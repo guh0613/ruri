@@ -19,6 +19,12 @@ import RuriCore
                     if p.completed % 20 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                 }
                 print("Installed \(installed.label)\n\(installed.path)")
+            case "fetch":
+                guard args.count >= 5, let url = URL(string: args[1]), let size = Int64(args[4]), size >= 0,
+                      args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message("用法：ruri-cli fetch <https-url> <output> <sha1> <bytes>") }
+                let item = DownloadItem(url: url, destination: URL(fileURLWithPath: args[2]), sha1: args[3], size: size)
+                try await DownloadManager().fetch(item) { p in print("\(p.receivedBytes)/\(p.totalBytes ?? size) bytes; resumed \(p.resumedBytes)") }
+                print("Downloaded and verified \(item.destination.lastPathComponent)")
             case "versions":
                 let catalog = try await GameInstaller(paths: paths).catalog()
                 print("Latest release: \(catalog.latest.release)")
