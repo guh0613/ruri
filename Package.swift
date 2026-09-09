@@ -11,7 +11,8 @@ let package = Package(
     ],
     dependencies: [.package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20")],
     targets: [
-        .target(name: "RuriCore", dependencies: ["ZIPFoundation"]),
+        .systemLibrary(name: "CZlib"),
+        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib"]),
         .executableTarget(name: "Ruri", dependencies: ["RuriCore"]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore"])
