@@ -13,6 +13,7 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     public let warnings: [String]
     public let fileCount: Int
     public let byteCount: Int64
+    public let curseForgeFiles: [CurseForgeReference]
     let workspace: URL
     let game: URL
     let records: Data?
@@ -73,23 +74,25 @@ public actor InstanceTransfer {
             let locks = try Self.lockWorlds(description.game); defer { locks.forEach { close($0) } }
             let snapshot = workspace.appendingPathComponent("minecraft")
             let excluded = try Self.exclusions(description.game, includeWorlds: true)
-            try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress("正在复制实例内容", completed: done, total: total)) }
+            if FileManager.default.fileExists(atPath: description.game.path) {
+                try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress("正在复制实例内容", completed: done, total: total)) }
+            } else { try FileManager.default.createDirectory(at: snapshot, withIntermediateDirectories: true) }
             let entries = try FileTree.entries(in: snapshot)
             return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings,
-                                          fileCount: entries.filter { !$0.directory }.count, byteCount: entries.reduce(0) { $0 + $1.size }, workspace: workspace, game: snapshot, records: description.records)
+                                          fileCount: entries.filter { !$0.directory }.count, byteCount: entries.reduce(0) { $0 + $1.size }, curseForgeFiles: description.curseForgeFiles, workspace: workspace, game: snapshot, records: description.records)
         } catch { try? FileManager.default.removeItem(at: workspace); throw error }
     }
 
     public func discard(_ prepared: PreparedInstanceImport) { try? FileManager.default.removeItem(at: prepared.workspace) }
 
-    public func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, installer: GameInstaller, concurrency: Int = 8,
+    public func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [], installer: GameInstaller, concurrency: Int = 8,
                         progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
-        try await install(prepared, name: name, importJVMArguments: importJVMArguments) { instance in
+        try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: content) { instance in
             try await installer.install(instance, concurrency: concurrency, progress: progress)
         }
     }
     // The closure makes filesystem rollback testable without contacting game services.
-    func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false,
+    func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [],
                  installGame: @Sendable (GameInstance) async throws -> GameInstance) async throws -> GameInstance {
         var instance = prepared.instance
         instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -97,6 +100,7 @@ public actor InstanceTransfer {
         instance.javaPath = nil; instance.installed = false
         if !importJVMArguments { instance.extraJVMArguments = "" }
         try Self.validate(instance)
+        try Self.validatePackContent(content, references: prepared.curseForgeFiles)
         do {
             // User files are copied first; official installer then supplies any
             // generated legacy resources without a destructive directory merge.
@@ -105,6 +109,7 @@ public actor InstanceTransfer {
                 try records.write(to: paths.instance(instance.id).appendingPathComponent("content.json"), options: .atomic)
                 _ = try await ContentManager(paths: paths, instanceID: instance.id).records()
             }
+            try Self.copyPackContent(content, to: paths, instanceID: instance.id)
             instance = try await installGame(instance)
             try Task.checkCancellation()
             return instance
@@ -140,21 +145,21 @@ public actor InstanceTransfer {
     }
 
     private static func findRoot(_ source: URL) throws -> URL {
-        func recognized(_ dir: URL) -> Bool { ["ruri-instance.json", "mmc-pack.json"].contains { FileManager.default.fileExists(atPath: dir.appendingPathComponent($0).path) } }
+        func recognized(_ dir: URL) -> Bool { ["ruri-instance.json", "mmc-pack.json", "manifest.json"].contains { FileManager.default.fileExists(atPath: dir.appendingPathComponent($0).path) } }
         if recognized(source) { return source }
         let candidates = try FileManager.default.contentsOfDirectory(at: source, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey]).filter {
             let info = try $0.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             return info.isDirectory == true && info.isSymbolicLink != true && recognized($0)
         }
-        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? "未找到实例清单。请选择 Ruri 导出包，或含 mmc-pack.json 的 Prism/MultiMC 实例。" : "目录包含多个实例，请选择其中一个实例目录。") }
+        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 CurseForge 整合包。" : "目录包含多个实例，请选择其中一个实例目录。") }
         return candidates[0]
     }
-    private static func read(_ url: URL) throws -> Data {
+    static func read(_ url: URL) throws -> Data {
         let info = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
         guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 4 * 1024 * 1024 else { throw RuriError.message("实例清单不是有效文件：\(url.lastPathComponent)") }
         return try Data(contentsOf: url)
     }
-    static func describe(_ root: URL) throws -> (instance: GameInstance, game: URL, format: String, warnings: [String], records: Data?) {
+    static func describe(_ root: URL) throws -> (instance: GameInstance, game: URL, format: String, warnings: [String], records: Data?, curseForgeFiles: [CurseForgeReference]) {
         let fm = FileManager.default
         let portable = root.appendingPathComponent("ruri-instance.json")
         var instance: GameInstance; var warnings: [String] = []; let format: String; var records: Data?
@@ -162,6 +167,8 @@ public actor InstanceTransfer {
             instance = try JSONDecoder().decode(PortableInstance.self, from: read(portable)).instance(); format = "Ruri"
             let metadata = root.appendingPathComponent("ruri-content.json")
             if fm.fileExists(atPath: metadata.path) { records = try read(metadata) }
+        } else if fm.fileExists(atPath: root.appendingPathComponent("manifest.json").path), !fm.fileExists(atPath: root.appendingPathComponent("mmc-pack.json").path) {
+            return try describeCurseForge(root)
         } else {
             format = "Prism / MultiMC"
             let pack = try JSONDecoder().decode(MultiMCPack.self, from: read(root.appendingPathComponent("mmc-pack.json")))
@@ -192,9 +199,9 @@ public actor InstanceTransfer {
         guard games.count == 1, try games[0].resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isDirectory == true,
               try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("实例需要唯一的 minecraft 或 .minecraft 游戏目录。") }
         if !instance.extraJVMArguments.isEmpty { warnings.append("实例带有自定义 JVM 参数，确认内容后可选择保留。") }
-        return (instance, games[0], format, warnings, records)
+        return (instance, games[0], format, warnings, records, [])
     }
-    private static func validate(_ instance: GameInstance) throws {
+    static func validate(_ instance: GameInstance) throws {
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,
               (512...262144).contains(instance.memoryMB), (320...16384).contains(instance.width), (240...16384).contains(instance.height),

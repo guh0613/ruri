@@ -149,6 +149,28 @@ public actor CurseForgeService {
         self.client = client ?? HTTPClient(session: URLSession(configuration: config, delegate: CurseForgeRedirectGuard(), delegateQueue: nil))
     }
     deinit { if ownsSession { client.session.invalidateAndCancel() } }
+    public static func cachedFile(_ file: CurseForgeFile, paths: LauncherPaths) async -> URL? {
+        guard let url = try? LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache),
+              let check = try? file.downloadItem(to: url, permittedURL: nil), DownloadManager.valid(url, item: check) else { return nil }
+        return url
+    }
+    public static func cacheManualFile(_ source: URL, file: CurseForgeFile, paths: LauncherPaths) async throws -> URL {
+        let scoped = source.startAccessingSecurityScopedResource()
+        defer { if scoped { source.stopAccessingSecurityScopedResource() } }
+        let info = try source.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+        guard info.isRegularFile == true, info.isSymbolicLink != true,
+              DownloadManager.valid(source, item: try file.downloadItem(to: source, permittedURL: nil)) else { throw RuriError.message("所选文件与 \(file.displayName) 的大小或校验值不符。请下载指定版本。") }
+        let cache = try LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache)
+        if source.standardizedFileURL == cache.standardizedFileURL { return cache }
+        try FileManager.default.createDirectory(at: cache.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let temporary = cache.deletingLastPathComponent().appendingPathComponent(".manual-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: temporary) }
+        try FileManager.default.copyItem(at: source, to: temporary)
+        try Task.checkCancellation()
+        guard DownloadManager.valid(temporary, item: try file.downloadItem(to: temporary, permittedURL: nil)) else { throw RuriError.message("复制期间文件发生变化，请重新选择。") }
+        guard rename(temporary.path, cache.path) == 0 else { throw RuriError.message("无法缓存已下载文件") }
+        return cache
+    }
     private struct Response<Value: Decodable & Sendable>: Decodable, Sendable { let data: Value }
     private func request<Value: Decodable & Sendable>(_ type: Value.Type, path: String, query: [URLQueryItem] = [], body: Data? = nil) async throws -> Value {
         guard !apiKey.isEmpty else { throw RuriError.message("请先在设置中配置 Ruri 的 CurseForge API Key。") }
@@ -183,7 +205,9 @@ public actor CurseForgeService {
         if let game { query.append(.init(name: "gameVersion", value: game)) }
         let loaders: [LoaderKind: Int] = [.forge: 1, .fabric: 4, .quilt: 5, .neoforge: 6]
         if let loader, let value = loaders[loader] { query.append(.init(name: "modLoaderType", value: String(value))) }
-        return try await request(CurseForgePage<CurseForgeFile>.self, path: "mods/\(id)/files", query: query)
+        let result = try await request(CurseForgePage<CurseForgeFile>.self, path: "mods/\(id)/files", query: query)
+        guard result.data.allSatisfy({ $0.modId == id }) else { throw RuriError.message("CurseForge 返回的版本列表与项目不一致") }
+        return result
     }
     public func resolve(_ references: [CurseForgeReference]) async throws -> [PlannedCurseFile] {
         guard references.count <= 5000, references.allSatisfy({ $0.projectID > 0 && $0.fileID > 0 }) else { throw RuriError.message("整合包文件标识或数量无效") }
@@ -202,6 +226,7 @@ public actor CurseForgeService {
         return try references.map { ref in
             guard let file = files[ref.fileID], file.modId == ref.projectID, let project = projects[ref.projectID], project.gameId == 432,
                   let raw = project.contentType, let kind = ContentKind(rawValue: raw) else { throw RuriError.message("找不到整合包文件：项目 \(ref.projectID)，文件 \(ref.fileID)") }
+            _ = try file.downloadItem(to: base, permittedURL: nil)
             return PlannedCurseFile(project: project, file: file, kind: kind)
         }
     }
