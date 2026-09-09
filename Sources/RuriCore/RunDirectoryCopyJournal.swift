@@ -14,12 +14,20 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         let device: Int64
         let inode: UInt64
         let directory: Bool
+        var volumeUUID: String?
         static func read(_ url: URL) throws -> Identity {
             var value = stat()
             guard lstat(url.path, &value) == 0, [S_IFREG, S_IFDIR].contains(value.st_mode & S_IFMT) else { throw RuriError.message("无法确认复制项目的文件身份：\(url.lastPathComponent)") }
-            return Identity(device: Int64(value.st_dev), inode: UInt64(value.st_ino), directory: value.st_mode & S_IFMT == S_IFDIR)
+            return Identity(device: Int64(value.st_dev), inode: UInt64(value.st_ino), directory: value.st_mode & S_IFMT == S_IFDIR,
+                            volumeUUID: try? url.resourceValues(forKeys: [.volumeUUIDStringKey]).volumeUUIDString)
         }
-        func matches(_ url: URL) -> Bool { (try? Self.read(url)) == self }
+        func matches(_ url: URL) -> Bool {
+            guard let candidate = try? Self.read(url), candidate.inode == inode, candidate.directory == directory else { return false }
+            // Device numbers belong to a mount session. A removable volume can
+            // receive a different one when it reconnects during recovery.
+            if let volumeUUID { return candidate.volumeUUID == volumeUUID }
+            return candidate.device == device // Journals written by older builds.
+        }
     }
     struct Item: Codable, Sendable {
         let area: Area
@@ -27,10 +35,12 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         let identity: Identity
     }
     struct EmptyDirectory: Codable, Sendable { let area: Area; let path: String }
-    var version = 1
+    var version = 2
     let id: UUID
     let original: GameInstance
     let target: GameRunDirectory
+    var targetCustomDirectory: CustomRunDirectory?
+    var stagingOnTarget: Bool?
     let createdAt: Date
     var phase: Phase
     var items: [Item]
@@ -39,15 +49,24 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
     static func root(paths: LauncherPaths, instanceID: UUID) throws -> URL {
         try LauncherPaths.safePath("run-directory-change", within: paths.instance(instanceID))
     }
-    static func load(paths: LauncherPaths, instanceID: UUID) throws -> RunDirectoryCopyJournal {
-        let root = try root(paths: paths, instanceID: instanceID)
+    static func load(paths: LauncherPaths, instanceID: UUID, recordDirectory: URL? = nil) throws -> RunDirectoryCopyJournal {
+        let root = try recordDirectory ?? root(paths: paths, instanceID: instanceID)
         let record: Self = try RunDirectoryCopyGuard.decode(root.appendingPathComponent("transaction.json"), limit: 8_388_608)
-        guard record.version == 1, record.original.id == instanceID, (record.original.runDirectory ?? .isolated) != record.target,
+        var differentLocation = (record.original.runDirectory ?? .isolated) != record.target
+        if !differentLocation, record.target == .custom, let source = record.original.customRunDirectory, let target = record.targetCustomDirectory { differentLocation = !source.isSameLocation(as: target) }
+        guard (1...2).contains(record.version), record.original.id == instanceID, differentLocation,
               record.items.count <= 4096, record.emptyDirectories.count <= 150_000, record.original.name.count <= 1024 else { throw RuriError.message("运行目录复制记录无效，工作副本已保留。") }
+        if record.target == .custom {
+            guard let custom = record.targetCustomDirectory ?? record.original.customRunDirectory else { throw RuriError.message("复制记录缺少自定义目标目录。") }
+            try custom.validateConfiguration()
+        }
+        try record.targetPaths(paths).validateDirectoryConfiguration()
+        guard record.stagingOnTarget != true || record.target == .custom else { throw RuriError.message("复制工作区位置无效。") }
         var keys = Set<String>()
         for item in record.items {
             guard !item.name.isEmpty, item.name != ".", item.name != "..", !item.name.contains("/"), !item.name.contains("\\"), !item.name.contains("\0"),
-                  item.identity.inode > 0, keys.insert(item.area.rawValue + "/" + item.name).inserted,
+                  item.identity.inode > 0, item.identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true,
+                  keys.insert(item.area.rawValue + "/" + item.name).inserted,
                   item.area != .metadata || ["content.json", "world-backups"].contains(item.name),
                   item.area != .game || ![".ruri", ".DS_Store", ".ruri-partials"].contains(item.name) else { throw RuriError.message("运行目录复制项目记录无效。") }
         }
@@ -66,7 +85,18 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         try data.write(to: directory.appendingPathComponent("transaction.json"), options: .atomic)
     }
     func incoming(_ item: Item, paths: LauncherPaths) throws -> URL {
-        try LauncherPaths.safePath("incoming/\(item.area.rawValue)/\(item.name)", within: Self.root(paths: paths, instanceID: original.id))
+        try LauncherPaths.safePath("incoming/\(item.area.rawValue)/\(item.name)", within: workspace(paths: paths))
+    }
+    func targetPaths(_ paths: LauncherPaths) -> LauncherPaths {
+        var instance = original; instance.runDirectory = target
+        if target == .custom { instance.customRunDirectory = targetCustomDirectory ?? original.customRunDirectory }
+        return paths.including(instance)
+    }
+    func workspace(paths: LauncherPaths) throws -> URL {
+        if stagingOnTarget == true {
+            return try LauncherPaths.safePath(".directory-change-workspaces/\(id.uuidString)", within: targetPaths(paths).gameDataState(original.id))
+        }
+        return try Self.root(paths: paths, instanceID: original.id)
     }
     func destination(_ item: Item, paths: LauncherPaths) throws -> URL {
         try LauncherPaths.safePath(item.name, within: item.area == .game ? paths.game(original.id) : paths.gameDataState(original.id))
@@ -74,6 +104,19 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
 }
 
 public enum RunDirectoryCopyGuard {
+    /// Completed/cancelled workspaces remain discoverable after app restart.
+    /// For a custom target the data may be on its volume, while the recovery
+    /// record stays beside the originating instance's history.
+    public static func preservedWorkspaces(paths: LauncherPaths, instanceID: UUID) -> [URL] {
+        guard let parent = try? LauncherPaths.safePath("directory-change-recovery", within: paths.instance(instanceID)),
+              let records = try? FileManager.default.contentsOfDirectory(at: parent, includingPropertiesForKeys: [.isDirectoryKey]) else { return [] }
+        return records.prefix(500).compactMap { directory in
+            guard (try? directory.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true else { return nil }
+            if let record = try? RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID, recordDirectory: directory), record.stagingOnTarget == true,
+               let workspace = try? record.workspace(paths: paths), FileManager.default.fileExists(atPath: workspace.path) { return workspace }
+            return directory
+        }.sorted { $0.path < $1.path }
+    }
     private struct Marker: Codable {
         let version: Int
         let transactionID: UUID

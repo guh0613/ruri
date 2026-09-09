@@ -43,7 +43,7 @@ extension GameRunDirectoryChange {
         let current = paths.configured(with: initial)
         let instance = try find(preview.instanceID, in: initial)
         try validatePreviewBinding(preview, instance: instance, paths: current)
-        let access = try await acquire(instance: instance, paths: current, target: preview.targetMode)
+        let access = try await acquire(instance: instance, paths: current, target: preview.targetMode, customDirectory: preview.targetCustomDirectory)
         defer { withExtendedLifetime(access) {} }
         try validateSnapshots(preview, access: access)
         // Upgrade before any copy can become pending, so old clients cannot
@@ -53,6 +53,9 @@ extension GameRunDirectoryChange {
         let preparing = try LauncherPaths.safePath(".run-directory-change-\(UUID().uuidString)", within: current.instance(instance.id))
         var journal = RunDirectoryCopyJournal(id: UUID(), original: instance, target: preview.targetMode, createdAt: Date(), phase: .copying, items: [],
                                               emptyDirectories: preview.targetSnapshot.game.filter(\.directory).map { .init(area: .game, path: $0.path) } + preview.targetSnapshot.metadata.filter(\.directory).map { .init(area: .metadata, path: $0.path) })
+        journal.targetCustomDirectory = preview.targetCustomDirectory
+        journal.stagingOnTarget = preview.targetMode == .custom
+        let workspace = try journal.workspace(paths: current)
         var committed: PersistentState?
         var activated = false
         do {
@@ -72,12 +75,12 @@ extension GameRunDirectoryChange {
             }
             progress(.init(phase: .copying, completed: 0, total: preview.sourceFileCount, bytesCopied: 0, totalBytes: preview.sourceBytes))
             func validateLocations() throws { try access.sourcePaths.validateInstanceLocation(instance.id); try access.targetPaths.validateInstanceLocation(instance.id) }
-            try RunDirectoryFileCopy.entries(preview.sourceSnapshot.game, to: root.appendingPathComponent("incoming/game"), validate: validateLocations, progress: copied)
-            try RunDirectoryFileCopy.entries(preview.sourceSnapshot.metadata, to: root.appendingPathComponent("incoming/metadata"), validate: validateLocations, progress: copied)
+            try RunDirectoryFileCopy.entries(preview.sourceSnapshot.game, to: workspace.appendingPathComponent("incoming/game"), validate: validateLocations, progress: copied)
+            try RunDirectoryFileCopy.entries(preview.sourceSnapshot.metadata, to: workspace.appendingPathComponent("incoming/metadata"), validate: validateLocations, progress: copied)
             try Task.checkCancellation()
             try validateSnapshots(preview, access: access)
             for area in [RunDirectoryCopyJournal.Area.game, .metadata] {
-                let incoming = root.appendingPathComponent("incoming/" + area.rawValue)
+                let incoming = workspace.appendingPathComponent("incoming/" + area.rawValue)
                 for url in try FileManager.default.contentsOfDirectory(at: incoming, includingPropertiesForKeys: nil).sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
                     journal.items.append(.init(area: area, name: url.lastPathComponent, identity: try .read(url)))
                 }
@@ -101,6 +104,7 @@ extension GameRunDirectoryChange {
                 try validatePreviewBinding(preview, instance: instance, paths: paths.configured(with: state))
                 let index = state.instances.firstIndex(where: { $0.id == instance.id })!
                 state.instances[index].runDirectory = preview.targetMode
+                if preview.targetMode == .custom { state.instances[index].customRunDirectory = preview.targetCustomDirectory }
                 state.instances[index].lastRunDirectoryChangeID = journal.id
             }
             progress(.init(phase: .committed, completed: 1, total: 1, bytesCopied: bytes, totalBytes: preview.sourceBytes))
@@ -126,7 +130,7 @@ extension GameRunDirectoryChange {
             let reason = Task.isCancelled || error is CancellationError ? "运行目录复制已取消，原目录和设置未改动。" : "运行目录复制未完成：\(error.localizedDescription)"
             do {
                 let preserved = try abandon(journal, access: access)
-                throw RunDirectoryCopyFailure(message: reason, preservedCopy: preserved, cancelled: Task.isCancelled || error is CancellationError)
+                throw RunDirectoryCopyFailure(message: reason + (preserved.warning.map { "\n" + $0 } ?? ""), preservedCopy: preserved.workspace, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as RunDirectoryCopyFailure { throw failure }
             catch { throw RunDirectoryCopyFailure(message: reason + "\n自动恢复尚未完成，请在实例设置中恢复复制。\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled) }
         }
@@ -140,9 +144,10 @@ extension GameRunDirectoryChange {
         let instance = try find(owner.instanceID, in: state)
         try validateJournalBinding(journal, current: instance)
         let source = current.including(journal.original)
-        var targetInstance = journal.original; targetInstance.runDirectory = journal.target
-        return .init(owner: journal.owner, source: source.game(instance.id), target: current.including(targetInstance).game(instance.id), createdAt: journal.createdAt,
-                     committed: instance.lastRunDirectoryChangeID == journal.id, workspace: try RunDirectoryCopyJournal.root(paths: current, instanceID: instance.id))
+        let workspace = try journal.workspace(paths: current)
+        return .init(owner: journal.owner, source: source.game(instance.id), target: journal.targetPaths(current).game(instance.id), createdAt: journal.createdAt,
+                     committed: instance.lastRunDirectoryChangeID == journal.id,
+                     workspace: FileManager.default.fileExists(atPath: workspace.path) ? workspace : try RunDirectoryCopyJournal.root(paths: current, instanceID: instance.id))
     }
     /// Recovery preserves an uncommitted working copy; a committed copy only
     /// needs cleanup. It never invents a successful commit or deletes originals.
@@ -154,7 +159,7 @@ extension GameRunDirectoryChange {
         let instance = try find(instanceID, in: state)
         try validateJournalBinding(journal, current: instance)
         let originalPaths = current.including(journal.original)
-        let access = try RunDirectoryChangeAccess(instance: journal.original, paths: originalPaths, target: journal.target, directoryChangeID: journal.id)
+        let access = try RunDirectoryChangeAccess(instance: journal.original, paths: originalPaths, target: journal.target, customDirectory: journal.targetCustomDirectory, directoryChangeID: journal.id)
         defer { withExtendedLifetime(access) {} }
         try access.lockFiles()
         let latest = try RunDirectoryCopyJournal.load(paths: current, instanceID: instanceID)
@@ -166,13 +171,16 @@ extension GameRunDirectoryChange {
             return .init(state: freshState, preservedCopy: remainder, warning: cleanupWarning(remainder))
         }
         let copy = try abandon(latest, access: access)
-        return .init(state: freshState, preservedCopy: copy, warning: nil)
+        return .init(state: freshState, preservedCopy: copy.workspace, warning: copy.warning)
     }
     private func validateJournalBinding(_ journal: RunDirectoryCopyJournal, current: GameInstance) throws {
         guard current.directoryID == journal.original.directoryID,
               current.gameVersion == journal.original.gameVersion, current.loader == journal.original.loader, current.loaderVersion == journal.original.loaderVersion,
               current.lastRunDirectoryChangeID == journal.id || current.runDirectory == journal.original.runDirectory else {
             throw RuriError.message("实例设置在复制中断后改变，工作区已保留，请先核对原实例。")
+        }
+        if current.lastRunDirectoryChangeID != journal.id, journal.original.runDirectory == .custom {
+            guard let expected = journal.original.customRunDirectory, current.customRunDirectory?.isSameLocation(as: expected) == true else { throw RuriError.message("自定义源目录在复制中断后改变，请先核对原位置。") }
         }
     }
     private func removeEmptyTree(_ url: URL) throws {
@@ -197,20 +205,33 @@ extension GameRunDirectoryChange {
         // deleting temporary files must not leave an unreadable pending journal.
         try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: retired)
         do {
+            if journal.stagingOnTarget == true {
+                let workspace = try journal.workspace(paths: access.sourcePaths)
+                if FileManager.default.fileExists(atPath: workspace.path) {
+                    do { try FileManager.default.removeItem(at: workspace); _ = rmdir(workspace.deletingLastPathComponent().path) }
+                    catch { return workspace }
+                }
+            }
             try FileManager.default.removeItem(at: retired)
             _ = rmdir(retired.deletingLastPathComponent().path)
             return nil
         } catch { return retired }
     }
-    private func abandon(_ input: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> URL {
+    private func abandon(_ input: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> (workspace: URL, warning: String?) {
         try access.sourcePaths.validateInstanceLocation(input.original.id)
         try access.targetPaths.validateInstanceLocation(input.original.id)
         var journal = input; journal.phase = .rollingBack; try journal.save(paths: access.sourcePaths)
+        var retained: [String] = []
         for item in journal.items.reversed() {
             let destination = try journal.destination(item, paths: access.targetPaths)
             // A foreign replacement remains untouched. Our directory inode can
             // contain later user edits; moving it back preserves those as well.
-            guard item.identity.matches(destination) else { continue }
+            guard item.identity.matches(destination) else {
+                var info = stat()
+                if lstat(destination.path, &info) == 0 { retained.append(item.name) }
+                else if errno != ENOENT { throw RuriError.message("无法检查目标项目，复制记录已保留：\(item.name)") }
+                continue
+            }
             let incoming = try journal.incoming(item, paths: access.sourcePaths)
             try FileManager.default.createDirectory(at: incoming.deletingLastPathComponent(), withIntermediateDirectories: true)
             try RunDirectoryFileCopy.moveWithoutReplacing(destination, to: incoming)
@@ -224,6 +245,11 @@ extension GameRunDirectoryChange {
         try FileManager.default.createDirectory(at: recovery.deletingLastPathComponent(), withIntermediateDirectories: true)
         try RunDirectoryCopyGuard.clear(journal, paths: access.targetPaths)
         try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: recovery)
-        return recovery
+        let warning = retained.isEmpty ? nil : "目标目录中有 \(retained.count) 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：\(retained.prefix(5).joined(separator: "、"))。"
+        if journal.stagingOnTarget == true {
+            let workspace = try journal.workspace(paths: access.sourcePaths)
+            if FileManager.default.fileExists(atPath: workspace.path) { return (workspace, warning) }
+        }
+        return (recovery, warning)
     }
 }

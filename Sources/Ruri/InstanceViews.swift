@@ -73,6 +73,7 @@ struct InstanceSettingsView: View {
     @State private var changingDirectory = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
+    @State private var preservedWorkspaces: [URL] = []
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
     private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
@@ -93,8 +94,12 @@ struct InstanceSettingsView: View {
                     Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
                     Text(model.paths.game(instance.id).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                     Button(directoryCopyPending ? "恢复目录复制…" : "切换运行目录…", systemImage: "arrow.triangle.swap") { changingDirectory = true }.disabled(model.busy || (!directoryCopyPending && model.isInstanceInUse(instance.id)))
-                    if FileManager.default.fileExists(atPath: model.paths.instance(instance.id).appendingPathComponent("directory-change-recovery").path) {
-                        Button("查看保留的复制工作区", systemImage: "folder") { NSWorkspace.shared.open(model.paths.instance(instance.id).appendingPathComponent("directory-change-recovery")) }
+                    if !preservedWorkspaces.isEmpty {
+                        Menu("查看保留的复制副本") {
+                            ForEach(Array(preservedWorkspaces.enumerated()), id: \.offset) { index, url in
+                                Button("副本 \(index + 1) · " + (url.deletingLastPathComponent().lastPathComponent == ".directory-change-workspaces" ? url.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().lastPathComponent : "此实例")) { NSWorkspace.shared.open(url) }
+                            }
+                        }.disabled(model.busy)
                     }
                     HStack {
                         Button("打开文件夹", systemImage: "folder") { model.reveal(instance) }
@@ -112,6 +117,12 @@ struct InstanceSettingsView: View {
             }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
         }.padding(24).frame(width: 620, height: 590)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
+        .task(id: model.busy) {
+            guard !model.busy else { return }
+            let paths = model.paths, id = instance.id
+            let locations = await Task.detached(priority: .utility) { RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) }.value
+            if !Task.isCancelled { preservedWorkspaces = locations }
+        }
     }
 }
 

@@ -34,7 +34,7 @@ public struct CustomRunDirectory: Codable, Identifiable, Equatable, Sendable {
     }
 
     public func isSameLocation(as other: Self) -> Bool {
-        id == other.id && url.standardizedFileURL == other.url.standardizedFileURL
+        id == other.id && url.standardizedFileURL.path == other.url.standardizedFileURL.path
     }
     func validateConfiguration() throws {
         guard id != GameDirectory.defaultID, url.isFileURL, url.path.hasPrefix("/"), !url.path.contains("\0"),
@@ -110,8 +110,12 @@ extension PersistentState {
     public func resolvingCustomRunDirectoryBookmarks() -> Self {
         let locations = instances.sorted { ($0.runDirectory == .custom ? 0 : 1) < ($1.runDirectory == .custom ? 0 : 1) }.compactMap(\.customRunDirectory)
         var resolved: [UUID: CustomRunDirectory] = [:]
-        for location in locations where resolved[location.id] == nil {
-            if (try? location.validateAvailability()) != nil { resolved[location.id] = location }
+        var ambiguous = Set<UUID>()
+        for location in locations {
+            if (try? location.validateAvailability()) != nil {
+                if let existing = resolved[location.id], !existing.isSameLocation(as: location) { ambiguous.insert(location.id) }
+                else { resolved[location.id] = location }
+            }
         }
         for location in locations where resolved[location.id] == nil {
             let candidate = location.resolvingBookmark()
@@ -120,7 +124,7 @@ extension PersistentState {
         var state = self
         state.instances = instances.map { item in
             var item = item
-            if let id = item.customRunDirectory?.id, let location = resolved[id] { item.customRunDirectory = location }
+            if let id = item.customRunDirectory?.id, !ambiguous.contains(id), let location = resolved[id] { item.customRunDirectory = location }
             return item
         }
         return state

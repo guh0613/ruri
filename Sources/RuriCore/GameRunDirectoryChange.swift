@@ -9,6 +9,7 @@ public struct GameRunDirectoryChangePreview: Identifiable, Sendable {
     public let target: URL
     public let sourceMode: GameRunDirectory
     public let targetMode: GameRunDirectory
+    public let targetCustomDirectory: CustomRunDirectory?
     public let createdAt: Date
     public var sourceFileCount: Int { sourceSnapshot.fileCount }
     public var sourceBytes: Int64 { sourceSnapshot.bytes }
@@ -56,10 +57,12 @@ final class RunDirectoryChangeAccess {
     let targetLease: SharedGameDirectoryLease?
     var operations: [GameDataOperationLock] = []
     var worldLocks: [Int32] = []
-    init(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory, directoryChangeID: UUID? = nil) throws {
+    init(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil, directoryChangeID: UUID? = nil) throws {
         self.instance = instance; sourcePaths = paths
         var changed = instance; changed.runDirectory = target
+        if target == .custom { changed.customRunDirectory = customDirectory ?? instance.customRunDirectory }
         targetPaths = paths.including(changed)
+        try targetPaths.validateDirectoryConfiguration()
         sourceLease = try GameRunLease.acquire(paths: paths, instanceID: instance.id, directoryChangeID: directoryChangeID)
         targetLease = target != .isolated ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil, directoryChangeID: directoryChangeID) : nil
         guard try !GameSessionStore.list(paths: paths, instanceID: instance.id).contains(where: { !$0.state.isFinished }) else {
@@ -87,12 +90,13 @@ public actor GameRunDirectoryChange {
     let paths: LauncherPaths
     public init(paths: LauncherPaths) { self.paths = paths }
 
-    public func preview(instanceID: UUID, target: GameRunDirectory) async throws -> GameRunDirectoryChangePreview {
+    public func preview(instanceID: UUID, target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil) async throws -> GameRunDirectoryChangePreview {
         let state = try StateStore.load(paths)
         let current = paths.configured(with: state)
         let instance = try find(instanceID, in: state)
-        try validateChange(instance, to: target, paths: current)
-        let access = try await acquire(instance: instance, paths: current, target: target)
+        let custom = target == .custom ? (customDirectory ?? instance.customRunDirectory) : nil
+        try validateChange(instance, to: target, customDirectory: custom, paths: current)
+        let access = try await acquire(instance: instance, paths: current, target: target, customDirectory: custom)
         defer { withExtendedLifetime(access) {} }
         let sourceSnapshot = try RunDirectorySnapshot.read(paths: current, instanceID: instanceID)
         let targetSnapshot = try RunDirectorySnapshot.read(paths: access.targetPaths, instanceID: instanceID)
@@ -101,7 +105,7 @@ public actor GameRunDirectoryChange {
         }.map(\.name)
         return GameRunDirectoryChangePreview(id: UUID(), instanceID: instanceID, instanceName: instance.name,
                                              source: current.game(instanceID), target: access.targetPaths.game(instanceID), sourceMode: instance.runDirectory ?? .isolated,
-                                             targetMode: target, createdAt: Date(), otherInstances: others, instance: instance,
+                                             targetMode: target, targetCustomDirectory: custom, createdAt: Date(), otherInstances: others, instance: instance,
                                              sourceSnapshot: sourceSnapshot, targetSnapshot: targetSnapshot)
     }
 
@@ -112,7 +116,7 @@ public actor GameRunDirectoryChange {
         let current = paths.configured(with: state)
         let instance = try find(preview.instanceID, in: state)
         try validatePreviewBinding(preview, instance: instance, paths: current)
-        let access = try await acquire(instance: instance, paths: current, target: preview.targetMode)
+        let access = try await acquire(instance: instance, paths: current, target: preview.targetMode, customDirectory: preview.targetCustomDirectory)
         defer { withExtendedLifetime(access) {} }
         try validateSnapshots(preview, access: access)
         try Task.checkCancellation()
@@ -124,26 +128,34 @@ public actor GameRunDirectoryChange {
         guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("这个实例已被移除，请刷新后重试。") }
         return instance
     }
-    func validateChange(_ instance: GameInstance, to target: GameRunDirectory, paths: LauncherPaths) throws {
+    func validateChange(_ instance: GameInstance, to target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil, paths: LauncherPaths) throws {
         try paths.validateBinding(instance)
         guard instance.name.count <= 1024 else { throw RuriError.message("实例名称过长，请先缩短名称再调整目录。") }
-        guard (instance.runDirectory ?? .isolated) != target else { throw RuriError.message("实例已经使用这个运行目录。") }
+        if target == .custom {
+            guard let customDirectory else { throw RuriError.message("请先选择自定义运行目录。") }
+            try paths.checkCustomRunDirectory(customDirectory)
+            try customDirectory.validateAvailability()
+        }
+        if (instance.runDirectory ?? .isolated) == target {
+            guard target == .custom, let customDirectory, instance.customRunDirectory?.isSameLocation(as: customDirectory) == false else { throw RuriError.message("实例已经使用这个运行目录。") }
+        }
         if target != .isolated, try ModpackRegistry.load(paths: paths, instanceID: instance.id) != nil || FileManager.default.fileExists(atPath: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta").path) {
             throw RuriError.message("整合包保持独立运行目录，以保留包的配置与更新记录。")
         }
     }
     func validatePreviewBinding(_ preview: GameRunDirectoryChangePreview, instance: GameInstance, paths: LauncherPaths) throws {
-        try validateChange(instance, to: preview.targetMode, paths: paths)
-        if preview.sourceMode == .custom || preview.targetMode == .custom {
+        try validateChange(instance, to: preview.targetMode, customDirectory: preview.targetCustomDirectory, paths: paths)
+        if preview.sourceMode == .custom {
             guard let current = instance.customRunDirectory, let original = preview.instance.customRunDirectory, current.isSameLocation(as: original) else { throw RuriError.message("自定义目录身份已经变化，请重新预览。") }
         }
         var target = instance; target.runDirectory = preview.targetMode
+        if preview.targetMode == .custom { target.customRunDirectory = preview.targetCustomDirectory }
         guard instance.directoryID == preview.instance.directoryID, instance.runDirectory == preview.instance.runDirectory,
               instance.gameVersion == preview.instance.gameVersion, instance.loader == preview.instance.loader, instance.loaderVersion == preview.instance.loaderVersion,
               paths.game(instance.id) == preview.source, paths.including(target).game(instance.id) == preview.target else { throw RuriError.message("实例或目录位置已经变化，请重新预览。") }
     }
-    func acquire(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory) async throws -> RunDirectoryChangeAccess {
-        let access = try RunDirectoryChangeAccess(instance: instance, paths: paths, target: target)
+    func acquire(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil) async throws -> RunDirectoryChangeAccess {
+        let access = try RunDirectoryChangeAccess(instance: instance, paths: paths, target: target, customDirectory: customDirectory)
         for location in [access.sourcePaths, access.targetPaths] {
             try await ContentManager(paths: location, instanceID: instance.id).recover()
             try await WorldManager(paths: location, instanceID: instance.id).recover()
@@ -163,6 +175,7 @@ public actor GameRunDirectoryChange {
             try validatePreviewBinding(preview, instance: instance, paths: paths.configured(with: state))
             guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { throw RuriError.message("实例已被移除。") }
             state.instances[index].runDirectory = preview.targetMode
+            if preview.targetMode == .custom { state.instances[index].customRunDirectory = preview.targetCustomDirectory }
             state.instances[index].lastRunDirectoryChangeID = nil
         }
     }

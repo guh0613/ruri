@@ -7,10 +7,14 @@ struct GameRunDirectoryChangeView: View {
     @Environment(\.dismiss) private var dismiss
     let instance: GameInstance
     @State private var target: GameRunDirectory
+    @State private var customDirectory: CustomRunDirectory?
+    @State private var chosenURL: URL?
+    @State private var selectionRequest = UUID()
+    @State private var registering = false
     @State private var preview: GameRunDirectoryChangePreview?
     @State private var recovery: RunDirectoryCopyRecovery?
     @State private var copyFiles = false
-    @State private var choiceFor: GameRunDirectory?
+    @State private var choiceFor: String?
     @State private var cancelling = false
     @State private var loading = false
     @State private var issue: String?
@@ -18,15 +22,27 @@ struct GameRunDirectoryChangeView: View {
     init(instance: GameInstance) {
         self.instance = instance
         _target = State(initialValue: (instance.runDirectory ?? .isolated) == .isolated ? .shared : .isolated)
+        _customDirectory = State(initialValue: instance.customRunDirectory)
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             SectionHeading(title: recovery == nil ? "切换运行目录" : "恢复目录复制", subtitle: recovery?.owner.instanceName ?? (instance.name + " · " + instance.subtitle))
             if recovery == nil {
-                Picker("目标", selection: $target) { ForEach(GameRunDirectory.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).disabled(model.busy)
+                Picker("目标", selection: $target) { ForEach(GameRunDirectory.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).disabled(model.busy || registering)
                 Text(target.explanation).font(.callout).foregroundStyle(.secondary)
+                if target == .custom {
+                    HStack {
+                        Text(customDirectory?.url.path ?? "尚未选择文件夹").font(.caption).textSelection(.enabled).lineLimit(2)
+                        Spacer()
+                        Button("选择文件夹…") {
+                            let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false
+                            panel.message = "选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。"
+                            if panel.runModal() == .OK, let url = panel.url { chosenURL = url; selectionRequest = UUID() }
+                        }.disabled(model.busy || registering)
+                    }
+                }
             }
-            if loading { ProgressView("正在检查目录与文件…").frame(maxWidth: .infinity, minHeight: 220) }
+            if loading || registering { ProgressView(registering ? "正在登记所选目录…" : "正在检查目录与文件…").frame(maxWidth: .infinity, minHeight: 220) }
             else if let recovery {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
@@ -64,37 +80,49 @@ struct GameRunDirectoryChangeView: View {
                 }.frame(maxWidth: .infinity, minHeight: 220, alignment: .leading)
             }
             HStack {
-                Button("刷新预览", systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(loading || model.busy)
+                Button("刷新预览", systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(loading || registering || model.busy)
                 Spacer()
                 Button(model.busy ? "取消操作" : "关闭") {
                     if model.busy { cancelling = true; model.operation?.cancel() } else { dismiss() }
                 }.keyboardShortcut(.cancelAction).disabled(cancelling || (model.busy && recovery != nil))
                 if let recovery {
-                    Button(recovery.committed ? "清理已完成记录" : "恢复并保留副本") { model.recoverGameRunDirectory(recovery) }.buttonStyle(.borderedProminent).disabled(model.busy || loading)
+                    Button(recovery.committed ? "清理已完成记录" : "恢复并保留副本") { model.recoverGameRunDirectory(recovery) }.buttonStyle(.borderedProminent).disabled(model.busy || loading || registering)
                 } else {
                     Button(copyFiles ? "复制并切换" : "使用目标现有内容") { if let preview { model.changeGameRunDirectory(preview, copyFiles: copyFiles) } }
-                        .buttonStyle(.borderedProminent).disabled(preview == nil || loading || model.busy)
+                        .buttonStyle(.borderedProminent).disabled(preview == nil || loading || registering || model.busy)
                 }
             }
             if model.busy { ProgressView(cancelling ? "正在取消并保留工作副本…" : model.activeActivity?.progress.stage ?? "正在处理目录…").controlSize(.small) }
         }.padding(24).frame(width: 640, height: 590)
         .interactiveDismissDisabled(model.busy)
-        .task(id: target.rawValue + refresh.uuidString) {
+        .task(id: selectionRequest) {
+            guard let chosenURL else { return }
+            registering = true; issue = nil
+            let paths = model.paths
+            do {
+                let selected = try await Task.detached(priority: .userInitiated) { try CustomRunDirectory.register(at: chosenURL, paths: paths) }.value
+                try Task.checkCancellation(); customDirectory = selected; refresh = UUID()
+            } catch { if !Task.isCancelled { preview = nil; issue = error.localizedDescription } }
+            if !Task.isCancelled { registering = false }
+        }
+        .task(id: target.rawValue + (customDirectory?.url.path ?? "") + refresh.uuidString) {
             preview = nil; recovery = nil; issue = nil; loading = true
             do {
                 let service = GameRunDirectoryChange(paths: model.paths)
                 if let pending = try await service.pendingCopy(instanceID: instance.id) { try Task.checkCancellation(); recovery = pending }
                 else {
-                    let result = try await service.preview(instanceID: instance.id, target: target)
+                    let result = try await service.preview(instanceID: instance.id, target: target, customDirectory: customDirectory)
                     try Task.checkCancellation(); preview = result
-                    if choiceFor != target { copyFiles = result.canCopyToTarget && result.sourceFileCount > 0; choiceFor = target }
+                    let choice = target.rawValue + result.target.path
+                    if choiceFor != choice { copyFiles = result.canCopyToTarget && result.sourceFileCount > 0; choiceFor = choice }
                     else if !result.canCopyToTarget { copyFiles = false }
                 }
             } catch { if !Task.isCancelled { issue = error.localizedDescription } }
             if !Task.isCancelled { loading = false }
         }
-        .onChange(of: model.state.instances.first(where: { $0.id == instance.id })?.runDirectory) {
+        .onChange(of: model.paths.game(instance.id)) {
             if model.state.instances.first(where: { $0.id == instance.id })?.runDirectory == target,
+               (target != .custom || model.state.instances.first(where: { $0.id == instance.id })?.customRunDirectory?.id == customDirectory?.id),
                !RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) { dismiss() }
         }
         .onChange(of: model.busy) { if !model.busy { cancelling = false; refresh = UUID() } }

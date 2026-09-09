@@ -28,13 +28,20 @@ import RuriCore
                 }
                 print((try StateStore.load(paths).settings.isolationPolicy ?? .always).title)
             case "run-directory":
-                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), let mode = GameRunDirectory(rawValue: args[2]),
-                      args.count == 3 || ["--apply", "--copy"].contains(args[3]) else { throw RuriError.message("用法：ruri-cli run-directory <instance-uuid> <isolated|shared> [--apply|--copy]。默认只预览；--apply 使用现有内容；--copy 复制到空目标。原目录均保留。") }
+                let usage = "用法：ruri-cli run-directory <实例UUID> <isolated|shared|custom> [自定义路径] [--apply|--copy]。默认预览；首次选择自定义路径会保存目录身份信息。--apply 使用现有内容；--copy 复制到空目标。原目录保留。"
+                guard (3...5).contains(args.count), let id = UUID(uuidString: args[1]), let mode = GameRunDirectory(rawValue: args[2]) else { throw RuriError.message(usage) }
+                var remaining = Array(args.dropFirst(3))
+                let action = remaining.last.flatMap { ["--apply", "--copy"].contains($0) ? $0 : nil }
+                if action != nil { remaining.removeLast() }
+                guard remaining.isEmpty || (mode == .custom && remaining.count == 1 && !remaining[0].hasPrefix("--")) else { throw RuriError.message(usage) }
+                let currentState = try StateStore.load(paths)
+                guard currentState.instances.contains(where: { $0.id == id }) else { throw RuriError.message("这个实例已被移除，请刷新后重试。") }
+                let custom = try remaining.first.map { try CustomRunDirectory.register(at: URL(fileURLWithPath: $0), paths: paths.configured(with: currentState)) }
                 let service = GameRunDirectoryChange(paths: paths)
-                let preview = try await service.preview(instanceID: id, target: mode)
+                let preview = try await service.preview(instanceID: id, target: mode, customDirectory: custom)
                 print("\(preview.instanceName)：\(preview.sourceMode.title) → \(preview.targetMode.title)\n原目录：\(preview.source.path)\n\(preview.sourceFileCount) 个文件，\(preview.sourceBytes) 字节\n目标目录：\(preview.target.path)\n\(preview.targetFileCount) 个文件，\(preview.targetBytes) 字节")
                 if !preview.otherInstances.isEmpty { print("共用目标目录的实例：" + preview.otherInstances.joined(separator: "、")) }
-                if args.last == "--copy" {
+                if action == "--copy" {
                     let result = try await service.copyToEmpty(preview) { p in
                         if p.phase != .copying || p.completed % 50 == 0 {
                             try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8))
@@ -42,7 +49,7 @@ import RuriCore
                     }
                     print(result.warning ?? "已复制并切换目录，原数据保留。")
                     if let url = result.preservedCopy { print("工作副本：\(url.path)") }
-                } else if args.count == 4 { _ = try await service.useExisting(preview); print("已切换到目标现有内容，原目录及其文件已保留。") }
+                } else if action == "--apply" { _ = try await service.useExisting(preview); print("已切换到目标现有内容，原目录及其文件已保留。") }
             case "recover-directory":
                 guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message("用法：ruri-cli recover-directory <instance-uuid> [--apply]。默认只查看待恢复操作。") }
                 let service = GameRunDirectoryChange(paths: paths)
@@ -253,7 +260,7 @@ import RuriCore
                   plan [instance-uuid]
                   launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
                   directories <list|add|select|rename|relocate|remove> ...
-                  run-directory <instance-uuid> <isolated|shared> [--apply|--copy]
+                  run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
                   recover-directory <instance-uuid> [--apply]
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>

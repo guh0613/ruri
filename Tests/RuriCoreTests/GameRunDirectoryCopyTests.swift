@@ -163,7 +163,8 @@ struct GameRunDirectoryCopyTests {
         try Data("foreign-replacement".utf8).write(to: destination)
         let service = GameRunDirectoryChange(paths: paths)
         await #expect(throws: (any Error).self) { try await service.recoverCopy(instanceID: a.id, transactionID: UUID()) }
-        _ = try await service.recoverCopy(instanceID: a.id, transactionID: pending.id)
+        let recovered = try await service.recoverCopy(instanceID: a.id, transactionID: pending.id)
+        #expect(recovered.warning?.contains("copied.txt") == true)
         #expect(try String(contentsOf: destination, encoding: .utf8) == "foreign-replacement")
         var forged = try journal(preview, paths: paths)
         forged.items = [.init(area: .game, name: "../outside", identity: try .read(destination))]

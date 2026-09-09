@@ -85,6 +85,13 @@ struct CustomRunDirectoryTests {
         #expect(resolved.instances.map(\.id) == [a.id, b.id])
         #expect(resolved.instances[1].directoryID == b.directoryID && resolved.settings == state.settings)
         try paths.configured(with: resolved).validateDirectoryConfiguration()
+        let copied = moved.deletingLastPathComponent().appendingPathComponent("Remembered copy")
+        try FileManager.default.copyItem(at: moved, to: copied)
+        var withCopy = resolved
+        withCopy.instances[1].runDirectory = .isolated
+        withCopy.instances[1].customRunDirectory?.url = copied
+        withCopy.instances[1].customRunDirectory?.bookmark = nil
+        #expect(withCopy.resolvingCustomRunDirectoryBookmarks().instances[1].customRunDirectory?.url == copied)
     }
 
     @Test func customInstancesShareContentBackupsAndOneWriterAcrossCollections() async throws {
