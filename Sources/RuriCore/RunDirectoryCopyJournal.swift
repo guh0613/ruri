@@ -58,9 +58,9 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         }
         return record
     }
-    func save(paths: LauncherPaths) throws {
+    func save(paths: LauncherPaths, at preparedDirectory: URL? = nil) throws {
         try paths.validateInstanceLocation(original.id)
-        let directory = try Self.root(paths: paths, instanceID: original.id)
+        let directory = try preparedDirectory ?? Self.root(paths: paths, instanceID: original.id)
         let data = try JSONEncoder().encode(self)
         guard data.count <= 8_388_608 else { throw RuriError.message("运行目录复制记录超过大小限制。") }
         try data.write(to: directory.appendingPathComponent("transaction.json"), options: .atomic)

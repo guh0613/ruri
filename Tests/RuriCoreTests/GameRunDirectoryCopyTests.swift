@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 import Testing
 @testable import RuriCore
 
@@ -169,6 +170,32 @@ struct GameRunDirectoryCopyTests {
         try forged.save(paths: paths)
         await #expect(throws: (any Error).self) { try await service.recoverCopy(instanceID: a.id, transactionID: forged.id) }
         #expect(FileManager.default.fileExists(atPath: destination.path))
+    }
+
+    @Test func failedTemporaryCleanupRetiresTheJournalAndDoesNotBlockTheCommittedDirectory() async throws {
+        let (paths, a, b, preview) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let result = try await GameRunDirectoryChange(paths: paths).copyToEmpty(preview) { progress in
+            if progress.phase == .committed {
+                do {
+                    let file = try RunDirectoryCopyJournal.root(paths: paths, instanceID: a.id).appendingPathComponent("incoming/game/cleanup-blocker.txt")
+                    try Data("temporary file".utf8).write(to: file)
+                    #expect(chflags(file.path, UInt32(UF_IMMUTABLE)) == 0)
+                } catch { Issue.record(error) }
+            }
+        }
+        let remainder = try #require(result.preservedCopy)
+        let blocker = remainder.appendingPathComponent("incoming/game/cleanup-blocker.txt")
+        defer { _ = chflags(blocker.path, 0) }
+        #expect(result.warning != nil)
+        let current = paths.configured(with: result.state)
+        #expect(result.state.instances[0].runDirectory == .shared)
+        #expect(!RunDirectoryCopyGuard.hasPending(paths: current, instanceID: a.id))
+        #expect(!RunDirectoryCopyGuard.hasPending(paths: current, instanceID: b.id))
+        #expect(try String(contentsOf: blocker, encoding: .utf8) == "temporary file")
+        #expect(try String(contentsOf: current.game(a.id).appendingPathComponent("options.txt"), encoding: .utf8) == "source-options")
+        #expect(try await GameRunDirectoryChange(paths: current).pendingCopy(instanceID: a.id) == nil)
+        let lease = try GameRunLease.acquire(paths: current, instanceID: a.id)
+        withExtendedLifetime(lease) {}
     }
 
     @Test func emptyCopyWorksAndStreamFallbackCanBeCancelledInsideALargeFile() async throws {

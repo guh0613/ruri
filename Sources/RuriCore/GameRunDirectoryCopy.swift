@@ -50,18 +50,23 @@ extension GameRunDirectoryChange {
         // read a state that lacks knowledge of the new persistent reservation.
         try StateStore.update(paths) { state in try validatePreviewBinding(preview, instance: find(instance.id, in: state), paths: paths.configured(with: state)) }
         let root = try RunDirectoryCopyJournal.root(paths: current, instanceID: instance.id)
-        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+        let preparing = try LauncherPaths.safePath(".run-directory-change-\(UUID().uuidString)", within: current.instance(instance.id))
         var journal = RunDirectoryCopyJournal(id: UUID(), original: instance, target: preview.targetMode, createdAt: Date(), phase: .copying, items: [],
                                               emptyDirectories: preview.targetSnapshot.game.filter(\.directory).map { .init(area: .game, path: $0.path) } + preview.targetSnapshot.metadata.filter(\.directory).map { .init(area: .metadata, path: $0.path) })
         var committed: PersistentState?
+        var activated = false
         do {
-            try journal.save(paths: current)
+            // Publish the work directory only after its first journal is complete.
+            // A process dying earlier leaves no pending operation or copied files.
+            try FileManager.default.createDirectory(at: preparing, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+            try journal.save(paths: current, at: preparing)
+            try RunDirectoryFileCopy.moveWithoutReplacing(preparing, to: root); activated = true
             try RunDirectoryCopyGuard.mark(journal, paths: access.targetPaths)
             var bytes: Int64 = 0, completed = 0
             var lastProgress = Date.distantPast
             func copied(_ amount: Int64, _ fileCompleted: Bool) {
                 bytes += amount; if fileCompleted { completed += 1 }
-                if fileCompleted || Date().timeIntervalSince(lastProgress) >= 0.1 {
+                if completed == preview.sourceFileCount || Date().timeIntervalSince(lastProgress) >= 0.1 {
                     lastProgress = Date(); progress(.init(phase: .copying, completed: completed, total: preview.sourceFileCount, bytesCopied: bytes, totalBytes: preview.sourceBytes))
                 }
             }
@@ -100,9 +105,13 @@ extension GameRunDirectoryChange {
             }
             progress(.init(phase: .committed, completed: 1, total: 1, bytesCopied: bytes, totalBytes: preview.sourceBytes))
             journal.phase = .committed; try journal.save(paths: current)
-            try cleanup(journal, access: access)
-            return .init(state: committed!, preservedCopy: nil, warning: nil)
+            let remainder = try cleanup(journal, access: access)
+            return .init(state: committed!, preservedCopy: remainder, warning: cleanupWarning(remainder))
         } catch {
+            if !activated {
+                try? FileManager.default.removeItem(at: preparing)
+                throw RunDirectoryCopyFailure(message: "运行目录复制尚未开始：\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled)
+            }
             if committed == nil {
                 do {
                     let saved = try StateStore.load(paths)
@@ -116,11 +125,6 @@ extension GameRunDirectoryChange {
             }
             let reason = Task.isCancelled || error is CancellationError ? "运行目录复制已取消，原目录和设置未改动。" : "运行目录复制未完成：\(error.localizedDescription)"
             do {
-                // A failure before the first atomic journal write has not copied
-                // user files. rmdir never removes a non-empty work directory.
-                if !FileManager.default.fileExists(atPath: root.appendingPathComponent("transaction.json").path), rmdir(root.path) == 0 {
-                    throw RunDirectoryCopyFailure(message: reason, preservedCopy: nil, cancelled: Task.isCancelled)
-                }
                 let preserved = try abandon(journal, access: access)
                 throw RunDirectoryCopyFailure(message: reason, preservedCopy: preserved, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as RunDirectoryCopyFailure { throw failure }
@@ -158,8 +162,8 @@ extension GameRunDirectoryChange {
         let freshState = try StateStore.load(paths), fresh = try find(instanceID, in: freshState)
         try validateJournalBinding(latest, current: fresh)
         if fresh.lastRunDirectoryChangeID == journal.id {
-            try cleanup(latest, access: access)
-            return .init(state: freshState, preservedCopy: nil, warning: nil)
+            let remainder = try cleanup(latest, access: access)
+            return .init(state: freshState, preservedCopy: remainder, warning: cleanupWarning(remainder))
         }
         let copy = try abandon(latest, access: access)
         return .init(state: freshState, preservedCopy: copy, warning: nil)
@@ -180,11 +184,23 @@ extension GameRunDirectoryChange {
         }
         guard rmdir(url.path) == 0 else { throw RuriError.message("目标目录并非空目录，未替换。") }
     }
-    private func cleanup(_ journal: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws {
+    private func cleanupWarning(_ remainder: URL?) -> String? {
+        remainder == nil ? nil : "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。"
+    }
+    private func cleanup(_ journal: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> URL? {
         try access.sourcePaths.validateInstanceLocation(journal.original.id)
         try access.targetPaths.validateInstanceLocation(journal.original.id)
+        let retired = try LauncherPaths.safePath("directory-change-recovery/\(journal.id.uuidString)-completed-\(UUID().uuidString)", within: access.sourcePaths.instance(journal.original.id))
+        try FileManager.default.createDirectory(at: retired.deletingLastPathComponent(), withIntermediateDirectories: true)
         try RunDirectoryCopyGuard.clear(journal, paths: access.targetPaths)
-        try FileManager.default.removeItem(at: RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id))
+        // Retire atomically before recursive cleanup. A process dying while
+        // deleting temporary files must not leave an unreadable pending journal.
+        try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: retired)
+        do {
+            try FileManager.default.removeItem(at: retired)
+            _ = rmdir(retired.deletingLastPathComponent().path)
+            return nil
+        } catch { return retired }
     }
     private func abandon(_ input: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> URL {
         try access.sourcePaths.validateInstanceLocation(input.original.id)

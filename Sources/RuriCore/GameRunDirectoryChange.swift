@@ -126,6 +126,7 @@ public actor GameRunDirectoryChange {
     }
     func validateChange(_ instance: GameInstance, to target: GameRunDirectory, paths: LauncherPaths) throws {
         try paths.validateBinding(instance)
+        guard instance.name.count <= 1024 else { throw RuriError.message("实例名称过长，请先缩短名称再调整目录。") }
         guard (instance.runDirectory ?? .isolated) != target else { throw RuriError.message("实例已经使用这个运行目录。") }
         if target != .isolated, try ModpackRegistry.load(paths: paths, instanceID: instance.id) != nil || FileManager.default.fileExists(atPath: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta").path) {
             throw RuriError.message("整合包保持独立运行目录，以保留包的配置与更新记录。")
