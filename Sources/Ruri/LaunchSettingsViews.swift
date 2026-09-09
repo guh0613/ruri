@@ -23,7 +23,12 @@ struct LaunchSettingsEditor: View {
     @ViewBuilder private func fields(_ key: LaunchSettingKey) -> some View {
         switch key {
         case .memory:
-            TextField("最大内存（MB）", value: Binding(get: { effective.memoryMB }, set: { overrides.memoryMB = $0 }), format: .number)
+            HStack {
+                TextField("最大内存（MB）", value: Binding(get: { effective.memoryMB }, set: { overrides.memoryMB = $0 }), format: .number)
+                Menu("常用内存") {
+                    ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button("\(value / 1024) GB") { overrides.memoryMB = value } }
+                }.fixedSize()
+            }
             Text("1024 MB = 1 GB。当前 Mac 物理内存：\(ProcessInfo.processInfo.physicalMemory / 1_073_741_824) GB。").font(.caption).foregroundStyle(.secondary)
         case .java:
             Picker("运行时", selection: Binding(get: { effective.java.path ?? "" }, set: { overrides.java = $0.isEmpty ? .automatic : .path($0) })) {
@@ -74,6 +79,6 @@ struct DefaultLaunchSettingsView: View {
                     catch { issue = error.localizedDescription }
                 }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
             }
-        }.padding(24).frame(width: 620, height: 640)
+        }.padding(24).frame(width: 620, height: 590)
     }
 }

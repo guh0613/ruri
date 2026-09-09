@@ -110,7 +110,7 @@ struct InstanceSettingsView: View {
                     instance.launchOverrides = launchOverrides; model.updateSettings(instance, basedOn: original); dismiss()
                 } catch { settingsIssue = error.localizedDescription }
             }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
-        }.padding(24).frame(width: 620, height: 630)
+        }.padding(24).frame(width: 620, height: 590)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
     }
 }
