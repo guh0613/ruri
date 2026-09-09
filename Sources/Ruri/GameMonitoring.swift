@@ -19,7 +19,7 @@ extension AppModel {
         }
     }
     func returnToGame(_ id: UUID) {
-        guard let record = activeSessions[id] else { return }
+        guard let record = activeSessions[id] ?? sessions.first(where: { $0.instanceID == id && !$0.state.isFinished && $0.gameIdentity?.isAlive == true }) else { return }
         guard let identity = record.gameIdentity, identity.isAlive,
               let application = NSRunningApplication(processIdentifier: identity.pid), !application.isTerminated else {
             showSession(record.id); return
@@ -31,6 +31,15 @@ extension AppModel {
         guard let id = instanceID ?? runningID, let record = activeSessions[id] else { return }
         do { try GameMonitorClient.requestStop(paths: paths, record: record) }
         catch { notice = error.localizedDescription; noticeSessionID = record.id }
+    }
+    func didRecoverSession(_ record: GameSession) async {
+        publishSession(record)
+        await readMonitorLog(record, final: true)
+        logCursors.removeValue(forKey: record.id)
+        if activeSessions[record.instanceID]?.id == record.id { activeSessions.removeValue(forKey: record.instanceID) }
+        handledExits.insert(record.id)
+        acknowledgeSession(record)
+        notice = record.title; noticeSessionID = record.id
     }
     func showSession(_ id: UUID? = nil) {
         requestedLogSessionID = id ?? logsSessionID ?? sessions.first?.id
@@ -88,7 +97,7 @@ extension AppModel {
                 await readMonitorLog(record, final: true)
                 logCursors.removeValue(forKey: record.id)
                 if let exit = record.exit { lastGameExit = exit }
-                notice = record.exit?.summary ?? "游戏进程已结束，监控没有留下退出原因。"
+                notice = record.interruption != nil ? record.title : record.exit?.summary ?? "游戏进程已结束，监控没有留下退出原因。"
                 noticeSessionID = record.id
             }
             if needsReview(record) && !handledExits.contains(record.id) {
@@ -106,6 +115,14 @@ extension AppModel {
             }
         }
         for (id, record) in activeSessions where !snapshotIDs.contains(record.id) { active[id] = record }
+        // A recovery action may have completed while a log read yielded above.
+        // Do not restore that action's older active snapshot into the UI.
+        for (id, record) in active {
+            if let latest = sessions.first(where: { $0.id == record.id }), latest != record {
+                if GameMonitorClient.activity(latest) == .inactive { active.removeValue(forKey: id) }
+                else { active[id] = latest }
+            }
+        }
         if activeSessions != active { activeSessions = active }
         restorePlaytime()
     }

@@ -38,6 +38,9 @@ struct LogsView: View {
                 Picker("查看内容", selection: $mode) {
                     ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                 }.pickerStyle(.segmented)
+                if let session, !session.state.isFinished, session.monitorIdentity != nil || !model.busy {
+                    GameSessionRecoveryView(session: session).id(session.id)
+                }
                 if mode != .logs, let session {
                     GameDiagnosticView(session: session, collecting: mode == .share, action: diagnosticAction).id(session.id)
                 } else {
@@ -95,9 +98,11 @@ struct LogsView: View {
     }
     @ViewBuilder private func summary(_ record: GameSession) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(isRunning ? record.stage.title : record.title).font(.headline)
+            Text(isRunning ? "最后记录阶段：\(record.stage.title)" : record.title).font(.headline)
             if let exit = record.exit {
                 Text(exit.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            } else if let interruption = record.interruption {
+                Text(interruption.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             } else if let failure = record.failure {
                 Text(failure).font(.callout).foregroundStyle(.orange).lineLimit(3).textSelection(.enabled)
             }
