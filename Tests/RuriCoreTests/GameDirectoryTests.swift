@@ -87,6 +87,43 @@ struct GameDirectoryTests {
         #expect(try FileManager.default.contentsOfDirectory(atPath: outside.path).isEmpty)
     }
 
+    @Test func directoryTransactionsCanRenameRemoveAndReattachAnEmptyFolder() throws {
+        let (root, base, directory) = try fixture(); defer { try? FileManager.default.removeItem(at: root) }
+        var state = PersistentState(); state.gameDirectories = [directory]; state.selectedDirectoryID = directory.id
+        try StateStore.save(state, to: base)
+        try GameDirectoryStore.rename(directory.id, name: "New name", paths: base)
+        #expect(try StateStore.load(base).gameDirectories?.first?.name == "New name")
+        try GameDirectoryStore.remove(directory.id, paths: base)
+        #expect(try StateStore.load(base).selectedDirectoryID == nil)
+        #expect(FileManager.default.fileExists(atPath: directory.url.appendingPathComponent(GameDirectory.markerName).path))
+        let attached = try GameDirectoryStore.add(name: "Reattached", url: directory.url, paths: base)
+        #expect(attached.gameDirectories?.first?.id == directory.id && attached.selectedDirectoryID == directory.id)
+        let pending = directory.url.appendingPathComponent("instances/\(UUID())")
+        try FileManager.default.createDirectory(at: pending, withIntermediateDirectories: true)
+        #expect(throws: (any Error).self) { try GameDirectoryStore.remove(directory.id, paths: base) }
+        try FileManager.default.removeItem(at: pending)
+        var instance = GameInstance(name: "Present", gameVersion: "1.21.1"); instance.directoryID = directory.id
+        try StateStore.update(base) { $0.instances.append(instance) }
+        #expect(throws: (any Error).self) { try GameDirectoryStore.remove(directory.id, paths: base) }
+        #expect(try StateStore.load(base).instances == [instance])
+    }
+
+    @Test func relocationRejectsAnOpenLeaseAtTheMovedLocation() throws {
+        let (root, base, directory) = try fixture(); defer { try? FileManager.default.removeItem(at: root) }
+        var instance = GameInstance(name: "Leased", gameVersion: "1.21.1"); instance.directoryID = directory.id
+        var state = PersistentState(); state.gameDirectories = [directory]; state.instances = [instance]
+        try StateStore.save(state, to: base)
+        let paths = base.configured(with: state)
+        var lease: GameRunLease? = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
+        let moved = root.appendingPathComponent("moved")
+        try FileManager.default.moveItem(at: directory.url, to: moved)
+        #expect(throws: (any Error).self) { try GameDirectoryStore.relocate(directory.id, to: moved, paths: base) }
+        #expect(try StateStore.load(base).gameDirectories?.first?.url == directory.url)
+        withExtendedLifetime(lease) {}; lease = nil
+        try GameDirectoryStore.relocate(directory.id, to: moved, paths: base)
+        #expect(try StateStore.load(base).gameDirectories?.first?.url == moved.standardizedFileURL.resolvingSymlinksInPath())
+    }
+
     @Test(.timeLimit(.minutes(1))) @MainActor func detachedMonitorKeepsExternalLocationAfterSelectionChanges() async throws {
         let (root, base, directory) = try fixture(); defer { try? FileManager.default.removeItem(at: root) }
         var instance = GameInstance(name: "目录监控", gameVersion: "fixture"); instance.directoryID = directory.id

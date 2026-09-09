@@ -8,7 +8,7 @@ extension AppModel {
         return activeSessions[id] != nil || GameRunLease.isHeld(paths: paths, instanceID: id)
     }
     func runningLabel(_ id: UUID) -> String? {
-        guard let record = activeSessions[id] else { return nil }
+        guard let record = activeSessions[id] else { return directoryErrors[paths.directoryID(for: id)] == nil ? nil : "文件夹无法访问" }
         switch GameMonitorClient.activity(record) {
         case .orphaned: return "监控已断开"
         case .uncertain: return "状态待确认"

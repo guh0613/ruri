@@ -54,6 +54,8 @@ enum Page: String, CaseIterable, Identifiable {
     @ObservationIgnored var handledExits: Set<UUID> = []
     @ObservationIgnored var bootTask: Task<Void, Never>?
     var showCreate = false
+    var showDirectories = false
+    var directoryErrors: [UUID: String] = [:]
     var showAccount = false
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
@@ -71,6 +73,9 @@ enum Page: String, CaseIterable, Identifiable {
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil || restoringGames || isQuitting }
     var activeActivity: ActivityItem? { activities.first { $0.status == .running } }
+    var selectedDirectoryID: UUID { state.selectedDirectoryID ?? GameDirectory.defaultID }
+    var selectedDirectoryName: String { state.gameDirectories?.first(where: { $0.id == selectedDirectoryID })?.name ?? "默认实例文件夹" }
+    var directoryInstances: [GameInstance] { state.instances.filter { ($0.directoryID ?? GameDirectory.defaultID) == selectedDirectoryID } }
     var colorScheme: ColorScheme? { state.settings.appearance == "dark" ? .dark : state.settings.appearance == "light" ? .light : nil }
 
     init() {
@@ -99,6 +104,7 @@ enum Page: String, CaseIterable, Identifiable {
         await work.value
     }
     private func initializeApplication() async {
+        await refreshDirectoryAvailability()
         await refreshSessions()
         await pollGames()
         restoringGames = false
@@ -121,6 +127,24 @@ enum Page: String, CaseIterable, Identifiable {
         scanningJava = false
     }
     func select(_ instance: GameInstance) { state.selectedInstanceID = instance.id; save() }
+    func changeDirectory(_ work: (LauncherPaths) throws -> PersistentState) {
+        guard !busy, !readOnly else { return }
+        save()
+        guard !readOnly else { return }
+        do { state = try work(paths); persistedState = state; Task { await refreshDirectoryAvailability() } }
+        catch { self.error = error.localizedDescription }
+    }
+    func refreshDirectoryAvailability() async {
+        let directories = state.gameDirectories ?? []
+        let errors = await Task.detached(priority: .utility) {
+            var result: [UUID: String] = [:]
+            for directory in directories {
+                do { try directory.validateAvailability() } catch { result[directory.id] = error.localizedDescription }
+            }
+            return result
+        }.value
+        directoryErrors = errors.filter { id, _ in state.gameDirectories?.contains(where: { $0.id == id }) == true }
+    }
     func update(_ instance: GameInstance) {
         guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { return }
         state.instances[index] = instance; save()

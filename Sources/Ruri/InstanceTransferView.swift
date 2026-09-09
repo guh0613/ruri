@@ -22,6 +22,7 @@ struct ImportInstanceView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Label("导入游戏实例", systemImage: "square.and.arrow.down").font(.title2.bold())
+            Label("保存到：\(model.selectedDirectoryName)", systemImage: "folder").font(.callout).foregroundStyle(.secondary)
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("已识别 \(prepared.format) 实例。游戏依赖将按这台 Mac 的系统与架构安装。").foregroundStyle(.secondary)

@@ -54,7 +54,19 @@ public enum StateStore {
         }
         return fd
     }
-    private static func conflict(_ field: String) -> RuriError { .message("保存冲突：\(field)。原文件已保留，请重新载入后再修改。") }
+    private static func conflict(_ field: String) -> RuriError {
+        let parts = field.split(separator: ".").map(String.init)
+        let labels = ["instances": "同一实例", "accounts": "同一账号", "gameDirectories": "同一实例文件夹", "settings": "启动器设置",
+                      "name": "名称", "favorite": "收藏状态", "memoryMB": "内存", "defaultMemoryMB": "默认内存", "javaPath": "Java 选择",
+                      "width": "窗口宽度", "height": "窗口高度", "appearance": "外观", "downloadSource": "下载源",
+                      "extraJVMArguments": "JVM 参数", "extraGameArguments": "游戏参数", "directoryID": "所属文件夹"]
+        let description: String
+        if let first = parts.first, let subject = labels[first] {
+            description = subject + (parts.count > 1 ? "的修改" : "") + "与另一窗口冲突" + (parts.last.flatMap { labels[$0] }.map { "（\($0)）" } ?? "")
+        } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = "当前实例、文件夹或账号的选择已在另一窗口改变" }
+        else { description = field }
+        return .message("保存冲突：\(description)。原文件已保留，请重新载入后再修改。")
+    }
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {
         func object(_ state: PersistentState) throws -> [String: Any] {

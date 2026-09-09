@@ -171,6 +171,7 @@ struct PreferencesView: View {
                 }
                 CurseForgeSettingsSection()
                 Section("数据") {
+                    Button("管理实例文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
                     LabeledContent("数据目录") { Text(model.paths.root.path).font(.caption).textSelection(.enabled) }
                     Button("在 Finder 中打开数据目录", systemImage: "folder") { do { try model.paths.prepare(); NSWorkspace.shared.open(model.paths.root) } catch { model.error = error.localizedDescription } }
                 }

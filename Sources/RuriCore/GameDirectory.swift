@@ -18,6 +18,23 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
         let directory = GameDirectory(id: UUID(), name: try validName(name), url: url.standardizedFileURL.resolvingSymlinksInPath(), bookmark: nil, createdAt: Date())
         try paths.checkNewDirectory(directory)
         let entries = try FileManager.default.contentsOfDirectory(at: directory.url, includingPropertiesForKeys: nil)
+        if entries.contains(where: { $0.lastPathComponent == markerName }) {
+            let markerURL = directory.url.appendingPathComponent(markerName)
+            let values = try markerURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+            guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024,
+                  entries.allSatisfy({ [markerName, ".DS_Store", "instances"].contains($0.lastPathComponent) }) else { throw RuriError.message("此文件夹已有数据，请通过实例导入入口处理。") }
+            let marker = try JSONDecoder().decode(Marker.self, from: Data(contentsOf: markerURL))
+            guard !paths.directories.contains(where: { $0.id == marker.id }), marker.id != defaultID else { throw RuriError.message("此实例文件夹已经登记，不能重复添加其副本。") }
+            let instances = directory.url.appendingPathComponent("instances")
+            if FileManager.default.fileExists(atPath: instances.path) {
+                guard try instances.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true,
+                      try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("此文件夹仍有实例文件，请通过导入入口预览后导入。") }
+            }
+            var existing = GameDirectory(id: marker.id, name: directory.name, url: directory.url, bookmark: nil, createdAt: Date())
+            try existing.validateAvailability()
+            existing.bookmark = try existing.url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+            return existing
+        }
         guard entries.allSatisfy({ $0.lastPathComponent == ".DS_Store" }) else {
             throw RuriError.message("请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。")
         }

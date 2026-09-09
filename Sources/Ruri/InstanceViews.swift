@@ -20,6 +20,7 @@ struct CreateInstanceView: View {
         VStack(alignment: .leading, spacing: 20) {
             HStack { SectionHeading(title: "创建一个新世界", subtitle: "选择版本，剩下的交给 Ruri。 "); Spacer(); Button { dismiss() } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
             TextField("实例名称（可选）", text: $name).textFieldStyle(.roundedBorder)
+            Label("保存到：\(model.selectedDirectoryName)", systemImage: "folder").font(.callout).foregroundStyle(.secondary)
             HStack { TextField("搜索 Minecraft 版本", text: $search).textFieldStyle(.roundedBorder); Toggle("快照与旧版", isOn: $snapshots).toggleStyle(.checkbox) }
             if model.catalogLoading && model.catalog == nil { ProgressView("正在获取版本…").frame(maxWidth: .infinity, minHeight: 220) }
             else if let error = model.catalogError, model.catalog == nil {

@@ -16,6 +16,7 @@ struct RootView: View {
                     }
                     Spacer()
                 }.padding(.horizontal, 23).padding(.top, 23).padding(.bottom, 28)
+                DirectorySidebarPicker().padding(.horizontal, 16).padding(.bottom, 10)
                 List(selection: $model.page) {
                     Section("游戏") { ForEach([Page.home, .library, .discover, .downloads]) { page in sidebarRow(page) } }
                     Section("管理") { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
@@ -70,6 +71,7 @@ struct RootView: View {
         .frame(minWidth: 760, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
         .sheet(isPresented: $model.showCreate) { CreateInstanceView() }
+        .sheet(isPresented: $model.showDirectories) { GameDirectoriesView() }
         .sheet(isPresented: $model.showAccount) { AddAccountView() }
         .sheet(isPresented: $model.showLogs) { LogsView() }
         .sheet(item: $model.editingInstance) { instance in InstanceSettingsView(instance: instance) }
@@ -166,19 +168,26 @@ struct LibraryView: View {
     @Environment(AppModel.self) private var model
     @State private var search = ""
     @State private var deleteTarget: GameInstance?
-    var filtered: [GameInstance] { model.state.instances.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) || $0.gameVersion.contains(search) }.sorted { $0.favorite != $1.favorite ? $0.favorite : $0.createdAt > $1.createdAt } }
+    var filtered: [GameInstance] { model.directoryInstances.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) || $0.gameVersion.contains(search) }.sorted { $0.favorite != $1.favorite ? $0.favorite : $0.createdAt > $1.createdAt } }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 HStack {
-                    SectionHeading(title: "你的游戏收藏", subtitle: "每个实例都有独立的模组、存档和设置。")
+                    SectionHeading(title: model.selectedDirectoryName, subtitle: "\(model.directoryInstances.count) 个实例 · 模组、存档与设置独立。")
                     Spacer()
                     Button("导入…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }.disabled(model.busy)
                     Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
                 }
                 TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
+                if let issue = model.directoryErrors[model.selectedDirectoryID] {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("实例文件夹无法访问", systemImage: "externaldrive.badge.exclamationmark").font(.headline)
+                        Text(issue).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                        HStack { Button("重新检查") { Task { await model.refreshDirectoryAvailability() } }; Button("管理文件夹…") { model.showDirectories = true } }
+                    }.padding().frame(maxWidth: .infinity, alignment: .leading).background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
+                }
                 if filtered.isEmpty {
-                    EmptyPanel(symbol: "square.stack.3d.up", title: model.state.instances.isEmpty ? "第一个世界，等你开启" : "没有匹配的实例", detail: "创建一个游戏实例，或导入你喜爱的整合包。")
+                    EmptyPanel(symbol: "square.stack.3d.up", title: model.directoryInstances.isEmpty ? "这个文件夹还没有实例" : "没有匹配的实例", detail: "创建一个游戏实例，或导入你喜爱的整合包。")
                 }
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 245), spacing: 18)], spacing: 18) {
                     ForEach(filtered) { instance in
@@ -221,5 +230,6 @@ struct LibraryView: View {
         .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
         } message: { Text("实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
+        .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability() }
     }
 }
