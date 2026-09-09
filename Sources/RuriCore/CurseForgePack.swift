@@ -75,6 +75,7 @@ extension InstanceTransfer {
         let projectIDs = Set(records.map(\.projectID))
         for i in records.indices { records[i].requiredProjects = records[i].requiredProjects.filter { projectIDs.contains($0) } }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try encoder.encode(records).write(to: paths.instance(instanceID).appendingPathComponent("content.json"), options: .atomic)
+        try FileManager.default.createDirectory(at: paths.gameDataState(instanceID), withIntermediateDirectories: true)
+        try encoder.encode(records).write(to: paths.gameDataState(instanceID).appendingPathComponent("content.json"), options: .atomic)
     }
 }

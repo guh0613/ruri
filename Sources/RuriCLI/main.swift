@@ -18,6 +18,13 @@ import RuriCore
             switch args.first {
             case "directories":
                 try manageDirectories(Array(args.dropFirst()), paths: paths)
+            case "isolation-policy":
+                guard args.count <= 2 else { throw RuriError.message("用法：ruri-cli isolation-policy [always|modded|never]") }
+                if args.count == 2 {
+                    guard let policy = GameIsolationPolicy(rawValue: args[1]) else { throw RuriError.message("隔离规则为 always、modded 或 never。") }
+                    try StateStore.update(paths) { $0.settings.isolationPolicy = policy }
+                }
+                print((try StateStore.load(paths).settings.isolationPolicy ?? .always).title)
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
             case "install-java":
@@ -45,7 +52,12 @@ import RuriCore
                 guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt]") }
                 guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
-                instance = try await GameInstaller(paths: paths).install(instance) { progress in
+                instance.directoryID = paths.newInstanceDirectoryID
+                instance.runDirectory = (try StateStore.load(paths).settings.isolationPolicy ?? .always).directory(loader: loader)
+                let installPaths = paths.including(instance)
+                let lease = try GameRunLease.acquire(paths: installPaths, instanceID: instance.id)
+                defer { withExtendedLifetime(lease) {} }
+                instance = try await GameInstaller(paths: installPaths).install(instance) { progress in
                     if progress.completed % 100 == 0 || progress.completed == progress.total { print("\(progress.stage) \(progress.completed)/\(progress.total)") }
                 }
                 try StateStore.update(paths) { state in state.instances.append(instance); state.selectedInstanceID = instance.id }

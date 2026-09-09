@@ -72,6 +72,7 @@ public enum GameSessionRecovery {
         let url = try LauncherPaths.safePath("session.json", within: directory)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(record).write(to: url, options: .atomic)
+        try? lease.clearReservation(session: record)
         // Metadata is authoritative even if a damaged/unwritable output log
         // cannot accept this additional event.
         try? appendRecoveryLog(explanation, date: date, paths: paths, record: record)

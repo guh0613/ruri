@@ -1,0 +1,76 @@
+import Foundation
+import Darwin
+
+/// A shared run directory has one writer, even when instances or launcher
+/// clients differ. The persistent reservation covers monitor handoff and loss.
+final class SharedGameDirectoryLease: @unchecked Sendable {
+    private let descriptor: Int32
+    private let root: URL
+    private init(_ descriptor: Int32, root: URL) { self.descriptor = descriptor; self.root = root }
+    deinit { close(descriptor) }
+    private struct Reservation: Codable {
+        let version: Int
+        let paths: LauncherPaths
+        let instanceID: UUID
+        let sessionID: UUID
+    }
+    static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID?) throws -> SharedGameDirectoryLease {
+        try paths.validateInstanceLocation(instanceID)
+        let root = paths.game(instanceID)
+        let metadata = try LauncherPaths.safePath(".ruri", within: root)
+        try FileManager.default.createDirectory(at: metadata, withIntermediateDirectories: true)
+        let url = try LauncherPaths.safePath("run.lock", within: metadata)
+        let fd = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
+        guard fd >= 0 else { throw RuriError.message("无法锁定共享运行目录。") }
+        var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
+            close(fd); throw RuriError.message("此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。")
+        }
+        let result = SharedGameDirectoryLease(fd, root: root)
+        try result.checkReservation(instanceID: instanceID, ignoringSession: ignoringSession)
+        return result
+    }
+    static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
+        guard let url = try? LauncherPaths.safePath(".ruri/run.lock", within: paths.game(instanceID)) else { return true }
+        guard FileManager.default.fileExists(atPath: url.path) else { return false }
+        let fd = open(url.path, O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
+        guard fd >= 0 else { return true }; defer { close(fd) }
+        var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
+        return fstat(fd, &info) != 0 || info.st_mode & S_IFMT != S_IFREG || fcntl(fd, F_OFD_SETLK, &lock) != 0
+    }
+    func reserve(paths: LauncherPaths, session: GameSession) throws {
+        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        let reservation = Reservation(version: 1, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
+        try JSONEncoder().encode(reservation).write(to: file, options: .atomic)
+    }
+    func clearReservation(session: GameSession) throws {
+        guard session.state.isFinished else { return }
+        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        guard FileManager.default.fileExists(atPath: file.path) else { return }
+        let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
+        guard values.isRegularFile == true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message("共享目录运行记录无效。") }
+        let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
+        guard reservation.instanceID == session.instanceID, reservation.sessionID == session.id else { return }
+        try FileManager.default.removeItem(at: file)
+    }
+    private func checkReservation(instanceID: UUID, ignoringSession: UUID?) throws {
+        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        guard FileManager.default.fileExists(atPath: file.path) else { return }
+        let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+        guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message("共享目录的运行记录无效，请检查运行历史。") }
+        let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
+        guard reservation.version == 1, reservation.paths.instanceDirectories.count == 1,
+              reservation.paths.instanceDirectories[reservation.instanceID] != nil,
+              reservation.paths.runDirectory(for: reservation.instanceID) == .shared,
+              reservation.paths.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath() == root.standardizedFileURL.resolvingSymlinksInPath() else {
+            throw RuriError.message("共享运行目录与上次运行记录不一致，请检查原实例。")
+        }
+        try reservation.paths.validateDirectoryConfiguration()
+        try reservation.paths.validateInstanceLocation(reservation.instanceID)
+        if reservation.instanceID == instanceID && reservation.sessionID == ignoringSession { return }
+        let record = try GameSessionStore.load(paths: reservation.paths, instanceID: reservation.instanceID, sessionID: reservation.sessionID)
+        guard record.state.isFinished || (record.monitorIdentity != nil && GameMonitorClient.activity(record) == .inactive) else {
+            throw RuriError.message("“\(record.instanceName)”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。")
+        }
+    }
+}

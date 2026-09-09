@@ -33,13 +33,20 @@ public struct WorldBackup: Identifiable, Sendable {
 
 public actor WorldManager {
     private static let diskLock = NSRecursiveLock()
+    private let operationLock = GameDataOperationLock()
     private let paths: LauncherPaths
     private let instanceID: UUID
     private var saves: URL { paths.game(instanceID).appendingPathComponent("saves") }
-    public var backupDirectory: URL { paths.instance(instanceID).appendingPathComponent("world-backups") }
-    private var transaction: URL { paths.instance(instanceID).appendingPathComponent("world-restore") }
+    public var backupDirectory: URL { paths.gameDataState(instanceID).appendingPathComponent("world-backups") }
+    private var transaction: URL { paths.gameDataState(instanceID).appendingPathComponent("world-restore") }
     struct RestoreJournal: Codable { let folder: String; let hadOriginal: Bool }
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
+    private func lock() throws {
+        Self.diskLock.lock()
+        do { try paths.validateInstanceLocation(instanceID); try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".world-operation.lock") }
+        catch { Self.diskLock.unlock(); throw error }
+    }
+    private func unlock() { operationLock.release(); Self.diskLock.unlock() }
     private func worldURL(_ folder: String) throws -> URL {
         guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\") else { throw RuriError.message("无效的存档目录名") }
         let target = saves.appendingPathComponent(folder)
@@ -47,7 +54,7 @@ public actor WorldManager {
         return try LauncherPaths.safePath(folder, within: saves)
     }
     public func worlds() throws -> [WorldSnapshot] {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         guard FileManager.default.fileExists(atPath: saves.path) else { return [] }
         return try FileManager.default.contentsOfDirectory(at: saves, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]).compactMap { entry in
@@ -59,7 +66,7 @@ public actor WorldManager {
     }
     public func backups() throws -> [WorldBackup] {
         try paths.validateInstanceLocation(instanceID)
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         guard FileManager.default.fileExists(atPath: backupDirectory.path) else { return [] }
         return try FileManager.default.contentsOfDirectory(at: backupDirectory, includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey, .isRegularFileKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles]).compactMap { url in
             let info = try url.resourceValues(forKeys: [.fileSizeKey, .contentModificationDateKey, .isRegularFileKey, .isSymbolicLinkKey])
@@ -69,7 +76,7 @@ public actor WorldManager {
         }.sorted { $0.createdAt > $1.createdAt }
     }
     public func backup(folder: String, reason: String = "手动备份", progress: @Sendable (Int, Int) -> Void = { _, _ in }) throws -> WorldBackup {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let world = try worldURL(folder)
         guard hasLevelData(world) else { throw RuriError.message("找不到存档的 level.dat") }
@@ -85,7 +92,7 @@ public actor WorldManager {
         return WorldBackup(url: destination, metadata: metadata, size: Int64(try destination.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0), createdAt: metadata.createdAt)
     }
     public func restore(_ backup: WorldBackup, replaceExisting: Bool = false, progress: @Sendable (Int, Int) -> Void = { _, _ in }) throws -> String {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let metadata = try readMetadata(backup.url)
         let unpacked = transaction.appendingPathComponent("unpacked")
@@ -115,7 +122,7 @@ public actor WorldManager {
     }
     public func recover() throws {
         try paths.validateInstanceLocation(instanceID)
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         let fm = FileManager.default
         guard fm.fileExists(atPath: transaction.path) else { return }
         let journalURL = transaction.appendingPathComponent("journal.json")
@@ -138,7 +145,7 @@ public actor WorldManager {
         try fm.removeItem(at: transaction)
     }
     public func importWorld(from source: URL, progress: @Sendable (Int, Int) -> Void = { _, _ in }) throws -> String {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let temporary = paths.instance(instanceID).appendingPathComponent("world-import-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: temporary) }
@@ -164,7 +171,7 @@ public actor WorldManager {
         return name
     }
     public func exportWorld(folder: String, to destination: URL, progress: @Sendable (Int, Int) -> Void = { _, _ in }) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let world = try worldURL(folder)
         guard hasLevelData(world) else { throw RuriError.message("存档不存在") }
@@ -172,14 +179,14 @@ public actor WorldManager {
         try SafeArchive.create(from: world, to: destination, excluding: ["session.lock"], progress: progress)
     }
     public func removeWorld(folder: String) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let world = try worldURL(folder)
         let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         try FileManager.default.trashItem(at: world, resultingItemURL: nil)
     }
     public func removeBackup(_ backup: WorldBackup) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         let file = try LauncherPaths.safePath(backup.url.lastPathComponent, within: backupDirectory)
         guard file.standardizedFileURL == backup.url.standardizedFileURL else { throw RuriError.message("备份不属于当前实例") }
         try FileManager.default.trashItem(at: file, resultingItemURL: nil)

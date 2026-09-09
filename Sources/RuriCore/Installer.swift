@@ -25,6 +25,7 @@ public actor GameInstaller {
         return try await HTTPClient.shared.get([Entry].self, from: URL(string: base)!.appendingPathComponent(game)).map(\.loader.version)
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
+        try paths.validateBinding(input)
         try paths.prepare()
         try paths.prepareInstance(input.id)
         await progress(InstallProgress("正在获取版本清单"))
@@ -50,7 +51,7 @@ public actor GameInstaller {
             manifest = manifest.merging(child: child)
         }
         manifest = try Self.applyingPackLibraries(instance.packLibraries ?? [], to: manifest)
-        try paths.validateInstanceLocation(instance.id)
+        try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -74,13 +75,13 @@ public actor GameInstaller {
         return result
     }
     public func repair(_ instance: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
-        try paths.validateInstanceLocation(instance.id)
+        try paths.validateBinding(instance)
         if instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
     }
     public func loadManifest(_ instance: GameInstance) throws -> VersionManifest {
-        try paths.validateInstanceLocation(instance.id)
+        try paths.validateBinding(instance)
         return try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: paths.manifest(instance.id)))
     }
     public nonisolated static func architecture(for manifest: VersionManifest) -> String {

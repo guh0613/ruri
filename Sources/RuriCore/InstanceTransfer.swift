@@ -99,7 +99,7 @@ struct MultiMCPack: Codable {
 public actor InstanceTransfer {
     let paths: LauncherPaths
     static let loaderIDs: [String: LoaderKind] = ["net.fabricmc.fabric-loader": .fabric, "org.quiltmc.quilt-loader": .quilt, "net.minecraftforge": .forge, "net.neoforged": .neoforge]
-    static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches", "local/crash_assistant"]
+    static let excluded: Set<String> = [".ruri", "logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches", "local/crash_assistant"]
     public init(paths: LauncherPaths) { self.paths = paths }
 
     public func prepare(_ source: URL, origin: ModpackOrigin? = nil, progress: @Sendable (InstallProgress) -> Void = { _ in }) throws -> PreparedInstanceImport {
@@ -185,6 +185,7 @@ public actor InstanceTransfer {
         var instance = prepared.instance
         instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         instance.directoryID = paths.directoryID(for: instance.id)
+        instance.runDirectory = .isolated
         if instance.name.isEmpty { instance.name = prepared.instance.name }
         instance.javaPath = nil; instance.installed = false
         if !importJVMArguments { instance.extraJVMArguments = "" }
@@ -200,7 +201,7 @@ public actor InstanceTransfer {
             // generated legacy resources without a destructive directory merge.
             try FileTree.copy(from: prepared.game, to: paths.game(instance.id), excluding: prepared.omittedOptionalPaths)
             if let records = prepared.records {
-                try records.write(to: paths.instance(instance.id).appendingPathComponent("content.json"), options: .atomic)
+                try records.write(to: paths.gameDataState(instance.id).appendingPathComponent("content.json"), options: .atomic)
                 _ = try await ContentManager(paths: paths, instanceID: instance.id).records()
             }
             if let source = prepared.sourceMetadata { try source.write(to: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta"), options: .atomic) }

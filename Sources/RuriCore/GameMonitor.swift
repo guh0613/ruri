@@ -58,7 +58,7 @@ public enum GameMonitorClient {
         try process.run()
         defer { try? input.fileHandleForWriting.close() }
         guard let identity = ProcessIdentity.read(process.processIdentifier) else { throw RuriError.message("无法确认游戏监控组件的身份。") }
-        let request = MonitorLaunchRequest(version: 2, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
+        let request = MonitorLaunchRequest(version: 3, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
                                            monitor: identity, plan: plan, secrets: secrets, storage: paths.monitorSnapshot(for: recorder.record.instanceID))
         let data = try JSONEncoder().encode(request)
         guard data.count <= 2_097_152 else { throw RuriError.message("游戏启动信息超过监控组件限制。") }
@@ -101,7 +101,7 @@ public enum GameMonitorService {
             }
             let decoded = try JSONDecoder().decode(MonitorLaunchRequest.self, from: data)
             request = decoded
-            guard (1...2).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+            guard (1...3).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
                   decoded.monitor == ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier) else { throw RuriError.message("游戏监控请求无效。") }
             let paths = try validatedPaths(decoded)
             guard decoded.plan.directory.resolvingSymlinksInPath() == paths.game(decoded.instanceID).resolvingSymlinksInPath() else { throw RuriError.message("游戏目录与运行会话不一致。") }
@@ -172,8 +172,10 @@ public enum GameMonitorService {
     }
     static func validatedPaths(_ request: MonitorLaunchRequest) throws -> LauncherPaths {
         if request.version == 1 { return LauncherPaths(root: request.root) }
-        guard request.version == 2, let paths = request.storage, paths.root == request.root,
+        guard (2...3).contains(request.version), let paths = request.storage, paths.root == request.root,
               paths.instanceDirectories.count == 1, paths.instanceDirectories[request.instanceID] != nil else { throw RuriError.message("游戏监控缺少实例文件夹信息。") }
+        guard request.version == 3 || paths.runDirectory(for: request.instanceID) == .isolated else { throw RuriError.message("共享运行目录需要新版监控协议。") }
+        if request.version == 3, paths.instanceRunDirectories?[request.instanceID] == nil { throw RuriError.message("游戏监控缺少运行目录策略。") }
         try paths.validateDirectoryConfiguration()
         try paths.validateInstanceLocation(request.instanceID)
         return paths

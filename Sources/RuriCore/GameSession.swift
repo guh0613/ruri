@@ -192,6 +192,7 @@ public enum GameSessionReviewStore {
     private var lease: GameRunLease?
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
         self.paths = paths
+        try paths.validateBinding(instance)
         lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
         let now = Date(), id = UUID()
         record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
@@ -204,6 +205,7 @@ public enum GameSessionReviewStore {
         guard FileManager.default.createFile(atPath: logURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message("无法创建运行日志。") }
         log = try FileHandle(forWritingTo: logURL)
         try transition(.preparing)
+        try lease?.reserve(paths: paths, session: record)
     }
     public init(resuming sessionID: UUID, instanceID: UUID, paths: LauncherPaths, monitor: ProcessIdentity) throws {
         self.paths = paths
@@ -273,6 +275,7 @@ public enum GameSessionReviewStore {
     }
     public func close() throws {
         defer { log = nil; lease = nil }
+        try lease?.clearReservation(session: record)
         try log?.synchronize(); try log?.close()
     }
     private func save() throws {

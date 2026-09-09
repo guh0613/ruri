@@ -57,12 +57,19 @@ public actor ContentManager {
     // Multiple views and services may create managers for the same instance.
     // Journal recovery must never race a live commit from another manager.
     private static let diskLock = NSRecursiveLock()
+    private let operationLock = GameDataOperationLock()
     let paths: LauncherPaths
     let instanceID: UUID
     var root: URL { paths.game(instanceID) }
-    var recordsURL: URL { paths.instance(instanceID).appendingPathComponent("content.json") }
-    var transactionURL: URL { paths.instance(instanceID).appendingPathComponent("content-transaction") }
+    var recordsURL: URL { paths.gameDataState(instanceID).appendingPathComponent("content.json") }
+    var transactionURL: URL { paths.gameDataState(instanceID).appendingPathComponent("content-transaction") }
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
+    private func lock() throws {
+        Self.diskLock.lock()
+        do { try paths.validateInstanceLocation(instanceID); try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".content-operation.lock") }
+        catch { Self.diskLock.unlock(); throw error }
+    }
+    private func unlock() { operationLock.release(); Self.diskLock.unlock() }
     struct Journal: Codable {
         let affected: [String]
         let originals: [String]
@@ -79,7 +86,7 @@ public actor ContentManager {
         return try LauncherPaths.safePath(String(pieces[1]), within: directory)
     }
     public func records() throws -> [ManagedContent] {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         return try readRecords()
     }
@@ -103,7 +110,7 @@ public actor ContentManager {
     }
     public func recover() throws {
         try paths.validateInstanceLocation(instanceID)
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         let fm = FileManager.default
         guard fm.fileExists(atPath: transactionURL.path) else { return }
         let journalURL = transactionURL.appendingPathComponent("journal.json")
@@ -130,7 +137,7 @@ public actor ContentManager {
         try fm.removeItem(at: transactionURL)
     }
     public func install(_ incoming: [ContentInstallation]) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover(); try Task.checkCancellation()
         let fm = FileManager.default
         let oldRecords = try readRecords()
@@ -208,7 +215,7 @@ public actor ContentManager {
         try? fm.removeItem(at: transactionURL)
     }
     public func scan(_ kind: ContentKind) throws -> [LocalContentFile] {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let managed = try readRecords()
         let directory = root.appendingPathComponent(kind.folder)
@@ -225,7 +232,7 @@ public actor ContentManager {
         }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
     public func setEnabled(_ enabled: Bool, file: LocalContentFile) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         let source = try contentURL("\(file.kind.folder)/\(file.filename)\(file.enabled ? "" : ".disabled")")
         guard enabled != file.enabled else { return }
@@ -247,7 +254,7 @@ public actor ContentManager {
         } catch { try? FileManager.default.moveItem(at: target, to: source); throw error }
     }
     public func importFiles(_ files: [URL], kind: ContentKind) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         var plans: [ContentInstallation] = []
         let existing = try scan(kind)
         var importedIDs = Set<String>()
@@ -263,7 +270,7 @@ public actor ContentManager {
         try install(plans)
     }
     public func remove(_ file: LocalContentFile) throws {
-        Self.diskLock.lock(); defer { Self.diskLock.unlock() }
+        try lock(); defer { unlock() }
         try recover()
         var records = try readRecords()
         if let record = file.managed {

@@ -33,7 +33,8 @@ public struct ProcessIdentity: Codable, Equatable, Sendable {
 /// by Java. The monitor holds one for the whole game lifetime.
 public final class GameRunLease: @unchecked Sendable {
     private let descriptor: Int32
-    private init(_ descriptor: Int32) { self.descriptor = descriptor }
+    private let sharedDirectory: SharedGameDirectoryLease?
+    private init(_ descriptor: Int32, sharedDirectory: SharedGameDirectoryLease?) { self.descriptor = descriptor; self.sharedDirectory = sharedDirectory }
     deinit { Darwin.close(descriptor) }
     public static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID? = nil) throws -> GameRunLease {
         try paths.prepareInstance(instanceID)
@@ -44,16 +45,21 @@ public final class GameRunLease: @unchecked Sendable {
         guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
             Darwin.close(fd); throw RuriError.message("这个实例正在运行或准备启动，请先结束当前游戏。")
         }
+        var shared: SharedGameDirectoryLease?
         do {
+            if paths.runDirectory(for: instanceID) == .shared { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession) }
             let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
             guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
                 throw RuriError.message("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
             }
         } catch { Darwin.close(fd); throw error }
-        return GameRunLease(fd)
+        return GameRunLease(fd, sharedDirectory: shared)
     }
+    func reserve(paths: LauncherPaths, session: GameSession) throws { try sharedDirectory?.reserve(paths: paths, session: session) }
+    func clearReservation(session: GameSession) throws { try sharedDirectory?.clearReservation(session: session) }
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
         guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
+        if paths.runDirectory(for: instanceID) == .shared, SharedGameDirectoryLease.isHeld(paths: paths, instanceID: instanceID) { return true }
         guard let file = try? LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID)) else { return true }
         guard FileManager.default.fileExists(atPath: file.path) else { return false }
         let fd = open(file.path, O_RDWR | O_CLOEXEC | O_NOFOLLOW)

@@ -22,7 +22,7 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
             let markerURL = directory.url.appendingPathComponent(markerName)
             let values = try markerURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
             guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024,
-                  entries.allSatisfy({ [markerName, ".DS_Store", "instances"].contains($0.lastPathComponent) }) else { throw RuriError.message("此文件夹已有数据，请通过实例导入入口处理。") }
+                  entries.allSatisfy({ [markerName, ".DS_Store", "instances", "minecraft"].contains($0.lastPathComponent) }) else { throw RuriError.message("此文件夹已有数据，请通过实例导入入口处理。") }
             let marker = try JSONDecoder().decode(Marker.self, from: Data(contentsOf: markerURL))
             guard !paths.directories.contains(where: { $0.id == marker.id }), marker.id != defaultID else { throw RuriError.message("此实例文件夹已经登记，不能重复添加其副本。") }
             let instances = directory.url.appendingPathComponent("instances")
@@ -88,7 +88,8 @@ extension LauncherPaths {
     public func configured(with state: PersistentState) -> LauncherPaths {
         LauncherPaths(root: root, directories: state.gameDirectories ?? [],
                       instanceDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.directoryID ?? GameDirectory.defaultID },
-                      newInstanceDirectoryID: state.selectedDirectoryID ?? GameDirectory.defaultID)
+                      newInstanceDirectoryID: state.selectedDirectoryID ?? GameDirectory.defaultID,
+                      instanceRunDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.runDirectory ?? .isolated })
     }
     public func directoryID(for instanceID: UUID) -> UUID { instanceDirectories[instanceID] ?? newInstanceDirectoryID }
     public func directoryRoot(_ id: UUID) -> URL {
@@ -121,12 +122,15 @@ extension LauncherPaths {
     }
     public func validateInstanceLocation(_ instanceID: UUID) throws {
         let id = directoryID(for: instanceID)
-        if id == GameDirectory.defaultID { return }
-        guard let directory = directories.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例所属文件夹，请恢复目录登记后重试。") }
-        try directory.validateAvailability()
+        if id != GameDirectory.defaultID {
+            guard let directory = directories.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例所属文件夹，请恢复目录登记后重试。") }
+            try directory.validateAvailability()
+        }
         // The selected directory is trusted; its internal managed tree may not
         // escape through a symlink, including one with a not-yet-created leaf.
-        _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: directory.url)
+        let root = directoryRoot(id)
+        _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)
+        if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }
     }
     public func prepareInstance(_ instanceID: UUID) throws {
         try validateInstanceLocation(instanceID)
@@ -137,6 +141,6 @@ extension LauncherPaths {
     func monitorSnapshot(for instanceID: UUID) -> LauncherPaths {
         let id = directoryID(for: instanceID)
         let selected = directories.filter { $0.id == id }.map { item in var item = item; item.bookmark = nil; return item }
-        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id])
+        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)])
     }
 }
