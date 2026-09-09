@@ -191,6 +191,7 @@ public enum GameSessionReviewStore {
     private var redactor = GameLogRedactor()
     private var lease: GameRunLease?
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
+        let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         self.paths = paths
         try paths.validateBinding(instance)
         lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)

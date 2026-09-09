@@ -38,6 +38,7 @@ public enum ArgumentTokenizer {
 
 public enum LaunchBuilder {
     public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths) throws -> LaunchPlan {
+        let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
         guard let mainClass = manifest.mainClass else { throw RuriError.message("启动清单没有主类") }
         guard manifest.inheritsFrom == nil else { throw RuriError.message("启动清单尚未合并父版本") }

@@ -216,6 +216,7 @@ public actor InstanceTransfer {
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
+        let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try await ContentManager(paths: paths, instanceID: instance.id).recover()
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
         let game = paths.game(instance.id)

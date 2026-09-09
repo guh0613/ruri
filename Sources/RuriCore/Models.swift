@@ -39,6 +39,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     /// Stored with the binding in the same state transaction; proves a copy
     /// committed even if its process died before cleaning its journal.
     public var lastRunDirectoryChangeID: UUID?
+    public var launchOverrides: InstanceLaunchOverrides?
     public init(name: String, gameVersion: String, loader: LoaderKind = .vanilla, loaderVersion: String? = nil) {
         id = UUID(); self.name = name; self.gameVersion = gameVersion; self.loader = loader
         self.loaderVersion = loaderVersion; createdAt = Date(); playTime = 0
@@ -80,6 +81,10 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var appearance = "system"
     public var downloadSource: DownloadSource?
     public var isolationPolicy: GameIsolationPolicy?
+    public var defaultJava: JavaSelection?
+    public var defaultJVMArguments: String?
+    public var defaultGameArguments: String?
+    public var defaultWindow: GameWindowSize?
     public init() {}
 }
 
