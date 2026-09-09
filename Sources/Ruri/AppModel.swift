@@ -171,17 +171,18 @@ enum Page: String, CaseIterable, Identifiable {
             }
             let manifest = try await installer.loadManifest(instance)
             let architecture = GameInstaller.architecture(for: manifest)
+            let requiredJava = try instance.preferredJavaMajor(default: manifest.requiredJava)
             let java: JavaRuntime
-            if instance.javaPath == nil, !runtimes.contains(where: { $0.major == manifest.requiredJava && $0.architecture == architecture }) {
+            if instance.javaPath == nil, !runtimes.contains(where: { $0.major == requiredJava && $0.architecture == architecture }) {
                 let service = JavaInstaller(paths: paths)
-                progress(id, InstallProgress("正在准备所需的 Java \(manifest.requiredJava)"))
-                guard let runtime = try await service.available().first(where: { $0.major == manifest.requiredJava && $0.architecture == architecture }) else {
+                progress(id, InstallProgress("正在准备所需的 Java \(requiredJava)"))
+                guard let runtime = try await service.available().first(where: { $0.major == requiredJava && $0.architecture == architecture }) else {
                     throw RuriError.message("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
                 }
                 java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
                 await scanJava()
             } else {
-                java = try JavaDiscovery.select(from: runtimes, major: manifest.requiredJava, architecture: architecture, preferredPath: instance.javaPath)
+                java = try JavaDiscovery.select(from: runtimes, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
             }
             let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
             logs.removeAll()

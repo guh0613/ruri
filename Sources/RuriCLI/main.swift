@@ -74,7 +74,7 @@ import RuriCore
                 guard let instance = state.instances.last else { throw RuriError.message("没有已安装实例") }
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let runtimes = await JavaDiscovery.scan(paths: paths)
-                let java = try JavaDiscovery.select(from: runtimes, major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest))
+                let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
             case "install-content":
@@ -97,7 +97,7 @@ import RuriCore
                 try await ContentManager(paths: paths, instanceID: instance.id).recover()
                 try await WorldManager(paths: paths, instanceID: instance.id).recover()
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
-                let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest))
+                let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
                 let game = GameProcess()
                 let status = await withCheckedContinuation { (continuation: CheckedContinuation<Int32, Never>) in

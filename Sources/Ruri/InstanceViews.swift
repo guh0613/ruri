@@ -79,11 +79,13 @@ struct InstanceSettingsView: View {
                         Text("自动选择兼容版本").tag("")
                         ForEach(model.runtimes) { Text($0.label).tag($0.path) }
                     }
+                    if let versions = instance.supportedJavaMajors, !versions.isEmpty { Text("整合包支持 Java：" + versions.map(String.init).joined(separator: "、")).font(.caption).foregroundStyle(.secondary) }
                     LabeledContent("最大内存", value: "\(instance.memoryMB) MB")
                     Slider(value: Binding(get: { Double(instance.memoryMB) }, set: { instance.memoryMB = Int($0) }), in: 1024...Double(max(2048, min(32768, ProcessInfo.processInfo.physicalMemory / 1024 / 1024))), step: 512)
                     TextField("附加 JVM 参数", text: $instance.extraJVMArguments).font(.system(.body, design: .monospaced))
                 }
                 Section("游戏窗口") {
+                    TextField("附加游戏参数", text: Binding(get: { instance.extraGameArguments ?? "" }, set: { instance.extraGameArguments = $0.isEmpty ? nil : $0 })).font(.system(.body, design: .monospaced))
                     TextField("宽度", value: $instance.width, format: .number)
                     TextField("高度", value: $instance.height, format: .number)
                 }

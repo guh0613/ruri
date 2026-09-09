@@ -29,15 +29,20 @@ struct PortableInstance: Codable {
     let loaderVersion: String?
     let memoryMB: Int
     let extraJVMArguments: String
+    let extraGameArguments: String?
+    let supportedJavaMajors: [Int]?
+    let packLibraries: [Library]?
     let width: Int
     let height: Int
     init(_ instance: GameInstance) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
+        extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
     }
     func instance() throws -> GameInstance {
         guard formatVersion == 1 else { throw RuriError.message("此实例包需要更新版本的 Ruri。") }
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
+        result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
         return result
     }

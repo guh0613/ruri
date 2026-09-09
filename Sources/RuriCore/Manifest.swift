@@ -13,7 +13,7 @@ public struct VersionEntry: Codable, Identifiable, Hashable, Sendable {
     public let releaseTime: String
     public var isRelease: Bool { type == "release" }
 }
-public struct Artifact: Codable, Sendable {
+public struct Artifact: Codable, Equatable, Sendable {
     public let path: String?
     public let url: URL?
     public let sha1: String?
@@ -40,8 +40,8 @@ public struct Artifact: Codable, Sendable {
         try c.encodeIfPresent(sha1, forKey: .sha1); try c.encodeIfPresent(size, forKey: .size)
     }
 }
-public struct Rule: Codable, Sendable {
-    public struct OS: Codable, Sendable { public let name: String?; public let arch: String?; public let version: String? }
+public struct Rule: Codable, Equatable, Sendable {
+    public struct OS: Codable, Equatable, Sendable { public let name: String?; public let arch: String?; public let version: String? }
     public let action: String
     public let os: OS?
     public let features: [String: Bool]?
@@ -88,9 +88,9 @@ public enum LaunchArgument: Codable, Sendable {
         switch self { case .text(let text): [text]; case .conditional(let rules, let values): Rule.allows(rules, architecture: architecture, features: features) ? values : [] }
     }
 }
-public struct Library: Codable, Sendable {
-    public struct Downloads: Codable, Sendable { public var artifact: Artifact?; public var classifiers: [String: Artifact]? }
-    public struct Extraction: Codable, Sendable { public let exclude: [String]? }
+public struct Library: Codable, Equatable, Sendable {
+    public struct Downloads: Codable, Equatable, Sendable { public var artifact: Artifact?; public var classifiers: [String: Artifact]? }
+    public struct Extraction: Codable, Equatable, Sendable { public let exclude: [String]? }
     public let name: String
     public var downloads: Downloads?
     public var url: URL?

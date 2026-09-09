@@ -47,6 +47,7 @@ public actor GameInstaller {
             }
             manifest = manifest.merging(child: child)
         }
+        manifest = try Self.applyingPackLibraries(instance.packLibraries ?? [], to: manifest)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -54,6 +55,19 @@ public actor GameInstaller {
         instance.installed = true
         await progress(InstallProgress("安装完成", completed: 1, total: 1))
         return instance
+    }
+    static func applyingPackLibraries(_ libraries: [Library], to manifest: VersionManifest) throws -> VersionManifest {
+        guard libraries.count <= 1000 else { throw RuriError.message("整合包依赖库数量超过限制") }
+        for library in libraries {
+            _ = try Library.mavenPath(library.name)
+            for artifact in [try library.artifact()].compactMap({ $0 }) + Array(library.downloads?.classifiers?.values ?? [:].values) {
+                if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message("整合包依赖库的下载地址无效") } }
+            }
+        }
+        var result = manifest
+        let keys = Set(libraries.map(\.identity)); var seen = Set<String>()
+        result.libraries = manifest.libraries.filter { !keys.contains($0.identity) } + libraries.reversed().filter { seen.insert($0.identity).inserted }.reversed()
+        return result
     }
     public func repair(_ instance: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         if instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }

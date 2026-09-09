@@ -16,6 +16,9 @@ public struct LaunchPlan: Sendable {
 }
 
 public enum ArgumentTokenizer {
+    public static func join(_ arguments: [String]) -> String {
+        arguments.map { "\"" + $0.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"") + "\"" }.joined(separator: " ")
+    }
     public static func split(_ input: String) throws -> [String] {
         var output: [String] = []; var token = ""; var quote: Character?; var escape = false; var started = false
         for c in input {
@@ -39,6 +42,7 @@ public enum LaunchBuilder {
         guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message("内存或窗口大小设置无效") }
         let architecture = GameInstaller.architecture(for: manifest)
         guard java.architecture == architecture else { throw RuriError.message("Java 与游戏原生库的架构不匹配。需要 \(architecture)。") }
+        guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message("所选 Java 不符合游戏或整合包的版本要求。") }
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         let jarID = manifest.jar ?? instance.gameVersion
         let jar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: paths.versions)
@@ -95,6 +99,10 @@ public enum LaunchBuilder {
         var game: [String]
         if let legacy = manifest.minecraftArguments { game = try ArgumentTokenizer.split(legacy).map(expand) }
         else { game = try (manifest.arguments?.game ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand) }
+        let extraGame = try ArgumentTokenizer.split(instance.extraGameArguments ?? "").map(expand)
+        let reserved: Set<String> = ["--gameDir", "--assetsDir", "--assetIndex", "--username", "--uuid", "--accessToken", "--session", "--clientId", "--xuid", "--userType", "--userProperties"]
+        guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message("附加游戏参数不能覆盖账号身份、令牌或游戏目录。") }
+        game += extraGame
         if !game.contains("--width") { game += ["--width", String(instance.width), "--height", String(instance.height)] }
         var env = ProcessInfo.processInfo.environment
         for key in ["JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "JDK_JAVA_OPTIONS", "CLASSPATH"] { env.removeValue(forKey: key) }
