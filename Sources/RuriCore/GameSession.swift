@@ -156,6 +156,24 @@ public enum GameSessionStore {
     }
 }
 
+public enum GameSessionReviewStore {
+    public static func mark(_ record: GameSession, paths: LauncherPaths, at date: Date = Date()) throws {
+        guard record.state.isFinished || (record.monitorIdentity != nil && GameMonitorClient.activity(record) != .monitoring) else { return }
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
+        try Data(String(date.timeIntervalSince1970).utf8).write(to: directory.appendingPathComponent("reviewed"), options: .atomic)
+    }
+    public static func contains(_ record: GameSession, paths: LauncherPaths) throws -> Bool {
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
+        let file = try LauncherPaths.safePath("reviewed", within: directory)
+        guard FileManager.default.fileExists(atPath: file.path) else { return false }
+        let attributes = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
+        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1024 else { throw RuriError.message("运行记录已读标记无效。") }
+        let text = String(decoding: try Data(contentsOf: file), as: UTF8.self)
+        let date = Double(text).map { Date(timeIntervalSince1970: $0) } ?? ISO8601DateFormatter().date(from: text)
+        return date.map { $0 >= record.updatedAt } ?? false
+    }
+}
+
 @MainActor public final class GameSessionRecorder {
     public private(set) var record: GameSession
     public let directory: URL

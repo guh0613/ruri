@@ -43,7 +43,7 @@ struct RootView: View {
         } detail: {
             VStack(spacing: 0) {
                 if let notice = model.notice {
-                    HStack { Image(systemName: "info.circle"); Text(notice).font(.callout); Spacer(); Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
+                    HStack { Image(systemName: "info.circle"); Text(notice).font(.callout); Spacer(); if let id = model.noticeSessionID { Button("查看记录") { model.showSession(id) } }; Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
                         .padding(12).background(Theme.accent.opacity(0.08))
                 }
                 Group {
@@ -61,7 +61,7 @@ struct RootView: View {
                 .navigationTitle(model.page.title)
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
-                        if model.runningID != nil { Button { model.showLogs = true } label: { Label("运行日志", systemImage: "terminal") } }
+                        if model.runningID != nil { Button { model.showSession(model.runningID.flatMap { model.activeSessions[$0]?.id }) } label: { Label("运行日志", systemImage: "terminal") } }
                         Button { model.showCreate = true } label: { Label("新建实例", systemImage: "plus") }.help("新建实例 ⌘N").disabled(model.busy)
                     }
                 }
@@ -105,7 +105,7 @@ struct HomeView: View {
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(instance.name).font(.headline)
                                     Text(instance.subtitle).font(.callout).foregroundStyle(.secondary)
-                                    HStack(spacing: 8) { TagPill(text: model.runningID == instance.id ? "运行中" : instance.installed ? "就绪" : "未完成安装"); Text(instance.lastPlayed.map { "上次游玩 \($0.formatted(.relative(presentation: .named)))" } ?? "一个全新的开始").font(.caption).foregroundStyle(.secondary) }
+                                    HStack(spacing: 8) { TagPill(text: model.runningLabel(instance.id) ?? (instance.installed ? "就绪" : "未完成安装")); Text(instance.lastPlayed.map { "上次游玩 \($0.formatted(.relative(presentation: .named)))" } ?? "一个全新的开始").font(.caption).foregroundStyle(.secondary) }
                                 }
                                 Spacer()
                                 launchButton(instance)
@@ -149,10 +149,16 @@ struct HomeView: View {
             }
         }.buttonStyle(.plain)
     }
-    private func launchButton(_ instance: GameInstance) -> some View {
-        Button { if model.runningID == instance.id { model.stopGame() } else { model.launch(instance) } } label: {
-            Label(model.runningID == instance.id ? "结束游戏" : instance.installed ? "启动游戏" : "继续安装", systemImage: model.runningID == instance.id ? "stop.fill" : "play.fill").padding(.horizontal, 15).padding(.vertical, 9)
-        }.buttonStyle(.borderedProminent).disabled(model.busy || (model.runningID != nil && model.runningID != instance.id))
+    private func launchButton(_ instance: GameInstance) -> some View { LaunchButton(instance: instance) }
+}
+
+struct LaunchButton: View {
+    @Environment(AppModel.self) private var model
+    let instance: GameInstance
+    var body: some View {
+        Button { if model.activeSessions[instance.id] != nil { model.returnToGame(instance.id) } else { model.launch(instance) } } label: {
+            Label(model.activeSessions[instance.id] != nil ? (model.activeSessions[instance.id]?.gameIdentity?.isAlive == true ? "返回游戏" : "查看运行记录") : instance.installed ? "启动游戏" : "继续安装", systemImage: model.activeSessions[instance.id] != nil ? "arrow.up.forward.app" : "play.fill").padding(.horizontal, 15).padding(.vertical, 9)
+        }.buttonStyle(.borderedProminent).disabled(model.activeSessions[instance.id] == nil && (model.busy || model.isInstanceInUse(instance.id)))
     }
 }
 
@@ -189,22 +195,22 @@ struct LibraryView: View {
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
                                         Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
                                         Button("管理存档与备份", systemImage: "globe") { model.worldInstance = instance }
-                                        Button("导出实例…", systemImage: "square.and.arrow.up") { model.exportingInstance = instance }.disabled(model.busy || model.runningID == instance.id || !instance.installed)
-                                        Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.runningID == instance.id || !instance.installed)
+                                        Button("导出实例…", systemImage: "square.and.arrow.up") { model.exportingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
+                                        Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
                                         Divider()
-                                        Button("移到废纸篓", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.runningID == instance.id)
+                                        Button("移到废纸篓", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
                                     } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
                                 }
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(instance.name).font(.headline).lineLimit(1)
                                     Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                                 }
-                                HStack { TagPill(text: model.runningID == instance.id ? "运行中" : instance.installed ? "就绪" : "待安装"); Spacer(); Text("\(instance.memoryMB / 1024) GB").font(.caption).foregroundStyle(.secondary) }
+                                HStack { TagPill(text: model.runningLabel(instance.id) ?? (instance.installed ? "就绪" : "待安装")); Spacer(); Text("\(instance.memoryMB / 1024) GB").font(.caption).foregroundStyle(.secondary) }
                                 Divider()
                                 HStack {
                                     Button { model.editingInstance = instance } label: { Image(systemName: "slider.horizontal.3") }.buttonStyle(.borderless).help("实例设置")
                                     Spacer()
-                                    Button { model.select(instance); model.launch(instance) } label: { Label(instance.installed ? "启动" : "继续安装", systemImage: "play.fill") }.buttonStyle(.borderedProminent).disabled(model.busy || model.runningID != nil)
+                                    LaunchButton(instance: instance)
                                 }
                             }
                         }

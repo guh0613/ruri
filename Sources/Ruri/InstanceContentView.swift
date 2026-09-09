@@ -20,7 +20,7 @@ struct InstanceContentView: View {
     @State private var showImporter = false
     @State private var deleteTarget: LocalContentFile?
     private var manager: ContentManager { ContentManager(paths: model.paths, instanceID: instance.id) }
-    private var canModify: Bool { !model.busy && model.runningID != instance.id }
+    private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     private var filtered: [LocalContentFile] { files.filter { search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) || $0.filename.localizedCaseInsensitiveContains(search) } }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -40,7 +40,7 @@ struct InstanceContentView: View {
                 TextField("搜索已安装内容", text: $search).textFieldStyle(.roundedBorder)
                 Text("\(files.filter(\.enabled).count) / \(files.count) 已启用").font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
-            if model.runningID == instance.id { Label("游戏运行期间，内容修改暂不可用。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if model.isInstanceInUse(instance.id) { Label("游戏运行期间，内容修改暂不可用。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if updateTask != nil { ProgressView("正在检查兼容的正式版本…").controlSize(.small) }
             if updatesChecked && updates.isEmpty && curseUpdates.isEmpty { Label("已是最新兼容正式版", systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
@@ -118,7 +118,7 @@ struct InstanceContentView: View {
     private func mutate(_ title: String, action: @escaping @MainActor @Sendable () async throws -> Void) {
         guard canModify else { return }
         error = nil
-        model.perform(title, presentErrors: false) { _ in
+        model.perform(title, presentErrors: false, instanceID: instance.id) { _ in
             do { try await action(); await reload() }
             catch { self.error = error.localizedDescription; throw error }
         }
@@ -156,7 +156,7 @@ struct InstanceContentView: View {
     }
     private func apply(_ update: ContentUpdate) {
         error = nil
-        model.perform("更新 \(update.installed.title)", presentErrors: false) { id in
+        model.perform("更新 \(update.installed.title)", presentErrors: false, instanceID: instance.id) { id in
             do {
                 try await ModrinthService().install(version: update.available, type: update.installed.kind.rawValue, instance: instance, paths: model.paths, downloader: model.installer.downloader) { p in await model.progress(id, p) }
                 updates.removeValue(forKey: update.id); await reload()

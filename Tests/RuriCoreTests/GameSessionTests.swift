@@ -3,6 +3,19 @@ import Testing
 @testable import RuriCore
 
 struct GameSessionTests {
+    @Test @MainActor func reviewingLiveLogsDoesNotAcknowledgeLaterFailure() throws {
+        let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        try GameSessionReviewStore.mark(recorder.record, paths: paths)
+        #expect(try !GameSessionReviewStore.contains(recorder.record, paths: paths))
+        try recorder.fail(RuriError.message("failure"), cancelled: false)
+        try GameSessionReviewStore.mark(recorder.record, paths: paths, at: recorder.record.updatedAt.addingTimeInterval(1))
+        #expect(try GameSessionReviewStore.contains(recorder.record, paths: paths))
+        var later = recorder.record; later.updatedAt = later.updatedAt.addingTimeInterval(60)
+        #expect(try !GameSessionReviewStore.contains(later, paths: paths))
+        try Data(repeating: 1, count: 1025).write(to: recorder.directory.appendingPathComponent("reviewed"))
+        #expect(throws: (any Error).self) { try GameSessionReviewStore.contains(recorder.record, paths: paths) }
+    }
     func setup() throws -> (LauncherPaths, GameInstance) {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
         try paths.prepare()

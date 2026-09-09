@@ -11,16 +11,16 @@ struct LogsView: View {
     @State private var historicalLines: [String] = []
     @State private var readError: String?
     private var session: GameSession? { model.sessions.first { $0.id == selectedID } }
-    private var isCurrent: Bool { selectedID != nil && selectedID == model.logsSessionID }
-    private var isRunning: Bool { isCurrent && model.runningID != nil }
+    private var isCurrent: Bool { selectedID.map { model.liveLogs[$0] != nil } ?? false }
+    private var isRunning: Bool { session.map { model.activeSessions[$0.instanceID]?.id == $0.id } ?? false }
     private var lines: [String] {
-        (isCurrent ? model.logs : historicalLines).filter { filter.isEmpty || $0.localizedCaseInsensitiveContains(filter) }
+        (selectedID.flatMap { model.liveLogs[$0] } ?? historicalLines).filter { filter.isEmpty || $0.localizedCaseInsensitiveContains(filter) }
     }
     var body: some View {
         VStack(spacing: 12) {
             HStack {
                 Text("运行记录").font(.title2.bold()); Spacer()
-                if isRunning { TagPill(text: "运行中") }
+                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? "运行中") }
                 Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
             }
             if model.sessions.isEmpty {
@@ -50,21 +50,24 @@ struct LogsView: View {
                             Color.clear.frame(height: 1).id("end")
                         }.padding(12)
                     }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 10))
-                        .onChange(of: model.logs.count) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
+                        .onChange(of: lines.last) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
                 }
                 HStack {
                     Text("预览最近 5,000 行；每次运行的完整日志独立保留。").font(.caption).foregroundStyle(.secondary)
                     Spacer()
-                    if isRunning { Button("结束游戏", role: .destructive) { model.stopGame() } }
+                    if isRunning, let session { Button("结束游戏", role: .destructive) { model.stopGame(session.instanceID) }.disabled(session.state.isFinished || session.monitorIdentity?.isAlive != true) }
                 }
             }
         }.padding(22).frame(width: 700, height: 560)
-            .onAppear {
-                model.refreshSessions()
-                selectedID = model.logsSessionID ?? model.sessions.first?.id
+            .task {
+                await model.refreshSessions()
+                selectedID = model.requestedLogSessionID ?? model.logsSessionID ?? model.sessions.first?.id
                 loadHistory()
             }
             .onChange(of: selectedID) { loadHistory() }
+            .onChange(of: session?.state) { if let session { model.acknowledgeSession(session) } }
+            .onChange(of: isCurrent) { loadHistory() }
+            .onChange(of: model.requestedLogSessionID) { if let id = model.requestedLogSessionID { selectedID = id } }
     }
     @ViewBuilder private func summary(_ record: GameSession) -> some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -96,7 +99,9 @@ struct LogsView: View {
     }
     private func loadHistory() {
         readError = nil; historicalLines = []
-        guard let session, !isCurrent else { return }
+        guard let session else { return }
+        model.acknowledgeSession(session)
+        guard !isCurrent else { return }
         do {
             historicalLines = Array(try GameSessionStore.logTail(paths: model.paths, session: session).split(separator: "\n", omittingEmptySubsequences: false).suffix(5000).map(String.init))
         } catch { readError = error.localizedDescription }

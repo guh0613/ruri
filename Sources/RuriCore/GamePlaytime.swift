@@ -34,6 +34,7 @@ public actor GameSessionLogCursor {
     private let handle: FileHandle
     private var pending = Data()
     public private(set) var lines: [String] = []
+    public private(set) var updates: [String] = []
     public init(paths: LauncherPaths, session: GameSession) throws {
         let url = try GameSessionStore.logURL(paths: paths, session: session)
         guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message("日志不是普通文件。") }
@@ -60,6 +61,7 @@ public actor GameSessionLogCursor {
         }
         if final && !pending.isEmpty { added.append(String(decoding: pending, as: UTF8.self)); pending.removeAll() }
         if pending.count > 2_097_152 { pending.removeAll(); added.append("[Ruri] 预览中的超长日志行已省略；完整内容可导出。") }
+        updates = added
         guard !added.isEmpty else { return false }
         lines += added
         if lines.count > 5000 { lines.removeFirst(lines.count - 5000) }

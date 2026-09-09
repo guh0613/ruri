@@ -32,13 +32,25 @@ enum Page: String, CaseIterable, Identifiable {
     var scanningJava = false
     var activities: [ActivityItem] = []
     var operation: Task<Void, Never>?
-    var runningID: UUID?
+    var activeSessions: [UUID: GameSession] = [:]
+    var runningID: UUID? { selected.flatMap { activeSessions[$0.id] }?.instanceID ?? activeSessions.values.max(by: { $0.createdAt < $1.createdAt })?.instanceID }
     var logs: [String] = []
     var showLogs = false
     var lastGameExit: GameExit?
     var crashReports: [GameCrashReport] = []
     var sessions: [GameSession] = []
     var logsSessionID: UUID?
+    var liveLogs: [UUID: [String]] = [:]
+    var requestedLogSessionID: UUID?
+    var noticeSessionID: UUID?
+    var restoringGames = true
+    var isQuitting = false
+    var pendingOpenURLs: [URL] = []
+    @ObservationIgnored var openMainWindow: (@MainActor () -> Void)?
+    @ObservationIgnored var monitorTask: Task<Void, Never>?
+    @ObservationIgnored var logCursors: [UUID: GameSessionLogCursor] = [:]
+    @ObservationIgnored var handledExits: Set<UUID> = []
+    @ObservationIgnored var bootTask: Task<Void, Never>?
     var showCreate = false
     var showAccount = false
     var editingInstance: GameInstance?
@@ -48,14 +60,13 @@ enum Page: String, CaseIterable, Identifiable {
     var importingInstance: PreparedInstanceImport?
     var exportingInstance: GameInstance?
     var error: String?
-    var notice: String?
+    var notice: String? { didSet { noticeSessionID = nil } }
     private var readOnly = false
-    private let gameProcess = GameProcess()
     private var sessionRecorder: GameSessionRecorder?
     private var recordingErrorShown = false
     var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
-    var busy: Bool { operation != nil }
+    var busy: Bool { operation != nil || restoringGames || isQuitting }
     var activeActivity: ActivityItem? { activities.first { $0.status == .running } }
     var colorScheme: ColorScheme? { state.settings.appearance == "dark" ? .dark : state.settings.appearance == "light" ? .light : nil }
 
@@ -70,7 +81,16 @@ enum Page: String, CaseIterable, Identifiable {
         do { try StateStore.save(state, to: paths) } catch { self.error = error.localizedDescription }
     }
     func boot() async {
-        refreshSessions()
+        if let bootTask { await bootTask.value; return }
+        let work = Task { await initializeApplication() }
+        bootTask = work
+        await work.value
+    }
+    private func initializeApplication() async {
+        await refreshSessions()
+        await pollGames()
+        restoringGames = false
+        startGameObservation()
         await applyNetworkSettings()
         async let versions: () = refreshCatalog()
         async let java: () = scanJava()
@@ -102,7 +122,7 @@ enum Page: String, CaseIterable, Identifiable {
     }
     func install(_ instance: GameInstance) {
         guard !busy, !readOnly else { return }
-        perform("安装 \(instance.name)") { [self] id in
+        perform("安装 \(instance.name)", instanceID: instance.id) { [self] id in
             let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
                 await self?.progress(id, progress)
             }
@@ -110,16 +130,19 @@ enum Page: String, CaseIterable, Identifiable {
         }
     }
     func repair(_ instance: GameInstance) {
-        guard runningID != instance.id else { return }
-        perform("修复 \(instance.name)") { [self] id in
+        guard !isInstanceInUse(instance.id) else { return }
+        perform("修复 \(instance.name)", instanceID: instance.id) { [self] id in
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
-    func perform(_ title: String, presentErrors: Bool = true, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
+    func perform(_ title: String, presentErrors: Bool = true, instanceID: UUID? = nil, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
         guard !busy, !readOnly else { return }
         let activity = ActivityItem(title: title); activities.insert(activity, at: 0)
         operation = Task {
+            var lease: GameRunLease?
+            defer { withExtendedLifetime(lease) {} }
             do {
+                if let instanceID { lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID) }
                 await applyNetworkSettings()
                 try await work(activity.id)
                 if let i = activities.firstIndex(where: { $0.id == activity.id }) { activities[i].status = .completed; activities[i].progress = InstallProgress("已完成", completed: 1, total: 1) }
@@ -128,7 +151,7 @@ enum Page: String, CaseIterable, Identifiable {
                     activities[i].status = Task.isCancelled ? .cancelled : .failed
                     activities[i].error = Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
                 }
-                if !Task.isCancelled && presentErrors { self.error = error.localizedDescription }
+                if !Task.isCancelled && (presentErrors || (instanceID != nil && lease == nil)) { self.error = error.localizedDescription }
             }
             operation = nil
         }
@@ -157,11 +180,14 @@ enum Page: String, CaseIterable, Identifiable {
         } catch { self.error = error.localizedDescription }
     }
     func launch(_ instance: GameInstance) {
-        guard runningID == nil, !busy, !readOnly else { return }
+        guard !isInstanceInUse(instance.id), !busy, !readOnly else { return }
         guard var account = activeAccount else { showAccount = true; return }
         do {
             let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
             sessionRecorder = recorder; logsSessionID = recorder.record.id
+            requestedLogSessionID = recorder.record.id
+            let activeIDs = Set(activeSessions.values.map(\.id))
+            liveLogs = liveLogs.filter { activeIDs.contains($0.key) }
             logs.removeAll(); lastGameExit = nil; crashReports = []; recordingErrorShown = false
             publishSession(recorder.record)
             perform("启动 \(instance.name)", presentErrors: false) { [self] id in
@@ -213,14 +239,11 @@ enum Page: String, CaseIterable, Identifiable {
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
                     try advanceSession(.starting)
-                    let instanceID = instance.id
-                    try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] result in self?.gameExited(instanceID, result: result) }
-                    runningID = instance.id
-                    if let pid = gameProcess.processIdentifier {
-                        do { try recorder.started(processID: pid) } catch { showRecordingError(error) }
-                        publishSession(recorder.record)
-                    }
-                    var updated = instance; updated.lastPlayed = Date(); update(updated)
+                    try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [token])
+                    sessionRecorder = nil
+                    activeSessions[instance.id] = recorder.record
+                    try? GameMonitorClient.recordEvent(.connected, paths: paths, session: recorder.record)
+                    publishSession(recorder.record)
                 } catch {
                     do { try recorder.fail(error, cancelled: Task.isCancelled) } catch { showRecordingError(error) }
                     publishSession(recorder.record)
@@ -232,13 +255,22 @@ enum Page: String, CaseIterable, Identifiable {
             }
         } catch { self.error = error.localizedDescription }
     }
-    func refreshSessions() {
+    func refreshSessions() async {
+        let ids = state.instances.map(\.id), paths = paths
         do {
-            sessions = try state.instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
+            let records = try await Task.detached(priority: .utility) {
+                try ids.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0) }.sorted { $0.createdAt > $1.createdAt }
+            }.value
+            for record in records {
+                if let current = sessions.first(where: { $0.id == record.id }), current.updatedAt > record.updatedAt { continue }
+                publishSession(record)
+            }
+            sessions.removeAll { !ids.contains($0.instanceID) }
+            sessions.sort { $0.createdAt > $1.createdAt }
         } catch { notice = "无法读取运行记录：\(error.localizedDescription)" }
     }
-    private func publishSession(_ record: GameSession) {
-        if let index = sessions.firstIndex(where: { $0.id == record.id }) { sessions[index] = record }
+    func publishSession(_ record: GameSession) {
+        if let index = sessions.firstIndex(where: { $0.id == record.id }) { if sessions[index] != record { sessions[index] = record } }
         else { sessions.insert(record, at: 0) }
     }
     private func advanceSession(_ stage: GameSession.Stage) throws {
@@ -252,36 +284,15 @@ enum Page: String, CaseIterable, Identifiable {
         let message = "运行记录未能完整写入：\(sessionRecorder?.redacted(error.localizedDescription) ?? error.localizedDescription)"
         notice = message; appendDisplayedLog("[Ruri] \(message)")
     }
-    func stopGame() {
-        guard gameProcess.isRunning else { return }
-        do { try advanceSession(.stopping) } catch { showRecordingError(error) }
-        gameProcess.stop()
-    }
     private func appendDisplayedLog(_ line: String) {
         logs.append(line)
         if logs.count > 5000 { logs.removeFirst(logs.count - 5000) }
+        if let id = logsSessionID { liveLogs[id] = logs }
     }
     func appendLog(_ line: String) {
         let line = sessionRecorder?.redacted(line) ?? line
         appendDisplayedLog(line)
         do { try sessionRecorder?.append(line) } catch { showRecordingError(error) }
-    }
-    private func gameExited(_ id: UUID, result: GameExit) {
-        lastGameExit = result
-        crashReports = GameCrashReport.find(in: paths.game(id), exit: result)
-        appendDisplayedLog(result.logDescription)
-        appendDisplayedLog("[Ruri] \(result.explanation)")
-        if let recorder = sessionRecorder {
-            do { try recorder.finish(exit: result) } catch { showRecordingError(error) }
-            publishSession(recorder.record)
-        }
-        do { try result.save(paths: paths, instanceID: id) }
-        catch { showRecordingError(error) }
-        sessionRecorder = nil; runningID = nil
-        if var instance = state.instances.first(where: { $0.id == id }) {
-            instance.playTime += result.endedAt.timeIntervalSince(result.startedAt); update(instance)
-        }
-        if result.requiresAttention || !crashReports.isEmpty { showLogs = true; notice = result.summary + "，请查看运行日志。" }
     }
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)
@@ -290,8 +301,10 @@ enum Page: String, CaseIterable, Identifiable {
         catch { self.error = error.localizedDescription }
     }
     func trash(_ instance: GameInstance) {
-        guard runningID != instance.id, !busy else { return }
+        guard !isInstanceInUse(instance.id), !busy else { return }
         do {
+            let lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
+            defer { withExtendedLifetime(lease) {} }
             let url = paths.instance(instance.id)
             if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.trashItem(at: url, resultingItemURL: nil) }
             state.instances.removeAll { $0.id == instance.id }

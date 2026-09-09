@@ -18,7 +18,7 @@ struct WorldManagerView: View {
     @State private var deletingWorld: WorldSnapshot?
     @State private var deletingBackup: WorldBackup?
     private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
-    private var canModify: Bool { !model.busy && model.runningID != instance.id }
+    private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: "留住每一次冒险", subtitle: instance.name); Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction) }
@@ -28,7 +28,7 @@ struct WorldManagerView: View {
                 Button("导入存档…", systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
                 Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help("打开存档文件夹")
             }
-            if model.runningID == instance.id { Label("请先结束游戏，再修改或备份存档。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if model.isInstanceInUse(instance.id) { Label("请先结束游戏，再修改或备份存档。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let status { Text(status).font(.callout).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -127,7 +127,7 @@ struct WorldManagerView: View {
     }
     private func mutate(_ title: String, action: @MainActor @Sendable @escaping (UUID) async throws -> Void) {
         guard canModify else { return }; error = nil; status = nil
-        model.perform(title, presentErrors: false) { id in
+        model.perform(title, presentErrors: false, instanceID: instance.id) { id in
             do { try await action(id); await reload() }
             catch { self.error = error.localizedDescription; throw error }
         }

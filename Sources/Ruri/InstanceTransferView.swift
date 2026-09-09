@@ -121,7 +121,7 @@ struct ExportInstanceView: View {
             HStack {
                 Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("选择保存位置…") { chooseDestination() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || model.runningID == instance.id)
+                Button("选择保存位置…") { chooseDestination() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || model.isInstanceInUse(instance.id))
             }
         }.padding(26).frame(width: 510)
     }
@@ -167,8 +167,8 @@ extension AppModel {
         }
     }
     func export(_ instance: GameInstance, to url: URL, format: InstanceExportFormat, includeWorlds: Bool, details: ModpackExportDetails = .init()) {
-        guard runningID != instance.id else { return }
-        perform("导出 \(instance.name)") { [self] id in
+        guard !isInstanceInUse(instance.id) else { return }
+        perform("导出 \(instance.name)", instanceID: instance.id) { [self] id in
             let scoped = url.startAccessingSecurityScopedResource(); defer { if scoped { url.stopAccessingSecurityScopedResource() } }
             try await InstanceTransfer(paths: paths).export(instance, to: url, format: format, includeWorlds: includeWorlds, details: details) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
             notice = "\(instance.name) 已导出"; NSWorkspace.shared.activateFileViewerSelecting([url])

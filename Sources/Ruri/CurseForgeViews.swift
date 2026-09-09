@@ -170,9 +170,9 @@ struct CurseForgeInstallView: View {
     }
     private var canContinue: Bool {
         guard !loading, !resolving, !model.busy else { return false }
-        if let plan { return model.runningID != plan.instance.id && plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil } }
+        if let plan { return !model.isInstanceInUse(plan.instance.id) && plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil } }
         guard let selected else { return false }
-        return isPack ? (!packIsManual || manualFiles[selected.id] != nil) : instance != nil && model.runningID != instanceID
+        return isPack ? (!packIsManual || manualFiles[selected.id] != nil) : instance != nil && !model.isInstanceInUse(instanceID)
     }
     private func advance() {
         if let plan { model.installCurseForge(plan, manualFiles: manualFiles); dismiss(); return }
@@ -199,15 +199,15 @@ struct CurseForgePlanView: View {
         VStack(alignment: .leading, spacing: 20) {
             SectionHeading(title: "更新 \(plan.title)", subtitle: "\(plan.instance.name) · \(plan.files.count) 个文件，包含必需依赖")
             ScrollView { CurseForgePlanFiles(files: plan.files, manualFiles: $manualFiles) }.frame(maxHeight: 360)
-            HStack { Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Spacer(); Button("更新") { model.installCurseForge(plan, manualFiles: manualFiles); dismiss() }.buttonStyle(.borderedProminent).disabled(model.busy || model.runningID == plan.instance.id || !plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil }) }
+            HStack { Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Spacer(); Button("更新") { model.installCurseForge(plan, manualFiles: manualFiles); dismiss() }.buttonStyle(.borderedProminent).disabled(model.busy || model.isInstanceInUse(plan.instance.id) || !plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil }) }
         }.padding(26).frame(width: 570)
     }
 }
 
 extension AppModel {
     func installCurseForge(_ plan: CurseForgeContentPlan, manualFiles: [Int: URL]) {
-        guard runningID != plan.instance.id else { return }
-        perform("安装 \(plan.title)") { [self] id in
+        guard !isInstanceInUse(plan.instance.id) else { return }
+        perform("安装 \(plan.title)", instanceID: plan.instance.id) { [self] id in
             try await CurseForgeService(apiKey: "").install(plan, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
             notice = "\(plan.title) 已安装"
         }

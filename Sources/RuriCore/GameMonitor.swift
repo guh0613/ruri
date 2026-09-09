@@ -17,6 +17,20 @@ struct MonitorStopRequest: Codable {
 
 public enum GameMonitorClient {
     public enum Activity: Equatable, Sendable { case inactive, monitoring, orphaned, uncertain }
+    public enum ClientEvent: String, Codable, Sendable { case connected, windowClosed, windowReopened, quitRequested, stopRequested, gameActivationRequested }
+    public static func recordEvent(_ event: ClientEvent, paths: LauncherPaths, session: GameSession) throws {
+        struct Entry: Encodable { let date: Date; let clientPID: Int32; let client: String; let event: ClientEvent }
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
+        let url = try LauncherPaths.safePath("client-events.jsonl", within: directory)
+        let fd = open(url.path, O_WRONLY | O_APPEND | O_CREAT | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
+        guard fd >= 0 else { throw RuriError.message("无法记录启动器事件。") }
+        defer { Darwin.close(fd) }
+        var attributes = stat()
+        guard fstat(fd, &attributes) == 0, attributes.st_mode & S_IFMT == S_IFREG else { throw RuriError.message("启动器事件记录不是普通文件。") }
+        var data = try JSONEncoder().encode(Entry(date: Date(), clientPID: ProcessInfo.processInfo.processIdentifier, client: Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName, event: event))
+        data.append(10)
+        guard data.withUnsafeBytes({ Darwin.write(fd, $0.baseAddress, $0.count) }) == data.count else { throw RuriError.message("无法保存启动器事件。") }
+    }
     public static func activity(_ record: GameSession) -> Activity {
         if record.monitorIdentity?.isAlive == true { return .monitoring }
         if record.state.isFinished || record.monitorIdentity == nil { return .inactive }
@@ -57,6 +71,7 @@ public enum GameMonitorClient {
         guard current.monitorIdentity == record.monitorIdentity, !current.state.isFinished else { throw RuriError.message("运行会话已经发生变化，请刷新后重试。") }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
         try JSONEncoder().encode(MonitorStopRequest(version: 1, sessionID: record.id)).write(to: directory.appendingPathComponent("stop-request.json"), options: .atomic)
+        try? recordEvent(.stopRequested, paths: paths, session: record)
     }
     public static func wait(paths: LauncherPaths, instanceID: UUID, sessionID: UUID) async throws -> GameSession {
         while true {

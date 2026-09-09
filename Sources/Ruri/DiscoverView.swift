@@ -145,7 +145,7 @@ struct ContentInstallView: View {
                 Button(isPack ? "查看整合包" : "安装") {
                     guard let version = versions.first(where: { $0.id == selectedVersion }) else { return }
                     model.installContent(project: project, version: version, instance: instance); dismiss()
-                }.buttonStyle(.borderedProminent).disabled(loading || selectedVersion.isEmpty || model.busy || (!isPack && (instance == nil || model.runningID == instanceID)))
+                }.buttonStyle(.borderedProminent).disabled(loading || selectedVersion.isEmpty || model.busy || (!isPack && (instance == nil || model.isInstanceInUse(instanceID))))
             }
         }.padding(30).frame(width: 570)
         .onAppear { instanceID = model.selected?.id }
@@ -168,7 +168,7 @@ extension AppModel {
         prepareInstanceImport(url)
     }
     func installContent(project: ModrinthProject, version: ModrinthVersion, instance: GameInstance?) {
-        perform("安装 \(project.title)") { [self] id in
+        perform("安装 \(project.title)", instanceID: project.project_type == "modpack" ? nil : instance?.id) { [self] id in
             if project.project_type == "modpack" {
                 guard let file = version.primaryFile else { throw RuriError.message("该版本没有整合包文件") }
                 let archive = paths.cache.appendingPathComponent("pack-\(version.id).mrpack")
