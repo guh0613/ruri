@@ -102,7 +102,7 @@ public enum StateStore {
             // Mode and limits form one policy. Combining two valid edits can
             // otherwise produce an initial heap larger than its new maximum,
             // or silently turn a manual edit into automatic allocation.
-            else if field == "settings.defaultMemorySettings" || field.hasSuffix(".launchOverrides.memory") { throw conflict(field) }
+            else if field == "settings.defaultMemorySettings" || field.hasSuffix(".launchOverrides.memory") || field.hasSuffix(".customRunDirectory") { throw conflict(field) }
             else if let b = b as? [String: Any], let l = l as? [String: Any], let r = r as? [String: Any] {
                 result[key] = try mergeObject(base: b, local: l, remote: r, path: field)
             } else if path.isEmpty && ["instances", "accounts", "gameDirectories"].contains(key) {
