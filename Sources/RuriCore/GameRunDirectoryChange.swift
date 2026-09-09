@@ -56,12 +56,12 @@ final class RunDirectoryChangeAccess {
     let targetLease: SharedGameDirectoryLease?
     var operations: [GameDataOperationLock] = []
     var worldLocks: [Int32] = []
-    init(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory) throws {
+    init(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory, directoryChangeID: UUID? = nil) throws {
         self.instance = instance; sourcePaths = paths
         var changed = instance; changed.runDirectory = target
         targetPaths = paths.including(changed)
-        sourceLease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
-        targetLease = target == .shared ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil) : nil
+        sourceLease = try GameRunLease.acquire(paths: paths, instanceID: instance.id, directoryChangeID: directoryChangeID)
+        targetLease = target == .shared ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil, directoryChangeID: directoryChangeID) : nil
         guard try !GameSessionStore.list(paths: paths, instanceID: instance.id).contains(where: { !$0.state.isFinished }) else {
             throw RuriError.message("此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。")
         }
@@ -159,6 +159,7 @@ public actor GameRunDirectoryChange {
             try validatePreviewBinding(preview, instance: instance, paths: paths.configured(with: state))
             guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { throw RuriError.message("实例已被移除。") }
             state.instances[index].runDirectory = preview.targetMode
+            state.instances[index].lastRunDirectoryChangeID = nil
         }
     }
 }

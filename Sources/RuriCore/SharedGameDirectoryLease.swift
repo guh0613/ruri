@@ -14,7 +14,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         let instanceID: UUID
         let sessionID: UUID
     }
-    static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID?) throws -> SharedGameDirectoryLease {
+    static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID?, directoryChangeID: UUID? = nil) throws -> SharedGameDirectoryLease {
         try paths.validateInstanceLocation(instanceID)
         let root = paths.game(instanceID)
         let metadata = try LauncherPaths.safePath(".ruri", within: root)
@@ -27,6 +27,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
             close(fd); throw RuriError.message("此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。")
         }
         let result = SharedGameDirectoryLease(fd, root: root)
+        try RunDirectoryCopyGuard.requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
         try result.checkReservation(instanceID: instanceID, ignoringSession: ignoringSession)
         return result
     }

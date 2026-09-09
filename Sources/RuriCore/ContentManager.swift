@@ -66,8 +66,12 @@ public actor ContentManager {
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
     private func lock() throws {
         Self.diskLock.lock()
-        do { try paths.validateInstanceLocation(instanceID); try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".content-operation.lock") }
-        catch { Self.diskLock.unlock(); throw error }
+        var acquired = false
+        do {
+            try paths.validateInstanceLocation(instanceID)
+            try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".content-operation.lock"); acquired = true
+            try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
+        } catch { if acquired { operationLock.release() }; Self.diskLock.unlock(); throw error }
     }
     private func unlock() { operationLock.release(); Self.diskLock.unlock() }
     struct Journal: Codable {
