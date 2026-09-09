@@ -108,6 +108,10 @@ public enum GameDiagnosticAnalyzer {
         if let exit = session.exit {
             facts.append("\(exit.reason == .signal ? "终止信号" : "退出码")：\(exit.status)；Ruri 结束请求：\(exit.stopRequested ? "有" : "无")")
         }
+        if let interruption = session.interruption {
+            facts.append("恢复记录时间：\(interruption.observedAt.ISO8601Format())（不是游戏退出时间）")
+            facts.append("恢复依据：\(interruption.resolution == .knownProcessEnded ? "原进程身份已失效" : "用户确认游戏已退出")")
+        }
         var findings: [GameDiagnosis.Finding] = []
         let externalTermination = session.exit.map { ($0.reason == .signal && [9, 15].contains($0.status)) || ($0.reason == .exit && $0.status == 143) } ?? false
         let canDiagnose = session.state == .failed && !externalTermination
@@ -151,6 +155,7 @@ public enum GameDiagnosticAnalyzer {
         }
         let summary: String
         if !session.state.isFinished { summary = "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。" }
+        else if session.state == .interrupted { summary = session.interruption?.explanation ?? "监控记录已中断，未取得游戏的退出结果。" }
         else if session.state == .cancelled { summary = "启动已取消，没有证据表明游戏发生了崩溃。" }
         else if session.state == .stopped || session.state == .succeeded { summary = session.exit?.explanation ?? "本次运行已经结束，无需进行崩溃处理。" }
         else if externalTermination { summary = "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。" }

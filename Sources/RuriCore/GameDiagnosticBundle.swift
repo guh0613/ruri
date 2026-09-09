@@ -33,7 +33,7 @@ public struct GameDiagnosticBundle: Sendable {
         }
         summary += "\n读取范围与缺失信息\n" + (diagnosis.limitations.isEmpty ? "未发现读取截断或读取错误。" : diagnosis.limitations.joined(separator: "\n"))
         append(id: "summary", path: "diagnosis.txt", title: "诊断结论与处理步骤", text: summary + "\n")
-        let environment = """
+        var environment = """
         Minecraft: \(session.gameVersion)
         Loader: \(session.loader) \(session.loaderVersion ?? "")
         Java: \(session.java ?? "未记录")
@@ -48,6 +48,9 @@ public struct GameDiagnosticBundle: Sendable {
         Exit status: \(session.exit.map { String($0.status) } ?? "未记录")
         Stop requested through Ruri: \(session.exit.map { $0.stopRequested ? "yes" : "no" } ?? "未记录")
         """
+        if let interruption = session.interruption {
+            environment += "\nRecovery observed at (not exit time): \(interruption.observedAt.ISO8601Format())\nRecovery basis: \(interruption.resolution.rawValue)\n\(interruption.explanation)"
+        }
         append(id: "environment", path: "environment.txt", title: "游戏、Java 与系统环境", text: environment + "\n")
         for (index, document) in diagnosis.documents.enumerated() {
             try Task.checkCancellation()

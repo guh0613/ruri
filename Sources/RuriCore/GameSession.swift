@@ -2,11 +2,11 @@ import Foundation
 
 public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public enum State: String, Codable, Sendable {
-        case preparing, running, succeeded, stopped, failed, cancelled
+        case preparing, running, succeeded, stopped, failed, cancelled, interrupted
         public var isFinished: Bool { self != .preparing && self != .running }
     }
     public enum Stage: String, Codable, Sendable {
-        case preparing, installation, recovery, account, manifest, java, arguments, starting, running, stopping, finished
+        case preparing, installation, recovery, account, manifest, java, arguments, starting, running, stopping, finished, monitorRecovery
         public var title: String {
             switch self {
             case .preparing: "准备启动"
@@ -20,6 +20,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
             case .running: "游戏进程运行"
             case .stopping: "请求结束游戏"
             case .finished: "游戏已退出"
+            case .monitorRecovery: "恢复中断记录"
             }
         }
     }
@@ -58,6 +59,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var gameIdentity: ProcessIdentity?
     public var failure: String?
     public var exit: GameExit?
+    public var interruption: GameSessionInterruption?
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
@@ -67,6 +69,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         case .running: return "游戏已启动 · 尚无退出记录"
         case .cancelled: return "启动已取消"
         case .failed: return "\(stage.title)失败"
+        case .interrupted: return "监控记录已收尾 · 退出结果未知"
         default: return "运行已结束"
         }
     }
@@ -110,6 +113,9 @@ public enum GameSessionStore {
         for evidence in record.evidence {
             guard evidence.relativePath.hasPrefix("reports/"), evidence.name.count <= 1024 else { throw RuriError.message("运行报告路径无效。") }
             _ = try LauncherPaths.safePath(evidence.relativePath, within: directory)
+        }
+        if let interruption = record.interruption {
+            guard interruption.explanation.count <= 8192, record.state == .interrupted, record.exit == nil else { throw RuriError.message("中断恢复记录无效。") }
         }
         return record
     }

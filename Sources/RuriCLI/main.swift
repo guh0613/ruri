@@ -132,7 +132,8 @@ import RuriCore
                             for line in await cursor.updates { try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8)) }
                         } while final && changed
                         if final {
-                            let status = record.exit?.shellStatus ?? 1
+                            guard let result = record.exit else { throw RuriError.message("监控没有留下游戏退出结果。请查看运行记录并恢复中断状态。") }
+                            let status = result.shellStatus
                             print("Game exit: \(status)")
                             if status != 0 { exit(status) }
                             break
@@ -149,6 +150,20 @@ import RuriCore
                 guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
                 try GameMonitorClient.requestStop(paths: paths, record: record)
                 print("Stop requested: \(record.id)")
+            case "recover-session":
+                guard (3...5).contains(args.count), let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]),
+                      Set(args.dropFirst(3)).isSubset(of: ["--apply", "--confirm-game-ended"]) else {
+                    throw RuriError.message("用法：ruri-cli recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]")
+                }
+                let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
+                let status = GameSessionRecovery.status(record)
+                print(status.title + "\n" + status.explanation)
+                if args.contains("--apply") {
+                    let recovered = try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: args.contains("--confirm-game-ended"))
+                    print(recovered.title)
+                } else if status == .processEnded || status == .confirmationRequired {
+                    print("使用 --apply 收尾这条记录；仅在已自行确认游戏退出时添加 --confirm-game-ended。")
+                }
             case "diagnose":
                 guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message("用法：ruri-cli diagnose <instance-uuid> <session-uuid>") }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
@@ -173,7 +188,7 @@ import RuriCore
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  launch [instance-uuid] [--detach] (offline account)\n  stop <instance-uuid>\n\nRURI_DATA_DIR overrides the data directory.")
+            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]\n  launch [instance-uuid] [--detach] (offline account)\n  stop <instance-uuid>\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }

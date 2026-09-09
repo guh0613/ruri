@@ -34,9 +34,10 @@ public enum GameMonitorClient {
     public static func activity(_ record: GameSession) -> Activity {
         if record.monitorIdentity?.isAlive == true { return .monitoring }
         if record.state.isFinished || record.monitorIdentity == nil { return .inactive }
+        if record.monitorIdentity?.liveness == .unverifiable { return .uncertain }
         if record.gameIdentity?.isAlive == true { return .orphaned }
         // A monitor may have died between spawning Java and saving its identity.
-        if record.gameIdentity == nil { return .uncertain }
+        if record.gameIdentity == nil || record.gameIdentity?.liveness == .unverifiable { return .uncertain }
         return .inactive
     }
     public static func helperExecutable() throws -> URL {
