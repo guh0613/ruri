@@ -9,7 +9,7 @@ struct InstanceTransferTests {
         var instance = GameInstance(name: "旅行 \"存档\" 🐱", gameVersion: "1.21.1", loader: .fabric, loaderVersion: "0.19.5")
         instance.memoryMB = 6144; instance.width = 1600; instance.height = 900; instance.javaPath = "/machine/specific/java"
         instance.extraJVMArguments = "-Dhello=\"two words\" -Dpath=/tmp/example"; instance.installed = true
-        for (path, value) in ["saves/World/level.dat": "world-data", "saves/World/session.lock": "lock", "mods/example.jar.disabled": "mod-data", "options.txt": "fov:0.5", "config/test.json": "{}", "logs/latest.log": "log", "launcher_accounts.json": "sensitive"] {
+        for (path, value) in ["saves/World/level.dat": "world-data", "saves/World/session.lock": "lock", "mods/example.jar.disabled": "mod-data", "options.txt": "fov:0.5", "config/test.json": "{}", "config/empty.txt": "", "logs/latest.log": "log", "launcher_accounts.json": "sensitive"] {
             let file = paths.game(instance.id).appendingPathComponent(path)
             try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
             try Data(value.utf8).write(to: file)
@@ -27,6 +27,7 @@ struct InstanceTransferTests {
             #expect(archive["\(prefix)/launcher_accounts.json"] == nil)
             #expect(archive["\(prefix)/logs/latest.log"] == nil)
             #expect(archive["\(prefix)/saves/World/session.lock"] == nil)
+            #expect(archive["\(prefix)/config/empty.txt"]?.uncompressedSize == 0)
             let preview = try await transfer.prepare(zip)
             #expect(preview.instance.name == original.name)
             #expect(preview.instance.loader == .fabric); #expect(preview.instance.loaderVersion == "0.19.5")

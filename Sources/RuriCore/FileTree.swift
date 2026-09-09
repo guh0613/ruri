@@ -70,6 +70,7 @@ extension SafeArchive {
                     defer { try? handle.close() }
                     try archive.addEntry(with: path, type: .file, uncompressedSize: entry.size, modificationDate: entry.modified, compressionMethod: .deflate, bufferSize: 128 * 1024) { position, count in
                         try Task.checkCancellation(); try handle.seek(toOffset: UInt64(position))
+                        if count == 0 { return Data() }
                         guard let data = try handle.read(upToCount: count), data.count == count else { throw RuriError.message("备份期间源文件发生变化：\(entry.path)") }
                         return data
                     }
