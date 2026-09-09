@@ -142,4 +142,81 @@ struct CustomRunDirectoryChangeTests {
             #expect(!RunDirectoryCopyGuard.hasPending(paths: paths.configured(with: result.state), instanceID: instance.id))
         }
     }
+
+    @Test func portablePublicationNeverReplacesExistingFilesOrDirectories() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-portable-publish-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true); defer { try? FileManager.default.removeItem(at: root) }
+        for directory in [false, true] {
+            let source = root.appendingPathComponent("source-\(directory)"), target = root.appendingPathComponent("target-\(directory)")
+            if directory { try FileManager.default.createDirectory(at: source, withIntermediateDirectories: false); try FileManager.default.createDirectory(at: target, withIntermediateDirectories: false) }
+            let sourceFile = directory ? source.appendingPathComponent("file.txt") : source
+            let targetFile = directory ? target.appendingPathComponent("file.txt") : target
+            try Data("staged".utf8).write(to: sourceFile); try Data("foreign".utf8).write(to: targetFile)
+            #expect(throws: (any Error).self) {
+                try RunDirectoryFileCopy.copyForPublication(source, to: target, directory: directory, created: { _ in Issue.record("Must not claim an existing destination") }, validate: {}, progress: { _ in })
+            }
+            #expect(try String(contentsOf: sourceFile, encoding: .utf8) == "staged")
+            #expect(try String(contentsOf: targetFile, encoding: .utf8) == "foreign")
+        }
+    }
+
+    @Test func recoveryPreservesStagingAndReturnsPartialPortablePublicationsIncludingLaterEdits() async throws {
+        enum Interruption: Error { case simulated }
+        for directory in [false, true] {
+            let (paths, instance, custom) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            var journal = RunDirectoryCopyJournal(id: UUID(), original: instance, target: .custom, createdAt: Date(), phase: .publishing, items: [], emptyDirectories: [])
+            journal.targetCustomDirectory = custom; journal.stagingOnTarget = true
+            let record = try RunDirectoryCopyJournal.root(paths: paths, instanceID: instance.id), workspace = try journal.workspace(paths: paths)
+            try FileManager.default.createDirectory(at: record, withIntermediateDirectories: true)
+            let staged = workspace.appendingPathComponent("incoming/game/copied")
+            try FileManager.default.createDirectory(at: directory ? staged : staged.deletingLastPathComponent(), withIntermediateDirectories: true)
+            let stagedFile = directory ? staged.appendingPathComponent("large.bin") : staged
+            let bytes = Data(repeating: 90, count: 4_194_304); try bytes.write(to: stagedFile)
+            journal.items = [.init(area: .game, name: "copied", identity: try .read(staged))]; try journal.save(paths: paths)
+            let target = custom.url.appendingPathComponent("copied"), targetPaths = journal.targetPaths(paths)
+            try RunDirectoryCopyGuard.mark(journal, paths: targetPaths)
+            var written: Int64 = 0
+            do {
+                try RunDirectoryFileCopy.copyForPublication(staged, to: target, directory: directory) { identity in
+                    journal.items[0].publishedIdentity = identity; try journal.save(paths: paths)
+                } validate: {
+                    if !directory && written > 0 { throw Interruption.simulated }
+                } progress: { written += $0 }
+                #expect(directory)
+            } catch Interruption.simulated { #expect(!directory && written == 1_048_576) }
+            if directory { try Data("later edit".utf8).write(to: target.appendingPathComponent("user.txt")) }
+            let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: instance.id, transactionID: journal.id)
+            #expect(result.warning == nil)
+            #expect(try Data(contentsOf: stagedFile) == bytes)
+            #expect(!FileManager.default.fileExists(atPath: target.path))
+            let returns = try FileManager.default.contentsOfDirectory(at: workspace.appendingPathComponent("returned"), includingPropertiesForKeys: nil)
+            let returned = try #require(returns.first).appendingPathComponent("copied")
+            if directory {
+                #expect(try Data(contentsOf: returned.appendingPathComponent("large.bin")) == bytes)
+                #expect(try String(contentsOf: returned.appendingPathComponent("user.txt"), encoding: .utf8) == "later edit")
+            } else { #expect(try Data(contentsOf: returned).count == 1_048_576) }
+            #expect(!RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: instance.id))
+        }
+    }
+
+    @Test func failureBeforeSavingPublicationIdentityPreservesUnknownPlaceholderAndReportsIt() async throws {
+        enum Interruption: Error { case simulated }
+        let (paths, instance, custom) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        var journal = RunDirectoryCopyJournal(id: UUID(), original: instance, target: .custom, createdAt: Date(), phase: .publishing, items: [], emptyDirectories: [])
+        journal.targetCustomDirectory = custom; journal.stagingOnTarget = true
+        let root = try RunDirectoryCopyJournal.root(paths: paths, instanceID: instance.id), workspace = try journal.workspace(paths: paths)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let staged = workspace.appendingPathComponent("incoming/game/copied.txt")
+        try FileManager.default.createDirectory(at: staged.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data("staged".utf8).write(to: staged)
+        journal.items = [.init(area: .game, name: "copied.txt", identity: try .read(staged))]; try journal.save(paths: paths)
+        let target = custom.url.appendingPathComponent("copied.txt")
+        #expect(throws: Interruption.simulated) {
+            try RunDirectoryFileCopy.copyForPublication(staged, to: target, directory: false, created: { _ in throw Interruption.simulated }, validate: {}, progress: { _ in Issue.record("No data should be written before the identity is durable") })
+        }
+        let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: instance.id, transactionID: journal.id)
+        #expect(result.warning?.contains("copied.txt") == true)
+        #expect(try Data(contentsOf: target) == Data([0]))
+        #expect(try String(contentsOf: staged, encoding: .utf8) == "staged")
+    }
 }

@@ -11,7 +11,7 @@ public struct RunDirectoryCopyProgress: Sendable {
     public var progress: InstallProgress {
         switch phase {
         case .copying: .init("正在复制游戏文件（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: completed, total: total)
-        case .publishing: .init("正在发布复制的文件", completed: completed, total: total)
+        case .publishing: .init("正在写入目标（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
         case .committed: .init("目录已更新，正在清理复制记录", completed: 1, total: 1)
         }
     }
@@ -87,16 +87,30 @@ extension GameRunDirectoryChange {
             }
             guard journal.items.count <= 4096 else { throw RuriError.message("游戏目录的顶层项目过多，无法记录安全的发布过程。") }
             journal.phase = .publishing; try journal.save(paths: current)
-            progress(.init(phase: .publishing, completed: 0, total: journal.items.count, bytesCopied: bytes, totalBytes: preview.sourceBytes))
+            var sizes: [String: Int64] = [:]
+            for (area, entries) in [(RunDirectoryCopyJournal.Area.game, preview.sourceSnapshot.game), (.metadata, preview.sourceSnapshot.metadata)] {
+                for entry in entries where !entry.directory {
+                    sizes[area.rawValue + "/" + String(entry.path.split(separator: "/")[0]), default: 0] += entry.size
+                }
+            }
+            var publishedBytes: Int64 = 0
+            progress(.init(phase: .publishing, completed: 0, total: journal.items.count, bytesCopied: 0, totalBytes: preview.sourceBytes))
             for (index, item) in journal.items.enumerated() {
                 try Task.checkCancellation()
                 try validateLocations()
                 let destination = try journal.destination(item, paths: access.targetPaths)
                 try removeEmptyTree(destination)
                 try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
-                try RunDirectoryFileCopy.moveWithoutReplacing(journal.incoming(item, paths: current), to: destination)
-                guard item.identity.matches(destination) else { throw RuriError.message("复制项目在发布时跨越磁盘或身份改变，已保留工作区。") }
-                progress(.init(phase: .publishing, completed: index + 1, total: journal.items.count, bytesCopied: bytes, totalBytes: preview.sourceBytes))
+                let completedBytes = publishedBytes
+                try RunDirectoryFileCopy.publish(journal.incoming(item, paths: current), to: destination, directory: item.identity.directory) { identity in
+                    journal.items[index].publishedIdentity = identity; try journal.save(paths: current)
+                } validate: { try validateLocations() } progress: { amount in
+                    publishedBytes += amount
+                    progress(.init(phase: .publishing, completed: index, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
+                }
+                guard (journal.items[index].publishedIdentity ?? item.identity).matches(destination) else { throw RuriError.message("复制项目在发布时身份改变，已保留工作区。") }
+                publishedBytes = completedBytes + (sizes[item.area.rawValue + "/" + item.name] ?? 0)
+                progress(.init(phase: .publishing, completed: index + 1, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
             }
             try Task.checkCancellation()
             committed = try StateStore.update(paths) { state in
@@ -226,10 +240,16 @@ extension GameRunDirectoryChange {
             let destination = try journal.destination(item, paths: access.targetPaths)
             // A foreign replacement remains untouched. Our directory inode can
             // contain later user edits; moving it back preserves those as well.
-            guard item.identity.matches(destination) else {
+            guard (item.publishedIdentity ?? item.identity).matches(destination) else {
                 var info = stat()
                 if lstat(destination.path, &info) == 0 { retained.append(item.name) }
                 else if errno != ENOENT { throw RuriError.message("无法检查目标项目，复制记录已保留：\(item.name)") }
+                continue
+            }
+            if item.publishedIdentity != nil {
+                // The complete staging copy still exists. Preserve the partial
+                // publication separately, including any subsequent user edits.
+                try RunDirectoryFileCopy.returnToWorkspace(destination, workspace: journal.workspace(paths: access.sourcePaths))
                 continue
             }
             let incoming = try journal.incoming(item, paths: access.sourcePaths)
