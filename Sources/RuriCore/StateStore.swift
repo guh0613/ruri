@@ -5,7 +5,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...5).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...6).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
         try validate(result, paths: paths)
         return result
     }
@@ -33,11 +33,12 @@ public enum StateStore {
         return try write(state, paths: paths)
     }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
+        guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message("启动快照不能覆盖实例设置，请保存原实例的覆盖项。") }
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
         try paths.configured(with: state).validateDirectoryConfiguration()
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
-        var state = input; state.schemaVersion = 5; state.revision = UUID()
+        var state = input; state.schemaVersion = 6; state.revision = UUID()
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(state).write(to: paths.state, options: [.atomic])

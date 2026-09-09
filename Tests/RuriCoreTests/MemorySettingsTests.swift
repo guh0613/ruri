@@ -1,0 +1,76 @@
+import Foundation
+import Testing
+@testable import RuriCore
+
+struct MemorySettingsTests {
+    @Test func automaticMemoryReservesHeadroomAndUsesAvailableEstimate() throws {
+        let automatic = MemorySettings(mode: .automatic)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 65536, availableMB: 49152)).maximumMB == 8192)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 12288)).maximumMB == 4096)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 2048)).maximumMB == 1024)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 4096)).maximumMB == 1024)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 4096, availableMB: 200)).maximumMB == 512)
+        #expect(throws: (any Error).self) { try automatic.resolve(availability: .init(physicalMB: 0)) }
+        let sample = MemoryAvailability.current()
+        #expect(sample.physicalMB >= 512)
+        #expect(sample.availableMB == nil || sample.availableMB! >= 0)
+    }
+
+    @Test func manualInitialAndMetaspaceAndValidation() throws {
+        let resolved = try MemorySettings(maximumMB: 6144, initialMB: 1024, metaspaceMB: 512).resolve()
+        #expect(resolved.arguments == ["-Xms1024M", "-Xmx6144M", "-XX:MaxMetaspaceSize=512M"])
+        #expect(resolved.maximumSource == .settings && resolved.initialBytes == 1_073_741_824)
+        #expect(throws: (any Error).self) { try MemorySettings(maximumMB: 512, initialMB: 1024).resolve() }
+        #expect(throws: (any Error).self) { try MemorySettings(metaspaceMB: 0).resolve() }
+        #expect(try MemorySettings().resolve().metaspaceBytes == nil)
+    }
+
+    @Test func aliasesAndUnitsRespectOrderWithoutConflatingInitialAndMinimum() throws {
+        let base = try MemorySettings(maximumMB: 4096).resolve()
+        let first = try JVMHeapArguments.resolve(base: base, arguments: ["-Xmx2G", "-XX:MaxHeapSize=3072m", "-Xms768m", "-XX:InitialHeapSize=1048576k", "-XX:MaxMetaspaceSize=268435456"])
+        #expect(first.maximumMB == 3072 && first.maximumSource == .jvmArguments)
+        #expect(first.minimumBytes == 768 * 1_048_576 && first.initialBytes == 1024 * 1_048_576)
+        #expect(try #require(first.metaspaceBytes) == Int64(256) * 1_048_576)
+        let second = try JVMHeapArguments.resolve(base: base, arguments: ["-XX:InitialHeapSize=1G", "-Xms512m", "-XX:MaxHeapSize=3G", "-Xmx2G"])
+        #expect(second.initialBytes == 512 * 1_048_576 && second.maximumMB == 2048)
+        let minimum = try JVMHeapArguments.resolve(base: base, arguments: ["-XX:MinHeapSize=128M"])
+        #expect(minimum.minimumBytes == 128 * 1_048_576 && minimum.initialBytes == 512 * 1_048_576)
+        let unrelated = try JVMHeapArguments.resolve(base: base, arguments: ["-Dmessage=-Xmx16G", "-XX:MaxRAMPercentage=70"])
+        #expect(unrelated == base)
+    }
+
+    @Test func malformedAndConflictingHeapArgumentsFailBeforeJava() throws {
+        let base = try MemorySettings().resolve()
+        for flag in ["-Xmx", "-Xmx1.5G", "-Xmx-1G", "-Xmx999999999999999999G", "-XX:MaxHeapSize=1gb", "-Xmx1M", "-Xms5G", "-XX:InitialHeapSize=128M"] {
+            #expect(throws: (any Error).self) { try JVMHeapArguments.resolve(base: base, arguments: [flag]) }
+        }
+    }
+
+    @Test func oldOverrideJSONAndGlobalMemoryEditsKeepManualSemantics() throws {
+        let old = try JSONDecoder().decode(InstanceLaunchOverrides.self, from: Data(#"{"memoryMB":6144,"jvmArguments":""}"#.utf8))
+        #expect(old.memory == .init(maximumMB: 6144))
+        var modern = old; modern.memory?.mode = .automatic; modern.memory?.initialMB = 1024
+        #expect(try JSONDecoder().decode(InstanceLaunchOverrides.self, from: JSONEncoder().encode(modern)) == modern)
+        var defaults = AppSettings(); defaults.defaultLaunchSettings = .init()
+        defaults.defaultMemoryMB = 8192
+        #expect(defaults.defaultLaunchSettings.memory == .init(maximumMB: 8192))
+        modern.setInheritance(true, for: .memory, defaults: defaults.defaultLaunchSettings)
+        #expect(modern.memory == nil && modern.inherits(.memory))
+    }
+
+    @MainActor @Test func snapshotFreezesAutomaticMemoryAndSessionSeesArgumentOverride() throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-heap-\(UUID())")); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var instance = GameInstance(name: "Heap", gameVersion: "1.0"); instance.launchOverrides = .init()
+        var defaults = AppSettings(); defaults.defaultMemorySettings = .init(mode: .automatic); defaults.defaultJVMArguments = "-Xmx2G -Xms1G"
+        let snapshot = try instance.launchSnapshot(defaults: defaults, availability: .init(physicalMB: 65536, availableMB: 49152))
+        #expect(snapshot.frozenMemory?.maximumMB == 8192 && snapshot.frozenMemory?.maximumSource == .automatic)
+        var state = PersistentState(); state.instances = [instance]; state.settings = defaults; try StateStore.save(state, to: paths)
+        let recorder = try GameSessionRecorder(paths: paths, instance: snapshot, accountMode: "offline")
+        #expect(recorder.record.memoryMB == 2048 && recorder.record.memory?.initialBytes == 1_073_741_824)
+        #expect(recorder.record.memory?.maximumSource == .jvmArguments)
+        let before = try Data(contentsOf: paths.state)
+        #expect(throws: (any Error).self) { try StateStore.update(paths) { $0.instances[0] = snapshot } }
+        #expect(try Data(contentsOf: paths.state) == before)
+        try recorder.fail(CancellationError(), cancelled: true)
+    }
+}

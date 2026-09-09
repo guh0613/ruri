@@ -164,7 +164,7 @@ enum Page: String, CaseIterable, Identifiable {
         func setting<Value: Equatable>(_ key: WritableKeyPath<InstanceLaunchOverrides, Value>) {
             if desired[keyPath: key] != baseline[keyPath: key] { overrides[keyPath: key] = desired[keyPath: key] }
         }
-        setting(\.memoryMB); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window)
+        setting(\.memory); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window)
         if overrides != current.effectiveLaunchOverrides { current.launchOverrides = overrides }
         update(current)
         Task { await scanJava() }
@@ -174,7 +174,7 @@ enum Page: String, CaseIterable, Identifiable {
         func apply<Value: Equatable>(_ key: WritableKeyPath<LaunchSettingsValues, Value>) {
             if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
         }
-        apply(\.memoryMB); apply(\.java); apply(\.jvmArguments); apply(\.gameArguments); apply(\.window)
+        apply(\.memory); apply(\.java); apply(\.jvmArguments); apply(\.gameArguments); apply(\.window)
         state.settings.defaultLaunchSettings = current; save()
         Task { await scanJava() }
     }

@@ -44,7 +44,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public let gameVersion: String
     public let loader: String
     public let loaderVersion: String?
-    public let memoryMB: Int
+    public var memoryMB: Int
+    public var memory: LaunchMemory?
     public var baselinePlayTime: Double?
     public let operatingSystem: String
     public let hostArchitecture: String
@@ -192,14 +193,16 @@ public enum GameSessionReviewStore {
     private var lease: GameRunLease?
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
+        let memory = try JVMHeapArguments.resolve(base: instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve(), arguments: ArgumentTokenizer.split(instance.extraJVMArguments))
         self.paths = paths
         try paths.validateBinding(instance)
         lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
         let now = Date(), id = UUID()
         record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
-                             loaderVersion: instance.loaderVersion, memoryMB: instance.memoryMB, baselinePlayTime: instance.playTime, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
+                             loaderVersion: instance.loaderVersion, memoryMB: memory.maximumMB, baselinePlayTime: instance.playTime, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
                              hostArchitecture: JavaRuntime.hostArchitecture, accountMode: accountMode, ownerPID: ProcessInfo.processInfo.processIdentifier,
                              createdAt: now, updatedAt: now, state: .preparing, stage: .preparing, events: [], evidence: [])
+        record.memory = memory
         directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: id)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
         let logURL = directory.appendingPathComponent("launcher.log")
@@ -237,6 +240,10 @@ public enum GameSessionReviewStore {
         try save()
     }
     public func setJava(_ label: String) throws { record.java = label; try save() }
+    public func setMemory(_ memory: LaunchMemory) throws {
+        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message("游戏已启动，不能改写本轮内存设置。") }
+        record.memory = memory; record.memoryMB = memory.maximumMB; try save()
+    }
     public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
     func recordNormalQuit(_ request: GameNormalQuitRequest, accepted: Bool) throws {
         guard !record.state.isFinished else { return }

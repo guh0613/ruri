@@ -40,6 +40,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     /// committed even if its process died before cleaning its journal.
     public var lastRunDirectoryChangeID: UUID?
     public var launchOverrides: InstanceLaunchOverrides?
+    /// Only set on a launch/export snapshot, never written over live preferences.
+    public var frozenMemory: LaunchMemory?
     public init(name: String, gameVersion: String, loader: LoaderKind = .vanilla, loaderVersion: String? = nil) {
         id = UUID(); self.name = name; self.gameVersion = gameVersion; self.loader = loader
         self.loaderVersion = loaderVersion; createdAt = Date(); playTime = 0
@@ -77,7 +79,10 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var concurrentDownloads = 8
     public var microsoftClientID = ""
     public var showSnapshots = false
-    public var defaultMemoryMB = 4096
+    public var defaultMemoryMB = 4096 {
+        didSet { if defaultMemorySettings != nil { defaultMemorySettings?.maximumMB = defaultMemoryMB; defaultMemorySettings?.mode = .manual } }
+    }
+    public var defaultMemorySettings: MemorySettings?
     public var appearance = "system"
     public var downloadSource: DownloadSource?
     public var isolationPolicy: GameIsolationPolicy?

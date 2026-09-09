@@ -37,7 +37,7 @@ public struct GameDiagnosticBundle: Sendable {
         Minecraft: \(session.gameVersion)
         Loader: \(session.loader) \(session.loaderVersion ?? "")
         Java: \(session.java ?? "未记录")
-        Memory limit: \(session.memoryMB) MB
+        Memory: \(session.memory?.summary ?? "堆上限 \(session.memoryMB) MB")
         System: \(session.operatingSystem)
         Host architecture: \(session.hostArchitecture)
         Account type: \(session.accountMode)

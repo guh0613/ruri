@@ -6,6 +6,7 @@ public struct LaunchPlan: Codable, Sendable {
     public let directory: URL
     public let environment: [String: String]
     public var nativeQuitSupported: Bool?
+    public var memory: LaunchMemory?
     public var redactedCommand: String {
         var redactNext = false
         return ([executable.path] + arguments).map { value in
@@ -91,7 +92,9 @@ public enum LaunchBuilder {
         // startup flag on it can leave the legacy OpenGL context unbound.
         let legacyLWJGL = manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl.lwjgl:lwjgl:") }
         if !legacyLWJGL && !jvm.contains("-XstartOnFirstThread") { jvm.insert("-XstartOnFirstThread", at: 0) }
-        jvm.insert(contentsOf: ["-Xms512M", "-Xmx\(instance.memoryMB)M", "-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
+        let baseMemory = try instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve()
+        var memoryArguments = jvm
+        jvm.insert(contentsOf: baseMemory.arguments + ["-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
         if let logging = manifest.logging?.client {
             let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: paths.assets)
             jvm.append(logging.argument.replacingOccurrences(of: "${path}", with: file.path))
@@ -99,6 +102,8 @@ public enum LaunchBuilder {
         let extras = try ArgumentTokenizer.split(instance.extraJVMArguments)
         guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message("附加 JVM 参数不能覆盖游戏主类或 classpath。") }
         jvm += extras
+        memoryArguments += extras
+        let memory = try JVMHeapArguments.resolve(base: baseMemory, arguments: memoryArguments)
         var game: [String]
         if let legacy = manifest.minecraftArguments { game = try ArgumentTokenizer.split(legacy).map(expand) }
         else { game = try (manifest.arguments?.game ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand) }
@@ -111,7 +116,7 @@ public enum LaunchBuilder {
         for key in ["JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "JDK_JAVA_OPTIONS", "CLASSPATH"] { env.removeValue(forKey: key) }
         env["JAVA_HOME"] = URL(fileURLWithPath: java.path).deletingLastPathComponent().deletingLastPathComponent().path
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported)
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory)
     }
 }
 

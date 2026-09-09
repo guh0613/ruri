@@ -49,6 +49,7 @@ public enum GameMonitorClient {
         return helper
     }
     @MainActor public static func start(plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String], helper: URL? = nil) throws {
+        if let memory = plan.memory { try recorder.setMemory(memory) }
         let process = Process(), input = Pipe()
         process.executableURL = try helper ?? helperExecutable()
         process.arguments = ["run"]
