@@ -51,7 +51,14 @@ extension InstanceTransfer {
         }
         var warnings = ["整合包版本：\(index.versionId)"]
         if let summary = index.summary, !summary.isEmpty { warnings.append(summary) }
-        return InstanceImportDescription(instance: instance, game: game, format: "Modrinth", warnings: warnings, packFiles: files, overlays: [root.appendingPathComponent("client-overrides")])
+        var identities: [String: String] = [:]
+        for file in files {
+            if let url = file.url, url.host == "cdn.modrinth.com" {
+                let parts = url.path.split(separator: "/")
+                if parts.count >= 5, parts[0] == "data", parts[2] == "versions" { identities[file.path] = "modrinth:" + parts[1] }
+            }
+        }
+        return InstanceImportDescription(instance: instance, game: game, format: "Modrinth", warnings: warnings, packFiles: files, overlays: [root.appendingPathComponent("client-overrides")], modpack: ModpackDescriptor(version: index.versionId, identities: identities))
     }
 
     func exportMRPack(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails,

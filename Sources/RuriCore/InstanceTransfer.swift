@@ -29,6 +29,8 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     let workspace: URL
     let game: URL
     let records: Data?
+    let modpack: ModpackDescriptor?
+    let inheritedModpack: InstalledModpack?
 }
 
 struct InstanceImportDescription {
@@ -42,6 +44,8 @@ struct InstanceImportDescription {
     var excluded: Set<String> = []
     var sourceMetadata: Data?
     var overlays: [URL] = []
+    var modpack: ModpackDescriptor?
+    var inheritedModpack: InstalledModpack?
 }
 
 public struct PackFile: Identifiable, Sendable {
@@ -53,6 +57,7 @@ public struct PackFile: Identifiable, Sendable {
     public var size: Int64?
     public var fallbackURLs: [URL] = []
     public var optional = false
+    public var force = false
     func item(in root: URL, url override: URL? = nil) throws -> DownloadItem { DownloadItem(url: override ?? url, destination: try LauncherPaths.safePath(path, within: root), sha1: sha1, sha512: sha512, size: size) }
 }
 
@@ -97,7 +102,7 @@ public actor InstanceTransfer {
     static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches"]
     public init(paths: LauncherPaths) { self.paths = paths }
 
-    public func prepare(_ source: URL, progress: @Sendable (InstallProgress) -> Void = { _ in }) throws -> PreparedInstanceImport {
+    public func prepare(_ source: URL, origin: ModpackOrigin? = nil, progress: @Sendable (InstallProgress) -> Void = { _ in }) throws -> PreparedInstanceImport {
         try paths.prepare()
         let workspace = paths.cache.appendingPathComponent("transfer-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
@@ -112,7 +117,8 @@ public actor InstanceTransfer {
                 try SafeArchive.extract(source, to: unpacked, maxBytes: 128 * 1024 * 1024 * 1024)
             }
             let root = try Self.findRoot(unpacked)
-            let description = try Self.describe(root)
+            var description = try Self.describe(root)
+            if let origin { description.modpack?.origin = origin }
             let locks = try Self.lockWorlds(description.game); defer { locks.forEach { close($0) } }
             let snapshot = workspace.appendingPathComponent("minecraft")
             let declaredFolders = Set(description.packFiles.compactMap { $0.path.split(separator: "/").first.map(String.init) })
@@ -136,7 +142,7 @@ public actor InstanceTransfer {
             return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings,
                                           fileCount: entries.filter { !$0.directory }.count, byteCount: entries.reduce(0) { $0 + $1.size }, curseForgeFiles: description.curseForgeFiles,
                                           remoteFileCount: packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }.count,
-                                          packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records)
+                                          packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records, modpack: description.modpack, inheritedModpack: description.inheritedModpack)
         } catch { try? FileManager.default.removeItem(at: workspace); throw error }
     }
 
@@ -197,7 +203,9 @@ public actor InstanceTransfer {
             }
             if let source = prepared.sourceMetadata { try source.write(to: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta"), options: .atomic) }
             try Self.copyPackContent(content, to: paths, instanceID: instance.id)
+            let pack = try ModpackRegistry.capture(prepared, instance: instance, paths: paths, content: content)
             instance = try await installGame(instance)
+            if let pack { try ModpackRegistry.save(pack, paths: paths, instanceID: instance.id) }
             try Task.checkCancellation()
             return instance
         } catch { try? FileManager.default.removeItem(at: paths.instance(instance.id)); throw error }
@@ -218,6 +226,7 @@ public actor InstanceTransfer {
             extra["ruri-instance.json"] = try encoder.encode(PortableInstance(instance))
             let records = try await ContentManager(paths: paths, instanceID: instance.id).records()
             extra["ruri-content.json"] = try encoder.encode(records)
+            if let pack = try ModpackRegistry.load(paths: paths, instanceID: instance.id) { extra["ruri-modpack-state.json"] = try encoder.encode(pack) }
             let source = paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta")
             if FileManager.default.fileExists(atPath: source.path) { extra["ruri-source-mcbbs.packmeta"] = try Self.read(source) }
         } else {
@@ -301,7 +310,8 @@ public actor InstanceTransfer {
         if !instance.extraJVMArguments.isEmpty { warnings.append("实例带有自定义 JVM 参数，确认内容后可选择保留。") }
         let source = root.appendingPathComponent("ruri-source-mcbbs.packmeta")
         return InstanceImportDescription(instance: instance, game: games[0], format: format, warnings: warnings, records: records,
-                                         sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil)
+                                         sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil,
+                                         inheritedModpack: format == "Ruri" && fm.fileExists(atPath: root.appendingPathComponent("ruri-modpack-state.json").path) ? try ModpackRegistry.read(root.appendingPathComponent("ruri-modpack-state.json"), game: games[0]) : nil)
     }
     static func validate(_ instance: GameInstance) throws {
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,

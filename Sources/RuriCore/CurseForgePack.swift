@@ -38,7 +38,7 @@ extension InstanceTransfer {
         var warnings: [String] = []
         if !manifest.files.isEmpty { warnings.append("需要下载 \(manifest.files.count) 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。") }
         if let author = manifest.author, !author.isEmpty { warnings.append("整合包作者：\(author)") }
-        return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", warnings: warnings, curseForgeFiles: manifest.files)
+        return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", warnings: warnings, curseForgeFiles: manifest.files, modpack: ModpackDescriptor(version: manifest.version ?? ""))
     }
 
     static func validatePackContent(_ content: [ContentInstallation], references: [CurseForgeReference]) throws {

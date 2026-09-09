@@ -275,8 +275,8 @@ public actor ContentManager {
         do { records.removeAll { $0.kind == file.kind && $0.filename == file.filename && $0.enabled == file.enabled }; try writeRecords(records) }
         catch { if let trashed { try? FileManager.default.moveItem(at: trashed as URL, to: source) }; throw error }
     }
-    private struct ModInfo { let id: String?; let name: String?; let version: String? }
-    private static func modInfo(_ url: URL) -> ModInfo? {
+    struct ModInfo { let id: String?; let name: String?; let version: String? }
+    static func modInfo(_ url: URL) -> ModInfo? {
         let archive: Archive
         do { archive = try Archive(url: url, accessMode: .read) } catch { return nil }
         for path in ["fabric.mod.json", "quilt.mod.json"] {

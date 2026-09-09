@@ -222,7 +222,7 @@ extension AppModel {
                 try await installer.downloader.fetch(file.downloadItem(to: archive, permittedURL: url))
             }
             guard DownloadManager.valid(archive, item: try file.downloadItem(to: archive, permittedURL: nil)) else { throw RuriError.message("整合包校验失败") }
-            importingInstance = try await InstanceTransfer(paths: paths).prepare(archive) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
+            importingInstance = try await InstanceTransfer(paths: paths).prepare(archive, origin: ModpackOrigin(provider: .curseforge, projectID: String(project.id), versionID: String(file.id))) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
         }
     }
 }

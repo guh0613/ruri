@@ -83,7 +83,7 @@ extension InstanceTransfer {
                     guard let base = URL(string: value), ["http", "https"].contains(base.scheme), base.host != nil, base.user == nil, base.password == nil, base.query == nil, base.fragment == nil else { throw RuriError.message("MCBBS fileApi 下载源无效") }
                     url = base.appendingPathComponent("overrides").appendingPathComponent(path)
                 }
-                files.append(PackFile(path: path, sha1: hash.lowercased(), url: url))
+                files.append(PackFile(path: path, sha1: hash.lowercased(), url: url, force: file.force ?? false))
             case "curse":
                 guard let project = file.projectID, let id = file.fileID, project > 0, id > 0 else { throw RuriError.message("MCBBS CurseForge 文件标识无效") }
                 // force controls online replacement, not whether a file is optional.
@@ -97,7 +97,8 @@ extension InstanceTransfer {
         if !instance.extraJVMArguments.isEmpty { warnings.append("此整合包提供了 JVM 参数，可在下方查看并选择保留。") }
         if manifest.fileApi?.isEmpty == false { warnings.append("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。") }
         if !curse.isEmpty { warnings.append("需要解析 \(curse.count) 个 CurseForge 文件。") }
-        return InstanceImportDescription(instance: instance, game: game, format: "MCBBS", warnings: warnings, curseForgeFiles: curse, packFiles: files, sourceMetadata: source)
+        let origin = manifest.fileApi.flatMap { $0.isEmpty ? nil : URL(string: $0) }.map { ModpackOrigin(provider: .mcbbs, fileAPI: $0) }
+        return InstanceImportDescription(instance: instance, game: game, format: "MCBBS", warnings: warnings, curseForgeFiles: curse, packFiles: files, sourceMetadata: source, modpack: ModpackDescriptor(version: manifest.version ?? "", origin: origin, forcedProjects: Set(manifest.files.filter { $0.type == "curse" && $0.force == true }.compactMap { $0.projectID.map(String.init) })))
     }
 
     func exportMCBBS(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails, progress: @Sendable (InstallProgress) -> Void) throws {

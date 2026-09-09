@@ -4,6 +4,7 @@ private struct HMCLMetadata: Decodable {
     let name: String
     let gameVersion: String?
     let author: String?
+    let version: String?
 }
 
 private struct HMCLVersion: Decodable {
@@ -94,6 +95,6 @@ extension InstanceTransfer {
         try validate(instance)
         var warnings = ["游戏与加载器依赖会重新安装，以匹配当前 Mac。"]
         if let author = metadata.author, !author.isEmpty { warnings.append("整合包作者：\(author)") }
-        return InstanceImportDescription(instance: instance, game: game, format: "HMCL", warnings: warnings, excluded: ["pack.json"])
+        return InstanceImportDescription(instance: instance, game: game, format: "HMCL", warnings: warnings, excluded: ["pack.json"], modpack: ModpackDescriptor(version: metadata.version ?? ""))
     }
 }
