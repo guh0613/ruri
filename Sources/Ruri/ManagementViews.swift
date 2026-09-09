@@ -145,6 +145,7 @@ struct JavaView: View {
 
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
+    @State private var showLaunchDefaults = false
     var body: some View {
         @Bindable var model = model
         VStack(alignment: .leading, spacing: 0) {
@@ -154,7 +155,9 @@ struct PreferencesView: View {
                     Picker("主题", selection: $model.state.settings.appearance) { Text("跟随系统").tag("system"); Text("浅色").tag("light"); Text("深色").tag("dark") }
                 }
                 Section("游戏默认设置") {
-                    Picker("新实例内存", selection: $model.state.settings.defaultMemoryMB) { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { Text("\($0 / 1024) GB").tag($0) } }
+                    LabeledContent("默认最大内存", value: "\(model.state.settings.defaultMemoryMB) MB")
+                    Button("编辑默认启动设置…", systemImage: "slider.horizontal.3") { showLaunchDefaults = true }
+                    Text("内存、Java、窗口和附加参数可被实例继承；实例也可按项覆盖。").font(.caption).foregroundStyle(.secondary)
                     Picker("新实例隔离规则", selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {
                         ForEach(GameIsolationPolicy.allCases) { Text($0.title).tag($0) }
                     }
@@ -186,7 +189,7 @@ struct PreferencesView: View {
             }.formStyle(.grouped)
         }
         .onChange(of: model.state.settings.appearance) { model.save() }
-        .onChange(of: model.state.settings.defaultMemoryMB) { model.save() }
+        .sheet(isPresented: $showLaunchDefaults) { DefaultLaunchSettingsView(settings: model.state.settings) }
         .onChange(of: model.state.settings.isolationPolicy) { model.save() }
         .onChange(of: model.state.settings.concurrentDownloads) { model.save() }
         .onChange(of: model.state.settings.downloadSource) { model.save(); Task { await model.applyNetworkSettings() } }

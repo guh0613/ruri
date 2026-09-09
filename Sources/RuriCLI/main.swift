@@ -16,6 +16,8 @@ import RuriCore
             } else { source = storedSource }
             await NetworkRouting.shared.configure(source)
             switch args.first {
+            case "launch-settings":
+                try manageLaunchSettings(Array(args.dropFirst()), paths: paths)
             case "directories":
                 try manageDirectories(Array(args.dropFirst()), paths: paths)
             case "isolation-policy":
@@ -78,6 +80,7 @@ import RuriCore
                 guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt]") }
                 guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
+                instance.launchOverrides = .init()
                 instance.directoryID = paths.newInstanceDirectoryID
                 instance.runDirectory = (try StateStore.load(paths).settings.isolationPolicy ?? .always).directory(loader: loader)
                 let installPaths = paths.including(instance)
@@ -115,10 +118,13 @@ import RuriCore
                 print("Repaired \(instance.id)")
             case "plan":
                 let state = try StateStore.load(paths)
-                guard let instance = state.instances.last else { throw RuriError.message("没有已安装实例") }
+                guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message("用法：ruri-cli plan [实例UUID]") }
+                let selectedID = args.count == 2 ? UUID(uuidString: args[1]) : state.selectedInstanceID
+                guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message("没有找到指定实例") }
+                let instance = try stored.launchSnapshot(defaults: state.settings)
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
-                let runtimes = await JavaDiscovery.scan(paths: paths)
-                let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
+                let runtimes = await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 })
+                let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
             case "install-content":
@@ -140,8 +146,9 @@ import RuriCore
                 let requestedID = launchArgs.first.flatMap(UUID.init(uuidString:)) ?? (launchArgs.isEmpty ? state.selectedInstanceID : nil)
                 if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message("无效的实例 UUID") }
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
-                guard let instance = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
+                guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
                 guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
+                let instance = try stored.launchSnapshot(defaults: state.settings)
                 let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {
@@ -151,7 +158,7 @@ import RuriCore
                     try recorder.transition(.manifest)
                     let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                     try recorder.transition(.java)
-                    let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
+                    let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 }), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
                     try recorder.setJava(java.label + " · " + java.version)
                     try recorder.transition(.arguments)
                     try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)
@@ -234,7 +241,29 @@ import RuriCore
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]\n  launch [instance-uuid] [--detach] (offline account)\n  quit <instance-uuid> (normal application quit)\n  stop <instance-uuid> (SIGTERM)\n\nRURI_DATA_DIR overrides the data directory.")
+            default: print("""
+                Ruri CLI
+                  java
+                  versions
+                  install <version> [fabric|quilt|forge|neoforge]
+                  install-java <major> [aarch64|x86_64]
+                  repair <instance-uuid>
+                  install-content <project> <instance-uuid> [version-id]
+                  content <instance-uuid>
+                  plan [instance-uuid]
+                  launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
+                  directories <list|add|select|rename|relocate|remove> ...
+                  run-directory <instance-uuid> <isolated|shared> [--apply|--copy]
+                  recover-directory <instance-uuid> [--apply]
+                  sessions [instance-uuid]
+                  diagnose <instance-uuid> <session-uuid>
+                  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
+                  launch [instance-uuid] [--detach] (offline account)
+                  quit <instance-uuid> (normal application quit)
+                  stop <instance-uuid> (SIGTERM)
+
+                RURI_DATA_DIR overrides the data directory.
+                """)
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }

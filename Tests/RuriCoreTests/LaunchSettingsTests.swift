@@ -105,4 +105,18 @@ struct LaunchSettingsTests {
         var values = LaunchSettingsValues(); values.java = .path("relative/java")
         #expect(throws: (any Error).self) { try values.validate() }
     }
+
+    @Test func installationCompletionPreservesPreferencesEditedDuringDownloads() throws {
+        let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var request = GameInstance(name: "Installing", gameVersion: "1.21.1", loader: .fabric); request.launchOverrides = .init()
+        var seed = PersistentState(); seed.instances = [request]; try StateStore.save(seed, to: paths)
+        var result = request; result.installed = true; result.loaderVersion = "0.19.5"; result.directoryID = GameDirectory.defaultID
+        try StateStore.update(paths) { $0.instances[0].name = "Renamed"; $0.instances[0].launchOverrides?.memoryMB = 8192; $0.settings.defaultJVMArguments = "-Dnext=yes" }
+        let saved = try StateStore.update(paths) { $0.instances[0] = try $0.instances[0].applyingInstallation(result, requested: request) }
+        #expect(saved.instances[0].installed && saved.instances[0].loaderVersion == "0.19.5")
+        #expect(saved.instances[0].name == "Renamed" && saved.instances[0].launchOverrides?.memoryMB == 8192)
+        #expect(saved.settings.defaultJVMArguments == "-Dnext=yes")
+        var changed = saved.instances[0]; changed.gameVersion = "1.20.1"
+        #expect(throws: (any Error).self) { try changed.applyingInstallation(result, requested: request) }
+    }
 }

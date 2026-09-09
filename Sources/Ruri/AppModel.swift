@@ -126,7 +126,8 @@ enum Page: String, CaseIterable, Identifiable {
     func scanJava() async {
         guard !scanningJava else { return }
         scanningJava = true
-        runtimes = await JavaDiscovery.scan(paths: paths, extra: state.instances.compactMap(\.javaPath))
+        let extra = state.instances.compactMap { $0.resolvedLaunchSettings(defaults: state.settings).java.path } + [state.settings.defaultLaunchSettings.java.path].compactMap { $0 }
+        runtimes = await JavaDiscovery.scan(paths: paths, extra: extra)
         scanningJava = false
     }
     func select(_ instance: GameInstance) { state.selectedInstanceID = instance.id; save() }
@@ -157,9 +158,25 @@ enum Page: String, CaseIterable, Identifiable {
         func apply<Value: Equatable>(_ key: WritableKeyPath<GameInstance, Value>) {
             if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
         }
-        apply(\.name); apply(\.favorite); apply(\.memoryMB); apply(\.javaPath)
-        apply(\.extraJVMArguments); apply(\.extraGameArguments); apply(\.width); apply(\.height)
+        apply(\.name); apply(\.favorite)
+        var overrides = current.effectiveLaunchOverrides
+        let desired = draft.effectiveLaunchOverrides, baseline = original.effectiveLaunchOverrides
+        func setting<Value: Equatable>(_ key: WritableKeyPath<InstanceLaunchOverrides, Value>) {
+            if desired[keyPath: key] != baseline[keyPath: key] { overrides[keyPath: key] = desired[keyPath: key] }
+        }
+        setting(\.memoryMB); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window)
+        if overrides != current.effectiveLaunchOverrides { current.launchOverrides = overrides }
         update(current)
+        Task { await scanJava() }
+    }
+    func updateDefaultLaunchSettings(_ draft: LaunchSettingsValues, basedOn original: LaunchSettingsValues) {
+        var current = state.settings.defaultLaunchSettings
+        func apply<Value: Equatable>(_ key: WritableKeyPath<LaunchSettingsValues, Value>) {
+            if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
+        }
+        apply(\.memoryMB); apply(\.java); apply(\.jvmArguments); apply(\.gameArguments); apply(\.window)
+        state.settings.defaultLaunchSettings = current; save()
+        Task { await scanJava() }
     }
     func changeGameRunDirectory(_ preview: GameRunDirectoryChangePreview, copyFiles: Bool = false) {
         perform("\(copyFiles ? "复制并切换" : "切换") \(preview.instanceName) 的运行目录") { [self] activity in
@@ -189,7 +206,7 @@ enum Page: String, CaseIterable, Identifiable {
     func install(name: String, version: String, loader: LoaderKind, loaderVersion: String?) {
         guard !busy, !readOnly else { return }
         var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version, loader: loader, loaderVersion: loaderVersion)
-        instance.memoryMB = state.settings.defaultMemoryMB
+        instance.launchOverrides = .init()
         instance.directoryID = paths.newInstanceDirectoryID
         instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: loader)
         state.instances.append(instance); select(instance); showCreate = false; page = .downloads
@@ -201,8 +218,17 @@ enum Page: String, CaseIterable, Identifiable {
             let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
                 await self?.progress(id, progress)
             }
-            update(result); notice = "\(result.name) 已准备就绪"
+            try recordInstallation(result, requested: instance); notice = "\(result.name) 已准备就绪"
         }
+    }
+    private func recordInstallation(_ result: GameInstance, requested: GameInstance) throws {
+        save()
+        guard !readOnly else { throw RuriError.message("设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。") }
+        state = try StateStore.update(basePaths) { latest in
+            guard let index = latest.instances.firstIndex(where: { $0.id == result.id }) else { throw RuriError.message("实例已被移除，未重新登记。") }
+            latest.instances[index] = try latest.instances[index].applyingInstallation(result, requested: requested)
+        }
+        persistedState = state
     }
     func repair(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id) else { return }
@@ -259,10 +285,12 @@ enum Page: String, CaseIterable, Identifiable {
         // Refresh/merge before taking a launch snapshot: another client may
         // have just committed a directory change while this window was idle.
         save()
-        guard !readOnly, let instance = state.instances.first(where: { $0.id == requested.id }) else { return }
-        guard !isInstanceInUse(instance.id) else { notice = "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。"; return }
+        guard !readOnly, let stored = state.instances.first(where: { $0.id == requested.id }) else { return }
+        guard !isInstanceInUse(stored.id) else { notice = "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。"; return }
         guard var account = activeAccount else { showAccount = true; return }
         do {
+            let defaults = state.settings
+            let instance = try stored.launchSnapshot(defaults: defaults)
             let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
             sessionRecorder = recorder; logsSessionID = recorder.record.id
             requestedLogSessionID = recorder.record.id
@@ -276,8 +304,9 @@ enum Page: String, CaseIterable, Identifiable {
                     try Task.checkCancellation()
                     if !instance.installed {
                         try advanceSession(.installation)
-                        instance = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
-                        update(instance)
+                        let installed = try await installer.install(stored, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
+                        try recordInstallation(installed, requested: stored)
+                        instance = try installed.launchSnapshot(defaults: defaults)
                     }
                     try advanceSession(.recovery)
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()
@@ -310,7 +339,11 @@ enum Page: String, CaseIterable, Identifiable {
                         java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
                         await scanJava()
                     } else {
-                        java = try JavaDiscovery.select(from: runtimes, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
+                        var available = runtimes
+                        if let path = instance.javaPath, !available.contains(where: { $0.path == path }) {
+                            available.append(try await Task.detached(priority: .utility) { try JavaDiscovery.inspect(path) }.value)
+                        }
+                        java = try JavaDiscovery.select(from: available, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
                     }
                     try Task.checkCancellation()
                     try recorder.setJava(java.label + " · " + java.version)

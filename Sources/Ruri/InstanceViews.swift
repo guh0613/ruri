@@ -71,30 +71,23 @@ struct InstanceSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State var instance: GameInstance
     @State private var changingDirectory = false
+    @State private var launchOverrides: InstanceLaunchOverrides
+    @State private var settingsIssue: String?
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
     private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
-    init(instance: GameInstance) { _instance = State(initialValue: instance); original = instance }
+    init(instance: GameInstance) { _instance = State(initialValue: instance); _launchOverrides = State(initialValue: instance.effectiveLaunchOverrides); original = instance }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack { InstanceIcon(loader: instance.loader); SectionHeading(title: "实例设置", subtitle: instance.subtitle) }
             Form {
                 Section("基本信息") { TextField("名称", text: $instance.name); Toggle("收藏此实例", isOn: $instance.favorite) }
-                Section("Java 与内存") {
-                    Picker("Java 运行时", selection: Binding(get: { instance.javaPath ?? "" }, set: { instance.javaPath = $0.isEmpty ? nil : $0 })) {
-                        Text("自动选择兼容版本").tag("")
-                        ForEach(model.runtimes) { Text($0.label).tag($0.path) }
-                    }
+                Section("启动设置") {
+                    Text("各项可跟随默认设置，或由此实例单独覆盖。修改只影响下一次启动。").font(.callout).foregroundStyle(.secondary)
+                    Button("所有启动设置恢复默认") { launchOverrides = .init() }
                     if let versions = instance.supportedJavaMajors, !versions.isEmpty { Text("整合包支持 Java：" + versions.map(String.init).joined(separator: "、")).font(.caption).foregroundStyle(.secondary) }
-                    LabeledContent("最大内存", value: "\(instance.memoryMB) MB")
-                    Slider(value: Binding(get: { Double(instance.memoryMB) }, set: { instance.memoryMB = Int($0) }), in: 1024...Double(max(2048, min(32768, ProcessInfo.processInfo.physicalMemory / 1024 / 1024))), step: 512)
-                    TextField("附加 JVM 参数", text: $instance.extraJVMArguments).font(.system(.body, design: .monospaced))
                 }
-                Section("游戏窗口") {
-                    TextField("附加游戏参数", text: Binding(get: { instance.extraGameArguments ?? "" }, set: { instance.extraGameArguments = $0.isEmpty ? nil : $0 })).font(.system(.body, design: .monospaced))
-                    TextField("宽度", value: $instance.width, format: .number)
-                    TextField("高度", value: $instance.height, format: .number)
-                }
+                LaunchSettingsEditor(overrides: $launchOverrides, defaults: model.state.settings.defaultLaunchSettings, runtimes: model.runtimes)
                 Section("实例文件") {
                     LabeledContent("运行目录", value: (locationInstance.runDirectory ?? .isolated).title)
                     Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
@@ -110,7 +103,13 @@ struct InstanceSettingsView: View {
                     }
                 }
             }.formStyle(.grouped)
-            HStack { Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Button("保存") { model.updateSettings(instance, basedOn: original); dismiss() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
+            if let settingsIssue { Text(settingsIssue).foregroundStyle(.red).font(.callout) }
+            HStack { Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Button("保存") {
+                do {
+                    try launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).validate()
+                    instance.launchOverrides = launchOverrides; model.updateSettings(instance, basedOn: original); dismiss()
+                } catch { settingsIssue = error.localizedDescription }
+            }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
         }.padding(24).frame(width: 620, height: 630)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
     }

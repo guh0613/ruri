@@ -109,7 +109,7 @@ struct ExportInstanceView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Label("导出 \(instance.name)", systemImage: "square.and.arrow.up").font(.title2.bold())
-            Text("将模组、配置与游戏设置保存为可迁移的 ZIP。导入时会重新下载游戏依赖。").foregroundStyle(.secondary)
+            Text("将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。").foregroundStyle(.secondary)
             Picker("导出格式", selection: $format) { ForEach(InstanceExportFormat.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
             if format == .mcbbs || format == .mrpack {
                 LabeledContent("版本") { TextField("整合包版本", text: $details.version).textFieldStyle(.roundedBorder) }
