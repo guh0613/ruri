@@ -149,6 +149,21 @@ import RuriCore
                 guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
                 try GameMonitorClient.requestStop(paths: paths, record: record)
                 print("Stop requested: \(record.id)")
+            case "diagnose":
+                guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message("用法：ruri-cli diagnose <instance-uuid> <session-uuid>") }
+                let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
+                let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: record)
+                print(diagnosis.title + "\n" + diagnosis.summary)
+                for fact in diagnosis.facts { print("• " + fact) }
+                for finding in diagnosis.findings {
+                    print("\n\(finding.title)（\(finding.confidence.rawValue)）\n\(finding.explanation)")
+                    for evidence in finding.evidence {
+                        let document = diagnosis.documents.first { $0.id == evidence.documentID }
+                        print("\(document?.title ?? evidence.documentID) · \(document?.isTail == true ? "末段" : "")第 \(evidence.line) 行\n\(evidence.excerpt)")
+                    }
+                    for (index, step) in finding.steps.enumerated() { print("\(index + 1). \(step)") }
+                }
+                for limitation in diagnosis.limitations { print("说明：" + limitation) }
             case "sessions":
                 let state = try StateStore.load(paths)
                 let instances: [GameInstance]
@@ -158,7 +173,7 @@ import RuriCore
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  launch [instance-uuid] [--detach] (offline account)\n  stop <instance-uuid>\n\nRURI_DATA_DIR overrides the data directory.")
+            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  launch [instance-uuid] [--detach] (offline account)\n  stop <instance-uuid>\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }
