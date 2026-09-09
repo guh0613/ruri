@@ -44,7 +44,7 @@ struct RootView: View {
         } detail: {
             VStack(spacing: 0) {
                 if let notice = model.notice {
-                    HStack { Image(systemName: "info.circle"); Text(notice).font(.callout); Spacer(); if let id = model.noticeSessionID { Button("查看记录") { model.showSession(id) } }; Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
+                    HStack { Image(systemName: "info.circle"); Text(notice).font(.callout); Spacer(); if let id = model.noticeSessionID { Button("查看记录") { model.showSession(id) } }; if let url = model.noticeFileURL { Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([url]) } }; Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
                         .padding(12).background(Theme.accent.opacity(0.08))
                 }
                 Group {

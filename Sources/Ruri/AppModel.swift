@@ -56,6 +56,8 @@ enum Page: String, CaseIterable, Identifiable {
     var showCreate = false
     var showDirectories = false
     var directoryErrors: [UUID: String] = [:]
+    var pendingDirectoryCopyIDs: Set<UUID> = []
+    private var failedSessionReadIDs: Set<UUID> = []
     var showAccount = false
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
@@ -64,7 +66,8 @@ enum Page: String, CaseIterable, Identifiable {
     var importingInstance: PreparedInstanceImport?
     var exportingInstance: GameInstance?
     var error: String?
-    var notice: String? { didSet { noticeSessionID = nil } }
+    var notice: String? { didSet { noticeSessionID = nil; noticeFileURL = nil } }
+    var noticeFileURL: URL?
     private var readOnly = false
     private var persistedState: PersistentState?
     private var sessionRecorder: GameSessionRecorder?
@@ -158,11 +161,29 @@ enum Page: String, CaseIterable, Identifiable {
         apply(\.extraJVMArguments); apply(\.extraGameArguments); apply(\.width); apply(\.height)
         update(current)
     }
-    func changeGameRunDirectory(_ preview: GameRunDirectoryChangePreview) {
-        perform("切换 \(preview.instanceName) 的运行目录") { [self] _ in
-            _ = try await GameRunDirectoryChange(paths: paths).useExisting(preview)
+    func changeGameRunDirectory(_ preview: GameRunDirectoryChangePreview, copyFiles: Bool = false) {
+        perform("\(copyFiles ? "复制并切换" : "切换") \(preview.instanceName) 的运行目录") { [self] activity in
+            let service = GameRunDirectoryChange(paths: paths)
+            do {
+                let result: RunDirectoryCopyResult?
+                if copyFiles {
+                    result = try await service.copyToEmpty(preview) { [weak self] value in Task { @MainActor in self?.progress(activity, value.progress) } }
+                } else { _ = try await service.useExisting(preview); result = nil }
+                state = try StateStore.load(basePaths); persistedState = state
+                notice = result?.warning ?? "\(preview.instanceName) 已\(copyFiles ? "复制并切换" : "使用目标内容")；原目录及备份已保留。"
+                noticeFileURL = result?.preservedCopy
+            } catch let failure as RunDirectoryCopyFailure {
+                notice = failure.localizedDescription; noticeFileURL = failure.preservedCopy
+                throw failure
+            }
+        }
+    }
+    func recoverGameRunDirectory(_ pending: RunDirectoryCopyRecovery) {
+        perform("恢复 \(pending.owner.instanceName) 的目录复制") { [self] _ in
+            let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
             state = try StateStore.load(basePaths); persistedState = state
-            notice = "\(preview.instanceName) 已使用目标目录的内容；原目录及备份已保留。"
+            notice = result.warning ?? (pending.committed ? "已清理完成的复制记录，目标内容保留。" : "已恢复到切换前的状态，复制工作区另行保留。")
+            noticeFileURL = result.preservedCopy
         }
     }
     func install(name: String, version: String, loader: LoaderKind, loaderVersion: String?) {
@@ -203,7 +224,7 @@ enum Page: String, CaseIterable, Identifiable {
             } catch {
                 if let i = activities.firstIndex(where: { $0.id == activity.id }) {
                     activities[i].status = Task.isCancelled ? .cancelled : .failed
-                    activities[i].error = Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
+                    activities[i].error = error is RunDirectoryCopyFailure ? error.localizedDescription : Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
                 }
                 if !Task.isCancelled && (presentErrors || (instanceID != nil && lease == nil)) { self.error = error.localizedDescription }
             }
@@ -212,7 +233,7 @@ enum Page: String, CaseIterable, Identifiable {
     }
     func applyNetworkSettings() async { await NetworkRouting.shared.configure(state.settings.downloadSource ?? .automatic) }
     func progress(_ id: UUID, _ progress: InstallProgress) {
-        if let index = activities.firstIndex(where: { $0.id == id }) { activities[index].progress = progress }
+        if let index = activities.firstIndex(where: { $0.id == id }), activities[index].status == .running { activities[index].progress = progress }
     }
     func addOffline(_ username: String) throws {
         let account = try Account(username: username)
@@ -233,8 +254,13 @@ enum Page: String, CaseIterable, Identifiable {
             save()
         } catch { self.error = error.localizedDescription }
     }
-    func launch(_ instance: GameInstance) {
-        guard !isInstanceInUse(instance.id), !busy, !readOnly else { return }
+    func launch(_ requested: GameInstance) {
+        guard !busy, !readOnly else { return }
+        // Refresh/merge before taking a launch snapshot: another client may
+        // have just committed a directory change while this window was idle.
+        save()
+        guard !readOnly, let instance = state.instances.first(where: { $0.id == requested.id }) else { return }
+        guard !isInstanceInUse(instance.id) else { notice = "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。"; return }
         guard var account = activeAccount else { showAccount = true; return }
         do {
             let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
@@ -311,18 +337,38 @@ enum Page: String, CaseIterable, Identifiable {
         } catch { self.error = error.localizedDescription }
     }
     func refreshSessions() async {
+        await synchronizeExternalState()
         let ids = state.instances.map(\.id), paths = paths
-        do {
-            let records = try await Task.detached(priority: .utility) {
-                try ids.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0) }.sorted { $0.createdAt > $1.createdAt }
-            }.value
-            for record in records {
-                if let current = sessions.first(where: { $0.id == record.id }), current.updatedAt > record.updatedAt { continue }
-                publishSession(record)
+        let result = await Task.detached(priority: .utility) {
+            var records: [GameSession] = [], failures: [UUID: String] = [:], pending = Set<UUID>()
+            for id in ids {
+                do { records += try GameSessionStore.list(paths: paths, instanceID: id) } catch { failures[id] = error.localizedDescription }
+                if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { pending.insert(id) }
             }
-            sessions.removeAll { !ids.contains($0.instanceID) }
-            sessions.sort { $0.createdAt > $1.createdAt }
-        } catch { notice = "无法读取运行记录：\(error.localizedDescription)" }
+            return (records, failures, pending)
+        }.value
+        for record in result.0 {
+            if let current = sessions.first(where: { $0.id == record.id }), current.updatedAt > record.updatedAt { continue }
+            publishSession(record)
+        }
+        if pendingDirectoryCopyIDs != result.2 { pendingDirectoryCopyIDs = result.2 }
+        let failures = Set(result.1.keys)
+        if failures != failedSessionReadIDs, let message = result.1.values.first { notice = "部分运行记录暂时无法读取：\(message)" }
+        failedSessionReadIDs = failures
+        sessions.removeAll { !ids.contains($0.instanceID) }
+        sessions.sort { $0.createdAt > $1.createdAt }
+    }
+    private func synchronizeExternalState() async {
+        guard !readOnly, operation == nil else { return }
+        let baselineRevision = persistedState?.revision, basePaths = basePaths
+        do {
+            let remote = try await Task.detached(priority: .utility) { try StateStore.load(basePaths) }.value
+            // A local save may have completed while the disk read was running.
+            guard operation == nil, persistedState?.revision == baselineRevision, remote.revision != baselineRevision else { return }
+            if baselineRevision != nil && remote.revision == nil { throw RuriError.message("数据索引在外部被移除或替换，已暂停写入。请检查数据目录。") }
+            if state == persistedState { state = remote; persistedState = remote }
+            else { save() }
+        } catch { readOnly = true; self.error = "无法同步其他客户端的更改，已暂停写入以保留原数据。\n\(error.localizedDescription)" }
     }
     func publishSession(_ record: GameSession) {
         if let index = sessions.firstIndex(where: { $0.id == record.id }) { if sessions[index] != record { sessions[index] = record } }

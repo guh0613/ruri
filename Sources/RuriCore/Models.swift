@@ -72,7 +72,7 @@ public struct Account: Codable, Identifiable, Equatable, Sendable {
     }
 }
 
-public struct AppSettings: Codable, Sendable {
+public struct AppSettings: Codable, Equatable, Sendable {
     public var concurrentDownloads = 8
     public var microsoftClientID = ""
     public var showSnapshots = false
@@ -83,7 +83,7 @@ public struct AppSettings: Codable, Sendable {
     public init() {}
 }
 
-public struct PersistentState: Codable, Sendable {
+public struct PersistentState: Codable, Equatable, Sendable {
     public var schemaVersion = 1
     public var revision: UUID?
     public var instances: [GameInstance] = []

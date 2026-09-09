@@ -5,9 +5,10 @@ import RuriCore
 extension AppModel {
     func isInstanceInUse(_ id: UUID?) -> Bool {
         guard let id else { return false }
-        return activeSessions[id] != nil || GameRunLease.isHeld(paths: paths, instanceID: id)
+        return activeSessions[id] != nil || pendingDirectoryCopyIDs.contains(id) || GameRunLease.isHeld(paths: paths, instanceID: id)
     }
     func runningLabel(_ id: UUID) -> String? {
+        if pendingDirectoryCopyIDs.contains(id) || RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { return "目录复制待恢复" }
         guard let record = activeSessions[id] else { return directoryErrors[paths.directoryID(for: id)] == nil ? nil : "文件夹无法访问" }
         switch GameMonitorClient.activity(record) {
         case .orphaned: return "监控已断开"

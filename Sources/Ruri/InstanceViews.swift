@@ -73,6 +73,7 @@ struct InstanceSettingsView: View {
     @State private var changingDirectory = false
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
+    private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
     init(instance: GameInstance) { _instance = State(initialValue: instance); original = instance }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -98,7 +99,10 @@ struct InstanceSettingsView: View {
                     LabeledContent("运行目录", value: (locationInstance.runDirectory ?? .isolated).title)
                     Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
                     Text(model.paths.game(instance.id).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    Button("切换运行目录…", systemImage: "arrow.triangle.swap") { changingDirectory = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                    Button(directoryCopyPending ? "恢复目录复制…" : "切换运行目录…", systemImage: "arrow.triangle.swap") { changingDirectory = true }.disabled(model.busy || (!directoryCopyPending && model.isInstanceInUse(instance.id)))
+                    if FileManager.default.fileExists(atPath: model.paths.instance(instance.id).appendingPathComponent("directory-change-recovery").path) {
+                        Button("查看保留的复制工作区", systemImage: "folder") { NSWorkspace.shared.open(model.paths.instance(instance.id).appendingPathComponent("directory-change-recovery")) }
+                    }
                     HStack {
                         Button("打开文件夹", systemImage: "folder") { model.reveal(instance) }
                         Button("模组", systemImage: "puzzlepiece.extension") { model.reveal(instance, folder: "mods") }
