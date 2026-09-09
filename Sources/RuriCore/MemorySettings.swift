@@ -61,7 +61,7 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     public var metaspaceSource: Source
     public var availability: MemoryAvailability?
     public var maximumMB: Int { Int((maximumBytes + 1_048_575) / 1_048_576) }
-    public var summary: String { "堆上限 \(Self.size(maximumBytes)) · 初始 \(Self.size(initialBytes)) · \(maximumSource.title)" + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
+    public var summary: String { "堆上限 \(Self.size(maximumBytes)) · 初始 \(initialBytes == 0 ? "由 JVM 自动决定" : Self.size(initialBytes)) · \(maximumSource.title)" + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
     public var arguments: [String] {
         func size(_ value: Int64) -> String { value % 1_048_576 == 0 ? "\(value / 1_048_576)M" : String(value) }
         var values = ["-Xms\(size(minimumBytes))", "-Xmx\(size(maximumBytes))"]
@@ -92,7 +92,10 @@ public enum JVMHeapArguments {
             else if argument.hasPrefix("-XX:MinHeapSize=") { result.minimumBytes = try bytes(String(argument.dropFirst("-XX:MinHeapSize=".count))) }
             else if argument.hasPrefix("-XX:MaxMetaspaceSize=") { result.metaspaceBytes = try bytes(String(argument.dropFirst("-XX:MaxMetaspaceSize=".count))); result.metaspaceSource = .jvmArguments }
         }
-        guard result.maximumBytes > 1_048_576, result.minimumBytes <= result.initialBytes, result.initialBytes <= result.maximumBytes else {
+        // Zero initial/minimum heap requests JVM ergonomics, not a zero-byte
+        // allocation. Preserve that choice without pretending to know its size.
+        guard result.maximumBytes > 1_048_576, result.minimumBytes <= result.maximumBytes,
+              result.initialBytes == 0 || (result.minimumBytes <= result.initialBytes && result.initialBytes <= result.maximumBytes) else {
             throw RuriError.message("JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。")
         }
         return result

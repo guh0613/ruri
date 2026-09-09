@@ -37,6 +37,11 @@ struct MemorySettingsTests {
         #expect(minimum.minimumBytes == 128 * 1_048_576 && minimum.initialBytes == 512 * 1_048_576)
         let unrelated = try JVMHeapArguments.resolve(base: base, arguments: ["-Dmessage=-Xmx16G", "-XX:MaxRAMPercentage=70"])
         #expect(unrelated == base)
+        let ergonomic = try JVMHeapArguments.resolve(base: base, arguments: ["-XX:InitialHeapSize=0"])
+        #expect(ergonomic.initialBytes == 0 && ergonomic.minimumBytes == base.minimumBytes)
+        #expect(ergonomic.summary.contains("由 JVM 自动决定"))
+        let zero = try JVMHeapArguments.resolve(base: base, arguments: ["-Xms0"])
+        #expect(zero.minimumBytes == 0 && zero.initialBytes == 0)
     }
 
     @Test func malformedAndConflictingHeapArgumentsFailBeforeJava() throws {
