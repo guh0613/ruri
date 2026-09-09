@@ -23,13 +23,7 @@ struct LaunchSettingsEditor: View {
     @ViewBuilder private func fields(_ key: LaunchSettingKey) -> some View {
         switch key {
         case .memory:
-            HStack {
-                TextField("最大内存（MB）", value: Binding(get: { effective.memoryMB }, set: { overrides.memoryMB = $0 }), format: .number)
-                Menu("常用内存") {
-                    ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button("\(value / 1024) GB") { overrides.memoryMB = value } }
-                }.fixedSize()
-            }
-            Text("1024 MB = 1 GB。当前 Mac 物理内存：\(ProcessInfo.processInfo.physicalMemory / 1_073_741_824) GB。").font(.caption).foregroundStyle(.secondary)
+            MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments)
         case .java:
             Picker("运行时", selection: Binding(get: { effective.java.path ?? "" }, set: { overrides.java = $0.isEmpty ? .automatic : .path($0) })) {
                 Text("自动选择兼容版本").tag("")
@@ -52,6 +46,44 @@ struct LaunchSettingsEditor: View {
             TextField("宽度", value: Binding(get: { effective.window.width }, set: { overrides.window = .init(width: $0, height: effective.window.height) }), format: .number)
             TextField("高度", value: Binding(get: { effective.window.height }, set: { overrides.window = .init(width: effective.window.width, height: $0) }), format: .number)
         }
+    }
+}
+
+struct MemorySettingsEditor: View {
+    @Binding var settings: MemorySettings
+    let jvmArguments: String
+    @State private var availability = MemoryAvailability.current()
+    private var preview: Result<LaunchMemory, Error> { Result { try JVMHeapArguments.resolve(base: settings.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments)) } }
+    var body: some View {
+        Picker("分配方式", selection: $settings.mode) { Text("自动估算").tag(MemorySettings.Mode.automatic); Text("手动设置").tag(MemorySettings.Mode.manual) }.pickerStyle(.segmented)
+        if settings.mode == .manual {
+            HStack {
+                TextField("最大堆（MB）", value: $settings.maximumMB, format: .number)
+                Menu("常用内存") { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button("\(value / 1024) GB") { settings.maximumMB = value } } }.fixedSize()
+            }
+        } else {
+            Text("根据物理内存与当前可用估算，为系统保留余量；本轮上限在开始启动时固定。大型整合包可按需要手动调整。").font(.caption).foregroundStyle(.secondary)
+            HStack {
+                Text("物理内存 \(availability.physicalMB) MB" + (availability.availableMB.map { " · 可用估算 \($0) MB" } ?? ""))
+                Spacer(); Button("重新估算") { availability = .current() }
+            }.font(.caption)
+        }
+        DisclosureGroup("初始堆与类元数据") {
+            Toggle("指定最小与初始堆", isOn: Binding(get: { settings.initialMB != nil }, set: { settings.initialMB = $0 ? 512 : nil }))
+            if settings.initialMB != nil { TextField("初始堆（MB）", value: Binding(get: { settings.initialMB ?? 512 }, set: { settings.initialMB = $0 }), format: .number) }
+            Toggle("限制 Metaspace", isOn: Binding(get: { settings.metaspaceMB != nil }, set: { settings.metaspaceMB = $0 ? 512 : nil }))
+            if settings.metaspaceMB != nil { TextField("类元数据上限（MB）", value: Binding(get: { settings.metaspaceMB ?? 512 }, set: { settings.metaspaceMB = $0 }), format: .number) }
+            Text("Metaspace 位于 Java 堆之外，用于加载类。默认不额外限制；过小的上限可能导致模组加载失败。").font(.caption).foregroundStyle(.secondary)
+        }
+        switch preview {
+        case .success(let memory):
+            Text(memory.summary).font(.callout).textSelection(.enabled)
+            if memory.maximumSource == .jvmArguments || memory.initialSource == .jvmArguments || memory.metaspaceSource == .jvmArguments {
+                Text("附加 JVM 参数按出现顺序覆盖内存设置，最后一项生效。堆上限来源：\(memory.maximumSource.title)；初始堆来源：\(memory.initialSource.title)。").font(.caption).foregroundStyle(.secondary)
+            }
+        case .failure(let error): Text(error.localizedDescription).font(.callout).foregroundStyle(.red)
+        }
+        Text("上限针对 Java 堆，不代表游戏进程的总内存占用。1024 MB = 1 GB。").font(.caption).foregroundStyle(.secondary)
     }
 }
 

@@ -61,7 +61,7 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     public var metaspaceSource: Source
     public var availability: MemoryAvailability?
     public var maximumMB: Int { Int((maximumBytes + 1_048_575) / 1_048_576) }
-    public var summary: String { "堆上限 \(Self.size(maximumBytes)) · 初始 \(Self.size(initialBytes)) · \(maximumSource.title)" }
+    public var summary: String { "堆上限 \(Self.size(maximumBytes)) · 初始 \(Self.size(initialBytes)) · \(maximumSource.title)" + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
     public var arguments: [String] {
         func size(_ value: Int64) -> String { value % 1_048_576 == 0 ? "\(value / 1_048_576)M" : String(value) }
         var values = ["-Xms\(size(minimumBytes))", "-Xmx\(size(maximumBytes))"]

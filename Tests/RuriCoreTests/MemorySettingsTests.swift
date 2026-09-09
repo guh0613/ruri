@@ -73,4 +73,33 @@ struct MemorySettingsTests {
         #expect(try Data(contentsOf: paths.state) == before)
         try recorder.fail(CancellationError(), cancelled: true)
     }
+
+    @Test func exportKeepsInitialHeapAndMetaspaceThroughPortableJVMArguments() async throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-heap-export-\(UUID())")); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var instance = GameInstance(name: "Heap export", gameVersion: "1.0"); instance.launchOverrides = .init()
+        var state = PersistentState(); state.instances = [instance]; state.settings.defaultMemorySettings = .init(maximumMB: 6144, initialMB: 1024, metaspaceMB: 384)
+        try StateStore.save(state, to: paths); try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
+        let transfer = InstanceTransfer(paths: paths)
+        for format in [InstanceExportFormat.ruri, .multimc, .mcbbs] {
+            let zip = paths.cache.appendingPathComponent("\(format.rawValue).zip")
+            try await transfer.export(instance, to: zip, format: format)
+            let prepared = try await transfer.prepare(zip)
+            let memory = try prepared.instance.resolvedLaunchSettings(defaults: AppSettings()).memoryPreview()
+            #expect(memory.maximumMB == 6144 && memory.initialBytes == 1_073_741_824)
+            #expect(try #require(memory.metaspaceBytes) == Int64(384) * 1_048_576)
+            await transfer.discard(prepared)
+        }
+        await #expect(throws: (any Error).self) { try await transfer.export(instance, to: paths.cache.appendingPathComponent("unsupported.mrpack"), format: .mrpack) }
+    }
+
+    @MainActor @Test func invalidHeapStillHasAPreparationFailureRecord() throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-invalid-heap-\(UUID())")); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var instance = GameInstance(name: "Invalid heap", gameVersion: "1.0"); instance.extraJVMArguments = "-Xmx1M"
+        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        do { _ = try instance.launchSnapshot(defaults: AppSettings()); Issue.record("Expected invalid heap") }
+        catch { try recorder.fail(error, cancelled: false) }
+        let saved = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
+        #expect(saved.state == .failed && saved.processID == nil && saved.failure != nil)
+        #expect(saved.memory == nil)
+    }
 }

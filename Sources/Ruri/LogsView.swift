@@ -111,7 +111,8 @@ struct LogsView: View {
             DisclosureGroup("阶段、环境与报告") {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 7) {
-                        Text("Minecraft \(record.gameVersion) · \(record.loader) \(record.loaderVersion ?? "") · \(record.memoryMB) MB").font(.caption)
+                        Text("Minecraft \(record.gameVersion) · \(record.loader) \(record.loaderVersion ?? "")").font(.caption)
+                        Text(record.memory?.summary ?? "记录的内存上限：\(record.memoryMB) MB").font(.caption).textSelection(.enabled)
                         Text("\(record.operatingSystem) · \(record.java ?? "尚未选择 Java")").font(.caption).foregroundStyle(.secondary)
                         ForEach(record.events) { event in
                             HStack(alignment: .top) {

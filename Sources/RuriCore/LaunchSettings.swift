@@ -32,6 +32,9 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     public var gameArguments: String = ""
     public var window = GameWindowSize()
     public init() {}
+    public func memoryPreview(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
+        try JVMHeapArguments.resolve(base: memory.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments))
+    }
     public func validate(availability: MemoryAvailability = .current()) throws {
         let baseMemory = try memory.resolve(availability: availability)
         guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message("窗口宽度应为 320–16384，高度应为 240–16384。") }

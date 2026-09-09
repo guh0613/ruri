@@ -214,7 +214,7 @@ struct LibraryView: View {
                                     Text(instance.name).font(.headline).lineLimit(1)
                                     Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                                 }
-                                HStack { TagPill(text: model.runningLabel(instance.id) ?? (instance.installed ? "就绪" : "待安装")); Spacer(); Text("\(instance.resolvedLaunchSettings(defaults: model.state.settings).memoryMB) MB").font(.caption).foregroundStyle(.secondary) }
+                                HStack { TagPill(text: model.runningLabel(instance.id) ?? (instance.installed ? "就绪" : "待安装")); Spacer(); Text(memoryLabel(instance)).font(.caption).foregroundStyle(.secondary) }
                                 Divider()
                                 HStack {
                                     Button { model.editingInstance = instance } label: { Image(systemName: "slider.horizontal.3") }.buttonStyle(.borderless).help("实例设置")
@@ -231,5 +231,9 @@ struct LibraryView: View {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
         } message: { Text(deleteTarget?.runDirectory == .shared ? "此实例的版本清单和运行记录会移入废纸篓。共享运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
         .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability() }
+    }
+    private func memoryLabel(_ instance: GameInstance) -> String {
+        guard let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview() else { return "内存设置待检查" }
+        return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? " · 自动" : memory.maximumSource == .jvmArguments ? " · 参数" : "")
     }
 }

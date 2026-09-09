@@ -192,14 +192,17 @@ public enum GameSessionReviewStore {
     private var redactor = GameLogRedactor()
     private var lease: GameRunLease?
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
-        let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
-        let memory = try JVMHeapArguments.resolve(base: instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve(), arguments: ArgumentTokenizer.split(instance.extraJVMArguments))
+        // Invalid preferences must still get a preparation-failure record.
+        // Launch validation happens after this record exists; no game process
+        // can start until the argument builder has produced a valid plan.
+        let instance = (try? instance.resolvingPersistedLaunchSettings(paths: paths)) ?? instance
+        let memory = try? JVMHeapArguments.resolve(base: instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve(), arguments: ArgumentTokenizer.split(instance.extraJVMArguments))
         self.paths = paths
         try paths.validateBinding(instance)
         lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
         let now = Date(), id = UUID()
         record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
-                             loaderVersion: instance.loaderVersion, memoryMB: memory.maximumMB, baselinePlayTime: instance.playTime, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
+                             loaderVersion: instance.loaderVersion, memoryMB: memory?.maximumMB ?? instance.memoryMB, baselinePlayTime: instance.playTime, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
                              hostArchitecture: JavaRuntime.hostArchitecture, accountMode: accountMode, ownerPID: ProcessInfo.processInfo.processIdentifier,
                              createdAt: now, updatedAt: now, state: .preparing, stage: .preparing, events: [], evidence: [])
         record.memory = memory

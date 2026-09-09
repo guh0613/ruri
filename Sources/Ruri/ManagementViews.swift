@@ -155,7 +155,7 @@ struct PreferencesView: View {
                     Picker("主题", selection: $model.state.settings.appearance) { Text("跟随系统").tag("system"); Text("浅色").tag("light"); Text("深色").tag("dark") }
                 }
                 Section("游戏默认设置") {
-                    LabeledContent("默认最大内存", value: "\(model.state.settings.defaultMemoryMB) MB")
+                    LabeledContent("默认内存分配", value: model.state.settings.defaultLaunchSettings.memory.mode == .automatic ? "自动估算" : "\(model.state.settings.defaultMemoryMB) MB")
                     Button("编辑默认启动设置…", systemImage: "slider.horizontal.3") { showLaunchDefaults = true }
                     Text("内存、Java、窗口和附加参数可被实例继承；实例也可按项覆盖。").font(.caption).foregroundStyle(.secondary)
                     Picker("新实例隔离规则", selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {

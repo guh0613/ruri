@@ -148,10 +148,10 @@ import RuriCore
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
                 guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
                 guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
-                let instance = try stored.launchSnapshot(defaults: state.settings)
-                let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
+                let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {
+                    let instance = try stored.launchSnapshot(defaults: state.settings)
                     try recorder.transition(.recovery)
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()
                     try await WorldManager(paths: paths, instanceID: instance.id).recover()

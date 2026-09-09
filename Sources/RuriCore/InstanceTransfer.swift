@@ -216,7 +216,14 @@ public actor InstanceTransfer {
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
-        let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
+        var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
+        // Portable formats already carry the maximum heap. Encode additional
+        // structured limits as ordinary JVM arguments before user arguments,
+        // preserving their original precedence in every supported format.
+        if let memory = instance.frozenMemory, memory.minimumBytes != 512 * 1_048_576 || memory.initialBytes != memory.minimumBytes || memory.metaspaceBytes != nil {
+            let limits = memory.arguments.filter { !$0.hasPrefix("-Xmx") }
+            instance.extraJVMArguments = ArgumentTokenizer.join(limits + (try ArgumentTokenizer.split(instance.extraJVMArguments)))
+        }
         try await ContentManager(paths: paths, instanceID: instance.id).recover()
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
         let game = paths.game(instance.id)

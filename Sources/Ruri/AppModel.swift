@@ -290,23 +290,23 @@ enum Page: String, CaseIterable, Identifiable {
         guard var account = activeAccount else { showAccount = true; return }
         do {
             let defaults = state.settings
-            let instance = try stored.launchSnapshot(defaults: defaults)
-            let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
+            let memoryAvailability = MemoryAvailability.current()
+            let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
             sessionRecorder = recorder; logsSessionID = recorder.record.id
             requestedLogSessionID = recorder.record.id
             let activeIDs = Set(activeSessions.values.map(\.id))
             liveLogs = liveLogs.filter { activeIDs.contains($0.key) }
             logs.removeAll(); lastGameExit = nil; crashReports = []; recordingErrorShown = false
             publishSession(recorder.record)
-            perform("启动 \(instance.name)", presentErrors: false) { [self] id in
+            perform("启动 \(stored.name)", presentErrors: false) { [self] id in
                 do {
-                    var instance = instance
+                    var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability)
                     try Task.checkCancellation()
                     if !instance.installed {
                         try advanceSession(.installation)
                         let installed = try await installer.install(stored, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
                         try recordInstallation(installed, requested: stored)
-                        instance = try installed.launchSnapshot(defaults: defaults)
+                        instance = try installed.launchSnapshot(defaults: defaults, availability: memoryAvailability)
                     }
                     try advanceSession(.recovery)
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()
