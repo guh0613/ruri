@@ -139,6 +139,7 @@ public struct VersionManifest: Codable, Sendable {
     public var assets: String?
     public var javaVersion: JavaVersion?
     public var logging: Logging?
+    public var generatedLibraries: [Artifact]?
     public var requiredJava: Int { javaVersion?.majorVersion ?? 8 }
     public func merging(child: VersionManifest) -> VersionManifest {
         var result = self
@@ -155,6 +156,7 @@ public struct VersionManifest: Codable, Sendable {
         result.downloads = child.downloads ?? downloads
         result.assetIndex = child.assetIndex ?? assetIndex
         result.logging = child.logging ?? logging
+        result.generatedLibraries = child.generatedLibraries ?? generatedLibraries
         return result
     }
 }

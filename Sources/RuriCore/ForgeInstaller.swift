@@ -1,5 +1,6 @@
 import Foundation
 import ZIPFoundation
+import CryptoKit
 
 public enum ForgeCatalog {
     public static func versions(loader: LoaderKind, game: String) async throws -> [String] {
@@ -121,9 +122,9 @@ public actor ForgeInstaller {
             throw RuriError.message("\(instance.loader.title) 安装程序退出（\(status)）。日志：\(log.path)\n\(String(tail.suffix(1200)))")
         }
         let installedJSON = try LauncherPaths.safePath("versions/\(child.id)/\(child.id).json", within: work)
-        let installed = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: installedJSON))
+        var installed = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: installedJSON))
         guard installed.id == child.id, installed.inheritsFrom == instance.gameVersion else { throw RuriError.message("安装器生成的版本清单不一致") }
-        // Promote only declared libraries, after processors have finished. Shared
+        // First validate declared artifacts against the official hashes. Shared
         // cache paths are never given to the external installation process.
         for library in libraries {
             guard let artifact = try library.artifact() else { continue }
@@ -134,6 +135,30 @@ public actor ForgeInstaller {
             let target = try LauncherPaths.safePath(relative, within: paths.libraries)
             if !DownloadManager.valid(target, item: DownloadItem(artifact, to: target)) { try copyAtomically(source, to: target) }
         }
+        // NeoForge locates patched client jars and mappings dynamically; those
+        // processor outputs are absent from the launcher classpath manifest.
+        // Preserve and fingerprint them separately, without adding them to -cp.
+        await progress(InstallProgress("校验加载器生成文件"))
+        var generated: [Artifact] = []
+        if let enumerator = FileManager.default.enumerator(at: workLibraries, includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey]) {
+            while let file = enumerator.nextObject() as? URL {
+                try Task.checkCancellation()
+                let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+                guard values.isSymbolicLink != true else { throw RuriError.message("安装器生成了不支持的符号链接") }
+                guard values.isRegularFile == true else { continue }
+                let relative = String(file.path.dropFirst(workLibraries.path.count + 1))
+                guard !seen.contains(relative) else { continue }
+                if ["jar", "zip"].contains(file.pathExtension) { try SafeArchive.verify(file) }
+                let handle = try FileHandle(forReadingFrom: file); var hash = Insecure.SHA1()
+                do { while let data = try handle.read(upToCount: 1024 * 1024), !data.isEmpty { hash.update(data: data) }; try handle.close() }
+                catch { try? handle.close(); throw error }
+                let artifact = Artifact(path: relative, url: nil, sha1: hash.finalize().map { String(format: "%02x", $0) }.joined(), size: Int64(values.fileSize ?? 0))
+                let target = try LauncherPaths.safePath(relative, within: paths.libraries)
+                if !DownloadManager.valid(target, item: DownloadItem(artifact, to: target)) { try copyAtomically(file, to: target) }
+                generated.append(artifact)
+            }
+        }
+        installed.generatedLibraries = generated
         try? FileManager.default.removeItem(at: work)
         return installed
     }

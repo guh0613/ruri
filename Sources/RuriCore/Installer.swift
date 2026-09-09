@@ -81,6 +81,10 @@ public actor GameInstaller {
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: paths.versions)
         var files = [DownloadItem(client, to: clientFile)]
+        for artifact in manifest.generatedLibraries ?? [] {
+            guard let path = artifact.path else { throw RuriError.message("生成依赖缺少路径") }
+            files.append(DownloadItem(artifact, to: try LauncherPaths.safePath(path, within: paths.libraries)))
+        }
         var nativeFiles: [(URL, [String])] = []
         for library in manifest.libraries where Self.allowed(library, architecture: arch) {
             if let artifact = try library.artifact() {

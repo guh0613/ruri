@@ -2,6 +2,19 @@ import Foundation
 import ZIPFoundation
 
 public enum SafeArchive {
+    public static func verify(_ file: URL, maxBytes: Int64 = 16 * 1024 * 1024 * 1024) throws {
+        let archive = try Archive(url: file, accessMode: .read)
+        var total: Int64 = 0; var count = 0
+        for entry in archive {
+            try Task.checkCancellation(); count += 1
+            guard count <= 150_000, Int64(entry.uncompressedSize) <= maxBytes - total else { throw RuriError.message("压缩包超出校验大小限制") }
+            let crc = try archive.extract(entry) { chunk in
+                total += Int64(chunk.count)
+                guard total <= maxBytes else { throw RuriError.message("压缩包超出校验大小限制") }
+            }
+            guard crc == entry.checksum else { throw RuriError.message("文件 CRC 校验失败：\(file.lastPathComponent)/\(entry.path)") }
+        }
+    }
     public static func extract(_ file: URL, to root: URL, allowSymlinks: Bool = false, excluding: [String] = [], maxBytes: Int64 = 16 * 1024 * 1024 * 1024) throws {
         let archive = try Archive(url: file, accessMode: .read)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)

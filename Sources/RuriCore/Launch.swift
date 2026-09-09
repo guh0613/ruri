@@ -47,6 +47,9 @@ public enum LaunchBuilder {
             if let artifact = try library.artifact() { classpath.append(try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: paths.libraries).path) }
         }
         classpath.append(jar.path)
+        for artifact in manifest.generatedLibraries ?? [] {
+            guard let relative = artifact.path, FileManager.default.fileExists(atPath: try LauncherPaths.safePath(relative, within: paths.libraries).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
+        }
         for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message("游戏文件缺失：\(URL(fileURLWithPath: file).lastPathComponent)。请先修复实例。") }
         let values: [String: String] = [
             "auth_player_name": account.username, "version_name": manifest.id,
