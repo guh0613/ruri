@@ -35,6 +35,8 @@ enum Page: String, CaseIterable, Identifiable {
     var runningID: UUID?
     var logs: [String] = []
     var showLogs = false
+    var lastGameExit: GameExit?
+    var crashReports: [GameCrashReport] = []
     var showCreate = false
     var showAccount = false
     var editingInstance: GameInstance?
@@ -49,7 +51,6 @@ enum Page: String, CaseIterable, Identifiable {
     private let gameProcess = GameProcess()
     private var logFile: FileHandle?
     private var startedAt: Date?
-    private var stoppingGame = false
     var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil }
@@ -186,30 +187,36 @@ enum Page: String, CaseIterable, Identifiable {
             }
             let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
             logs.removeAll()
+            lastGameExit = nil; crashReports = []
             let logURL = paths.instance(instance.id).appendingPathComponent("launcher.log")
             FileManager.default.createFile(atPath: logURL.path, contents: nil)
             logFile = try FileHandle(forWritingTo: logURL)
             appendLog("[Ruri] \(java.label)")
             appendLog("[Ruri] \(plan.redactedCommand)")
-            try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] status in self?.gameExited(instance.id, status: status) }
-            runningID = instance.id; startedAt = Date(); stoppingGame = false
+            try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] result in self?.gameExited(instance.id, result: result) }
+            runningID = instance.id; startedAt = Date()
             var updated = instance; updated.lastPlayed = Date(); update(updated)
         }
     }
-    func stopGame() { stoppingGame = true; gameProcess.stop() }
+    func stopGame() { gameProcess.stop() }
     func appendLog(_ line: String) {
         logs.append(line)
         if logs.count > 5000 { logs.removeFirst(logs.count - 5000) }
         try? logFile?.write(contentsOf: Data((line + "\n").utf8))
     }
-    private func gameExited(_ id: UUID, status: Int32) {
-        appendLog("[Ruri] 游戏已退出，状态码 \(status)")
+    private func gameExited(_ id: UUID, result: GameExit) {
+        lastGameExit = result
+        crashReports = GameCrashReport.find(in: paths.game(id), exit: result)
+        appendLog(result.logDescription)
+        appendLog("[Ruri] \(result.explanation)")
+        for report in crashReports { appendLog("[Ruri] 本次崩溃报告：\(report.url.path)") }
+        do { try result.save(paths: paths, instanceID: id) }
+        catch { appendLog("[Ruri] 无法保存退出记录：\(error.localizedDescription)") }
         try? logFile?.close(); logFile = nil; runningID = nil
         if var instance = state.instances.first(where: { $0.id == id }), let startedAt {
             instance.playTime += Date().timeIntervalSince(startedAt); update(instance)
         }
-        if status != 0 && !stoppingGame { showLogs = true; notice = "游戏异常退出，请查看日志中的错误信息。" }
-        stoppingGame = false
+        if result.requiresAttention || !crashReports.isEmpty { showLogs = true; notice = result.summary + "，请查看运行日志。" }
     }
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)

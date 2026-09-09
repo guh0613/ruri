@@ -104,7 +104,14 @@ import RuriCore
                     do {
                         try game.start(plan: plan) { line in
                             try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8))
-                        } onExit: { code in continuation.resume(returning: code) }
+                        } onExit: { result in
+                            print(result.logDescription)
+                            print(result.explanation)
+                            do { try result.save(paths: paths, instanceID: instance.id) }
+                            catch { print("Unable to save exit record: \(error.localizedDescription)") }
+                            for report in GameCrashReport.find(in: paths.game(instance.id), exit: result) { print("Crash report: \(report.url.path)") }
+                            continuation.resume(returning: result.shellStatus)
+                        }
                     } catch { print(error.localizedDescription); continuation.resume(returning: -1) }
                 }
                 print("Game exit: \(status)")

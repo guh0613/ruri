@@ -119,12 +119,15 @@ public final class GameProcess {
     private var formatter = GameLogFormatter()
     private var secrets: [String] = []
     private var output: (@MainActor @Sendable (String) -> Void)?
-    private var onExit: (@MainActor @Sendable (Int32) -> Void)?
+    private var onExit: (@MainActor @Sendable (GameExit) -> Void)?
+    private var stopRequested = false
     public var isRunning: Bool { process?.isRunning ?? false }
     public init() {}
-    public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (Int32) -> Void) throws {
-        guard !isRunning else { throw RuriError.message("游戏已在运行") }
+    public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
+        guard self.process == nil else { throw RuriError.message("游戏已在运行或正在结束") }
         self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
+        stopRequested = false
+        let startedAt = Date()
         let process = Process(); let pipe = Pipe()
         process.executableURL = plan.executable; process.arguments = plan.arguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
         process.standardOutput = pipe; process.standardError = pipe
@@ -134,17 +137,27 @@ public final class GameProcess {
         }
         process.terminationHandler = { [weak self] process in
             let status = process.terminationStatus
+            let reason: GameExit.Reason = process.terminationReason == .uncaughtSignal ? .signal : .exit
+            let processID = process.processIdentifier
+            let endedAt = Date()
             Task { @MainActor in
                 guard let self else { return }
                 self.pipe?.fileHandleForReading.readabilityHandler = nil
                 if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
                 for line in self.formatter.flush() { self.redactAndSend(line) }
-                self.onExit?(status); self.process = nil; self.pipe = nil
+                let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested)
+                let callback = self.onExit
+                self.process = nil; self.pipe = nil; self.onExit = nil
+                callback?(result)
             }
         }
         try process.run(); self.process = process; self.pipe = pipe
     }
-    public func stop() { process?.terminate() }
+    public func stop() {
+        guard let process, process.isRunning else { return }
+        stopRequested = true
+        process.terminate()
+    }
     private func receive(_ data: Data) {
         pending.append(data)
         while let newline = pending.firstIndex(of: 10) {

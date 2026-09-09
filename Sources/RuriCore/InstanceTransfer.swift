@@ -99,7 +99,7 @@ struct MultiMCPack: Codable {
 public actor InstanceTransfer {
     let paths: LauncherPaths
     static let loaderIDs: [String: LoaderKind] = ["net.fabricmc.fabric-loader": .fabric, "org.quiltmc.quilt-loader": .quilt, "net.minecraftforge": .forge, "net.neoforged": .neoforge]
-    static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches"]
+    static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches", "local/crash_assistant"]
     public init(paths: LauncherPaths) { self.paths = paths }
 
     public func prepare(_ source: URL, origin: ModpackOrigin? = nil, progress: @Sendable (InstallProgress) -> Void = { _ in }) throws -> PreparedInstanceImport {

@@ -89,6 +89,7 @@ struct MRPackTests {
         for (path, data) in [("mods/known.jar", MRFixture.data), ("mods/local.jar", Data("local".utf8)), ("mods/disabled.jar.disabled", MRFixture.data), ("config/empty.json", Data())] { try write(data, path, in: game) }
         try write(Data("regenerable".utf8), ".fabric/remappedJars/client.jar", in: game)
         try write(Data("private diagnostic".utf8), "hs_err_pid42.log", in: game)
+        try write(Data("private launch arguments".utf8), "local/crash_assistant/process_args.info", in: game)
         try write(Data("launcher credential".utf8), "launcher_msa_credentials.bin", in: game)
         let session = URLSession(configuration: config()); defer { session.invalidateAndCancel() }
         let transfer = InstanceTransfer(paths: paths); let destination = paths.cache.appendingPathComponent("test.mrpack")
@@ -96,6 +97,7 @@ struct MRPackTests {
         let archive = try Archive(url: destination, accessMode: .read)
         #expect(archive["client-overrides/.fabric/remappedJars/client.jar"] == nil)
         #expect(archive["client-overrides/hs_err_pid42.log"] == nil)
+        #expect(archive["client-overrides/local/crash_assistant/process_args.info"] == nil)
         #expect(archive["client-overrides/launcher_msa_credentials.bin"] == nil)
         #expect(archive["modrinth.index.json"] != nil); #expect(archive["client-overrides/mods/known.jar"] == nil)
         #expect(archive["client-overrides/mods/local.jar"] != nil); #expect(archive["client-overrides/mods/disabled.jar.disabled"] != nil)

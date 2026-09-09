@@ -185,6 +185,15 @@ struct LogsView: View {
     var body: some View {
         VStack(spacing: 14) {
             HStack { Text("游戏运行日志").font(.title2.bold()); Spacer(); TagPill(text: model.runningID == nil ? "已退出" : "运行中"); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction) }
+            if let result = model.lastGameExit {
+                VStack(alignment: .leading, spacing: 6) {
+                    Label(result.summary, systemImage: result.requiresAttention ? "exclamationmark.triangle" : "checkmark.circle").font(.headline)
+                    Text(result.explanation).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                    ForEach(model.crashReports) { report in
+                        Button("在 Finder 中显示 \(report.kind.rawValue) 崩溃报告") { NSWorkspace.shared.activateFileViewerSelecting([report.url]) }
+                    }
+                }.frame(maxWidth: .infinity, alignment: .leading)
+            }
             HStack { TextField("筛选日志", text: $filter).textFieldStyle(.roundedBorder); Toggle("自动滚动", isOn: $follow).toggleStyle(.checkbox); Button("导出…") { export() } }
             ScrollViewReader { proxy in
                 ScrollView([.vertical, .horizontal]) {
