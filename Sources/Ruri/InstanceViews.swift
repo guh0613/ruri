@@ -138,13 +138,9 @@ struct DownloadsView: View {
                                         Text(transfer.state.title).font(.caption).foregroundStyle(transfer.state == .failed ? .orange : .secondary)
                                     }
                                     if transfer.state.isActive, let total = transfer.totalBytes, total > 0 { ProgressView(value: min(Double(transfer.receivedBytes) / Double(total), 1)) }
-                                    HStack {
-                                        Text(transfer.host)
-                                        if transfer.attempt > 1 { Text("第 \(transfer.attempt) 次尝试") }
-                                        if transfer.resumedBytes > 0 { Text("续传 \(bytes(transfer.resumedBytes))") }
-                                        Spacer()
-                                        Text(bytes(transfer.receivedBytes) + (transfer.totalBytes.map { " / " + bytes($0) } ?? ""))
-                                        if transfer.state == .receiving, transfer.bytesPerSecond > 0 { Text(bytes(Int64(transfer.bytesPerSecond)) + "/s") }
+                                    ViewThatFits(in: .horizontal) {
+                                        HStack { sourceInfo(transfer).fixedSize(); Spacer(minLength: 12); byteInfo(transfer).fixedSize() }
+                                        VStack(alignment: .leading, spacing: 4) { sourceInfo(transfer); byteInfo(transfer) }
                                     }.font(.caption2).foregroundStyle(.secondary).monospacedDigit()
                                     if let message = transfer.message, transfer.state != .cancelled { Text(message).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
                                 }
@@ -163,6 +159,19 @@ struct DownloadsView: View {
         }
     }
     private func bytes(_ value: Int64) -> String { ByteCountFormatter.string(fromByteCount: value, countStyle: .file) }
+    private func sourceInfo(_ transfer: FileTransfer) -> some View {
+        HStack {
+            Text(transfer.host).lineLimit(1).truncationMode(.middle)
+            if transfer.attempt > 1 { Text("第 \(transfer.attempt) 次尝试") }
+            if transfer.resumedBytes > 0 { Text("续传 \(bytes(transfer.resumedBytes))") }
+        }
+    }
+    private func byteInfo(_ transfer: FileTransfer) -> some View {
+        HStack {
+            Text(bytes(transfer.receivedBytes) + (transfer.totalBytes.map { " / " + bytes($0) } ?? ""))
+            if transfer.state == .receiving, transfer.bytesPerSecond > 0 { Text(bytes(Int64(transfer.bytesPerSecond)) + "/s") }
+        }
+    }
 }
 
 struct LogsView: View {

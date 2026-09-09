@@ -104,7 +104,7 @@ struct JavaView: View {
                             VStack(alignment: .leading, spacing: 7) {
                                 HStack { Text(java.label).font(.headline); if java.isNative { TagPill(text: "原生") } }
                                 Text(java.version).font(.caption).foregroundStyle(.secondary)
-                                Text(java.path).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).textSelection(.enabled)
+                                Text(java.path).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(2).truncationMode(.middle).textSelection(.enabled).help(java.path)
                             }
                             Spacer(); Button { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: java.path)]) } label: { Image(systemName: "folder") }.buttonStyle(.borderless).help("在 Finder 中显示")
                         }
@@ -117,16 +117,18 @@ struct JavaView: View {
                         if loadingRemote { ProgressView("获取 Mojang 运行时列表…").controlSize(.small) }
                         if let javaError { Text(javaError).font(.caption).foregroundStyle(.orange) }
                         ForEach(available) { runtime in
+                            let installed = model.runtimes.contains { $0.path.hasPrefix(model.paths.runtimes.appendingPathComponent(runtime.id).path + "/") }
+                            let resumable = FileManager.default.fileExists(atPath: model.paths.runtimes.appendingPathComponent(".partial-\(runtime.id)").path)
                             HStack {
                                 Text(runtime.label).font(.callout)
                                 Spacer()
-                                Button("安装") {
+                                Button(installed ? "已安装" : resumable ? "继续安装" : "安装") {
                                     model.perform("安装 Java \(runtime.major)") { id in
                                         _ = try await JavaInstaller(paths: model.paths).install(runtime, downloader: model.installer.downloader) { p in await model.progress(id, p) }
                                         await model.scanJava()
                                     }
                                     model.page = .downloads
-                                }.disabled(model.busy)
+                                }.disabled(model.busy || installed)
                             }
                         }
                         HStack { Link("Azul Zulu 下载", destination: URL(string: "https://www.azul.com/downloads/?package=jdk#zulu")!); Link("Eclipse Temurin 下载", destination: URL(string: "https://adoptium.net/temurin/releases/?os=mac")!) }.font(.callout)

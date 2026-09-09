@@ -21,9 +21,9 @@ struct DiscoverView: View {
                     SectionHeading(title: "让世界，多一点不同", subtitle: "从 Modrinth 发现社区创作的内容。")
                     Spacer(); Button("导入整合包…", systemImage: "square.and.arrow.down") { showImporter = true }.disabled(model.busy)
                 }
-                HStack(spacing: 18) {
-                    TextField("搜索模组、整合包、光影…", text: $search).textFieldStyle(.roundedBorder)
-                    Picker("内容类型", selection: $type) { Text("整合包").tag("modpack"); Text("模组").tag("mod"); Text("资源包").tag("resourcepack"); Text("光影").tag("shader") }.pickerStyle(.segmented).frame(width: 310)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 18) { searchField.frame(minWidth: 210); contentPicker.frame(width: 310) }
+                    VStack(alignment: .leading, spacing: 12) { searchField; contentPicker }
                 }
                 if loading { ProgressView("正在发现内容…").frame(maxWidth: .infinity).padding(30) }
                 if let error { Surface { Text(error).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading) } }
@@ -59,6 +59,10 @@ struct DiscoverView: View {
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [UTType(filenameExtension: "mrpack") ?? .zip, .zip]) { result in
             switch result { case .success(let url): model.importPack(url); case .failure(let error): model.error = error.localizedDescription }
         }
+    }
+    private var searchField: some View { TextField("搜索模组、整合包、光影…", text: $search).textFieldStyle(.roundedBorder) }
+    private var contentPicker: some View {
+        Picker("内容类型", selection: $type) { Text("整合包").tag("modpack"); Text("模组").tag("mod"); Text("资源包").tag("resourcepack"); Text("光影").tag("shader") }.pickerStyle(.segmented)
     }
 }
 
