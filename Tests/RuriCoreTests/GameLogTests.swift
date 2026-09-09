@@ -2,6 +2,10 @@ import Testing
 @testable import RuriCore
 
 struct GameLogTests {
+    @Test func stripsForgeTerminalColorCodes() {
+        var formatter = GameLogFormatter()
+        #expect(formatter.consume("\u{001B}[32m[main/INFO] Ready\u{001B}[m") == ["[main/INFO] Ready"])
+    }
     @Test func decodesMojangEventsAndPreservesStackTraces() {
         var formatter = GameLogFormatter()
         #expect(formatter.consume("native stderr") == ["native stderr"])
