@@ -84,6 +84,32 @@ public actor GameInstaller {
         try paths.validateBinding(instance)
         return try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: paths.manifest(instance.id)))
     }
+    /// A directory change keeps shared downloads. Legacy releases also need
+    /// missing mapped resources recreated in the newly selected game folder.
+    public func prepareRunDirectory(_ instance: GameInstance, manifest: VersionManifest) throws {
+        try paths.validateBinding(instance)
+        try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
+        guard let index = manifest.assetIndex else { return }
+        let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.assets)
+        guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("游戏资源索引缺失，请先修复实例。") }
+        let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: file))
+        try mapLegacyAssets(assets, indexID: index.id, instance: instance)
+    }
+    private func mapLegacyAssets(_ assets: AssetObjects, indexID: String, instance: GameInstance) throws {
+        guard assets.virtual == true || assets.map_to_resources == true else { return }
+        try paths.validateBinding(instance)
+        let root = assets.map_to_resources == true ? paths.game(instance.id).appendingPathComponent("resources") : try LauncherPaths.safePath("virtual/\(indexID)", within: paths.assets)
+        for (name, object) in assets.objects {
+            try Task.checkCancellation()
+            guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message("资源索引包含无效哈希") }
+            let target = try LauncherPaths.safePath(name, within: root)
+            guard !FileManager.default.fileExists(atPath: target.path) else { continue }
+            let source = try LauncherPaths.safePath("objects/\(object.hash.prefix(2))/\(object.hash)", within: paths.assets)
+            guard DownloadManager.valid(source, item: DownloadItem(url: nil, destination: source, sha1: object.hash, size: object.size)) else { throw RuriError.message("缓存资源缺失或已损坏，请先修复实例：\(name)") }
+            try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try FileManager.default.copyItem(at: source, to: target)
+        }
+    }
     public nonisolated static func architecture(for manifest: VersionManifest) -> String {
         // LWJGL 2 / early LWJGL 3 releases ship only Intel natives. Select matching Java.
         let hasARM = manifest.libraries.contains { $0.name.contains("natives-macos-arm64") || $0.name.contains("natives-osx-arm64") }
@@ -134,16 +160,7 @@ public actor GameInstaller {
                 return DownloadItem(url: URL(string: "https://resources.download.minecraft.net/\(subpath)")!, destination: try LauncherPaths.safePath("objects/\(subpath)", within: paths.assets), sha1: object.hash, size: object.size)
             }
             try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏资源", completed: done, total: total)) }
-            if assets.virtual == true || assets.map_to_resources == true {
-                try paths.validateInstanceLocation(instance.id)
-                let root = assets.map_to_resources == true ? paths.game(instance.id).appendingPathComponent("resources") : try LauncherPaths.safePath("virtual/\(index.id)", within: paths.assets)
-                for (name, object) in assets.objects {
-                    let target = try LauncherPaths.safePath(name, within: root)
-                    let source = paths.assets.appendingPathComponent("objects/\(object.hash.prefix(2))/\(object.hash)")
-                    try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
-                    if !FileManager.default.fileExists(atPath: target.path) { try FileManager.default.copyItem(at: source, to: target) }
-                }
-            }
+            try mapLegacyAssets(assets, indexID: index.id, instance: instance)
         }
         await progress(InstallProgress("正在准备 macOS 原生库"))
         try paths.validateInstanceLocation(instance.id)

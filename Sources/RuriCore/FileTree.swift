@@ -2,7 +2,7 @@ import Foundation
 import ZIPFoundation
 
 public enum FileTree {
-    struct Entry: Equatable { let url: URL; let path: String; let directory: Bool; let size: Int64; let modified: Date }
+    struct Entry: Equatable, Sendable { let url: URL; let path: String; let directory: Bool; let size: Int64; let modified: Date }
     static func entries(in root: URL, excluding: Set<String> = []) throws -> [Entry] {
         let fm = FileManager.default
         guard try root.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("请选择实际目录，而不是符号链接。") }

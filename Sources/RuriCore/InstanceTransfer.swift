@@ -337,7 +337,7 @@ public actor InstanceTransfer {
         }
         return result
     }
-    private static func lockWorlds(_ game: URL) throws -> [Int32] {
+    static func lockWorlds(_ game: URL) throws -> [Int32] {
         let saves = game.appendingPathComponent("saves")
         guard FileManager.default.fileExists(atPath: saves.path) else { return [] }
         guard try saves.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("存档目录不能是符号链接。") }

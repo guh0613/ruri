@@ -25,6 +25,14 @@ import RuriCore
                     try StateStore.update(paths) { $0.settings.isolationPolicy = policy }
                 }
                 print((try StateStore.load(paths).settings.isolationPolicy ?? .always).title)
+            case "run-directory":
+                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), let mode = GameRunDirectory(rawValue: args[2]),
+                      args.count == 3 || args[3] == "--apply" else { throw RuriError.message("用法：ruri-cli run-directory <instance-uuid> <isolated|shared> [--apply]。默认只预览；--apply 使用目标已有内容并保留原目录。") }
+                let service = GameRunDirectoryChange(paths: paths)
+                let preview = try await service.preview(instanceID: id, target: mode)
+                print("\(preview.instanceName)：\(preview.sourceMode.title) → \(preview.targetMode.title)\n原目录：\(preview.source.path)\n\(preview.sourceFileCount) 个文件，\(preview.sourceBytes) 字节\n目标目录：\(preview.target.path)\n\(preview.targetFileCount) 个文件，\(preview.targetBytes) 字节")
+                if !preview.otherInstances.isEmpty { print("共用目标目录的实例：" + preview.otherInstances.joined(separator: "、")) }
+                if args.count == 4 { _ = try await service.useExisting(preview); print("已切换到目标现有内容，原目录及其文件已保留。") }
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
             case "install-java":
@@ -128,6 +136,7 @@ import RuriCore
                     let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
                     try recorder.setJava(java.label + " · " + java.version)
                     try recorder.transition(.arguments)
+                    try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
                     try recorder.append("[Ruri] \(plan.redactedCommand)")
                     try recorder.transition(.starting)
