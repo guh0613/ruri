@@ -77,7 +77,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
 public struct GameLogRedactor: Sendable {
     private var secrets: [String] = []
     private static let patterns = [
-        #"(?i)(--(?:accessToken|session|clientId|xuid)(?:=|\s+))(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s,]+)"#,
+        #"(?i)(--(?:accessToken|session|clientId|xuid)(?:=|\s+))(?:"[^"\r\n]*(?:"|(?=\r|\n|$))|'[^'\r\n]*(?:'|(?=\r|\n|$))|[^\s,]+)"#,
         #"(?i)("(?:access_token|refresh_token|client_secret|accessToken)"\s*:\s*")[^"]*"#,
         #"(?i)([?&](?:access_token|refresh_token|client_secret|token)=)[^&#\s]+"#,
         #"(?i)(Authorization\s*:\s*Bearer\s+)[^\s]+"#

@@ -35,7 +35,9 @@ struct GameDiagnosisTests {
         [12:00:02] [main/INFO]: Warnings were found!
         Incompatible mods found!
         """
-        #expect(try GameDiagnosticAnalyzer.analyze(session: session(), documents: [document(log)]).findings.isEmpty)
+        for variant in [log, log.replacingOccurrences(of: #"\[12:00:0[0-2]\] "#, with: "", options: .regularExpression)] {
+            #expect(try GameDiagnosticAnalyzer.analyze(session: session(), documents: [document(variant)]).findings.isEmpty)
+        }
     }
     @Test func dependenciesIncludeTheirVersionEvidenceAndPrecedeMixinClues() throws {
         let log = """

@@ -174,7 +174,7 @@ public enum GameDiagnosticAnalyzer {
         let steps: [String]
         let actions: [GameDiagnosis.Action]
     }
-    private static let levelPattern = try! NSRegularExpression(pattern: #"^\[[^\]\r\n]{1,100}\]\s*\[[^\]\r\n]*/(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)\]|^\[[^\]\r\n]{1,100}\]\s*\[(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)\]"#)
+    private static let levelPattern = try! NSRegularExpression(pattern: #"^(?:\[[^\]\r\n]{1,100}\]\s*)?\[(?:[^\]\r\n]*/)?(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)\]"#)
     private static func logLevel(_ text: String) -> String? {
         guard let match = levelPattern.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) else { return nil }
         for index in 1..<match.numberOfRanges {

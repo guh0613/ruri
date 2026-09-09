@@ -93,22 +93,24 @@ public struct GameShareRedactor: Sendable {
         self.homeDirectory = homeDirectory
     }
     public func redact(_ text: String) -> String {
-        var result = GameLogRedactor().redact(text)
-        for value in additionalPrivateText { result = result.replacingOccurrences(of: value, with: "<已隐藏>") }
+        var result = text
         if homeDirectory.count > 1 { result = result.replacingOccurrences(of: homeDirectory, with: "<主目录>") }
         for (pattern, replacement) in Self.patterns {
             result = pattern.stringByReplacingMatches(in: result, range: NSRange(result.startIndex..., in: result), withTemplate: replacement)
         }
+        result = GameLogRedactor().redact(result)
+        for value in additionalPrivateText { result = result.replacingOccurrences(of: value, with: "<已隐藏>") }
         return result
     }
     private static let patterns: [(NSRegularExpression, String)] = [
-        (#"(?i)(\b(?:access_token|refresh_token|id_token|client_secret|api[_-]?key|accessToken|refreshToken|sessionToken|x-api-key|token)\b["']?\s*[:=]\s*)(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s"',;}&]+)"#, "$1<凭据>"),
-        (#"(?i)(--(?:apiKey|token|refreshToken|idToken|clientSecret)(?:=|\s+))(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s,]+)"#, "$1<凭据>"),
+        (#"(?i)(\b(?:access_token|refresh_token|id_token|client_secret|api[_-]?key|accessToken|refreshToken|sessionToken|x-api-key|token)\b["']?\s*[:=]\s*)(?:"[^"\r\n]*(?:"|(?=\r|\n|$))|'[^'\r\n]*(?:'|(?=\r|\n|$))|[^\s"',;}&]+)"#, "$1<凭据>"),
+        (#"(?i)(--(?:apiKey|token|accessToken|session|refreshToken|idToken|clientSecret)(?:=|\s+))(?:"[^"\r\n]*(?:"|(?=\r|\n|$))|'[^'\r\n]*(?:'|(?=\r|\n|$))|[^\s,]+)"#, "$1<凭据>"),
         (#"(?i)((?:Authorization|Proxy-Authorization)\s*:\s*)[^\r\n]+"#, "$1<凭据>"),
         (#"(?i)((?:Cookie|Set-Cookie)\s*:\s*)[^\r\n]+"#, "$1<凭据>"),
         (#"\beyJ[A-Za-z0-9_-]{12,}\.[A-Za-z0-9_-]{12,}\.[A-Za-z0-9_-]+\b"#, "<凭据>"),
         (#"/Users/[^/\r\n"<>]+"#, "/Users/<用户>"),
-        (#"(?i)(--(?:username|uuid|xuid|clientId)(?:=|\s+))(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s,]+)"#, "$1<玩家>"),
+        (#"(?i)(--(?:username|uuid|xuid|clientId)(?:=|\s+))(?:"[^"\r\n]*(?:"|(?=\r|\n|$))|'[^'\r\n]*(?:'|(?=\r|\n|$))|[^\s,]+)"#, "$1<玩家>"),
+        (#"(?i)((?:Setting user|Username)\s*:\s*)[^\r\n]+"#, "$1<玩家>"),
         (#"(?i)("(?:username|displayName|uuid|xuid)"\s*:\s*")[^"]*"#, "$1<玩家>"),
         (#"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, "<邮箱>"),
         (#"(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b"#, "<UUID>"),

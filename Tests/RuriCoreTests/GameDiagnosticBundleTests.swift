@@ -21,6 +21,16 @@ struct GameDiagnosticBundleTests {
         }
         #expect(result.contains("config.txt") && result.contains("25565"))
     }
+    @Test func incompleteQuotedCredentialsAndPlainPlayerNamesAreMasked() {
+        for text in [#"--accessToken "first private remainder"#, #"{"apiKey":"first private remainder"#, #"--session 'first private remainder"#] {
+            let redacted = GameShareRedactor().redact(text)
+            #expect(!redacted.contains("first") && !redacted.contains("private") && !redacted.contains("remainder"))
+        }
+        let persisted = GameLogRedactor().redact(#"--accessToken "first private remainder"#)
+        #expect(!persisted.contains("remainder"))
+        let name = GameShareRedactor().redact("[Render thread/INFO] Setting user: PrivatePlayer\nNext log line")
+        #expect(!name.contains("PrivatePlayer") && name.contains("Next log line"))
+    }
     @Test @MainActor func archiveContainsExactlySelectedPreviewBytesAndProtectsSources() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: root) }
