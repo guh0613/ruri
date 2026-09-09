@@ -4,7 +4,12 @@ struct DownloadResumeState: Codable, Sendable {
     let identity: String
     let etag: String?
     let lastModified: String?
-    var validator: String? { etag.flatMap { $0.hasPrefix("W/") ? nil : $0 } ?? lastModified }
+    var sourceURL: String? = nil
+    var validator: String? {
+        // Some Mojang/Azure responses expose a bare, unquoted ETag. It is not a
+        // valid strong If-Range validator; use Last-Modified for those responses.
+        etag.flatMap { $0.hasPrefix("\"") && $0.hasSuffix("\"") && $0.count >= 2 ? $0 : nil } ?? lastModified
+    }
 }
 
 struct DownloadFailure: LocalizedError, Sendable {
@@ -77,6 +82,7 @@ final class DownloadStream: @unchecked Sendable {
     let partial: URL
     let metadata: URL
     let identity: String
+    let sourceURL: String
     let offset: Int64
     let expectedSize: Int64?
     let progress: @Sendable (DownloadTransferProgress) -> Void
@@ -92,8 +98,8 @@ final class DownloadStream: @unchecked Sendable {
     private var expectedEnd: Int64?
     private var lastReport = Date.distantPast
 
-    init(partial: URL, metadata: URL, identity: String, offset: Int64, expectedSize: Int64?, progress: @escaping @Sendable (DownloadTransferProgress) -> Void) {
-        self.partial = partial; self.metadata = metadata; self.identity = identity; self.offset = offset; self.expectedSize = expectedSize; self.progress = progress
+    init(partial: URL, metadata: URL, identity: String, sourceURL: String, offset: Int64, expectedSize: Int64?, progress: @escaping @Sendable (DownloadTransferProgress) -> Void) {
+        self.partial = partial; self.metadata = metadata; self.identity = identity; self.sourceURL = sourceURL; self.offset = offset; self.expectedSize = expectedSize; self.progress = progress
     }
     func run(request: URLRequest, transport: DownloadTransport) async throws {
         try await withTaskCancellationHandler {
@@ -142,7 +148,7 @@ final class DownloadStream: @unchecked Sendable {
             if resumed == 0 { try file.truncate(atOffset: 0) }
             let length = try file.seekToEnd()
             guard length == UInt64(received) else { throw DownloadFailure(message: "本地续传文件在下载期间发生变化", discardPartial: true) }
-            let state = DownloadResumeState(identity: identity, etag: http.value(forHTTPHeaderField: "ETag"), lastModified: http.value(forHTTPHeaderField: "Last-Modified"))
+            let state = DownloadResumeState(identity: identity, etag: http.value(forHTTPHeaderField: "ETag"), lastModified: http.value(forHTTPHeaderField: "Last-Modified"), sourceURL: sourceURL)
             try JSONEncoder().encode(state).write(to: metadata, options: .atomic)
             report(force: true)
             completionHandler(.allow)

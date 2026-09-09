@@ -64,6 +64,7 @@ public struct AppSettings: Codable, Sendable {
     public var showSnapshots = false
     public var defaultMemoryMB = 4096
     public var appearance = "system"
+    public var downloadSource: DownloadSource?
     public init() {}
 }
 

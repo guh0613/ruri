@@ -31,7 +31,7 @@ private final class StubHTTP: URLProtocol, @unchecked Sendable {
     static let scenarios = HTTPScenarios()
     private let stopLock = NSLock()
     private var stopped = false
-    override class func canInit(with request: URLRequest) -> Bool { request.url?.host?.hasSuffix(".ruri.test") == true }
+    override class func canInit(with request: URLRequest) -> Bool { request.url?.host.flatMap { scenarios.get($0) } != nil }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
         guard let scenario = Self.scenarios.get(request.url!.host!) else { client?.urlProtocol(self, didFailWithError: URLError(.resourceUnavailable)); return }
@@ -84,6 +84,9 @@ struct DownloadTests {
         #expect(requests.last?.value(forHTTPHeaderField: "Range") == "bytes=200-")
         #expect(requests.last?.value(forHTTPHeaderField: "If-Range") == "\"one\"")
         #expect(progress.values.contains { $0.resumedBytes == 200 })
+        let transfer = try #require(await manager.transfers().first)
+        #expect(transfer.state == .completed); #expect(transfer.receivedBytes == 512)
+        #expect(transfer.attempt == 2); #expect(transfer.resumedBytes == 200)
         #expect(!FileManager.default.fileExists(atPath: DownloadManager.partialFiles(item).data.path))
     }
     @Test func serverIgnoringRangeRestartsCleanly() async throws {
@@ -129,6 +132,7 @@ struct DownloadTests {
         }
         operation.cancel()
         await #expect(throws: CancellationError.self) { try await operation.value }
+        #expect(await manager.transfers().first?.state == .cancelled)
         #expect(try Data(contentsOf: partial.data).count == 200)
         #expect(!FileManager.default.fileExists(atPath: item.destination.path))
         let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
@@ -142,6 +146,7 @@ struct DownloadTests {
         defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
         try Data("keep previous".utf8).write(to: item.destination)
         await #expect(throws: (any Error).self) { try await manager.fetch(item) }
+        #expect(await manager.transfers().first?.state == .failed)
         #expect(try Data(contentsOf: item.destination) == Data("keep previous".utf8))
         #expect(!FileManager.default.fileExists(atPath: DownloadManager.partialFiles(item).data.path))
     }
@@ -150,6 +155,12 @@ struct DownloadTests {
         for value in ["bytes -1-3/10", "bytes 2-1/10", "bytes 0-10/10", "bytes 0-2/*", "bytes 0-999999999999999999999/100", "items 0-2/3"] {
             #expect(throws: (any Error).self) { try HTTPContentRange(value) }
         }
+    }
+    @Test func resumeUsesOnlyValidStrongETags() {
+        #expect(DownloadResumeState(identity: "x", etag: "\"version\"", lastModified: "date").validator == "\"version\"")
+        #expect(DownloadResumeState(identity: "x", etag: "W/\"weak\"", lastModified: "date").validator == "date")
+        #expect(DownloadResumeState(identity: "x", etag: "0x8DCB7A74F8D4DDF", lastModified: "date").validator == "date")
+        #expect(DownloadResumeState(identity: "x", etag: "bare", lastModified: nil).validator == nil)
     }
     @Test func simultaneousRequestsShareOneTransfer() async throws {
         let body = body
@@ -161,5 +172,48 @@ struct DownloadTests {
         _ = try await (first, second)
         #expect(scenario.receivedRequests.count == 1)
         #expect(DownloadManager.valid(item.destination, item: item))
+    }
+    @Test func separateManagersCannotWriteOnePartialConcurrently() async throws {
+        let body = body
+        let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }
+        let (firstManager, item, root, host) = try setup(scenario)
+        defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
+        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
+        let secondManager = DownloadManager(configuration: config, retryDelay: .zero)
+        async let first: Void = firstManager.fetch(item)
+        async let second: Void = secondManager.fetch(item)
+        _ = try await (first, second)
+        #expect(scenario.receivedRequests.count == 1)
+        #expect(DownloadManager.valid(item.destination, item: item))
+    }
+    @Test func refusesRedirectedPartialDirectory() async throws {
+        let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: [:], data: Data()) }
+        let (manager, item, root, host) = try setup(scenario)
+        defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
+        let outside = root.appendingPathComponent("other-data")
+        try FileManager.default.createDirectory(at: outside, withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(at: root.appendingPathComponent(".ruri-partials"), withDestinationURL: outside)
+        await #expect(throws: (any Error).self) { try await manager.fetch(item) }
+        #expect(scenario.receivedRequests.isEmpty)
+        #expect(try FileManager.default.contentsOfDirectory(atPath: outside.path).isEmpty)
+    }
+    @Test func failedMirrorFallsBackForMetadataAndFiles() async throws {
+        let body = body
+        let mirror = HTTPScenario { _, _ in HTTPReply(status: 503, headers: [:], data: Data()) }
+        let original = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }
+        StubHTTP.scenarios.set(mirror, host: "bmclapi2.bangbang93.com")
+        StubHTTP.scenarios.set(original, host: "libraries.minecraft.net")
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { StubHTTP.scenarios.set(nil, host: "bmclapi2.bangbang93.com"); StubHTTP.scenarios.set(nil, host: "libraries.minecraft.net"); try? FileManager.default.removeItem(at: root) }
+        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
+        let routing = NetworkRouting(source: .bmclapi)
+        let url = URL(string: "https://libraries.minecraft.net/test/artifact.jar")!
+        let client = HTTPClient(session: URLSession(configuration: config), routing: routing)
+        #expect(try await client.data(from: url) == body)
+        let item = DownloadItem(url: url, destination: root.appendingPathComponent("artifact.jar"), sha1: Insecure.SHA1.hash(data: body).map { String(format: "%02x", $0) }.joined(), size: 512)
+        try await DownloadManager(configuration: config, retryDelay: .zero, routing: routing).fetch(item)
+        #expect(DownloadManager.valid(item.destination, item: item))
+        #expect(mirror.receivedRequests.count == 2); #expect(original.receivedRequests.count == 2)
+        #expect(mirror.receivedRequests.allSatisfy { $0.url?.path == "/libraries/test/artifact.jar" })
     }
 }

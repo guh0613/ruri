@@ -4,21 +4,30 @@ import CryptoKit
 public struct HTTPClient: Sendable {
     public static let shared = HTTPClient()
     public let session: URLSession
-    public init(session: URLSession = .shared) { self.session = session }
+    private let routing: NetworkRouting
+    public init(session: URLSession = .shared, routing: NetworkRouting = .shared) { self.session = session; self.routing = routing }
     public func data(from url: URL) async throws -> Data {
         var request = URLRequest(url: url)
         request.timeoutInterval = 45
         return try await data(for: request)
     }
     public func data(for input: URLRequest) async throws -> Data {
-        var request = input
-        request.setValue("Ruri/0.1 (macOS Minecraft launcher)", forHTTPHeaderField: "User-Agent")
-        let (data, response) = try await session.data(for: request)
-        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
-            throw RuriError.message("\(request.url?.host ?? "服务") 返回 HTTP \(status)。请检查网络后重试。")
+        let candidates = await routing.candidates(for: input)
+        var lastError: any Error = RuriError.message("请求缺少地址")
+        for url in candidates {
+            do {
+                var request = input; request.url = url
+                if candidates.count > 1 { request.timeoutInterval = min(request.timeoutInterval, 20) }
+                request.setValue("Ruri/0.1 (macOS Minecraft launcher)", forHTTPHeaderField: "User-Agent")
+                let (data, response) = try await session.data(for: request)
+                guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+                    let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+                    throw RuriError.message("\(url.host ?? "服务") 返回 HTTP \(status)。请检查网络后重试。")
+                }
+                return data
+            } catch { if Task.isCancelled { throw CancellationError() }; lastError = error }
         }
-        return data
+        throw lastError
     }
     public func get<T: Decodable & Sendable>(_ type: T.Type, from url: URL) async throws -> T {
         try JSONDecoder().decode(type, from: await data(from: url))
@@ -40,13 +49,15 @@ public struct DownloadItem: Sendable {
 public actor DownloadManager {
     private let transport: DownloadTransport
     private let retryDelay: Duration
+    private let routing: NetworkRouting
     private var inFlight: [String: (identity: String, task: Task<Void, any Error>)] = [:]
-    public init(configuration: URLSessionConfiguration = .default, retryDelay: Duration = .seconds(1)) {
+    var transferRecords: [String: FileTransfer] = [:]
+    public init(configuration: URLSessionConfiguration = .default, retryDelay: Duration = .seconds(1), routing: NetworkRouting = .shared) {
         let config = configuration.copy() as! URLSessionConfiguration
         config.httpMaximumConnectionsPerHost = 8
         config.timeoutIntervalForRequest = 45
         config.timeoutIntervalForResource = 1800
-        self.transport = DownloadTransport(configuration: config); self.retryDelay = retryDelay
+        self.transport = DownloadTransport(configuration: config); self.retryDelay = retryDelay; self.routing = routing
     }
     public func download(_ items: [DownloadItem], concurrency: Int = 8, progress: @Sendable @escaping (Int, Int) async -> Void = { _, _ in }) async throws {
         // A shared artifact appears many times in asset indexes. Do not race writers.
@@ -76,10 +87,20 @@ public actor DownloadManager {
             guard existing.identity == identity else { throw RuriError.message("多个下载要求写入同一文件：\(item.destination.lastPathComponent)") }
             try await existing.task.value; try Task.checkCancellation(); return
         }
-        let task = Task { try await self.performFetch(item, identity: identity, progress: progress) }
+        let candidates = await routing.candidates(for: url)
+        if Self.valid(item.destination, item: item) { return }
+        // Recheck after the routing await so simultaneous callers still share one writer.
+        if let existing = inFlight[key] {
+            guard existing.identity == identity else { throw RuriError.message("多个下载要求写入同一文件：\(item.destination.lastPathComponent)") }
+            try await existing.task.value; try Task.checkCancellation(); return
+        }
+        let task = Task { try await self.performFetch(item, identity: identity, candidates: candidates, progress: progress) }
         inFlight[key] = (identity, task)
         defer { inFlight[key] = nil }
-        try await withTaskCancellationHandler { try await task.value } onCancel: { task.cancel() }
+        do {
+            try await withTaskCancellationHandler { try await task.value } onCancel: { task.cancel() }
+            finishTransfer(identity, item: item)
+        } catch { finishTransfer(identity, item: item, error: error); throw error }
     }
     static func identity(_ item: DownloadItem) -> String {
         let values = [item.url?.absoluteString ?? "", item.destination.standardizedFileURL.path, item.sha1 ?? "", item.sha512 ?? "", item.size.map(String.init) ?? ""]
@@ -90,15 +111,17 @@ public actor DownloadManager {
         let name = identity(item)
         return (root.appendingPathComponent(name + ".part"), root.appendingPathComponent(name + ".json"))
     }
-    private func performFetch(_ item: DownloadItem, identity: String, progress: @escaping @Sendable (DownloadTransferProgress) -> Void) async throws {
-        guard let url = item.url else { throw RuriError.message("文件缺少下载地址") }
+    private func performFetch(_ item: DownloadItem, identity: String, candidates: [URL], progress: @escaping @Sendable (DownloadTransferProgress) -> Void) async throws {
         try FileManager.default.createDirectory(at: item.destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let lock = try await DownloadFileLock.acquire(for: item.destination); defer { close(lock) }
+        if Self.valid(item.destination, item: item) { return }
         let files = Self.partialFiles(item)
         try FileManager.default.createDirectory(at: files.data.deletingLastPathComponent(), withIntermediateDirectories: true)
         func discard() { try? FileManager.default.removeItem(at: files.data); try? FileManager.default.removeItem(at: files.metadata) }
         for attempt in 0..<3 {
             try Task.checkCancellation()
             do {
+                let url = candidates[attempt % candidates.count]
                 if Self.valid(files.data, item: item), item.sha1 != nil || item.sha512 != nil {
                     guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message("无法保存已校验的下载文件") }
                     try? FileManager.default.removeItem(at: files.metadata); return
@@ -106,7 +129,7 @@ public actor DownloadManager {
                 let state = (try? Data(contentsOf: files.metadata)).flatMap { try? JSONDecoder().decode(DownloadResumeState.self, from: $0) }
                 let info = try? FileManager.default.attributesOfItem(atPath: files.data.path)
                 var offset = (info?[.size] as? NSNumber)?.int64Value ?? 0
-                if state?.identity != identity || info?[.type] as? FileAttributeType != .typeRegular || (state?.validator == nil && item.sha1 == nil && item.sha512 == nil) || (item.size.map { offset >= $0 } ?? false) {
+                if state?.identity != identity || (state?.sourceURL != nil && state?.sourceURL != url.absoluteString) || info?[.type] as? FileAttributeType != .typeRegular || (state?.validator == nil && item.sha1 == nil && item.sha512 == nil) || (item.size.map { offset >= $0 } ?? false) {
                     discard(); offset = 0
                 }
                 var request = URLRequest(url: url)
@@ -116,7 +139,11 @@ public actor DownloadManager {
                     request.setValue("bytes=\(offset)-", forHTTPHeaderField: "Range")
                     if let validator = state?.validator { request.setValue(validator, forHTTPHeaderField: "If-Range") }
                 }
-                let stream = DownloadStream(partial: files.data, metadata: files.metadata, identity: identity, offset: offset, expectedSize: item.size, progress: progress)
+                let generation = beginTransfer(item, id: identity, url: url, attempt: attempt + 1, offset: offset)
+                let stream = DownloadStream(partial: files.data, metadata: files.metadata, identity: identity, sourceURL: url.absoluteString, offset: offset, expectedSize: item.size) { [weak self] value in
+                    progress(value)
+                    Task { await self?.updateTransfer(identity, generation: generation, progress: value) }
+                }
                 try await stream.run(request: request, transport: transport)
                 try Task.checkCancellation()
                 guard Self.valid(files.data, item: item) else { throw DownloadFailure(message: "文件校验失败：\(item.destination.lastPathComponent)", discardPartial: true) }
@@ -127,6 +154,7 @@ public actor DownloadManager {
                 if (error as? DownloadFailure)?.discardPartial == true { discard() }
                 if Task.isCancelled { throw CancellationError() }
                 if attempt == 2 { throw error }
+                retryTransfer(identity, message: error.localizedDescription)
                 try await Task.sleep(for: retryDelay * (attempt + 1))
             }
         }

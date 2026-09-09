@@ -7,6 +7,13 @@ import RuriCore
             let args = Array(CommandLine.arguments.dropFirst())
             let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
             let paths = LauncherPaths(root: root)
+            let storedSource = (try? StateStore.load(paths).settings.downloadSource) ?? .automatic
+            let source: DownloadSource
+            if let requested = ProcessInfo.processInfo.environment["RURI_DOWNLOAD_SOURCE"] {
+                guard let parsed = DownloadSource(rawValue: requested) else { throw RuriError.message("RURI_DOWNLOAD_SOURCE 应为 automatic、official 或 bmclapi") }
+                source = parsed
+            } else { source = storedSource }
+            await NetworkRouting.shared.configure(source)
             switch args.first {
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
@@ -23,7 +30,9 @@ import RuriCore
                 guard args.count >= 5, let url = URL(string: args[1]), let size = Int64(args[4]), size >= 0,
                       args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message("用法：ruri-cli fetch <https-url> <output> <sha1> <bytes>") }
                 let item = DownloadItem(url: url, destination: URL(fileURLWithPath: args[2]), sha1: args[3], size: size)
-                try await DownloadManager().fetch(item) { p in print("\(p.receivedBytes)/\(p.totalBytes ?? size) bytes; resumed \(p.resumedBytes)") }
+                let manager = DownloadManager()
+                try await manager.fetch(item) { p in print("\(p.receivedBytes)/\(p.totalBytes ?? size) bytes; resumed \(p.resumedBytes)") }
+                if let transfer = await manager.transfers().first { print("Source: \(transfer.host); attempts: \(transfer.attempt)") }
                 print("Downloaded and verified \(item.destination.lastPathComponent)")
             case "versions":
                 let catalog = try await GameInstaller(paths: paths).catalog()
