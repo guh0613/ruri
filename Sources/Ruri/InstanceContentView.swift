@@ -13,6 +13,8 @@ struct InstanceContentView: View {
     @State private var loading = false
     @State private var error: String?
     @State private var updates: [String: ContentUpdate] = [:]
+    @State private var curseUpdates: [String: CurseForgeUpdate] = [:]
+    @State private var cursePlan: CurseForgeContentPlan?
     @State private var updateTask: Task<Void, Never>?
     @State private var updatesChecked = false
     @State private var showImporter = false
@@ -30,7 +32,7 @@ struct InstanceContentView: View {
             HStack {
                 Picker("内容", selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270)
                 Spacer()
-                Button("检查更新", systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { $0.managed?.provider != "modrinth" })
+                Button("检查更新", systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
                 Button("导入…", systemImage: "plus") { showImporter = true }.disabled(!canModify)
                 Button { model.reveal(instance, folder: kind.folder) } label: { Image(systemName: "folder") }.help("在 Finder 中打开内容文件夹")
             }
@@ -41,7 +43,7 @@ struct InstanceContentView: View {
             if model.runningID == instance.id { Label("游戏运行期间，内容修改暂不可用。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if updateTask != nil { ProgressView("正在检查兼容的正式版本…").controlSize(.small) }
-            if updatesChecked && updates.isEmpty { Label("已是最新兼容正式版", systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
+            if updatesChecked && updates.isEmpty && curseUpdates.isEmpty { Label("已是最新兼容正式版", systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
             else if filtered.isEmpty {
                 EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? "还没有安装\(kind.title)" : "没有匹配内容", detail: "从本地导入文件，或到“发现内容”安装兼容版本。").frame(maxHeight: .infinity)
@@ -54,13 +56,16 @@ struct InstanceContentView: View {
                                     mutate("\(enabled ? "启用" : "停用") \(file.title)") { try await manager.setEnabled(enabled, file: file) }
                                 })).labelsHidden().toggleStyle(.switch).controlSize(.small).disabled(!canModify)
                                 VStack(alignment: .leading, spacing: 5) {
-                                    HStack { Text(file.title).font(.system(size: 13, weight: .semibold)).lineLimit(1); if file.managed?.provider == "modrinth" { TagPill(text: "Modrinth") } }
+                                    HStack { Text(file.title).font(.system(size: 13, weight: .semibold)).lineLimit(1); if let provider = file.managed?.provider { TagPill(text: provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : provider) } }
                                     HStack(spacing: 8) { if let version = file.version { Text(version).lineLimit(1) }; Text(ByteCountFormatter.string(fromByteCount: file.size, countStyle: .file)) }.font(.caption).foregroundStyle(.secondary)
                                     Text(file.filename).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(1).help(file.filename)
                                 }
                                 Spacer(minLength: 4)
                                 if let record = file.managed, let update = updates[record.id] {
                                     Button("更新", systemImage: "arrow.down.circle") { apply(update) }.disabled(!canModify).help("更新至 \(update.available.version_number)")
+                                }
+                                if let record = file.managed, let update = curseUpdates[record.id] {
+                                    Button("更新", systemImage: "arrow.down.circle") { prepare(update) }.disabled(!canModify).help("更新至 \(update.available.displayName)")
                                 }
                                 Menu {
                                     Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
@@ -83,7 +88,9 @@ struct InstanceContentView: View {
                 else { Button("发现更多内容", systemImage: "safari") { model.page = .discover; dismiss() } }
             }
         }.padding(24).frame(width: 800, height: 650)
-        .task(id: kind) { updateTask?.cancel(); updates.removeAll(); updatesChecked = false; await reload() }
+        .task(id: kind) { updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
+        .onChange(of: model.busy) { if !model.busy { Task { await reload() } } }
+        .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
         .onDisappear { updateTask?.cancel() }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [kind == .mod ? (UTType(filenameExtension: "jar") ?? .data) : .zip], allowsMultipleSelection: true) { result in
             do {
@@ -101,7 +108,10 @@ struct InstanceContentView: View {
     }
     private func reload() async {
         loading = true
-        do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items }
+        do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items
+            let versions = Dictionary(items.compactMap(\.managed).map { ($0.id, $0.versionID) }, uniquingKeysWith: { first, _ in first })
+            updates = updates.filter { versions[$0.key] == $0.value.installed.versionID }
+            curseUpdates = curseUpdates.filter { versions[$0.key] == $0.value.installed.versionID } }
         catch { if !Task.isCancelled { self.error = error.localizedDescription } }
         loading = false
     }
@@ -117,11 +127,31 @@ struct InstanceContentView: View {
         error = nil; updatesChecked = false
         updateTask = Task {
             defer { updateTask = nil }
+            let records = files.compactMap(\.managed)
+            var failures: [String] = []
+            if records.contains(where: { $0.provider == "modrinth" }) {
+                do {
+                    let result = try await ModrinthService().updates(for: records, instance: instance)
+                    try Task.checkCancellation(); updates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+                } catch { if Task.isCancelled { return }; failures.append("Modrinth：" + error.localizedDescription) }
+            }
+            if records.contains(where: { $0.provider == "curseforge" }) {
+                do {
+                    let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).updates(for: records, instance: instance)
+                    try Task.checkCancellation(); curseUpdates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+                } catch { if Task.isCancelled { return }; failures.append("CurseForge：" + error.localizedDescription) }
+            }
+            updatesChecked = failures.isEmpty
+            error = failures.isEmpty ? nil : failures.joined(separator: "\n")
+        }
+    }
+    private func prepare(_ update: CurseForgeUpdate) {
+        error = nil
+        model.perform("解析 \(update.installed.title) 更新", presentErrors: false) { _ in
             do {
-                let records = files.compactMap(\.managed)
-                let result = try await ModrinthService().updates(for: records, instance: instance)
-                try Task.checkCancellation(); updates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first }); updatesChecked = true
-            } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
+                let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).plan(file: update.available, instance: instance, paths: model.paths)
+                try Task.checkCancellation(); cursePlan = result
+            } catch { self.error = error.localizedDescription; throw error }
         }
     }
     private func apply(_ update: ContentUpdate) {

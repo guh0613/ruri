@@ -8,6 +8,14 @@ struct ImportInstanceView: View {
     let prepared: PreparedInstanceImport
     @State private var name: String
     @State private var keepJVMArguments = false
+    @State private var files: [PlannedCurseFile]?
+    @State private var excluded = Set<Int>()
+    @State private var manualFiles: [Int: URL] = [:]
+    @State private var resolving = false
+    @State private var error: String?
+    @State private var task: Task<Void, Never>?
+    private var chosenFiles: [PlannedCurseFile] { files?.filter { !excluded.contains($0.id) } ?? [] }
+    private var ready: Bool { prepared.curseForgeFiles.isEmpty || files != nil && chosenFiles.filter(\.requiresManualDownload).allSatisfy { manualFiles[$0.id] != nil } }
     init(prepared: PreparedInstanceImport) { self.prepared = prepared; _name = State(initialValue: prepared.instance.name) }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -20,7 +28,30 @@ struct ImportInstanceView: View {
                 LabeledContent("窗口", value: "\(prepared.instance.width) × \(prepared.instance.height)")
                 LabeledContent("迁移内容", value: "\(prepared.fileCount) 个文件 · \(ByteCountFormatter.string(fromByteCount: prepared.byteCount, countStyle: .file))")
             }.formStyle(.grouped)
-            if !prepared.warnings.isEmpty {
+            if !prepared.curseForgeFiles.isEmpty {
+                if let files {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 12) {
+                            ForEach(files) { item in
+                                let optional = prepared.curseForgeFiles.first { $0.fileID == item.id }?.required == false
+                                if optional {
+                                    Toggle("安装可选内容：\(item.project.name)", isOn: Binding(get: { !excluded.contains(item.id) }, set: { if $0 { excluded.remove(item.id) } else { excluded.insert(item.id) } }))
+                                }
+                                if !excluded.contains(item.id) {
+                                    CurseForgeFileRow(file: item.file, title: item.project.name, page: item.pageURL, manual: item.requiresManualDownload, selectedURL: Binding(get: { manualFiles[item.id] }, set: { manualFiles[item.id] = $0 }))
+                                }
+                            }
+                        }
+                    }.frame(maxHeight: 230)
+                } else if resolving { ProgressView("正在解析整合包文件…") }
+                else {
+                    Text("继续前需要解析 CurseForge 文件清单。").foregroundStyle(.secondary)
+                    if model.curseForgeConfigured { Button("解析文件清单") { resolve() } }
+                    else { Text("可在设置中配置 API Key，再重新导入此整合包。").font(.callout).foregroundStyle(.secondary) }
+                }
+            }
+            if let error { Text(error).font(.callout).foregroundStyle(.orange) }
+            if !prepared.warnings.isEmpty && files == nil {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(prepared.warnings, id: \.self) { warning in Label(warning, systemImage: "info.circle").font(.callout).foregroundStyle(.secondary) }
                 }
@@ -30,11 +61,23 @@ struct ImportInstanceView: View {
                 ScrollView { Text(prepared.instance.extraJVMArguments).font(.system(.caption, design: .monospaced)).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading) }.frame(maxHeight: 75)
             }
             HStack {
-                Button("取消") { model.cancelImport(prepared) }.keyboardShortcut(.cancelAction)
+                Button("取消") { task?.cancel(); model.cancelImport(prepared) }.keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("导入实例") { model.finishImport(prepared, name: name, keepJVMArguments: keepJVMArguments) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                Button("导入实例") { model.finishImport(prepared, name: name, keepJVMArguments: keepJVMArguments, curseFiles: chosenFiles, manualFiles: manualFiles) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || resolving || !ready || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }.padding(26).frame(width: 560).interactiveDismissDisabled()
+        .onAppear { if model.curseForgeConfigured && !prepared.curseForgeFiles.isEmpty { resolve() } }
+        .onDisappear { task?.cancel() }
+    }
+    private func resolve() {
+        resolving = true; error = nil
+        task = Task {
+            do {
+                let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).resolve(prepared.curseForgeFiles)
+                try Task.checkCancellation(); files = result
+            } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
+            resolving = false
+        }
     }
 }
 
@@ -71,7 +114,7 @@ extension AppModel {
         guard !busy else { return }
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = true
         panel.allowsMultipleSelection = false; panel.allowedContentTypes = [.zip, UTType(filenameExtension: "mrpack") ?? .data]
-        panel.message = "选择 Ruri、Prism/MultiMC 实例目录或 ZIP，也可导入 Modrinth 整合包。"
+        panel.message = "选择 Ruri、Prism/MultiMC 实例目录或 ZIP，也可导入 Modrinth 或 CurseForge 整合包。"
         guard panel.runModal() == .OK, let url = panel.url else { return }
         importPack(url)
     }
@@ -86,16 +129,17 @@ extension AppModel {
         importingInstance = nil
         Task { await InstanceTransfer(paths: paths).discard(prepared) }
     }
-    func finishImport(_ prepared: PreparedInstanceImport, name: String, keepJVMArguments: Bool) {
+    func finishImport(_ prepared: PreparedInstanceImport, name: String, keepJVMArguments: Bool, curseFiles: [PlannedCurseFile] = [], manualFiles: [Int: URL] = [:]) {
         guard !busy else { return }
         importingInstance = nil; page = .downloads
         perform("导入 \(name)") { [self] id in
             let service = InstanceTransfer(paths: paths)
             do {
-                let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, installer: installer, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
+                let content = try await CurseForgeService(apiKey: "").materialize(curseFiles, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
+                let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, content: content, installer: installer, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
                 state.instances.append(instance); select(instance); notice = "\(instance.name) 已导入"
                 await service.discard(prepared)
-            } catch { await service.discard(prepared); throw error }
+            } catch { importingInstance = prepared; throw error }
         }
     }
     func export(_ instance: GameInstance, to url: URL, format: InstanceExportFormat, includeWorlds: Bool) {

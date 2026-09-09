@@ -40,6 +40,7 @@ enum Page: String, CaseIterable, Identifiable {
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
     var worldInstance: GameInstance?
+    var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
     var exportingInstance: GameInstance?
     var error: String?

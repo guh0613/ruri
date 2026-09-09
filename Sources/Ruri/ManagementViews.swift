@@ -169,6 +169,7 @@ struct PreferencesView: View {
                     Text("使用 Ruri 自己注册的 Microsoft 公共客户端应用。应用还需要获准访问 Minecraft 服务；这里不使用其他启动器的 Client ID。").font(.caption).foregroundStyle(.secondary)
                     Link("Microsoft 应用注册文档", destination: URL(string: "https://learn.microsoft.com/entra/identity-platform/quickstart-register-app")!)
                 }
+                CurseForgeSettingsSection()
                 Section("数据") {
                     LabeledContent("数据目录") { Text(model.paths.root.path).font(.caption).textSelection(.enabled) }
                     Button("在 Finder 中打开数据目录", systemImage: "folder") { do { try model.paths.prepare(); NSWorkspace.shared.open(model.paths.root) } catch { model.error = error.localizedDescription } }

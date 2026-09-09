@@ -130,4 +130,17 @@ struct CurseForgeTests {
         await #expect(throws: (any Error).self) { try await manager.install([.init(record: dependent, source: source)]) }
         #expect(try await manager.records().count == 1)
     }
+    @Test func updatesUseCompatibleStableVersionsWithoutDowngrading() async throws {
+        let (service, server, id, session) = service([
+            "/v1/mods/1/files": try json(["data": [file(12, project: 1, release: 2, date: "2026-09-09T12:00:00Z"), file(11, project: 1)]]),
+            "/v1/mods/2/files": try json(["data": [file(21, project: 2, date: "2026-08-01T12:00:00Z")]])
+        ])
+        defer { CFTestProtocol.servers.set(nil, id: id); session.invalidateAndCancel() }
+        let first = ManagedContent(provider: "curseforge", projectID: "1", versionID: "10", title: "Project 1", versionName: "old", publishedAt: "2026-08-01T12:00:00Z", kind: .mod, filename: "old.jar", size: 1)
+        let second = ManagedContent(provider: "curseforge", projectID: "2", versionID: "20", title: "Project 2", versionName: "newer", publishedAt: "2026-09-02T12:00:00Z", kind: .mod, filename: "newer.jar", size: 1)
+        let unrelated = ManagedContent(projectID: "unrelated", versionID: "v", title: "Modrinth", versionName: "v", kind: .mod, filename: "mr.jar", size: 1)
+        let result = try await service.updates(for: [first, second, unrelated], instance: GameInstance(name: "Test", gameVersion: "1.21.1", loader: .fabric))
+        #expect(result.count == 1); #expect(result.first?.available.id == 11)
+        #expect(server.received.count == 2)
+    }
 }
