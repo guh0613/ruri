@@ -117,7 +117,7 @@ struct ExportInstanceView: View {
             }
             if format == .mrpack { Toggle("从 Modrinth 引用可下载文件", isOn: $details.referenceDownloads) }
             Toggle("包含存档", isOn: $includeWorlds)
-            Text(format == .ruri ? "Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。" : format == .mcbbs ? "可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。" : format == .mrpack ? "已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。" : "可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。").font(.callout).foregroundStyle(.secondary)
+            Text(format == .ruri ? "Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。" : format == .mcbbs ? "可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。" : format == .mrpack ? "已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。" : "可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。").font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             HStack {
                 Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
                 Spacer()
