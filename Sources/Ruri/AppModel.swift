@@ -39,6 +39,7 @@ enum Page: String, CaseIterable, Identifiable {
     var showAccount = false
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
+    var worldInstance: GameInstance?
     var error: String?
     var notice: String?
     private var readOnly = false
@@ -151,6 +152,7 @@ enum Page: String, CaseIterable, Identifiable {
         guard instance.installed else { install(instance); return }
         perform("启动 \(instance.name)") { [self] id in
             try await ContentManager(paths: paths, instanceID: instance.id).recover()
+            try await WorldManager(paths: paths, instanceID: instance.id).recover()
             progress(id, InstallProgress("正在检查账号和 Java"))
             var token = "0"
             if account.kind == .microsoft {

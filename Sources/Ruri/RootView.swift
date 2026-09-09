@@ -74,6 +74,7 @@ struct RootView: View {
         .sheet(isPresented: $model.showLogs) { LogsView() }
         .sheet(item: $model.editingInstance) { instance in InstanceSettingsView(instance: instance) }
         .sheet(item: $model.contentInstance) { instance in InstanceContentView(instance: instance) }
+        .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
         .alert("操作未完成", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button("好", role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
     }
@@ -181,7 +182,7 @@ struct LibraryView: View {
                                         Button("实例设置", systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
                                         Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
-                                        Button("查看存档") { model.reveal(instance, folder: "saves") }
+                                        Button("管理存档与备份", systemImage: "globe") { model.worldInstance = instance }
                                         Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.runningID == instance.id || !instance.installed)
                                         Divider()
                                         Button("移到废纸篓", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.runningID == instance.id)
