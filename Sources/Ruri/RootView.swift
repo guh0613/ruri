@@ -109,7 +109,7 @@ struct HomeView: View {
                     }
                 }
                 HStack(spacing: 16) {
-                    quickCard("建立新世界", detail: "原版、Fabric 和 Quilt", symbol: "plus.square.on.square", action: { model.showCreate = true })
+                    quickCard("建立新世界", detail: "原版与主流模组加载器", symbol: "plus.square.on.square", action: { model.showCreate = true })
                     quickCard("发现更多可能", detail: "模组、光影与整合包", symbol: "sparkles", action: { model.page = .discover })
                     quickCard("准备好出发", detail: model.activeAccount == nil ? "添加你的 Minecraft 账号" : "管理账号与玩家身份", symbol: "person.crop.circle", action: { model.page = .accounts })
                 }
