@@ -149,6 +149,22 @@ enum Page: String, CaseIterable, Identifiable {
         guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { return }
         state.instances[index] = instance; save()
     }
+    func updateSettings(_ draft: GameInstance, basedOn original: GameInstance) {
+        guard var current = state.instances.first(where: { $0.id == draft.id }) else { return }
+        func apply<Value: Equatable>(_ key: WritableKeyPath<GameInstance, Value>) {
+            if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
+        }
+        apply(\.name); apply(\.favorite); apply(\.memoryMB); apply(\.javaPath)
+        apply(\.extraJVMArguments); apply(\.extraGameArguments); apply(\.width); apply(\.height)
+        update(current)
+    }
+    func changeGameRunDirectory(_ preview: GameRunDirectoryChangePreview) {
+        perform("切换 \(preview.instanceName) 的运行目录") { [self] _ in
+            _ = try await GameRunDirectoryChange(paths: paths).useExisting(preview)
+            state = try StateStore.load(basePaths); persistedState = state
+            notice = "\(preview.instanceName) 已使用目标目录的内容；原目录及备份已保留。"
+        }
+    }
     func install(name: String, version: String, loader: LoaderKind, loaderVersion: String?) {
         guard !busy, !readOnly else { return }
         var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version, loader: loader, loaderVersion: loaderVersion)
@@ -273,6 +289,7 @@ enum Page: String, CaseIterable, Identifiable {
                     try Task.checkCancellation()
                     try recorder.setJava(java.label + " · " + java.version)
                     try advanceSession(.arguments)
+                    try await installer.prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")

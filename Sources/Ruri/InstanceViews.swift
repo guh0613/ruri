@@ -70,6 +70,10 @@ struct InstanceSettingsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State var instance: GameInstance
+    @State private var changingDirectory = false
+    private let original: GameInstance
+    private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
+    init(instance: GameInstance) { _instance = State(initialValue: instance); original = instance }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack { InstanceIcon(loader: instance.loader); SectionHeading(title: "实例设置", subtitle: instance.subtitle) }
@@ -91,9 +95,10 @@ struct InstanceSettingsView: View {
                     TextField("高度", value: $instance.height, format: .number)
                 }
                 Section("实例文件") {
-                    LabeledContent("运行目录", value: (instance.runDirectory ?? .isolated).title)
-                    Text((instance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
+                    LabeledContent("运行目录", value: (locationInstance.runDirectory ?? .isolated).title)
+                    Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
                     Text(model.paths.game(instance.id).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                    Button("切换运行目录…", systemImage: "arrow.triangle.swap") { changingDirectory = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
                     HStack {
                         Button("打开文件夹", systemImage: "folder") { model.reveal(instance) }
                         Button("模组", systemImage: "puzzlepiece.extension") { model.reveal(instance, folder: "mods") }
@@ -101,8 +106,9 @@ struct InstanceSettingsView: View {
                     }
                 }
             }.formStyle(.grouped)
-            HStack { Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Button("保存") { model.update(instance); dismiss() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
+            HStack { Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Button("保存") { model.updateSettings(instance, basedOn: original); dismiss() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
         }.padding(24).frame(width: 620, height: 630)
+        .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
     }
 }
 
