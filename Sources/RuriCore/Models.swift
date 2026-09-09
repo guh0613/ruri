@@ -80,6 +80,7 @@ public struct AppSettings: Codable, Sendable {
 
 public struct PersistentState: Codable, Sendable {
     public var schemaVersion = 1
+    public var revision: UUID?
     public var instances: [GameInstance] = []
     public var accounts: [Account] = []
     public var activeAccountID: UUID?
@@ -138,24 +139,5 @@ public struct LauncherPaths: Codable, Sendable {
             guard resolved.path.hasPrefix(base) else { throw RuriError.message("文件路径超出实例目录：\(path)") }
         }
         return resolved
-    }
-}
-
-public enum StateStore {
-    public static func load(_ paths: LauncherPaths) throws -> PersistentState {
-        guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
-        let data = try Data(contentsOf: paths.state)
-        let result = try JSONDecoder().decode(PersistentState.self, from: data)
-        guard (1...2).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
-        try paths.configured(with: result).validateDirectoryConfiguration()
-        return result
-    }
-    public static func save(_ state: PersistentState, to paths: LauncherPaths) throws {
-        var state = state
-        if !(state.gameDirectories ?? []).isEmpty || state.instances.contains(where: { $0.directoryID != nil && $0.directoryID != GameDirectory.defaultID }) { state.schemaVersion = 2 }
-        try paths.configured(with: state).validateDirectoryConfiguration()
-        try paths.prepare()
-        let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try encoder.encode(state).write(to: paths.state, options: .atomic)
     }
 }

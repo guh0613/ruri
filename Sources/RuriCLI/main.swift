@@ -48,8 +48,7 @@ import RuriCore
                 instance = try await GameInstaller(paths: paths).install(instance) { progress in
                     if progress.completed % 100 == 0 || progress.completed == progress.total { print("\(progress.stage) \(progress.completed)/\(progress.total)") }
                 }
-                var state = try StateStore.load(paths); state.instances.append(instance); state.selectedInstanceID = instance.id
-                try StateStore.save(state, to: paths)
+                try StateStore.update(paths) { state in state.instances.append(instance); state.selectedInstanceID = instance.id }
                 print("Installed \(instance.id)")
             case "export-instance":
                 guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli export-instance <instance-uuid> <output.zip> [ruri|multimc|mcbbs|mrpack]") }
@@ -66,8 +65,8 @@ import RuriCore
                 for warning in prepared.warnings { print(warning) }
                 do {
                     let imported = try await transfer.install(prepared, name: args.count > 2 ? args[2] : prepared.instance.name, importJVMArguments: prepared.format == "MCBBS", installer: GameInstaller(paths: paths)) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                    var state = try StateStore.load(paths); state.instances.append(imported); state.selectedInstanceID = imported.id
-                    try StateStore.save(state, to: paths); await transfer.discard(prepared)
+                    try StateStore.update(paths) { state in state.instances.append(imported); state.selectedInstanceID = imported.id }
+                    await transfer.discard(prepared)
                     print("Imported \(imported.id)")
                 } catch { await transfer.discard(prepared); throw error }
             case "repair":

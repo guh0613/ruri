@@ -64,6 +64,7 @@ enum Page: String, CaseIterable, Identifiable {
     var error: String?
     var notice: String? { didSet { noticeSessionID = nil } }
     private var readOnly = false
+    private var persistedState: PersistentState?
     private var sessionRecorder: GameSessionRecorder?
     private var recordingErrorShown = false
     var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
@@ -77,6 +78,7 @@ enum Page: String, CaseIterable, Identifiable {
         basePaths = LauncherPaths(root: root)
         do {
             state = try StateStore.load(basePaths)
+            persistedState = state
             state.gameDirectories = state.gameDirectories?.map { $0.resolvingBookmark() }
             try basePaths.configured(with: state).validateDirectoryConfiguration()
         }
@@ -84,7 +86,11 @@ enum Page: String, CaseIterable, Identifiable {
     }
     func save() {
         guard !readOnly else { return }
-        do { try StateStore.save(state, to: paths) } catch { self.error = error.localizedDescription }
+        do { state = try StateStore.save(state, to: paths, basedOn: persistedState); persistedState = state }
+        catch {
+            readOnly = true
+            self.error = "\(error.localizedDescription)\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。"
+        }
     }
     func boot() async {
         if let bootTask { await bootTask.value; return }
