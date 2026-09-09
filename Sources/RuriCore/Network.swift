@@ -163,7 +163,7 @@ public actor DownloadManager {
     }
     public nonisolated static func valid(_ file: URL, item: DownloadItem) -> Bool {
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: file.path), attributes[.type] as? FileAttributeType == .typeRegular,
-              let size = attributes[.size] as? NSNumber, size.int64Value > 0 || item.size == 0 else { return false }
+              let size = attributes[.size] as? NSNumber, size.int64Value > 0 || item.size == 0 || item.sha1 != nil || item.sha512 != nil || item.md5 != nil else { return false }
         if let expected = item.size, size.int64Value != expected { return false }
         guard item.sha1 != nil || item.sha512 != nil || item.md5 != nil else { return true }
         guard let handle = try? FileHandle(forReadingFrom: file) else { return false }

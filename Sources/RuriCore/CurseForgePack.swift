@@ -17,7 +17,7 @@ struct CurseForgeManifest: Decodable {
 }
 
 extension InstanceTransfer {
-    static func describeCurseForge(_ root: URL) throws -> (instance: GameInstance, game: URL, format: String, warnings: [String], records: Data?, curseForgeFiles: [CurseForgeReference]) {
+    static func describeCurseForge(_ root: URL) throws -> InstanceImportDescription {
         let manifest = try JSONDecoder().decode(CurseForgeManifest.self, from: read(root.appendingPathComponent("manifest.json")))
         guard manifest.manifestType == "minecraftModpack", manifest.manifestVersion == 1 else { throw RuriError.message("不支持的 CurseForge 整合包格式") }
         guard manifest.minecraft.modLoaders.count <= 1 else { throw RuriError.message("此整合包包含多个加载器，暂时无法安装。") }
@@ -38,7 +38,7 @@ extension InstanceTransfer {
         var warnings: [String] = []
         if !manifest.files.isEmpty { warnings.append("需要下载 \(manifest.files.count) 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。") }
         if let author = manifest.author, !author.isEmpty { warnings.append("整合包作者：\(author)") }
-        return (instance, game, "CurseForge", warnings, nil, manifest.files)
+        return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", warnings: warnings, curseForgeFiles: manifest.files)
     }
 
     static func validatePackContent(_ content: [ContentInstallation], references: [CurseForgeReference]) throws {

@@ -40,7 +40,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     }
     public func preferredJavaMajor(default minimum: Int) throws -> Int {
         guard let supported = supportedJavaMajors, !supported.isEmpty else { return minimum }
-        guard let selected = supported.filter({ $0 >= minimum }).sorted(by: { a, b in a == minimum || b != minimum && a < b }).first else { throw RuriError.message("整合包指定的 Java 版本与游戏要求的 Java \(minimum) 不兼容。") }
+        guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message("整合包指定的 Java 版本与游戏要求的 Java \(minimum) 不兼容。") }
         return selected
     }
     public var subtitle: String { loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")" }

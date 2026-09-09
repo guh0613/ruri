@@ -19,7 +19,7 @@ struct InstanceTransferTests {
     @Test func portableAndMultiMCRoundTrip() async throws {
         let (paths, original) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let transfer = InstanceTransfer(paths: paths)
-        for format in InstanceExportFormat.allCases {
+        for format in [InstanceExportFormat.ruri, .multimc] {
             let zip = paths.cache.appendingPathComponent("\(format.rawValue).zip")
             try await transfer.export(original, to: zip, format: format)
             let archive = try Archive(url: zip, accessMode: .read)

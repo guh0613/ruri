@@ -1,0 +1,99 @@
+import Foundation
+
+private struct HMCLMetadata: Decodable {
+    let name: String
+    let gameVersion: String?
+    let author: String?
+}
+
+private struct HMCLVersion: Decodable {
+    struct Identifier: Decodable {
+        let value: String
+        private enum CodingKeys: CodingKey { case id }
+        init(from decoder: any Decoder) throws {
+            if let text = try? decoder.singleValueContainer().decode(String.self) { value = text }
+            else { value = try decoder.container(keyedBy: CodingKeys.self).decode(String.self, forKey: .id) }
+        }
+    }
+    let id: String?
+    let jar: Identifier?
+    let inheritsFrom: Identifier?
+    let version: String?
+    let hidden: Bool?
+    let mainClass: String?
+    let libraries: [Library]?
+    let arguments: VersionManifest.Arguments?
+    let minecraftArguments: String?
+    let patches: [HMCLVersion]?
+}
+
+extension InstanceTransfer {
+    static func describeHMCL(_ root: URL) throws -> InstanceImportDescription {
+        let metadata = try JSONDecoder().decode(HMCLMetadata.self, from: read(root.appendingPathComponent("modpack.json")))
+        let game = try LauncherPaths.safePath("minecraft", within: root)
+        let manifest = try JSONDecoder().decode(HMCLVersion.self, from: read(game.appendingPathComponent("pack.json")))
+        var nodes: [HMCLVersion] = [manifest]; var index = 0
+        while index < nodes.count {
+            guard nodes.count <= 1000 else { throw RuriError.message("HMCL 清单补丁数量超过限制") }
+            nodes += nodes[index].patches ?? []; index += 1
+        }
+        let patches = Array(nodes.dropFirst())
+        let libraries = nodes.flatMap { $0.libraries ?? [] }
+        let version = manifest.jar?.value ?? metadata.gameVersion ?? patches.first(where: { $0.id == "game" })?.version ?? manifest.inheritsFrom?.value ?? manifest.id
+        guard let version, version.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:[-_][A-Za-z0-9. -]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil else { throw RuriError.message("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。") }
+        let known = Set(["game", "fabric", "quilt", "forge", "neoforge"])
+        let unsupported = patches.filter { $0.hidden != true && $0.id != nil && !known.contains($0.id!) }.compactMap(\.id)
+        guard unsupported.isEmpty else { throw RuriError.message("HMCL 整合包包含尚未支持的组件：\(unsupported.joined(separator: "、"))") }
+        for library in libraries {
+            let parts = library.name.split(separator: ":")
+            guard parts.count >= 3 else { throw RuriError.message("HMCL 清单包含无效依赖坐标") }
+            if ["optifine", "net.optifine", "net.legacyfabric", "com.cleanroommc"].contains(String(parts[0])) || parts[0] == "com.mumfrey" && parts[1] == "liteloader" {
+                throw RuriError.message("HMCL 整合包需要尚未接入的组件：\(parts[0]):\(parts[1])")
+            }
+        }
+        var components: [LoaderKind: String] = [:]
+        for patch in patches where patch.hidden != true {
+            if let id = patch.id, let kind = LoaderKind(rawValue: id), kind != .vanilla, let value = patch.version { components[kind] = value }
+        }
+        let gameArguments = try nodes.flatMap { node in
+            let modern = (node.arguments?.game ?? []).compactMap { if case .text(let text) = $0 { text } else { nil } }
+            return modern + (try node.minecraftArguments.map(ArgumentTokenizer.split) ?? [])
+        }
+        func argument(_ key: String) -> String? {
+            guard let index = gameArguments.firstIndex(of: key), index + 1 < gameArguments.count else { return nil }
+            return gameArguments[index + 1]
+        }
+        func forgeVersion(_ value: String) -> String {
+            let parts = value.split(separator: "-")
+            if parts.count >= 2, parts[0] == Substring(version) { return String(parts[1]) }
+            return value
+        }
+        let neo = libraries.contains { $0.name.hasPrefix("net.neoforged.fancymodloader:") || $0.name.hasPrefix("net.neoforged:neoforge:") || $0.name.hasPrefix("net.neoforged:forge:") }
+        for library in libraries {
+            let parts = library.name.split(separator: ":").map(String.init)
+            let coordinate = parts[0] + ":" + parts[1]; let value = parts[2].components(separatedBy: "@")[0]
+            if coordinate == "net.fabricmc:fabric-loader", components[.fabric] == nil { components[.fabric] = value }
+            if coordinate == "org.quiltmc:quilt-loader", components[.quilt] == nil { components[.quilt] = value }
+            if !neo, ["net.minecraftforge:forge", "net.minecraftforge:fmlloader", "net.minecraftforge:minecraftforge"].contains(coordinate), components[.forge] == nil { components[.forge] = forgeVersion(value) }
+            if neo, components[.neoforge] == nil {
+                if let value = argument("--fml.neoForgeVersion") ?? argument("--fml.forgeVersion") { components[.neoforge] = value }
+                else if ["net.neoforged:neoforge", "net.neoforged:forge"].contains(coordinate) { components[.neoforge] = forgeVersion(value) }
+            }
+        }
+        guard !neo || components[.neoforge] != nil else { throw RuriError.message("检测到 NeoForge，但无法确定其版本。") }
+        guard components.count <= 1 else { throw RuriError.message("HMCL 整合包同时声明多个加载器，暂时无法迁移。") }
+        let loader = components.keys.first ?? .vanilla
+        if gameArguments.contains(where: { $0.lowercased().contains("optifine") || $0.lowercased().contains("liteloader") }) {
+            throw RuriError.message("HMCL 整合包包含尚未接入的 OptiFine 或 LiteLoader 启动参数。")
+        }
+        if loader == .vanilla, gameArguments.contains("--tweakClass") { throw RuriError.message("HMCL 整合包需要未识别的 LaunchWrapper 组件。") }
+        if loader == .vanilla, let main = nodes.compactMap(\.mainClass).last, !["net.minecraft.client.main.Main", "net.minecraft.launchwrapper.Launch", "net.minecraft.client.Minecraft", "com.mojang.rubydung.RubyDung"].contains(main) {
+            throw RuriError.message("HMCL 整合包使用未识别的游戏启动方式：\(main)")
+        }
+        let instance = GameInstance(name: metadata.name, gameVersion: version, loader: loader, loaderVersion: components[loader])
+        try validate(instance)
+        var warnings = ["游戏与加载器依赖会重新安装，以匹配当前 Mac。"]
+        if let author = metadata.author, !author.isEmpty { warnings.append("整合包作者：\(author)") }
+        return InstanceImportDescription(instance: instance, game: game, format: "HMCL", warnings: warnings, excluded: ["pack.json"])
+    }
+}
