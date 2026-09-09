@@ -142,7 +142,7 @@ struct ContentInstallView: View {
             HStack {
                 Link("在 Modrinth 查看", destination: URL(string: "https://modrinth.com/\(project.project_type)/\(project.slug)")!)
                 Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(isPack ? "安装为新实例" : "安装") {
+                Button(isPack ? "查看整合包" : "安装") {
                     guard let version = versions.first(where: { $0.id == selectedVersion }) else { return }
                     model.installContent(project: project, version: version, instance: instance); dismiss()
                 }.buttonStyle(.borderedProminent).disabled(loading || selectedVersion.isEmpty || model.busy || (!isPack && (instance == nil || model.runningID == instanceID)))
@@ -165,14 +165,7 @@ struct ContentInstallView: View {
 extension AppModel {
     func importPack(_ url: URL) {
         guard !busy else { return }
-        if url.pathExtension.lowercased() != "mrpack" { prepareInstanceImport(url); return }
-        perform("导入 \(url.lastPathComponent)") { [self] id in
-            let scoped = url.startAccessingSecurityScopedResource()
-            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-            let result = try await ModpackImporter(paths: paths).install(url, installer: installer) { [weak self] p in await self?.progress(id, p) }
-            state.instances.append(result); select(result); notice = "整合包 \(result.name) 已安装"
-        }
-        page = .downloads
+        prepareInstanceImport(url)
     }
     func installContent(project: ModrinthProject, version: ModrinthVersion, instance: GameInstance?) {
         perform("安装 \(project.title)") { [self] id in
@@ -181,8 +174,8 @@ extension AppModel {
                 let archive = paths.cache.appendingPathComponent("pack-\(version.id).mrpack")
                 progress(id, InstallProgress("下载整合包清单"))
                 try await installer.downloader.fetch(DownloadItem(url: file.url, destination: archive, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size))
-                let result = try await ModpackImporter(paths: paths).install(archive, installer: installer) { [weak self] p in await self?.progress(id, p) }
-                state.instances.append(result); select(result)
+                importingInstance = try await InstanceTransfer(paths: paths).prepare(archive) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
+                notice = "整合包清单已读取"; return
             } else if let instance {
                 try await ModrinthService().install(version: version, type: project.project_type, instance: instance, paths: paths, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
             } else { throw RuriError.message("请选择游戏实例") }

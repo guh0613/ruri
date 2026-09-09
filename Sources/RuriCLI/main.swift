@@ -49,8 +49,8 @@ import RuriCore
                 try StateStore.save(state, to: paths)
                 print("Installed \(instance.id)")
             case "export-instance":
-                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli export-instance <instance-uuid> <output.zip> [ruri|multimc|mcbbs]") }
-                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message("导出格式为 ruri、multimc 或 mcbbs") }
+                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli export-instance <instance-uuid> <output.zip> [ruri|multimc|mcbbs|mrpack]") }
+                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message("导出格式为 ruri、multimc、mcbbs 或 mrpack") }
                 try await InstanceTransfer(paths: paths).export(instance, to: URL(fileURLWithPath: args[2]), format: format) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
                 print("Exported \(instance.name)")
             case "import-instance":
