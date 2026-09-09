@@ -8,7 +8,10 @@ configuration="${1:-release}"
 scratch="${RURI_BUILD_DIR:-.build/validation}"
 xcrun swift build --scratch-path "$scratch" -c "$configuration" --product Ruri
 binary_dir="$(xcrun swift build --scratch-path "$scratch" -c "$configuration" --show-bin-path)"
-app="$(pwd)/build/Ruri.app"
+mkdir -p build
+stage_dir="$(mktemp -d "$(pwd)/build/.ruri-build.XXXXXX")"
+trap 'rm -rf "$stage_dir"' EXIT
+app="$stage_dir/Ruri.app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
 cp Resources/Info.plist "$app/Contents/Info.plist"
@@ -18,4 +21,13 @@ done
 xcrun swift scripts/make-icon.swift build/AppIcon.iconset
 iconutil -c icns build/AppIcon.iconset -o "$app/Contents/Resources/AppIcon.icns"
 codesign --force --deep --sign "${RURI_SIGN_IDENTITY:--}" "$app"
-print "Built $app"
+codesign --verify --deep --strict "$app"
+destination="$(pwd)/build/Ruri.app"
+if [[ -e "$destination" ]]; then
+  mv "$destination" "$stage_dir/previous.app"
+fi
+if ! mv "$app" "$destination"; then
+  if [[ -e "$stage_dir/previous.app" ]]; then mv "$stage_dir/previous.app" "$destination"; fi
+  exit 1
+fi
+print "Built $destination"
