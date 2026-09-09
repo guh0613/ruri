@@ -173,7 +173,7 @@ struct LibraryView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 HStack {
-                    SectionHeading(title: model.selectedDirectoryName, subtitle: "\(model.directoryInstances.count) 个实例 · 模组、存档与设置独立。")
+                    SectionHeading(title: model.selectedDirectoryName, subtitle: "\(model.directoryInstances.count) 个实例 · 在实例设置中查看运行目录。")
                     Spacer()
                     Button("导入…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }.disabled(model.busy)
                     Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
@@ -229,7 +229,7 @@ struct LibraryView: View {
         }
         .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
-        } message: { Text("实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
+        } message: { Text(deleteTarget?.runDirectory == .shared ? "此实例的版本清单和运行记录会移入废纸篓。共享运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
         .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability() }
     }
 }

@@ -44,7 +44,7 @@ struct CreateInstanceView: View {
                 else { Picker("加载器版本", selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }
             }
             HStack {
-                Text("游戏资源共享，存档与模组独立。").font(.caption).foregroundStyle(.secondary)
+                Text((model.state.settings.isolationPolicy ?? .always).directory(loader: loader).title).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
                 Button("创建并安装") { model.install(name: name, version: selectedVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : loaderVersion) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
@@ -91,6 +91,9 @@ struct InstanceSettingsView: View {
                     TextField("高度", value: $instance.height, format: .number)
                 }
                 Section("实例文件") {
+                    LabeledContent("运行目录", value: (instance.runDirectory ?? .isolated).title)
+                    Text((instance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
+                    Text(model.paths.game(instance.id).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                     HStack {
                         Button("打开文件夹", systemImage: "folder") { model.reveal(instance) }
                         Button("模组", systemImage: "puzzlepiece.extension") { model.reveal(instance, folder: "mods") }

@@ -154,6 +154,7 @@ enum Page: String, CaseIterable, Identifiable {
         var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version, loader: loader, loaderVersion: loaderVersion)
         instance.memoryMB = state.settings.defaultMemoryMB
         instance.directoryID = paths.newInstanceDirectoryID
+        instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: loader)
         state.instances.append(instance); select(instance); showCreate = false; page = .downloads
         install(instance)
     }

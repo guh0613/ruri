@@ -155,6 +155,10 @@ struct PreferencesView: View {
                 }
                 Section("游戏默认设置") {
                     Picker("新实例内存", selection: $model.state.settings.defaultMemoryMB) { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { Text("\($0 / 1024) GB").tag($0) } }
+                    Picker("新实例隔离规则", selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {
+                        ForEach(GameIsolationPolicy.allCases) { Text($0.title).tag($0) }
+                    }
+                    Text("仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。").font(.caption).foregroundStyle(.secondary)
                 }
                 Section("下载与网络") {
                     Picker("下载源", selection: Binding(get: { model.state.settings.downloadSource ?? .automatic }, set: { model.state.settings.downloadSource = $0 })) {
@@ -183,6 +187,7 @@ struct PreferencesView: View {
         }
         .onChange(of: model.state.settings.appearance) { model.save() }
         .onChange(of: model.state.settings.defaultMemoryMB) { model.save() }
+        .onChange(of: model.state.settings.isolationPolicy) { model.save() }
         .onChange(of: model.state.settings.concurrentDownloads) { model.save() }
         .onChange(of: model.state.settings.downloadSource) { model.save(); Task { await model.applyNetworkSettings() } }
         .onChange(of: model.state.settings.microsoftClientID) { model.save() }
