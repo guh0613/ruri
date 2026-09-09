@@ -72,7 +72,7 @@ public actor WorldManager {
         try recover()
         let world = try worldURL(folder)
         guard hasLevelData(world) else { throw RuriError.message("找不到存档的 level.dat") }
-        let lock = try readLock(world); defer { if let lock { close(lock) } }
+        let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         return try writeBackup(world, reason: reason, progress: progress)
     }
     private func writeBackup(_ world: URL, reason: String, progress: @Sendable (Int, Int) -> Void) throws -> WorldBackup {
@@ -95,7 +95,7 @@ public actor WorldManager {
             let folder = replaceExisting ? metadata.worldFolder : try uniqueFolder(metadata.worldFolder + " 恢复")
             let destination = try worldURL(folder)
             let exists = FileManager.default.fileExists(atPath: destination.path)
-            let lock = exists ? try readLock(destination) : nil
+            let lock = exists ? try Self.readLock(destination) : nil
             defer { if let lock { close(lock) } }
             if exists { _ = try writeBackup(destination, reason: "恢复前自动备份", progress: progress) }
             try FileManager.default.moveItem(at: source, to: transaction.appendingPathComponent("incoming"))
@@ -152,7 +152,7 @@ public actor WorldManager {
             guard candidates.count == 1, let candidate = candidates.first else { throw RuriError.message("请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件") }
             world = candidate
         }
-        let lock = try readLock(world); defer { if let lock { close(lock) } }
+        let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         let incoming = temporary.appendingPathComponent("incoming")
         try FileTree.copy(from: world, to: incoming, excluding: ["session.lock"], progress: progress)
         let name = try uniqueFolder(snapshot(world).name)
@@ -166,14 +166,14 @@ public actor WorldManager {
         try recover()
         let world = try worldURL(folder)
         guard hasLevelData(world) else { throw RuriError.message("存档不存在") }
-        let lock = try readLock(world); defer { if let lock { close(lock) } }
+        let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         try SafeArchive.create(from: world, to: destination, excluding: ["session.lock"], progress: progress)
     }
     public func removeWorld(folder: String) throws {
         Self.diskLock.lock(); defer { Self.diskLock.unlock() }
         try recover()
         let world = try worldURL(folder)
-        let lock = try readLock(world); defer { if let lock { close(lock) } }
+        let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         try FileManager.default.trashItem(at: world, resultingItemURL: nil)
     }
     public func removeBackup(_ backup: WorldBackup) throws {
@@ -219,7 +219,7 @@ public actor WorldManager {
         let entries = try? FileTree.entries(in: world)
         return WorldSnapshot(folder: world.lastPathComponent, url: world, name: data?["LevelName"]?.string ?? world.lastPathComponent, version: data?["Version"]?["Name"]?.string, gameMode: mode, lastPlayed: lastPlayed, size: entries.map { $0.filter { !$0.directory }.reduce(0) { $0 + $1.size } }, icon: FileManager.default.fileExists(atPath: icon.path) ? icon : nil, metadataError: failure)
     }
-    private func readLock(_ world: URL) throws -> Int32? {
+    nonisolated static func readLock(_ world: URL) throws -> Int32? {
         let file = world.appendingPathComponent("session.lock")
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let fd = open(file.path, O_RDONLY)
