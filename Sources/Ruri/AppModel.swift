@@ -40,6 +40,8 @@ enum Page: String, CaseIterable, Identifiable {
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
     var worldInstance: GameInstance?
+    var importingInstance: PreparedInstanceImport?
+    var exportingInstance: GameInstance?
     var error: String?
     var notice: String?
     private var readOnly = false

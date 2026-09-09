@@ -116,6 +116,8 @@ struct ContentInstallView: View {
 
 extension AppModel {
     func importPack(_ url: URL) {
+        guard !busy else { return }
+        if url.pathExtension.lowercased() != "mrpack" { prepareInstanceImport(url); return }
         perform("导入 \(url.lastPathComponent)") { [self] id in
             let scoped = url.startAccessingSecurityScopedResource()
             defer { if scoped { url.stopAccessingSecurityScopedResource() } }

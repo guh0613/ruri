@@ -13,6 +13,7 @@ import RuriCore
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("新建游戏实例") { model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
+                Button("导入实例或整合包…") { model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
             }
             CommandGroup(replacing: .appSettings) {
                 Button("设置…") { model.page = .settings }.keyboardShortcut(",")

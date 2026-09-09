@@ -75,6 +75,8 @@ struct RootView: View {
         .sheet(item: $model.editingInstance) { instance in InstanceSettingsView(instance: instance) }
         .sheet(item: $model.contentInstance) { instance in InstanceContentView(instance: instance) }
         .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
+        .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
+        .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
         .alert("操作未完成", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button("好", role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
     }
@@ -162,7 +164,9 @@ struct LibraryView: View {
             VStack(alignment: .leading, spacing: 24) {
                 HStack {
                     SectionHeading(title: "你的游戏收藏", subtitle: "每个实例都有独立的模组、存档和设置。")
-                    Spacer(); Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
+                    Spacer()
+                    Button("导入…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }.disabled(model.busy)
+                    Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
                 }
                 TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
                 if filtered.isEmpty {
@@ -183,6 +187,7 @@ struct LibraryView: View {
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
                                         Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
                                         Button("管理存档与备份", systemImage: "globe") { model.worldInstance = instance }
+                                        Button("导出实例…", systemImage: "square.and.arrow.up") { model.exportingInstance = instance }.disabled(model.busy || model.runningID == instance.id || !instance.installed)
                                         Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.runningID == instance.id || !instance.installed)
                                         Divider()
                                         Button("移到废纸篓", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.runningID == instance.id)
