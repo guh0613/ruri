@@ -39,9 +39,10 @@ public struct DownloadItem: Sendable {
     public let destination: URL
     public let sha1: String?
     public let sha512: String?
+    public let md5: String?
     public let size: Int64?
-    public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, size: Int64? = nil) {
-        self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.size = size
+    public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64? = nil) {
+        self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.md5 = md5; self.size = size
     }
     public init(_ artifact: Artifact, to destination: URL) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, size: artifact.size) }
 }
@@ -103,7 +104,8 @@ public actor DownloadManager {
         } catch { finishTransfer(identity, item: item, error: error); throw error }
     }
     static func identity(_ item: DownloadItem) -> String {
-        let values = [item.url?.absoluteString ?? "", item.destination.standardizedFileURL.path, item.sha1 ?? "", item.sha512 ?? "", item.size.map(String.init) ?? ""]
+        var values = [item.url?.absoluteString ?? "", item.destination.standardizedFileURL.path, item.sha1 ?? "", item.sha512 ?? "", item.size.map(String.init) ?? ""]
+        if let md5 = item.md5 { values.append("md5:" + md5) }
         return SHA256.hash(data: Data(values.joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
     }
     static func partialFiles(_ item: DownloadItem) -> (data: URL, metadata: URL) {
@@ -122,14 +124,14 @@ public actor DownloadManager {
             try Task.checkCancellation()
             do {
                 let url = candidates[attempt % candidates.count]
-                if Self.valid(files.data, item: item), item.sha1 != nil || item.sha512 != nil {
+                if Self.valid(files.data, item: item), item.sha1 != nil || item.sha512 != nil || item.md5 != nil {
                     guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message("无法保存已校验的下载文件") }
                     try? FileManager.default.removeItem(at: files.metadata); return
                 }
                 let state = (try? Data(contentsOf: files.metadata)).flatMap { try? JSONDecoder().decode(DownloadResumeState.self, from: $0) }
                 let info = try? FileManager.default.attributesOfItem(atPath: files.data.path)
                 var offset = (info?[.size] as? NSNumber)?.int64Value ?? 0
-                if state?.identity != identity || (state?.sourceURL != nil && state?.sourceURL != url.absoluteString) || info?[.type] as? FileAttributeType != .typeRegular || (state?.validator == nil && item.sha1 == nil && item.sha512 == nil) || (item.size.map { offset >= $0 } ?? false) {
+                if state?.identity != identity || (state?.sourceURL != nil && state?.sourceURL != url.absoluteString) || info?[.type] as? FileAttributeType != .typeRegular || (state?.validator == nil && item.sha1 == nil && item.sha512 == nil && item.md5 == nil) || (item.size.map { offset >= $0 } ?? false) {
                     discard(); offset = 0
                 }
                 var request = URLRequest(url: url)
@@ -163,18 +165,20 @@ public actor DownloadManager {
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: file.path), attributes[.type] as? FileAttributeType == .typeRegular,
               let size = attributes[.size] as? NSNumber, size.int64Value > 0 || item.size == 0 else { return false }
         if let expected = item.size, size.int64Value != expected { return false }
-        guard item.sha1 != nil || item.sha512 != nil else { return true }
+        guard item.sha1 != nil || item.sha512 != nil || item.md5 != nil else { return true }
         guard let handle = try? FileHandle(forReadingFrom: file) else { return false }
         defer { try? handle.close() }
-        var sha1 = Insecure.SHA1(); var sha512 = SHA512()
+        var sha1 = Insecure.SHA1(); var sha512 = SHA512(); var md5 = Insecure.MD5()
         do {
             while let chunk = try handle.read(upToCount: 1024 * 1024), !chunk.isEmpty {
                 if item.sha1 != nil { sha1.update(data: chunk) }
                 if item.sha512 != nil { sha512.update(data: chunk) }
+                if item.md5 != nil { md5.update(data: chunk) }
             }
         } catch { return false }
         if let hash = item.sha1, sha1.finalize().map({ String(format: "%02x", $0) }).joined() != hash.lowercased() { return false }
         if let hash = item.sha512, sha512.finalize().map({ String(format: "%02x", $0) }).joined() != hash.lowercased() { return false }
+        if let hash = item.md5, md5.finalize().map({ String(format: "%02x", $0) }).joined() != hash.lowercased() { return false }
         return true
     }
 }

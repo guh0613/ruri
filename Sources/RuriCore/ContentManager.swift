@@ -21,14 +21,15 @@ public struct ManagedContent: Codable, Identifiable, Equatable, Sendable {
     public var filename: String
     public var sha1: String?
     public var sha512: String?
+    public var md5: String?
     public var size: Int64
     public var requiredProjects: [String]
     public var enabled: Bool
     public var relativePath: String { "\(kind.folder)/\(filename)\(enabled ? "" : ".disabled")" }
-    public init(provider: String = "modrinth", projectID: String, versionID: String, title: String, versionName: String, publishedAt: String? = nil, kind: ContentKind, filename: String, sha1: String? = nil, sha512: String? = nil, size: Int64, requiredProjects: [String] = [], enabled: Bool = true) {
+    public init(provider: String = "modrinth", projectID: String, versionID: String, title: String, versionName: String, publishedAt: String? = nil, kind: ContentKind, filename: String, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64, requiredProjects: [String] = [], enabled: Bool = true) {
         self.provider = provider; self.projectID = projectID; self.versionID = versionID; self.title = title
         self.versionName = versionName; self.publishedAt = publishedAt; self.kind = kind; self.filename = filename
-        self.sha1 = sha1; self.sha512 = sha512; self.size = size; self.requiredProjects = requiredProjects; self.enabled = enabled
+        self.sha1 = sha1; self.sha512 = sha512; self.md5 = md5; self.size = size; self.requiredProjects = requiredProjects; self.enabled = enabled
     }
 }
 
@@ -139,7 +140,7 @@ public actor ContentManager {
             if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
             let record = installs[i].record
             guard !record.filename.contains("/"), !record.filename.contains("\\"), URL(fileURLWithPath: record.filename).pathExtension.lowercased() == record.kind.fileExtension else { throw RuriError.message("无效内容文件名：\(record.filename)") }
-            let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, size: record.size)
+            let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)
             guard DownloadManager.valid(installs[i].source, item: check) else { throw RuriError.message("待安装文件校验失败：\(record.filename)") }
         }
         let newPaths = installs.map { $0.record.relativePath }
@@ -149,7 +150,7 @@ public actor ContentManager {
         for record in installs.map(\.record) where record.enabled {
             let unavailable = record.requiredProjects.filter { required in
                 !futureRecords.contains { candidate in
-                    guard candidate.projectID == required, candidate.enabled else { return false }
+                    guard candidate.provider == record.provider, candidate.projectID == required, candidate.enabled else { return false }
                     if incomingIDs.contains(candidate.id) { return true }
                     guard let url = try? contentURL(candidate.relativePath) else { return false }
                     return FileManager.default.fileExists(atPath: url.path)
@@ -161,7 +162,7 @@ public actor ContentManager {
         for old in replaced {
             let file = try contentURL(old.relativePath)
             if fm.fileExists(atPath: file.path) {
-                let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: file, sha1: old.sha1, sha512: old.sha512, size: old.size)
+                let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: file, sha1: old.sha1, sha512: old.sha512, md5: old.md5, size: old.size)
                 guard DownloadManager.valid(file, item: check) else { throw RuriError.message("\(old.filename) 已在外部修改。请先备份或移走该文件，再更新。") }
             }
         }
@@ -229,11 +230,11 @@ public actor ContentManager {
         guard enabled != file.enabled else { return }
         var records = try readRecords()
         if enabled, let record = file.managed {
-            let missing = record.requiredProjects.filter { id in !records.contains(where: { $0.projectID == id && $0.enabled }) }
+            let missing = record.requiredProjects.filter { id in !records.contains(where: { $0.provider == record.provider && $0.projectID == id && $0.enabled }) }
             guard missing.isEmpty else { throw RuriError.message("请先安装并启用此模组的必需依赖。") }
         }
         if !enabled, let record = file.managed {
-            let dependents = records.filter { $0.enabled && $0.requiredProjects.contains(record.projectID) }
+            let dependents = records.filter { $0.provider == record.provider && $0.enabled && $0.requiredProjects.contains(record.projectID) }
             guard dependents.isEmpty else { throw RuriError.message("以下内容依赖此模组，请先停用它们：\(dependents.map(\.title).joined(separator: "、"))") }
         }
         let target = try contentURL("\(file.kind.folder)/\(file.filename)\(enabled ? "" : ".disabled")")
@@ -265,7 +266,7 @@ public actor ContentManager {
         try recover()
         var records = try readRecords()
         if let record = file.managed {
-            let dependents = records.filter { $0.enabled && $0.requiredProjects.contains(record.projectID) }
+            let dependents = records.filter { $0.provider == record.provider && $0.enabled && $0.requiredProjects.contains(record.projectID) }
             guard dependents.isEmpty else { throw RuriError.message("以下内容依赖此文件：\(dependents.map(\.title).joined(separator: "、"))") }
         }
         let source = try contentURL("\(file.kind.folder)/\(file.filename)\(file.enabled ? "" : ".disabled")")
