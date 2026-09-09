@@ -87,10 +87,16 @@ struct MRPackTests {
         let instance = GameInstance(name: "Round trip", gameVersion: "1.21.1", loader: .fabric, loaderVersion: "0.19.5")
         let game = paths.game(instance.id)
         for (path, data) in [("mods/known.jar", MRFixture.data), ("mods/local.jar", Data("local".utf8)), ("mods/disabled.jar.disabled", MRFixture.data), ("config/empty.json", Data())] { try write(data, path, in: game) }
+        try write(Data("regenerable".utf8), ".fabric/remappedJars/client.jar", in: game)
+        try write(Data("private diagnostic".utf8), "hs_err_pid42.log", in: game)
+        try write(Data("launcher credential".utf8), "launcher_msa_credentials.bin", in: game)
         let session = URLSession(configuration: config()); defer { session.invalidateAndCancel() }
         let transfer = InstanceTransfer(paths: paths); let destination = paths.cache.appendingPathComponent("test.mrpack")
         try await transfer.exportMRPack(instance, game: game, to: destination, includeWorlds: true, details: .init(version: "3.0", description: "Fixture"), service: ModrinthService(client: HTTPClient(session: session))) { _ in }
         let archive = try Archive(url: destination, accessMode: .read)
+        #expect(archive["client-overrides/.fabric/remappedJars/client.jar"] == nil)
+        #expect(archive["client-overrides/hs_err_pid42.log"] == nil)
+        #expect(archive["client-overrides/launcher_msa_credentials.bin"] == nil)
         #expect(archive["modrinth.index.json"] != nil); #expect(archive["client-overrides/mods/known.jar"] == nil)
         #expect(archive["client-overrides/mods/local.jar"] != nil); #expect(archive["client-overrides/mods/disabled.jar.disabled"] != nil)
         let preview = try await transfer.prepare(destination)

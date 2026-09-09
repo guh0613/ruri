@@ -94,7 +94,7 @@ struct MultiMCPack: Codable {
 public actor InstanceTransfer {
     let paths: LauncherPaths
     static let loaderIDs: [String: LoaderKind] = ["net.fabricmc.fabric-loader": .fabric, "org.quiltmc.quilt-loader": .quilt, "net.minecraftforge": .forge, "net.neoforged": .neoforge]
-    static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json"]
+    static let excluded: Set<String> = ["logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches"]
     public init(paths: LauncherPaths) { self.paths = paths }
 
     public func prepare(_ source: URL, progress: @Sendable (InstallProgress) -> Void = { _ in }) throws -> PreparedInstanceImport {
@@ -312,6 +312,11 @@ public actor InstanceTransfer {
     }
     static func exclusions(_ game: URL, includeWorlds: Bool) throws -> Set<String> {
         var result = excluded
+        if FileManager.default.fileExists(atPath: game.path) {
+            for file in try FileManager.default.contentsOfDirectory(at: game, includingPropertiesForKeys: [.isRegularFileKey]) {
+                if ["log", "hprof", "jfr"].contains(file.pathExtension.lowercased()), try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true { result.insert(file.lastPathComponent) }
+            }
+        }
         if !includeWorlds { result.insert("saves") }
         let saves = game.appendingPathComponent("saves")
         if FileManager.default.fileExists(atPath: saves.path) {
