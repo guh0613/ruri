@@ -38,6 +38,7 @@ public enum ArgumentTokenizer {
 
 public enum LaunchBuilder {
     public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths) throws -> LaunchPlan {
+        try paths.validateInstanceLocation(instance.id)
         guard let mainClass = manifest.mainClass else { throw RuriError.message("启动清单没有主类") }
         guard manifest.inheritsFrom == nil else { throw RuriError.message("启动清单尚未合并父版本") }
         guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message("内存或窗口大小设置无效") }

@@ -58,6 +58,7 @@ public actor WorldManager {
         }.sorted { ($0.lastPlayed ?? .distantPast) > ($1.lastPlayed ?? .distantPast) }
     }
     public func backups() throws -> [WorldBackup] {
+        try paths.validateInstanceLocation(instanceID)
         Self.diskLock.lock(); defer { Self.diskLock.unlock() }
         guard FileManager.default.fileExists(atPath: backupDirectory.path) else { return [] }
         return try FileManager.default.contentsOfDirectory(at: backupDirectory, includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey, .isRegularFileKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles]).compactMap { url in
@@ -113,6 +114,7 @@ public actor WorldManager {
         }
     }
     public func recover() throws {
+        try paths.validateInstanceLocation(instanceID)
         Self.diskLock.lock(); defer { Self.diskLock.unlock() }
         let fm = FileManager.default
         guard fm.fileExists(atPath: transaction.path) else { return }

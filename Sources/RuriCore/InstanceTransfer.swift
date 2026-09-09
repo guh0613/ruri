@@ -184,6 +184,7 @@ public actor InstanceTransfer {
                  installGame: @Sendable (GameInstance) async throws -> GameInstance) async throws -> GameInstance {
         var instance = prepared.instance
         instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        instance.directoryID = paths.directoryID(for: instance.id)
         if instance.name.isEmpty { instance.name = prepared.instance.name }
         instance.javaPath = nil; instance.installed = false
         if !importJVMArguments { instance.extraJVMArguments = "" }
@@ -193,6 +194,7 @@ public actor InstanceTransfer {
             guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包文件缺失或已修改：\(file.path)") }
         }
         try Self.validatePackContent(content, references: prepared.curseForgeFiles)
+        try paths.prepareInstance(instance.id)
         do {
             // User files are copied first; official installer then supplies any
             // generated legacy resources without a destructive directory merge.

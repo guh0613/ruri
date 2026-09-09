@@ -33,6 +33,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var height: Int
     public var favorite: Bool
     public var installed: Bool
+    /// Missing in older states: the original Application Support directory.
+    public var directoryID: UUID?
     public init(name: String, gameVersion: String, loader: LoaderKind = .vanilla, loaderVersion: String? = nil) {
         id = UUID(); self.name = name; self.gameVersion = gameVersion; self.loader = loader
         self.loaderVersion = loaderVersion; createdAt = Date(); playTime = 0
@@ -83,6 +85,8 @@ public struct PersistentState: Codable, Sendable {
     public var activeAccountID: UUID?
     public var selectedInstanceID: UUID?
     public var settings = AppSettings()
+    public var gameDirectories: [GameDirectory]?
+    public var selectedDirectoryID: UUID?
     public init() {}
 }
 
@@ -96,10 +100,14 @@ public struct InstallProgress: Sendable {
     }
 }
 
-public struct LauncherPaths: Sendable {
+public struct LauncherPaths: Codable, Sendable {
     public let root: URL
-    public init(root: URL? = nil) {
+    public let directories: [GameDirectory]
+    public let instanceDirectories: [UUID: UUID]
+    public let newInstanceDirectoryID: UUID
+    public init(root: URL? = nil, directories: [GameDirectory] = [], instanceDirectories: [UUID: UUID] = [:], newInstanceDirectoryID: UUID = GameDirectory.defaultID) {
         self.root = root ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Ruri", isDirectory: true)
+        self.directories = directories; self.instanceDirectories = instanceDirectories; self.newInstanceDirectoryID = newInstanceDirectoryID
     }
     public var libraries: URL { root.appendingPathComponent("libraries") }
     public var assets: URL { root.appendingPathComponent("assets") }
@@ -108,7 +116,7 @@ public struct LauncherPaths: Sendable {
     public var runtimes: URL { root.appendingPathComponent("runtimes") }
     public var cache: URL { root.appendingPathComponent("cache") }
     public var state: URL { root.appendingPathComponent("state.json") }
-    public func instance(_ id: UUID) -> URL { instances.appendingPathComponent(id.uuidString) }
+    public func instance(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent("instances").appendingPathComponent(id.uuidString) }
     public func game(_ id: UUID) -> URL { instance(id).appendingPathComponent("minecraft") }
     public func manifest(_ id: UUID) -> URL { instance(id).appendingPathComponent("version.json") }
     public func prepare() throws {
@@ -138,10 +146,14 @@ public enum StateStore {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let data = try Data(contentsOf: paths.state)
         let result = try JSONDecoder().decode(PersistentState.self, from: data)
-        guard result.schemaVersion == 1 else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...2).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        try paths.configured(with: result).validateDirectoryConfiguration()
         return result
     }
     public static func save(_ state: PersistentState, to paths: LauncherPaths) throws {
+        var state = state
+        if !(state.gameDirectories ?? []).isEmpty || state.instances.contains(where: { $0.directoryID != nil && $0.directoryID != GameDirectory.defaultID }) { state.schemaVersion = 2 }
+        try paths.configured(with: state).validateDirectoryConfiguration()
         try paths.prepare()
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(state).write(to: paths.state, options: .atomic)

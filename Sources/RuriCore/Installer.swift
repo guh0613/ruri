@@ -26,6 +26,7 @@ public actor GameInstaller {
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
         try paths.prepare()
+        try paths.prepareInstance(input.id)
         await progress(InstallProgress("正在获取版本清单"))
         let catalog = try await catalog()
         guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message("找不到 Minecraft \(input.gameVersion)") }
@@ -33,6 +34,7 @@ public actor GameInstaller {
         try await downloader.fetch(DownloadItem(url: version.url, destination: baseFile, sha1: version.sha1))
         var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
         var instance = input
+        instance.directoryID = paths.directoryID(for: instance.id)
         if instance.loader != .vanilla {
             await progress(InstallProgress("正在安装 \(instance.loader.title)"))
             if instance.loaderVersion == nil { instance.loaderVersion = try await loaderVersions(instance.loader, game: instance.gameVersion).first }
@@ -48,9 +50,11 @@ public actor GameInstaller {
             manifest = manifest.merging(child: child)
         }
         manifest = try Self.applyingPackLibraries(instance.packLibraries ?? [], to: manifest)
+        try paths.validateInstanceLocation(instance.id)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        try paths.validateInstanceLocation(instance.id)
         try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: .atomic)
         instance.installed = true
         await progress(InstallProgress("安装完成", completed: 1, total: 1))
@@ -70,12 +74,14 @@ public actor GameInstaller {
         return result
     }
     public func repair(_ instance: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
+        try paths.validateInstanceLocation(instance.id)
         if instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
     }
     public func loadManifest(_ instance: GameInstance) throws -> VersionManifest {
-        try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: paths.manifest(instance.id)))
+        try paths.validateInstanceLocation(instance.id)
+        return try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: paths.manifest(instance.id)))
     }
     public nonisolated static func architecture(for manifest: VersionManifest) -> String {
         // LWJGL 2 / early LWJGL 3 releases ship only Intel natives. Select matching Java.
@@ -128,6 +134,7 @@ public actor GameInstaller {
             }
             try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏资源", completed: done, total: total)) }
             if assets.virtual == true || assets.map_to_resources == true {
+                try paths.validateInstanceLocation(instance.id)
                 let root = assets.map_to_resources == true ? paths.game(instance.id).appendingPathComponent("resources") : try LauncherPaths.safePath("virtual/\(index.id)", within: paths.assets)
                 for (name, object) in assets.objects {
                     let target = try LauncherPaths.safePath(name, within: root)
@@ -138,6 +145,7 @@ public actor GameInstaller {
             }
         }
         await progress(InstallProgress("正在准备 macOS 原生库"))
+        try paths.validateInstanceLocation(instance.id)
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         try FileManager.default.createDirectory(at: natives, withIntermediateDirectories: true)
         for (file, excluded) in nativeFiles { try SafeArchive.extract(file, to: natives, excluding: excluded) }

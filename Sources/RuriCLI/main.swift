@@ -6,7 +6,8 @@ import RuriCore
         do {
             let args = Array(CommandLine.arguments.dropFirst())
             let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
-            let paths = LauncherPaths(root: root)
+            let basePaths = LauncherPaths(root: root)
+            let paths = try basePaths.configured(with: StateStore.load(basePaths))
             let storedSource = (try? StateStore.load(paths).settings.downloadSource) ?? .automatic
             let source: DownloadSource
             if let requested = ProcessInfo.processInfo.environment["RURI_DOWNLOAD_SOURCE"] {
@@ -15,6 +16,8 @@ import RuriCore
             } else { source = storedSource }
             await NetworkRouting.shared.configure(source)
             switch args.first {
+            case "directories":
+                try manageDirectories(Array(args.dropFirst()), paths: paths)
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
             case "install-java":

@@ -36,7 +36,7 @@ public final class GameRunLease: @unchecked Sendable {
     private init(_ descriptor: Int32) { self.descriptor = descriptor }
     deinit { Darwin.close(descriptor) }
     public static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID? = nil) throws -> GameRunLease {
-        try FileManager.default.createDirectory(at: paths.instance(instanceID), withIntermediateDirectories: true)
+        try paths.prepareInstance(instanceID)
         let file = try LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID))
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
         guard fd >= 0 else { throw RuriError.message("无法取得实例运行锁。") }
@@ -53,6 +53,7 @@ public final class GameRunLease: @unchecked Sendable {
         return GameRunLease(fd)
     }
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
+        guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
         guard let file = try? LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID)) else { return true }
         guard FileManager.default.fileExists(atPath: file.path) else { return false }
         let fd = open(file.path, O_RDWR | O_CLOEXEC | O_NOFOLLOW)

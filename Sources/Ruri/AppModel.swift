@@ -22,8 +22,10 @@ enum Page: String, CaseIterable, Identifiable {
 
 @MainActor @Observable final class AppModel {
     var state: PersistentState
-    let paths: LauncherPaths
-    let installer: GameInstaller
+    let basePaths: LauncherPaths
+    let downloader = DownloadManager()
+    var paths: LauncherPaths { basePaths.configured(with: state) }
+    var installer: GameInstaller { GameInstaller(paths: paths, downloader: downloader) }
     var page = Page.home
     var catalog: VersionCatalog?
     var catalogLoading = false
@@ -72,8 +74,12 @@ enum Page: String, CaseIterable, Identifiable {
 
     init() {
         let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
-        paths = LauncherPaths(root: root); installer = GameInstaller(paths: paths)
-        do { state = try StateStore.load(paths) }
+        basePaths = LauncherPaths(root: root)
+        do {
+            state = try StateStore.load(basePaths)
+            state.gameDirectories = state.gameDirectories?.map { $0.resolvingBookmark() }
+            try basePaths.configured(with: state).validateDirectoryConfiguration()
+        }
         catch { state = PersistentState(); self.error = "无法读取 Ruri 数据，已暂停写入以保护原文件。\n\(error.localizedDescription)"; readOnly = true }
     }
     func save() {
@@ -117,6 +123,7 @@ enum Page: String, CaseIterable, Identifiable {
         guard !busy, !readOnly else { return }
         var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version, loader: loader, loaderVersion: loaderVersion)
         instance.memoryMB = state.settings.defaultMemoryMB
+        instance.directoryID = paths.newInstanceDirectoryID
         state.instances.append(instance); select(instance); showCreate = false; page = .downloads
         install(instance)
     }
@@ -297,7 +304,7 @@ enum Page: String, CaseIterable, Identifiable {
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)
         let url = folder.map { base.appendingPathComponent($0) } ?? base
-        do { try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true); NSWorkspace.shared.open(url) }
+        do { try paths.validateInstanceLocation(instance.id); try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true); NSWorkspace.shared.open(url) }
         catch { self.error = error.localizedDescription }
     }
     func trash(_ instance: GameInstance) {

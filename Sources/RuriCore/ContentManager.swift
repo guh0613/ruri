@@ -102,6 +102,7 @@ public actor ContentManager {
         try encoder.encode(records).write(to: recordsURL, options: .atomic)
     }
     public func recover() throws {
+        try paths.validateInstanceLocation(instanceID)
         Self.diskLock.lock(); defer { Self.diskLock.unlock() }
         let fm = FileManager.default
         guard fm.fileExists(atPath: transactionURL.path) else { return }

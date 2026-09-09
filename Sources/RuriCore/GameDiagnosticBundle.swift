@@ -67,9 +67,11 @@ public struct GameDiagnosticBundle: Sendable {
         let selected = files.filter { selectedIDs.contains($0.id) }
         guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message("请选择有效的报告内容。") }
         guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message("请选择 ZIP 文件保存位置。") }
-        let root = paths.root.resolvingSymlinksInPath().standardizedFileURL.path
         let target = destination.resolvingSymlinksInPath().standardizedFileURL.path
-        guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message("请将诊断包保存在 Ruri 数据目录之外。") }
+        for url in [paths.root] + paths.directories.map(\.url) {
+            let root = url.resolvingSymlinksInPath().standardizedFileURL.path
+            guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message("请将诊断包保存在 Ruri 数据目录和实例文件夹之外。") }
+        }
         let staging = destination.deletingLastPathComponent().appendingPathComponent(".ruri-diagnostic-\(UUID().uuidString).zip")
         defer { try? FileManager.default.removeItem(at: staging) }
         do {
