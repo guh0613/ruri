@@ -17,7 +17,7 @@ struct MonitorStopRequest: Codable {
 
 public enum GameMonitorClient {
     public enum Activity: Equatable, Sendable { case inactive, monitoring, orphaned, uncertain }
-    public enum ClientEvent: String, Codable, Sendable { case connected, windowClosed, windowReopened, quitRequested, stopRequested, gameActivationRequested }
+    public enum ClientEvent: String, Codable, Sendable { case connected, windowClosed, windowReopened, quitRequested, normalQuitRequested, stopRequested, gameActivationRequested }
     public static func recordEvent(_ event: ClientEvent, paths: LauncherPaths, session: GameSession) throws {
         struct Entry: Encodable { let date: Date; let clientPID: Int32; let client: String; let event: ClientEvent }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
@@ -114,6 +114,7 @@ public enum GameMonitorService {
     }
     @MainActor private static func run(_ plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String]) async throws -> Int32 {
         let game = GameProcess()
+        try recorder.setNativeQuitSupported(plan.nativeQuitSupported == true)
         var stopTask: Task<Void, Never>?
         defer { stopTask?.cancel() }
         return try await withCheckedThrowingContinuation { continuation in
@@ -131,11 +132,17 @@ public enum GameMonitorService {
                     catch { try? recorder.append("[Ruri] 无法保存游戏进程信息：\(error.localizedDescription)") }
                 }
                 stopTask = Task { @MainActor in
+                    var lastNormalQuit = recorder.record.normalQuitAttempt?.requestID
                     while !Task.isCancelled && game.isRunning {
                         if stopRequested(recorder) {
                             try? recorder.transition(.stopping)
                             game.stop()
                             return
+                        }
+                        if let request = GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record), request.id != lastNormalQuit {
+                            lastNormalQuit = request.id
+                            let accepted = game.requestNormalQuit()
+                            try? recorder.recordNormalQuit(request, accepted: accepted)
                         }
                         try? await Task.sleep(for: .milliseconds(200))
                     }

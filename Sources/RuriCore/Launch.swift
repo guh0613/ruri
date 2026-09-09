@@ -5,6 +5,7 @@ public struct LaunchPlan: Codable, Sendable {
     public let arguments: [String]
     public let directory: URL
     public let environment: [String: String]
+    public var nativeQuitSupported: Bool?
     public var redactedCommand: String {
         var redactNext = false
         return ([executable.path] + arguments).map { value in
@@ -107,7 +108,8 @@ public enum LaunchBuilder {
         var env = ProcessInfo.processInfo.environment
         for key in ["JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "JDK_JAVA_OPTIONS", "CLASSPATH"] { env.removeValue(forKey: key) }
         env["JAVA_HOME"] = URL(fileURLWithPath: java.path).deletingLastPathComponent().deletingLastPathComponent().path
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env)
+        let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported)
     }
 }
 
@@ -122,6 +124,9 @@ public final class GameProcess {
     private var output: (@MainActor @Sendable (String) -> Void)?
     private var onExit: (@MainActor @Sendable (GameExit) -> Void)?
     private var stopRequested = false
+    private var normalQuitRequested = false
+    private var nativeQuitSupported = false
+    private var identity: ProcessIdentity?
     public var isRunning: Bool { process?.isRunning ?? false }
     public var processIdentifier: Int32? { process?.processIdentifier }
     public init() {}
@@ -129,6 +134,7 @@ public final class GameProcess {
         guard self.process == nil else { throw RuriError.message("游戏已在运行或正在结束") }
         self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         stopRequested = false
+        normalQuitRequested = false; nativeQuitSupported = plan.nativeQuitSupported == true; identity = nil
         let startedAt = Date()
         let startedClock = ContinuousClock.now
         let process = Process(); let pipe = Pipe()
@@ -150,20 +156,26 @@ public final class GameProcess {
                     guard let self else { return }
                     if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
                     for line in self.formatter.flush() { self.redactAndSend(line) }
-                    let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed)
+                    let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed, normalQuitRequested: self.normalQuitRequested ? true : nil)
                     let callback = self.onExit
                     self.process = nil; self.pipe = nil; self.reader = nil; self.onExit = nil
                     callback?(result)
                 }
             }
         }
-        do { try process.run(); self.process = process; self.pipe = pipe; self.reader = reader }
+        do { try process.run(); self.process = process; self.pipe = pipe; self.reader = reader; identity = ProcessIdentity.read(process.processIdentifier) }
         catch { reader.finish {}; self.output = nil; self.onExit = nil; throw error }
     }
     public func stop() {
         guard let process, process.isRunning else { return }
         stopRequested = true
         process.terminate()
+    }
+    @discardableResult public func requestNormalQuit() -> Bool {
+        guard nativeQuitSupported, process?.isRunning == true, let identity else { return false }
+        let accepted = NativeGameQuit.request(identity)
+        if accepted { normalQuitRequested = true }
+        return accepted
     }
     private func receive(_ data: Data) {
         pending.append(data)

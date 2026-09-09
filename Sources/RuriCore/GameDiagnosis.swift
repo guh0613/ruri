@@ -107,6 +107,7 @@ public enum GameDiagnosticAnalyzer {
                      "\(session.java ?? "未记录 Java") · 内存上限 \(session.memoryMB) MB"]
         if let exit = session.exit {
             facts.append("\(exit.reason == .signal ? "终止信号" : "退出码")：\(exit.status)；Ruri 结束请求：\(exit.stopRequested ? "有" : "无")")
+            if exit.normalQuitRequested == true { facts.append("系统曾接收 Ruri 的正常退出请求。") }
         }
         if let interruption = session.interruption {
             facts.append("恢复记录时间：\(interruption.observedAt.ISO8601Format())（不是游戏退出时间）")

@@ -6,7 +6,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         public var isFinished: Bool { self != .preparing && self != .running }
     }
     public enum Stage: String, Codable, Sendable {
-        case preparing, installation, recovery, account, manifest, java, arguments, starting, running, stopping, finished, monitorRecovery
+        case preparing, installation, recovery, account, manifest, java, arguments, starting, running, quitting, stopping, finished, monitorRecovery
         public var title: String {
             switch self {
             case .preparing: "准备启动"
@@ -19,6 +19,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
             case .starting: "创建游戏进程"
             case .running: "游戏进程运行"
             case .stopping: "请求结束游戏"
+            case .quitting: "等待游戏处理退出请求"
             case .finished: "游戏已退出"
             case .monitorRecovery: "恢复中断记录"
             }
@@ -60,6 +61,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var failure: String?
     public var exit: GameExit?
     public var interruption: GameSessionInterruption?
+    public var nativeQuitSupported: Bool?
+    public var normalQuitAttempt: GameNormalQuitAttempt?
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
@@ -231,6 +234,15 @@ public enum GameSessionReviewStore {
         try save()
     }
     public func setJava(_ label: String) throws { record.java = label; try save() }
+    public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
+    func recordNormalQuit(_ request: GameNormalQuitRequest, accepted: Bool) throws {
+        guard !record.state.isFinished else { return }
+        let attempt = GameNormalQuitAttempt(requestID: request.id, requestedAt: request.requestedAt, processedAt: Date(), accepted: accepted)
+        record.normalQuitAttempt = attempt; record.updatedAt = attempt.processedAt
+        if accepted { record.stage = .quitting }
+        if record.events.count < 512 { record.events.append(.init(id: UUID(), date: attempt.processedAt, stage: record.stage, message: attempt.explanation)) }
+        try save(); try append("[Ruri] \(attempt.explanation)")
+    }
     public func started(processID: Int32) throws {
         record.processID = processID; record.gameIdentity = ProcessIdentity.read(processID)
         record.state = .running; try transition(.running)

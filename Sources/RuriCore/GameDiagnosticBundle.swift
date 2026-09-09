@@ -47,6 +47,7 @@ public struct GameDiagnosticBundle: Sendable {
         Exit kind: \(session.exit?.reason.rawValue ?? "未记录")
         Exit status: \(session.exit.map { String($0.status) } ?? "未记录")
         Stop requested through Ruri: \(session.exit.map { $0.stopRequested ? "yes" : "no" } ?? "未记录")
+        Normal quit request sent: \(session.exit?.normalQuitRequested == true ? "yes" : session.normalQuitAttempt?.accepted == true ? "yes (exit not recorded)" : "未记录")
         """
         if let interruption = session.interruption {
             environment += "\nRecovery observed at (not exit time): \(interruption.observedAt.ISO8601Format())\nRecovery basis: \(interruption.resolution.rawValue)\n\(interruption.explanation)"

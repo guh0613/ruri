@@ -9,6 +9,7 @@ public struct GameExit: Codable, Equatable, Sendable {
     public let endedAt: Date
     public let stopRequested: Bool
     public var durationSeconds: Double?
+    public var normalQuitRequested: Bool?
     public var playTime: TimeInterval { max(0, durationSeconds ?? endedAt.timeIntervalSince(startedAt)) }
 
     public var succeeded: Bool { reason == .exit && status == 0 }
@@ -25,7 +26,7 @@ public struct GameExit: Codable, Equatable, Sendable {
     }
     public var explanation: String {
         if stoppedByLauncher { return "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。" }
-        if succeeded { return "游戏进程返回成功状态。" }
+        if succeeded { return normalQuitRequested == true ? "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。" : "游戏进程返回成功状态。" }
         if reason == .signal && [9, 15].contains(status) {
             return "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。"
         }
@@ -35,7 +36,7 @@ public struct GameExit: Codable, Equatable, Sendable {
         return "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。"
     }
     public var logDescription: String {
-        "[Ruri] \(summary)；PID \(processID)；\(reason == .signal ? "信号" : "退出码") \(status)；Ruri 结束请求：\(stopRequested ? "是" : "否")；开始 \(startedAt.ISO8601Format())；结束 \(endedAt.ISO8601Format())"
+        "[Ruri] \(summary)；PID \(processID)；\(reason == .signal ? "信号" : "退出码") \(status)；Ruri 结束请求：\(stopRequested ? "是" : "否")；正常退出请求：\(normalQuitRequested == true ? "是" : "否")；开始 \(startedAt.ISO8601Format())；结束 \(endedAt.ISO8601Format())"
     }
     private var signalName: String {
         [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? "信号 \(status)"

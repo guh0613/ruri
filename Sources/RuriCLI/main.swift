@@ -145,6 +145,11 @@ import RuriCore
                     if !handedOff { try? recorder.fail(error, cancelled: Task.isCancelled) }
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
+            case "quit":
+                guard args.count == 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message("用法：ruri-cli quit <instance-uuid>") }
+                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { !$0.state.isFinished && GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
+                let request = try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
+                print("已提交正常退出请求：\(request)。这不代表游戏已经退出；监控会继续记录实际结果。")
             case "stop":
                 guard args.count == 2, let id = UUID(uuidString: args[1]), try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli stop <instance-uuid>") }
                 guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
@@ -188,7 +193,7 @@ import RuriCore
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]\n  launch [instance-uuid] [--detach] (offline account)\n  stop <instance-uuid>\n\nRURI_DATA_DIR overrides the data directory.")
+            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  diagnose <instance-uuid> <session-uuid>\n  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]\n  launch [instance-uuid] [--detach] (offline account)\n  quit <instance-uuid> (normal application quit)\n  stop <instance-uuid> (SIGTERM)\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }
