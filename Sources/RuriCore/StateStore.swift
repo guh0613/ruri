@@ -39,10 +39,16 @@ public enum StateStore {
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
         var state = input; state.schemaVersion = 6; state.revision = UUID()
+        normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(state).write(to: paths.state, options: [.atomic])
         return state
+    }
+    private static func normalizeMemory(_ state: inout PersistentState) {
+        let memory = state.settings.defaultLaunchSettings.memory
+        state.settings.defaultMemoryMB = memory.maximumMB
+        state.settings.defaultMemorySettings = memory
     }
     private static func acquire(_ paths: LauncherPaths) throws -> Int32 {
         try paths.prepare()
@@ -60,7 +66,8 @@ public enum StateStore {
         let labels = ["instances": "同一实例", "accounts": "同一账号", "gameDirectories": "同一实例文件夹", "settings": "启动器设置",
                       "name": "名称", "favorite": "收藏状态", "memoryMB": "内存", "defaultMemoryMB": "默认内存", "javaPath": "Java 选择",
                       "width": "窗口宽度", "height": "窗口高度", "appearance": "外观", "downloadSource": "下载源",
-                      "extraJVMArguments": "JVM 参数", "extraGameArguments": "游戏参数", "directoryID": "所属文件夹"]
+                      "extraJVMArguments": "JVM 参数", "extraGameArguments": "游戏参数", "directoryID": "所属文件夹",
+                      "memory": "内存策略", "defaultMemorySettings": "默认内存策略"]
         let description: String
         if let first = parts.first, let subject = labels[first] {
             description = subject + (parts.count > 1 ? "的修改" : "") + "与另一窗口冲突" + (parts.last.flatMap { labels[$0] }.map { "（\($0)）" } ?? "")
@@ -71,7 +78,8 @@ public enum StateStore {
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {
         func object(_ state: PersistentState) throws -> [String: Any] {
-            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(state)) as? [String: Any] else { throw conflict("数据格式无效") }
+            var normalized = state; normalizeMemory(&normalized)
+            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict("数据格式无效") }
             result.removeValue(forKey: "revision"); result.removeValue(forKey: "schemaVersion")
             return result
         }
@@ -91,6 +99,10 @@ public enum StateStore {
             let field = path.isEmpty ? key : path + "." + key
             if equal(l, b) { result[key] = r }
             else if equal(r, b) || equal(l, r) { result[key] = l }
+            // Mode and limits form one policy. Combining two valid edits can
+            // otherwise produce an initial heap larger than its new maximum,
+            // or silently turn a manual edit into automatic allocation.
+            else if field == "settings.defaultMemorySettings" || field.hasSuffix(".launchOverrides.memory") { throw conflict(field) }
             else if let b = b as? [String: Any], let l = l as? [String: Any], let r = r as? [String: Any] {
                 result[key] = try mergeObject(base: b, local: l, remote: r, path: field)
             } else if path.isEmpty && ["instances", "accounts", "gameDirectories"].contains(key) {

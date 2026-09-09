@@ -102,4 +102,27 @@ struct MemorySettingsTests {
         #expect(saved.state == .failed && saved.processID == nil && saved.failure != nil)
         #expect(saved.memory == nil)
     }
+
+    @Test func concurrentMemoryPolicyEditsCannotCombineIntoDifferentOrInvalidLimits() throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-heap-merge-\(UUID())")); defer { try? FileManager.default.removeItem(at: paths.root) }
+        try paths.prepare()
+        var instance = GameInstance(name: "Concurrent memory", gameVersion: "1.0"); instance.launchOverrides = .init()
+        instance.launchOverrides?.memory = .init(maximumMB: 4096, initialMB: 512)
+        var legacy = PersistentState(); legacy.schemaVersion = 5; legacy.instances = [instance]
+        // Start at the previous format without structured global memory.
+        try JSONEncoder().encode(legacy).write(to: paths.state)
+        let baseline = try StateStore.load(paths)
+        var local = baseline; local.settings.defaultMemorySettings = .init(mode: .automatic)
+        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 8192 }
+        var bytes = try Data(contentsOf: paths.state)
+        #expect(throws: (any Error).self) { try StateStore.save(local, to: paths, basedOn: baseline) }
+        #expect(try Data(contentsOf: paths.state) == bytes)
+        let next = try StateStore.load(paths)
+        #expect(next.settings.defaultMemorySettings == .init(maximumMB: 8192))
+        var smaller = next; smaller.instances[0].launchOverrides?.memory?.maximumMB = 1024
+        try StateStore.update(paths) { $0.instances[0].launchOverrides?.memory?.initialMB = 2048 }
+        bytes = try Data(contentsOf: paths.state)
+        #expect(throws: (any Error).self) { try StateStore.save(smaller, to: paths, basedOn: next) }
+        #expect(try Data(contentsOf: paths.state) == bytes)
+    }
 }
