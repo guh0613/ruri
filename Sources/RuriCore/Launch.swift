@@ -115,6 +115,7 @@ public enum LaunchBuilder {
 public final class GameProcess {
     private var process: Process?
     private var pipe: Pipe?
+    private var reader: ProcessOutputReader?
     private var pending = Data()
     private var formatter = GameLogFormatter()
     private var secrets: [String] = []
@@ -131,27 +132,28 @@ public final class GameProcess {
         let process = Process(); let pipe = Pipe()
         process.executableURL = plan.executable; process.arguments = plan.arguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
         process.standardOutput = pipe; process.standardError = pipe
-        pipe.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            let data = handle.availableData
-            if !data.isEmpty { Task { @MainActor in self?.receive(data) } }
+        let reader = try ProcessOutputReader(handle: pipe.fileHandleForReading) { [weak self] data in
+            DispatchQueue.main.async { self?.receive(data) }
         }
-        process.terminationHandler = { [weak self] process in
+        process.terminationHandler = { [weak self, reader] process in
             let status = process.terminationStatus
             let reason: GameExit.Reason = process.terminationReason == .uncaughtSignal ? .signal : .exit
             let processID = process.processIdentifier
             let endedAt = Date()
-            Task { @MainActor in
-                guard let self else { return }
-                self.pipe?.fileHandleForReading.readabilityHandler = nil
-                if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
-                for line in self.formatter.flush() { self.redactAndSend(line) }
-                let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested)
-                let callback = self.onExit
-                self.process = nil; self.pipe = nil; self.onExit = nil
-                callback?(result)
+            reader.finish { [weak self] in
+                DispatchQueue.main.async {
+                    guard let self else { return }
+                    if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
+                    for line in self.formatter.flush() { self.redactAndSend(line) }
+                    let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested)
+                    let callback = self.onExit
+                    self.process = nil; self.pipe = nil; self.reader = nil; self.onExit = nil
+                    callback?(result)
+                }
             }
         }
-        try process.run(); self.process = process; self.pipe = pipe
+        do { try process.run(); self.process = process; self.pipe = pipe; self.reader = reader }
+        catch { reader.finish {}; self.output = nil; self.onExit = nil; throw error }
     }
     public func stop() {
         guard let process, process.isRunning else { return }
