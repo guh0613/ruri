@@ -20,6 +20,7 @@ public actor GameInstaller {
     public func loaderVersions(_ loader: LoaderKind, game: String) async throws -> [String] {
         struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
         guard loader != .vanilla else { return [] }
+        if loader.usesInstaller { return try await ForgeCatalog.versions(loader: loader, game: game) }
         let base = loader == .fabric ? "https://meta.fabricmc.net/v2/versions/loader" : "https://meta.quiltmc.org/v3/versions/loader"
         return try await HTTPClient.shared.get([Entry].self, from: URL(string: base)!.appendingPathComponent(game)).map(\.loader.version)
     }
@@ -36,9 +37,14 @@ public actor GameInstaller {
             await progress(InstallProgress("正在安装 \(instance.loader.title)"))
             if instance.loaderVersion == nil { instance.loaderVersion = try await loaderVersions(instance.loader, game: instance.gameVersion).first }
             guard let loaderVersion = instance.loaderVersion else { throw RuriError.message("此版本没有可用的 \(instance.loader.title) 加载器。") }
-            let base = instance.loader == .fabric ? "https://meta.fabricmc.net/v2/versions/loader" : "https://meta.quiltmc.org/v3/versions/loader"
-            let url = URL(string: base)!.appendingPathComponent(instance.gameVersion).appendingPathComponent(loaderVersion).appendingPathComponent("profile/json")
-            let child = try await HTTPClient.shared.get(VersionManifest.self, from: url)
+            let child: VersionManifest
+            if instance.loader.usesInstaller {
+                child = try await ForgeInstaller(paths: paths, downloader: downloader).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
+            } else {
+                let base = instance.loader == .fabric ? "https://meta.fabricmc.net/v2/versions/loader" : "https://meta.quiltmc.org/v3/versions/loader"
+                let url = URL(string: base)!.appendingPathComponent(instance.gameVersion).appendingPathComponent(loaderVersion).appendingPathComponent("profile/json")
+                child = try await HTTPClient.shared.get(VersionManifest.self, from: url)
+            }
             manifest = manifest.merging(child: child)
         }
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
@@ -50,6 +56,7 @@ public actor GameInstaller {
         return instance
     }
     public func repair(_ instance: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
+        if instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
     }
@@ -81,7 +88,8 @@ public actor GameInstaller {
                 files.append(DownloadItem(artifact, to: target))
             }
             if let artifact = library.nativeArtifact(architecture: arch) {
-                let target = try LauncherPaths.safePath(artifact.path ?? "natives/\(artifact.url.lastPathComponent)", within: paths.libraries)
+                guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message("原生库缺少文件路径") }
+                let target = try LauncherPaths.safePath(nativePath, within: paths.libraries)
                 files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
             }
         }

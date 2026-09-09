@@ -55,7 +55,7 @@ public actor ModrinthService {
     }
     public func install(version: ModrinthVersion, type: String, instance: GameInstance, paths: LauncherPaths, downloader: DownloadManager, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         guard let kind = ContentKind(rawValue: type) else { throw RuriError.message("不支持的内容类型") }
-        if type == "mod", instance.loader == .vanilla { throw RuriError.message("模组需要 Fabric 或 Quilt 实例，请先创建相应实例。") }
+        if type == "mod", instance.loader == .vanilla { throw RuriError.message("模组需要已安装加载器的实例，请先创建相应实例。") }
         var queue = [version]; var resolved: [ModrinthVersion] = []; var seen = Set<String>()
         while !queue.isEmpty {
             try Task.checkCancellation()
@@ -142,11 +142,15 @@ public actor ModpackImporter {
         guard FileManager.default.fileExists(atPath: indexURL.path) else { throw RuriError.message("此文件不是 Modrinth 整合包（缺少 modrinth.index.json）。") }
         let index = try JSONDecoder().decode(ModpackIndex.self, from: Data(contentsOf: indexURL))
         guard index.formatVersion == 1, index.game == "minecraft", let game = index.dependencies["minecraft"] else { throw RuriError.message("不支持的整合包格式或游戏") }
-        let supported = Set(["minecraft", "fabric-loader", "quilt-loader"])
+        let supported = Set(["minecraft", "fabric-loader", "quilt-loader", "forge", "neoforge"])
         let unknown = Set(index.dependencies.keys).subtracting(supported)
         guard unknown.isEmpty else { throw RuriError.message("此整合包需要 \(unknown.sorted().joined(separator: ", "))，目前尚未接入该加载器。") }
-        let loader: LoaderKind = index.dependencies["fabric-loader"] != nil ? .fabric : index.dependencies["quilt-loader"] != nil ? .quilt : .vanilla
-        var instance = GameInstance(name: index.name, gameVersion: game, loader: loader, loaderVersion: index.dependencies["fabric-loader"] ?? index.dependencies["quilt-loader"])
+        let loaderKeys: [(String, LoaderKind)] = [("fabric-loader", .fabric), ("quilt-loader", .quilt), ("forge", .forge), ("neoforge", .neoforge)]
+        let selected = loaderKeys.filter { index.dependencies[$0.0] != nil }
+        guard selected.count <= 1 else { throw RuriError.message("整合包声明了互不兼容的多个加载器") }
+        let loader = selected.first?.1 ?? .vanilla
+        let loaderVersion = selected.first.flatMap { index.dependencies[$0.0] }
+        var instance = GameInstance(name: index.name, gameVersion: game, loader: loader, loaderVersion: loaderVersion)
         do {
             instance = try await installer.install(instance, progress: progress)
             let files = try index.files.filter { $0.env?["client"] != "unsupported" }.map { file -> DownloadItem in

@@ -70,6 +70,12 @@ public enum LaunchBuilder {
         }
         let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": false]
         var jvm = try (manifest.arguments?.jvm ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand)
+        if mainClass == "cpw.mods.bootstraplauncher.BootstrapLauncher" {
+            jvm = jvm.map { value in
+                guard value.hasPrefix("-DignoreList="), !value.dropFirst(13).split(separator: ",").contains(Substring(jar.lastPathComponent)) else { return value }
+                return value + "," + jar.lastPathComponent
+            }
+        }
         if jvm.isEmpty { jvm = ["-Djava.library.path=\(natives.path)", "-cp", classpath.joined(separator: ":")] }
         if !jvm.contains("-XstartOnFirstThread") { jvm.insert("-XstartOnFirstThread", at: 0) }
         jvm.insert(contentsOf: ["-Xms512M", "-Xmx\(instance.memoryMB)M", "-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)

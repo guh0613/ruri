@@ -26,12 +26,12 @@ public struct HTTPClient: Sendable {
 }
 
 public struct DownloadItem: Sendable {
-    public let url: URL
+    public let url: URL?
     public let destination: URL
     public let sha1: String?
     public let sha512: String?
     public let size: Int64?
-    public init(url: URL, destination: URL, sha1: String? = nil, sha512: String? = nil, size: Int64? = nil) {
+    public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, size: Int64? = nil) {
         self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.size = size
     }
     public init(_ artifact: Artifact, to destination: URL) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, size: artifact.size) }
@@ -66,12 +66,13 @@ public actor DownloadManager {
     public func fetch(_ item: DownloadItem) async throws {
         try Task.checkCancellation()
         if Self.valid(item.destination, item: item) { return }
-        guard item.url.scheme == "https" else { throw RuriError.message("下载仅接受 HTTPS：\(item.url.host ?? "未知来源")") }
+        guard let url = item.url else { throw RuriError.message("安装器生成的文件缺失或损坏：\(item.destination.lastPathComponent)。请修复此实例。") }
+        guard url.scheme == "https" else { throw RuriError.message("下载仅接受 HTTPS：\(url.host ?? "未知来源")") }
         try FileManager.default.createDirectory(at: item.destination.deletingLastPathComponent(), withIntermediateDirectories: true)
         for attempt in 0..<3 {
             try Task.checkCancellation()
             do {
-                var request = URLRequest(url: item.url)
+                var request = URLRequest(url: url)
                 request.setValue("Ruri/0.1 (macOS Minecraft launcher)", forHTTPHeaderField: "User-Agent")
                 let (temporary, response) = try await session.download(for: request)
                 defer { try? FileManager.default.removeItem(at: temporary) }

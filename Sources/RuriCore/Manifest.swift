@@ -15,11 +15,29 @@ public struct VersionEntry: Codable, Identifiable, Hashable, Sendable {
 }
 public struct Artifact: Codable, Sendable {
     public let path: String?
-    public let url: URL
+    public let url: URL?
     public let sha1: String?
     public let size: Int64?
-    public init(path: String? = nil, url: URL, sha1: String? = nil, size: Int64? = nil) {
+    public init(path: String? = nil, url: URL?, sha1: String? = nil, size: Int64? = nil) {
         self.path = path; self.url = url; self.sha1 = sha1; self.size = size
+    }
+    private enum CodingKeys: String, CodingKey { case path, url, sha1, size }
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        path = try c.decodeIfPresent(String.self, forKey: .path)
+        let address = try c.decodeIfPresent(String.self, forKey: .url)
+        if let address, !address.isEmpty {
+            guard let parsed = URL(string: address) else { throw DecodingError.dataCorruptedError(forKey: .url, in: c, debugDescription: "Invalid artifact URL") }
+            url = parsed
+        } else { url = nil }
+        let hash = try c.decodeIfPresent(String.self, forKey: .sha1)
+        sha1 = hash?.isEmpty == true ? nil : hash
+        size = try c.decodeIfPresent(Int64.self, forKey: .size)
+    }
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encodeIfPresent(path, forKey: .path); try c.encodeIfPresent(url?.absoluteString, forKey: .url)
+        try c.encodeIfPresent(sha1, forKey: .sha1); try c.encodeIfPresent(size, forKey: .size)
     }
 }
 public struct Rule: Codable, Sendable {
@@ -124,13 +142,15 @@ public struct VersionManifest: Codable, Sendable {
     public var requiredJava: Int { javaVersion?.majorVersion ?? 8 }
     public func merging(child: VersionManifest) -> VersionManifest {
         var result = self
-        result.id = child.id; result.inheritsFrom = nil; result.jar = jar ?? id
+        result.id = child.id; result.inheritsFrom = nil; result.jar = child.jar ?? jar ?? id
         result.mainClass = child.mainClass ?? mainClass
         result.type = child.type ?? type
         result.arguments = Arguments(game: (arguments?.game ?? []) + (child.arguments?.game ?? []), jvm: (arguments?.jvm ?? []) + (child.arguments?.jvm ?? []))
         result.minecraftArguments = child.minecraftArguments ?? minecraftArguments
         let keys = Set(child.libraries.map(\.identity))
-        result.libraries = libraries.filter { !keys.contains($0.identity) } + child.libraries
+        var seen = Set<String>()
+        let uniqueChild = child.libraries.reversed().filter { seen.insert($0.identity).inserted }.reversed()
+        result.libraries = libraries.filter { !keys.contains($0.identity) } + uniqueChild
         result.javaVersion = child.javaVersion ?? javaVersion
         result.downloads = child.downloads ?? downloads
         result.assetIndex = child.assetIndex ?? assetIndex
