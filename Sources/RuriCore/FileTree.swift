@@ -70,6 +70,7 @@ extension SafeArchive {
             guard !path.isEmpty, !path.hasPrefix("/"), !path.contains("\\"), !path.contains("\0"), !path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0 == ".." || $0 == "." || $0.isEmpty }) else { throw RuriError.message("无效压缩包路径：\(path)") }
         }
         var names = Set<String>()
+        if !prefix.isEmpty { let directory = String(prefix.dropLast()); try check(directory); names.insert(directory) }
         for name in entries.map({ prefix + $0.path }) + Array(additionalFiles.keys) {
             try check(name)
             guard names.insert(name).inserted else { throw RuriError.message("压缩包条目重名：\(name)") }
@@ -79,6 +80,9 @@ extension SafeArchive {
         defer { try? FileManager.default.removeItem(at: staging) }
         do {
             let archive = try Archive(url: staging, accessMode: .create)
+            // Keep the game root even when it has no files yet. Portable
+            // instance readers need it to distinguish a valid empty instance.
+            if !prefix.isEmpty { try archive.addEntry(with: prefix, type: .directory, uncompressedSize: Int64(0)) { _, _ in Data() } }
             for (index, entry) in entries.enumerated() {
                 try Task.checkCancellation()
                 let path = prefix + entry.path
