@@ -44,6 +44,7 @@ enum Page: String, CaseIterable, Identifiable {
     private let gameProcess = GameProcess()
     private var logFile: FileHandle?
     private var startedAt: Date?
+    private var stoppingGame = false
     var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil }
@@ -159,7 +160,19 @@ enum Page: String, CaseIterable, Identifiable {
                 token = credentials.accessToken
             }
             let manifest = try await installer.loadManifest(instance)
-            let java = try JavaDiscovery.select(from: runtimes, major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
+            let architecture = GameInstaller.architecture(for: manifest)
+            let java: JavaRuntime
+            if instance.javaPath == nil, !runtimes.contains(where: { $0.major == manifest.requiredJava && $0.architecture == architecture }) {
+                let service = JavaInstaller(paths: paths)
+                progress(id, InstallProgress("正在准备所需的 Java \(manifest.requiredJava)"))
+                guard let runtime = try await service.available().first(where: { $0.major == manifest.requiredJava && $0.architecture == architecture }) else {
+                    throw RuriError.message("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
+                }
+                java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
+                await scanJava()
+            } else {
+                java = try JavaDiscovery.select(from: runtimes, major: manifest.requiredJava, architecture: architecture, preferredPath: instance.javaPath)
+            }
             let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
             logs.removeAll()
             let logURL = paths.instance(instance.id).appendingPathComponent("launcher.log")
@@ -168,11 +181,11 @@ enum Page: String, CaseIterable, Identifiable {
             appendLog("[Ruri] \(java.label)")
             appendLog("[Ruri] \(plan.redactedCommand)")
             try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] status in self?.gameExited(instance.id, status: status) }
-            runningID = instance.id; startedAt = Date()
+            runningID = instance.id; startedAt = Date(); stoppingGame = false
             var updated = instance; updated.lastPlayed = Date(); update(updated)
         }
     }
-    func stopGame() { gameProcess.stop() }
+    func stopGame() { stoppingGame = true; gameProcess.stop() }
     func appendLog(_ line: String) {
         logs.append(line)
         if logs.count > 5000 { logs.removeFirst(logs.count - 5000) }
@@ -184,7 +197,8 @@ enum Page: String, CaseIterable, Identifiable {
         if var instance = state.instances.first(where: { $0.id == id }), let startedAt {
             instance.playTime += Date().timeIntervalSince(startedAt); update(instance)
         }
-        if status != 0 && status != 15 { showLogs = true; notice = "游戏异常退出，请查看日志中的错误信息。" }
+        if status != 0 && !stoppingGame { showLogs = true; notice = "游戏异常退出，请查看日志中的错误信息。" }
+        stoppingGame = false
     }
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)

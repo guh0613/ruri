@@ -2,7 +2,7 @@ import Foundation
 import RuriCore
 
 @main struct CLI {
-    static func main() async {
+    @MainActor static func main() async {
         do {
             let args = Array(CommandLine.arguments.dropFirst())
             let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
@@ -10,6 +10,15 @@ import RuriCore
             switch args.first {
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
+            case "install-java":
+                guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message("用法：ruri-cli install-java <major> [aarch64|x86_64]") }
+                let service = JavaInstaller(paths: paths)
+                let architecture = args.count > 2 ? args[2] : JavaRuntime.hostArchitecture
+                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message("Mojang 没有提供所需运行时") }
+                let installed = try await service.install(runtime, downloader: DownloadManager()) { p in
+                    if p.completed % 20 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
+                }
+                print("Installed \(installed.label)\n\(installed.path)")
             case "versions":
                 let catalog = try await GameInstaller(paths: paths).catalog()
                 print("Latest release: \(catalog.latest.release)")
@@ -32,6 +41,23 @@ import RuriCore
                 let java = try JavaDiscovery.select(from: runtimes, major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest))
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
+            case "launch":
+                let state = try StateStore.load(paths)
+                guard let instance = state.instances.last, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
+                guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
+                let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
+                let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest))
+                let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
+                let game = GameProcess()
+                let status = await withCheckedContinuation { (continuation: CheckedContinuation<Int32, Never>) in
+                    do {
+                        try game.start(plan: plan) { line in
+                            try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8))
+                        } onExit: { code in continuation.resume(returning: code) }
+                    } catch { print(error.localizedDescription); continuation.resume(returning: -1) }
+                }
+                print("Game exit: \(status)")
+                if status != 0 { exit(status) }
             default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt]\n  plan\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }

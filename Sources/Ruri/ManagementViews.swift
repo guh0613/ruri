@@ -85,6 +85,9 @@ struct AddAccountView: View {
 
 struct JavaView: View {
     @Environment(AppModel.self) private var model
+    @State private var available: [RemoteJava] = []
+    @State private var javaError: String?
+    @State private var loadingRemote = false
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -109,12 +112,31 @@ struct JavaView: View {
                 }
                 Surface {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("安装其他版本").font(.headline)
+                        Text("下载官方游戏运行时").font(.headline)
                         Text("Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。").font(.callout).foregroundStyle(.secondary)
+                        if loadingRemote { ProgressView("获取 Mojang 运行时列表…").controlSize(.small) }
+                        if let javaError { Text(javaError).font(.caption).foregroundStyle(.orange) }
+                        ForEach(available) { runtime in
+                            HStack {
+                                Text(runtime.label).font(.callout)
+                                Spacer()
+                                Button("安装") {
+                                    model.perform("安装 Java \(runtime.major)") { id in
+                                        _ = try await JavaInstaller(paths: model.paths).install(runtime, downloader: model.installer.downloader) { p in await model.progress(id, p) }
+                                        await model.scanJava()
+                                    }
+                                    model.page = .downloads
+                                }.disabled(model.busy)
+                            }
+                        }
                         HStack { Link("Azul Zulu 下载", destination: URL(string: "https://www.azul.com/downloads/?package=jdk#zulu")!); Link("Eclipse Temurin 下载", destination: URL(string: "https://adoptium.net/temurin/releases/?os=mac")!) }.font(.callout)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
             }.padding(30)
+        }.task {
+            loadingRemote = true
+            do { available = try await JavaInstaller(paths: model.paths).available() } catch { javaError = error.localizedDescription }
+            loadingRemote = false
         }
     }
 }

@@ -44,7 +44,8 @@ public enum JavaDiscovery {
             for folder in folders {
                 for child in (try? fm.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? [] {
                     if folder.path.hasSuffix("/opt"), !child.lastPathComponent.contains("openjdk") { continue }
-                    for suffix in ["Contents/Home/bin/java", "bin/java", "libexec/openjdk.jdk/Contents/Home/bin/java"] {
+                    if child.lastPathComponent.hasPrefix(".") { continue }
+                    for suffix in ["Contents/Home/bin/java", "bin/java", "jre.bundle/Contents/Home/bin/java", "libexec/openjdk.jdk/Contents/Home/bin/java"] {
                         let file = child.appendingPathComponent(suffix)
                         if fm.isExecutableFile(atPath: file.path) { candidates.insert(file.resolvingSymlinksInPath().path) }
                     }
