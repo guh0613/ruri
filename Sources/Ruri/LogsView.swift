@@ -5,6 +5,10 @@ import RuriCore
 struct LogsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    private enum Mode: String, CaseIterable { case analysis = "诊断与处理", logs = "运行日志", share = "收集报告" }
+    private enum Destination: String, Identifiable { case settings, mods; var id: String { rawValue } }
+    @State private var mode = Mode.logs
+    @State private var destination: Destination?
     @State private var filter = ""
     @State private var follow = true
     @State private var selectedID: UUID?
@@ -31,41 +35,61 @@ struct LogsView: View {
                         Text("\(record.createdAt.formatted(date: .abbreviated, time: .standard)) · \(record.instanceName)").tag(Optional(record.id))
                     }
                 }
-                if let session { summary(session) }
-                HStack {
-                    TextField("筛选日志", text: $filter).textFieldStyle(.roundedBorder)
-                    Toggle("自动滚动", isOn: $follow).toggleStyle(.checkbox)
-                    Button("导出完整日志…") { export() }.disabled(session == nil)
-                }
-                if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
-                ScrollViewReader { proxy in
-                    ScrollView([.vertical, .horizontal]) {
-                        LazyVStack(alignment: .leading, spacing: 3) {
-                            ForEach(Array(lines.enumerated()), id: \.offset) { index, line in
-                                Text(line).font(.system(size: 11, design: .monospaced))
-                                    .fixedSize(horizontal: true, vertical: false)
-                                    .foregroundStyle(line.contains("ERROR") || line.contains("Exception") ? .orange : .primary)
-                                    .textSelection(.enabled).id(index)
-                            }
-                            Color.clear.frame(height: 1).id("end")
-                        }.padding(12)
-                    }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 10))
-                        .onChange(of: lines.last) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
-                }
-                HStack {
-                    Text("预览最近 5,000 行；每次运行的完整日志独立保留。").font(.caption).foregroundStyle(.secondary)
-                    Spacer()
-                    if isRunning, let session { Button("结束游戏", role: .destructive) { model.stopGame(session.instanceID) }.disabled(session.state.isFinished || session.monitorIdentity?.isAlive != true) }
+                Picker("查看内容", selection: $mode) {
+                    ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                }.pickerStyle(.segmented)
+                if mode != .logs, let session {
+                    GameDiagnosticView(session: session, collecting: mode == .share, action: diagnosticAction).id(session.id)
+                } else {
+                    if let session { summary(session) }
+                    HStack {
+                        TextField("筛选日志", text: $filter).textFieldStyle(.roundedBorder)
+                        Toggle("自动滚动", isOn: $follow).toggleStyle(.checkbox)
+                        Button("导出完整日志…") { export() }.disabled(session == nil)
+                    }
+                    if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
+                    ScrollViewReader { proxy in
+                        ScrollView([.vertical, .horizontal]) {
+                            LazyVStack(alignment: .leading, spacing: 3) {
+                                ForEach(Array(lines.enumerated()), id: \.offset) { index, line in
+                                    Text(line).font(.system(size: 11, design: .monospaced))
+                                        .fixedSize(horizontal: true, vertical: false)
+                                        .foregroundStyle(line.contains("ERROR") || line.contains("Exception") ? .orange : .primary)
+                                        .textSelection(.enabled).id(index)
+                                }
+                                Color.clear.frame(height: 1).id("end")
+                            }.padding(12)
+                        }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 10))
+                            .onChange(of: lines.last) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
+                    }
+                    HStack {
+                        Text("预览最近 5,000 行；每次运行的完整日志独立保留。").font(.caption).foregroundStyle(.secondary)
+                        Spacer()
+                        if isRunning, let session { Button("结束游戏", role: .destructive) { model.stopGame(session.instanceID) }.disabled(session.state.isFinished || session.monitorIdentity?.isAlive != true) }
+                    }
                 }
             }
-        }.padding(22).frame(width: 700, height: 560)
+        }.padding(22).frame(width: 780, height: 660)
+            .sheet(item: $destination) { target in
+                if let record = session, let instance = model.state.instances.first(where: { $0.id == record.instanceID }) {
+                    switch target {
+                    case .settings: InstanceSettingsView(instance: instance)
+                    case .mods: InstanceContentView(instance: instance)
+                    }
+                }
+            }
             .task {
                 await model.refreshSessions()
                 selectedID = model.requestedLogSessionID ?? model.logsSessionID ?? model.sessions.first?.id
                 loadHistory()
             }
-            .onChange(of: selectedID) { loadHistory() }
-            .onChange(of: session?.state) { if let session { model.acknowledgeSession(session) } }
+            .onChange(of: selectedID) { loadHistory(); mode = session?.state == .failed ? .analysis : .logs }
+            .onChange(of: session?.state) {
+                if let session {
+                    model.acknowledgeSession(session)
+                    if session.state == .failed && mode != .share { mode = .analysis }
+                }
+            }
             .onChange(of: isCurrent) { loadHistory() }
             .onChange(of: model.requestedLogSessionID) { if let id = model.requestedLogSessionID { selectedID = id } }
     }
@@ -96,6 +120,18 @@ struct LogsView: View {
                 }.frame(maxHeight: 125)
             }.font(.caption)
         }.frame(maxWidth: .infinity, alignment: .leading)
+    }
+    private func diagnosticAction(_ action: GameDiagnosis.Action) {
+        guard let record = session else { return }
+        switch action {
+        case .collect: mode = .share
+        case .files: reveal(record)
+        case .accounts: model.page = .accounts; dismiss()
+        case .settings: destination = .settings
+        case .mods: destination = .mods
+        case .repair:
+            if let instance = model.state.instances.first(where: { $0.id == record.instanceID }) { model.repair(instance) }
+        }
     }
     private func loadHistory() {
         readError = nil; historicalLines = []
