@@ -41,7 +41,7 @@ struct ArchiveAndLaunchTests {
         defer { try? FileManager.default.removeItem(at: root.deletingLastPathComponent()) }
         let paths = LauncherPaths(root: root); try paths.prepare()
         let json = #"{"id":"1.0","mainClass":"net.minecraft.client.main.Main","libraries":[],"minecraftArguments":"--username ${auth_player_name} --gameDir ${game_directory} --accessToken ${auth_access_token}","javaVersion":{"majorVersion":8}}"#
-        let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(json.utf8))
+        var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(json.utf8))
         var instance = GameInstance(name: "Test", gameVersion: "1.0")
         instance.extraJVMArguments = #"-Dtest="hello world""#
         let java = JavaRuntime(path: "/test/bin/java", version: "8", major: 8, architecture: "x86_64", vendor: "Test")
@@ -56,5 +56,12 @@ struct ArchiveAndLaunchTests {
         #expect(plan.arguments.filter { $0 == "-XstartOnFirstThread" }.count == 1)
         #expect(!plan.redactedCommand.contains("secret-token-value"))
         #expect(plan.redactedCommand.contains("<redacted>"))
+        let legacy = try JSONDecoder().decode(Library.self, from: Data(#"{"name":"org.lwjgl.lwjgl:lwjgl:2.9.2"}"#.utf8))
+        manifest.libraries = [legacy]
+        let library = paths.libraries.appendingPathComponent(try Library.mavenPath(legacy.name))
+        try FileManager.default.createDirectory(at: library.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data("stub".utf8).write(to: library)
+        let legacyPlan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
+        #expect(!legacyPlan.arguments.contains("-XstartOnFirstThread"))
     }
 }

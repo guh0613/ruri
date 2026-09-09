@@ -80,7 +80,10 @@ public enum LaunchBuilder {
             }
         }
         if jvm.isEmpty { jvm = ["-Djava.library.path=\(natives.path)", "-cp", classpath.joined(separator: ":")] }
-        if !jvm.contains("-XstartOnFirstThread") { jvm.insert("-XstartOnFirstThread", at: 0) }
+        // LWJGL 2 uses the AWT/AppKit thread arrangement. Forcing the GLFW/LWJGL 3
+        // startup flag on it can leave the legacy OpenGL context unbound.
+        let legacyLWJGL = manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl.lwjgl:lwjgl:") }
+        if !legacyLWJGL && !jvm.contains("-XstartOnFirstThread") { jvm.insert("-XstartOnFirstThread", at: 0) }
         jvm.insert(contentsOf: ["-Xms512M", "-Xmx\(instance.memoryMB)M", "-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
         if let logging = manifest.logging?.client {
             let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: paths.assets)
