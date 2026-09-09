@@ -100,7 +100,7 @@ struct HomeView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(instance.name).font(.headline)
                                 Text(instance.subtitle).font(.callout).foregroundStyle(.secondary)
-                                HStack(spacing: 8) { TagPill(text: instance.installed ? "就绪" : "未完成安装"); Text(instance.lastPlayed.map { "上次游玩 \($0.formatted(.relative(presentation: .named)))" } ?? "一个全新的开始").font(.caption).foregroundStyle(.secondary) }
+                                HStack(spacing: 8) { TagPill(text: model.runningID == instance.id ? "运行中" : instance.installed ? "就绪" : "未完成安装"); Text(instance.lastPlayed.map { "上次游玩 \($0.formatted(.relative(presentation: .named)))" } ?? "一个全新的开始").font(.caption).foregroundStyle(.secondary) }
                             }
                             Spacer()
                             launchButton(instance)

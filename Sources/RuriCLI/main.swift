@@ -58,7 +58,7 @@ import RuriCore
                 }
                 print("Game exit: \(status)")
                 if status != 0 { exit(status) }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt]\n  plan\n\nRURI_DATA_DIR overrides the data directory.")
+            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt]\n  install-java <major> [aarch64|x86_64]\n  plan\n  launch (offline account)\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }

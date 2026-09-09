@@ -18,7 +18,7 @@ public struct GameLogFormatter: Sendable {
         let prefix = "[\(delegate.thread)/\(delegate.level)]"
         var text = "\(prefix) \(delegate.message.trimmingCharacters(in: .newlines))"
         if !delegate.throwable.isEmpty { text += "\n" + delegate.throwable }
-        return text.components(separatedBy: .newlines)
+        return text.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n").components(separatedBy: "\n")
     }
     public mutating func flush() -> [String] { defer { event = "" }; return event.isEmpty ? [] : [event] }
 }
