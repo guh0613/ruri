@@ -114,7 +114,7 @@ public enum GameDiagnosticAnalyzer {
         if canDiagnose {
             for document in documents {
                 try Task.checkCancellation()
-                let lines = document.text.components(separatedBy: .newlines)
+                let lines = document.text.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n").components(separatedBy: "\n")
                 var level: String?, crashSectionEnded = false
                 for (index, original) in lines.enumerated() {
                     if index % 256 == 0 { try Task.checkCancellation() }

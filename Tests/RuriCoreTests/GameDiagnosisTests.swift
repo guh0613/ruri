@@ -44,7 +44,7 @@ struct GameDiagnosisTests {
         Mod 'Example' (example) 2.0 requires version 0.116 or later of fabric-api, which is missing!
         A potential solution has been determined: Install fabric-api.
         """
-        let diagnosis = try GameDiagnosticAnalyzer.analyze(session: session(), documents: [document(log)])
+        let diagnosis = try GameDiagnosticAnalyzer.analyze(session: session(), documents: [document(log.replacingOccurrences(of: "\n", with: "\r\n"))])
         #expect(diagnosis.findings.map(\.id) == ["dependencies", "mixin"])
         let first = try #require(diagnosis.findings.first)
         #expect(first.evidence.first?.line == 2)
