@@ -1,9 +1,9 @@
 import Foundation
 
 public enum InstanceExportFormat: String, CaseIterable, Sendable, Identifiable {
-    case ruri, multimc, mcbbs
+    case ruri, multimc, mcbbs, mrpack
     public var id: String { rawValue }
-    public var title: String { switch self { case .ruri: "Ruri 实例"; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL" } }
+    public var title: String { switch self { case .ruri: "Ruri 实例"; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
 }
 
 public struct PreparedInstanceImport: Identifiable, Sendable {
@@ -14,8 +14,17 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     public let fileCount: Int
     public let byteCount: Int64
     public let curseForgeFiles: [CurseForgeReference]
-    public let remoteFileCount: Int
+    public private(set) var remoteFileCount: Int
     let packFiles: [PackFile]
+    public private(set) var omittedOptionalPaths: Set<String> = []
+    var selectedPackFiles: [PackFile] { packFiles.filter { !omittedOptionalPaths.contains($0.path) } }
+    public var optionalFiles: [PackFile] { packFiles.filter(\.optional) }
+    public func selectingOptionalFiles(excluding paths: Set<String>) -> Self {
+        var result = self
+        result.omittedOptionalPaths = paths.intersection(Set(optionalFiles.map(\.path)))
+        result.remoteFileCount = result.selectedPackFiles.filter { !FileManager.default.fileExists(atPath: game.appendingPathComponent($0.path).path) }.count
+        return result
+    }
     let sourceMetadata: Data?
     let workspace: URL
     let game: URL
@@ -32,13 +41,19 @@ struct InstanceImportDescription {
     var packFiles: [PackFile] = []
     var excluded: Set<String> = []
     var sourceMetadata: Data?
+    var overlays: [URL] = []
 }
 
-public struct PackFile: Sendable {
+public struct PackFile: Identifiable, Sendable {
+    public var id: String { path }
     public let path: String
     public let sha1: String
     public let url: URL?
-    func item(in root: URL) throws -> DownloadItem { DownloadItem(url: url, destination: try LauncherPaths.safePath(path, within: root), sha1: sha1) }
+    public var sha512: String?
+    public var size: Int64?
+    public var fallbackURLs: [URL] = []
+    public var optional = false
+    func item(in root: URL, url override: URL? = nil) throws -> DownloadItem { DownloadItem(url: override ?? url, destination: try LauncherPaths.safePath(path, within: root), sha1: sha1, sha512: sha512, size: size) }
 }
 
 /// Portable exports contain game data and preferences; shared downloads and
@@ -105,7 +120,13 @@ public actor InstanceTransfer {
             if FileManager.default.fileExists(atPath: description.game.path) {
                 try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress("正在复制实例内容", completed: done, total: total)) }
             } else { try FileManager.default.createDirectory(at: snapshot, withIntermediateDirectories: true) }
-            for file in description.packFiles {
+            for overlay in description.overlays {
+                if FileManager.default.fileExists(atPath: overlay.path) { try FileTree.overlay(from: overlay, to: snapshot, excluding: excluded) }
+            }
+            // In mrpack, archive overrides are applied after downloads and may
+            // intentionally replace them. Keep the bundled file as authoritative.
+            let packFiles = description.packFiles.filter { description.format != "Modrinth" || !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }
+            for file in packFiles {
                 let item = try file.item(in: snapshot)
                 if FileManager.default.fileExists(atPath: item.destination.path) {
                     guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包内附文件校验失败：\(file.path)") }
@@ -114,8 +135,8 @@ public actor InstanceTransfer {
             let entries = try FileTree.entries(in: snapshot)
             return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings,
                                           fileCount: entries.filter { !$0.directory }.count, byteCount: entries.reduce(0) { $0 + $1.size }, curseForgeFiles: description.curseForgeFiles,
-                                          remoteFileCount: description.packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }.count,
-                                          packFiles: description.packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records)
+                                          remoteFileCount: packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }.count,
+                                          packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records)
         } catch { try? FileManager.default.removeItem(at: workspace); throw error }
     }
 
@@ -130,8 +151,27 @@ public actor InstanceTransfer {
     }
     public func completeFiles(_ prepared: PreparedInstanceImport, downloader: DownloadManager, concurrency: Int = 8,
                               progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
-        let downloads = try prepared.packFiles.map { try $0.item(in: prepared.game) }
-        try await downloader.download(downloads, concurrency: concurrency) { done, total in await progress(InstallProgress("补齐整合包文件", completed: done, total: total)) }
+        let files = prepared.selectedPackFiles; let root = prepared.game
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            var index = 0; var completed = 0
+            func add(_ file: PackFile) {
+                group.addTask {
+                    let urls = [file.url].compactMap { $0 } + file.fallbackURLs
+                    if urls.isEmpty { try await downloader.fetch(file.item(in: root)); return }
+                    var failure: (any Error)?
+                    for url in urls {
+                        do { try await downloader.fetch(file.item(in: root, url: url)); return }
+                        catch { if Task.isCancelled { throw CancellationError() }; failure = error }
+                    }
+                    throw failure ?? RuriError.message("文件缺少可用下载源")
+                }
+            }
+            while index < min(max(1, min(16, concurrency)), files.count) { add(files[index]); index += 1 }
+            while try await group.next() != nil {
+                completed += 1; await progress(InstallProgress("补齐整合包文件", completed: completed, total: files.count))
+                if index < files.count { add(files[index]); index += 1 }
+            }
+        }
     }
     // The closure makes filesystem rollback testable without contacting game services.
     func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [],
@@ -142,7 +182,7 @@ public actor InstanceTransfer {
         instance.javaPath = nil; instance.installed = false
         if !importJVMArguments { instance.extraJVMArguments = "" }
         try Self.validate(instance)
-        for file in prepared.packFiles {
+        for file in prepared.selectedPackFiles {
             let item = try file.item(in: prepared.game)
             guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包文件缺失或已修改：\(file.path)") }
         }
@@ -150,7 +190,7 @@ public actor InstanceTransfer {
         do {
             // User files are copied first; official installer then supplies any
             // generated legacy resources without a destructive directory merge.
-            try FileTree.copy(from: prepared.game, to: paths.game(instance.id))
+            try FileTree.copy(from: prepared.game, to: paths.game(instance.id), excluding: prepared.omittedOptionalPaths)
             if let records = prepared.records {
                 try records.write(to: paths.instance(instance.id).appendingPathComponent("content.json"), options: .atomic)
                 _ = try await ContentManager(paths: paths, instanceID: instance.id).records()
@@ -169,6 +209,7 @@ public actor InstanceTransfer {
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
         let game = paths.game(instance.id)
         let locks = try Self.lockWorlds(game); defer { locks.forEach { close($0) } }
+        if format == .mrpack { try await exportMRPack(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .mcbbs { try exportMCBBS(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。") }
         var extra: [String: Data] = [:]
@@ -196,7 +237,7 @@ public actor InstanceTransfer {
     }
 
     private static func findRoot(_ source: URL) throws -> URL {
-        func recognized(_ dir: URL) -> Bool { ["ruri-instance.json", "mmc-pack.json", "mcbbs.packmeta", "modpack.json", "manifest.json"].contains { FileManager.default.fileExists(atPath: dir.appendingPathComponent($0).path) } }
+        func recognized(_ dir: URL) -> Bool { ["ruri-instance.json", "mmc-pack.json", "modrinth.index.json", "mcbbs.packmeta", "modpack.json", "manifest.json"].contains { FileManager.default.fileExists(atPath: dir.appendingPathComponent($0).path) } }
         if recognized(source) { return source }
         let candidates = try FileManager.default.contentsOfDirectory(at: source, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey]).filter {
             let info = try $0.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
@@ -218,6 +259,8 @@ public actor InstanceTransfer {
             instance = try JSONDecoder().decode(PortableInstance.self, from: read(portable)).instance(); format = "Ruri"
             let metadata = root.appendingPathComponent("ruri-content.json")
             if fm.fileExists(atPath: metadata.path) { records = try read(metadata) }
+        } else if fm.fileExists(atPath: root.appendingPathComponent("modrinth.index.json").path) {
+            return try describeMRPack(root)
         } else if fm.fileExists(atPath: root.appendingPathComponent("mcbbs.packmeta").path) {
             return try describeMCBBS(root)
         } else if fm.fileExists(atPath: root.appendingPathComponent("modpack.json").path) {

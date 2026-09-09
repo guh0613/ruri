@@ -5,7 +5,8 @@ public struct ModpackExportDetails: Sendable {
     public var version: String
     public var author: String
     public var description: String
-    public init(version: String = "1.0.0", author: String = "", description: String = "") { self.version = version; self.author = author; self.description = description }
+    public var referenceDownloads: Bool
+    public init(version: String = "1.0.0", author: String = "", description: String = "", referenceDownloads: Bool = true) { self.version = version; self.author = author; self.description = description; self.referenceDownloads = referenceDownloads }
 }
 
 struct MCBBSManifest: Codable {

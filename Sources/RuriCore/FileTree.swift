@@ -40,6 +40,24 @@ public enum FileTree {
         }
         guard try Self.entries(in: source, excluding: excluding) == entries else { throw RuriError.message("源目录在复制期间发生了变化，请退出游戏后重试。") }
     }
+    /// Used only on an import snapshot, where a later pack layer deliberately
+    /// wins. Source entries and destination prefixes are checked before copying.
+    static func overlay(from source: URL, to destination: URL, excluding: Set<String> = []) throws {
+        let entries = try entries(in: source, excluding: excluding)
+        for entry in entries {
+            try Task.checkCancellation()
+            let target = try LauncherPaths.safePath(entry.path, within: destination)
+            if FileManager.default.fileExists(atPath: target.path) {
+                let directory = try target.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
+                if entry.directory && directory { continue }
+                try FileManager.default.removeItem(at: target)
+            }
+            try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
+            if entry.directory { try FileManager.default.createDirectory(at: target, withIntermediateDirectories: true) }
+            else { try FileManager.default.copyItem(at: entry.url, to: target) }
+        }
+        guard try Self.entries(in: source, excluding: excluding) == entries else { throw RuriError.message("覆盖文件在复制期间发生了变化") }
+    }
 }
 
 extension SafeArchive {

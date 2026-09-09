@@ -37,12 +37,13 @@ public struct ContentUpdate: Identifiable, Sendable {
 
 public actor ModrinthService {
     private let base = URL(string: "https://api.modrinth.com/v2")!
-    public init() {}
+    let client: HTTPClient
+    public init(client: HTTPClient = .shared) { self.client = client }
     public func search(_ query: String, type: String, offset: Int = 0) async throws -> ModrinthSearch {
         var url = URLComponents(url: base.appendingPathComponent("search"), resolvingAgainstBaseURL: false)!
         let facets = String(decoding: try JSONEncoder().encode([["project_type:\(type)"]]), as: UTF8.self)
         url.queryItems = [URLQueryItem(name: "query", value: query), URLQueryItem(name: "facets", value: facets), URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "index", value: query.isEmpty ? "downloads" : "relevance")]
-        return try await HTTPClient.shared.get(ModrinthSearch.self, from: url.url!)
+        return try await client.get(ModrinthSearch.self, from: url.url!)
     }
     public func versions(project: String, game: String? = nil, loader: String? = nil) async throws -> [ModrinthVersion] {
         var url = URLComponents(url: base.appendingPathComponent("project").appendingPathComponent(project).appendingPathComponent("version"), resolvingAgainstBaseURL: false)!
@@ -51,7 +52,7 @@ public actor ModrinthService {
             if let value { items.append(URLQueryItem(name: key, value: String(decoding: try JSONEncoder().encode([value]), as: UTF8.self))) }
         }
         url.queryItems = items.isEmpty ? nil : items
-        return try await HTTPClient.shared.get([ModrinthVersion].self, from: url.url!)
+        return try await client.get([ModrinthVersion].self, from: url.url!)
     }
     public func install(version: ModrinthVersion, type: String, instance: GameInstance, paths: LauncherPaths, downloader: DownloadManager, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         guard let kind = ContentKind(rawValue: type) else { throw RuriError.message("不支持的内容类型") }
@@ -69,7 +70,7 @@ public actor ModrinthService {
             if type == "mod" {
                 for dependency in current.dependencies where dependency.dependency_type == "required" {
                     if let id = dependency.version_id {
-                        queue.append(try await HTTPClient.shared.get(ModrinthVersion.self, from: base.appendingPathComponent("version").appendingPathComponent(id)))
+                        queue.append(try await client.get(ModrinthVersion.self, from: base.appendingPathComponent("version").appendingPathComponent(id)))
                     } else if let project = dependency.project_id {
                         guard let match = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.rawValue).first else { throw RuriError.message("找不到兼容的必需依赖：\(project)") }
                         queue.append(match)
@@ -104,7 +105,7 @@ public actor ModrinthService {
             guard let candidate = available.first(where: { $0.version_type == "release" || $0.version_type == nil }), candidate.id != record.versionID else { continue }
             let currentDate: String?
             if let date = record.publishedAt { currentDate = date }
-            else { currentDate = try await HTTPClient.shared.get(ModrinthVersion.self, from: base.appendingPathComponent("version").appendingPathComponent(record.versionID)).date_published }
+            else { currentDate = try await client.get(ModrinthVersion.self, from: base.appendingPathComponent("version").appendingPathComponent(record.versionID)).date_published }
             if let currentDate, let newer = candidate.date_published, Self.date(newer) > Self.date(currentDate) { updates.append(ContentUpdate(installed: record, available: candidate)) }
         }
         return updates
@@ -117,8 +118,8 @@ public actor ModrinthService {
     }
 }
 
-public struct ModpackIndex: Decodable, Sendable {
-    public struct File: Decodable, Sendable {
+public struct ModpackIndex: Codable, Sendable {
+    public struct File: Codable, Sendable {
         public let path: String; public let hashes: [String: String]; public let env: [String: String]?
         public let downloads: [URL]; public let fileSize: Int64
     }
@@ -126,6 +127,7 @@ public struct ModpackIndex: Decodable, Sendable {
     public let game: String
     public let name: String
     public let versionId: String
+    public var summary: String?
     public let dependencies: [String: String]
     public let files: [File]
 }
@@ -134,44 +136,12 @@ public actor ModpackImporter {
     let paths: LauncherPaths
     public init(paths: LauncherPaths) { self.paths = paths }
     public func install(_ archive: URL, installer: GameInstaller, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
-        let temp = paths.cache.appendingPathComponent("import-\(UUID().uuidString)")
-        defer { try? FileManager.default.removeItem(at: temp) }
-        await progress(InstallProgress("正在读取整合包"))
-        try SafeArchive.extract(archive, to: temp)
-        let indexURL = temp.appendingPathComponent("modrinth.index.json")
-        guard FileManager.default.fileExists(atPath: indexURL.path) else { throw RuriError.message("此文件不是 Modrinth 整合包（缺少 modrinth.index.json）。") }
-        let index = try JSONDecoder().decode(ModpackIndex.self, from: Data(contentsOf: indexURL))
-        guard index.formatVersion == 1, index.game == "minecraft", let game = index.dependencies["minecraft"] else { throw RuriError.message("不支持的整合包格式或游戏") }
-        let supported = Set(["minecraft", "fabric-loader", "quilt-loader", "forge", "neoforge"])
-        let unknown = Set(index.dependencies.keys).subtracting(supported)
-        guard unknown.isEmpty else { throw RuriError.message("此整合包需要 \(unknown.sorted().joined(separator: ", "))，目前尚未接入该加载器。") }
-        let loaderKeys: [(String, LoaderKind)] = [("fabric-loader", .fabric), ("quilt-loader", .quilt), ("forge", .forge), ("neoforge", .neoforge)]
-        let selected = loaderKeys.filter { index.dependencies[$0.0] != nil }
-        guard selected.count <= 1 else { throw RuriError.message("整合包声明了互不兼容的多个加载器") }
-        let loader = selected.first?.1 ?? .vanilla
-        let loaderVersion = selected.first.flatMap { index.dependencies[$0.0] }
-        var instance = GameInstance(name: index.name, gameVersion: game, loader: loader, loaderVersion: loaderVersion)
+        let transfer = InstanceTransfer(paths: paths)
+        let prepared = try await transfer.prepare(archive)
         do {
-            instance = try await installer.install(instance, progress: progress)
-            let files = try index.files.filter { $0.env?["client"] != "unsupported" }.map { file -> DownloadItem in
-                guard let url = file.downloads.first(where: { $0.scheme == "https" }) else { throw RuriError.message("整合包文件缺少 HTTPS 下载地址：\(file.path)") }
-                guard file.hashes["sha1"] != nil || file.hashes["sha512"] != nil else { throw RuriError.message("整合包文件缺少校验哈希：\(file.path)") }
-                return DownloadItem(url: url, destination: try LauncherPaths.safePath(file.path, within: paths.game(instance.id)), sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.fileSize)
-            }
-            try await installer.downloader.download(files) { done, total in await progress(InstallProgress("正在安装整合包内容", completed: done, total: total)) }
-            for folder in ["overrides", "client-overrides"] {
-                let source = temp.appendingPathComponent(folder)
-                guard let enumerator = FileManager.default.enumerator(at: source, includingPropertiesForKeys: [.isRegularFileKey], options: []) else { continue }
-                while let file = enumerator.nextObject() as? URL {
-                    try Task.checkCancellation()
-                    guard try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { continue }
-                    let relative = String(file.path.dropFirst(source.path.count + 1))
-                    let target = try LauncherPaths.safePath(relative, within: paths.game(instance.id))
-                    try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
-                    try Data(contentsOf: file).write(to: target, options: .atomic)
-                }
-            }
-            return instance
-        } catch { try? FileManager.default.removeItem(at: paths.instance(instance.id)); throw error }
+            guard prepared.format == "Modrinth" else { throw RuriError.message("此文件不是 Modrinth 整合包") }
+            let result = try await transfer.install(prepared, name: prepared.instance.name, installer: installer, progress: progress)
+            await transfer.discard(prepared); return result
+        } catch { await transfer.discard(prepared); throw error }
     }
 }
