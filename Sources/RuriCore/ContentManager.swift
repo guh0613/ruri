@@ -151,7 +151,8 @@ public actor ContentManager {
                 !futureRecords.contains { candidate in
                     guard candidate.projectID == required, candidate.enabled else { return false }
                     if incomingIDs.contains(candidate.id) { return true }
-                    return (try? contentURL(candidate.relativePath)).map { fm.fileExists(atPath: $0.path) } ?? false
+                    guard let url = try? contentURL(candidate.relativePath) else { return false }
+                    return FileManager.default.fileExists(atPath: url.path)
                 }
             }
             guard unavailable.isEmpty else { throw RuriError.message("\(record.title) 的必需依赖尚未启用。请先启用依赖，再安装或更新。") }
@@ -275,7 +276,8 @@ public actor ContentManager {
     }
     private struct ModInfo { let id: String?; let name: String?; let version: String? }
     private static func modInfo(_ url: URL) -> ModInfo? {
-        guard let archive = try? Archive(url: url, accessMode: .read) else { return nil }
+        let archive: Archive
+        do { archive = try Archive(url: url, accessMode: .read) } catch { return nil }
         for path in ["fabric.mod.json", "quilt.mod.json"] {
             guard let entry = archive[path], entry.uncompressedSize <= 1024 * 1024 else { continue }
             var data = Data()
