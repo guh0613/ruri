@@ -66,6 +66,7 @@ enum Page: String, CaseIterable, Identifiable {
         do { try StateStore.save(state, to: paths) } catch { self.error = error.localizedDescription }
     }
     func boot() async {
+        await applyNetworkSettings()
         async let versions: () = refreshCatalog()
         async let java: () = scanJava()
         _ = await (versions, java)
@@ -114,18 +115,20 @@ enum Page: String, CaseIterable, Identifiable {
         let activity = ActivityItem(title: title); activities.insert(activity, at: 0)
         operation = Task {
             do {
+                await applyNetworkSettings()
                 try await work(activity.id)
                 if let i = activities.firstIndex(where: { $0.id == activity.id }) { activities[i].status = .completed; activities[i].progress = InstallProgress("已完成", completed: 1, total: 1) }
             } catch {
                 if let i = activities.firstIndex(where: { $0.id == activity.id }) {
                     activities[i].status = Task.isCancelled ? .cancelled : .failed
-                    activities[i].error = Task.isCancelled ? "任务已取消，已校验的文件保留以便重试。" : error.localizedDescription
+                    activities[i].error = Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
                 }
                 if !Task.isCancelled && presentErrors { self.error = error.localizedDescription }
             }
             operation = nil
         }
     }
+    func applyNetworkSettings() async { await NetworkRouting.shared.configure(state.settings.downloadSource ?? .automatic) }
     func progress(_ id: UUID, _ progress: InstallProgress) {
         if let index = activities.firstIndex(where: { $0.id == id }) { activities[index].progress = progress }
     }

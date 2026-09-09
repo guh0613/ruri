@@ -153,7 +153,14 @@ struct PreferencesView: View {
                 }
                 Section("游戏默认设置") {
                     Picker("新实例内存", selection: $model.state.settings.defaultMemoryMB) { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { Text("\($0 / 1024) GB").tag($0) } }
+                }
+                Section("下载与网络") {
+                    Picker("下载源", selection: Binding(get: { model.state.settings.downloadSource ?? .automatic }, set: { model.state.settings.downloadSource = $0 })) {
+                        ForEach(DownloadSource.allCases) { Text($0.title).tag($0) }
+                    }
                     Stepper("并行下载：\(model.state.settings.concurrentDownloads)", value: $model.state.settings.concurrentDownloads, in: 1...16)
+                    Text("自动切换会优先使用官方源，连接失败时尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。支持范围请求的文件可在取消后继续下载。").font(.caption).foregroundStyle(.secondary)
+                    Link("BMCLAPI 镜像服务", destination: URL(string: "https://bmclapidoc.bangbang93.com/")!)
                 }
                 Section("Microsoft 登录") {
                     TextField("应用 Client ID", text: $model.state.settings.microsoftClientID).font(.system(.body, design: .monospaced))
@@ -173,6 +180,7 @@ struct PreferencesView: View {
         .onChange(of: model.state.settings.appearance) { model.save() }
         .onChange(of: model.state.settings.defaultMemoryMB) { model.save() }
         .onChange(of: model.state.settings.concurrentDownloads) { model.save() }
+        .onChange(of: model.state.settings.downloadSource) { model.save(); Task { await model.applyNetworkSettings() } }
         .onChange(of: model.state.settings.microsoftClientID) { model.save() }
     }
 }

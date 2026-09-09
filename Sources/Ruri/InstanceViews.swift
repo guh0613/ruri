@@ -102,10 +102,11 @@ struct InstanceSettingsView: View {
 
 struct DownloadsView: View {
     @Environment(AppModel.self) private var model
+    @State private var transfers: [FileTransfer] = []
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                SectionHeading(title: "下载任务", subtitle: "文件自动校验，已完成的下载会保留用于重试。")
+                SectionHeading(title: "下载任务", subtitle: "文件自动校验，重试时继续下载可用的未完成文件。")
                 if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: "一切就绪", detail: "安装游戏或下载内容时，可以在这里查看进度。") }
                 ForEach(model.activities) { activity in
                     Surface {
@@ -125,9 +126,43 @@ struct DownloadsView: View {
                         }
                     }
                 }
+                if !transfers.isEmpty {
+                    Text("最近的文件传输").font(.headline)
+                    Surface {
+                        VStack(spacing: 15) {
+                            ForEach(transfers) { transfer in
+                                VStack(alignment: .leading, spacing: 7) {
+                                    HStack {
+                                        Text(transfer.filename).font(.callout.weight(.medium)).lineLimit(1)
+                                        Spacer()
+                                        Text(transfer.state.title).font(.caption).foregroundStyle(transfer.state == .failed ? .orange : .secondary)
+                                    }
+                                    if transfer.state.isActive, let total = transfer.totalBytes, total > 0 { ProgressView(value: min(Double(transfer.receivedBytes) / Double(total), 1)) }
+                                    HStack {
+                                        Text(transfer.host)
+                                        if transfer.attempt > 1 { Text("第 \(transfer.attempt) 次尝试") }
+                                        if transfer.resumedBytes > 0 { Text("续传 \(bytes(transfer.resumedBytes))") }
+                                        Spacer()
+                                        Text(bytes(transfer.receivedBytes) + (transfer.totalBytes.map { " / " + bytes($0) } ?? ""))
+                                        if transfer.state == .receiving, transfer.bytesPerSecond > 0 { Text(bytes(Int64(transfer.bytesPerSecond)) + "/s") }
+                                    }.font(.caption2).foregroundStyle(.secondary).monospacedDigit()
+                                    if let message = transfer.message, transfer.state != .cancelled { Text(message).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
+                                }
+                                if transfer.id != transfers.last?.id { Divider() }
+                            }
+                        }
+                    }
+                }
             }.padding(30)
         }
+        .task {
+            while !Task.isCancelled {
+                transfers = await model.installer.downloader.transfers()
+                try? await Task.sleep(for: .milliseconds(500))
+            }
+        }
     }
+    private func bytes(_ value: Int64) -> String { ByteCountFormatter.string(fromByteCount: value, countStyle: .file) }
 }
 
 struct LogsView: View {
