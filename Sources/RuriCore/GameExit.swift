@@ -8,6 +8,8 @@ public struct GameExit: Codable, Equatable, Sendable {
     public let startedAt: Date
     public let endedAt: Date
     public let stopRequested: Bool
+    public var durationSeconds: Double?
+    public var playTime: TimeInterval { max(0, durationSeconds ?? endedAt.timeIntervalSince(startedAt)) }
 
     public var succeeded: Bool { reason == .exit && status == 0 }
     public var stoppedByLauncher: Bool {

@@ -7,6 +7,7 @@ let package = Package(
     products: [
         .executable(name: "Ruri", targets: ["Ruri"]),
         .executable(name: "ruri-cli", targets: ["RuriCLI"]),
+        .executable(name: "ruri-monitor", targets: ["RuriMonitor"]),
         .library(name: "RuriCore", targets: ["RuriCore"])
     ],
     dependencies: [.package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20")],
@@ -15,6 +16,7 @@ let package = Package(
         .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib"]),
         .executableTarget(name: "Ruri", dependencies: ["RuriCore"]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore"]),
+        .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore"])
     ]
 )

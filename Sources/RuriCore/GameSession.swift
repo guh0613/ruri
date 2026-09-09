@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GameSession: Codable, Identifiable, Sendable {
+public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public enum State: String, Codable, Sendable {
         case preparing, running, succeeded, stopped, failed, cancelled
         public var isFinished: Bool { self != .preparing && self != .running }
@@ -23,13 +23,13 @@ public struct GameSession: Codable, Identifiable, Sendable {
             }
         }
     }
-    public struct Event: Codable, Identifiable, Sendable {
+    public struct Event: Codable, Identifiable, Equatable, Sendable {
         public let id: UUID
         public let date: Date
         public let stage: Stage
         public let message: String
     }
-    public struct Evidence: Codable, Identifiable, Sendable {
+    public struct Evidence: Codable, Identifiable, Equatable, Sendable {
         public let relativePath: String
         public let name: String
         public let truncated: Bool
@@ -43,16 +43,19 @@ public struct GameSession: Codable, Identifiable, Sendable {
     public let loader: String
     public let loaderVersion: String?
     public let memoryMB: Int
+    public var baselinePlayTime: Double?
     public let operatingSystem: String
     public let hostArchitecture: String
     public let accountMode: String
-    public let ownerPID: Int32
+    public var ownerPID: Int32
     public let createdAt: Date
     public var updatedAt: Date
     public var state: State
     public var stage: Stage
     public var java: String?
     public var processID: Int32?
+    public var monitorIdentity: ProcessIdentity?
+    public var gameIdentity: ProcessIdentity?
     public var failure: String?
     public var exit: GameExit?
     public var events: [Event]
@@ -159,11 +162,13 @@ public enum GameSessionStore {
     private let paths: LauncherPaths
     private var log: FileHandle?
     private var redactor = GameLogRedactor()
+    private var lease: GameRunLease?
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
         self.paths = paths
+        lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
         let now = Date(), id = UUID()
         record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
-                             loaderVersion: instance.loaderVersion, memoryMB: instance.memoryMB, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
+                             loaderVersion: instance.loaderVersion, memoryMB: instance.memoryMB, baselinePlayTime: instance.playTime, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
                              hostArchitecture: JavaRuntime.hostArchitecture, accountMode: accountMode, ownerPID: ProcessInfo.processInfo.processIdentifier,
                              createdAt: now, updatedAt: now, state: .preparing, stage: .preparing, events: [], evidence: [])
         directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: id)
@@ -172,6 +177,20 @@ public enum GameSessionStore {
         guard FileManager.default.createFile(atPath: logURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message("无法创建运行日志。") }
         log = try FileHandle(forWritingTo: logURL)
         try transition(.preparing)
+    }
+    public init(resuming sessionID: UUID, instanceID: UUID, paths: LauncherPaths, monitor: ProcessIdentity) throws {
+        self.paths = paths
+        lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: sessionID)
+        record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
+        guard !record.state.isFinished, record.processID == nil, record.monitorIdentity == monitor,
+              monitor.pid == ProcessInfo.processInfo.processIdentifier, monitor.isAlive else { throw RuriError.message("监控组件不能接管这个运行记录。") }
+        directory = try GameSessionStore.directory(paths: paths, instanceID: instanceID, sessionID: sessionID)
+        log = try FileHandle(forWritingTo: GameSessionStore.logURL(paths: paths, session: record)); try log?.seekToEnd()
+        record.ownerPID = monitor.pid; record.updatedAt = Date(); try save()
+    }
+    public func handoff(to monitor: ProcessIdentity) throws {
+        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message("这个运行记录不能交给监控组件。") }
+        record.monitorIdentity = monitor; record.updatedAt = Date(); try save(); try close()
     }
     public func addSecrets(_ values: [String]) { redactor.addSecrets(values) }
     public func redacted(_ text: String) -> String { redactor.redact(text) }
@@ -189,7 +208,8 @@ public enum GameSessionStore {
     }
     public func setJava(_ label: String) throws { record.java = label; try save() }
     public func started(processID: Int32) throws {
-        record.processID = processID; record.state = .running; try transition(.running)
+        record.processID = processID; record.gameIdentity = ProcessIdentity.read(processID)
+        record.state = .running; try transition(.running)
     }
     public func finish(exit: GameExit) throws {
         guard !record.state.isFinished else { throw RuriError.message("运行会话已经结束。") }
@@ -200,6 +220,8 @@ public enum GameSessionStore {
         record.events.append(.init(id: UUID(), date: exit.endedAt, stage: .finished, message: exit.summary))
         try save()
         try append(exit.logDescription); try append("[Ruri] \(exit.explanation)")
+        do { try GamePlaytimeStore.record(record, paths: paths) }
+        catch { try append("[Ruri] 未能保存游玩时长：\(error.localizedDescription)") }
         do { try captureReports(exit: exit) }
         catch { try append("[Ruri] 未能保存报告副本：\(error.localizedDescription)") }
         try save(); try close()
@@ -209,10 +231,14 @@ public enum GameSessionStore {
         defer { try? close() }
         record.failure = cancelled ? nil : redactor.redact(String(error.localizedDescription.prefix(32768)))
         record.state = cancelled ? .cancelled : .failed; record.updatedAt = Date()
-        try append("[Ruri] \(cancelled ? "启动已取消" : record.failure ?? "启动失败")")
-        try save(); try close()
+        try save()
+        if log != nil { try append("[Ruri] \(cancelled ? "启动已取消" : record.failure ?? "启动失败")") }
+        try close()
     }
-    public func close() throws { try log?.synchronize(); try log?.close(); log = nil }
+    public func close() throws {
+        defer { log = nil; lease = nil }
+        try log?.synchronize(); try log?.close()
+    }
     private func save() throws {
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(record).write(to: directory.appendingPathComponent("session.json"), options: .atomic)

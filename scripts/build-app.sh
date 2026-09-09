@@ -7,13 +7,17 @@ fi
 configuration="${1:-release}"
 scratch="${RURI_BUILD_DIR:-.build/validation}"
 xcrun swift build --scratch-path "$scratch" -c "$configuration" --product Ruri
+xcrun swift build --scratch-path "$scratch" -c "$configuration" --product ruri-monitor
 binary_dir="$(xcrun swift build --scratch-path "$scratch" -c "$configuration" --show-bin-path)"
 mkdir -p build
 stage_dir="$(mktemp -d "$(pwd)/build/.ruri-build.XXXXXX")"
 trap 'rm -rf "$stage_dir"' EXIT
 app="$stage_dir/Ruri.app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
+mkdir -p "$app/Contents/Helpers"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
+cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app/Contents/Helpers/ruri-monitor"
 cp Resources/Info.plist "$app/Contents/Info.plist"
 for bundle in "$binary_dir/"*.bundle(N); do
   ditto "$bundle" "$app/Contents/Resources/${bundle:t}"

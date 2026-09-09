@@ -1,6 +1,6 @@
 import Foundation
 
-public struct LaunchPlan: Sendable {
+public struct LaunchPlan: Codable, Sendable {
     public let executable: URL
     public let arguments: [String]
     public let directory: URL
@@ -130,9 +130,11 @@ public final class GameProcess {
         self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         stopRequested = false
         let startedAt = Date()
+        let startedClock = ContinuousClock.now
         let process = Process(); let pipe = Pipe()
         process.executableURL = plan.executable; process.arguments = plan.arguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
         process.standardOutput = pipe; process.standardError = pipe
+        process.standardInput = FileHandle.nullDevice
         let reader = try ProcessOutputReader(handle: pipe.fileHandleForReading) { [weak self] data in
             DispatchQueue.main.async { self?.receive(data) }
         }
@@ -141,12 +143,14 @@ public final class GameProcess {
             let reason: GameExit.Reason = process.terminationReason == .uncaughtSignal ? .signal : .exit
             let processID = process.processIdentifier
             let endedAt = Date()
+            let duration = startedClock.duration(to: .now).components
+            let elapsed = Double(duration.seconds) + Double(duration.attoseconds) / 1e18
             reader.finish { [weak self] in
                 DispatchQueue.main.async {
                     guard let self else { return }
                     if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
                     for line in self.formatter.flush() { self.redactAndSend(line) }
-                    let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested)
+                    let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed)
                     let callback = self.onExit
                     self.process = nil; self.pipe = nil; self.reader = nil; self.onExit = nil
                     callback?(result)
