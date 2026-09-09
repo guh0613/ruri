@@ -96,6 +96,7 @@ public final class GameProcess {
     private var process: Process?
     private var pipe: Pipe?
     private var pending = Data()
+    private var formatter = GameLogFormatter()
     private var secrets: [String] = []
     private var output: (@MainActor @Sendable (String) -> Void)?
     private var onExit: (@MainActor @Sendable (Int32) -> Void)?
@@ -103,7 +104,7 @@ public final class GameProcess {
     public init() {}
     public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (Int32) -> Void) throws {
         guard !isRunning else { throw RuriError.message("游戏已在运行") }
-        self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data()
+        self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         let process = Process(); let pipe = Pipe()
         process.executableURL = plan.executable; process.arguments = plan.arguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
         process.standardOutput = pipe; process.standardError = pipe
@@ -117,6 +118,7 @@ public final class GameProcess {
                 guard let self else { return }
                 self.pipe?.fileHandleForReading.readabilityHandler = nil
                 if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
+                for line in self.formatter.flush() { self.redactAndSend(line) }
                 self.onExit?(status); self.process = nil; self.pipe = nil
             }
         }
@@ -131,6 +133,9 @@ public final class GameProcess {
         if pending.count > 1024 * 1024 { emit("[Ruri] 单行日志过长，已省略"); pending.removeAll() }
     }
     private func emit(_ input: String) {
+        for line in formatter.consume(input) { redactAndSend(line) }
+    }
+    private func redactAndSend(_ input: String) {
         var text = input
         for secret in secrets { text = text.replacingOccurrences(of: secret, with: "<redacted>") }
         output?(text)
