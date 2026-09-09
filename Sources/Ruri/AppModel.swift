@@ -38,6 +38,7 @@ enum Page: String, CaseIterable, Identifiable {
     var showCreate = false
     var showAccount = false
     var editingInstance: GameInstance?
+    var contentInstance: GameInstance?
     var error: String?
     var notice: String?
     private var readOnly = false
@@ -105,7 +106,7 @@ enum Page: String, CaseIterable, Identifiable {
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
-    func perform(_ title: String, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
+    func perform(_ title: String, presentErrors: Bool = true, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
         guard !busy, !readOnly else { return }
         let activity = ActivityItem(title: title); activities.insert(activity, at: 0)
         operation = Task {
@@ -117,7 +118,7 @@ enum Page: String, CaseIterable, Identifiable {
                     activities[i].status = Task.isCancelled ? .cancelled : .failed
                     activities[i].error = Task.isCancelled ? "任务已取消，已校验的文件保留以便重试。" : error.localizedDescription
                 }
-                if !Task.isCancelled { self.error = error.localizedDescription }
+                if !Task.isCancelled && presentErrors { self.error = error.localizedDescription }
             }
             operation = nil
         }
@@ -149,6 +150,7 @@ enum Page: String, CaseIterable, Identifiable {
         guard var account = activeAccount else { showAccount = true; return }
         guard instance.installed else { install(instance); return }
         perform("启动 \(instance.name)") { [self] id in
+            try await ContentManager(paths: paths, instanceID: instance.id).recover()
             progress(id, InstallProgress("正在检查账号和 Java"))
             var token = "0"
             if account.kind == .microsoft {

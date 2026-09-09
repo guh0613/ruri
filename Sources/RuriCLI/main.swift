@@ -45,6 +45,7 @@ import RuriCore
                 let state = try StateStore.load(paths)
                 guard let instance = state.instances.last, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
                 guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
+                try await ContentManager(paths: paths, instanceID: instance.id).recover()
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: manifest.requiredJava, architecture: GameInstaller.architecture(for: manifest))
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
