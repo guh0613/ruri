@@ -88,6 +88,7 @@ enum Page: String, CaseIterable, Identifiable {
             state = try StateStore.load(basePaths)
             persistedState = state
             state.gameDirectories = state.gameDirectories?.map { $0.resolvingBookmark() }
+            state = state.resolvingCustomRunDirectoryBookmarks()
             try basePaths.configured(with: state).validateDirectoryConfiguration()
         }
         catch { state = PersistentState(); self.error = "无法读取 Ruri 数据，已暂停写入以保护原文件。\n\(error.localizedDescription)"; readOnly = true }

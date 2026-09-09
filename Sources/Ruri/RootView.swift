@@ -229,7 +229,7 @@ struct LibraryView: View {
         }
         .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
-        } message: { Text(deleteTarget?.runDirectory == .shared ? "此实例的版本清单和运行记录会移入废纸篓。共享运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
+        } message: { Text((deleteTarget?.runDirectory ?? .isolated) != .isolated ? "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
         .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability() }
     }
     private func memoryLabel(_ instance: GameInstance) -> String {

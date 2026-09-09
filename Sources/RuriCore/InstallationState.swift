@@ -15,6 +15,10 @@ extension GameInstance {
               (result.runDirectory ?? .isolated) == (runDirectory ?? .isolated) else {
             throw RuriError.message("实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。")
         }
+        if runDirectory == .custom {
+            guard let current = customRunDirectory, let original = requested.customRunDirectory, let installed = result.customRunDirectory,
+                  current.isSameLocation(as: original), current.isSameLocation(as: installed) else { throw RuriError.message("自定义运行目录在安装期间改变，未覆盖最新设置。") }
+        }
         var current = self
         current.installed = result.installed; current.loaderVersion = result.loaderVersion; current.directoryID = result.directoryID
         return current

@@ -5,7 +5,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...6).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...7).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
         try validate(result, paths: paths)
         return result
     }
@@ -38,7 +38,7 @@ public enum StateStore {
         try paths.configured(with: state).validateDirectoryConfiguration()
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
-        var state = input; state.schemaVersion = 6; state.revision = UUID()
+        var state = input; state.schemaVersion = 7; state.revision = UUID()
         normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]

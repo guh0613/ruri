@@ -87,13 +87,13 @@ public enum RunDirectoryCopyGuard {
     public static func hasPending(paths: LauncherPaths, instanceID: UUID) -> Bool {
         let own = paths.instance(instanceID).appendingPathComponent("run-directory-change")
         if FileManager.default.fileExists(atPath: own.path) { return true }
-        return paths.runDirectory(for: instanceID) == .shared && FileManager.default.fileExists(atPath: paths.gameDataState(instanceID).appendingPathComponent("directory-change.json").path)
+        return paths.runDirectory(for: instanceID) != .isolated && FileManager.default.fileExists(atPath: paths.gameDataState(instanceID).appendingPathComponent("directory-change.json").path)
     }
     public static func owner(paths: LauncherPaths, instanceID: UUID) throws -> RunDirectoryCopyOwner? {
         if FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent("run-directory-change").path) {
             return try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).owner
         }
-        guard paths.runDirectory(for: instanceID) == .shared else { return nil }
+        guard paths.runDirectory(for: instanceID) != .isolated else { return nil }
         return try sharedMarker(paths: paths, instanceID: instanceID)?.owner
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
@@ -103,7 +103,7 @@ public enum RunDirectoryCopyGuard {
         try requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: id)
     }
     static func requireSharedAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
-        guard paths.runDirectory(for: instanceID) == .shared, let marker = try sharedMarker(paths: paths, instanceID: instanceID) else { return }
+        guard paths.runDirectory(for: instanceID) != .isolated, let marker = try sharedMarker(paths: paths, instanceID: instanceID) else { return }
         guard marker.transactionID == id, marker.instanceID == instanceID else { throw RuriError.message("“\(marker.instanceName)”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。") }
     }
     private static func sharedMarker(paths: LauncherPaths, instanceID: UUID) throws -> Marker? {
@@ -114,12 +114,12 @@ public enum RunDirectoryCopyGuard {
         return marker
     }
     static func mark(_ journal: RunDirectoryCopyJournal, paths: LauncherPaths) throws {
-        guard paths.runDirectory(for: journal.original.id) == .shared else { return }
+        guard paths.runDirectory(for: journal.original.id) != .isolated else { return }
         let marker = Marker(version: 1, transactionID: journal.id, instanceID: journal.original.id, instanceName: journal.original.name)
         try JSONEncoder().encode(marker).write(to: markerURL(paths: paths, instanceID: journal.original.id), options: .atomic)
     }
     static func clear(_ journal: RunDirectoryCopyJournal, paths: LauncherPaths) throws {
-        guard paths.runDirectory(for: journal.original.id) == .shared, let marker = try sharedMarker(paths: paths, instanceID: journal.original.id) else { return }
+        guard paths.runDirectory(for: journal.original.id) != .isolated, let marker = try sharedMarker(paths: paths, instanceID: journal.original.id) else { return }
         guard marker.transactionID == journal.id, marker.instanceID == journal.original.id else { throw RuriError.message("共享目录的占用记录已经改变，未清除其他操作的记录。") }
         try FileManager.default.removeItem(at: markerURL(paths: paths, instanceID: journal.original.id))
     }

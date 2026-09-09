@@ -89,7 +89,8 @@ extension LauncherPaths {
         LauncherPaths(root: root, directories: state.gameDirectories ?? [],
                       instanceDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.directoryID ?? GameDirectory.defaultID },
                       newInstanceDirectoryID: state.selectedDirectoryID ?? GameDirectory.defaultID,
-                      instanceRunDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.runDirectory ?? .isolated })
+                      instanceRunDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.runDirectory ?? .isolated },
+                      instanceCustomDirectories: state.instances.reduce(into: [:]) { if $1.runDirectory == .custom { $0[$1.id] = $1.customRunDirectory } })
     }
     public func directoryID(for instanceID: UUID) -> UUID { instanceDirectories[instanceID] ?? newInstanceDirectoryID }
     public func directoryRoot(_ id: UUID) -> URL {
@@ -106,6 +107,16 @@ extension LauncherPaths {
             guard directory.url.isFileURL, directory.url.path.hasPrefix("/"), (directory.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("实例文件夹位置无效。") }
             try checkDirectoryOverlap(directory)
         }
+        for (id, mode) in instanceRunDirectories ?? [:] where mode == .custom {
+            guard let custom = instanceCustomDirectories?[id] else { throw RuriError.message("实例缺少自定义运行目录信息。") }
+            try checkCustomRunDirectory(custom)
+        }
+        for (id, custom) in instanceCustomDirectories ?? [:] {
+            guard instanceRunDirectories?[id] == .custom else { throw RuriError.message("自定义目录与实例策略不一致。") }
+            for other in (instanceCustomDirectories ?? [:]).values where other.url.standardizedFileURL == custom.url.standardizedFileURL {
+                guard other.id == custom.id else { throw RuriError.message("同一自定义路径保存了不同的目录身份。") }
+            }
+        }
     }
     func checkNewDirectory(_ directory: GameDirectory) throws {
         guard directory.url.isFileURL, try directory.url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message("请选择已存在的本地文件夹。") }
@@ -113,7 +124,7 @@ extension LauncherPaths {
     }
     private func checkDirectoryOverlap(_ directory: GameDirectory) throws {
         let target = directory.url.standardizedFileURL.resolvingSymlinksInPath().path
-        for other in [root] + directories.filter({ $0.id != directory.id }).map(\.url) {
+        for other in [root] + directories.filter({ $0.id != directory.id }).map(\.url) + (instanceCustomDirectories ?? [:]).values.map(\.url) {
             let existing = other.standardizedFileURL.resolvingSymlinksInPath().path
             guard target != existing, !target.hasPrefix(existing + "/"), !existing.hasPrefix(target == "/" ? "/" : target + "/") else {
                 throw RuriError.message("实例文件夹不能与已登记文件夹或公共数据目录重叠。")
@@ -131,6 +142,11 @@ extension LauncherPaths {
         let root = directoryRoot(id)
         _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)
         if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }
+        if runDirectory(for: instanceID) == .custom {
+            guard let custom = instanceCustomDirectories?[instanceID] else { throw RuriError.message("请先选择自定义运行目录。") }
+            try custom.validateAvailability()
+            _ = try Self.safePath(".ruri", within: custom.url)
+        }
     }
     public func prepareInstance(_ instanceID: UUID) throws {
         try validateInstanceLocation(instanceID)
@@ -141,6 +157,7 @@ extension LauncherPaths {
     func monitorSnapshot(for instanceID: UUID) -> LauncherPaths {
         let id = directoryID(for: instanceID)
         let selected = directories.filter { $0.id == id }.map { item in var item = item; item.bookmark = nil; return item }
-        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)])
+        var custom = instanceCustomDirectories?[instanceID]; custom?.bookmark = nil
+        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)], instanceCustomDirectories: custom.map { [instanceID: $0] })
     }
 }

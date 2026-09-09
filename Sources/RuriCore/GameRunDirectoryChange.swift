@@ -61,7 +61,7 @@ final class RunDirectoryChangeAccess {
         var changed = instance; changed.runDirectory = target
         targetPaths = paths.including(changed)
         sourceLease = try GameRunLease.acquire(paths: paths, instanceID: instance.id, directoryChangeID: directoryChangeID)
-        targetLease = target == .shared ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil, directoryChangeID: directoryChangeID) : nil
+        targetLease = target != .isolated ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil, directoryChangeID: directoryChangeID) : nil
         guard try !GameSessionStore.list(paths: paths, instanceID: instance.id).contains(where: { !$0.state.isFinished }) else {
             throw RuriError.message("此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。")
         }
@@ -134,6 +134,9 @@ public actor GameRunDirectoryChange {
     }
     func validatePreviewBinding(_ preview: GameRunDirectoryChangePreview, instance: GameInstance, paths: LauncherPaths) throws {
         try validateChange(instance, to: preview.targetMode, paths: paths)
+        if preview.sourceMode == .custom || preview.targetMode == .custom {
+            guard let current = instance.customRunDirectory, let original = preview.instance.customRunDirectory, current.isSameLocation(as: original) else { throw RuriError.message("自定义目录身份已经变化，请重新预览。") }
+        }
         var target = instance; target.runDirectory = preview.targetMode
         guard instance.directoryID == preview.instance.directoryID, instance.runDirectory == preview.instance.runDirectory,
               instance.gameVersion == preview.instance.gameVersion, instance.loader == preview.instance.loader, instance.loaderVersion == preview.instance.loaderVersion,

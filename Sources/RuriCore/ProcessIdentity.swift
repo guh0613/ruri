@@ -49,7 +49,7 @@ public final class GameRunLease: @unchecked Sendable {
         var shared: SharedGameDirectoryLease?
         do {
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
-            if paths.runDirectory(for: instanceID) == .shared { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession, directoryChangeID: directoryChangeID) }
+            if paths.runDirectory(for: instanceID) != .isolated { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession, directoryChangeID: directoryChangeID) }
             let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
             guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
                 throw RuriError.message("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
@@ -62,7 +62,7 @@ public final class GameRunLease: @unchecked Sendable {
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
         guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
         if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
-        if paths.runDirectory(for: instanceID) == .shared, SharedGameDirectoryLease.isHeld(paths: paths, instanceID: instanceID) { return true }
+        if paths.runDirectory(for: instanceID) != .isolated, SharedGameDirectoryLease.isHeld(paths: paths, instanceID: instanceID) { return true }
         guard let file = try? LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID)) else { return true }
         guard FileManager.default.fileExists(atPath: file.path) else { return false }
         let fd = open(file.path, O_RDWR | O_CLOEXEC | O_NOFOLLOW)

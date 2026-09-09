@@ -41,7 +41,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
     }
     func reserve(paths: LauncherPaths, session: GameSession) throws {
         let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
-        let reservation = Reservation(version: 1, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
+        let reservation = Reservation(version: 2, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
         try JSONEncoder().encode(reservation).write(to: file, options: .atomic)
     }
     func clearReservation(session: GameSession) throws {
@@ -60,12 +60,13 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
         guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message("共享目录的运行记录无效，请检查运行历史。") }
         let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
-        guard reservation.version == 1, reservation.paths.instanceDirectories.count == 1,
+        guard (1...2).contains(reservation.version), reservation.paths.instanceDirectories.count == 1,
               reservation.paths.instanceDirectories[reservation.instanceID] != nil,
-              reservation.paths.runDirectory(for: reservation.instanceID) == .shared,
+              reservation.paths.runDirectory(for: reservation.instanceID) != .isolated,
               reservation.paths.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath() == root.standardizedFileURL.resolvingSymlinksInPath() else {
             throw RuriError.message("共享运行目录与上次运行记录不一致，请检查原实例。")
         }
+        if reservation.paths.runDirectory(for: reservation.instanceID) == .custom, reservation.version < 2 { throw RuriError.message("自定义运行目录的占用记录版本无效。") }
         try reservation.paths.validateDirectoryConfiguration()
         try reservation.paths.validateInstanceLocation(reservation.instanceID)
         if reservation.instanceID == instanceID && reservation.sessionID == ignoringSession { return }
