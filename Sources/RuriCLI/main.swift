@@ -94,29 +94,63 @@ import RuriCore
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (args.count > 1 ? nil : state.instances.last)
                 guard let instance = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
                 guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
-                try await ContentManager(paths: paths, instanceID: instance.id).recover()
-                try await WorldManager(paths: paths, instanceID: instance.id).recover()
-                let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
-                let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
-                let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
-                let game = GameProcess()
-                let status = await withCheckedContinuation { (continuation: CheckedContinuation<Int32, Never>) in
-                    do {
-                        try game.start(plan: plan) { line in
-                            try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8))
-                        } onExit: { result in
-                            print(result.logDescription)
-                            print(result.explanation)
-                            do { try result.save(paths: paths, instanceID: instance.id) }
-                            catch { print("Unable to save exit record: \(error.localizedDescription)") }
-                            for report in GameCrashReport.find(in: paths.game(instance.id), exit: result) { print("Crash report: \(report.url.path)") }
-                            continuation.resume(returning: result.shellStatus)
-                        }
-                    } catch { print(error.localizedDescription); continuation.resume(returning: -1) }
+                let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
+                do {
+                    try recorder.transition(.recovery)
+                    try await ContentManager(paths: paths, instanceID: instance.id).recover()
+                    try await WorldManager(paths: paths, instanceID: instance.id).recover()
+                    try recorder.transition(.manifest)
+                    let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
+                    try recorder.transition(.java)
+                    let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest))
+                    try recorder.setJava(java.label + " · " + java.version)
+                    try recorder.transition(.arguments)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
+                    try recorder.append("[Ruri] \(plan.redactedCommand)")
+                    try recorder.transition(.starting)
+                    let game = GameProcess()
+                    var reportedWriteError = false
+                    let status = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Int32, any Error>) in
+                        do {
+                            try game.start(plan: plan) { line in
+                                let line = recorder.redacted(line)
+                                try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8))
+                                do { try recorder.append(line) }
+                                catch {
+                                    if !reportedWriteError { print("Unable to write session log: \(error.localizedDescription)"); reportedWriteError = true }
+                                }
+                            } onExit: { result in
+                                print(result.logDescription)
+                                print(result.explanation)
+                                do { try recorder.finish(exit: result) }
+                                catch { print("Unable to finish session record: \(error.localizedDescription)") }
+                                do { try result.save(paths: paths, instanceID: instance.id) }
+                                catch { print("Unable to save exit record: \(error.localizedDescription)") }
+                                for report in GameCrashReport.find(in: paths.game(instance.id), exit: result) { print("Crash report: \(report.url.path)") }
+                                continuation.resume(returning: result.shellStatus)
+                            }
+                            if let pid = game.processIdentifier {
+                                do { try recorder.started(processID: pid) }
+                                catch { print("Unable to save process record: \(error.localizedDescription)") }
+                            }
+                        } catch { continuation.resume(throwing: error) }
+                    }
+                    print("Game exit: \(status)")
+                    if status != 0 { exit(status) }
+                } catch {
+                    try? recorder.fail(error, cancelled: Task.isCancelled)
+                    throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
-                print("Game exit: \(status)")
-                if status != 0 { exit(status) }
-            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  launch [instance-uuid] (offline account)\n\nRURI_DATA_DIR overrides the data directory.")
+            case "sessions":
+                let state = try StateStore.load(paths)
+                let instances: [GameInstance]
+                if args.count > 1 {
+                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("无效的实例 UUID") }
+                    instances = [instance]
+                } else { instances = state.instances }
+                let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
+                for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
+            default: print("Ruri CLI\n  java\n  versions\n  install <version> [fabric|quilt|forge|neoforge]\n  install-java <major> [aarch64|x86_64]\n  repair <instance-uuid>\n  install-content <project> <instance-uuid> [version-id]\n  content <instance-uuid>\n  plan\n  sessions [instance-uuid]\n  launch [instance-uuid] (offline account)\n\nRURI_DATA_DIR overrides the data directory.")
             }
         } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
     }

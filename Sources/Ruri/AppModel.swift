@@ -37,6 +37,8 @@ enum Page: String, CaseIterable, Identifiable {
     var showLogs = false
     var lastGameExit: GameExit?
     var crashReports: [GameCrashReport] = []
+    var sessions: [GameSession] = []
+    var logsSessionID: UUID?
     var showCreate = false
     var showAccount = false
     var editingInstance: GameInstance?
@@ -49,8 +51,8 @@ enum Page: String, CaseIterable, Identifiable {
     var notice: String?
     private var readOnly = false
     private let gameProcess = GameProcess()
-    private var logFile: FileHandle?
-    private var startedAt: Date?
+    private var sessionRecorder: GameSessionRecorder?
+    private var recordingErrorShown = false
     var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil }
@@ -68,6 +70,7 @@ enum Page: String, CaseIterable, Identifiable {
         do { try StateStore.save(state, to: paths) } catch { self.error = error.localizedDescription }
     }
     func boot() async {
+        refreshSessions()
         await applyNetworkSettings()
         async let versions: () = refreshCatalog()
         async let java: () = scanJava()
@@ -154,67 +157,129 @@ enum Page: String, CaseIterable, Identifiable {
         } catch { self.error = error.localizedDescription }
     }
     func launch(_ instance: GameInstance) {
-        guard runningID == nil, !busy else { return }
+        guard runningID == nil, !busy, !readOnly else { return }
         guard var account = activeAccount else { showAccount = true; return }
-        guard instance.installed else { install(instance); return }
-        perform("启动 \(instance.name)") { [self] id in
-            try await ContentManager(paths: paths, instanceID: instance.id).recover()
-            try await WorldManager(paths: paths, instanceID: instance.id).recover()
-            progress(id, InstallProgress("正在检查账号和 Java"))
-            var token = "0"
-            if account.kind == .microsoft {
-                var credentials = try CredentialStore.load(for: account.id)
-                if credentials.expiresAt < Date().addingTimeInterval(120) {
-                    (account, credentials) = try await MicrosoftAuth(clientID: credentials.clientID).refresh(credentials, account: account)
-                    try addMicrosoft(account, credentials: credentials)
+        do {
+            let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: account.kind.rawValue)
+            sessionRecorder = recorder; logsSessionID = recorder.record.id
+            logs.removeAll(); lastGameExit = nil; crashReports = []; recordingErrorShown = false
+            publishSession(recorder.record)
+            perform("启动 \(instance.name)", presentErrors: false) { [self] id in
+                do {
+                    var instance = instance
+                    try Task.checkCancellation()
+                    if !instance.installed {
+                        try advanceSession(.installation)
+                        instance = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
+                        update(instance)
+                    }
+                    try advanceSession(.recovery)
+                    try await ContentManager(paths: paths, instanceID: instance.id).recover()
+                    try await WorldManager(paths: paths, instanceID: instance.id).recover()
+                    try advanceSession(.account)
+                    progress(id, InstallProgress("正在检查账号和 Java"))
+                    var token = "0"
+                    if account.kind == .microsoft {
+                        var credentials = try CredentialStore.load(for: account.id)
+                        recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
+                        if credentials.expiresAt < Date().addingTimeInterval(120) {
+                            (account, credentials) = try await MicrosoftAuth(clientID: credentials.clientID).refresh(credentials, account: account)
+                            recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
+                            try addMicrosoft(account, credentials: credentials)
+                        }
+                        token = credentials.accessToken
+                    }
+                    try advanceSession(.manifest)
+                    let manifest = try await installer.loadManifest(instance)
+                    let architecture = GameInstaller.architecture(for: manifest)
+                    let requiredJava = try instance.preferredJavaMajor(default: manifest.requiredJava)
+                    try advanceSession(.java)
+                    let java: JavaRuntime
+                    if instance.javaPath == nil, !runtimes.contains(where: { $0.major == requiredJava && $0.architecture == architecture }) {
+                        let service = JavaInstaller(paths: paths)
+                        progress(id, InstallProgress("正在准备所需的 Java \(requiredJava)"))
+                        guard let runtime = try await service.available().first(where: { $0.major == requiredJava && $0.architecture == architecture }) else {
+                            throw RuriError.message("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
+                        }
+                        java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
+                        await scanJava()
+                    } else {
+                        java = try JavaDiscovery.select(from: runtimes, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
+                    }
+                    try Task.checkCancellation()
+                    try recorder.setJava(java.label + " · " + java.version)
+                    try advanceSession(.arguments)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
+                    appendLog("[Ruri] \(java.label)")
+                    appendLog("[Ruri] \(plan.redactedCommand)")
+                    try advanceSession(.starting)
+                    let instanceID = instance.id
+                    try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] result in self?.gameExited(instanceID, result: result) }
+                    runningID = instance.id
+                    if let pid = gameProcess.processIdentifier {
+                        do { try recorder.started(processID: pid) } catch { showRecordingError(error) }
+                        publishSession(recorder.record)
+                    }
+                    var updated = instance; updated.lastPlayed = Date(); update(updated)
+                } catch {
+                    do { try recorder.fail(error, cancelled: Task.isCancelled) } catch { showRecordingError(error) }
+                    publishSession(recorder.record)
+                    if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }
+                    sessionRecorder = nil
+                    if !Task.isCancelled { showLogs = true; notice = recorder.record.title + "，可在运行记录中查看详情。" }
+                    throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
-                token = credentials.accessToken
             }
-            let manifest = try await installer.loadManifest(instance)
-            let architecture = GameInstaller.architecture(for: manifest)
-            let requiredJava = try instance.preferredJavaMajor(default: manifest.requiredJava)
-            let java: JavaRuntime
-            if instance.javaPath == nil, !runtimes.contains(where: { $0.major == requiredJava && $0.architecture == architecture }) {
-                let service = JavaInstaller(paths: paths)
-                progress(id, InstallProgress("正在准备所需的 Java \(requiredJava)"))
-                guard let runtime = try await service.available().first(where: { $0.major == requiredJava && $0.architecture == architecture }) else {
-                    throw RuriError.message("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
-                }
-                java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
-                await scanJava()
-            } else {
-                java = try JavaDiscovery.select(from: runtimes, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
-            }
-            let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
-            logs.removeAll()
-            lastGameExit = nil; crashReports = []
-            let logURL = paths.instance(instance.id).appendingPathComponent("launcher.log")
-            FileManager.default.createFile(atPath: logURL.path, contents: nil)
-            logFile = try FileHandle(forWritingTo: logURL)
-            appendLog("[Ruri] \(java.label)")
-            appendLog("[Ruri] \(plan.redactedCommand)")
-            try gameProcess.start(plan: plan, secrets: [token]) { [weak self] line in self?.appendLog(line) } onExit: { [weak self] result in self?.gameExited(instance.id, result: result) }
-            runningID = instance.id; startedAt = Date()
-            var updated = instance; updated.lastPlayed = Date(); update(updated)
-        }
+        } catch { self.error = error.localizedDescription }
     }
-    func stopGame() { gameProcess.stop() }
-    func appendLog(_ line: String) {
+    func refreshSessions() {
+        do {
+            sessions = try state.instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
+        } catch { notice = "无法读取运行记录：\(error.localizedDescription)" }
+    }
+    private func publishSession(_ record: GameSession) {
+        if let index = sessions.firstIndex(where: { $0.id == record.id }) { sessions[index] = record }
+        else { sessions.insert(record, at: 0) }
+    }
+    private func advanceSession(_ stage: GameSession.Stage) throws {
+        try sessionRecorder?.transition(stage)
+        appendDisplayedLog("[Ruri] \(stage.title)")
+        if let record = sessionRecorder?.record { publishSession(record) }
+    }
+    private func showRecordingError(_ error: any Error) {
+        guard !recordingErrorShown else { return }
+        recordingErrorShown = true
+        let message = "运行记录未能完整写入：\(sessionRecorder?.redacted(error.localizedDescription) ?? error.localizedDescription)"
+        notice = message; appendDisplayedLog("[Ruri] \(message)")
+    }
+    func stopGame() {
+        guard gameProcess.isRunning else { return }
+        do { try advanceSession(.stopping) } catch { showRecordingError(error) }
+        gameProcess.stop()
+    }
+    private func appendDisplayedLog(_ line: String) {
         logs.append(line)
         if logs.count > 5000 { logs.removeFirst(logs.count - 5000) }
-        try? logFile?.write(contentsOf: Data((line + "\n").utf8))
+    }
+    func appendLog(_ line: String) {
+        let line = sessionRecorder?.redacted(line) ?? line
+        appendDisplayedLog(line)
+        do { try sessionRecorder?.append(line) } catch { showRecordingError(error) }
     }
     private func gameExited(_ id: UUID, result: GameExit) {
         lastGameExit = result
         crashReports = GameCrashReport.find(in: paths.game(id), exit: result)
-        appendLog(result.logDescription)
-        appendLog("[Ruri] \(result.explanation)")
-        for report in crashReports { appendLog("[Ruri] 本次崩溃报告：\(report.url.path)") }
+        appendDisplayedLog(result.logDescription)
+        appendDisplayedLog("[Ruri] \(result.explanation)")
+        if let recorder = sessionRecorder {
+            do { try recorder.finish(exit: result) } catch { showRecordingError(error) }
+            publishSession(recorder.record)
+        }
         do { try result.save(paths: paths, instanceID: id) }
-        catch { appendLog("[Ruri] 无法保存退出记录：\(error.localizedDescription)") }
-        try? logFile?.close(); logFile = nil; runningID = nil
-        if var instance = state.instances.first(where: { $0.id == id }), let startedAt {
-            instance.playTime += Date().timeIntervalSince(startedAt); update(instance)
+        catch { showRecordingError(error) }
+        sessionRecorder = nil; runningID = nil
+        if var instance = state.instances.first(where: { $0.id == id }) {
+            instance.playTime += result.endedAt.timeIntervalSince(result.startedAt); update(instance)
         }
         if result.requiresAttention || !crashReports.isEmpty { showLogs = true; notice = result.summary + "，请查看运行日志。" }
     }

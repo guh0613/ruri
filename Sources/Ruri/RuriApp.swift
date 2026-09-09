@@ -21,7 +21,7 @@ import RuriCore
             CommandMenu("游戏") {
                 Button("启动选中实例") { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.runningID != nil)
                 Button("结束游戏") { model.stopGame() }.disabled(model.runningID == nil)
-                Button("查看日志") { model.showLogs = true }.keyboardShortcut("l")
+                Button("运行记录与日志") { model.showLogs = true }.keyboardShortcut("l")
                 Divider()
                 Button("在 Finder 中显示实例") { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
             }

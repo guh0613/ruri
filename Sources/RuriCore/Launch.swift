@@ -123,6 +123,7 @@ public final class GameProcess {
     private var onExit: (@MainActor @Sendable (GameExit) -> Void)?
     private var stopRequested = false
     public var isRunning: Bool { process?.isRunning ?? false }
+    public var processIdentifier: Int32? { process?.processIdentifier }
     public init() {}
     public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
         guard self.process == nil else { throw RuriError.message("游戏已在运行或正在结束") }
