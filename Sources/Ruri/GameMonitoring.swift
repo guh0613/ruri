@@ -15,6 +15,8 @@ extension AppModel {
         case .inactive: return nil
         case .monitoring:
             if record.state.isFinished { return "正在保存记录" }
+            if record.stage == .quitting { return "等待游戏退出" }
+            if record.stage == .stopping { return "正在终止进程" }
             return record.gameIdentity == nil ? "正在启动" : "运行中"
         }
     }
@@ -27,8 +29,22 @@ extension AppModel {
         if application.activate(options: [.activateAllWindows]) { try? GameMonitorClient.recordEvent(.gameActivationRequested, paths: paths, session: record) }
         else { notice = "暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。" }
     }
-    func stopGame(_ instanceID: UUID? = nil) {
-        guard let id = instanceID ?? runningID, let record = activeSessions[id] else { return }
+    func requestGameQuit(_ instanceID: UUID) {
+        guard let record = activeSessions[instanceID] else { return }
+        do {
+            try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
+            notice = "已提交正常退出请求，等待游戏处理。"; noticeSessionID = record.id
+        } catch { notice = error.localizedDescription; noticeSessionID = record.id }
+    }
+    func confirmGameTermination(_ instanceID: UUID) {
+        guard let record = activeSessions[instanceID], !record.state.isFinished, record.monitorIdentity?.isAlive == true else { return }
+        let alert = NSAlert()
+        alert.messageText = "终止“\(record.instanceName)”的游戏进程？"
+        alert.informativeText = "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。"
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "取消")
+        alert.addButton(withTitle: "终止进程")
+        guard alert.runModal() == .alertSecondButtonReturn else { return }
         do { try GameMonitorClient.requestStop(paths: paths, record: record) }
         catch { notice = error.localizedDescription; noticeSessionID = record.id }
     }

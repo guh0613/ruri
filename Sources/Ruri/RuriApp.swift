@@ -24,7 +24,10 @@ import RuriCore
                 Button("启动选中实例") { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.isInstanceInUse(model.selected?.id))
                 ForEach(model.activeSessions.values.sorted { $0.createdAt < $1.createdAt }) { record in
                     Button("返回 \(record.instanceName)") { model.returnToGame(record.instanceID) }
-                    Button("结束 \(record.instanceName)") { model.stopGame(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
+                    if record.nativeQuitSupported == true {
+                        Button("请求退出 \(record.instanceName)") { model.requestGameQuit(record.instanceID) }.disabled(record.state.isFinished || record.gameIdentity?.isAlive != true || record.monitorIdentity?.isAlive != true)
+                    }
+                    Button("终止 \(record.instanceName) 的进程…") { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
                 }
                 Button("运行记录与日志") { model.showSession() }.keyboardShortcut("l")
                 Divider()

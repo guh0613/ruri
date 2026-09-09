@@ -65,10 +65,12 @@ struct LogsView: View {
                         }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 10))
                             .onChange(of: lines.last) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
                     }
+                    if isRunning, let session, !session.state.isFinished, session.monitorIdentity?.isAlive == true {
+                        GameQuitControls(session: session)
+                    }
                     HStack {
                         Text("预览最近 5,000 行；每次运行的完整日志独立保留。").font(.caption).foregroundStyle(.secondary)
                         Spacer()
-                        if isRunning, let session { Button("结束游戏", role: .destructive) { model.stopGame(session.instanceID) }.disabled(session.state.isFinished || session.monitorIdentity?.isAlive != true) }
                     }
                 }
             }
