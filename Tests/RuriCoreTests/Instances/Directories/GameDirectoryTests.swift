@@ -132,8 +132,7 @@ struct GameDirectoryTests {
         try paths.prepareInstance(instance.id)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
-        let repository = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        let helper = repository.appendingPathComponent(".build/validation/out/Products/Debug/ruri-monitor")
+        let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 0.3; echo external-game-finished"], directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"])
         try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         state.selectedDirectoryID = nil

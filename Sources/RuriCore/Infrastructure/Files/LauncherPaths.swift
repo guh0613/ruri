@@ -1,0 +1,49 @@
+import Foundation
+
+public struct LauncherPaths: Codable, Sendable {
+    public let root: URL
+    public let directories: [GameDirectory]
+    public let instanceDirectories: [UUID: UUID]
+    public let newInstanceDirectoryID: UUID
+    public let instanceRunDirectories: [UUID: GameRunDirectory]?
+    public let instanceCustomDirectories: [UUID: CustomRunDirectory]?
+    public init(root: URL? = nil, directories: [GameDirectory] = [], instanceDirectories: [UUID: UUID] = [:], newInstanceDirectoryID: UUID = GameDirectory.defaultID, instanceRunDirectories: [UUID: GameRunDirectory]? = nil, instanceCustomDirectories: [UUID: CustomRunDirectory]? = nil) {
+        self.root = root ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Ruri", isDirectory: true)
+        self.directories = directories; self.instanceDirectories = instanceDirectories; self.newInstanceDirectoryID = newInstanceDirectoryID
+        self.instanceRunDirectories = instanceRunDirectories
+        self.instanceCustomDirectories = instanceCustomDirectories
+    }
+    public var libraries: URL { root.appendingPathComponent("libraries") }
+    public var assets: URL { root.appendingPathComponent("assets") }
+    public var versions: URL { root.appendingPathComponent("versions") }
+    public var instances: URL { root.appendingPathComponent("instances") }
+    public var runtimes: URL { root.appendingPathComponent("runtimes") }
+    public var cache: URL { root.appendingPathComponent("cache") }
+    public var state: URL { root.appendingPathComponent("state.json") }
+    public func instance(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent("instances").appendingPathComponent(id.uuidString) }
+    public func game(_ id: UUID) -> URL {
+        if runDirectory(for: id) == .custom { return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)") }
+        return (runDirectory(for: id) == .isolated ? instance(id) : directoryRoot(directoryID(for: id))).appendingPathComponent("minecraft")
+    }
+    public func manifest(_ id: UUID) -> URL { instance(id).appendingPathComponent("version.json") }
+    public func prepare() throws {
+        for url in [root, libraries, assets, versions, instances, runtimes, cache] { try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true) }
+    }
+    public static func safePath(_ path: String, within root: URL) throws -> URL {
+        guard !path.isEmpty, !path.hasPrefix("/"), !path.contains("\\"), !path.contains("\0"),
+              !path.split(separator: "/").contains("..") else { throw RuriError.message("不安全的文件路径：\(path)") }
+        let baseURL = root.standardizedFileURL.resolvingSymlinksInPath()
+        let base = baseURL.path + "/"
+        var resolved = baseURL
+        // Foundation does not resolve an intermediate symlink reliably when the
+        // final file does not exist yet. Validate each existing prefix instead.
+        for component in path.split(separator: "/") where component != "." {
+            resolved = resolved.appendingPathComponent(String(component)).standardizedFileURL
+            if (try? FileManager.default.destinationOfSymbolicLink(atPath: resolved.path)) != nil {
+                resolved = resolved.resolvingSymlinksInPath()
+            }
+            guard resolved.path.hasPrefix(base) else { throw RuriError.message("文件路径超出实例目录：\(path)") }
+        }
+        return resolved
+    }
+}

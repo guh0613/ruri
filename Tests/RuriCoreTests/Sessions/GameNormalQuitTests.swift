@@ -48,8 +48,7 @@ struct GameNormalQuitTests {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", #"trap 'printf "explicit-stop\n"; exit 0' TERM; while :; do sleep 0.05; done"#], directory: paths.game(instance.id), environment: ["PATH": "/usr/bin:/bin"], nativeQuitSupported: true)
-        let repository = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: repository.appendingPathComponent(".build/validation/out/Products/Debug/ruri-monitor"))
+        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         func load() throws -> GameSession { try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) }
         defer { if let record = try? load() { try? GameMonitorClient.requestStop(paths: paths, record: record) } }
         try await waitFor { try load().gameIdentity?.isAlive == true }

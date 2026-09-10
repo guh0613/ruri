@@ -122,8 +122,7 @@ struct GameRunDirectoryTests {
     @Test(.timeLimit(.minutes(1))) @MainActor func actualSharedMonitorRetainsGameLockAndSavesDistinctHistory() async throws {
         let (paths, a, b, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
-        let repository = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        let helper = repository.appendingPathComponent(".build/validation/out/Products/Debug/ruri-monitor")
+        let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo shared-game-finished"], directory: paths.game(a.id), environment: ["PATH": "/bin:/usr/bin"])
         try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }

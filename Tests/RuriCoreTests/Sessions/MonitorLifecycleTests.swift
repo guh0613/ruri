@@ -11,8 +11,7 @@ struct MonitorLifecycleTests {
         }
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func monitorOutlivesParentAndAcceptsReconnectedStopWithoutPersistingCredentials() async throws {
-        let repository = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        let helper = repository.appendingPathComponent(".build/validation/out/Products/Debug/ruri-monitor")
+        let helper = TestPaths.monitorExecutable
         #expect(FileManager.default.isExecutableFile(atPath: helper.path))
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
