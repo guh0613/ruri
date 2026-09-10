@@ -9,6 +9,27 @@ public indirect enum NBTValue: Sendable, Equatable {
 }
 
 public enum Gzip {
+    static func compress(_ data: Data) throws -> Data {
+        guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message("NBT 文件过大") }
+        var stream = z_stream()
+        guard deflateInit2_(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message("无法初始化 gzip 压缩") }
+        defer { deflateEnd(&stream) }
+        return try data.withUnsafeBytes { input in
+            stream.next_in = UnsafeMutablePointer(mutating: input.bindMemory(to: UInt8.self).baseAddress)
+            stream.avail_in = uInt(data.count)
+            var output = Data(), buffer = [UInt8](repeating: 0, count: 64 * 1024)
+            while true {
+                let status = buffer.withUnsafeMutableBytes { bytes -> Int32 in
+                    stream.next_out = bytes.bindMemory(to: UInt8.self).baseAddress
+                    stream.avail_out = uInt(bytes.count)
+                    return deflate(&stream, Z_FINISH)
+                }
+                output.append(contentsOf: buffer.prefix(buffer.count - Int(stream.avail_out)))
+                if status == Z_STREAM_END { return output }
+                guard status == Z_OK else { throw RuriError.message("无法压缩 NBT") }
+            }
+        }
+    }
     public static func decompress(_ data: Data, limit: Int = 32 * 1024 * 1024) throws -> Data {
         guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message("压缩 NBT 文件过大") }
         var stream = z_stream()
@@ -53,6 +74,64 @@ public struct NBTReader {
         let value = try payload(10, depth: 0)
         guard offset == bytes.count else { throw RuriError.message("NBT 根节点后有多余数据") }
         return value
+    }
+    // Copy untouched tags verbatim: NBTValue deliberately does not retain numeric
+    // widths, array types or empty-list subtypes, so it cannot be used as a writer.
+    static func updatingDataPacks(_ data: Data, enabled: [String], disabled: [String]) throws -> Data {
+        var reader = try NBTReader(data: data)
+        guard try reader.byte() == 10 else { throw RuriError.message("NBT 根节点不是复合标签") }
+        _ = try reader.text()
+        var result = Data(reader.bytes[..<reader.offset])
+        let replacements = try ["Enabled": stringList("Enabled", enabled), "Disabled": stringList("Disabled", disabled)]
+        result += try reader.rewriteCompound(path: ["Data", "DataPacks"], replacements: replacements, depth: 0)
+        guard reader.offset == reader.bytes.count, result.count <= 32 * 1024 * 1024 else { throw RuriError.message("NBT 文件结构或大小无效") }
+        return data.starts(with: [0x1f, 0x8b]) ? try Gzip.compress(result) : result
+    }
+    private mutating func rewriteCompound(path: [String], replacements: [String: Data], depth: Int) throws -> Data {
+        remainingTags -= 1
+        guard remainingTags >= 0, depth <= 64 else { throw RuriError.message("NBT 结构超出限制") }
+        var result = Data(), seen = Set<String>()
+        while true {
+            let start = offset, type = try byte()
+            if type == 0 { break }
+            let name = try text()
+            guard seen.insert(name).inserted else { throw RuriError.message("NBT 包含重复标签") }
+            if name == path.first {
+                guard type == 10 else { throw RuriError.message("存档数据包配置不是复合标签") }
+                result += Data(bytes[start..<offset])
+                result += try rewriteCompound(path: Array(path.dropFirst()), replacements: replacements, depth: depth + 1)
+            } else {
+                _ = try payload(type, depth: depth + 1)
+                result += path.isEmpty ? replacements[name] ?? Data(bytes[start..<offset]) : Data(bytes[start..<offset])
+            }
+        }
+        if path.isEmpty {
+            for name in replacements.keys.sorted() where !seen.contains(name) { result += replacements[name]! }
+        } else if let name = path.first, !seen.contains(name) {
+            guard path == ["DataPacks"] else { throw RuriError.message("存档缺少 Data 标签") }
+            result += Data([10]) + (try Self.encodedString(name))
+            for name in replacements.keys.sorted() { result += replacements[name]! }
+            result.append(0)
+        }
+        result.append(0)
+        return result
+    }
+    private static func stringList(_ name: String, _ values: [String]) throws -> Data {
+        guard values.count <= 4096 else { throw RuriError.message("数据包数量超出限制") }
+        let count = UInt32(values.count)
+        var result = Data([9]) + (try encodedString(name)) + Data([8, UInt8(truncatingIfNeeded: count >> 24), UInt8(truncatingIfNeeded: count >> 16), UInt8(truncatingIfNeeded: count >> 8), UInt8(truncatingIfNeeded: count)])
+        for value in values { result += try encodedString(value) }
+        return result
+    }
+    private static func encodedString(_ value: String) throws -> Data {
+        var bytes = Data()
+        for unit in value.utf16 {
+            if (1...0x7f).contains(unit) { bytes.append(UInt8(unit)) }
+            else if unit <= 0x7ff { bytes.append(contentsOf: [0xc0 | UInt8(unit >> 6), 0x80 | UInt8(unit & 0x3f)]) }
+            else { bytes.append(contentsOf: [0xe0 | UInt8(unit >> 12), 0x80 | UInt8((unit >> 6) & 0x3f), 0x80 | UInt8(unit & 0x3f)]) }
+        }
+        guard bytes.count <= 65535 else { throw RuriError.message("NBT 字符串过长") }
+        return Data([UInt8(bytes.count >> 8), UInt8(bytes.count & 255)]) + bytes
     }
     private mutating func payload(_ tag: UInt8, depth: Int) throws -> NBTValue {
         remainingTags -= 1

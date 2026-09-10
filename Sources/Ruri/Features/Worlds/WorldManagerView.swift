@@ -18,6 +18,7 @@ struct WorldManagerView: View {
     @State private var deletingWorld: WorldSnapshot?
     @State private var deletingBackup: WorldBackup?
     @State private var launchingWorld: WorldSnapshot?
+    @State private var dataPackWorld: WorldSnapshot?
     @State private var quickPlaySupported = false
     private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
@@ -56,6 +57,7 @@ struct WorldManagerView: View {
             }
         }.padding(24).frame(width: 820, height: 650)
         .task { await reload() }
+        .sheet(item: $dataPackWorld) { world in WorldDataPacksView(instance: instance, world: world) }
         .onDisappear {
             if let world = launchingWorld { launchingWorld = nil; model.launch(instance, world: world) }
         }
@@ -102,6 +104,7 @@ struct WorldManagerView: View {
                 }
             }.disabled(!canModify)
             Menu {
+                Button("管理数据包…") { dataPackWorld = world }.disabled(world.metadataError != nil)
                 Button("导出 ZIP…") { export(world) }.disabled(!canModify)
                 Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
                 Divider(); Button("移到废纸篓", role: .destructive) { deletingWorld = world }.disabled(!canModify)

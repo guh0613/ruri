@@ -35,14 +35,14 @@ public actor WorldManager {
     private static let diskLock = NSRecursiveLock()
     private let operationLock = GameDataOperationLock()
     private let locationLock = InstanceLocationOperationLock()
-    private let paths: LauncherPaths
-    private let instanceID: UUID
+    let paths: LauncherPaths
+    let instanceID: UUID
     private var saves: URL { paths.game(instanceID).appendingPathComponent("saves") }
     public var backupDirectory: URL { paths.gameDataState(instanceID).appendingPathComponent("world-backups") }
     private var transaction: URL { paths.gameDataState(instanceID).appendingPathComponent("world-restore") }
     struct RestoreJournal: Codable { let folder: String; let hadOriginal: Bool }
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
-    private func lock() throws {
+    func lock() throws {
         Self.diskLock.lock()
         var acquired = false, located = false
         do {
@@ -53,8 +53,8 @@ public actor WorldManager {
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
         } catch { if acquired { operationLock.release() }; if located { locationLock.release() }; Self.diskLock.unlock(); throw error }
     }
-    private func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
-    private func worldURL(_ folder: String) throws -> URL {
+    func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
+    func worldURL(_ folder: String) throws -> URL {
         guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\") else { throw RuriError.message("无效的存档目录名") }
         let target = saves.appendingPathComponent(folder)
         for url in [saves, target] where (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) != nil { throw RuriError.message("存档管理不修改符号链接目录") }

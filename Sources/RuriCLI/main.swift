@@ -207,6 +207,8 @@ import RuriCore
                 print("Installed \(version.version_number)")
             case "content", "content-action":
                 try await manageContent(args, paths: paths)
+            case "datapacks":
+                try await manageDataPacks(args, paths: paths)
             case "launch":
                 let state = try StateStore.load(paths)
                 var launchArgs = args.dropFirst().filter { $0 != "--detach" }
@@ -348,6 +350,7 @@ import RuriCore
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
                   components <instance-uuid> [versions <loader> | set <loader> [version] | restore]
+                  datapacks <instance-uuid> <world-folder> [import <path> | enable|disable|remove <filename>] [--apply]
                   update-pack <instance-uuid> <archive> [--apply] [--replace-local]
                   rollback-pack/recover-pack-update <instance-uuid> [--apply]
                   launch [instance-uuid] [--world folder] [--detach] (offline account)
