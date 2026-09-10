@@ -62,6 +62,11 @@ public enum LaunchBuilder {
             if let artifact = try library.artifact() { classpath.append(try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name)).path) }
         }
         classpath.append(jar.path)
+        // Native and ordinary declarations can share a Java artifact. Keep
+        // their metadata for extraction, but pass each resolved JAR only once
+        // to bootstrap loaders, preserving the original classpath precedence.
+        var seen = Set<String>()
+        classpath = classpath.filter { seen.insert($0).inserted }
         for artifact in manifest.generatedLibraries ?? [] {
             guard FileManager.default.fileExists(atPath: try resources.libraryFile(artifact).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
         }
