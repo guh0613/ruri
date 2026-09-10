@@ -58,6 +58,7 @@ public actor ContentManager {
     // Journal recovery must never race a live commit from another manager.
     private static let diskLock = NSRecursiveLock()
     private let operationLock = GameDataOperationLock()
+    private let locationLock = InstanceLocationOperationLock()
     let paths: LauncherPaths
     let instanceID: UUID
     var root: URL { paths.game(instanceID) }
@@ -66,15 +67,16 @@ public actor ContentManager {
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
     private func lock() throws {
         Self.diskLock.lock()
-        var acquired = false
+        var acquired = false, located = false
         do {
+            try locationLock.acquire(paths: paths, instanceID: instanceID); located = true
             try paths.validateInstanceLocation(instanceID)
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
             try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".content-operation.lock"); acquired = true
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
-        } catch { if acquired { operationLock.release() }; Self.diskLock.unlock(); throw error }
+        } catch { if acquired { operationLock.release() }; if located { locationLock.release() }; Self.diskLock.unlock(); throw error }
     }
-    private func unlock() { operationLock.release(); Self.diskLock.unlock() }
+    private func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
     struct Journal: Codable {
         let affected: [String]
         let originals: [String]

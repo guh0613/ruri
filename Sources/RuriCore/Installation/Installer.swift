@@ -24,6 +24,8 @@ public actor GameInstaller {
         return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
+        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: input.id)
+        defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(input)
         try paths.prepare()
         try paths.prepareInstance(input.id)
@@ -73,6 +75,8 @@ public actor GameInstaller {
         return result
     }
     public func repair(_ instance: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
+        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instance.id)
+        defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
         if instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
@@ -85,6 +89,8 @@ public actor GameInstaller {
     /// A directory change keeps shared downloads. Legacy releases also need
     /// missing mapped resources recreated in the newly selected game folder.
     public func prepareRunDirectory(_ instance: GameInstance, manifest: VersionManifest) throws {
+        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instance.id)
+        defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         guard let index = manifest.assetIndex else { return }

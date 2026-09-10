@@ -6,9 +6,13 @@ import Darwin
 public final class GameRunLease: @unchecked Sendable {
     private let descriptor: Int32
     private let sharedDirectory: SharedGameDirectoryLease?
-    private init(_ descriptor: Int32, sharedDirectory: SharedGameDirectoryLease?) { self.descriptor = descriptor; self.sharedDirectory = sharedDirectory }
+    private let location: InstanceLocationLease
+    private init(_ descriptor: Int32, sharedDirectory: SharedGameDirectoryLease?, location: InstanceLocationLease) {
+        self.descriptor = descriptor; self.sharedDirectory = sharedDirectory; self.location = location
+    }
     deinit { Darwin.close(descriptor) }
     public static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID? = nil, directoryChangeID: UUID? = nil) throws -> GameRunLease {
+        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instanceID)
         try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
         try paths.prepareInstance(instanceID)
         let file = try LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID))
@@ -27,11 +31,13 @@ public final class GameRunLease: @unchecked Sendable {
                 throw RuriError.message("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
             }
         } catch { Darwin.close(fd); throw error }
-        return GameRunLease(fd, sharedDirectory: shared)
+        return GameRunLease(fd, sharedDirectory: shared, location: location)
     }
+    func excludeLocationOperations() throws { try location.excludeOtherOperations() }
     func reserve(paths: LauncherPaths, session: GameSession) throws { try sharedDirectory?.reserve(paths: paths, session: session) }
     func clearReservation(session: GameSession) throws { try sharedDirectory?.clearReservation(session: session) }
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
+        guard (try? InstanceLocationLease.requireCurrentDirectory(paths: paths, instanceID: instanceID)) != nil else { return true }
         guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
         if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
         if InstanceCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }

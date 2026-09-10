@@ -27,7 +27,12 @@ extension AppModel {
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)
         let url = folder.map { base.appendingPathComponent($0) } ?? base
-        do { try paths.validateInstanceLocation(instance.id); try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true); NSWorkspace.shared.open(url) }
+        do {
+            let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instance.id)
+            defer { withExtendedLifetime(location) {} }
+            try paths.validateInstanceLocation(instance.id)
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true); NSWorkspace.shared.open(url)
+        }
         catch { self.error = error.localizedDescription }
     }
     func trash(_ instance: GameInstance) {

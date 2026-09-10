@@ -34,6 +34,7 @@ public struct WorldBackup: Identifiable, Sendable {
 public actor WorldManager {
     private static let diskLock = NSRecursiveLock()
     private let operationLock = GameDataOperationLock()
+    private let locationLock = InstanceLocationOperationLock()
     private let paths: LauncherPaths
     private let instanceID: UUID
     private var saves: URL { paths.game(instanceID).appendingPathComponent("saves") }
@@ -43,15 +44,16 @@ public actor WorldManager {
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
     private func lock() throws {
         Self.diskLock.lock()
-        var acquired = false
+        var acquired = false, located = false
         do {
+            try locationLock.acquire(paths: paths, instanceID: instanceID); located = true
             try paths.validateInstanceLocation(instanceID)
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
             try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".world-operation.lock"); acquired = true
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
-        } catch { if acquired { operationLock.release() }; Self.diskLock.unlock(); throw error }
+        } catch { if acquired { operationLock.release() }; if located { locationLock.release() }; Self.diskLock.unlock(); throw error }
     }
-    private func unlock() { operationLock.release(); Self.diskLock.unlock() }
+    private func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
     private func worldURL(_ folder: String) throws -> URL {
         guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\") else { throw RuriError.message("无效的存档目录名") }
         let target = saves.appendingPathComponent(folder)

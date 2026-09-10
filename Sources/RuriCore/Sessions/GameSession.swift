@@ -168,6 +168,8 @@ public enum GameSessionStore {
 
 public enum GameSessionReviewStore {
     public static func mark(_ record: GameSession, paths: LauncherPaths, at date: Date = Date()) throws {
+        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: record.instanceID)
+        defer { withExtendedLifetime(location) {} }
         guard record.state.isFinished || (record.monitorIdentity != nil && GameMonitorClient.activity(record) != .monitoring) else { return }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
         try Data(String(date.timeIntervalSince1970).utf8).write(to: directory.appendingPathComponent("reviewed"), options: .atomic)

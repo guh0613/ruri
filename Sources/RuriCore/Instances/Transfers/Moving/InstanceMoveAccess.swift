@@ -14,6 +14,7 @@ final class InstanceMoveAccess {
         try requireFinishedSessions(paths: paths, instanceID: instance.id)
         try await ContentManager(paths: paths, instanceID: instance.id).recover()
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
+        try result.lease.excludeLocationOperations()
         for name in [".content-operation.lock", ".world-operation.lock"] {
             let lock = GameDataOperationLock()
             try lock.acquire(directory: paths.gameDataState(instance.id), name: name); result.operations.append(lock)

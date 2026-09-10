@@ -149,6 +149,8 @@ extension LauncherPaths {
         }
     }
     public func prepareInstance(_ instanceID: UUID) throws {
+        let location = try InstanceLocationLease.acquire(paths: self, instanceID: instanceID)
+        defer { withExtendedLifetime(location) {} }
         try validateInstanceLocation(instanceID)
         try FileManager.default.createDirectory(at: instance(instanceID), withIntermediateDirectories: true)
     }
