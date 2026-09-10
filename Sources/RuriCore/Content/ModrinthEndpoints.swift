@@ -5,8 +5,10 @@ enum ModrinthEndpoints {
     private static let website = URL(string: "https://modrinth.com")!
     static let versionFiles = api.appending(component: "version_files")
 
-    static func search(_ query: String, type: String, offset: Int) throws -> URL {
-        let facets = String(decoding: try JSONEncoder().encode([["project_type:\(type)"]]), as: UTF8.self)
+    static func search(_ query: String, type: String, offset: Int, game: String? = nil) throws -> URL {
+        var filters = [["project_type:\(type)"]]
+        if let game { filters.append(["versions:\(game)"]) }
+        let facets = String(decoding: try JSONEncoder().encode(filters), as: UTF8.self)
         return try EndpointURL.build(base: api, path: ["search"], query: [
             .init(name: "query", value: query), .init(name: "facets", value: facets),
             .init(name: "limit", value: "20"), .init(name: "offset", value: String(offset)),

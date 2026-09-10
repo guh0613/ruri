@@ -12,6 +12,8 @@ struct WorldDataPacksView: View {
     @State private var error: String?
     @State private var status: String?
     @State private var importing = false
+    @State private var searching = false
+    @State private var ordering = false
     @State private var loading = false
     @State private var removing: WorldDataPack?
     @State private var backup: URL?
@@ -23,6 +25,7 @@ struct WorldDataPacksView: View {
             HStack {
                 SectionHeading(title: "数据包", subtitle: world.name)
                 Spacer()
+                Button("查找…", systemImage: "magnifyingglass") { searching = true }.disabled(!canModify)
                 Button("导入…", systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
                 Button("完成") { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
             }
@@ -55,6 +58,7 @@ struct WorldDataPacksView: View {
             }
             Divider()
             HStack {
+                Button("调整优先级…") { ordering = true }.disabled(!canModify)
                 Text("修改前会保留上一份世界配置备份。").font(.caption).foregroundStyle(.secondary)
                 if let backup { Button("显示配置备份") { NSWorkspace.shared.activateFileViewerSelecting([backup]) }.font(.caption) }
                 Spacer()
@@ -62,13 +66,15 @@ struct WorldDataPacksView: View {
             }
         }.padding(24).frame(width: 760, height: 570)
         .task { await reload() }
+        .sheet(isPresented: $searching, onDismiss: { Task { await reload() } }) { WorldDataPackSearchView(instance: instance, world: world) }
+        .sheet(isPresented: $ordering, onDismiss: { Task { await reload() } }) { WorldDataPackPriorityView(instance: instance, world: world) }
         .interactiveDismissDisabled(model.busy)
-        .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip]) { result in
+        .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip], allowsMultipleSelection: true) { result in
             do {
-                let url = try result.get()
+                let urls = try result.get()
                 mutate("导入数据包") {
-                    let access = url.startAccessingSecurityScopedResource(); defer { if access { url.stopAccessingSecurityScopedResource() } }
-                    try await manager.importDataPack(from: url, folder: world.folder)
+                    let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }; defer { scoped.forEach { $0.stopAccessingSecurityScopedResource() } }
+                    try await manager.importDataPacks(from: urls, folder: world.folder)
                 }
             } catch { self.error = error.localizedDescription }
         }

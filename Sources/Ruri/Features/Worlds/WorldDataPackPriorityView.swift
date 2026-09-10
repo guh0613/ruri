@@ -1,0 +1,57 @@
+import SwiftUI
+import RuriCore
+
+struct WorldDataPackPriorityView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    let instance: GameInstance
+    let world: WorldSnapshot
+    @State private var snapshot: WorldDataPackPriority?
+    @State private var keys: [String] = []
+    @State private var error: String?
+    private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SectionHeading(title: "数据包优先级", subtitle: world.name)
+            Text("越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。").font(.callout).foregroundStyle(.secondary)
+            if let snapshot {
+                List {
+                    ForEach(keys, id: \.self) { key in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(key == "vanilla" ? "原版" : key.hasPrefix("file/") ? String(key.dropFirst(5)) : key).lineLimit(1)
+                                if !snapshot.localKeys.contains(key) { Text(key.hasPrefix("file/") ? "本地文件缺失或未启用，保留原记录" : "游戏或模组提供").font(.caption).foregroundStyle(.secondary) }
+                            }
+                            Spacer()
+                            if snapshot.localKeys.contains(key), let index = keys.firstIndex(of: key) {
+                                Button { keys.swapAt(index, index - 1) } label: { Image(systemName: "arrow.up") }.help("提高优先级").disabled(index == 0 || model.busy)
+                                Button { keys.swapAt(index, index + 1) } label: { Image(systemName: "arrow.down") }.help("降低优先级").disabled(index + 1 == keys.count || model.busy)
+                            }
+                        }.padding(.vertical, 5)
+                    }.onMove { indices, destination in
+                        guard !model.busy, indices.allSatisfy({ snapshot.localKeys.contains(keys[$0]) }) else { return }
+                        keys.move(fromOffsets: indices, toOffset: destination)
+                    }
+                }.listStyle(.bordered)
+            } else if error == nil { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+            if let error { Text(error).font(.callout).foregroundStyle(.orange) }
+            HStack {
+                Button("取消") { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
+                Spacer()
+                Button("保存顺序") { save() }.buttonStyle(.borderedProminent)
+                    .disabled(snapshot == nil || keys == snapshot?.keys || model.busy || model.isInstanceInUse(instance.id))
+            }
+        }.padding(24).frame(width: 610, height: 520).interactiveDismissDisabled(model.busy)
+        .task {
+            do { let value = try await manager.dataPackPriority(folder: world.folder); snapshot = value; keys = value.keys }
+            catch { self.error = error.localizedDescription }
+        }
+    }
+    private func save() {
+        guard let snapshot else { return }
+        model.perform("调整数据包优先级", presentErrors: false, instanceID: instance.id) { _ in
+            do { try await manager.setDataPackPriority(keys, folder: world.folder, expecting: snapshot); dismiss() }
+            catch { self.error = error.localizedDescription; throw error }
+        }
+    }
+}

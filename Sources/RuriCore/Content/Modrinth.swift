@@ -38,8 +38,8 @@ public struct ContentUpdate: Identifiable, Sendable {
 public actor ModrinthService {
     let client: HTTPClient
     public init(client: HTTPClient = .shared) { self.client = client }
-    public func search(_ query: String, type: String, offset: Int = 0) async throws -> ModrinthSearch {
-        try await client.get(ModrinthSearch.self, from: ModrinthEndpoints.search(query, type: type, offset: offset))
+    public func search(_ query: String, type: String, offset: Int = 0, game: String? = nil) async throws -> ModrinthSearch {
+        try await client.get(ModrinthSearch.self, from: ModrinthEndpoints.search(query, type: type, offset: offset, game: game))
     }
     public func versions(project: String, game: String? = nil, loader: String? = nil) async throws -> [ModrinthVersion] {
         try await client.get([ModrinthVersion].self, from: ModrinthEndpoints.versions(project: project, game: game, loader: loader))

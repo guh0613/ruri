@@ -11,6 +11,14 @@ public struct WorldDataPack: Identifiable, Sendable {
     public let error: String?
 }
 
+public struct WorldDataPackPriority: Equatable, Sendable {
+    /// Highest priority first. Built-in and missing entries retain relative order.
+    public let keys: [String]
+    public let localKeys: Set<String>
+    let storedKeys: [String]
+    let disabledKeys: [String]
+}
+
 private struct WorldPackSelection {
     let file: URL
     let original: Data
@@ -54,20 +62,46 @@ extension WorldManager {
         return try LauncherPaths.safePath("world-datapack-backups/\(folder)/level.dat", within: paths.gameDataState(instanceID))
     }
     public func dataPacks(folder: String) throws -> [WorldDataPack] {
+        try withDataPacks(folder) { directory, selection in try Self.readDataPacks(directory: directory, selection: selection) }
+    }
+    private static func readDataPacks(directory: URL, selection: WorldPackSelection) throws -> [WorldDataPack] {
+        guard FileManager.default.fileExists(atPath: directory.path) else { return [] }
+        return try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]).compactMap { url in
+            let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey])
+            guard info.isSymbolicLink != true, info.isDirectory == true || (info.isRegularFile == true && (url.lastPathComponent.lowercased().hasSuffix(".zip") || url.lastPathComponent.lowercased().hasSuffix(".zip.disabled"))) else { return nil }
+            let key = Self.packKey(url)
+            let physicallyDisabled = info.isDirectory == true ? !FileManager.default.fileExists(atPath: url.appendingPathComponent("pack.mcmeta").path) : url.pathExtension == "disabled"
+            do {
+                let meta = try Self.packMetadata(url)
+                return WorldDataPack(url: url, enabled: !physicallyDisabled && !selection.disabled.contains(key), description: meta.0, format: meta.1, error: nil)
+            } catch {
+                return WorldDataPack(url: url, enabled: false, description: "", format: nil, error: error.localizedDescription)
+            }
+        }.sorted { $0.id.localizedStandardCompare($1.id) == .orderedAscending }
+    }
+    public func dataPackPriority(folder: String) throws -> WorldDataPackPriority {
         try withDataPacks(folder) { directory, selection in
-            guard FileManager.default.fileExists(atPath: directory.path) else { return [] }
-            return try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]).compactMap { url in
-                let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey])
-                guard info.isSymbolicLink != true, info.isDirectory == true || (info.isRegularFile == true && (url.lastPathComponent.hasSuffix(".zip") || url.lastPathComponent.hasSuffix(".zip.disabled"))) else { return nil }
-                let key = Self.packKey(url)
-                let physicallyDisabled = info.isDirectory == true ? !FileManager.default.fileExists(atPath: url.appendingPathComponent("pack.mcmeta").path) : url.pathExtension == "disabled"
-                do {
-                    let meta = try Self.packMetadata(url)
-                    return WorldDataPack(url: url, enabled: !physicallyDisabled && !selection.disabled.contains(key), description: meta.0, format: meta.1, error: nil)
-                } catch {
-                    return WorldDataPack(url: url, enabled: false, description: "", format: nil, error: error.localizedDescription)
-                }
-            }.sorted { $0.id.localizedStandardCompare($1.id) == .orderedAscending }
+            try Self.priority(directory: directory, selection: selection)
+        }
+    }
+    private static func priority(directory: URL, selection: WorldPackSelection) throws -> WorldDataPackPriority {
+        let packs = try readDataPacks(directory: directory, selection: selection)
+        let local = packs.filter { $0.enabled && $0.error == nil }.map { Self.packKey($0.url) }
+        var known = Set<String>()
+        let enabled = (selection.enabled + local).filter { known.insert($0).inserted }
+        return WorldDataPackPriority(keys: enabled.reversed(), localKeys: Set(local), storedKeys: selection.enabled, disabledKeys: selection.disabled)
+    }
+    public func setDataPackPriority(_ keys: [String], folder: String, expecting previous: WorldDataPackPriority) throws {
+        try withDataPacks(folder) { directory, selection in
+            let current = try Self.priority(directory: directory, selection: selection)
+            guard current == previous else { throw RuriError.message("数据包列表已改变，请刷新后重新调整顺序。") }
+            guard keys.count == current.keys.count, Set(keys) == Set(current.keys) else { throw RuriError.message("调整优先级不能添加、移除或重复数据包。") }
+            guard keys.filter({ !current.localKeys.contains($0) }) == current.keys.filter({ !current.localKeys.contains($0) }) else {
+                throw RuriError.message("内置、模组与缺失数据包的相对顺序必须保留。")
+            }
+            selection.enabled = keys.reversed()
+            guard selection.enabled != previous.storedKeys else { return }
+            try selection.save(backup: dataPackBackup(folder: folder))
         }
     }
     public func setDataPackEnabled(_ enabled: Bool, name: String, folder: String) throws {
@@ -94,25 +128,45 @@ extension WorldManager {
         }
     }
     public func importDataPack(from source: URL, folder: String) throws {
+        try importDataPacks(from: [source], folder: folder)
+    }
+    public func importDataPacks(from sources: [URL], folder: String) throws {
+        guard !sources.isEmpty, sources.count <= 200 else { throw RuriError.message("请选择 1–200 个数据包。") }
         try withDataPacks(folder) { directory, selection in
-            _ = try Self.packMetadata(source)
-            let isDirectory = try source.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
-            guard isDirectory || source.pathExtension == "zip" else { throw RuriError.message("请选择 ZIP 格式的数据包。") }
-            guard source.pathExtension != "disabled", !isDirectory || Self.exists(source.appendingPathComponent("pack.mcmeta")) else { throw RuriError.message("请先启用数据包再导入。") }
-            let target = try Self.packURL(source.lastPathComponent, directory: directory)
-            guard !Self.exists(target), !Self.exists(target.appendingPathExtension("disabled")) else { throw RuriError.message("同名数据包已存在，请先移除旧文件或更改导入文件名。") }
+            var targets: [URL] = [], names = Set<String>()
+            for source in sources {
+                _ = try Self.packMetadata(source)
+                let isDirectory = try source.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
+                guard isDirectory || source.pathExtension.lowercased() == "zip" else { throw RuriError.message("请选择 ZIP 格式的数据包。") }
+                guard source.pathExtension != "disabled", !isDirectory || Self.exists(source.appendingPathComponent("pack.mcmeta")) else { throw RuriError.message("请先启用数据包再导入。") }
+                let target = try Self.packURL(source.lastPathComponent, directory: directory)
+                guard names.insert(target.lastPathComponent.lowercased()).inserted, !Self.exists(target), !Self.exists(target.appendingPathExtension("disabled")) else {
+                    throw RuriError.message("同名数据包已存在：\(source.lastPathComponent)。请先移除旧文件或更改导入文件名。")
+                }
+                targets.append(target)
+            }
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let staging = directory.appendingPathComponent(".ruri-import-\(UUID().uuidString)")
+            try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
             defer { try? FileManager.default.removeItem(at: staging) }
-            if isDirectory { try FileTree.copy(from: source, to: staging) }
-            else { try FileManager.default.copyItem(at: source, to: staging) }
-            _ = try Self.packMetadata(staging)
+            for (source, target) in zip(sources, targets) {
+                let staged = staging.appendingPathComponent(target.lastPathComponent)
+                if try source.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true { try FileTree.copy(from: source, to: staged) }
+                else { try FileManager.default.copyItem(at: source, to: staged) }
+                _ = try Self.packMetadata(staged)
+            }
             try Task.checkCancellation()
-            try FileManager.default.moveItem(at: staging, to: target)
+            var published: [URL] = []
             do {
-                selection.select(Self.packKey(target), enabled: true)
+                for target in targets {
+                    try FileManager.default.moveItem(at: staging.appendingPathComponent(target.lastPathComponent), to: target)
+                    published.append(target); selection.select(Self.packKey(target), enabled: true)
+                }
                 try selection.save(backup: dataPackBackup(folder: folder))
-            } catch { try FileManager.default.removeItem(at: target); throw error }
+            } catch {
+                for target in published { try FileManager.default.removeItem(at: target) }
+                throw error
+            }
         }
     }
     @discardableResult public func removeDataPack(name: String, folder: String) throws -> URL? {
