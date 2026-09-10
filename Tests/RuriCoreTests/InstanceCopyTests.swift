@@ -221,7 +221,7 @@ struct InstanceCopyTests {
     }
 
     @Test func committedCopiesKeepRecoveryDataUntilContentAndReceiptAreRestored() async throws {
-        for damage in ["content", "record", "missing-record"] {
+        for damage in ["content", "record", "missing-record", "nonempty-lock"] {
             let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id)
@@ -233,6 +233,7 @@ struct InstanceCopyTests {
                         try FileManager.default.copyItem(at: record, to: backup)
                         if damage == "content" { try Data("changed".utf8).write(to: file) }
                         else if damage == "record" { try Data("{}".utf8).write(to: record) }
+                        else if damage == "nonempty-lock" { try Data("keep data".utf8).write(to: preview.destination.appendingPathComponent(".content-operation.lock")) }
                         else { try FileManager.default.removeItem(at: record) }
                     } catch { Issue.record(error) }
                 }
@@ -242,7 +243,10 @@ struct InstanceCopyTests {
             await #expect(throws: (any Error).self) { try await service.recover(sourceID: source.id, transactionID: preview.id) }
             #expect(FileManager.default.fileExists(atPath: root.path))
             if damage == "content" { try Data("options".utf8).write(to: file) }
+            else if damage == "nonempty-lock" { try Data().write(to: preview.destination.appendingPathComponent(".content-operation.lock")) }
             else { try Data(contentsOf: backup).write(to: record, options: .atomic) }
+            // A legacy client may have created these before its pending check.
+            for lock in [".ruri-game.lock", ".content-operation.lock", ".world-operation.lock"] { try Data().write(to: preview.destination.appendingPathComponent(lock)) }
             let recovered = try await service.recover(sourceID: source.id, transactionID: preview.id)
             #expect(recovered.warning == nil && recovered.preservedCopy == nil)
             #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
@@ -262,6 +266,9 @@ struct InstanceCopyTests {
         try InstanceCopyGuard.mark(journal, at: preview.destination)
         let before = try FileTreeManifest.capture(in: preview.destination)
         #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths.including(preview.copy), instanceID: preview.copy.id) }
+        await #expect(throws: (any Error).self) { try await ContentManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).records() }
+        await #expect(throws: (any Error).self) { try await WorldManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).worlds() }
+        await #expect(throws: (any Error).self) { try await WorldManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).backups() }
         try before.requireMatch(in: preview.destination)
     }
 }

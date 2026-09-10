@@ -46,6 +46,7 @@ public actor WorldManager {
         var acquired = false
         do {
             try paths.validateInstanceLocation(instanceID)
+            try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
             try operationLock.acquire(directory: paths.gameDataState(instanceID), name: ".world-operation.lock"); acquired = true
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
         } catch { if acquired { operationLock.release() }; Self.diskLock.unlock(); throw error }

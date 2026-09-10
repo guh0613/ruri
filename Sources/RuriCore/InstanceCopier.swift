@@ -108,7 +108,7 @@ public actor InstanceCopier {
             try Task.checkCancellation()
             progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: publicationBytes))
             try validateFiles(preview, paths: current)
-            try publishedManifest.requireMatch(in: destination, excluding: [InstanceCopyGuard.markerName], ignoringTransientFiles: true)
+            try verifyPublication(publishedManifest, at: destination)
             committed = try StateStore.update(paths) { latest in
                 try validate(preview, state: latest)
                 try journal.validateTarget(paths: paths.configured(with: latest))
@@ -235,7 +235,7 @@ public actor InstanceCopier {
         }
         if let digest = journal.verificationDigest {
             let record = try InstanceCopyJournal.root(paths: paths, sourceID: journal.original.id).appendingPathComponent("verification.json")
-            try FileTreeManifest.load(from: record, expectedDigest: digest).requireMatch(in: destination, excluding: [InstanceCopyGuard.markerName], ignoringTransientFiles: true)
+            try verifyPublication(FileTreeManifest.load(from: record, expectedDigest: digest), at: destination)
         }
         try InstanceCopyGuard.clear(journal, at: destination)
         let record = try retire(journal, paths: paths), workspace = try journal.workspace(paths: paths)
@@ -245,6 +245,18 @@ public actor InstanceCopier {
             }
             try FileManager.default.removeItem(at: record); return nil
         } catch { return record }
+    }
+    private func verifyPublication(_ manifest: FileTreeManifest, at directory: URL) throws {
+        // Older clients create these before checking a pending reservation.
+        // Only tolerate regular, empty locks; never ignore data at these names.
+        let locks: Set<String> = [".ruri-game.lock", ".content-operation.lock", ".world-operation.lock"]
+        for name in locks {
+            var info = stat()
+            if lstat(directory.appendingPathComponent(name).path, &info) == 0 {
+                guard info.st_mode & S_IFMT == S_IFREG, info.st_size == 0 else { throw RuriError.message("副本的操作锁包含意外内容，工作副本已保留。") }
+            } else if errno != ENOENT { throw RuriError.message("无法核对副本的操作锁，工作副本已保留。") }
+        }
+        try manifest.requireMatch(in: directory, excluding: locks.union([InstanceCopyGuard.markerName]), ignoringTransientFiles: true)
     }
     private func abandon(_ input: InstanceCopyJournal, paths: LauncherPaths) throws -> (workspace: URL, warning: String?) {
         try input.validateTarget(paths: paths)
