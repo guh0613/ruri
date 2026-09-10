@@ -19,6 +19,7 @@ struct InstanceContentView: View {
     @State private var updatesChecked = false
     @State private var showImporter = false
     @State private var deleteTarget: LocalContentFile?
+    @State private var versionTarget: LocalContentFile?
     private var manager: ContentManager { ContentManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     private var filtered: [LocalContentFile] { files.filter { search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) || $0.filename.localizedCaseInsensitiveContains(search) } }
@@ -68,6 +69,12 @@ struct InstanceContentView: View {
                                     Button("更新", systemImage: "arrow.down.circle") { prepare(update) }.disabled(!canModify).help("更新至 \(update.available.displayName)")
                                 }
                                 Menu {
+                                    if let record = file.managed, ["modrinth", "curseforge"].contains(record.provider) {
+                                        Button("更换版本…", systemImage: "arrow.triangle.swap") {
+                                            updateTask?.cancel(); updatesChecked = false; updates = [:]; curseUpdates = [:]
+                                            versionTarget = file
+                                        }.disabled(!canModify)
+                                    }
                                     Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
                                     if let page = file.managed?.modrinthPageURL {
                                         Link("在 Modrinth 查看", destination: page)
@@ -91,6 +98,9 @@ struct InstanceContentView: View {
         .task(id: kind) { updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
         .onChange(of: model.busy) { if !model.busy { Task { await reload() } } }
         .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
+        .sheet(item: $versionTarget) { file in
+            if let record = file.managed { ContentVersionView(record: record, instanceID: instance.id) }
+        }
         .onDisappear { updateTask?.cancel() }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [kind == .mod ? (UTType(filenameExtension: "jar") ?? .data) : .zip], allowsMultipleSelection: true) { result in
             do {
