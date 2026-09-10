@@ -46,7 +46,7 @@ extension InstanceTransfer {
         guard manifest.manifestType == "minecraftModpack", [1, 2].contains(manifest.manifestVersion),
               Set(manifest.addons.map(\.id)).count == manifest.addons.count,
               let gameVersion = manifest.addons.first(where: { $0.id == "game" })?.version else { throw RuriError.message("MCBBS 整合包清单无效或缺少游戏版本") }
-        let supported = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader"])
+        let supported = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader", "optifine"])
         let unknown = manifest.addons.filter { !supported.contains($0.id) }
         guard unknown.isEmpty else { throw RuriError.message("MCBBS 整合包包含尚未接入的组件：\(unknown.map(\.id).joined(separator: "、"))") }
         let loaders = manifest.addons.filter { $0.id != "game" }

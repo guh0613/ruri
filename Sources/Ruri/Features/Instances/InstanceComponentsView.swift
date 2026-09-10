@@ -27,8 +27,9 @@ struct InstanceComponentsView: View {
             else {
                 Picker("加载器", selection: $loader) {
                     ForEach(LoaderKind.allCases) { Text($0.title).tag($0) }
-                }.pickerStyle(.segmented)
+                }.pickerStyle(.menu)
                 if loader != .vanilla {
+                    if loader == .optifine { Text("OptiFine 版本与安装包由 BMCLAPI 提供。").font(.caption).foregroundStyle(.secondary) }
                     if loading { ProgressView("正在查找兼容版本…").controlSize(.small) }
                     else if let error {
                         Text(error).font(.callout).foregroundStyle(.orange)

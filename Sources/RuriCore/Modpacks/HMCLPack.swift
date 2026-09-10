@@ -42,13 +42,13 @@ extension InstanceTransfer {
         let libraries = nodes.flatMap { $0.libraries ?? [] }
         let version = manifest.jar?.value ?? metadata.gameVersion ?? patches.first(where: { $0.id == "game" })?.version ?? manifest.inheritsFrom?.value ?? manifest.id
         guard let version, version.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:[-_][A-Za-z0-9. -]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil else { throw RuriError.message("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。") }
-        let known = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader"])
+        let known = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader", "optifine"])
         let unsupported = patches.filter { $0.hidden != true && $0.id != nil && !known.contains($0.id!) }.compactMap(\.id)
         guard unsupported.isEmpty else { throw RuriError.message("HMCL 整合包包含尚未支持的组件：\(unsupported.joined(separator: "、"))") }
         for library in libraries {
             let parts = library.name.split(separator: ":")
             guard parts.count >= 3 else { throw RuriError.message("HMCL 清单包含无效依赖坐标") }
-            if ["optifine", "net.optifine", "com.cleanroommc"].contains(String(parts[0])) {
+            if String(parts[0]) == "com.cleanroommc" {
                 throw RuriError.message("HMCL 整合包需要尚未接入的组件：\(parts[0]):\(parts[1])")
             }
         }
@@ -76,6 +76,9 @@ extension InstanceTransfer {
             let parts = library.name.split(separator: ":").map(String.init)
             let coordinate = parts[0] + ":" + parts[1]; let value = parts[2].components(separatedBy: "@")[0]
             if coordinate == "com.mumfrey:liteloader", components[.liteloader] == nil { components[.liteloader] = value }
+            if ["optifine:OptiFine", "net.optifine:OptiFine"].contains(coordinate), components[.optifine] == nil {
+                components[.optifine] = OptiFineCatalog.normalized(value, game: version)
+            }
             if ["net.fabricmc:fabric-loader", "net.legacyfabric:fabric-loader"].contains(coordinate) {
                 let kind: LoaderKind = legacyFabric ? .legacyfabric : .fabric
                 if components[kind] == nil { components[kind] = value }
@@ -90,7 +93,7 @@ extension InstanceTransfer {
         guard !neo || components[.neoforge] != nil else { throw RuriError.message("检测到 NeoForge，但无法确定其版本。") }
         guard components.count <= 1 else { throw RuriError.message("HMCL 整合包同时声明多个加载器，暂时无法迁移。") }
         let loader = components.keys.first ?? .vanilla
-        if gameArguments.contains(where: { $0.lowercased().contains("optifine") || $0.lowercased().contains("liteloader") && loader != .liteloader }) {
+        if gameArguments.contains(where: { ($0.lowercased().contains("optifine") && loader != .optifine) || ($0.lowercased().contains("liteloader") && loader != .liteloader) }) {
             throw RuriError.message("HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。")
         }
         if loader == .vanilla, gameArguments.contains("--tweakClass") { throw RuriError.message("HMCL 整合包需要未识别的 LaunchWrapper 组件。") }

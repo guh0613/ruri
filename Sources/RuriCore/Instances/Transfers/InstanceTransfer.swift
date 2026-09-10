@@ -289,6 +289,9 @@ public actor InstanceTransfer {
         if instance.loader == .liteloader && [.multimc, .mrpack].contains(format) {
             throw RuriError.message("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
         }
+        if instance.loader == .optifine && [.multimc, .mrpack].contains(format) {
+            throw RuriError.message("此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。")
+        }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         if instance.launchCommands?.isEmpty == false, ![.ruri, .complete].contains(format) {
             throw RuriError.message("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")

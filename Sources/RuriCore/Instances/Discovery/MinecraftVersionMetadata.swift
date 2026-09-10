@@ -54,7 +54,7 @@ extension MinecraftDirectoryScan {
                 components["Forge"] = Self.forgeVersion(version, game: gameVersion)
             case "net.neoforged:neoforge", "net.neoforged:forge":
                 components["NeoForge"] = Self.forgeVersion(version, game: gameVersion)
-            case "optifine:OptiFine", "net.optifine:OptiFine": components["OptiFine"] = version
+            case "optifine:OptiFine", "net.optifine:OptiFine": components["OptiFine"] = OptiFineCatalog.normalized(version, game: gameVersion ?? "")
             case "com.mumfrey:liteloader": components["LiteLoader"] = version
             case "net.legacyfabric:fabric-loader": components["Legacy Fabric"] = version
             case "com.cleanroommc:cleanroom": components["Cleanroom"] = version

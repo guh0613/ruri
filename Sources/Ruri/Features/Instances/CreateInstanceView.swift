@@ -39,6 +39,7 @@ struct CreateInstanceView: View {
                 Picker("加载器", selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
             }
             if loader != .vanilla {
+                if loader == .optifine { Text("OptiFine 版本与安装包由 BMCLAPI 提供。").font(.caption).foregroundStyle(.secondary) }
                 if loadingLoader { ProgressView("查找兼容的加载器…").controlSize(.small) }
                 else if let loaderError { Text(loaderError).font(.caption).foregroundStyle(.red) }
                 else { Picker("加载器版本", selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }

@@ -121,9 +121,10 @@ import RuriCore
                 print("Latest release: \(catalog.latest.release)")
                 for version in catalog.versions.prefix(20) { print("\(version.id) [\(version.type)]") }
             case "install":
-                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader]") }
+                guard (2...4).contains(args.count) else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader|optifine] [loader-version]") }
                 guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
+                if args.count == 4 { instance.loaderVersion = args[3] }
                 instance.launchOverrides = .init()
                 instance.directoryID = paths.newInstanceDirectoryID
                 instance.runDirectory = (try StateStore.load(paths).settings.isolationPolicy ?? .always).directory(loader: loader)
@@ -333,7 +334,7 @@ import RuriCore
                   repair-java <runtime-id>
                   remove-java <runtime-id> [--apply] [--reset-references] [--partial]
                   versions
-                  install <version> [fabric|quilt|forge|neoforge]
+                  install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader|optifine] [loader-version]
                   install-java <major> [aarch64|x86_64]
                   repair <instance-uuid>
                   install-content <project> <instance-uuid> [version-id]

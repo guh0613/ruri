@@ -59,7 +59,7 @@ struct ExternalAuthenticationTests {
         var state = PersistentState(); state.accounts = [try Account(username: "Offline"), updated]; state.activeAccountID = updated.id
         try StateStore.save(state, to: paths)
         let saved = try StateStore.load(paths)
-        #expect(saved.schemaVersion == 22 && saved.accounts == state.accounts)
+        #expect(saved.schemaVersion == StateStore.currentSchemaVersion && saved.accounts == state.accounts)
         let json = try String(contentsOf: paths.state, encoding: .utf8)
         #expect(!json.contains("token") && !json.contains("secret") && !json.contains("clientToken"))
         #expect(throws: (any Error).self) { try ExternalAuthServer.address("http://skin.test") }

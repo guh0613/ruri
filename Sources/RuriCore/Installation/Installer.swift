@@ -24,6 +24,7 @@ public actor GameInstaller {
         struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
         guard loader != .vanilla else { return [] }
         if loader == .liteloader { return try await LiteLoaderCatalog.releases(game: game).map(\.version) }
+        if loader == .optifine { return try await OptiFineCatalog.releases(game: game).map(\.version) }
         if loader == .legacyfabric {
             struct Game: Decodable, Sendable { let version: String }
             let games = try await HTTPClient.shared.get([Game].self, from: LoaderEndpoints.legacyFabricGames)
@@ -55,6 +56,9 @@ public actor GameInstaller {
             let child: VersionManifest
             if instance.loader.usesInstaller {
                 child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
+            } else if instance.loader == .optifine {
+                instance.loaderVersion = OptiFineCatalog.normalized(loaderVersion, game: instance.gameVersion)
+                child = try await OptiFineInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, progress: progress)
             } else if instance.loader == .liteloader {
                 let result = try await LiteLoaderCatalog.profile(game: instance.gameVersion, version: loaderVersion, base: manifest)
                 child = result.0; instance.loaderVersion = result.1
@@ -97,6 +101,9 @@ public actor GameInstaller {
         try paths.validateBinding(instance)
         if instance.repositoryVersionID == nil && instance.importedInstallation == nil && instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
+        if instance.loader == .optifine {
+            try await OptiFineInstaller(paths: paths, downloader: downloader).repair(instance: instance, manifest: manifest, progress: progress)
+        }
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
     }
     public func loadManifest(_ instance: GameInstance) throws -> VersionManifest {
