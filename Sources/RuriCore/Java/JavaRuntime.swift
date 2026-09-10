@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 
 public struct JavaRuntime: Codable, Identifiable, Hashable, Sendable {
     public var id: String { path }
@@ -22,40 +23,44 @@ public struct JavaRuntime: Codable, Identifiable, Hashable, Sendable {
 }
 
 public enum ProcessRunner {
-    public static func run(_ executable: URL, arguments: [String], directory: URL? = nil) throws -> (Int32, String) {
-        let process = Process(); let pipe = Pipe()
+    public static func run(_ executable: URL, arguments: [String], directory: URL? = nil, timeout: TimeInterval = 10) throws -> (Int32, String) {
+        let process = Process(), finished = DispatchSemaphore(value: 0)
+        let output = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-java-probe-" + UUID().uuidString)
+        FileManager.default.createFile(atPath: output.path, contents: nil, attributes: [.posixPermissions: 0o600])
+        let handle = try FileHandle(forWritingTo: output)
+        defer { try? handle.close(); try? FileManager.default.removeItem(at: output) }
         process.executableURL = executable; process.arguments = arguments; process.currentDirectoryURL = directory
-        process.standardOutput = pipe; process.standardError = pipe
+        process.standardOutput = handle; process.standardError = handle
+        var environment = ProcessInfo.processInfo.environment
+        for key in ["JAVA_TOOL_OPTIONS", "JDK_JAVA_OPTIONS", "_JAVA_OPTIONS", "CLASSPATH"] { environment.removeValue(forKey: key) }
+        process.environment = environment
+        process.terminationHandler = { _ in finished.signal() }
         try process.run()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        process.waitUntilExit()
+        guard finished.wait(timeout: .now() + timeout) == .success else {
+            if process.isRunning { kill(process.processIdentifier, SIGKILL) }
+            _ = finished.wait(timeout: .now() + 1)
+            throw RuriError.message("Java 检测超时，请检查所选程序是否为可用的 Java。")
+        }
+        let reader = try FileHandle(forReadingFrom: output); defer { try? reader.close() }
+        let data = try reader.read(upToCount: 1024 * 1024) ?? Data()
         return (process.terminationStatus, String(decoding: data, as: UTF8.self))
     }
 }
 
 public enum JavaDiscovery {
     public static func scan(paths: LauncherPaths, extra: [String] = []) async -> [JavaRuntime] {
-        await Task.detached(priority: .utility) {
-            let fm = FileManager.default
-            var candidates = Set(extra)
-            let home = fm.homeDirectoryForCurrentUser
-            let folders = [URL(fileURLWithPath: "/Library/Java/JavaVirtualMachines"), home.appendingPathComponent("Library/Java/JavaVirtualMachines"), paths.runtimes,
-                           URL(fileURLWithPath: "/opt/homebrew/opt"), URL(fileURLWithPath: "/usr/local/opt")]
-            for folder in folders {
-                for child in (try? fm.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? [] {
-                    if folder.path.hasSuffix("/opt"), !child.lastPathComponent.contains("openjdk") { continue }
-                    if child.lastPathComponent.hasPrefix(".") { continue }
-                    for suffix in ["Contents/Home/bin/java", "bin/java", "jre.bundle/Contents/Home/bin/java", "libexec/openjdk.jdk/Contents/Home/bin/java"] {
-                        let file = child.appendingPathComponent(suffix)
-                        if fm.isExecutableFile(atPath: file.path) { candidates.insert(file.resolvingSymlinksInPath().path) }
-                    }
-                }
-            }
-            if let javaHome = ProcessInfo.processInfo.environment["JAVA_HOME"] { candidates.insert(javaHome + "/bin/java") }
-            var result: [JavaRuntime] = []
-            for path in candidates.sorted() { if let runtime = try? inspect(path) { result.append(runtime) } }
-            return result.sorted { $0.isNative != $1.isNative ? $0.isNative : $0.major > $1.major }
-        }.value
+        await inventory(paths: paths, extra: extra).compactMap(\.runtime)
+    }
+    public static func executable(in selection: URL) throws -> URL {
+        let selection = selection.standardizedFileURL
+        let candidates = [selection] + ["Contents/Home/bin/java", "bin/java", "jre.bundle/Contents/Home/bin/java", "libexec/openjdk.jdk/Contents/Home/bin/java"].map { selection.appendingPathComponent($0) }
+        guard let executable = candidates.first(where: { $0.lastPathComponent == "java" && FileManager.default.isExecutableFile(atPath: $0.path) && (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) != true }) else {
+            throw RuriError.message("请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
+        }
+        return executable
+    }
+    public static func sameExecutable(_ first: String, _ second: String) -> Bool {
+        URL(fileURLWithPath: first).standardizedFileURL.resolvingSymlinksInPath() == URL(fileURLWithPath: second).standardizedFileURL.resolvingSymlinksInPath()
     }
     public static func inspect(_ path: String) throws -> JavaRuntime {
         guard FileManager.default.isExecutableFile(atPath: path) else { throw RuriError.message("Java 不可执行：\(path)") }
@@ -67,11 +72,12 @@ public enum JavaDiscovery {
         guard let version = property("java.version"), let arch = property("os.arch") else { throw RuriError.message("无法识别 Java 版本") }
         let components = version.split(whereSeparator: { !$0.isNumber })
         let major = Int(components.first == "1" ? (components.dropFirst().first ?? "0") : (components.first ?? "0")) ?? 0
+        guard major > 0 else { throw RuriError.message("无法识别 Java 主版本：\(version)") }
         return JavaRuntime(path: path, version: version, major: major, architecture: arch == "arm64" ? "aarch64" : (arch == "amd64" ? "x86_64" : arch), vendor: property("java.vendor") ?? "Java")
     }
     public static func select(from runtimes: [JavaRuntime], major: Int, architecture: String? = nil, preferredPath: String? = nil) throws -> JavaRuntime {
         if let path = preferredPath {
-            guard let selected = runtimes.first(where: { $0.path == path }) else { throw RuriError.message("指定的 Java 不可用，请在实例设置中重新选择。") }
+            guard let selected = runtimes.first(where: { $0.path == path }) ?? runtimes.first(where: { sameExecutable($0.path, path) }) else { throw RuriError.message("指定的 Java 不可用，请在实例设置中重新选择。") }
             guard selected.major >= major else { throw RuriError.message("此游戏需要 Java \(major)，当前指定 Java \(selected.major)。") }
             if let architecture, selected.architecture != architecture { throw RuriError.message("Java 架构与游戏原生库不匹配，需要 \(architecture)。") }
             return selected

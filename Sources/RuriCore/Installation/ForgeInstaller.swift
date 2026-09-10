@@ -116,7 +116,7 @@ public actor ForgeInstaller {
         await progress(InstallProgress("运行 \(instance.loader.title) 安装程序"))
         let runner = InstallerProcess()
         let log = paths.instance(instance.id).appendingPathComponent("installer.log")
-        let status = try await runner.run(java: java, arguments: ["-Djava.awt.headless=true", "-jar", jar.path, "--installClient", work.path], directory: work, logURL: log) { line in await progress(InstallProgress(line)) }
+        let status = try await runner.run(java: java, arguments: ["-Djava.awt.headless=true", "-jar", jar.path, "--installClient", work.path], directory: work, logURL: log, runtimePaths: paths) { line in await progress(InstallProgress(line)) }
         guard status == 0 else {
             let tail = await runner.lastOutput()
             throw RuriError.message("\(instance.loader.title) 安装程序退出（\(status)）。日志：\(log.path)\n\(String(tail.suffix(1200)))")

@@ -14,7 +14,9 @@ import RuriCore
     var catalogLoading = false
     var catalogError: String?
     var runtimes: [JavaRuntime] = []
+    var javaEntries: [JavaRuntimeEntry] = []
     var scanningJava = false
+    var javaScanAgain = false
     var activities: [ActivityItem] = []
     var operation: Task<Void, Never>?
     var activeSessions: [UUID: GameSession] = [:]

@@ -1,6 +1,7 @@
 import Foundation
+import Darwin
 
-public struct RemoteJava: Identifiable, Sendable {
+public struct RemoteJava: Identifiable, Codable, Sendable {
     public var id: String { "\(component)-\(architecture)-\(version)" }
     public let component: String
     public let architecture: String
@@ -28,24 +29,39 @@ public actor JavaInstaller {
                 if seen.insert("\(arch)-\(runtime.major)").inserted { result.append(runtime) }
             }
         }
+        try paths.prepare()
+        let cache = try LauncherPaths.safePath("java-runtime-descriptors", within: paths.cache)
+        try FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
+        for runtime in result { try JSONEncoder().encode(runtime).write(to: LauncherPaths.safePath(runtime.id + ".json", within: cache), options: .atomic) }
         return result.sorted { $0.architecture != $1.architecture ? $0.architecture == JavaRuntime.hostArchitecture : $0.major > $1.major }
     }
-    public func install(_ runtime: RemoteJava, downloader: DownloadManager, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> JavaRuntime {
+    public func install(_ runtime: RemoteJava, downloader: DownloadManager, repairing: Bool = false, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> JavaRuntime {
         struct Manifest: Decodable, Sendable {
             struct File: Decodable, Sendable { let type: String; let downloads: [String: Artifact]?; let executable: Bool?; let target: String? }
             let files: [String: File]
         }
         try paths.prepare()
-        let destination = try LauncherPaths.safePath(runtime.id, within: paths.runtimes)
+        let destination = try JavaRuntimeStore.directory(runtime.id, paths: paths)
         let binary = destination.appendingPathComponent("jre.bundle/Contents/Home/bin/java")
-        if let existing = try? JavaDiscovery.inspect(binary.path), existing.major == runtime.major, existing.architecture == runtime.architecture { return existing }
-        guard !FileManager.default.fileExists(atPath: destination.path) else { throw RuriError.message("此 Java 目录已存在但无法运行，请先在 Finder 中移走：\(destination.path)") }
+        if !repairing, FileManager.default.fileExists(atPath: destination.path) {
+            let reading = try JavaRuntimeLease.acquire(id: runtime.id, paths: paths, exclusive: false)
+            defer { withExtendedLifetime(reading) {} }
+            if let existing = try? JavaDiscovery.inspect(binary.path), existing.major == runtime.major, existing.architecture == runtime.architecture { return existing }
+            throw RuriError.message("此 Java 已损坏，请在 Java 页面点击“修复”：\(destination.lastPathComponent)")
+        }
+        let lease = try JavaRuntimeLease.acquire(id: runtime.id, paths: paths, exclusive: true)
+        defer { withExtendedLifetime(lease) {} }
+        try JavaRuntimeLease.requireNoRunningProcess(in: destination)
+        if repairing, try StateStore.load(paths).schemaVersion < 17 { try StateStore.update(paths) { _ in } }
+        let replacing = FileManager.default.fileExists(atPath: destination.path)
+        guard repairing || !replacing else { throw RuriError.message("此 Java 已由另一个操作安装，请重新检测。") }
         let manifestURL = try LauncherPaths.safePath("java-\(runtime.id).json", within: paths.cache)
         await progress(InstallProgress("读取 Java \(runtime.major) 文件清单"))
         try await downloader.fetch(DownloadItem(runtime.manifest, to: manifestURL))
         let manifest = try JSONDecoder().decode(Manifest.self, from: Data(contentsOf: manifestURL))
-        let staging = try LauncherPaths.safePath(".partial-\(runtime.id)", within: paths.runtimes)
-        try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
+        let staging = try JavaRuntimeStore.directory(runtime.id, paths: paths, partial: true)
+        if repairing, replacing, !FileManager.default.fileExists(atPath: staging.path) { try FileManager.default.copyItem(at: destination, to: staging) }
+        else { try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true) }
         var downloads: [DownloadItem] = []; var executables: [URL] = []; var links: [(URL, String)] = []
         for (path, file) in manifest.files.sorted(by: { $0.key < $1.key }) {
             let target = try LauncherPaths.safePath(path, within: staging)
@@ -77,6 +93,19 @@ public actor JavaInstaller {
         try Task.checkCancellation()
         let checked = try JavaDiscovery.inspect(staging.appendingPathComponent("jre.bundle/Contents/Home/bin/java").path)
         guard checked.major == runtime.major, checked.architecture == runtime.architecture else { throw RuriError.message("下载的 Java 版本或架构不符合要求") }
+        try JSONEncoder().encode(runtime).write(to: staging.appendingPathComponent(".ruri-runtime.json"), options: .atomic)
+        if replacing {
+            try JavaRuntimeLease.requireNoRunningProcess(in: destination)
+            guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message("无法替换 Java 目录，原运行时仍保留。") }
+            do {
+                let result = try JavaDiscovery.inspect(binary.path)
+                try? FileManager.default.removeItem(at: staging)
+                return result
+            } catch {
+                guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message("修复后的 Java 无法运行，原副本保留在：\(staging.path)") }
+                throw error
+            }
+        }
         try FileManager.default.moveItem(at: staging, to: destination)
         return try JavaDiscovery.inspect(binary.path)
     }

@@ -115,6 +115,8 @@ public enum GameMonitorService {
         }
     }
     @MainActor private static func run(_ plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String]) async throws -> Int32 {
+        let javaLease = try JavaRuntimeLease.shared(binary: plan.executable, paths: paths)
+        defer { withExtendedLifetime(javaLease) {} }
         let game = GameProcess()
         try recorder.setNativeQuitSupported(plan.nativeQuitSupported == true)
         var stopTask: Task<Void, Never>?

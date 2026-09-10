@@ -97,8 +97,8 @@ import RuriCore
                     print(result.warning ?? "已恢复实例复制。")
                     if let file = result.preservedCopy { print("工作副本：\(file.path)") }
                 }
-            case "java":
-                for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
+            case "java", "add-java", "forget-java", "default-java", "repair-java", "remove-java":
+                try await manageJava(args, paths: paths)
             case "install-java":
                 guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message("用法：ruri-cli install-java <major> [aarch64|x86_64]") }
                 let service = JavaInstaller(paths: paths)
@@ -323,6 +323,11 @@ import RuriCore
             default: print("""
                 Ruri CLI
                   java
+                  add-java <Java executable or JDK folder>
+                  forget-java <manually added executable path>
+                  default-java <path or automatic>
+                  repair-java <runtime-id>
+                  remove-java <runtime-id> [--apply] [--reset-references] [--partial]
                   versions
                   install <version> [fabric|quilt|forge|neoforge]
                   install-java <major> [aarch64|x86_64]

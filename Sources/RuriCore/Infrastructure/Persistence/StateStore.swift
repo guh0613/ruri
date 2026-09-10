@@ -2,7 +2,7 @@ import Foundation
 import Darwin
 
 public enum StateStore {
-    public static let currentSchemaVersion = 16
+    public static let currentSchemaVersion = 17
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
@@ -34,6 +34,7 @@ public enum StateStore {
         return try write(state, paths: paths)
     }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
+        try JavaRuntimeStore.validate(state.settings.javaLocations ?? [])
         guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message("启动快照不能覆盖实例设置，请保存原实例的覆盖项。") }
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
         for instance in state.instances {
