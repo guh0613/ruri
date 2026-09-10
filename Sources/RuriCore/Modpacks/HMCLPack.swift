@@ -42,13 +42,13 @@ extension InstanceTransfer {
         let libraries = nodes.flatMap { $0.libraries ?? [] }
         let version = manifest.jar?.value ?? metadata.gameVersion ?? patches.first(where: { $0.id == "game" })?.version ?? manifest.inheritsFrom?.value ?? manifest.id
         guard let version, version.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:[-_][A-Za-z0-9. -]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil else { throw RuriError.message("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。") }
-        let known = Set(["game", "fabric", "quilt", "forge", "neoforge"])
+        let known = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric"])
         let unsupported = patches.filter { $0.hidden != true && $0.id != nil && !known.contains($0.id!) }.compactMap(\.id)
         guard unsupported.isEmpty else { throw RuriError.message("HMCL 整合包包含尚未支持的组件：\(unsupported.joined(separator: "、"))") }
         for library in libraries {
             let parts = library.name.split(separator: ":")
             guard parts.count >= 3 else { throw RuriError.message("HMCL 清单包含无效依赖坐标") }
-            if ["optifine", "net.optifine", "net.legacyfabric", "com.cleanroommc"].contains(String(parts[0])) || parts[0] == "com.mumfrey" && parts[1] == "liteloader" {
+            if ["optifine", "net.optifine", "com.cleanroommc"].contains(String(parts[0])) || parts[0] == "com.mumfrey" && parts[1] == "liteloader" {
                 throw RuriError.message("HMCL 整合包需要尚未接入的组件：\(parts[0]):\(parts[1])")
             }
         }
@@ -70,10 +70,15 @@ extension InstanceTransfer {
             return value
         }
         let neo = libraries.contains { $0.name.hasPrefix("net.neoforged.fancymodloader:") || $0.name.hasPrefix("net.neoforged:neoforge:") || $0.name.hasPrefix("net.neoforged:forge:") }
+        let legacyFabric = components[.legacyfabric] != nil || libraries.contains { $0.name.hasPrefix("net.legacyfabric:intermediary:") || $0.name.hasPrefix("net.legacyfabric:fabric-loader:") }
+        if legacyFabric, let version = components.removeValue(forKey: .fabric), components[.legacyfabric] == nil { components[.legacyfabric] = version }
         for library in libraries {
             let parts = library.name.split(separator: ":").map(String.init)
             let coordinate = parts[0] + ":" + parts[1]; let value = parts[2].components(separatedBy: "@")[0]
-            if coordinate == "net.fabricmc:fabric-loader", components[.fabric] == nil { components[.fabric] = value }
+            if ["net.fabricmc:fabric-loader", "net.legacyfabric:fabric-loader"].contains(coordinate) {
+                let kind: LoaderKind = legacyFabric ? .legacyfabric : .fabric
+                if components[kind] == nil { components[kind] = value }
+            }
             if coordinate == "org.quiltmc:quilt-loader", components[.quilt] == nil { components[.quilt] = value }
             if !neo, ["net.minecraftforge:forge", "net.minecraftforge:fmlloader", "net.minecraftforge:minecraftforge"].contains(coordinate), components[.forge] == nil { components[.forge] = forgeVersion(value) }
             if neo, components[.neoforge] == nil {

@@ -26,7 +26,7 @@ extension GameInstaller {
         let destination = try LauncherPaths.safePath("natives", within: paths.instance(instance.id))
         try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
         for library in manifest.libraries where Self.allowed(library, architecture: architecture) {
-            guard let native = library.nativeArtifact(architecture: architecture) else { continue }
+            guard let native = try library.nativeArtifact(architecture: architecture) else { continue }
             let file = try resources.libraryFile(native, fallback: native.url.map { "natives/" + $0.lastPathComponent })
             guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("原生依赖库缺失，请修复此版本：\(file.lastPathComponent)") }
             try SafeArchive.extract(file, to: destination, excluding: library.extract?.exclude ?? ["META-INF/"])

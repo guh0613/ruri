@@ -103,7 +103,7 @@ public struct Library: Codable, Equatable, Sendable {
     public var identity: String { let p = name.split(separator: ":"); return p.prefix(2).joined(separator: ":") + (p.count > 3 ? ":\(p[3])" : "") }
     public func artifact() throws -> Artifact? {
         if let artifact = downloads?.artifact { return artifact }
-        if downloads != nil { return nil }
+        if downloads != nil || natives != nil { return nil }
         let path = try Self.mavenPath(name)
         return Artifact(path: path, url: try EndpointURL.build(base: url ?? MinecraftEndpoints.libraries, path: path.split(separator: "/").map(String.init)))
     }
@@ -116,9 +116,13 @@ public struct Library: Codable, Equatable, Sendable {
         guard ext.range(of: "^[A-Za-z0-9]+$", options: .regularExpression) != nil else { throw RuriError.message("无效 Maven 扩展名") }
         return "\(parts[0].replacingOccurrences(of: ".", with: "/"))/\(parts[1])/\(parts[2])/\(parts[1])-\(parts[2])\(parts.count == 4 ? "-" + parts[3] : "").\(ext)"
     }
-    public func nativeArtifact(architecture: String) -> Artifact? {
+    public func nativeArtifact(architecture: String) throws -> Artifact? {
         guard let classifier = natives?["osx"] else { return nil }
-        return downloads?.classifiers?[classifier.replacingOccurrences(of: "${arch}", with: "64")]
+        let classifierName = classifier.replacingOccurrences(of: "${arch}", with: "64")
+        if let artifact = downloads?.classifiers?[classifierName] { return artifact }
+        guard downloads == nil else { return nil }
+        let path = try Self.mavenPath(name + ":" + classifierName)
+        return Artifact(path: path, url: try EndpointURL.build(base: url ?? MinecraftEndpoints.libraries, path: path.split(separator: "/").map(String.init)))
     }
 }
 public struct VersionManifest: Codable, Sendable {

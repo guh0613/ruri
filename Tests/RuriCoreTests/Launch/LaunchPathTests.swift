@@ -32,7 +32,7 @@ struct LaunchPathTests {
             libraries: manifest.libraries.map { .init(library: $0, localFile: nil, sourceMetadata: nil) }, warnings: [], sourceManifests: [])
         manifest = try resolution.selectingLibraries().manifest
         #expect(manifest.libraries.filter { $0.name == "ca.weblite:java-objc-bridge:1.0.0" }.count == 2)
-        #expect(manifest.libraries.first?.nativeArtifact(architecture: "x86_64")?.path == "bridge-natives.jar")
+        #expect(try manifest.libraries.first?.nativeArtifact(architecture: "x86_64")?.path == "bridge-natives.jar")
         let expected = ["bridge.jar", "middle.jar", "extra.jar"].map { paths.libraries.appendingPathComponent($0) }
             + [paths.versions.appendingPathComponent("1.18.2/1.18.2.jar")]
         for file in expected {

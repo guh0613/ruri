@@ -121,7 +121,7 @@ import RuriCore
                 print("Latest release: \(catalog.latest.release)")
                 for version in catalog.versions.prefix(20) { print("\(version.id) [\(version.type)]") }
             case "install":
-                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt]") }
+                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric]") }
                 guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
                 instance.launchOverrides = .init()
@@ -202,7 +202,7 @@ import RuriCore
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
                 let service = ModrinthService()
-                let versions = try await service.versions(project: args[1], game: instance.gameVersion, loader: instance.loader.rawValue)
+                let versions = try await service.versions(project: args[1], game: instance.gameVersion, loader: instance.loader.modrinthLoader)
                 guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message("找不到兼容内容版本") }
                 try await service.install(version: version, type: "mod", instance: instance, paths: paths, downloader: DownloadManager()) { p in print("\(p.stage) \(p.completed)/\(p.total)") }
                 print("Installed \(version.version_number)")

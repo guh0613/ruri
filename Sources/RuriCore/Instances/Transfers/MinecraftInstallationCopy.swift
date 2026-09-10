@@ -95,9 +95,13 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             let needed = GameInstaller.allowed(library, architecture: architecture)
             var downloads = library.downloads ?? .init()
             if let value = try library.artifact() { downloads.artifact = try artifact(value, fallback: Library.mavenPath(library.name), required: needed) }
+            let native = try library.nativeArtifact(architecture: architecture)
+            if library.downloads == nil, let native, let classifier = library.natives?["osx"] {
+                downloads.classifiers = [classifier.replacingOccurrences(of: "${arch}", with: "64"): native]
+            }
             if let classifiers = downloads.classifiers {
                 for (key, value) in classifiers {
-                    downloads.classifiers?[key] = try artifact(value, fallback: value.url.map { "natives/" + $0.lastPathComponent }, required: needed && value == library.nativeArtifact(architecture: architecture))
+                    downloads.classifiers?[key] = try artifact(value, fallback: value.url.map { "natives/" + $0.lastPathComponent }, required: needed && value == native)
                 }
             }
             library.downloads = downloads; manifest.libraries[index] = library

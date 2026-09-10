@@ -182,7 +182,8 @@ public actor InstanceComponents {
     }
     private func backupFile(_ id: UUID, paths: LauncherPaths) throws -> URL { try LauncherPaths.safePath("previous-components.json", within: paths.instance(id)) }
     private static func isLoaderLibrary(_ library: Library) -> Bool {
-        ["net.fabricmc:", "org.quiltmc:", "net.minecraftforge:", "net.neoforged:", "cpw.mods:"].contains { library.name.hasPrefix($0) }
+        ["net.fabricmc:", "net.legacyfabric:", "org.quiltmc:", "net.minecraftforge:", "net.neoforged:", "cpw.mods:"].contains { library.name.hasPrefix($0) }
+            || library.name.hasPrefix("org.lwjgl.lwjgl:") && library.name.contains("+legacyfabric.")
     }
     private func encode(_ manifest: VersionManifest, gameVersion: String, components: [MinecraftDirectoryComponent]) throws -> Data {
         var document = try JSONSerialization.jsonObject(with: JSONEncoder().encode(manifest)) as! [String: Any]

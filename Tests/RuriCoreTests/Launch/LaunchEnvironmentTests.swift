@@ -83,6 +83,6 @@ struct LaunchEnvironmentTests {
         await service.discard(prepared)
         let restored = try StateStore.load(paths)
         #expect(restored.settings.defaultJava == .major(21) && restored.settings.defaultEnvironment == state.settings.defaultEnvironment)
-        #expect(restored.schemaVersion == 18)
+        #expect(restored.schemaVersion == StateStore.currentSchemaVersion)
     }
 }

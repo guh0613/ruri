@@ -83,8 +83,8 @@ public enum MinecraftFolderStore {
             item.directoryID = directory.id; item.repositoryVersionID = version.id
             item.repositoryComponents = version.components; item.repositoryIssue = version.issue
             item.gameVersion = version.gameVersion ?? item.gameVersion
-            let component = version.components.first { ["Fabric", "Quilt", "Forge", "NeoForge"].contains($0.name) }
-            item.loader = component.flatMap { LoaderKind(rawValue: $0.name.lowercased()) } ?? .vanilla
+            let component = version.components.first { component in LoaderKind.allCases.contains { $0 != .vanilla && $0.title == component.name } }
+            item.loader = component.flatMap { component in LoaderKind.allCases.first { $0.title == component.name } } ?? .vanilla
             item.loaderVersion = component?.version
             item.installed = true
             if index == nil {

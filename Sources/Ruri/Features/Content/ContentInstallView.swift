@@ -47,7 +47,7 @@ struct ContentInstallView: View {
             guard isPack || instance != nil else { return }
             loading = true
             do {
-                let result = try await service.versions(project: project.id, game: isPack ? nil : instance?.gameVersion, loader: project.project_type == "mod" ? instance?.loader.rawValue : nil)
+                let result = try await service.versions(project: project.id, game: isPack ? nil : instance?.gameVersion, loader: project.project_type == "mod" ? instance?.loader.modrinthLoader : nil)
                 try Task.checkCancellation(); versions = result; selectedVersion = result.first?.id ?? ""
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
             loading = false

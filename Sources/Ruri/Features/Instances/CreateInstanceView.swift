@@ -36,7 +36,7 @@ struct CreateInstanceView: View {
                 }.listStyle(.bordered).frame(height: 230)
             }
             HStack {
-                Picker("加载器", selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented)
+                Picker("加载器", selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
             }
             if loader != .vanilla {
                 if loadingLoader { ProgressView("查找兼容的加载器…").controlSize(.small) }

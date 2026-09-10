@@ -55,14 +55,14 @@ public actor ModrinthService {
             if let other = resolved.first(where: { $0.project_id == current.project_id }), other.id != current.id { throw RuriError.message("依赖要求同一项目的不同版本：\(current.name)。请选择其他兼容版本。") }
             guard seen.count <= 200 else { throw RuriError.message("模组依赖数量超出限制") }
             guard current.game_versions.contains(instance.gameVersion) else { throw RuriError.message("\(current.name) 不支持 Minecraft \(instance.gameVersion)") }
-            if type == "mod", !current.loaders.contains(instance.loader.rawValue) { throw RuriError.message("\(current.name) 不支持此实例的加载器") }
+            if type == "mod", !current.loaders.contains(instance.loader.modrinthLoader) { throw RuriError.message("\(current.name) 不支持此实例的加载器") }
             resolved.append(current)
             if type == "mod" {
                 for dependency in current.dependencies where dependency.dependency_type == "required" {
                     if let id = dependency.version_id {
                         queue.append(try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(id)))
                     } else if let project = dependency.project_id {
-                        guard let match = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.rawValue).first else { throw RuriError.message("找不到兼容的必需依赖：\(project)") }
+                        guard let match = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.modrinthLoader).first else { throw RuriError.message("找不到兼容的必需依赖：\(project)") }
                         queue.append(match)
                     } else { throw RuriError.message("必需依赖缺少下载标识") }
                 }
@@ -91,7 +91,7 @@ public actor ModrinthService {
         var updates: [ContentUpdate] = []
         for record in records where record.provider == "modrinth" {
             try Task.checkCancellation()
-            let available = try await versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.rawValue : nil)
+            let available = try await versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.modrinthLoader : nil)
             guard let candidate = available.first(where: { $0.version_type == "release" || $0.version_type == nil }), candidate.id != record.versionID else { continue }
             let currentDate: String?
             if let date = record.publishedAt { currentDate = date }

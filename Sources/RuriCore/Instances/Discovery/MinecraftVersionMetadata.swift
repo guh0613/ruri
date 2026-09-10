@@ -61,6 +61,9 @@ extension MinecraftDirectoryScan {
             default: break
             }
         }
+        if libraries.contains(where: { $0.name.hasPrefix("net.legacyfabric:intermediary:") || $0.name.hasPrefix("net.legacyfabric:fabric-loader:") }) {
+            if let version = components.removeValue(forKey: "Fabric"), components["Legacy Fabric"] == nil { components["Legacy Fabric"] = version }
+        }
         if let neo = argument("--fml.neoForgeVersion") { components["NeoForge"] = neo; components.removeValue(forKey: "Forge") }
         else if let forge = argument("--fml.forgeVersion"), components["NeoForge"] == nil { components["Forge"] = forge }
         if components.isEmpty, let main = nodes.reversed().compactMap({ $0["mainClass"] as? String }).first,

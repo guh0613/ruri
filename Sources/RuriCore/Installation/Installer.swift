@@ -23,6 +23,11 @@ public actor GameInstaller {
     public func loaderVersions(_ loader: LoaderKind, game: String) async throws -> [String] {
         struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
         guard loader != .vanilla else { return [] }
+        if loader == .legacyfabric {
+            struct Game: Decodable, Sendable { let version: String }
+            let games = try await HTTPClient.shared.get([Game].self, from: LoaderEndpoints.legacyFabricGames)
+            guard games.contains(where: { $0.version == LoaderEndpoints.metadataGame(game, loader: loader) }) else { return [] }
+        }
         if loader.usesInstaller { return try await ForgeCatalog.versions(loader: loader, game: game) }
         return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
     }
@@ -165,7 +170,7 @@ public actor GameInstaller {
                 let target = try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name))
                 files.append(DownloadItem(artifact, to: target))
             }
-            if let artifact = library.nativeArtifact(architecture: arch) {
+            if let artifact = try library.nativeArtifact(architecture: arch) {
                 guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message("原生库缺少文件路径") }
                 let target = try resources.libraryFile(artifact, fallback: nativePath)
                 files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))

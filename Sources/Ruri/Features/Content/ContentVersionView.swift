@@ -20,7 +20,7 @@ struct ContentVersionView: View {
     private var instance: GameInstance? { model.state.instances.first { $0.id == instanceID } }
     private var choices: [Choice] { versions.filter { includePrereleases || $0.isRelease || $0.id == record.versionID } }
     private var selected: Choice? { choices.first { $0.id == selectedID } }
-    private var requestKey: String { "\(instance?.gameVersion ?? ""): \(instance?.loader.rawValue ?? ""): \(offset)" }
+    private var requestKey: String { "\(instance?.gameVersion ?? ""): \(instance?.loader.modrinthLoader ?? ""): \(offset)" }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -86,11 +86,11 @@ struct ContentVersionView: View {
         loading = true
         do {
             if record.provider == "modrinth" {
-                let result = try await ModrinthService().versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.rawValue : nil)
+                let result = try await ModrinthService().versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.modrinthLoader : nil)
                 try Task.checkCancellation()
                 versions = result.filter {
                     $0.project_id == record.projectID && $0.game_versions.contains(instance.gameVersion) &&
-                    (record.kind != .mod || $0.loaders.contains(instance.loader.rawValue)) && $0.primaryFile != nil
+                    (record.kind != .mod || $0.loaders.contains(instance.loader.modrinthLoader)) && $0.primaryFile != nil
                 }.map(Choice.modrinth)
             } else if record.provider == "curseforge", let project = Int(record.projectID) {
                 let page = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).files(project: project, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader : nil, offset: offset)

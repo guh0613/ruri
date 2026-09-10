@@ -279,6 +279,9 @@ public actor InstanceTransfer {
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
         let complete = format == .complete || (format == .ruri && (instance.repositoryVersionID != nil || instance.importedInstallation != nil))
         guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。") }
+        if instance.loader == .legacyfabric && [.multimc, .mrpack].contains(format) {
+            throw RuriError.message("此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
+        }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
