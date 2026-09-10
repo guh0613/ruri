@@ -88,7 +88,7 @@ extension LauncherPaths {
         func overlaps(_ first: String, _ second: String) -> Bool {
             first == second || first.hasPrefix(second == "/" ? "/" : second + "/") || second.hasPrefix(first == "/" ? "/" : first + "/")
         }
-        for managed in [root] + directories.map(\.url) {
+        for managed in [root] + directories.map({ $0.isMinecraft ? $0.url.appendingPathComponent(".ruri") : $0.url }) {
             guard !overlaps(target, managed.standardizedFileURL.resolvingSymlinksInPath().path) else { throw RuriError.message("自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。") }
         }
         for other in (instanceCustomDirectories ?? [:]).values where other.id != relocatingID {

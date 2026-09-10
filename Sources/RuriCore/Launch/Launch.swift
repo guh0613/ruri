@@ -59,11 +59,11 @@ public enum LaunchBuilder {
         let libraries = resources.libraries.standardizedFileURL.resolvingSymlinksInPath()
         var classpath: [String] = []
         for library in manifest.libraries where GameInstaller.allowed(library, architecture: architecture) {
-            if let artifact = try library.artifact() { classpath.append(try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: libraries).path) }
+            if let artifact = try library.artifact() { classpath.append(try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name)).path) }
         }
         classpath.append(jar.path)
         for artifact in manifest.generatedLibraries ?? [] {
-            guard let relative = artifact.path, FileManager.default.fileExists(atPath: try LauncherPaths.safePath(relative, within: libraries).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
+            guard FileManager.default.fileExists(atPath: try resources.libraryFile(artifact).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
         }
         for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message("游戏文件缺失：\(URL(fileURLWithPath: file).lastPathComponent)。请先修复实例。") }
         let values: [String: String] = [

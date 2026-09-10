@@ -32,6 +32,7 @@ public actor InstanceCopier {
     public func preview(instanceID: UUID, name: String, directoryID: UUID, options: InstanceCopyOptions = .init()) async throws -> InstanceCopyPreview {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         let original = try instance(instanceID, in: state)
+        guard original.repositoryVersionID == nil, !current.isMinecraftDirectory(directoryID) else { throw RuriError.message("已有 Minecraft 目录的跨文件夹复制尚未开放。可在 Finder 中复制整个文件夹后添加。") }
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("副本名称需为 1–256 个字符。") }
         var copy = original; copy.id = UUID(); copy.name = name; copy.createdAt = Date(); copy.lastPlayed = nil; copy.playTime = 0; copy.favorite = false

@@ -5,7 +5,7 @@ extension GameInstance {
     /// changed while downloads were running, so the original copy is not a new
     /// authoritative instance record.
     public func applyingInstallation(_ result: GameInstance, requested: GameInstance) throws -> GameInstance {
-        guard id == requested.id, result.id == id,
+        guard id == requested.id, result.id == id, repositoryVersionID == requested.repositoryVersionID, result.repositoryVersionID == repositoryVersionID,
               gameVersion == requested.gameVersion, result.gameVersion == gameVersion,
               loader == requested.loader, result.loader == loader,
               loaderVersion == requested.loaderVersion || loaderVersion == result.loaderVersion,

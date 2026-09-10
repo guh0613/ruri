@@ -25,6 +25,7 @@ public actor GameInstaller {
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
         guard input.importedInstallation == nil else { throw RuriError.message("此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。") }
+        if input.repositoryVersionID != nil && input.installed { throw RuriError.message("此版本已存在，请使用修复功能。") }
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: input.id)
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(input)
@@ -51,13 +52,15 @@ public actor GameInstaller {
             }
             manifest = manifest.merging(child: child)
         }
+        if let version = instance.repositoryVersionID { manifest.id = version; manifest.jar = version; manifest.inheritsFrom = nil }
         manifest = try Self.applyingPackLibraries(instance.packLibraries ?? [], to: manifest)
         try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try paths.validateInstanceLocation(instance.id)
-        try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: .atomic)
+        try FileManager.default.createDirectory(at: paths.manifest(instance.id).deletingLastPathComponent(), withIntermediateDirectories: true)
+        try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: instance.repositoryVersionID == nil ? .atomic : .withoutOverwriting)
         instance.installed = true
         await progress(InstallProgress("安装完成", completed: 1, total: 1))
         return instance
@@ -79,12 +82,19 @@ public actor GameInstaller {
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instance.id)
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
-        if instance.importedInstallation == nil && instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
+        if instance.repositoryVersionID == nil && instance.importedInstallation == nil && instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
     }
     public func loadManifest(_ instance: GameInstance) throws -> VersionManifest {
         try paths.validateBinding(instance)
+        if let versionID = instance.repositoryVersionID {
+            let reader = MinecraftDirectoryReader()
+            let catalog = try reader.scanNow(paths.directoryRoot(paths.directoryID(for: instance.id)))
+            guard let version = catalog.versions.first(where: { $0.id == versionID }) else { throw RuriError.message("此版本已从游戏文件夹移除，请刷新实例列表。") }
+            if let issue = version.issue { throw RuriError.message(issue) }
+            return try reader.resolveManifestNow(version, in: catalog).selectingLibraries().repositoryManifest(root: catalog.directory)
+        }
         return try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: paths.manifest(instance.id)))
     }
     /// A game directory change keeps installation resources. Legacy releases need
@@ -94,6 +104,7 @@ public actor GameInstaller {
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
+        if instance.repositoryVersionID != nil { try prepareRepositoryNatives(instance, manifest: manifest) }
         guard let index = manifest.assetIndex else { return }
         let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.resources(for: instance).assets)
         guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("游戏资源索引缺失，请先修复实例。") }
@@ -134,23 +145,23 @@ public actor GameInstaller {
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
             throw RuriError.message("此版本的兼容规则不支持当前 macOS 环境。")
         }
-        guard let client = manifest.downloads?["client"] else { throw RuriError.message("版本清单缺少客户端文件") }
+        let client = manifest.downloads?["client"] ?? Artifact(url: nil)
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)
         var files = [DownloadItem(client, to: clientFile)]
         for artifact in manifest.generatedLibraries ?? [] {
             guard let path = artifact.path else { throw RuriError.message("生成依赖缺少路径") }
-            files.append(DownloadItem(artifact, to: try LauncherPaths.safePath(path, within: resources.libraries)))
+            files.append(DownloadItem(artifact, to: try resources.libraryFile(artifact, fallback: path)))
         }
         var nativeFiles: [(URL, [String])] = []
         for library in manifest.libraries where Self.allowed(library, architecture: arch) {
             if let artifact = try library.artifact() {
-                let target = try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: resources.libraries)
+                let target = try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name))
                 files.append(DownloadItem(artifact, to: target))
             }
             if let artifact = library.nativeArtifact(architecture: arch) {
                 guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message("原生库缺少文件路径") }
-                let target = try LauncherPaths.safePath(nativePath, within: resources.libraries)
+                let target = try resources.libraryFile(artifact, fallback: nativePath)
                 files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
             }
         }

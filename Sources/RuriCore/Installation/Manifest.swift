@@ -18,10 +18,11 @@ public struct Artifact: Codable, Equatable, Sendable {
     public let url: URL?
     public let sha1: String?
     public let size: Int64?
-    public init(path: String? = nil, url: URL?, sha1: String? = nil, size: Int64? = nil) {
-        self.path = path; self.url = url; self.sha1 = sha1; self.size = size
+    public let repositoryPath: String?
+    public init(path: String? = nil, url: URL?, sha1: String? = nil, size: Int64? = nil, repositoryPath: String? = nil) {
+        self.path = path; self.url = url; self.sha1 = sha1; self.size = size; self.repositoryPath = repositoryPath
     }
-    private enum CodingKeys: String, CodingKey { case path, url, sha1, size }
+    private enum CodingKeys: String, CodingKey { case path, url, sha1, size, repositoryPath }
     public init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         path = try c.decodeIfPresent(String.self, forKey: .path)
@@ -33,11 +34,13 @@ public struct Artifact: Codable, Equatable, Sendable {
         let hash = try c.decodeIfPresent(String.self, forKey: .sha1)
         sha1 = hash?.isEmpty == true ? nil : hash
         size = try c.decodeIfPresent(Int64.self, forKey: .size)
+        repositoryPath = try c.decodeIfPresent(String.self, forKey: .repositoryPath)
     }
     public func encode(to encoder: any Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encodeIfPresent(path, forKey: .path); try c.encodeIfPresent(url?.absoluteString, forKey: .url)
         try c.encodeIfPresent(sha1, forKey: .sha1); try c.encodeIfPresent(size, forKey: .size)
+        try c.encodeIfPresent(repositoryPath, forKey: .repositoryPath)
     }
 }
 public struct Rule: Codable, Equatable, Sendable {

@@ -182,6 +182,7 @@ public actor InstanceTransfer {
     // The closure makes filesystem rollback testable without contacting game services.
     func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [],
                  installGame: @Sendable (GameInstance) async throws -> GameInstance) async throws -> GameInstance {
+        guard !paths.isMinecraftDirectory(paths.newInstanceDirectoryID) else { throw RuriError.message("整合包导入到 Minecraft 目录尚未开放，请先选择默认实例文件夹。") }
         var instance = prepared.instance
         instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         instance.directoryID = paths.directoryID(for: instance.id)
@@ -216,7 +217,7 @@ public actor InstanceTransfer {
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
-        guard instance.importedInstallation == nil else { throw RuriError.message("此实例含有本地游戏本体和依赖，当前整合包格式无法完整保存它们。可使用复制实例保留完整副本。") }
+        guard instance.repositoryVersionID == nil, instance.importedInstallation == nil else { throw RuriError.message("此实例含有本地游戏本体和依赖，当前整合包格式无法完整保存它们。可使用复制实例保留完整副本。") }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,

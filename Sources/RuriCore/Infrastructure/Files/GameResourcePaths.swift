@@ -25,6 +25,14 @@ extension LauncherPaths {
             try imported.validate()
             return try .init(root: Self.safePath("installation", within: self.instance(instance.id)), confined: true)
         }
-        return try .init(root: root, confined: false)
+        return try .init(root: instance.repositoryVersionID == nil ? root : directoryRoot(directoryID(for: instance.id)), confined: false)
+    }
+}
+
+extension GameResourcePaths {
+    func libraryFile(_ artifact: Artifact, fallback: String? = nil) throws -> URL {
+        if let relative = artifact.repositoryPath { return try LauncherPaths.safePath(relative, within: root) }
+        guard let path = artifact.path ?? fallback else { throw RuriError.message("依赖库缺少文件路径。") }
+        return try LauncherPaths.safePath(path, within: libraries)
     }
 }

@@ -9,8 +9,11 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
     public var url: URL
     public var bookmark: Data?
     public let createdAt: Date
+    public enum Layout: String, Codable, Sendable { case managed, minecraft }
+    public var layout: Layout?
+    public var isMinecraft: Bool { layout == .minecraft }
     static let markerName = ".ruri-directory.json"
-    struct Marker: Codable { let schema: Int; let id: UUID }
+    struct Marker: Codable { let schema: Int; let id: UUID; var layout: Layout? }
 
     /// Registration is deliberate and only initializes an empty selected folder.
     /// Existing launcher layouts need an import preview, not a silent conversion.
@@ -51,7 +54,7 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
             let values = try marker.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
             guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024 else { throw RuriError.message("目录标记无效") }
             let record = try JSONDecoder().decode(Marker.self, from: Data(contentsOf: marker))
-            guard record.schema == 1, record.id == id else { throw RuriError.message("目录身份与登记信息不一致") }
+            guard record.schema == 1, record.id == id, (record.layout ?? .managed) == (layout ?? .managed) else { throw RuriError.message("目录身份与登记信息不一致") }
         } catch {
             throw RuriError.message("无法访问实例文件夹“\(name)”：\(url.path)\n请连接磁盘、检查访问权限或重新定位原文件夹。\n\(error.localizedDescription)")
         }
@@ -90,8 +93,10 @@ extension LauncherPaths {
                       instanceDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.directoryID ?? GameDirectory.defaultID },
                       newInstanceDirectoryID: state.selectedDirectoryID ?? GameDirectory.defaultID,
                       instanceRunDirectories: state.instances.reduce(into: [:]) { $0[$1.id] = $1.runDirectory ?? .isolated },
-                      instanceCustomDirectories: state.instances.reduce(into: [:]) { if $1.runDirectory == .custom { $0[$1.id] = $1.customRunDirectory } })
+                      instanceCustomDirectories: state.instances.reduce(into: [:]) { if $1.runDirectory == .custom { $0[$1.id] = $1.customRunDirectory } },
+                      instanceRepositoryVersions: state.instances.reduce(into: [:]) { $0[$1.id] = $1.repositoryVersionID })
     }
+    public func isMinecraftDirectory(_ id: UUID) -> Bool { directories.first(where: { $0.id == id })?.isMinecraft == true }
     public func directoryID(for instanceID: UUID) -> UUID { instanceDirectories[instanceID] ?? newInstanceDirectoryID }
     public func directoryRoot(_ id: UUID) -> URL {
         if id == GameDirectory.defaultID { return root }
@@ -106,6 +111,13 @@ extension LauncherPaths {
             _ = try GameDirectory.validName(directory.name)
             guard directory.url.isFileURL, directory.url.path.hasPrefix("/"), (directory.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("实例文件夹位置无效。") }
             try checkDirectoryOverlap(directory)
+        }
+        for (id, version) in instanceRepositoryVersions ?? [:] {
+            try MinecraftDirectoryScan.checkIdentifier(version)
+            guard isMinecraftDirectory(directoryID(for: id)) else { throw RuriError.message("本地版本缺少所属 Minecraft 文件夹。") }
+        }
+        for (id, directory) in instanceDirectories where isMinecraftDirectory(directory) {
+            guard instanceRepositoryVersions?[id] != nil else { throw RuriError.message("Minecraft 文件夹中的实例缺少版本目录名称。") }
         }
         for (id, mode) in instanceRunDirectories ?? [:] where mode == .custom {
             guard let custom = instanceCustomDirectories?[id] else { throw RuriError.message("实例缺少自定义运行目录信息。") }
@@ -124,7 +136,7 @@ extension LauncherPaths {
     }
     private func checkDirectoryOverlap(_ directory: GameDirectory) throws {
         let target = directory.url.standardizedFileURL.resolvingSymlinksInPath().path
-        for other in [root] + directories.filter({ $0.id != directory.id }).map(\.url) + (instanceCustomDirectories ?? [:]).values.map(\.url) {
+        for other in [root] + directories.filter({ $0.id != directory.id }).map(\.url) + (instanceCustomDirectories ?? [:]).values.map(\.url).filter({ !directory.isMinecraft || !$0.path.hasPrefix(target + "/") }) {
             let existing = other.standardizedFileURL.resolvingSymlinksInPath().path
             guard target != existing, !target.hasPrefix(existing + "/"), !existing.hasPrefix(target == "/" ? "/" : target + "/") else {
                 throw RuriError.message("实例文件夹不能与已登记文件夹或公共数据目录重叠。")
@@ -140,8 +152,15 @@ extension LauncherPaths {
         // The selected directory is trusted; its internal managed tree may not
         // escape through a symlink, including one with a not-yet-created leaf.
         let root = directoryRoot(id)
-        _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)
-        if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }
+        if isMinecraftDirectory(id) {
+            guard let version = instanceRepositoryVersions?[instanceID] else { throw RuriError.message("实例缺少版本文件夹。") }
+            try MinecraftDirectoryScan.checkIdentifier(version)
+            _ = try Self.safePath("versions/\(version)/\(version).json", within: root)
+            _ = try Self.safePath(".ruri/instances/\(instanceID.uuidString)", within: root)
+        } else {
+            _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)
+            if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }
+        }
         if runDirectory(for: instanceID) == .custom {
             guard let custom = instanceCustomDirectories?[instanceID] else { throw RuriError.message("请先选择自定义运行目录。") }
             try custom.validateAvailability()
@@ -160,6 +179,6 @@ extension LauncherPaths {
         let id = directoryID(for: instanceID)
         let selected = directories.filter { $0.id == id }.map { item in var item = item; item.bookmark = nil; return item }
         var custom = instanceCustomDirectories?[instanceID]; custom?.bookmark = nil
-        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)], instanceCustomDirectories: custom.map { [instanceID: $0] })
+        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)], instanceCustomDirectories: custom.map { [instanceID: $0] }, instanceRepositoryVersions: instanceRepositoryVersions?[instanceID].map { [instanceID: $0] })
     }
 }

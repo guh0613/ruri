@@ -5,11 +5,13 @@ import Foundation
 public actor MinecraftDirectoryReader {
     public init() {}
 
-    public func scan(_ selection: URL) throws -> MinecraftDirectoryCatalog {
-        let (root, selected) = try Self.repository(for: selection)
+    public func scan(_ selection: URL) throws -> MinecraftDirectoryCatalog { try scanNow(selection) }
+
+    nonisolated func scanNow(_ selection: URL, allowEmpty: Bool = false) throws -> MinecraftDirectoryCatalog {
+        let (root, selected) = try Self.repository(for: selection, allowEmpty: allowEmpty)
         let identity = try RunDirectoryCopyJournal.Identity.read(root)
         let versions = root.appendingPathComponent("versions")
-        let children = try FileTree.children(in: versions)
+        let children = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
         guard children.count <= 2_000 else { throw RuriError.message("此目录的版本数量超过读取限制。") }
         var reader = MinecraftDirectoryScan(root: root)
         var result: [MinecraftDirectoryVersion] = []
@@ -32,14 +34,17 @@ public actor MinecraftDirectoryReader {
             }
             reader.documents = []
         }
-        guard identity.matches(root), try FileTree.children(in: versions).map(\.lastPathComponent) == children.map(\.lastPathComponent) else {
+        let currentChildren = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
+        guard identity.matches(root), currentChildren.map(\.lastPathComponent) == children.map(\.lastPathComponent) else {
             throw RuriError.message("读取期间游戏目录发生变化，请重新扫描。")
         }
-        guard !result.isEmpty else { throw RuriError.message("此目录的 versions 文件夹里没有找到版本。") }
+        guard allowEmpty || !result.isEmpty else { throw RuriError.message("此目录的 versions 文件夹里没有找到版本。") }
         return .init(id: UUID(), directory: root, selectedVersionID: selected, versions: result, identity: identity)
     }
 
-    public func validate(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws {
+    public func validate(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws { try validateNow(version, in: catalog) }
+
+    nonisolated func validateNow(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws {
         guard catalog.identity.matches(catalog.directory), catalog.versions.contains(where: { $0.id == version.id && $0.directory == version.directory }), version.issue == nil else {
             throw RuriError.message("游戏目录或所选版本已不可用，请重新扫描。")
         }
@@ -57,7 +62,7 @@ public actor MinecraftDirectoryReader {
         }
     }
 
-    private static func repository(for selection: URL) throws -> (URL, String?) {
+    private static func repository(for selection: URL, allowEmpty: Bool) throws -> (URL, String?) {
         let url = selection.standardizedFileURL
         let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey])
         guard info.isSymbolicLink != true else { throw RuriError.message("请选择实际的 Minecraft 目录。") }
@@ -67,11 +72,12 @@ public actor MinecraftDirectoryReader {
         else if directory.lastPathComponent == "versions" { root = directory.deletingLastPathComponent(); selected = nil }
         else if directory.deletingLastPathComponent().lastPathComponent == "versions" {
             root = directory.deletingLastPathComponent().deletingLastPathComponent(); selected = directory.lastPathComponent
+        } else if allowEmpty && info.isDirectory == true { root = directory; selected = nil
         } else { throw RuriError.message("没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。") }
         if info.isDirectory != true {
             guard let selected, info.isRegularFile == true, url.lastPathComponent == selected + ".json" else { throw RuriError.message("请选择版本文件夹或同名 JSON 清单。") }
         }
-        guard isDirectory(root), isDirectory(root.appendingPathComponent("versions")) else { throw RuriError.message("Minecraft 目录不存在或是符号链接。") }
+        guard isDirectory(root), isDirectory(root.appendingPathComponent("versions")) || (allowEmpty && !FileManager.default.fileExists(atPath: root.appendingPathComponent("versions").path)) else { throw RuriError.message("Minecraft 目录不存在或是符号链接。") }
         return (root.resolvingSymlinksInPath(), selected)
     }
     private static func isDirectory(_ url: URL) -> Bool {

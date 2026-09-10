@@ -30,7 +30,9 @@ struct RunDirectorySnapshot: Equatable, Sendable {
     var isEmpty: Bool { fileCount == 0 }
     static func read(paths: LauncherPaths, instanceID: UUID) throws -> RunDirectorySnapshot {
         let fm = FileManager.default, gameRoot = paths.game(instanceID), metadataRoot = paths.gameDataState(instanceID)
-        let game = fm.fileExists(atPath: gameRoot.path) ? try FileTree.entries(in: gameRoot, excluding: [".ruri"]) : []
+        let repository = paths.instanceRepositoryVersions?[instanceID]
+        let excluded = [".ruri"] + (repository == nil ? [] : paths.runDirectory(for: instanceID) == .shared ? ["versions", "libraries", "assets", GameDirectory.markerName, "launcher_profiles.json", "launcher_accounts.json"] : [repository! + ".json", repository! + ".jar", "libraries", ".hmcl", "hmclversion.cfg", "modpack.cfg"])
+        let game = fm.fileExists(atPath: gameRoot.path) ? try FileTree.entries(in: gameRoot, excluding: Set(excluded)) : []
         var metadata: [FileTree.Entry] = []
         for name in ["content.json", "world-backups"] {
             let url = try LauncherPaths.safePath(name, within: metadataRoot)

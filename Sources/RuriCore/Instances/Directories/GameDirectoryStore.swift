@@ -23,10 +23,17 @@ public enum GameDirectoryStore {
         }
     }
     @discardableResult public static func select(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
-        try StateStore.update(paths) { state in
+        let result = try StateStore.update(paths) { state in
             guard id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw RuriError.message("此实例文件夹已被取消登记。") }
             state.selectedDirectoryID = id
+            if !state.instances.contains(where: { $0.id == state.selectedInstanceID && ($0.directoryID ?? GameDirectory.defaultID) == id }) {
+                state.selectedInstanceID = state.instances.first(where: { ($0.directoryID ?? GameDirectory.defaultID) == id })?.id
+            }
         }
+        if let directory = result.gameDirectories?.first(where: { $0.id == id }), directory.isMinecraft, (try? directory.validateAvailability()) != nil {
+            return try MinecraftFolderStore.refresh(id, paths: paths)
+        }
+        return result
     }
     @discardableResult public static func rename(_ id: UUID, name: String, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
@@ -72,12 +79,20 @@ public enum GameDirectoryStore {
     @discardableResult public static func remove(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
-            guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message("文件夹仍有实例，不能取消登记。") }
             guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例文件夹。") }
-            if (try? directory.validateAvailability()) != nil {
-                let instances = directory.url.appendingPathComponent("instances")
-                if FileManager.default.fileExists(atPath: instances.path) {
-                    guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("文件夹中仍有未登记或正在安装的实例，请先处理这些实例再取消登记。") }
+            if directory.isMinecraft {
+                let current = paths.configured(with: state)
+                let leases = try state.instances.filter { $0.directoryID == id }.map { try GameRunLease.acquire(paths: current, instanceID: $0.id) }
+                defer { withExtendedLifetime(leases) {} }
+                state.instances.removeAll { $0.directoryID == id }
+                if !state.instances.contains(where: { $0.id == state.selectedInstanceID }) { state.selectedInstanceID = nil }
+            } else {
+                guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message("文件夹仍有实例，不能取消登记。") }
+                if (try? directory.validateAvailability()) != nil {
+                    let instances = directory.url.appendingPathComponent("instances")
+                    if FileManager.default.fileExists(atPath: instances.path) {
+                        guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("文件夹中仍有未登记或正在安装的实例，请先处理这些实例再取消登记。") }
+                    }
                 }
             }
             // Empty markers can be kept and reattached later. No file deletion.

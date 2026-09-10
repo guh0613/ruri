@@ -57,6 +57,7 @@ public actor ForgeInstaller {
         let install: Legacy?
     }
     public func install(instance: GameInstance, base: VersionManifest, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> VersionManifest {
+        let resources = try paths.resources(for: instance)
         guard let version = instance.loaderVersion else { throw RuriError.message("请选择加载器版本") }
         let url = try ForgeCatalog.installerURL(loader: instance.loader, game: instance.gameVersion, version: version)
         let checksumData = try await HTTPClient.shared.data(from: LoaderEndpoints.installerChecksum(url))
@@ -68,13 +69,14 @@ public actor ForgeInstaller {
         let archive = try Archive(url: jar, accessMode: .read)
         let profile = try JSONDecoder().decode(Profile.self, from: read("install_profile.json", in: archive))
         guard (profile.minecraft ?? profile.install?.minecraft ?? profile.versionInfo?.inheritsFrom) == instance.gameVersion else { throw RuriError.message("安装程序对应的 Minecraft 版本不匹配") }
-        if let legacy = profile.versionInfo { return try installLegacy(legacy, profile: profile, archive: archive) }
+        if let legacy = profile.versionInfo { return try installLegacy(legacy, profile: profile, archive: archive, resources: resources) }
         guard let json = profile.json else { throw RuriError.message("加载器安装包缺少版本清单") }
         let child = try JSONDecoder().decode(VersionManifest.self, from: read(json, in: archive))
         guard child.inheritsFrom == instance.gameVersion else { throw RuriError.message("加载器清单的父版本不匹配") }
         let work = try LauncherPaths.safePath("loader-work/\(instance.id.uuidString)/\(instance.loader.rawValue)-\(version)", within: paths.cache)
         try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)
-        let sourceJar = try LauncherPaths.safePath("\(instance.gameVersion)/\(instance.gameVersion).jar", within: paths.versions)
+        let jarID = instance.repositoryVersionID ?? instance.gameVersion
+        let sourceJar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)
         guard let client = base.downloads?["client"] else { throw RuriError.message("缺少原版客户端信息") }
         try await downloader.fetch(DownloadItem(client, to: sourceJar))
         let vanilla = try LauncherPaths.safePath("versions/\(instance.gameVersion)", within: work)
@@ -90,7 +92,7 @@ public actor ForgeInstaller {
             let relative = try artifact.path ?? Library.mavenPath(library.name)
             guard seen.insert(relative).inserted else { continue }
             let target = try LauncherPaths.safePath(relative, within: workLibraries)
-            let cached = try LauncherPaths.safePath(relative, within: paths.libraries)
+            let cached = try LauncherPaths.safePath(relative, within: resources.libraries)
             if DownloadManager.valid(cached, item: DownloadItem(artifact, to: cached)) { try copyAtomically(cached, to: target) }
             else if let entry = archive["maven/" + relative], entry.type == .file {
                 try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -127,7 +129,7 @@ public actor ForgeInstaller {
             let source = try LauncherPaths.safePath(relative, within: workLibraries)
             if !FileManager.default.fileExists(atPath: source.path) { continue }
             guard DownloadManager.valid(source, item: DownloadItem(artifact, to: source)) else { throw RuriError.message("加载器生成文件校验失败：\(relative)") }
-            let target = try LauncherPaths.safePath(relative, within: paths.libraries)
+            let target = try LauncherPaths.safePath(relative, within: resources.libraries)
             if !DownloadManager.valid(target, item: DownloadItem(artifact, to: target)) { try copyAtomically(source, to: target) }
         }
         // NeoForge locates patched client jars and mappings dynamically; those
@@ -148,7 +150,7 @@ public actor ForgeInstaller {
                 do { while let data = try handle.read(upToCount: 1024 * 1024), !data.isEmpty { hash.update(data: data) }; try handle.close() }
                 catch { try? handle.close(); throw error }
                 let artifact = Artifact(path: relative, url: nil, sha1: hash.finalize().map { String(format: "%02x", $0) }.joined(), size: Int64(values.fileSize ?? 0))
-                let target = try LauncherPaths.safePath(relative, within: paths.libraries)
+                let target = try LauncherPaths.safePath(relative, within: resources.libraries)
                 if !DownloadManager.valid(target, item: DownloadItem(artifact, to: target)) { try copyAtomically(file, to: target) }
                 generated.append(artifact)
             }
@@ -163,10 +165,10 @@ public actor ForgeInstaller {
         var data = Data(); let crc = try archive.extract(entry) { data.append($0) }
         guard crc == entry.checksum else { throw RuriError.message("安装包清单校验失败") }; return data
     }
-    private func installLegacy(_ child: VersionManifest, profile: Profile, archive: Archive) throws -> VersionManifest {
+    private func installLegacy(_ child: VersionManifest, profile: Profile, archive: Archive, resources: GameResourcePaths) throws -> VersionManifest {
         guard let coordinate = profile.install?.path, let filename = profile.install?.filePath,
               let entry = archive[filename], entry.type == .file else { throw RuriError.message("旧版 Forge 安装包缺少内嵌客户端") }
-        let target = try LauncherPaths.safePath(Library.mavenPath(coordinate), within: paths.libraries)
+        let target = try LauncherPaths.safePath(Library.mavenPath(coordinate), within: resources.libraries)
         try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
         let staging = target.deletingLastPathComponent().appendingPathComponent(".\(UUID().uuidString).jar")
         defer { try? FileManager.default.removeItem(at: staging) }

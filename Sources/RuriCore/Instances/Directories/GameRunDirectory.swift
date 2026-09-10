@@ -24,7 +24,7 @@ public enum GameIsolationPolicy: String, Codable, CaseIterable, Sendable, Identi
 
 extension LauncherPaths {
     public func validateBinding(_ instance: GameInstance) throws {
-        guard runDirectory(for: instance.id) == (instance.runDirectory ?? .isolated),
+        guard instanceRepositoryVersions?[instance.id] == instance.repositoryVersionID, runDirectory(for: instance.id) == (instance.runDirectory ?? .isolated),
               instance.directoryID == nil || instance.directoryID == directoryID(for: instance.id) else {
             throw RuriError.message("实例设置与本次操作的目录不一致，请刷新后重试。")
         }
@@ -40,10 +40,12 @@ extension LauncherPaths {
         runDirectory(for: instanceID) == .isolated ? instance(instanceID) : game(instanceID).appendingPathComponent(".ruri")
     }
     public func including(_ instance: GameInstance) -> LauncherPaths {
+        var versions = instanceRepositoryVersions ?? [:]
+        versions[instance.id] = instance.repositoryVersionID
         var directoriesByInstance = instanceDirectories, modes = instanceRunDirectories ?? [:], custom = instanceCustomDirectories ?? [:]
         directoriesByInstance[instance.id] = instance.directoryID ?? directoryID(for: instance.id)
         modes[instance.id] = instance.runDirectory ?? .isolated
         custom[instance.id] = instance.runDirectory == .custom ? instance.customRunDirectory : nil
-        return LauncherPaths(root: root, directories: directories, instanceDirectories: directoriesByInstance, newInstanceDirectoryID: newInstanceDirectoryID, instanceRunDirectories: modes, instanceCustomDirectories: custom)
+        return LauncherPaths(root: root, directories: directories, instanceDirectories: directoriesByInstance, newInstanceDirectoryID: newInstanceDirectoryID, instanceRunDirectories: modes, instanceCustomDirectories: custom, instanceRepositoryVersions: versions)
     }
 }

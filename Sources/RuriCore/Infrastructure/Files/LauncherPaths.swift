@@ -7,11 +7,13 @@ public struct LauncherPaths: Codable, Sendable {
     public let newInstanceDirectoryID: UUID
     public let instanceRunDirectories: [UUID: GameRunDirectory]?
     public let instanceCustomDirectories: [UUID: CustomRunDirectory]?
-    public init(root: URL? = nil, directories: [GameDirectory] = [], instanceDirectories: [UUID: UUID] = [:], newInstanceDirectoryID: UUID = GameDirectory.defaultID, instanceRunDirectories: [UUID: GameRunDirectory]? = nil, instanceCustomDirectories: [UUID: CustomRunDirectory]? = nil) {
+    public let instanceRepositoryVersions: [UUID: String]?
+    public init(root: URL? = nil, directories: [GameDirectory] = [], instanceDirectories: [UUID: UUID] = [:], newInstanceDirectoryID: UUID = GameDirectory.defaultID, instanceRunDirectories: [UUID: GameRunDirectory]? = nil, instanceCustomDirectories: [UUID: CustomRunDirectory]? = nil, instanceRepositoryVersions: [UUID: String]? = nil) {
         self.root = root ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Ruri", isDirectory: true)
         self.directories = directories; self.instanceDirectories = instanceDirectories; self.newInstanceDirectoryID = newInstanceDirectoryID
         self.instanceRunDirectories = instanceRunDirectories
         self.instanceCustomDirectories = instanceCustomDirectories
+        self.instanceRepositoryVersions = instanceRepositoryVersions
     }
     public var libraries: URL { root.appendingPathComponent("libraries") }
     public var assets: URL { root.appendingPathComponent("assets") }
@@ -20,12 +22,19 @@ public struct LauncherPaths: Codable, Sendable {
     public var runtimes: URL { root.appendingPathComponent("runtimes") }
     public var cache: URL { root.appendingPathComponent("cache") }
     public var state: URL { root.appendingPathComponent("state.json") }
-    public func instance(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent("instances").appendingPathComponent(id.uuidString) }
+    public func instance(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances").appendingPathComponent(id.uuidString) }
+    public func versionDirectory(_ id: UUID) -> URL {
+        directoryRoot(directoryID(for: id)).appendingPathComponent("versions").appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
+    }
     public func game(_ id: UUID) -> URL {
         if runDirectory(for: id) == .custom { return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)") }
+        if isMinecraftDirectory(directoryID(for: id)) { return runDirectory(for: id) == .isolated ? versionDirectory(id) : directoryRoot(directoryID(for: id)) }
         return (runDirectory(for: id) == .isolated ? instance(id) : directoryRoot(directoryID(for: id))).appendingPathComponent("minecraft")
     }
-    public func manifest(_ id: UUID) -> URL { instance(id).appendingPathComponent("version.json") }
+    public func manifest(_ id: UUID) -> URL {
+        if let version = instanceRepositoryVersions?[id] { return versionDirectory(id).appendingPathComponent(version + ".json") }
+        return instance(id).appendingPathComponent("version.json")
+    }
     public func prepare() throws {
         for url in [root, libraries, assets, versions, instances, runtimes, cache] { try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true) }
     }

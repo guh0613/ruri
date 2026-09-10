@@ -82,7 +82,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         if let collection = paths.directories.first(where: { $0.id == reservation.paths.directoryID(for: reservation.instanceID) }) {
             let directories = checked.directories.map { $0.id == collection.id ? collection : $0 }
             checked = LauncherPaths(root: checked.root, directories: directories, instanceDirectories: checked.instanceDirectories,
-                                    newInstanceDirectoryID: checked.newInstanceDirectoryID, instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: checked.instanceCustomDirectories)
+                                    newInstanceDirectoryID: checked.newInstanceDirectoryID, instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: checked.instanceCustomDirectories, instanceRepositoryVersions: checked.instanceRepositoryVersions)
         }
         if let custom = paths.instanceCustomDirectories?[instanceID], let original = checked.instanceCustomDirectories?[reservation.instanceID], original.id == custom.id {
             // The marker identifies a moved custom root, while its history
@@ -91,7 +91,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
             var locations = checked.instanceCustomDirectories ?? [:]; locations[reservation.instanceID] = custom
             checked = LauncherPaths(root: checked.root, directories: checked.directories,
                                     instanceDirectories: checked.instanceDirectories, newInstanceDirectoryID: checked.newInstanceDirectoryID,
-                                    instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: locations)
+                                    instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: locations, instanceRepositoryVersions: checked.instanceRepositoryVersions)
         } else {
             guard checked.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath().path == root.standardizedFileURL.resolvingSymlinksInPath().path else { throw RuriError.message("共享运行目录与上次运行记录不一致，请检查原实例。") }
         }

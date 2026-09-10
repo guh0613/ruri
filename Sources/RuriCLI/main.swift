@@ -127,6 +127,7 @@ import RuriCore
                 instance.launchOverrides = .init()
                 instance.directoryID = paths.newInstanceDirectoryID
                 instance.runDirectory = (try StateStore.load(paths).settings.isolationPolicy ?? .always).directory(loader: loader)
+                instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths)
                 let installPaths = paths.including(instance)
                 let lease = try GameRunLease.acquire(paths: installPaths, instanceID: instance.id)
                 defer { withExtendedLifetime(lease) {} }

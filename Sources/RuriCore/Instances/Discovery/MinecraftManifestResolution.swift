@@ -26,8 +26,10 @@ public struct MinecraftLibraryDeclaration: Sendable {
 }
 
 extension MinecraftDirectoryReader {
-    public func resolveManifest(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws -> MinecraftManifestResolution {
-        try validate(version, in: catalog)
+    public func resolveManifest(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws -> MinecraftManifestResolution { try resolveManifestNow(version, in: catalog) }
+
+    nonisolated func resolveManifestNow(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws -> MinecraftManifestResolution {
+        try validateNow(version, in: catalog)
         var reader = MinecraftDirectoryScan(root: catalog.directory)
         let graph = try reader.manifestGraph(version.id)
         let manifest = try JSONDecoder().decode(VersionManifest.self, from: JSONSerialization.data(withJSONObject: graph.value))
@@ -54,7 +56,7 @@ extension MinecraftDirectoryReader {
         let client = try reader.path("versions/\(jarID)/\(jarID).jar")
         // Recheck the scan snapshot after composition as another launcher may
         // have rewritten a parent or its directory settings during this read.
-        try validate(version, in: catalog)
+        try validateNow(version, in: catalog)
         return .init(manifest: manifest, clientFile: client, libraries: libraries, warnings: graph.warnings, sourceManifests: reader.documents)
     }
 }

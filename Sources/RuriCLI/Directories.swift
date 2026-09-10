@@ -16,8 +16,11 @@ extension CLI {
             return
         case "add":
             guard args.count == 3 else { throw usage }
-            let result = try GameDirectoryStore.add(name: args[2], url: URL(fileURLWithPath: args[1]), paths: paths)
+            let result = try MinecraftFolderStore.add(name: args[2], url: URL(fileURLWithPath: args[1]), paths: paths)
             print("Added \(result.selectedDirectoryID!.uuidString)"); return
+        case "refresh":
+            guard args.count == 1 else { throw usage }
+            _ = try MinecraftFolderStore.refresh(state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths)
         case "select":
             guard args.count == 2, let id = UUID(uuidString: args[1]), id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw usage }
             try GameDirectoryStore.select(id, paths: paths)
@@ -31,5 +34,5 @@ extension CLI {
         }
         print("Updated directory settings")
     }
-    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <empty-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid>]") }
+    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid>]") }
 }

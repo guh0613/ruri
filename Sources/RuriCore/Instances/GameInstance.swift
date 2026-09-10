@@ -15,6 +15,10 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var extraGameArguments: String?
     public var supportedJavaMajors: [Int]?
     public var packLibraries: [Library]?
+    /// The folder name under a registered Minecraft repository’s versions directory.
+    public var repositoryVersionID: String?
+    public var repositoryComponents: [MinecraftDirectoryComponent]?
+    public var repositoryIssue: String?
     public var importedInstallation: ImportedMinecraftInstallation?
     public var width: Int
     public var height: Int
@@ -45,8 +49,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
         return selected
     }
     public var subtitle: String {
-        if let importedInstallation {
-            let components = importedInstallation.components.map { $0.name + " " + $0.version }
+        if let details = repositoryComponents ?? importedInstallation?.components {
+            let components = details.map { $0.name + " " + $0.version }
             return (["Minecraft \(gameVersion)"] + (components.isEmpty ? ["本地版本"] : components)).joined(separator: " · ")
         }
         return loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")"
