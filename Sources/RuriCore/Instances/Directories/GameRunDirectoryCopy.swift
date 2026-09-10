@@ -39,7 +39,7 @@ public struct RunDirectoryCopyFailure: LocalizedError, Sendable {
 
 extension GameRunDirectoryChange {
     public func copyToEmpty(_ preview: GameRunDirectoryChangePreview, progress: @Sendable (RunDirectoryCopyProgress) -> Void = { _ in }) async throws -> RunDirectoryCopyResult {
-        guard preview.instance.repositoryVersionID == nil else { throw RuriError.message("Minecraft 目录暂时支持直接切换运行目录；复制内容功能仍在适配。") }
+        if let issue = preview.copyIssue { throw RuriError.message(issue) }
         guard preview.canCopyToTarget else { throw RuriError.message("目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。") }
         let initial = try StateStore.load(paths)
         let current = paths.configured(with: initial)
@@ -191,6 +191,7 @@ extension GameRunDirectoryChange {
     }
     private func validateJournalBinding(_ journal: RunDirectoryCopyJournal, current: GameInstance) throws {
         guard current.directoryID == journal.original.directoryID,
+              current.repositoryVersionID == journal.original.repositoryVersionID,
               current.gameVersion == journal.original.gameVersion, current.loader == journal.original.loader, current.loaderVersion == journal.original.loaderVersion,
               current.lastRunDirectoryChangeID == journal.id || current.runDirectory == journal.original.runDirectory else {
             throw RuriError.message("实例设置在复制中断后改变，工作区已保留，请先核对原实例。")

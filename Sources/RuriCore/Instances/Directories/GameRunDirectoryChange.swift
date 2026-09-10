@@ -15,7 +15,8 @@ public struct GameRunDirectoryChangePreview: Identifiable, Sendable {
     public var sourceBytes: Int64 { sourceSnapshot.bytes }
     public var targetFileCount: Int { targetSnapshot.fileCount }
     public var targetBytes: Int64 { targetSnapshot.bytes }
-    public var canCopyToTarget: Bool { targetSnapshot.isEmpty }
+    public var canCopyToTarget: Bool { targetSnapshot.isEmpty && copyIssue == nil }
+    public let copyIssue: String?
     public let otherInstances: [String]
     let instance: GameInstance
     let sourceSnapshot: RunDirectorySnapshot
@@ -30,9 +31,12 @@ struct RunDirectorySnapshot: Equatable, Sendable {
     var isEmpty: Bool { fileCount == 0 }
     static func read(paths: LauncherPaths, instanceID: UUID) throws -> RunDirectorySnapshot {
         let fm = FileManager.default, gameRoot = paths.game(instanceID), metadataRoot = paths.gameDataState(instanceID)
-        let repository = paths.instanceRepositoryVersions?[instanceID]
-        let excluded = [".ruri"] + (repository == nil ? [] : paths.runDirectory(for: instanceID) == .shared ? ["versions", "libraries", "assets", GameDirectory.markerName, "launcher_profiles.json", "launcher_accounts.json"] : [repository! + ".json", repository! + ".jar", "libraries", ".hmcl", "hmclversion.cfg", "modpack.cfg"])
-        let game = fm.fileExists(atPath: gameRoot.path) ? try FileTree.entries(in: gameRoot, excluding: Set(excluded)) : []
+        let reserved = Set(MinecraftGameDataFiles.reservedNames(paths: paths, instanceID: instanceID).map(MinecraftGameDataFiles.key))
+        var game: [FileTree.Entry] = []
+        if fm.fileExists(atPath: gameRoot.path) {
+            let excluded = Set(try FileTree.children(in: gameRoot).filter { reserved.contains(MinecraftGameDataFiles.key($0.lastPathComponent)) }.map(\.lastPathComponent))
+            game = try FileTree.entries(in: gameRoot, excluding: excluded)
+        }
         var metadata: [FileTree.Entry] = []
         for name in ["content.json", "world-backups"] {
             let url = try LauncherPaths.safePath(name, within: metadataRoot)
@@ -102,12 +106,13 @@ public actor GameRunDirectoryChange {
         defer { withExtendedLifetime(access) {} }
         let sourceSnapshot = try RunDirectorySnapshot.read(paths: current, instanceID: instanceID)
         let targetSnapshot = try RunDirectorySnapshot.read(paths: access.targetPaths, instanceID: instanceID)
+        let copyIssue = MinecraftGameDataFiles.copyIssue(source: sourceSnapshot, sourcePaths: current, targetPaths: access.targetPaths, instanceID: instanceID)
         let others = state.instances.filter { other in
             other.id != instanceID && current.game(other.id).standardizedFileURL.resolvingSymlinksInPath() == access.targetPaths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath()
         }.map(\.name)
         return GameRunDirectoryChangePreview(id: UUID(), instanceID: instanceID, instanceName: instance.name,
                                              source: current.game(instanceID), target: access.targetPaths.game(instanceID), sourceMode: instance.runDirectory ?? .isolated,
-                                             targetMode: target, targetCustomDirectory: custom, createdAt: Date(), otherInstances: others, instance: instance,
+                                             targetMode: target, targetCustomDirectory: custom, createdAt: Date(), copyIssue: copyIssue, otherInstances: others, instance: instance,
                                              sourceSnapshot: sourceSnapshot, targetSnapshot: targetSnapshot)
     }
 
@@ -141,6 +146,11 @@ public actor GameRunDirectoryChange {
         if (instance.runDirectory ?? .isolated) == target {
             guard target == .custom, let customDirectory, instance.customRunDirectory?.isSameLocation(as: customDirectory) == false else { throw RuriError.message("实例已经使用这个运行目录。") }
         }
+        var changed = instance; changed.runDirectory = target
+        if target == .custom { changed.customRunDirectory = customDirectory }
+        guard !MinecraftGameDataFiles.sameLocation(paths.game(instance.id), paths.including(changed).game(instance.id)) else {
+            throw RuriError.message("所选目录就是当前游戏目录，无需切换。")
+        }
         if target != .isolated, try ModpackRegistry.load(paths: paths, instanceID: instance.id) != nil || FileManager.default.fileExists(atPath: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta").path) {
             throw RuriError.message("整合包保持独立运行目录，以保留包的配置与更新记录。")
         }
@@ -153,6 +163,7 @@ public actor GameRunDirectoryChange {
         var target = instance; target.runDirectory = preview.targetMode
         if preview.targetMode == .custom { target.customRunDirectory = preview.targetCustomDirectory }
         guard instance.directoryID == preview.instance.directoryID, instance.runDirectory == preview.instance.runDirectory,
+              instance.repositoryVersionID == preview.instance.repositoryVersionID,
               instance.gameVersion == preview.instance.gameVersion, instance.loader == preview.instance.loader, instance.loaderVersion == preview.instance.loaderVersion,
               paths.game(instance.id) == preview.source, paths.including(target).game(instance.id) == preview.target else { throw RuriError.message("实例或目录位置已经变化，请重新预览。") }
     }

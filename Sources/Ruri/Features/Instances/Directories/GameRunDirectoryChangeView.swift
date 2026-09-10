@@ -42,7 +42,7 @@ struct GameRunDirectoryChangeView: View {
                     }
                 }
             }
-            if loading || registering { ProgressView(registering ? "正在登记所选目录…" : "正在检查目录与文件…").frame(maxWidth: .infinity, minHeight: 220) }
+            if loading || registering { ProgressView(registering ? "正在准备所选目录…" : "正在检查目录与文件…").frame(maxWidth: .infinity, minHeight: 220) }
             else if let recovery {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
@@ -59,9 +59,10 @@ struct GameRunDirectoryChangeView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Picker("内容处理", selection: $copyFiles) {
                             Text("使用目标已有的内容").tag(false)
-                            Text("复制当前内容到空目标").tag(true).disabled(!preview.canCopyToTarget || instance.repositoryVersionID != nil)
+                            Text("复制当前内容到空目标").tag(true).disabled(!preview.canCopyToTarget)
                         }.pickerStyle(.radioGroup).disabled(model.busy)
-                        if !preview.canCopyToTarget { Text("目标已有文件或备份，不能用复制覆盖。").font(.caption).foregroundStyle(.secondary) }
+                        if let issue = preview.copyIssue { Text(issue).font(.caption).foregroundStyle(.secondary) }
+                        else if !preview.canCopyToTarget { Text("目标已有文件或备份，不能用复制覆盖。").font(.caption).foregroundStyle(.secondary) }
                         location("原目录", url: preview.source, files: preview.sourceFileCount, bytes: preview.sourceBytes)
                         location("目标目录", url: preview.target, files: preview.targetFileCount, bytes: preview.targetBytes)
                         if !preview.otherInstances.isEmpty {
@@ -70,6 +71,7 @@ struct GameRunDirectoryChangeView: View {
                         Text(copyFiles ? "先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。" : preview.targetFileCount == 0 ? "目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。" : "切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。")
                             .font(.callout).fixedSize(horizontal: false, vertical: true)
                         Text("文件统计包含该目录对应的内容来源记录和世界备份。").font(.caption).foregroundStyle(.secondary)
+                        if instance.repositoryVersionID != nil { Text("游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。").font(.caption).foregroundStyle(.secondary) }
                     }.padding(2)
                 }.frame(minHeight: 230)
             } else if let issue {

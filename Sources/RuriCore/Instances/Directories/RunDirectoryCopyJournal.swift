@@ -36,7 +36,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         var publishedIdentity: Identity?
     }
     struct EmptyDirectory: Codable, Sendable { let area: Area; let path: String }
-    var version = 3
+    var version = 4
     let id: UUID
     let original: GameInstance
     let target: GameRunDirectory
@@ -55,7 +55,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         let record: Self = try RunDirectoryCopyGuard.decode(root.appendingPathComponent("transaction.json"), limit: 8_388_608)
         var differentLocation = (record.original.runDirectory ?? .isolated) != record.target
         if !differentLocation, record.target == .custom, let source = record.original.customRunDirectory, let target = record.targetCustomDirectory { differentLocation = !source.isSameLocation(as: target) }
-        guard (1...3).contains(record.version), record.original.id == instanceID, differentLocation,
+        guard (1...4).contains(record.version), record.original.id == instanceID, differentLocation,
               record.items.count <= 4096, record.emptyDirectories.count <= 150_000, record.original.name.count <= 1024 else { throw RuriError.message("运行目录复制记录无效，工作副本已保留。") }
         if record.target == .custom {
             guard let custom = record.targetCustomDirectory ?? record.original.customRunDirectory else { throw RuriError.message("复制记录缺少自定义目标目录。") }
@@ -63,6 +63,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         }
         try record.targetPaths(paths).validateDirectoryConfiguration()
         guard record.stagingOnTarget != true || record.target == .custom else { throw RuriError.message("复制工作区位置无效。") }
+        let reserved = Set(MinecraftGameDataFiles.reservedNames(paths: record.targetPaths(paths), instanceID: instanceID).map(MinecraftGameDataFiles.key))
         var keys = Set<String>()
         for item in record.items {
             guard !item.name.isEmpty, item.name != ".", item.name != "..", !item.name.contains("/"), !item.name.contains("\\"), !item.name.contains("\0"),
@@ -74,11 +75,16 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
                 guard record.version >= 3, published.inode > 0, published.directory == item.identity.directory,
                       published.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message("发布副本的文件身份记录无效。") }
             }
+            if record.version >= 4, item.area == .game, reserved.contains(MinecraftGameDataFiles.key(item.name)) {
+                throw RuriError.message("运行目录复制记录包含目标安装文件，未移动这些文件。")
+            }
         }
         for directory in record.emptyDirectories {
             guard directory.area != .metadata || directory.path == "world-backups" || directory.path.hasPrefix("world-backups/") else { throw RuriError.message("运行目录复制记录包含无效的备份路径。") }
             _ = try LauncherPaths.safePath(directory.path, within: root)
             guard directory.path.split(separator: "/").first != ".ruri" else { throw RuriError.message("运行目录复制记录包含保留路径。") }
+            if record.version >= 4, directory.area == .game, let first = directory.path.split(separator: "/").first,
+               reserved.contains(MinecraftGameDataFiles.key(String(first))) { throw RuriError.message("运行目录复制记录包含目标安装目录。") }
         }
         return record
     }
