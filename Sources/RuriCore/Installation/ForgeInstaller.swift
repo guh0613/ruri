@@ -4,8 +4,7 @@ import CryptoKit
 
 public enum ForgeCatalog {
     public static func versions(loader: LoaderKind, game: String) async throws -> [String] {
-        let base = repository(loader: loader, game: game)
-        let data = try await HTTPClient.shared.data(from: base.appendingPathComponent("maven-metadata.xml"))
+        let data = try await HTTPClient.shared.data(from: LoaderEndpoints.mavenMetadata(loader: loader, game: game))
         let parser = XMLParser(data: data); let delegate = MavenVersionsParser(); parser.delegate = delegate
         parser.shouldResolveExternalEntities = false
         guard parser.parse() else { throw RuriError.message("无法读取加载器版本列表") }
@@ -29,14 +28,10 @@ public enum ForgeCatalog {
         return "\(parts[0]).\(parts[1]).\(parts.count > 2 ? parts[2] : "0")."
     }
     public static func repository(loader: LoaderKind, game: String) -> URL {
-        if loader == .forge { return URL(string: "https://maven.minecraftforge.net/net/minecraftforge/forge")! }
-        return URL(string: game == "1.20.1" ? "https://maven.neoforged.net/releases/net/neoforged/forge" : "https://maven.neoforged.net/releases/net/neoforged/neoforge")!
+        LoaderEndpoints.repository(loader: loader, game: game)
     }
-    public static func installerURL(loader: LoaderKind, game: String, version: String) -> URL {
-        let legacyName = loader == .forge || game == "1.20.1"
-        let coordinate = legacyName ? "\(game)-\(version)" : version
-        let artifact = legacyName ? "forge" : "neoforge"
-        return repository(loader: loader, game: game).appendingPathComponent(coordinate).appendingPathComponent("\(artifact)-\(coordinate)-installer.jar")
+    public static func installerURL(loader: LoaderKind, game: String, version: String) throws -> URL {
+        try LoaderEndpoints.installer(loader: loader, game: game, version: version)
     }
 }
 private final class MavenVersionsParser: NSObject, XMLParserDelegate {
@@ -63,8 +58,8 @@ public actor ForgeInstaller {
     }
     public func install(instance: GameInstance, base: VersionManifest, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> VersionManifest {
         guard let version = instance.loaderVersion else { throw RuriError.message("请选择加载器版本") }
-        let url = ForgeCatalog.installerURL(loader: instance.loader, game: instance.gameVersion, version: version)
-        let checksumData = try await HTTPClient.shared.data(from: URL(string: url.absoluteString + ".sha1")!)
+        let url = try ForgeCatalog.installerURL(loader: instance.loader, game: instance.gameVersion, version: version)
+        let checksumData = try await HTTPClient.shared.data(from: LoaderEndpoints.installerChecksum(url))
         let checksum = String(decoding: checksumData, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespaces).first ?? ""
         guard checksum.range(of: "^[0-9A-Fa-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message("加载器安装包没有有效的 SHA-1 校验值") }
         let jar = try LauncherPaths.safePath("installers/\(instance.loader.rawValue)-\(instance.gameVersion)-\(version).jar", within: paths.cache)

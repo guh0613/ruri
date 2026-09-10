@@ -1,7 +1,7 @@
 import Foundation
 
 public actor GameInstaller {
-    public static let manifestURL = URL(string: "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")!
+    public static let manifestURL = MinecraftEndpoints.versionManifest
     public let paths: LauncherPaths
     public let downloader: DownloadManager
     public init(paths: LauncherPaths, downloader: DownloadManager = DownloadManager()) { self.paths = paths; self.downloader = downloader }
@@ -21,8 +21,7 @@ public actor GameInstaller {
         struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
         guard loader != .vanilla else { return [] }
         if loader.usesInstaller { return try await ForgeCatalog.versions(loader: loader, game: game) }
-        let base = loader == .fabric ? "https://meta.fabricmc.net/v2/versions/loader" : "https://meta.quiltmc.org/v3/versions/loader"
-        return try await HTTPClient.shared.get([Entry].self, from: URL(string: base)!.appendingPathComponent(game)).map(\.loader.version)
+        return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
         try paths.validateBinding(input)
@@ -44,8 +43,7 @@ public actor GameInstaller {
             if instance.loader.usesInstaller {
                 child = try await ForgeInstaller(paths: paths, downloader: downloader).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
             } else {
-                let base = instance.loader == .fabric ? "https://meta.fabricmc.net/v2/versions/loader" : "https://meta.quiltmc.org/v3/versions/loader"
-                let url = URL(string: base)!.appendingPathComponent(instance.gameVersion).appendingPathComponent(loaderVersion).appendingPathComponent("profile/json")
+                let url = try LoaderEndpoints.profile(loader: instance.loader, game: instance.gameVersion, version: loaderVersion)
                 child = try await HTTPClient.shared.get(VersionManifest.self, from: url)
             }
             manifest = manifest.merging(child: child)
@@ -155,9 +153,9 @@ public actor GameInstaller {
             try await downloader.fetch(DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size))
             let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: indexFile))
             let objects = try assets.objects.values.map { object -> DownloadItem in
-                guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message("资源索引包含无效哈希") }
+                let url = try MinecraftEndpoints.asset(hash: object.hash)
                 let subpath = "\(object.hash.prefix(2))/\(object.hash)"
-                return DownloadItem(url: URL(string: "https://resources.download.minecraft.net/\(subpath)")!, destination: try LauncherPaths.safePath("objects/\(subpath)", within: paths.assets), sha1: object.hash, size: object.size)
+                return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: paths.assets), sha1: object.hash, size: object.size)
             }
             try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏资源", completed: done, total: total)) }
             try mapLegacyAssets(assets, indexID: index.id, instance: instance)

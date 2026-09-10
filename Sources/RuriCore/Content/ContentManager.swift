@@ -153,7 +153,7 @@ public actor ContentManager {
             if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
             let record = installs[i].record
             guard !record.filename.contains("/"), !record.filename.contains("\\"), URL(fileURLWithPath: record.filename).pathExtension.lowercased() == record.kind.fileExtension else { throw RuriError.message("无效内容文件名：\(record.filename)") }
-            let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)
+            let check = DownloadItem(url: nil, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)
             guard DownloadManager.valid(installs[i].source, item: check) else { throw RuriError.message("待安装文件校验失败：\(record.filename)") }
         }
         let newPaths = installs.map { $0.record.relativePath }
@@ -175,7 +175,7 @@ public actor ContentManager {
         for old in replaced {
             let file = try contentURL(old.relativePath)
             if fm.fileExists(atPath: file.path) {
-                let check = DownloadItem(url: URL(string: "https://localhost/")!, destination: file, sha1: old.sha1, sha512: old.sha512, md5: old.md5, size: old.size)
+                let check = DownloadItem(url: nil, destination: file, sha1: old.sha1, sha512: old.sha512, md5: old.md5, size: old.size)
                 guard DownloadManager.valid(file, item: check) else { throw RuriError.message("\(old.filename) 已在外部修改。请先备份或移走该文件，再更新。") }
             }
         }

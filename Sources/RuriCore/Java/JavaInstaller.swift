@@ -11,7 +11,7 @@ public struct RemoteJava: Identifiable, Sendable {
 }
 
 public actor JavaInstaller {
-    public static let catalogURL = URL(string: "https://piston-meta.mojang.com/v1/products/java-runtime/2ec0cc96c44e5a76b9c8b7c39df7210883d12871/all.json")!
+    public static let catalogURL = MinecraftEndpoints.javaRuntimeCatalog
     private let paths: LauncherPaths
     public init(paths: LauncherPaths) { self.paths = paths }
     public func available() async throws -> [RemoteJava] {

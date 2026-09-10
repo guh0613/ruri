@@ -44,12 +44,11 @@ public struct DeviceCode: Decodable, Sendable {
 
 public actor MicrosoftAuth {
     private let clientID: String
-    private static let base = "https://login.microsoftonline.com/consumers/oauth2/v2.0/"
-    private static let scope = "XboxLive.signin offline_access"
-    public init(clientID: String) { self.clientID = clientID.trimmingCharacters(in: .whitespacesAndNewlines) }
+    private let session: URLSession
+    public init(clientID: String, session: URLSession = .shared) { self.clientID = clientID.trimmingCharacters(in: .whitespacesAndNewlines); self.session = session }
     public func begin() async throws -> DeviceCode {
         guard UUID(uuidString: clientID) != nil else { throw RuriError.message("请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。") }
-        let (data, status) = try await form("devicecode", values: ["client_id": clientID, "scope": Self.scope])
+        let (data, status) = try await form(AuthenticationEndpoints.deviceCode, values: ["client_id": clientID, "scope": AuthenticationEndpoints.scope])
         guard status == 200 else { throw RuriError.message("Microsoft 拒绝了设备登录请求（HTTP \(status)）。请检查 Client ID 和公共客户端设置。") }
         return try JSONDecoder().decode(DeviceCode.self, from: data)
     }
@@ -61,7 +60,7 @@ public actor MicrosoftAuth {
         var interval = max(code.interval ?? 5, 1)
         while Date() < deadline {
             try await Task.sleep(for: .seconds(interval)); try Task.checkCancellation()
-            let (data, _) = try await form("token", values: ["client_id": clientID, "grant_type": "urn:ietf:params:oauth:grant-type:device_code", "device_code": code.device_code])
+            let (data, _) = try await form(AuthenticationEndpoints.token, values: ["client_id": clientID, "grant_type": "urn:ietf:params:oauth:grant-type:device_code", "device_code": code.device_code])
             let token = try JSONDecoder().decode(OAuthToken.self, from: data)
             if token.error == "authorization_pending" { continue }
             if token.error == "slow_down" { interval += 5; continue }
@@ -73,27 +72,27 @@ public actor MicrosoftAuth {
         throw RuriError.message("设备登录代码已过期，请重新登录。")
     }
     public func refresh(_ credentials: AccountCredentials, account: Account) async throws -> (Account, AccountCredentials) {
-        let (data, status) = try await form("token", values: ["client_id": credentials.clientID, "grant_type": "refresh_token", "refresh_token": credentials.refreshToken, "scope": Self.scope])
+        let (data, status) = try await form(AuthenticationEndpoints.token, values: ["client_id": credentials.clientID, "grant_type": "refresh_token", "refresh_token": credentials.refreshToken, "scope": AuthenticationEndpoints.scope])
         let token = try JSONDecoder().decode(OAuthToken.self, from: data)
         guard status == 200, let access = token.access_token else { throw RuriError.message("Microsoft 登录已失效，请重新添加账号。") }
         var (updated, secrets) = try await exchange(access: access, refresh: token.refresh_token ?? credentials.refreshToken)
         updated.id = account.id; secrets.clientID = credentials.clientID
         return (updated, secrets)
     }
-    private func form(_ endpoint: String, values: [String: String]) async throws -> (Data, Int) {
-        var request = URLRequest(url: URL(string: Self.base + endpoint)!)
+    private func form(_ endpoint: URL, values: [String: String]) async throws -> (Data, Int) {
+        var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"; request.timeoutInterval = 45
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         let allowed = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
         request.httpBody = Data(values.sorted(by: { $0.key < $1.key }).map { key, value in "\(key)=\(value.addingPercentEncoding(withAllowedCharacters: allowed) ?? "")" }.joined(separator: "&").utf8)
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         return (data, (response as? HTTPURLResponse)?.statusCode ?? 0)
     }
-    private func post<T: Decodable>(_ type: T.Type, url: String, body: [String: Any]) async throws -> T {
-        var request = URLRequest(url: URL(string: url)!); request.httpMethod = "POST"; request.timeoutInterval = 45
+    private func post<T: Decodable>(_ type: T.Type, url: URL, body: [String: Any]) async throws -> T {
+        var request = URLRequest(url: url); request.httpMethod = "POST"; request.timeoutInterval = 45
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         if status == 401, let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let code = json["XErr"] as? Int64 {
             let explanation: String
@@ -106,7 +105,7 @@ public actor MicrosoftAuth {
             }
             throw RuriError.message(explanation)
         }
-        guard (200..<300).contains(status) else { throw RuriError.message("\(request.url!.host!) 登录失败（HTTP \(status)）。请检查应用是否已获 Minecraft API 访问权限。") }
+        guard (200..<300).contains(status) else { throw RuriError.message("\(url.host ?? "认证服务") 登录失败（HTTP \(status)）。请检查应用是否已获 Minecraft API 访问权限。") }
         return try JSONDecoder().decode(type, from: data)
     }
     private func exchange(access: String, refresh: String) async throws -> (Account, AccountCredentials) {
@@ -114,16 +113,16 @@ public actor MicrosoftAuth {
         struct Minecraft: Decodable { let access_token: String; let expires_in: Int }
         struct Entitlements: Decodable, Sendable { struct Item: Decodable, Sendable { let name: String }; let items: [Item] }
         struct Profile: Decodable, Sendable { let id: String; let name: String }
-        let xbox = try await post(Xbox.self, url: "https://user.auth.xboxlive.com/user/authenticate", body: ["Properties": ["AuthMethod": "RPS", "SiteName": "user.auth.xboxlive.com", "RpsTicket": "d=\(access)"], "RelyingParty": "http://auth.xboxlive.com", "TokenType": "JWT"])
-        let xsts = try await post(Xbox.self, url: "https://xsts.auth.xboxlive.com/xsts/authorize", body: ["Properties": ["SandboxId": "RETAIL", "UserTokens": [xbox.Token]], "RelyingParty": "rp://api.minecraftservices.com/", "TokenType": "JWT"])
+        let xbox = try await post(Xbox.self, url: AuthenticationEndpoints.xboxAuthenticate, body: ["Properties": ["AuthMethod": "RPS", "SiteName": AuthenticationEndpoints.xboxSite, "RpsTicket": "d=\(access)"], "RelyingParty": AuthenticationEndpoints.xboxRelyingParty, "TokenType": "JWT"])
+        let xsts = try await post(Xbox.self, url: AuthenticationEndpoints.xstsAuthorize, body: ["Properties": ["SandboxId": "RETAIL", "UserTokens": [xbox.Token]], "RelyingParty": AuthenticationEndpoints.minecraftRelyingParty, "TokenType": "JWT"])
         guard let uhs = xsts.DisplayClaims.xui.first?["uhs"], uhs == xbox.DisplayClaims.xui.first?["uhs"] else { throw RuriError.message("Xbox 账号身份校验失败。") }
-        let minecraft = try await post(Minecraft.self, url: "https://api.minecraftservices.com/authentication/login_with_xbox", body: ["identityToken": "XBL3.0 x=\(uhs);\(xsts.Token)"])
-        var request = URLRequest(url: URL(string: "https://api.minecraftservices.com/entitlements/mcstore")!)
+        let minecraft = try await post(Minecraft.self, url: AuthenticationEndpoints.minecraftLogin, body: ["identityToken": "XBL3.0 x=\(uhs);\(xsts.Token)"])
+        var request = URLRequest(url: AuthenticationEndpoints.entitlements)
         request.setValue("Bearer \(minecraft.access_token)", forHTTPHeaderField: "Authorization")
-        let entitlements = try JSONDecoder().decode(Entitlements.self, from: await HTTPClient.shared.data(for: request))
+        let entitlements = try JSONDecoder().decode(Entitlements.self, from: await HTTPClient(session: session).data(for: request))
         guard !entitlements.items.isEmpty else { throw RuriError.message("此 Microsoft 账号未拥有 Minecraft Java 版。") }
-        request.url = URL(string: "https://api.minecraftservices.com/minecraft/profile")!
-        let profile = try JSONDecoder().decode(Profile.self, from: await HTTPClient.shared.data(for: request))
+        request.url = AuthenticationEndpoints.profile
+        let profile = try JSONDecoder().decode(Profile.self, from: await HTTPClient(session: session).data(for: request))
         return (Account(username: profile.name, uuid: profile.id, kind: .microsoft), AccountCredentials(accessToken: minecraft.access_token, refreshToken: refresh, expiresAt: Date().addingTimeInterval(TimeInterval(minecraft.expires_in)), clientID: clientID))
     }
 }

@@ -51,11 +51,7 @@ public struct CurseForgeProject: Decodable, Identifiable, Sendable {
     public let allowModDistribution: Bool?
     public var contentType: String? { switch classId { case 6: "mod"; case 4471: "modpack"; case 12: "resourcepack"; case 6552: "shader"; default: nil } }
     public func page(for fileID: Int) -> URL {
-        if let page = links?.websiteUrl, page.scheme == "https", ["www.curseforge.com", "curseforge.com"].contains(page.host ?? "") {
-            return page.appendingPathComponent("files").appendingPathComponent(String(fileID))
-        }
-        let kind = contentType == "modpack" ? "modpacks" : contentType == "resourcepack" ? "texture-packs" : contentType == "shader" ? "shaders" : "mc-mods"
-        return URL(string: "https://www.curseforge.com/minecraft/\(kind)")!.appendingPathComponent(slug).appendingPathComponent("files").appendingPathComponent(String(fileID))
+        CurseForgeEndpoints.filePage(project: self, fileID: fileID)
     }
 }
 public struct CurseForgeFile: Decodable, Identifiable, Sendable {
@@ -80,9 +76,12 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
         hashes.first(where: { $0.algo == algorithm && $0.value.range(of: "^[a-fA-F0-9]{\(length)}$", options: .regularExpression) != nil })?.value.lowercased()
     }
     public func downloadItem(to destination: URL, permittedURL: URL?) throws -> DownloadItem {
+        try validateDownloadMetadata()
+        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength)
+    }
+    func validateDownloadMetadata() throws {
         guard id > 0, modId > 0, fileLength >= 0, isAvailable != false, sha1 != nil || md5 != nil else { throw RuriError.message("\(fileName) 不可用或缺少有效的文件校验信息。") }
         guard !fileName.isEmpty, !fileName.contains("/"), !fileName.contains("\\"), !fileName.contains("\0") else { throw RuriError.message("CurseForge 返回了无效文件名") }
-        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength)
     }
     public func supports(_ instance: GameInstance, kind: ContentKind) -> Bool {
         guard gameVersions.contains(instance.gameVersion) else { return false }
@@ -132,8 +131,7 @@ public struct CurseForgeUpdate: Identifiable, Sendable {
 
 private final class CurseForgeRedirectGuard: NSObject, URLSessionTaskDelegate, Sendable {
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
-        guard let url = request.url, url.scheme == "https", url.host == "api.curseforge.com", url.port == nil || url.port == 443,
-              url.user == nil, url.password == nil else { completionHandler(nil); return }
+        guard let url = request.url, CurseForgeEndpoints.allowsAPI(url) else { completionHandler(nil); return }
         completionHandler(request)
     }
 }
@@ -142,7 +140,6 @@ public actor CurseForgeService {
     private let apiKey: String
     private let client: HTTPClient
     private let ownsSession: Bool
-    private let base = URL(string: "https://api.curseforge.com/v1")!
     public init(apiKey: String, client: HTTPClient? = nil) {
         self.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines); self.ownsSession = client == nil
         let config = URLSessionConfiguration.ephemeral; config.urlCache = nil; config.timeoutIntervalForRequest = 30
@@ -172,10 +169,9 @@ public actor CurseForgeService {
         return cache
     }
     private struct Response<Value: Decodable & Sendable>: Decodable, Sendable { let data: Value }
-    private func request<Value: Decodable & Sendable>(_ type: Value.Type, path: String, query: [URLQueryItem] = [], body: Data? = nil) async throws -> Value {
+    private func request<Value: Decodable & Sendable>(_ type: Value.Type, route: CurseForgeEndpoints.Route, query: [URLQueryItem] = [], body: Data? = nil) async throws -> Value {
         guard !apiKey.isEmpty else { throw RuriError.message("请先在设置中配置 Ruri 的 CurseForge API Key。") }
-        var url = URLComponents(url: base.appendingPathComponent(path), resolvingAgainstBaseURL: false)!; url.queryItems = query.isEmpty ? nil : query
-        var request = URLRequest(url: url.url!); request.timeoutInterval = 30
+        var request = URLRequest(url: try CurseForgeEndpoints.request(route, query: query)); request.timeoutInterval = 30
         request.setValue(apiKey, forHTTPHeaderField: "x-api-key"); request.setValue("application/json", forHTTPHeaderField: "Accept")
         if let body { request.httpMethod = "POST"; request.httpBody = body; request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
         return try JSONDecoder().decode(type, from: await client.data(for: request))
@@ -183,19 +179,19 @@ public actor CurseForgeService {
     public func search(_ query: String, type: String, offset: Int = 0) async throws -> CurseForgePage<CurseForgeProject> {
         let classes = ["mod": 6, "modpack": 4471, "resourcepack": 12, "shader": 6552]
         guard let category = classes[type] else { throw RuriError.message("不支持的 CurseForge 内容类型") }
-        return try await request(CurseForgePage<CurseForgeProject>.self, path: "mods/search", query: [
+        return try await request(CurseForgePage<CurseForgeProject>.self, route: .search, query: [
             .init(name: "gameId", value: "432"), .init(name: "classId", value: String(category)), .init(name: "searchFilter", value: query),
             .init(name: "pageSize", value: "20"), .init(name: "index", value: String(max(0, offset))), .init(name: "sortField", value: "6"), .init(name: "sortOrder", value: "desc")])
     }
     public func project(_ id: Int) async throws -> CurseForgeProject {
         guard id > 0 else { throw RuriError.message("无效的 CurseForge 项目标识") }
-        let result = try await request(Response<CurseForgeProject>.self, path: "mods/\(id)").data
+        let result = try await request(Response<CurseForgeProject>.self, route: .project(id)).data
         guard result.id == id, result.gameId == 432 else { throw RuriError.message("CurseForge 项目与请求不一致") }
         return result
     }
     public func file(project id: Int, file fileID: Int) async throws -> CurseForgeFile {
         guard id > 0, fileID > 0 else { throw RuriError.message("无效的 CurseForge 文件标识") }
-        let result = try await request(Response<CurseForgeFile>.self, path: "mods/\(id)/files/\(fileID)").data
+        let result = try await request(Response<CurseForgeFile>.self, route: .file(project: id, file: fileID)).data
         guard result.id == fileID, result.modId == id else { throw RuriError.message("CurseForge 文件与请求不一致") }
         return result
     }
@@ -205,7 +201,7 @@ public actor CurseForgeService {
         if let game { query.append(.init(name: "gameVersion", value: game)) }
         let loaders: [LoaderKind: Int] = [.forge: 1, .fabric: 4, .quilt: 5, .neoforge: 6]
         if let loader, let value = loaders[loader] { query.append(.init(name: "modLoaderType", value: String(value))) }
-        let result = try await request(CurseForgePage<CurseForgeFile>.self, path: "mods/\(id)/files", query: query)
+        let result = try await request(CurseForgePage<CurseForgeFile>.self, route: .projectFiles(id), query: query)
         guard result.data.allSatisfy({ $0.modId == id }) else { throw RuriError.message("CurseForge 返回的版本列表与项目不一致") }
         return result
     }
@@ -216,17 +212,17 @@ public actor CurseForgeService {
         for start in stride(from: 0, to: fileIDs.count, by: 50) {
             try Task.checkCancellation()
             let body = try JSONEncoder().encode(["fileIds": Array(fileIDs[start..<min(start + 50, fileIDs.count)])])
-            for file in try await request(Response<[CurseForgeFile]>.self, path: "mods/files", body: body).data { files[file.id] = file }
+            for file in try await request(Response<[CurseForgeFile]>.self, route: .files, body: body).data { files[file.id] = file }
         }
         for start in stride(from: 0, to: projectIDs.count, by: 50) {
             try Task.checkCancellation()
             let body = try JSONEncoder().encode(["modIds": Array(projectIDs[start..<min(start + 50, projectIDs.count)])])
-            for project in try await request(Response<[CurseForgeProject]>.self, path: "mods", body: body).data { projects[project.id] = project }
+            for project in try await request(Response<[CurseForgeProject]>.self, route: .projects, body: body).data { projects[project.id] = project }
         }
         return try references.map { ref in
             guard let file = files[ref.fileID], file.modId == ref.projectID, let project = projects[ref.projectID], project.gameId == 432,
                   let raw = project.contentType, let kind = ContentKind(rawValue: raw) else { throw RuriError.message("找不到整合包文件：项目 \(ref.projectID)，文件 \(ref.fileID)") }
-            _ = try file.downloadItem(to: base, permittedURL: nil)
+            try file.validateDownloadMetadata()
             return PlannedCurseFile(project: project, file: file, kind: kind)
         }
     }

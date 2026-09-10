@@ -10,7 +10,7 @@ extension ModrinthService {
         for start in stride(from: 0, to: unique.count, by: 100) {
             try Task.checkCancellation()
             let batch = Array(unique[start..<min(start + 100, unique.count)])
-            var request = URLRequest(url: URL(string: "https://api.modrinth.com/v2/version_files")!); request.httpMethod = "POST"
+            var request = URLRequest(url: ModrinthEndpoints.versionFiles); request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try JSONSerialization.data(withJSONObject: ["hashes": batch, "algorithm": algorithm])
             let versions = try JSONDecoder().decode([String: ModrinthVersion].self, from: await client.data(for: request))

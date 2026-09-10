@@ -81,7 +81,7 @@ extension InstanceTransfer {
                 var url: URL?
                 if let value = manifest.fileApi, !value.isEmpty {
                     guard let base = URL(string: value), ["http", "https"].contains(base.scheme), base.host != nil, base.user == nil, base.password == nil, base.query == nil, base.fragment == nil else { throw RuriError.message("MCBBS fileApi 下载源无效") }
-                    url = base.appendingPathComponent("overrides").appendingPathComponent(path)
+                    url = try EndpointURL.build(base: base, path: ["overrides"] + path.split(separator: "/").map(String.init))
                 }
                 files.append(PackFile(path: path, sha1: hash.lowercased(), url: url, force: file.force ?? false))
             case "curse":

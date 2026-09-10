@@ -102,7 +102,7 @@ public struct Library: Codable, Equatable, Sendable {
         if let artifact = downloads?.artifact { return artifact }
         if downloads != nil { return nil }
         let path = try Self.mavenPath(name)
-        return Artifact(path: path, url: (url ?? URL(string: "https://libraries.minecraft.net/")!).appendingPathComponent(path))
+        return Artifact(path: path, url: try EndpointURL.build(base: url ?? MinecraftEndpoints.libraries, path: path.split(separator: "/").map(String.init)))
     }
     public static func mavenPath(_ coordinate: String) throws -> String {
         let extParts = coordinate.split(separator: "@", omittingEmptySubsequences: false)

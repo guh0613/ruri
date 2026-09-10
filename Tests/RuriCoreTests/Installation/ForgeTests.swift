@@ -11,10 +11,10 @@ struct ForgeTests {
         #expect(ForgeCatalog.neoForgePrefix("26.1.2") == "26.1.2.")
         #expect(ForgeCatalog.neoForgePrefix("26.3-pre-3") == nil)
     }
-    @Test func installerCoordinatesRespectLegacyNeoForge() {
-        #expect(ForgeCatalog.installerURL(loader: .forge, game: "1.21.1", version: "52.1.16").absoluteString == "https://maven.minecraftforge.net/net/minecraftforge/forge/1.21.1-52.1.16/forge-1.21.1-52.1.16-installer.jar")
-        #expect(ForgeCatalog.installerURL(loader: .neoforge, game: "1.20.1", version: "47.1.106").absoluteString.contains("net/neoforged/forge/1.20.1-47.1.106/forge-1.20.1-47.1.106"))
-        #expect(ForgeCatalog.installerURL(loader: .neoforge, game: "1.21.1", version: "21.1.250").absoluteString.contains("net/neoforged/neoforge/21.1.250/neoforge-21.1.250"))
+    @Test func installerCoordinatesRespectLegacyNeoForge() throws {
+        #expect(try ForgeCatalog.installerURL(loader: .forge, game: "1.21.1", version: "52.1.16").absoluteString == "https://maven.minecraftforge.net/net/minecraftforge/forge/1.21.1-52.1.16/forge-1.21.1-52.1.16-installer.jar")
+        #expect(try ForgeCatalog.installerURL(loader: .neoforge, game: "1.20.1", version: "47.1.106").absoluteString.contains("net/neoforged/forge/1.20.1-47.1.106/forge-1.20.1-47.1.106"))
+        #expect(try ForgeCatalog.installerURL(loader: .neoforge, game: "1.21.1", version: "21.1.250").absoluteString.contains("net/neoforged/neoforge/21.1.250/neoforge-21.1.250"))
     }
     @Test func generatedLibraryCanHaveEmptyDownloadURL() throws {
         let data = Data(#"{"path":"generated/client.jar","url":"","sha1":"586c071a3ead6c755c700ad6328f069006296196","size":28055793}"#.utf8)
