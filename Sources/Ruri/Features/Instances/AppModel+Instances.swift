@@ -8,8 +8,8 @@ extension AppModel {
         guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { return }
         state.instances[index] = instance; save()
     }
-    func updateSettings(_ draft: GameInstance, basedOn original: GameInstance) {
-        guard var current = state.instances.first(where: { $0.id == draft.id }) else { return }
+    @discardableResult func updateSettings(_ draft: GameInstance, basedOn original: GameInstance) -> Bool {
+        guard !readOnly, var current = state.instances.first(where: { $0.id == draft.id }) else { return false }
         func apply<Value: Equatable>(_ key: WritableKeyPath<GameInstance, Value>) {
             if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
         }
@@ -23,6 +23,7 @@ extension AppModel {
         if overrides != current.effectiveLaunchOverrides { current.launchOverrides = overrides }
         update(current)
         Task { await scanJava() }
+        return !readOnly
     }
     func reveal(_ instance: GameInstance, folder: String? = nil) {
         let base = paths.game(instance.id)
