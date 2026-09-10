@@ -86,17 +86,18 @@ public struct ExternalAuthMetadata: Sendable {
 
 /// Credentials only go to the API root already presented in the login form.
 /// Discovery GETs may redirect over HTTPS; credential POSTs never redirect.
-private final class ExternalAuthRedirects: NSObject, URLSessionTaskDelegate, Sendable {
+final class AccountRequestRedirects: NSObject, URLSessionTaskDelegate, Sendable {
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
                     newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
-        let allowed = task.originalRequest?.httpMethod == "GET" && request.url.flatMap { try? ExternalAuthServer.address($0.absoluteString) } != nil
+        let allowed = task.originalRequest?.httpMethod == "GET" && task.originalRequest?.value(forHTTPHeaderField: "Authorization") == nil
+            && request.url.flatMap { try? ExternalAuthServer.address($0.absoluteString) } != nil
         completionHandler(allowed ? request : nil)
     }
 }
 
 public struct ExternalAuthentication: Sendable {
     private let session: URLSession
-    private let redirects = ExternalAuthRedirects()
+    private let redirects = AccountRequestRedirects()
     public init(session: URLSession = .shared) { self.session = session }
 
     public func discover(_ address: String) async throws -> ExternalAuthMetadata {

@@ -7,11 +7,16 @@ extension AppModel {
         guard !state.accounts.contains(where: { $0.kind == .offline && $0.uuid == account.uuid }) else { throw RuriError.message("这个离线账号已存在。") }
         state.accounts.append(account); state.activeAccountID = account.id; save()
     }
-    func addMicrosoft(_ account: Account, credentials: AccountCredentials) throws {
+    func addMicrosoft(_ account: Account, credentials: AccountCredentials, activate: Bool = true, requireExisting: Bool = false) throws {
+        guard !readOnly else { throw RuriError.message("当前窗口已暂停写入，请重新打开 Ruri。") }
+        guard !requireExisting || state.accounts.contains(where: { $0.id == account.id && $0.uuid == account.uuid }) else { throw RuriError.message("此账号已被移除或发生变化。") }
         var account = account
         if let existing = state.accounts.first(where: { $0.kind == .microsoft && $0.uuid == account.uuid }) { account.id = existing.id }
         try CredentialStore.save(credentials, for: account.id)
-        state.accounts.removeAll { $0.id == account.id }; state.accounts.append(account); state.activeAccountID = account.id; save()
+        state.accounts.removeAll { $0.id == account.id }; state.accounts.append(account)
+        if activate { state.activeAccountID = account.id }
+        save()
+        if readOnly { throw RuriError.message("账号信息未能保存，请重新打开 Ruri。") }
     }
     func removeAccount(_ account: Account) {
         guard !readOnly else { return }
@@ -48,5 +53,26 @@ extension AppModel {
         try await ExternalAuthentication().invalidate(server: server, credentials: CredentialStore.loadExternal(for: account.id))
         try Task.checkCancellation()
         removeAccount(account)
+    }
+    func appearanceClient(for requested: Account) async throws -> AccountAppearanceClient {
+        guard !readOnly, var account = state.accounts.first(where: { $0.id == requested.id }),
+              account.uuid == requested.uuid, account.kind == requested.kind, account.externalLogin == requested.externalLogin else {
+            throw RuriError.message("账号已变化，请重新打开外观管理。")
+        }
+        switch account.kind {
+        case .offline: throw RuriError.message("离线账号没有在线外观资料。")
+        case .microsoft:
+            var credentials = try CredentialStore.load(for: account.id)
+            if credentials.expiresAt < Date().addingTimeInterval(120) {
+                (account, credentials) = try await MicrosoftAuth(clientID: credentials.clientID).refresh(credentials, account: account)
+                try addMicrosoft(account, credentials: credentials, activate: false, requireExisting: true)
+            }
+            return AccountAppearanceClient(account: account, accessToken: credentials.accessToken)
+        case .external:
+            let credentials = try CredentialStore.loadExternal(for: account.id)
+            let (updated, refreshed) = try await ExternalAuthentication().refresh(account: account, credentials: credentials)
+            try addExternal(updated, credentials: refreshed, requireExisting: true, activate: false)
+            return AccountAppearanceClient(account: updated, accessToken: refreshed.accessToken)
+        }
     }
 }

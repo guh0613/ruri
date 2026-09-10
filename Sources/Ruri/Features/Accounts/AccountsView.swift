@@ -5,6 +5,7 @@ import RuriCore
 struct AccountsView: View {
     @Environment(AppModel.self) private var model
     @State private var relogin: Account?
+    @State private var appearanceAccount: Account?
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -23,6 +24,7 @@ struct AccountsView: View {
                             if model.state.activeAccountID == account.id { TagPill(text: "当前使用") }
                             else { Button("使用此账号") { model.state.activeAccountID = account.id; model.save() } }
                             Menu {
+                                if account.kind != .offline { Button("皮肤与披风…") { appearanceAccount = account } }
                                 if account.kind == .external {
                                     Button("刷新登录状态") { run { try await model.refreshExternal(account) } }
                                     Button("重新登录") { relogin = account }
@@ -39,6 +41,7 @@ struct AccountsView: View {
                 }
             }.padding(30)
         }.sheet(item: $relogin) { ExternalAccountReloginView(account: $0) }
+            .sheet(item: $appearanceAccount) { AccountAppearanceView(account: $0) }
     }
     private func run(_ operation: @escaping @MainActor @Sendable () async throws -> Void) {
         model.perform("更新账号") { _ in try await operation() }
