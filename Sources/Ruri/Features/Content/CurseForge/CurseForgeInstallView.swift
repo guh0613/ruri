@@ -2,99 +2,6 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-struct CurseForgeSettingsSection: View {
-    @Environment(AppModel.self) private var model
-    @State private var key = ""
-    @State private var error: String?
-    var body: some View {
-        Section("CurseForge") {
-            LabeledContent("API Key", value: model.curseForgeConfigured ? "已保存在钥匙串" : "尚未配置")
-            SecureField(model.curseForgeConfigured ? "输入新 Key 以替换" : "输入 API Key", text: $key)
-            HStack {
-                Button("保存到钥匙串") {
-                    do { try CurseForgeKeyStore.save(key); key = ""; error = nil; model.curseForgeConfigured = true }
-                    catch { self.error = error.localizedDescription }
-                }.disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                if model.curseForgeConfigured {
-                    Button("移除 Key") {
-                        do { try CurseForgeKeyStore.remove(); key = ""; error = nil; model.curseForgeConfigured = false }
-                        catch { self.error = error.localizedDescription }
-                    }
-                }
-            }
-            if let error { Text(error).foregroundStyle(.red).font(.caption) }
-            Text("用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。").font(.caption).foregroundStyle(.secondary)
-            Link("CurseForge 第三方 API 申请说明", destination: URL(string: "https://support.curseforge.com/support/solutions/articles/9000208346")!)
-        }
-    }
-}
-
-/// Local files are copied into the resumable cache after verification, so a
-/// dismissed file panel never leaves a security-scoped URL in a future task.
-struct CurseForgeFileRow: View {
-    @Environment(AppModel.self) private var model
-    let file: CurseForgeFile
-    let title: String
-    let page: URL
-    let manual: Bool
-    @Binding var selectedURL: URL?
-    @State private var checking = false
-    @State private var error: String?
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(title).font(.headline)
-                    Text(file.fileName).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    Text(ByteCountFormatter.string(fromByteCount: file.fileLength, countStyle: .file)).font(.caption).foregroundStyle(.secondary)
-                }
-                Spacer()
-                if manual {
-                    if checking { ProgressView().controlSize(.small) }
-                    else if selectedURL != nil { Label("已校验", systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(Theme.accent) }
-                    else { TagPill(text: "手动下载") }
-                } else { Label("自动下载", systemImage: "arrow.down.circle").font(.caption).foregroundStyle(.secondary) }
-            }
-            if manual {
-                HStack { Link("打开下载页面", destination: page); Spacer(); Button(selectedURL == nil ? "选择已下载文件…" : "重新选择…") { choose() }.disabled(checking) }.font(.callout)
-            }
-            if let error { Text(error).font(.caption).foregroundStyle(.orange) }
-        }.padding(14).background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 10))
-        .task(id: file.id) {
-            if manual, selectedURL == nil, let cached = await CurseForgeService.cachedFile(file, paths: model.paths), !Task.isCancelled { selectedURL = cached }
-        }
-    }
-    private func choose() {
-        let panel = NSOpenPanel(); panel.canChooseDirectories = false; panel.allowsMultipleSelection = false
-        panel.message = "选择 \(file.fileName)。Ruri 会核对版本、大小与校验值。"
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        checking = true; error = nil
-        Task {
-            do {
-                let cached = try await CurseForgeService.cacheManualFile(url, file: file, paths: model.paths)
-                selectedURL = cached
-            } catch { self.error = error.localizedDescription }
-            checking = false
-        }
-    }
-}
-
-struct CurseForgePlanFiles: View {
-    let files: [PlannedCurseFile]
-    @Binding var manualFiles: [Int: URL]
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if files.contains(where: \.requiresManualDownload) {
-                Text("部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。").font(.callout).foregroundStyle(.secondary)
-            }
-            ForEach(files) { item in
-                CurseForgeFileRow(file: item.file, title: item.project.name, page: item.pageURL, manual: item.requiresManualDownload,
-                                  selectedURL: Binding(get: { manualFiles[item.id] }, set: { manualFiles[item.id] = $0 }))
-            }
-        }
-    }
-}
-
 struct CurseForgeInstallView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
@@ -201,28 +108,5 @@ struct CurseForgePlanView: View {
             ScrollView { CurseForgePlanFiles(files: plan.files, manualFiles: $manualFiles) }.frame(maxHeight: 360)
             HStack { Button("取消") { dismiss() }.keyboardShortcut(.cancelAction); Spacer(); Button("更新") { model.installCurseForge(plan, manualFiles: manualFiles); dismiss() }.buttonStyle(.borderedProminent).disabled(model.busy || model.isInstanceInUse(plan.instance.id) || !plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil }) }
         }.padding(26).frame(width: 570)
-    }
-}
-
-extension AppModel {
-    func installCurseForge(_ plan: CurseForgeContentPlan, manualFiles: [Int: URL]) {
-        guard !isInstanceInUse(plan.instance.id) else { return }
-        perform("安装 \(plan.title)", instanceID: plan.instance.id) { [self] id in
-            try await CurseForgeService(apiKey: "").install(plan, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
-            notice = "\(plan.title) 已安装"
-        }
-    }
-    func readCurseForgePack(_ project: CurseForgeProject, file: CurseForgeFile, manual: URL?) {
-        perform("读取 \(project.name)") { [self] id in
-            let archive: URL
-            if let manual { archive = manual }
-            else {
-                guard project.allowModDistribution != false, let url = file.downloadURL else { throw RuriError.message("此整合包需要先从 CurseForge 页面下载。") }
-                archive = try LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache)
-                try await installer.downloader.fetch(file.downloadItem(to: archive, permittedURL: url))
-            }
-            guard DownloadManager.valid(archive, item: try file.downloadItem(to: archive, permittedURL: nil)) else { throw RuriError.message("整合包校验失败") }
-            importingInstance = try await InstanceTransfer(paths: paths).prepare(archive, origin: ModpackOrigin(provider: .curseforge, projectID: String(project.id), versionID: String(file.id))) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
-        }
     }
 }
