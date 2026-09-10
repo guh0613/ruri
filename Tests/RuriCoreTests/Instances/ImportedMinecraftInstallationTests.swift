@@ -171,7 +171,7 @@ struct ImportedMinecraftInstallationTests {
         let f = try Fixture(); defer { f.cleanup() }
         let destination = f.root.appendingPathComponent("existing.zip"), existing = Data("keep this file".utf8)
         try existing.write(to: destination)
-        for format in InstanceExportFormat.allCases {
+        for format in [InstanceExportFormat.multimc, .mcbbs, .mrpack] {
             await #expect(throws: (any Error).self) { try await InstanceTransfer(paths: f.paths).export(f.instance, to: destination, format: format) }
             #expect(try Data(contentsOf: destination) == existing)
         }
@@ -191,4 +191,68 @@ struct ImportedMinecraftInstallationTests {
         try FileManager.default.createSymbolicLink(at: f.resources.root, withDestinationURL: f.paths.root)
         #expect(throws: (any Error).self) { try f.paths.resources(for: f.instance) }
     }
+    @Test(arguments: [false, true])
+    func completeArchiveRestoresLocalInstallationWithoutSourceOrDownloads(repository: Bool) async throws {
+        let f = try Fixture(); defer { f.cleanup() }
+        var source = f.instance
+        source.extraJVMArguments = ArgumentTokenizer.join(["-Dlocal.config=" + f.paths.game(source.id).appendingPathComponent("options.txt").path,
+                                                          "-Dlocal.jar=" + f.resources.versions.appendingPathComponent("local-client/local-client.jar").path])
+        try StateStore.update(f.paths) { $0.instances[0] = source }
+        let archive = f.root.appendingPathComponent("Complete.zip")
+        try await InstanceTransfer(paths: f.paths).export(source, to: archive, format: repository ? .complete : .ruri)
+        try FileManager.default.removeItem(at: f.paths.root)
+        let base = LauncherPaths(root: f.root.appendingPathComponent("Restored data"))
+        let paths: LauncherPaths
+        if repository {
+            let folder = f.root.appendingPathComponent("Restored Minecraft")
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            paths = base.configured(with: try MinecraftFolderStore.add(name: "Restored", url: folder, paths: base))
+        } else { paths = base }
+        let transfer = InstanceTransfer(paths: paths), prepared = try await transfer.prepare(archive)
+        #expect(prepared.includesInstallation && prepared.remoteFileCount == 0 && prepared.instance.javaPath == nil)
+        #expect(prepared.instance.extraJVMArguments.contains("${game_directory}"))
+        #expect(prepared.instance.extraJVMArguments.contains("${primary_jar}"))
+        let restored = try await transfer.install(prepared, name: "Restored", importJVMArguments: true, installing: { _, _ in
+            Issue.record("Complete import must not reinstall the game")
+            throw RuriError.message("Unexpected installer")
+        })
+        if !repository { try StateStore.update(paths) { $0.instances.append(restored) } }
+        let current = paths.configured(with: try StateStore.load(paths))
+        let manifest = try await GameInstaller(paths: current).loadManifest(restored)
+        let java = JavaRuntime(path: "/fixture/java", version: "21", major: 21, architecture: GameInstaller.architecture(for: manifest), vendor: "Fixture")
+        let plan = try LaunchBuilder.build(instance: restored, manifest: manifest, java: java, account: Account(username: "Player"), paths: current)
+        let resources = try current.resources(for: restored)
+        let client = try current.clientJar(manifest.jar!, instance: restored)
+        #expect(try Data(contentsOf: client) == f.client)
+        #expect(try String(contentsOf: resources.libraries.appendingPathComponent(f.relativeLibrary), encoding: .utf8) == "locally modified bootstrap")
+        #expect(plan.arguments.contains("-Dlocal.config=" + current.game(restored.id).appendingPathComponent("options.txt").path))
+        #expect(plan.arguments.contains("-Dlocal.jar=" + client.path))
+        #expect(!plan.arguments.joined(separator: " ").contains(f.paths.root.path))
+        #expect(try Data(contentsOf: current.game(restored.id).appendingPathComponent("resources/sound/local.ogg")) == f.asset)
+        #expect(restored.importedInstallation != nil || restored.repositoryVersionID == "Restored")
+        await transfer.discard(prepared)
+    }
+
+    @Test func changedCompleteImportAndCancelledExportPreserveExistingFiles() async throws {
+        let f = try Fixture(); defer { f.cleanup() }
+        let archive = f.root.appendingPathComponent("Complete.zip"), service = InstanceTransfer(paths: f.paths)
+        try await service.export(f.instance, to: archive, format: .complete)
+        let existing = try Data(contentsOf: archive)
+        let operation = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            try await service.export(f.instance, to: archive, format: .complete)
+        }
+        await #expect(throws: (any Error).self) { try await operation.value }
+        #expect(try Data(contentsOf: archive) == existing)
+        let prepared = try await service.prepare(archive)
+        let root = try #require(prepared.installation?.root)
+        try Data("changed after preview".utf8).write(to: root.appendingPathComponent("versions/game/game.jar"))
+        await #expect(throws: (any Error).self) {
+            try await service.install(prepared, name: "Changed", installing: { _, _ in throw RuriError.message("Unexpected installer") })
+        }
+        #expect(try StateStore.load(f.paths).instances == [f.instance])
+        #expect(try Data(contentsOf: f.resources.versions.appendingPathComponent("local-client/local-client.jar")) == f.client)
+        await service.discard(prepared)
+    }
+
 }

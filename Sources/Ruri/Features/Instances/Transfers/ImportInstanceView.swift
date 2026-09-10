@@ -18,7 +18,7 @@ struct ImportInstanceView: View {
     @State private var task: Task<Void, Never>?
     private var chosenFiles: [PlannedCurseFile] { files?.filter { !excluded.contains($0.id) } ?? [] }
     private var ready: Bool { prepared.curseForgeFiles.isEmpty || files != nil && chosenFiles.filter(\.requiresManualDownload).allSatisfy { manualFiles[$0.id] != nil } }
-    init(prepared: PreparedInstanceImport) { self.prepared = prepared; _name = State(initialValue: prepared.instance.name); _keepJVMArguments = State(initialValue: prepared.format == "MCBBS"); _excludedOptional = State(initialValue: prepared.omittedOptionalPaths) }
+    init(prepared: PreparedInstanceImport) { self.prepared = prepared; _name = State(initialValue: prepared.instance.name); _keepJVMArguments = State(initialValue: prepared.format == "MCBBS" || prepared.includesInstallation); _excludedOptional = State(initialValue: prepared.omittedOptionalPaths) }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Label("导入游戏实例", systemImage: "square.and.arrow.down").font(.title2.bold())
@@ -26,7 +26,7 @@ struct ImportInstanceView: View {
             Text("整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。").font(.caption).foregroundStyle(.secondary)
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("已识别 \(prepared.format) 实例。游戏依赖将按这台 Mac 的系统与架构安装。").foregroundStyle(.secondary)
+                    Text(prepared.includesInstallation ? "已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。" : "已识别 \(prepared.format) 实例。游戏依赖将按这台 Mac 的系统与架构安装。").foregroundStyle(.secondary)
                     VStack(alignment: .leading, spacing: 12) {
                         LabeledContent("实例名称") { TextField("实例名称", text: $name).textFieldStyle(.roundedBorder) }
                         LabeledContent("游戏版本", value: prepared.instance.subtitle)

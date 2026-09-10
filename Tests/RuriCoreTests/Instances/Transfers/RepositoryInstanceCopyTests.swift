@@ -148,4 +148,27 @@ import Testing
         #expect(result.state.instances.first { $0.id == f.source.id } == f.source)
         #expect(try await service.pending(instanceID: f.source.id) == nil)
     }
+    @Test func exportsSharedRepositoryWithoutOtherVersionsOrLauncherFiles() async throws {
+        let f = try fixture(mode: .shared); defer { try? FileManager.default.removeItem(at: f.root) }
+        let service = InstanceTransfer(paths: f.paths), archive = f.root.appendingPathComponent("Complete.zip")
+        try write(Data("account data".utf8), "launcher_accounts.json", at: f.paths.game(f.source.id))
+        try await service.export(f.source, to: archive, format: .complete, includeWorlds: false)
+        let unpacked = f.root.appendingPathComponent("Exported")
+        try SafeArchive.extract(archive, to: unpacked)
+        #expect(!FileManager.default.fileExists(atPath: unpacked.appendingPathComponent("minecraft/launcher_accounts.json").path))
+        #expect(!FileManager.default.fileExists(atPath: unpacked.appendingPathComponent("minecraft/versions").path))
+        #expect(!FileManager.default.fileExists(atPath: unpacked.appendingPathComponent("minecraft/saves").path))
+        #expect(!FileManager.default.fileExists(atPath: unpacked.appendingPathComponent("installation/libraries/unrelated.jar").path))
+        try FileManager.default.removeItem(at: f.root.appendingPathComponent("Minecraft"))
+        let prepared = try await service.prepare(archive)
+        let restored = try await service.install(prepared, name: "Restored", installing: { _, _ in throw RuriError.message("Unexpected installer") })
+        let current = f.paths.configured(with: try StateStore.load(f.paths))
+        #expect(restored.repositoryVersionID == "Restored")
+        #expect(try String(contentsOf: current.game(restored.id).appendingPathComponent("config/example.txt"), encoding: .utf8) == "configuration")
+        #expect(try MinecraftFolderStore.refresh(f.targetDirectory, paths: f.paths).instances.first { $0.id == restored.id }?.gameVersion == "1.21.1")
+        let metadata = try #require(try ModpackRegistry.load(paths: current, instanceID: restored.id))
+        #expect(metadata.name == "Local pack")
+        await service.discard(prepared)
+    }
+
 }

@@ -105,7 +105,7 @@ public actor GameInstaller {
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
-        if instance.repositoryVersionID != nil { try prepareRepositoryNatives(instance, manifest: manifest) }
+        if instance.repositoryVersionID != nil || instance.importedInstallation != nil { try prepareRepositoryNatives(instance, manifest: manifest) }
         guard let index = manifest.assetIndex else { return }
         let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.resources(for: instance).assets)
         guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("游戏资源索引缺失，请先修复实例。") }

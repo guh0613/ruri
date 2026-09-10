@@ -6,7 +6,7 @@ public struct GameResourcePaths: Sendable {
     public let versions: URL
     public let assets: URL
 
-    fileprivate init(root: URL, confined: Bool) throws {
+    init(root: URL, confined: Bool) throws {
         self.root = root
         func directory(_ name: String) throws -> URL {
             // An imported installation owns its files. Its resource folders

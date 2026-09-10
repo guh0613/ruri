@@ -20,11 +20,11 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
     var fileCount: Int { 2 + resources.count + generatedResources.count + sourceManifests.count }
     var bytes: Int64 { client.size + Int64(manifest.count) + resources.reduce(0) { $0 + $1.size } + (Array(generatedResources.values) + Array(sourceManifests.values)).reduce(0) { $0 + Int64($1.count) } }
 
-    static func read(instance: GameInstance, copy: GameInstance, paths: LauncherPaths) throws -> Self {
-        let source = try paths.resources(for: instance)
-        let targetRoot = paths.directoryRoot(copy.directoryID ?? paths.newInstanceDirectoryID)
-        let targetVersion = paths.including(copy).versionDirectory(copy.id)
-        let name = try required(copy.repositoryVersionID)
+    static func read(instance: GameInstance, copy: GameInstance, paths: LauncherPaths, portable: Bool = false, installationRoot: URL? = nil) throws -> Self {
+        let source = try installationRoot.map { try GameResourcePaths(root: $0, confined: true) } ?? paths.resources(for: instance)
+        let targetRoot = try paths.including(copy).resources(for: copy).root
+        let name = try required(copy.repositoryVersionID ?? (copy.importedInstallation != nil ? "game" : nil))
+        let targetVersion = copy.repositoryVersionID == nil ? targetRoot.appendingPathComponent("versions/" + name) : paths.including(copy).versionDirectory(copy.id)
         var manifest: VersionManifest
         var documents: [MinecraftDirectoryDocument]
         if let version = instance.repositoryVersionID {
@@ -34,7 +34,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             manifest = try resolution.selectingLibraries().repositoryManifest(root: source.root)
             documents = resolution.sourceManifests
         } else {
-            let file = paths.manifest(instance.id), data = try RunDirectoryCopyGuard.read(file, limit: 8_388_608)
+            let file = installationRoot?.appendingPathComponent("version.json") ?? paths.manifest(instance.id), data = try RunDirectoryCopyGuard.read(file, limit: 8_388_608)
             manifest = try JSONDecoder().decode(VersionManifest.self, from: data)
             documents = [.init(url: file, data: data)]
         }
@@ -77,18 +77,19 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             } else { relative = try Self.required(value.path ?? fallback) }
             let file = try add(url, as: "libraries/" + relative)
             let target = targetRoot.appendingPathComponent(file.path)
-            replacements[url.path] = target.path
+            replacements[url.path] = portable ? "${library_directory}/" + relative : target.path
             if let old = value.path ?? fallback, old != relative {
                 replacements["${library_directory}/" + old] = "${library_directory}/" + relative
             }
             return Artifact(path: relative, url: value.sha1.map({ $0.lowercased() != hash }) == true ? nil : value.url, sha1: hash, size: size)
         }
-        let clientURL = try paths.clientJar(manifest.jar ?? instance.gameVersion, instance: instance)
+        let jarID = manifest.jar ?? instance.gameVersion
+        let clientURL = try installationRoot == nil ? paths.clientJar(jarID, instance: instance) : LauncherPaths.safePath("versions/\(jarID)/\(jarID).jar", within: source.root)
         let (clientHash, clientSize) = try inspect(clientURL)
         let client = Resource(source: clientURL, path: name + ".jar", sha1: clientHash, size: clientSize)
         let oldClient = manifest.downloads?["client"]
         manifest.downloads = ["client": Artifact(url: oldClient?.sha1.map({ $0.lowercased() != clientHash }) == true ? nil : oldClient?.url, sha1: clientHash, size: clientSize)]
-        replacements[clientURL.path] = targetVersion.appendingPathComponent(name + ".jar").path
+        replacements[clientURL.path] = portable ? "${primary_jar}" : targetVersion.appendingPathComponent(name + ".jar").path
         for index in manifest.libraries.indices {
             var library = manifest.libraries[index]
             let needed = GameInstaller.allowed(library, architecture: architecture)
@@ -131,16 +132,17 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
         for (index, document) in documents.enumerated() {
             if let data = document.data { originals["source-manifests/\(index).json"] = data; _ = try inspect(document.url) }
         }
-        replacements[source.libraries.path] = targetRoot.appendingPathComponent("libraries").path
-        replacements[source.assets.path] = targetRoot.appendingPathComponent("assets").path
-        if !MinecraftGameDataFiles.sameLocation(paths.game(instance.id), source.root) {
-            replacements[paths.game(instance.id).path] = targetVersion.path
+        replacements[source.libraries.path] = portable ? "${library_directory}" : targetRoot.appendingPathComponent("libraries").path
+        replacements[source.assets.path] = portable ? "${assets_root}" : targetRoot.appendingPathComponent("assets").path
+        if portable || !MinecraftGameDataFiles.sameLocation(paths.game(instance.id), source.root) {
+            replacements[paths.game(instance.id).path] = portable ? "${game_directory}" : targetVersion.path
         }
-        if instance.repositoryVersionID != nil { replacements[paths.versionDirectory(instance.id).path] = targetVersion.path }
+        if instance.repositoryVersionID != nil && (!portable || !MinecraftGameDataFiles.sameLocation(paths.game(instance.id), paths.versionDirectory(instance.id))) { replacements[paths.versionDirectory(instance.id).path] = portable ? "${version_directory}" : targetVersion.path }
+        if portable { replacements[paths.instance(instance.id).appendingPathComponent("natives").path] = "${natives_directory}" }
         manifest.id = name; manifest.jar = name; manifest.inheritsFrom = nil
         func rewrite(_ value: String) -> String {
-            if value == paths.game(instance.id).path { return targetVersion.path }
-            if value == "--gameDir=" + paths.game(instance.id).path { return "--gameDir=" + targetVersion.path }
+            if value == paths.game(instance.id).path { return portable ? "${game_directory}" : targetVersion.path }
+            if value == "--gameDir=" + paths.game(instance.id).path { return "--gameDir=" + (portable ? "${game_directory}" : targetVersion.path) }
             return Self.rewrite(value, replacements: replacements)
         }
         func argument(_ value: LaunchArgument) -> LaunchArgument {
@@ -152,6 +154,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             manifest.arguments = arguments
         }
         if let legacy = manifest.minecraftArguments { manifest.minecraftArguments = try ArgumentTokenizer.join(ArgumentTokenizer.split(legacy).map(rewrite)) }
+        if let logging = manifest.logging?.client { manifest.logging = .init(client: .init(argument: rewrite(logging.argument), file: logging.file)) }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
         var document = try JSONSerialization.jsonObject(with: encoder.encode(manifest)) as! [String: Any]
         document["clientVersion"] = instance.gameVersion

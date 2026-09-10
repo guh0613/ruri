@@ -82,7 +82,7 @@ public enum LaunchBuilder {
             "version_type": manifest.type ?? "release", "user_properties": "{}",
             "natives_directory": natives.path, "launcher_name": "Ruri", "launcher_version": "0.1.0",
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
-            "library_directory": libraries.path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
+            "library_directory": libraries.path, "version_directory": jar.deletingLastPathComponent().path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
             "resolution_width": String(instance.width), "resolution_height": String(instance.height),
             "game_assets": resources.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path
         ]
@@ -110,9 +110,9 @@ public enum LaunchBuilder {
         jvm.insert(contentsOf: baseMemory.arguments + ["-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
         if let logging = manifest.logging?.client {
             let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: resources.assets)
-            jvm.append(logging.argument.replacingOccurrences(of: "${path}", with: file.path))
+            jvm.append(try expand(logging.argument.replacingOccurrences(of: "${path}", with: file.path)))
         }
-        let extras = try ArgumentTokenizer.split(instance.extraJVMArguments)
+        let extras = try ArgumentTokenizer.split(instance.extraJVMArguments).map(expand)
         guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message("附加 JVM 参数不能覆盖游戏主类或 classpath。") }
         jvm += extras
         memoryArguments += extras

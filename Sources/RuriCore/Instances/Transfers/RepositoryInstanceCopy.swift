@@ -43,7 +43,7 @@ extension InstanceCopier {
         let transaction = try RepositoryImportTransaction(instance: preview.copy, paths: current, copySource: owner)
         let staging = transaction.staging
         do {
-            func validateLocations() throws {
+            @Sendable func validateLocations() throws {
                 try current.validateInstanceLocation(preview.source.id)
                 try preview.targetCollection?.validateAvailability()
             }
@@ -64,11 +64,11 @@ extension InstanceCopier {
             try preview.manifest.requireMatch(in: transaction.workspace, excluding: ["transaction.json", ".operation.lock"], ignoringTransientFiles: true)
             let client = staging.versionDirectory(preview.copy.id).appendingPathComponent(installation.client.path)
             try RunDirectoryFileCopy.file(installation.client.source, to: client, validate: validateLocations) { report($0) }
-            try requireResource(client, sha1: installation.client.sha1, size: installation.client.size)
+            try MinecraftInstallationFiles.requireResource(client, sha1: installation.client.sha1, size: installation.client.size)
             report(0, finished: true)
             let targetRoot = current.directoryRoot(preview.copy.directoryID!)
             for resource in installation.resources {
-                try await copyResource(resource, root: targetRoot, validate: validateLocations) { report($0) }
+                try await MinecraftInstallationFiles.copyResource(resource, root: targetRoot, validate: validateLocations) { report($0) }
                 report(0, finished: true)
             }
             for (path, data) in installation.generatedResources.sorted(by: { $0.key < $1.key }) {
@@ -78,7 +78,7 @@ extension InstanceCopier {
                 try data.write(to: temporary, options: .withoutOverwriting)
                 defer { try? FileManager.default.removeItem(at: temporary) }
                 let resource = MinecraftInstallationCopy.Resource(source: temporary, path: path, sha1: MinecraftInstallationCopy.sha1(data), size: Int64(data.count))
-                try await copyResource(resource, root: targetRoot, validate: validateLocations) { report($0) }
+                try await MinecraftInstallationFiles.copyResource(resource, root: targetRoot, validate: validateLocations) { report($0) }
                 report(0, finished: true)
             }
             for (path, data) in installation.sourceManifests {
@@ -178,29 +178,5 @@ extension InstanceCopier {
         var record = try ModpackRegistry.read(file, game: paths.game(copy.id))
         record.settings = copy
         try FileExtendedAttributes.rewrite(JSONEncoder().encode(record), at: file)
-    }
-    private func requireResource(_ file: URL, sha1: String, size: Int64) throws {
-        guard DownloadManager.valid(file, item: .init(url: nil, destination: file, sha1: sha1, size: size)) else {
-            throw RuriError.message("安装文件内容不一致，未覆盖现有文件：\(file.path)")
-        }
-    }
-    private func copyResource(_ resource: MinecraftInstallationCopy.Resource, root: URL, validate: () throws -> Void, progress: (Int64) -> Void) async throws {
-        let target = try LauncherPaths.safePath(resource.path, within: root)
-        let lock = try await DownloadFileLock.acquire(for: target); defer { close(lock) }
-        try validate()
-        if FileManager.default.fileExists(atPath: target.path) {
-            try requireResource(target, sha1: resource.sha1, size: resource.size); progress(resource.size); return
-        }
-        let temporary = target.deletingLastPathComponent().appendingPathComponent(".ruri-partials/copy-" + UUID().uuidString)
-        defer { try? FileManager.default.removeItem(at: temporary) }
-        try RunDirectoryFileCopy.file(resource.source, to: temporary, validate: validate, progress: progress)
-        try requireResource(temporary, sha1: resource.sha1, size: resource.size)
-        var identity: RunDirectoryCopyJournal.Identity?
-        do {
-            try RunDirectoryFileCopy.publish(temporary, to: target, directory: false, created: { identity = $0 }, validate: validate, progress: { _ in })
-        } catch {
-            if identity?.matches(target) == true { try? FileManager.default.removeItem(at: target) }
-            throw error
-        }
     }
 }

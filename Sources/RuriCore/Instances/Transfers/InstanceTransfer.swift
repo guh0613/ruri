@@ -1,9 +1,9 @@
 import Foundation
 
 public enum InstanceExportFormat: String, CaseIterable, Sendable, Identifiable {
-    case ruri, multimc, mcbbs, mrpack
+    case ruri, complete, multimc, mcbbs, mrpack
     public var id: String { rawValue }
-    public var title: String { switch self { case .ruri: "Ruri 实例"; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
+    public var title: String { switch self { case .ruri: "Ruri 实例"; case .complete: "Ruri 完整副本"; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
 }
 
 public struct PreparedInstanceImport: Identifiable, Sendable {
@@ -31,6 +31,8 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     let records: Data?
     let modpack: ModpackDescriptor?
     let inheritedModpack: InstalledModpack?
+    var installation: PreparedMinecraftInstallation? = nil
+    public var includesInstallation: Bool { installation != nil }
 }
 
 struct InstanceImportDescription {
@@ -46,6 +48,7 @@ struct InstanceImportDescription {
     var overlays: [URL] = []
     var modpack: ModpackDescriptor?
     var inheritedModpack: InstalledModpack?
+    var installation: URL?
 }
 
 public struct PackFile: Identifiable, Sendable {
@@ -77,18 +80,21 @@ struct PortableInstance: Codable {
     let width: Int
     let height: Int
     let iconPNG: Data?
-    init(_ instance: GameInstance) {
+    let installation: ImportedMinecraftInstallation?
+    init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
-        iconPNG = instance.iconPNG
+        iconPNG = instance.iconPNG; self.installation = installation
+        if installation != nil { formatVersion = 2 }
     }
     func instance() throws -> GameInstance {
-        guard formatVersion == 1 else { throw RuriError.message("此实例包需要更新版本的 Ruri。") }
+        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message("此实例包需要更新版本的 Ruri，或缺少安装文件信息。") }
+        try installation?.validate()
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
-        result.iconPNG = iconPNG
+        result.iconPNG = iconPNG; result.importedInstallation = installation
         return result
     }
 }
@@ -125,7 +131,12 @@ public actor InstanceTransfer {
             let locks = try Self.lockWorlds(description.game); defer { locks.forEach { close($0) } }
             let snapshot = workspace.appendingPathComponent("minecraft")
             let declaredFolders = Set(description.packFiles.compactMap { $0.path.split(separator: "/").first.map(String.init) })
-            let excluded = try Self.exclusions(description.game, includeWorlds: true).subtracting(declaredFolders).union(description.excluded)
+            var excluded = try Self.exclusions(description.game, includeWorlds: true).subtracting(declaredFolders).union(description.excluded)
+            if description.installation != nil {
+                // A complete export already selected its game files; retain
+                // bundled folders even when light packs normally rebuild them.
+                excluded = Set(excluded.filter { $0 == ".ruri" || ($0.hasPrefix("saves/") && $0.hasSuffix("/session.lock")) })
+            }
             if FileManager.default.fileExists(atPath: description.game.path) {
                 try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress("正在复制实例内容", completed: done, total: total)) }
             } else { try FileManager.default.createDirectory(at: snapshot, withIntermediateDirectories: true) }
@@ -141,11 +152,14 @@ public actor InstanceTransfer {
                     guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包内附文件校验失败：\(file.path)") }
                 } else if file.url == nil { throw RuriError.message("整合包缺少文件且未提供下载源：\(file.path)") }
             }
+            let installation = try description.installation.map {
+                try PreparedMinecraftInstallation.capture($0, in: workspace, instance: description.instance, paths: paths)
+            }
             let entries = try FileTree.entries(in: snapshot)
             return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings,
-                                          fileCount: entries.filter { !$0.directory }.count, byteCount: entries.reduce(0) { $0 + $1.size }, curseForgeFiles: description.curseForgeFiles,
+                                          fileCount: entries.filter { !$0.directory }.count + (installation?.fileCount ?? 0), byteCount: entries.reduce(0) { $0 + $1.size } + (installation?.byteCount ?? 0), curseForgeFiles: description.curseForgeFiles,
                                           remoteFileCount: packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }.count,
-                                          packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records, modpack: description.modpack, inheritedModpack: description.inheritedModpack)
+                                          packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records, modpack: description.modpack, inheritedModpack: description.inheritedModpack, installation: installation)
         } catch { try? FileManager.default.removeItem(at: workspace); throw error }
     }
 
@@ -172,6 +186,9 @@ public actor InstanceTransfer {
         instance.javaPath = nil; instance.installed = false
         if !importJVMArguments { instance.extraJVMArguments = "" }
         instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths)
+        if prepared.includesInstallation, instance.repositoryVersionID != nil {
+            instance.repositoryComponents = instance.importedInstallation?.components; instance.importedInstallation = nil
+        }
         try Self.validate(instance)
         return instance
     }
@@ -227,7 +244,14 @@ public actor InstanceTransfer {
             if let source = prepared.sourceMetadata { try source.write(to: location.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta"), options: .atomic) }
             try Self.copyPackContent(content, to: location, instanceID: instance.id)
             let pack = try ModpackRegistry.capture(prepared, instance: instance, paths: location, content: content)
-            instance = try await installing(instance, location)
+            if let installation = prepared.installation {
+                try installation.validate(instance: prepared.instance, paths: paths)
+                let plan = try MinecraftInstallationCopy.read(instance: prepared.instance, copy: instance, paths: paths, installationRoot: installation.root)
+                try await plan.install(instance, at: location)
+                try MinecraftInstallationCopy.retainOriginals(from: installation.root, to: location.instance(instance.id))
+                try await GameInstaller(paths: location).prepareRunDirectory(instance, manifest: JSONDecoder().decode(VersionManifest.self, from: plan.manifest))
+                instance.installed = true
+            } else { instance = try await installing(instance, location) }
             if let pack { try ModpackRegistry.save(pack, paths: location, instanceID: instance.id) }
             try Task.checkCancellation()
             return try transaction?.publish(instance) ?? instance
@@ -246,7 +270,8 @@ public actor InstanceTransfer {
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
-        guard instance.repositoryVersionID == nil, instance.importedInstallation == nil else { throw RuriError.message("此实例含有本地游戏本体和依赖，当前整合包格式无法完整保存它们。可使用复制实例保留完整副本。") }
+        let complete = format == .complete || (format == .ruri && (instance.repositoryVersionID != nil || instance.importedInstallation != nil))
+        guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。") }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
@@ -259,6 +284,7 @@ public actor InstanceTransfer {
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
         let game = paths.game(instance.id)
         let locks = try Self.lockWorlds(game); defer { locks.forEach { close($0) } }
+        if complete { try await exportComplete(instance, to: destination, includeWorlds: includeWorlds, progress: progress); return }
         if format == .mrpack { try await exportMRPack(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .mcbbs { try exportMCBBS(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。") }
@@ -353,7 +379,8 @@ public actor InstanceTransfer {
         let source = root.appendingPathComponent("ruri-source-mcbbs.packmeta")
         return InstanceImportDescription(instance: instance, game: games[0], format: format, warnings: warnings, records: records,
                                          sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil,
-                                         inheritedModpack: format == "Ruri" && fm.fileExists(atPath: root.appendingPathComponent("ruri-modpack-state.json").path) ? try ModpackRegistry.read(root.appendingPathComponent("ruri-modpack-state.json"), game: games[0]) : nil)
+                                         inheritedModpack: format == "Ruri" && fm.fileExists(atPath: root.appendingPathComponent("ruri-modpack-state.json").path) ? try ModpackRegistry.read(root.appendingPathComponent("ruri-modpack-state.json"), game: games[0]) : nil,
+                                         installation: instance.importedInstallation != nil ? try LauncherPaths.safePath("installation", within: root) : nil)
     }
     static func validate(_ instance: GameInstance) throws {
         if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
