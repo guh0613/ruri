@@ -10,7 +10,7 @@ public actor MinecraftDirectoryReader {
     nonisolated func scanNow(_ selection: URL, allowEmpty: Bool = false) throws -> MinecraftDirectoryCatalog {
         let (root, selected) = try Self.repository(for: selection, allowEmpty: allowEmpty)
         let identity = try RunDirectoryCopyJournal.Identity.read(root)
-        let importing = try RepositoryImportStore.reservedVersionNames(in: root)
+        let importing = try RepositoryImportStore.reservedVersionNames(in: root).union(RepositoryMoveReservation.names(in: root))
         let versions = root.appendingPathComponent("versions")
         let children = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
         guard children.count <= 2_000 else { throw RuriError.message("此目录的版本数量超过读取限制。") }
@@ -41,7 +41,7 @@ public actor MinecraftDirectoryReader {
         }
         let currentChildren = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
         guard identity.matches(root), currentChildren.map(\.lastPathComponent) == children.map(\.lastPathComponent),
-              try RepositoryImportStore.reservedVersionNames(in: root) == importing else {
+              try RepositoryImportStore.reservedVersionNames(in: root).union(RepositoryMoveReservation.names(in: root)) == importing else {
             throw RuriError.message("读取期间游戏目录发生变化，请重新扫描。")
         }
         guard allowEmpty || !result.isEmpty else { throw RuriError.message("此目录的 versions 文件夹里没有找到版本。") }

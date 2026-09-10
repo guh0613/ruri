@@ -11,8 +11,8 @@ public struct InstanceMovePreview: Identifiable, Sendable {
     public let destinationGame: URL
     /// Shared and custom game files remain at their original location.
     public var retainedGameDirectory: URL? { source.runDirectory == .shared || source.runDirectory == .custom ? sourceGame : nil }
-    public var fileCount: Int { snapshot.destination.entries.filter { !$0.directory }.count }
-    public var bytes: Int64 { snapshot.destination.entries.reduce(0) { $0 + $1.size } }
+    public var fileCount: Int { snapshot.destination.entries.filter { !$0.directory }.count + (repository?.installation.fileCount ?? 0) }
+    public var bytes: Int64 { snapshot.destination.entries.reduce(0) { $0 + $1.size } + (repository?.installation.bytes ?? 0) }
     public var preservedPreviousData: URL? {
         snapshot.hasPreviousData ? destination.appendingPathComponent(InstanceMoveSnapshot.previousDataPath(id)) : nil
     }
@@ -20,6 +20,7 @@ public struct InstanceMovePreview: Identifiable, Sendable {
     let targetCollection: GameDirectory?
     let sourceIdentity: RunDirectoryCopyJournal.Identity
     let snapshot: InstanceMoveSnapshot
+    var repository: RepositoryMoveSnapshot? = nil
 }
 
 public actor InstanceMover {
@@ -30,7 +31,9 @@ public actor InstanceMover {
         try Task.checkCancellation()
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         guard let source = state.instances.first(where: { $0.id == instanceID }) else { throw RuriError.message("找不到要移动的实例，请刷新后重试。") }
-        guard source.repositoryVersionID == nil, !current.isMinecraftDirectory(directoryID) else { throw RuriError.message("已有 Minecraft 目录的跨文件夹移动尚未开放。可在 Finder 中移动整个文件夹后重新定位。") }
+        if source.repositoryVersionID != nil || current.isMinecraftDirectory(directoryID) {
+            return try await repositoryPreview(source: source, directoryID: directoryID, paths: current)
+        }
         guard current.directoryID(for: instanceID) != directoryID else { throw RuriError.message("此实例已经位于所选文件夹中。") }
         guard directoryID == GameDirectory.defaultID || current.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message("找不到目标实例文件夹。") }
         let id = UUID()

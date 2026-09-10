@@ -3,6 +3,7 @@ import Darwin
 
 extension InstanceMover {
     public func move(_ preview: InstanceMovePreview, progress: @Sendable (InstanceMoveProgress) -> Void = { _ in }) async throws -> InstanceMoveResult {
+        if preview.repository != nil { return try await moveRepository(preview, progress: progress) }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message("实例设置在预览后改变，请重新预览。") }
         let access = try await InstanceMoveAccess.acquire(instance: preview.source, paths: current)
@@ -94,6 +95,7 @@ extension InstanceMover {
     public func pending(instanceID: UUID) throws -> InstanceMoveRecovery? {
         guard InstanceMoveGuard.hasPending(paths: paths, instanceID: instanceID) else { return nil }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
+        if RepositoryMoveJournal.exists(paths: current, instanceID: instanceID) { return try repositoryPending(instanceID, state: state) }
         let record = try InstanceMoveJournal.load(paths: current, instanceID: instanceID)
         return .init(id: record.id, instance: record.original, source: try record.source(paths: current),
                      destination: try record.destination(paths: current), workspace: try record.workspace(paths: current),
@@ -104,6 +106,9 @@ extension InstanceMover {
         let lease = try InstanceLocationLease.acquireForMoveRecovery(paths: paths, instanceID: instanceID)
         defer { withExtendedLifetime(lease) {} }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
+        if RepositoryMoveJournal.exists(paths: current, instanceID: instanceID) {
+            return try recoverRepository(instanceID, transactionID: transactionID, state: state, preservingSource: preservingSource, progress: progress)
+        }
         let record = try InstanceMoveJournal.load(paths: current, instanceID: instanceID)
         guard record.id == transactionID else { throw RuriError.message("待恢复的移动已经改变，请刷新后重试。") }
         try record.validateLocations(paths: current)

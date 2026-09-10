@@ -44,6 +44,11 @@ import Testing
         let state = try StateStore.update(base) { state in
             let index = state.instances.firstIndex { $0.id == source.id }!
             state.instances[index].runDirectory = mode
+            if mode == .custom {
+                let folder = root.appendingPathComponent("Custom game")
+                try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+                state.instances[index].customRunDirectory = try CustomRunDirectory.register(at: folder, paths: base)
+            }
             state.instances[index].playTime = 120; state.instances[index].lastPlayed = Date(); state.instances[index].favorite = true
             state.instances[index].extraJVMArguments = "-Dcopy=preserved"
         }
@@ -169,6 +174,72 @@ import Testing
         let metadata = try #require(try ModpackRegistry.load(paths: current, instanceID: restored.id))
         #expect(metadata.name == "Local pack")
         await service.discard(prepared)
+    }
+
+    @Test(arguments: [GameRunDirectory.isolated, .shared, .custom])
+    @MainActor func movesRepositoryVersionWithIdentityHistoryAndCorrectRunDirectory(mode: GameRunDirectory) async throws {
+        let f = try fixture(mode: mode); defer { try? FileManager.default.removeItem(at: f.root) }
+        let history = try GameSessionRecorder(paths: f.paths, instance: f.source, accountMode: "offline")
+        try history.append("original history"); try history.fail(CancellationError(), cancelled: true)
+        let sourceMetadata = f.paths.instance(f.source.id), sourceVersion = f.paths.versionDirectory(f.source.id)
+        let service = InstanceMover(paths: f.paths)
+        let preview = try await service.preview(instanceID: f.source.id, directoryID: f.targetDirectory)
+        let result = try await service.move(preview), current = f.paths.configured(with: result.state)
+        #expect(result.warning == nil)
+        let moved = try #require(result.state.instances.first { $0.id == f.source.id })
+        #expect(moved.id == f.source.id && moved.name == f.source.name && moved.playTime == f.source.playTime && moved.favorite == f.source.favorite)
+        #expect(moved.directoryID == f.targetDirectory && moved.repositoryVersionID == "Original" && moved.lastInstanceMoveID == preview.id)
+        #expect(try GameSessionStore.load(paths: current, instanceID: moved.id, sessionID: history.record.id).state.isFinished)
+        #expect(try String(contentsOf: current.game(moved.id).appendingPathComponent("config/example.txt"), encoding: .utf8) == "configuration")
+        #expect(FileManager.default.fileExists(atPath: current.gameDataState(moved.id).appendingPathComponent("world-backups/fixture.zip").path))
+        #expect((current.game(moved.id) == f.paths.game(f.source.id)) == (mode == .custom))
+        #expect(!FileManager.default.fileExists(atPath: sourceMetadata.path) && !FileManager.default.fileExists(atPath: sourceVersion.path))
+        #expect(FileManager.default.fileExists(atPath: f.root.appendingPathComponent("Minecraft/versions/1.21.1/1.21.1.jar").path))
+        let sourceRefresh = try MinecraftFolderStore.refresh(f.sourceDirectory, paths: f.paths)
+        #expect(sourceRefresh.instances.filter { $0.id == moved.id }.count == 1 && sourceRefresh.instances.first { $0.id == moved.id }?.directoryID == f.targetDirectory)
+        #expect(try MinecraftFolderStore.refresh(f.targetDirectory, paths: f.paths).instances.filter { $0.directoryID == f.targetDirectory }.map(\.id) == [moved.id])
+        #expect(!InstanceMoveGuard.hasPending(paths: current, instanceID: moved.id))
+        let manifest = try await GameInstaller(paths: current).loadManifest(moved)
+        #expect(try String(contentsOf: current.clientJar(manifest.jar!, instance: moved), encoding: .utf8) == "locally modified client")
+    }
+
+    @Test func movesRepositoryIntoManagedLayoutAndBackWithoutReinstalling() async throws {
+        let f = try fixture(); defer { try? FileManager.default.removeItem(at: f.root) }
+        let service = InstanceMover(paths: f.paths)
+        let first = try await service.preview(instanceID: f.source.id, directoryID: GameDirectory.defaultID)
+        let result = try await service.move(first)
+        #expect(result.warning == nil)
+        let managed = try #require(result.state.instances.first { $0.id == f.source.id })
+        #expect(managed.importedInstallation != nil && managed.repositoryVersionID == nil)
+        let current = f.paths.configured(with: result.state), root = current.instance(managed.id)
+        #expect(try String(contentsOf: current.game(managed.id).appendingPathComponent("config/example.txt"), encoding: .utf8) == "configuration")
+        let second = try await service.preview(instanceID: managed.id, directoryID: f.sourceDirectory)
+        let returned = try await service.move(second)
+        #expect(returned.warning == nil)
+        #expect(returned.state.instances.first { $0.id == managed.id }?.repositoryVersionID == "Original")
+        #expect(!FileManager.default.fileExists(atPath: root.path))
+    }
+
+    @Test func dependentVersionsAndInterruptedMovesKeepSourceUntilRecovery() async throws {
+        let f = try fixture(); defer { try? FileManager.default.removeItem(at: f.root) }
+        let state = try StateStore.load(f.paths), parent = try #require(state.instances.first { $0.repositoryVersionID == "1.21.1" })
+        let service = InstanceMover(paths: f.paths)
+        await #expect(throws: (any Error).self) { try await service.preview(instanceID: parent.id, directoryID: f.targetDirectory) }
+        let preview = try await service.preview(instanceID: f.source.id, directoryID: f.targetDirectory)
+        let interrupted = Task { try await service.move(preview) { progress in
+            if progress.phase == .committed { withUnsafeCurrentTask { $0?.cancel() } }
+        } }
+        let result = try await interrupted.value
+        #expect(result.warning != nil && InstanceMoveGuard.hasPending(paths: f.paths, instanceID: f.source.id))
+        #expect(FileManager.default.fileExists(atPath: f.paths.versionDirectory(f.source.id).path))
+        #expect(try await service.pending(instanceID: f.source.id)?.committed == true)
+        _ = try MinecraftFolderStore.refresh(f.sourceDirectory, paths: f.paths)
+        _ = try MinecraftFolderStore.refresh(f.targetDirectory, paths: f.paths)
+        #expect(try StateStore.load(f.paths).instances.filter { $0.id == f.source.id }.count == 1)
+        let recovered = try await service.recover(instanceID: f.source.id, transactionID: preview.id)
+        #expect(recovered.warning == nil && !InstanceMoveGuard.hasPending(paths: f.paths, instanceID: f.source.id))
+        #expect(!FileManager.default.fileExists(atPath: f.paths.versionDirectory(f.source.id).path))
+        #expect(recovered.state.instances.first { $0.id == f.source.id }?.directoryID == f.targetDirectory)
     }
 
 }

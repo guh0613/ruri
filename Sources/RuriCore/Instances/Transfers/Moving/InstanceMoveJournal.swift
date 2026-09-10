@@ -101,6 +101,9 @@ public enum InstanceMoveGuard {
               let entries = try? FileManager.default.contentsOfDirectory(at: parent, includingPropertiesForKeys: nil) else { return [] }
         let current = (try? StateStore.load(paths)).map { paths.configured(with: $0).instance(instanceID).standardizedFileURL.path }
         return entries.filter { $0.lastPathComponent.hasPrefix(instanceID.uuidString + "-") }.prefix(500).flatMap { entry -> [URL] in
+            if let record = try? RepositoryMoveJournal.load(paths: paths, instanceID: instanceID, at: entry) {
+                return [entry, try? record.retirement(paths: paths)].compactMap { $0 }.filter { FileManager.default.fileExists(atPath: $0.path) }
+            }
             guard let record = try? InstanceMoveJournal.load(paths: paths, instanceID: instanceID, at: entry) else { return [entry] }
             var candidates = [try? record.workspace(paths: paths), try? record.retirementParent(paths: paths)].compactMap { $0 }
             if record.phase != .recovering, let source = try? record.source(paths: paths), source.standardizedFileURL.path != current { candidates.append(source) }
@@ -122,6 +125,13 @@ public enum InstanceMoveGuard {
         guard records.count <= 500 else { throw RuriError.message("待处理的实例移动过多，请先恢复。") }
         for record in records {
             guard let instanceID = UUID(uuidString: record.lastPathComponent) else { continue }
+            if RepositoryMoveJournal.exists(paths: paths, instanceID: instanceID) {
+                let journal = try RepositoryMoveJournal.load(paths: paths, instanceID: instanceID)
+                guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
+                    throw RuriError.message("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")
+                }
+                continue
+            }
             let journal = try InstanceMoveJournal.load(paths: paths, instanceID: instanceID)
             guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
                 throw RuriError.message("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")

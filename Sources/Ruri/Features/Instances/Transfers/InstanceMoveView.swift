@@ -26,7 +26,7 @@ struct InstanceMoveView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if let recovery {
-                        Label(recovery.committed ? "目标实例已登记，等待校验与清理" : "移动尚未完成，原实例仍保留", systemImage: "arrow.counterclockwise").font(.headline)
+                        Label(recovery.committed ? "目标实例已就绪，等待清理" : "移动尚未完成，原实例仍保留", systemImage: "arrow.counterclockwise").font(.headline)
                         path("原位置", recovery.source)
                         path("目标位置", recovery.destination)
                         Text(recovery.committed ? "校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。" : "恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。").font(.callout).foregroundStyle(.secondary)
@@ -42,7 +42,7 @@ struct InstanceMoveView: View {
                             ForEach(choices, id: \.self) { id in Text(directoryName(id)).tag(Optional(id)) }
                         }.disabled(model.busy)
                         Button("添加目标文件夹…", systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
-                        Text(source.importedInstallation == nil
+                        Text(source.importedInstallation == nil && source.repositoryVersionID == nil
                              ? "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。"
                              : "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。")
                             .font(.callout).foregroundStyle(.secondary)
@@ -123,10 +123,10 @@ struct InstanceMoveView: View {
     }
     private func addDirectory() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = "选择空文件夹保存实例，也可以在这里新建文件夹。"
+        panel.message = "选择 Minecraft 文件夹保存实例，也可以新建空文件夹。"
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
-            model.changeDirectory { try GameDirectoryStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
+            model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
             if let added = model.state.gameDirectories?.first(where: { $0.url.standardizedFileURL.path == url.standardizedFileURL.resolvingSymlinksInPath().path }) { directoryID = added.id }
         }
     }

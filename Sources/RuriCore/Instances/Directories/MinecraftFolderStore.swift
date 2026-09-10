@@ -73,8 +73,11 @@ public enum MinecraftFolderStore {
     }
 
     private static func synchronize(_ catalog: MinecraftDirectoryCatalog, directory: GameDirectory, state: inout PersistentState, paths: LauncherPaths) throws {
+        let reserved = try RepositoryImportStore.reservedVersionNames(in: directory.url).union(RepositoryMoveReservation.names(in: directory.url))
         for version in catalog.versions {
+            guard !reserved.contains(MinecraftGameDataFiles.key(version.id)), FileManager.default.fileExists(atPath: version.directory.path) else { continue }
             let index = state.instances.firstIndex { $0.directoryID == directory.id && $0.repositoryVersionID == version.id }
+            if let index, InstanceMoveGuard.hasPending(paths: paths, instanceID: state.instances[index].id) { continue }
             var item = index.map { state.instances[$0] } ?? GameInstance(name: version.id, gameVersion: version.gameVersion ?? version.id)
             item.directoryID = directory.id; item.repositoryVersionID = version.id
             item.repositoryComponents = version.components; item.repositoryIssue = version.issue
@@ -101,7 +104,8 @@ public enum MinecraftFolderStore {
         }
         let found = Set(catalog.versions.map(\.id))
         for index in state.instances.indices where state.instances[index].directoryID == directory.id {
-            if let version = state.instances[index].repositoryVersionID, !found.contains(version), state.instances[index].installed {
+            if let version = state.instances[index].repositoryVersionID, !found.contains(version), state.instances[index].installed,
+               !reserved.contains(MinecraftGameDataFiles.key(version)), !InstanceMoveGuard.hasPending(paths: paths, instanceID: state.instances[index].id) {
                 let current = paths.configured(with: state)
                 state.instances[index].repositoryIssue = FileManager.default.fileExists(atPath: current.repositoryImportWorkspace(state.instances[index].id).path)
                     ? "导入或复制尚需完成，请处理实例库中的工作文件。"
