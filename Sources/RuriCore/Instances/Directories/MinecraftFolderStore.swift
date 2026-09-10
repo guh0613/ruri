@@ -77,6 +77,7 @@ public enum MinecraftFolderStore {
         for version in catalog.versions {
             guard !reserved.contains(MinecraftGameDataFiles.key(version.id)), FileManager.default.fileExists(atPath: version.directory.path) else { continue }
             let index = state.instances.firstIndex { $0.directoryID == directory.id && $0.repositoryVersionID == version.id }
+            if let index, ModpackUpdateStore.hasPending(paths: paths.configured(with: state), instanceID: state.instances[index].id) { continue }
             if let index, InstanceMoveGuard.hasPending(paths: paths, instanceID: state.instances[index].id) { continue }
             var item = index.map { state.instances[$0] } ?? GameInstance(name: version.id, gameVersion: version.gameVersion ?? version.id)
             item.directoryID = directory.id; item.repositoryVersionID = version.id

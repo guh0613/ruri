@@ -12,6 +12,7 @@ struct InstanceSettingsView: View {
     @State private var copyingInstance = false
     @State private var movingInstance = false
     @State private var managingComponents = false
+    @State private var updatingModpack = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var loadingIcon = false
@@ -39,6 +40,8 @@ struct InstanceSettingsView: View {
                     Text(locationInstance.subtitle).font(.callout)
                     Button("管理加载器…", systemImage: "puzzlepiece.extension") { managingComponents = true }
                         .disabled(model.busy || model.isInstanceInUse(instance.id) || !locationInstance.installed)
+                    Button("整合包更新…", systemImage: "shippingbox") { updatingModpack = true }
+                        .disabled(model.busy || (!ModpackUpdateStore.hasPending(paths: model.paths, instanceID: instance.id) && model.isInstanceInUse(instance.id)))
                 }
                 Section("启动设置") {
                     Text("各项可跟随默认设置，或由此实例单独覆盖。修改只影响下一次启动。").font(.callout).foregroundStyle(.secondary)
@@ -92,6 +95,7 @@ struct InstanceSettingsView: View {
         .sheet(isPresented: $copyingInstance) { InstanceCopyView(instance: locationInstance) }
         .sheet(isPresented: $movingInstance) { InstanceMoveView(instance: locationInstance) }
         .sheet(isPresented: $managingComponents) { InstanceComponentsView(instance: locationInstance) }
+        .sheet(isPresented: $updatingModpack) { ModpackUpdateView(instance: locationInstance) }
         .task(id: model.busy) {
             guard !model.busy else { return }
             let paths = model.paths, id = instance.id

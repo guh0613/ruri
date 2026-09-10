@@ -157,6 +157,8 @@ import RuriCore
                     await transfer.discard(prepared)
                     print("Imported \(imported.id)")
                 } catch { await transfer.discard(prepared); throw error }
+            case "update-pack", "rollback-pack", "recover-pack-update":
+                try await manageModpackUpdate(args, paths: paths)
             case "components":
                 guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else {
                     throw RuriError.message("用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]")
@@ -342,6 +344,8 @@ import RuriCore
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
                   components <instance-uuid> [versions <loader> | set <loader> [version] | restore]
+                  update-pack <instance-uuid> <archive> [--apply] [--replace-local]
+                  rollback-pack/recover-pack-update <instance-uuid> [--apply]
                   launch [instance-uuid] [--world folder] [--detach] (offline account)
                   quit <instance-uuid> (normal application quit)
                   stop <instance-uuid> (SIGTERM)
