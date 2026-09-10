@@ -77,13 +77,21 @@ public enum GameDirectoryStore {
         return try StateStore.load(paths)
     }
     @discardableResult public static func remove(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
-        try StateStore.update(paths) { state in
+        var leases: [GameRunLease] = [], sharedLeases: [SharedGameDirectoryLease] = []
+        defer { withExtendedLifetime(leases) {}; withExtendedLifetime(sharedLeases) {} }
+        return try StateStore.update(paths) { state in
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例文件夹。") }
             if directory.isMinecraft {
                 let current = paths.configured(with: state)
-                let leases = try state.instances.filter { $0.directoryID == id }.map { try GameRunLease.acquire(paths: current, instanceID: $0.id) }
-                defer { withExtendedLifetime(leases) {} }
+                var lockedRoots = Set<String>()
+                for instance in state.instances where instance.directoryID == id {
+                    var metadata = instance; metadata.runDirectory = .isolated
+                    leases.append(try GameRunLease.acquire(paths: current.including(metadata), instanceID: instance.id))
+                    if instance.runDirectory != .isolated, lockedRoots.insert(current.game(instance.id).standardizedFileURL.resolvingSymlinksInPath().path).inserted {
+                        sharedLeases.append(try SharedGameDirectoryLease.acquire(paths: current, instanceID: instance.id, ignoringSession: nil))
+                    }
+                }
                 state.instances.removeAll { $0.directoryID == id }
                 if !state.instances.contains(where: { $0.id == state.selectedInstanceID }) { state.selectedInstanceID = nil }
             } else {

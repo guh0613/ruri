@@ -1,7 +1,7 @@
 import Foundation
 
-/// A collection of managed instances. Shared downloads and accounts stay in
-/// LauncherPaths.root; moving or disconnecting a collection never changes them.
+/// A registered game folder. Standard Minecraft repositories own their
+/// resources; older Ruri collections retain the shared launcher cache.
 public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
     public static let defaultID = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
     public let id: UUID
@@ -15,8 +15,8 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
     static let markerName = ".ruri-directory.json"
     struct Marker: Codable { let schema: Int; let id: UUID; var layout: Layout? }
 
-    /// Registration is deliberate and only initializes an empty selected folder.
-    /// Existing launcher layouts need an import preview, not a silent conversion.
+    /// Compatibility entry point for older Ruri-managed collections.
+    /// New and existing Minecraft repositories use MinecraftFolderStore.
     public static func create(name: String, at url: URL, paths: LauncherPaths) throws -> GameDirectory {
         let directory = GameDirectory(id: UUID(), name: try validName(name), url: url.standardizedFileURL.resolvingSymlinksInPath(), bookmark: nil, createdAt: Date())
         try paths.checkNewDirectory(directory)

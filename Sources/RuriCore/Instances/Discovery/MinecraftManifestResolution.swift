@@ -1,8 +1,7 @@
 import Foundation
 
-/// The original installation after structural inheritance/patch composition.
-/// This is not an installed instance: library normalization, file verification,
-/// macOS dependency preparation and publication still happen during import.
+/// The source installation after structural inheritance and patch composition.
+/// Library selection and native preparation can then use its files in place.
 public struct MinecraftManifestResolution: Sendable {
     public let manifest: VersionManifest
     public let clientFile: URL

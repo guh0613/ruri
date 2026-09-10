@@ -2,6 +2,17 @@ import Foundation
 import RuriCore
 
 extension AppModel {
+    func selectDirectory(_ id: UUID) {
+        guard !busy, !readOnly else { return }
+        save(); guard !readOnly else { return }
+        let base = basePaths
+        perform("切换游戏文件夹") { [self] _ in
+            let result = try await Task.detached(priority: .userInitiated) { try GameDirectoryStore.select(id, paths: base) }.value
+            acceptState(result); page = .library
+            await refreshDirectoryAvailability()
+        }
+    }
+
     func changeDirectory(_ work: (LauncherPaths) throws -> PersistentState) {
         guard !busy, !readOnly else { return }
         save()

@@ -18,7 +18,7 @@ extension MinecraftManifestResolution {
         let selection = try MinecraftLibrarySelector.select(libraries)
         var result = manifest
         // HMCL treats empty rule lists as unrestricted. Normalize them at the
-        // import boundary while keeping Ruri's ordinary manifest rules intact.
+        // discovery boundary while keeping Ruri's ordinary manifest rules intact.
         let libraries = selection.libraries.map { declaration -> MinecraftLibraryDeclaration in
             let library = declaration.library
             let normalized = Library(name: library.name, downloads: library.downloads, url: library.url,

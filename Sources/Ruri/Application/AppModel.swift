@@ -50,7 +50,6 @@ import RuriCore
     var worldInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
-    var minecraftDirectory: MinecraftDirectoryCatalog?
     var exportingInstance: GameInstance?
     var copyingInstance: GameInstance?
     var movingInstance: GameInstance?
@@ -61,7 +60,7 @@ import RuriCore
     private(set) var persistedState: PersistentState?
     var sessionRecorder: GameSessionRecorder?
     var recordingErrorShown = false
-    var selected: GameInstance? { state.instances.first(where: { $0.id == state.selectedInstanceID }) ?? state.instances.first }
+    var selected: GameInstance? { directoryInstances.first(where: { $0.id == state.selectedInstanceID }) ?? directoryInstances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil || restoringGames || isQuitting }
     var activeActivity: ActivityItem? { activities.first { $0.status == .running } }
@@ -101,6 +100,11 @@ import RuriCore
                 _ = try await Task.detached(priority: .utility) { try GameDirectoryStore.resolveBookmarks(paths: basePaths) }.value
                 state = try await CustomRunDirectoryRelocation(paths: basePaths).resolveBookmarks(); persistedState = state
             } catch { self.error = "无法恢复目录登记：\(error.localizedDescription)" }
+        }
+        if !readOnly {
+            let base = basePaths, id = selectedDirectoryID
+            do { acceptState(try await Task.detached(priority: .utility) { try MinecraftFolderStore.refresh(id, paths: base) }.value) }
+            catch { directoryErrors[id] = error.localizedDescription }
         }
         await refreshDirectoryAvailability()
         await refreshSessions()

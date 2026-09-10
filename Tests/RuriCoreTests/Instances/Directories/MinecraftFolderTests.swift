@@ -85,4 +85,37 @@ import Testing
         #expect(state.instances.first?.repositoryIssue != nil)
         #expect(state.instances.count == 1)
     }
+    @Test func isolationSwitchUsesExistingDataAndSkipsRepositoryResources() async throws {
+        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
+        let folder = try version("1.21.1", root: root)
+        try Data("shared settings".utf8).write(to: root.appendingPathComponent("options.txt"))
+        try Data("isolated settings".utf8).write(to: folder.appendingPathComponent("options.txt"))
+        try Data("{}".utf8).write(to: folder.appendingPathComponent("modpack.cfg"))
+        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
+        let instance = try #require(state.instances.first)
+        let service = GameRunDirectoryChange(paths: paths)
+        let preview = try await service.preview(instanceID: instance.id, target: .shared)
+        #expect(preview.sourceSnapshot.game.map(\.path) == ["options.txt"])
+        #expect(preview.targetSnapshot.game.map(\.path) == ["options.txt"])
+        let changed = try await service.useExisting(preview)
+        #expect(paths.configured(with: changed).game(instance.id).path == root.path)
+        #expect(try String(contentsOf: folder.appendingPathComponent("options.txt"), encoding: .utf8) == "isolated settings")
+        let restored = try await service.preview(instanceID: instance.id, target: .isolated)
+        #expect(try await service.useExisting(restored).instances.first?.runDirectory == .isolated)
+    }
+
+    @Test func parentDeletionIsBlockedAndRemovingFolderKeepsAllVersions() throws {
+        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
+        let parent = try version("1.21.1", root: root)
+        _ = try version("Fabric", root: root, extra: ["inheritsFrom": "1.21.1"])
+        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
+        let instance = try #require(state.instances.first { $0.repositoryVersionID == "1.21.1" })
+        #expect(throws: (any Error).self) { try MinecraftFolderStore.trashVersion(instance.id, paths: paths) }
+        #expect(FileManager.default.fileExists(atPath: parent.appendingPathComponent("1.21.1.json").path))
+        let removed = try GameDirectoryStore.remove(state.selectedDirectoryID!, paths: paths)
+        #expect(removed.instances.isEmpty && removed.gameDirectories?.isEmpty == true)
+        #expect(FileManager.default.fileExists(atPath: parent.appendingPathComponent("1.21.1.json").path))
+        #expect(try MinecraftFolderStore.add(name: "Games again", url: root, paths: paths).instances.count == 2)
+    }
+
 }

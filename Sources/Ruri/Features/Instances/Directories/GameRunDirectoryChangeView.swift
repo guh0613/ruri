@@ -59,7 +59,7 @@ struct GameRunDirectoryChangeView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Picker("内容处理", selection: $copyFiles) {
                             Text("使用目标已有的内容").tag(false)
-                            Text("复制当前内容到空目标").tag(true).disabled(!preview.canCopyToTarget)
+                            Text("复制当前内容到空目标").tag(true).disabled(!preview.canCopyToTarget || instance.repositoryVersionID != nil)
                         }.pickerStyle(.radioGroup).disabled(model.busy)
                         if !preview.canCopyToTarget { Text("目标已有文件或备份，不能用复制覆盖。").font(.caption).foregroundStyle(.secondary) }
                         location("原目录", url: preview.source, files: preview.sourceFileCount, bytes: preview.sourceBytes)

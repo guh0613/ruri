@@ -14,6 +14,8 @@ extension AppModel {
         instance.launchOverrides = .init()
         instance.directoryID = paths.newInstanceDirectoryID
         instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: loader)
+        do { instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths) }
+        catch { self.error = error.localizedDescription; return }
         state.instances.append(instance); select(instance); showCreate = false; page = .downloads
         install(instance)
     }

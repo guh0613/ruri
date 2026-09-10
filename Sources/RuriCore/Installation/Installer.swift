@@ -25,7 +25,7 @@ public actor GameInstaller {
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
         guard input.importedInstallation == nil else { throw RuriError.message("此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。") }
-        if input.repositoryVersionID != nil && input.installed { throw RuriError.message("此版本已存在，请使用修复功能。") }
+        if input.repositoryVersionID != nil && (input.installed || FileManager.default.fileExists(atPath: paths.manifest(input.id).path)) { throw RuriError.message("此版本已存在，请使用修复功能。") }
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: input.id)
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(input)

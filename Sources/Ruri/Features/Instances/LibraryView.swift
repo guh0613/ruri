@@ -15,11 +15,16 @@ struct LibraryView: View {
                     Spacer()
                     Menu {
                         Button("导入实例或整合包…") { model.chooseInstanceImport() }
-                        Button("查看已有 Minecraft 目录…") { model.chooseMinecraftDirectory() }
+                        Button("添加游戏文件夹…") { model.chooseMinecraftDirectory() }
                     } label: { Label("导入", systemImage: "square.and.arrow.down") }.disabled(model.busy)
                     Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
                 }
-                TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
+                HStack {
+                    TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
+                    if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
+                        Button("刷新版本", systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }.disabled(model.busy)
+                    }
+                }
                 if let issue = model.directoryErrors[model.selectedDirectoryID] {
                     VStack(alignment: .leading, spacing: 8) {
                         Label("实例文件夹无法访问", systemImage: "externaldrive.badge.exclamationmark").font(.headline)
@@ -65,7 +70,8 @@ struct LibraryView: View {
                                     Text(instance.name).font(.headline).lineLimit(1)
                                     Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                                 }
-                                HStack { TagPill(text: model.runningLabel(instance.id) ?? (instance.installed ? "就绪" : "待安装")); Spacer(); Text(memoryLabel(instance)).font(.caption).foregroundStyle(.secondary) }
+                                HStack { TagPill(text: model.runningLabel(instance.id) ?? (instance.repositoryIssue != nil ? "需要检查" : instance.installed ? "就绪" : "待安装")); Spacer(); Text(memoryLabel(instance)).font(.caption).foregroundStyle(.secondary) }
+                                if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.orange).lineLimit(3).help(issue) }
                                 Divider()
                                 HStack {
                                     Button { model.editingInstance = instance } label: { Image(systemName: "slider.horizontal.3") }.buttonStyle(.borderless).help("实例设置")
@@ -80,8 +86,8 @@ struct LibraryView: View {
         }
         .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
-        } message: { Text((deleteTarget?.runDirectory ?? .isolated) != .isolated ? "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
-        .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability() }
+        } message: { Text(deleteTarget?.repositoryVersionID != nil ? "此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。" : (deleteTarget?.runDirectory ?? .isolated) != .isolated ? "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
+        .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability(); await model.refreshMinecraftFolder() }
     }
     private func memoryLabel(_ instance: GameInstance) -> String {
         guard let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview() else { return "内存设置待检查" }

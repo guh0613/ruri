@@ -38,6 +38,10 @@ extension AppModel {
     func trash(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id), !busy else { return }
         do {
+            if instance.repositoryVersionID != nil {
+                save(); guard !readOnly else { return }
+                acceptState(try MinecraftFolderStore.trashVersion(instance.id, paths: basePaths)); return
+            }
             let lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
             defer { withExtendedLifetime(lease) {} }
             let url = paths.instance(instance.id)

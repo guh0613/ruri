@@ -77,7 +77,7 @@ public enum MinecraftFolderStore {
                 state.instances[index].repositoryIssue = "版本文件夹已移除或改名。请恢复原文件夹，或删除此登记。"
             }
         }
-        if !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
+        if state.selectedDirectoryID == directory.id, !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
             state.selectedInstanceID = state.instances.first(where: { $0.directoryID == directory.id && $0.repositoryIssue == nil })?.id
         }
     }
