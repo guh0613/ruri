@@ -1,9 +1,11 @@
 import Foundation
 
-public enum JavaSelection: Codable, Equatable, Sendable {
+public enum JavaSelection: Codable, Hashable, Sendable {
     case automatic
+    case major(Int)
     case path(String)
     public var path: String? { if case .path(let value) = self { value } else { nil } }
+    public var major: Int? { if case .major(let value) = self { value } else { nil } }
 }
 
 public struct GameWindowSize: Codable, Equatable, Sendable {
@@ -26,10 +28,10 @@ public struct LaunchPresentation: Codable, Equatable, Sendable {
 }
 
 public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
-    case memory, java, jvmArguments, gameArguments, window, presentation
+    case memory, java, jvmArguments, gameArguments, window, presentation, environment
     public var id: String { rawValue }
     public var title: String {
-        switch self { case .memory: "内存"; case .java: "Java 运行时"; case .jvmArguments: "附加 JVM 参数"; case .gameArguments: "附加游戏参数"; case .window: "游戏窗口"; case .presentation: "启动器与日志" }
+        switch self { case .memory: "内存"; case .java: "Java 运行时"; case .jvmArguments: "附加 JVM 参数"; case .gameArguments: "附加游戏参数"; case .window: "游戏窗口"; case .presentation: "启动器与日志"; case .environment: "游戏环境变量" }
     }
 }
 
@@ -45,6 +47,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     public var gameArguments: String = ""
     public var window = GameWindowSize()
     public var presentation = LaunchPresentation()
+    public var environment: String = ""
     public init() {}
     public func memoryPreview(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
         try JVMHeapArguments.resolve(base: memory.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments))
@@ -56,10 +59,12 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         if let path = java.path {
             guard path.hasPrefix("/"), !path.contains("\0"), path.count <= 32768 else { throw RuriError.message("请选择 Java 可执行文件的完整路径。") }
         }
+        if let major = java.major, !(6...99).contains(major) { throw RuriError.message("Java 主版本应为 6–99。") }
+        _ = try LaunchEnvironment(environment)
         _ = try JVMHeapArguments.resolve(base: baseMemory, arguments: ArgumentTokenizer.split(jvmArguments))
         _ = try ArgumentTokenizer.split(gameArguments)
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation }
+    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? .init(maximumMB: values.decodeIfPresent(Int.self, forKey: .memoryMB) ?? 4096)
@@ -68,12 +73,14 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         gameArguments = try values.decodeIfPresent(String.self, forKey: .gameArguments) ?? ""
         window = try values.decodeIfPresent(GameWindowSize.self, forKey: .window) ?? .init()
         presentation = try values.decodeIfPresent(LaunchPresentation.self, forKey: .presentation) ?? .init()
+        environment = try values.decodeIfPresent(String.self, forKey: .environment) ?? ""
     }
     public func encode(to encoder: Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
         try values.encode(memory, forKey: .memory); try values.encode(memoryMB, forKey: .memoryMB)
         try values.encode(java, forKey: .java); try values.encode(jvmArguments, forKey: .jvmArguments)
         try values.encode(gameArguments, forKey: .gameArguments); try values.encode(window, forKey: .window); try values.encode(presentation, forKey: .presentation)
+        try values.encode(environment, forKey: .environment)
     }
 }
 
@@ -93,20 +100,22 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
     public var gameArguments: String?
     public var window: GameWindowSize?
     public var presentation: LaunchPresentation?
+    public var environment: String?
     public init() {}
     public init(fixing values: LaunchSettingsValues) {
         memory = values.memory; java = values.java; jvmArguments = values.jvmArguments
-        gameArguments = values.gameArguments; window = values.window; presentation = values.presentation
+        gameArguments = values.gameArguments; window = values.window; presentation = values.presentation; environment = values.environment
     }
     public func resolve(defaults: LaunchSettingsValues) -> LaunchSettingsValues {
         var result = defaults
         if let memory { result.memory = memory }; if let java { result.java = java }
         if let jvmArguments { result.jvmArguments = jvmArguments }; if let gameArguments { result.gameArguments = gameArguments }
         if let window { result.window = window }; if let presentation { result.presentation = presentation }
+        if let environment { result.environment = environment }
         return result
     }
     public func inherits(_ key: LaunchSettingKey) -> Bool {
-        switch key { case .memory: memory == nil; case .java: java == nil; case .jvmArguments: jvmArguments == nil; case .gameArguments: gameArguments == nil; case .window: window == nil; case .presentation: presentation == nil }
+        switch key { case .memory: memory == nil; case .java: java == nil; case .jvmArguments: jvmArguments == nil; case .gameArguments: gameArguments == nil; case .window: window == nil; case .presentation: presentation == nil; case .environment: environment == nil }
     }
     /// Turning inheritance off starts with the currently effective value.
     public mutating func setInheritance(_ inherit: Bool, for key: LaunchSettingKey, defaults: LaunchSettingsValues) {
@@ -118,9 +127,10 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         case .gameArguments: gameArguments = inherit ? nil : effective.gameArguments
         case .window: window = inherit ? nil : effective.window
         case .presentation: presentation = inherit ? nil : effective.presentation
+        case .environment: environment = inherit ? nil : effective.environment
         }
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation }
+    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         if values.contains(.memory) { memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) }
@@ -130,12 +140,14 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         gameArguments = try values.decodeIfPresent(String.self, forKey: .gameArguments)
         window = try values.decodeIfPresent(GameWindowSize.self, forKey: .window)
         presentation = try values.decodeIfPresent(LaunchPresentation.self, forKey: .presentation)
+        environment = try values.decodeIfPresent(String.self, forKey: .environment)
     }
     public func encode(to encoder: Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
         try values.encodeIfPresent(memory, forKey: .memory); try values.encodeIfPresent(java, forKey: .java)
         try values.encodeIfPresent(jvmArguments, forKey: .jvmArguments); try values.encodeIfPresent(gameArguments, forKey: .gameArguments)
         try values.encodeIfPresent(window, forKey: .window); try values.encodeIfPresent(presentation, forKey: .presentation)
+        try values.encodeIfPresent(environment, forKey: .environment)
     }
 }
 
@@ -145,11 +157,13 @@ extension AppSettings {
             var result = LaunchSettingsValues(); result.memory = defaultMemorySettings ?? .init(maximumMB: defaultMemoryMB)
             result.java = defaultJava ?? .automatic; result.jvmArguments = defaultJVMArguments ?? ""
             result.gameArguments = defaultGameArguments ?? ""; result.window = defaultWindow ?? .init(); result.presentation = defaultLaunchPresentation ?? .init()
+            result.environment = defaultEnvironment ?? ""
             return result
         }
         set {
             defaultMemoryMB = newValue.memoryMB; defaultMemorySettings = newValue.memory; defaultJava = newValue.java; defaultJVMArguments = newValue.jvmArguments
             defaultGameArguments = newValue.gameArguments; defaultWindow = newValue.window; defaultLaunchPresentation = newValue.presentation
+            defaultEnvironment = newValue.environment
         }
     }
 }
@@ -159,9 +173,10 @@ extension GameInstance {
     /// existing value fixed, including an empty argument or automatic Java.
     public var effectiveLaunchOverrides: InstanceLaunchOverrides {
         if let launchOverrides { return launchOverrides }
-        var legacy = LaunchSettingsValues(); legacy.memoryMB = memoryMB; legacy.java = javaPath.map(JavaSelection.path) ?? .automatic
+        var legacy = LaunchSettingsValues(); legacy.memoryMB = memoryMB; legacy.java = javaPath.map(JavaSelection.path) ?? javaMajor.map(JavaSelection.major) ?? .automatic
         legacy.jvmArguments = extraJVMArguments; legacy.gameArguments = extraGameArguments ?? ""
         legacy.window = .init(width: width, height: height, fullscreen: fullscreen ?? false); legacy.presentation = launchPresentation ?? .init()
+        legacy.environment = environmentVariables ?? ""
         return .init(fixing: legacy)
     }
     public func resolvedLaunchSettings(defaults: AppSettings) -> LaunchSettingsValues {
@@ -173,6 +188,7 @@ extension GameInstance {
         let settings = resolvedLaunchSettings(defaults: defaults); try settings.validate(availability: availability)
         let memory = try settings.memory.resolve(availability: availability)
         var copy = self; copy.memoryMB = memory.maximumMB; copy.frozenMemory = memory; copy.javaPath = settings.java.path
+        copy.javaMajor = settings.java.major; copy.environmentVariables = settings.environment.isEmpty ? nil : settings.environment
         copy.extraJVMArguments = settings.jvmArguments; copy.extraGameArguments = settings.gameArguments.isEmpty ? nil : settings.gameArguments
         copy.width = settings.window.width; copy.height = settings.window.height; copy.fullscreen = settings.window.fullscreen
         copy.launchPresentation = settings.presentation; copy.launchOverrides = nil

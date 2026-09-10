@@ -3,12 +3,12 @@ import RuriCore
 
 extension CLI {
     static func manageLaunchSettings(_ args: [String], paths: LauncherPaths) throws {
-        let usage = "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto 或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep（保持可见）、hide（运行时隐藏）或 logs（自动打开日志）。默认只查看生效值与继承来源。"
+        let usage = "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。默认只查看生效值与继承来源。"
         guard let scope = args.first, scope == "defaults" || UUID(uuidString: scope) != nil else { throw RuriError.message(usage) }
         let id = UUID(uuidString: scope)
         if args.count > 1 {
             guard (args.count == 4 && args[1] == "set") || (args.count == 3 && args[1] == "inherit" && id != nil) else { throw RuriError.message(usage) }
-            let key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : LaunchSettingKey(rawValue: args[2])
+            let key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : args[1] == "set" && args[2] == "environment-file" ? .environment : LaunchSettingKey(rawValue: args[2])
             let memoryDetail = args[1] == "set" && ["initialMemory", "metaspace"].contains(args[2])
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
@@ -30,7 +30,7 @@ extension CLI {
                         } else if value == "auto" { memory.mode = .automatic }
                         else { guard let amount = Int(value) else { throw RuriError.message(usage) }; memory.mode = .manual; memory.maximumMB = amount }
                         overrides.memory = memory
-                    case .java: overrides.java = value == "auto" ? .automatic : .path(value)
+                    case .java: overrides.java = value == "auto" ? .automatic : Int(value).map(JavaSelection.major) ?? .path(value)
                     case .jvmArguments: overrides.jvmArguments = value
                     case .gameArguments: overrides.gameArguments = value
                     case .window:
@@ -46,6 +46,14 @@ extension CLI {
                     case .presentation:
                         guard ["keep", "hide", "logs"].contains(value) else { throw RuriError.message(usage) }
                         overrides.presentation = .init(hideLauncher: value == "hide", showLogs: value == "logs")
+                    case .environment:
+                        if args[2] == "environment-file" {
+                            let file = URL(fileURLWithPath: value)
+                            let handle = try FileHandle(forReadingFrom: file); defer { try? handle.close() }
+                            let data = try handle.read(upToCount: 65537) ?? Data()
+                            guard data.count <= 65536, let content = String(data: data, encoding: .utf8) else { throw RuriError.message("环境变量文件应为不超过 64 KB 的 UTF-8 文本。") }
+                            overrides.environment = content
+                        } else { overrides.environment = value }
                     }
                 }
                 let effective = overrides.resolve(defaults: defaults); try effective.validate()

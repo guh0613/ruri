@@ -7,6 +7,8 @@ public struct LaunchPlan: Codable, Sendable {
     public let environment: [String: String]
     public var nativeQuitSupported: Bool?
     public var memory: LaunchMemory?
+    public var customEnvironmentNames: [String]?
+    public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
     public var redactedCommand: String {
         var redactNext = false
         return ([executable.path] + arguments).map { value in
@@ -52,6 +54,7 @@ public enum LaunchBuilder {
         }
         guard java.architecture == architecture else { throw RuriError.message("Java 与游戏原生库的架构不匹配。需要 \(architecture)。") }
         guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message("所选 Java 不符合游戏或整合包的版本要求。") }
+        if instance.javaMajor != nil, java.major != (try instance.preferredJavaMajor(default: manifest.requiredJava)) { throw RuriError.message("所选运行时不是实例指定的 Java 主版本。") }
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         let resources = try paths.resources(for: instance)
         let jarID = manifest.jar ?? instance.gameVersion
@@ -133,11 +136,10 @@ public enum LaunchBuilder {
         if !hasOption("--width") { game += ["--width", String(instance.width)] }
         if !hasOption("--height") { game += ["--height", String(instance.height)] }
         if instance.fullscreen == true && !hasOption("--fullscreen") { game.append("--fullscreen") }
-        var env = ProcessInfo.processInfo.environment
-        for key in ["JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "JDK_JAVA_OPTIONS", "CLASSPATH"] { env.removeValue(forKey: key) }
-        env["JAVA_HOME"] = URL(fileURLWithPath: java.path).deletingLastPathComponent().deletingLastPathComponent().path
+        let customEnvironment = try LaunchEnvironment(instance.environmentVariables ?? "")
+        let env = customEnvironment.applying(to: ProcessInfo.processInfo.environment, java: URL(fileURLWithPath: java.path))
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory)
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name))
     }
 }
 
@@ -160,7 +162,7 @@ public final class GameProcess {
     public init() {}
     public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
         guard self.process == nil else { throw RuriError.message("游戏已在运行或正在结束") }
-        self.secrets = secrets.filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
+        self.secrets = (secrets + plan.environmentRedactions).filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         stopRequested = false
         normalQuitRequested = false; nativeQuitSupported = plan.nativeQuitSupported == true; identity = nil
         let startedAt = Date()

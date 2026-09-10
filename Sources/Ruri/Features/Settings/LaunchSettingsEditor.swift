@@ -25,10 +25,17 @@ struct LaunchSettingsEditor: View {
         case .memory:
             MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments)
         case .java:
-            Picker("运行时", selection: Binding(get: { effective.java.path ?? "" }, set: { overrides.java = $0.isEmpty ? .automatic : .path($0) })) {
-                Text("自动选择兼容版本").tag("")
-                ForEach(runtimes) { Text($0.label).tag($0.path) }
-                if let path = effective.java.path, !runtimes.contains(where: { $0.path == path }) { Text("自选：" + path).tag(path) }
+            Picker("运行时", selection: Binding(get: { effective.java }, set: { overrides.java = $0 })) {
+                Text("自动选择兼容版本").tag(JavaSelection.automatic)
+                ForEach(Array(Set([8, 11, 16, 17, 21, 25] + runtimes.map(\.major) + [effective.java.major].compactMap { $0 })).sorted(), id: \.self) { major in
+                    Text("自动选择 Java \(major)").tag(JavaSelection.major(major))
+                }
+                ForEach(runtimes) { Text($0.label).tag(JavaSelection.path($0.path)) }
+                if let path = effective.java.path, !runtimes.contains(where: { $0.path == path }) { Text("自选：" + path).tag(JavaSelection.path(path)) }
+            }
+            if let major = effective.java.major {
+                TextField("主版本", value: Binding(get: { effective.java.major ?? major }, set: { overrides.java = .major($0) }), format: .number)
+                Text("在该主版本中选择已发现的运行时；缺少时尝试下载 Mojang 提供的版本。仍会检查游戏要求、整合包约束和架构。").font(.caption).foregroundStyle(.secondary)
             }
             if let path = effective.java.path { Text(path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
             Button("选择 Java 可执行文件…", systemImage: "folder") {
@@ -59,6 +66,14 @@ struct LaunchSettingsEditor: View {
             Toggle("启动时自动打开日志", isOn: presentationBinding(\.showLogs))
             Toggle("游戏运行时隐藏启动器", isOn: presentationBinding(\.hideLauncher)).disabled(effective.presentation.showLogs)
             Text(effective.presentation.showLogs ? "自动打开日志时，启动器保持可见。" : "游戏进程启动后隐藏 Ruri，退出后恢复窗口。可随时点击 Dock 图标打开启动器。").font(.caption).foregroundStyle(.secondary)
+        case .environment:
+            TextField("NAME=value", text: Binding(get: { effective.environment }, set: { overrides.environment = $0 }), axis: .vertical)
+                .lineLimit(4...10).font(.system(.body, design: .monospaced))
+            Text("每行一项 NAME=value；NAME= 设置空值，只写 NAME 则移除继承值。值原样传入，无需引号，不展开变量。仅作用于游戏进程。").font(.caption).foregroundStyle(.secondary)
+            Text("JAVA_HOME、CLASSPATH 和 Java 参数环境变量由 Ruri 管理。本机环境配置不写入导出的整合包。").font(.caption).foregroundStyle(.secondary)
+            if case .failure(let error) = Result(catching: { try LaunchEnvironment(effective.environment) }) {
+                Text(error.localizedDescription).font(.caption).foregroundStyle(.red)
+            }
         }
     }
     private func windowBinding<Value>(_ key: WritableKeyPath<GameWindowSize, Value>) -> Binding<Value> {

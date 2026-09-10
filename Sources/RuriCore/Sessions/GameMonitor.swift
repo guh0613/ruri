@@ -49,6 +49,9 @@ public enum GameMonitorClient {
         return helper
     }
     @MainActor public static func start(plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String], helper: URL? = nil) throws {
+        let secrets = secrets + plan.environmentRedactions
+        recorder.addSecrets(secrets)
+        if let names = plan.customEnvironmentNames, !names.isEmpty { try recorder.append("[Ruri] 自定义环境变量：" + names.joined(separator: ", ")) }
         if let memory = plan.memory { try recorder.setMemory(memory) }
         let process = Process(), input = Pipe()
         process.executableURL = try helper ?? helperExecutable()

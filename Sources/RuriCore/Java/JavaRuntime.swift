@@ -83,7 +83,11 @@ public enum JavaDiscovery {
             return selected
         }
         let compatible = runtimes.filter { $0.major == major && (architecture == nil || $0.architecture == architecture) }
-        guard let runtime = compatible.sorted(by: { $0.isNative && !$1.isNative }).first else {
+        guard let runtime = compatible.sorted(by: {
+            if $0.isNative != $1.isNative { return $0.isNative }
+            let order = $0.version.compare($1.version, options: .numeric)
+            return order == .orderedSame ? $0.path < $1.path : order == .orderedDescending
+        }).first else {
             throw RuriError.message("需要 Java \(major)\(architecture == "x86_64" ? "（Intel / Rosetta）" : "")。请到设置 → Java 安装或选择该版本。")
         }
         return runtime

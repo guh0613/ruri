@@ -11,6 +11,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var playTime: TimeInterval
     public var memoryMB: Int
     public var javaPath: String?
+    public var javaMajor: Int?
+    public var environmentVariables: String?
     public var extraJVMArguments: String
     public var extraGameArguments: String?
     public var supportedJavaMajors: [Int]?
@@ -48,6 +50,11 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
         memoryMB = 4096; extraJVMArguments = ""; width = 1280; height = 800; favorite = false; installed = false
     }
     public func preferredJavaMajor(default minimum: Int) throws -> Int {
+        if let selected = javaMajor {
+            guard (6...99).contains(selected), selected >= minimum else { throw RuriError.message("指定的 Java \(selected) 不符合游戏要求，请选择 Java \(minimum) 或更高版本。") }
+            guard supportedJavaMajors?.isEmpty != false || supportedJavaMajors!.contains(selected) else { throw RuriError.message("指定的 Java \(selected) 不在此整合包支持的版本中。") }
+            return selected
+        }
         guard let supported = supportedJavaMajors, !supported.isEmpty else { return minimum }
         guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message("整合包指定的 Java 版本与游戏要求的 Java \(minimum) 不兼容。") }
         return selected

@@ -76,6 +76,7 @@ struct PortableInstance: Codable {
     let extraJVMArguments: String
     let extraGameArguments: String?
     let supportedJavaMajors: [Int]?
+    let javaMajor: Int?
     let packLibraries: [Library]?
     let width: Int
     let height: Int
@@ -86,6 +87,7 @@ struct PortableInstance: Codable {
     init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
+        javaMajor = instance.javaMajor
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
         fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation
         iconPNG = instance.iconPNG; self.installation = installation
@@ -96,6 +98,7 @@ struct PortableInstance: Codable {
         try installation?.validate()
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
+        result.javaMajor = javaMajor
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
         result.fullscreen = fullscreen; result.launchPresentation = launchPresentation
         result.iconPNG = iconPNG; result.importedInstallation = installation
@@ -391,7 +394,8 @@ public actor InstanceTransfer {
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,
               (512...131072).contains(instance.memoryMB), (320...16384).contains(instance.width), (240...16384).contains(instance.height),
-              instance.extraJVMArguments.count <= 32768, (instance.extraGameArguments?.count ?? 0) <= 32768, (instance.supportedJavaMajors ?? []).allSatisfy({ (6...100).contains($0) }) else { throw RuriError.message("实例版本、内存或窗口设置无效。") }
+              instance.extraJVMArguments.count <= 32768, (instance.extraGameArguments?.count ?? 0) <= 32768, (instance.supportedJavaMajors ?? []).allSatisfy({ (6...100).contains($0) }),
+              instance.javaMajor == nil || (6...99).contains(instance.javaMajor!) else { throw RuriError.message("实例版本、内存或窗口设置无效。") }
         _ = try GameInstaller.applyingPackLibraries(instance.packLibraries ?? [], to: VersionManifest(id: "pack", libraries: []))
     }
     static func exclusions(_ game: URL, includeWorlds: Bool) throws -> Set<String> {

@@ -196,6 +196,7 @@ import RuriCore
                 let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
+                if let names = plan.customEnvironmentNames, !names.isEmpty { print("Environment overrides (values hidden): " + names.joined(separator: ", ")) }
             case "install-content":
                 guard args.count >= 3, let id = UUID(uuidString: args[2]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli install-content <project> <instance-uuid> [version-id]") }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
@@ -242,6 +243,7 @@ import RuriCore
                     try recorder.transition(.arguments)
                     try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, world: world)
+                    recorder.addSecrets(plan.environmentRedactions)
                     try recorder.append("[Ruri] \(plan.redactedCommand)")
                     try recorder.transition(.starting)
                     try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])

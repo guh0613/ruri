@@ -76,6 +76,7 @@ extension AppModel {
                     try advanceSession(.arguments)
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world)
+                    recorder.addSecrets(plan.environmentRedactions)
                     if let world { appendLog("[Ruri] 进入存档：" + world.name) }
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
