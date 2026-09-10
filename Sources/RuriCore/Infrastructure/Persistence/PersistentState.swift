@@ -9,6 +9,7 @@ public struct PersistentState: Codable, Equatable, Sendable {
     public var selectedInstanceID: UUID?
     public var settings = AppSettings()
     public var gameDirectories: [GameDirectory]?
+    public var detachedMinecraftFolders: [DetachedMinecraftFolder]?
     public var selectedDirectoryID: UUID?
     public init() {}
 }

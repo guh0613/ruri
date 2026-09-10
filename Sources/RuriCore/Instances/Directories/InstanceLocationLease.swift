@@ -26,6 +26,9 @@ public final class InstanceLocationLease: @unchecked Sendable {
 
     static func requireCurrentDirectory(paths: LauncherPaths, instanceID: UUID) throws {
         let state = try StateStore.load(paths)
+        guard !(state.detachedMinecraftFolders ?? []).contains(where: { folder in folder.instances.contains(where: { $0.id == instanceID }) }) else {
+            throw RuriError.message("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")
+        }
         // New installations and import snapshots may not be registered yet.
         guard let instance = state.instances.first(where: { $0.id == instanceID }) else { return }
         guard (instance.directoryID ?? GameDirectory.defaultID) == paths.directoryID(for: instanceID) else {

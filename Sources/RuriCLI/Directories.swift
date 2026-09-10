@@ -13,6 +13,9 @@ extension CLI {
                 let availability = (try? directory.validateAvailability()) != nil ? "可用" : "无法访问"
                 print("\(state.selectedDirectoryID == directory.id ? "*" : " ") \(directory.id) \(directory.name) [\(count) 个实例 · \(availability)]\n  \(directory.url.path)")
             }
+            for folder in state.detachedMinecraftFolders ?? [] {
+                print("  \(folder.id) \(folder.directory.name) [已从列表移除 · 保留 \(folder.instances.count) 个实例设置]\n  \(folder.directory.url.path)")
+            }
             return
         case "add":
             guard args.count == 3 else { throw usage }
@@ -21,6 +24,11 @@ extension CLI {
         case "refresh":
             guard args.count == 1 else { throw usage }
             _ = try MinecraftFolderStore.refresh(state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths)
+        case "restore":
+            guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]),
+                  let folder = state.detachedMinecraftFolders?.first(where: { $0.id == id }) else { throw usage }
+            let url = args.count == 3 ? URL(fileURLWithPath: args[2]) : folder.directory.resolvingBookmark().url
+            try MinecraftFolderStore.restore(id, from: url, paths: paths)
         case "select":
             guard args.count == 2, let id = UUID(uuidString: args[1]), id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw usage }
             try GameDirectoryStore.select(id, paths: paths)
@@ -34,5 +42,5 @@ extension CLI {
         }
         print("Updated directory settings")
     }
-    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid>]") }
+    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder]]") }
 }

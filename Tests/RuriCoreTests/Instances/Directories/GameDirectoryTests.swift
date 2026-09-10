@@ -24,7 +24,7 @@ struct GameDirectoryTests {
         #expect(paths.assets == base.assets && paths.libraries == base.libraries && paths.runtimes == base.runtimes)
         try StateStore.save(state, to: base)
         let loaded = try StateStore.load(base)
-        #expect(loaded.schemaVersion == 11 && loaded.gameDirectories == [directory])
+        #expect(loaded.schemaVersion == 12 && loaded.gameDirectories == [directory])
         #expect(base.configured(with: loaded).instance(old.id) == base.instance(old.id))
         var legacy = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(old)) as? [String: Any])
         legacy.removeValue(forKey: "directoryID")

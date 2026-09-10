@@ -25,7 +25,7 @@ struct InstanceMoveTests {
         try StateStore.update(paths) { $0.settings.defaultMemoryMB = 6144 }
         let result = try await service.move(preview), current = paths.configured(with: result.state)
         #expect(result.state.instances == [preview.moved])
-        #expect(result.state.schemaVersion == 11 && result.state.settings.defaultMemoryMB == 6144)
+        #expect(result.state.schemaVersion == 12 && result.state.settings.defaultMemoryMB == 6144)
         #expect(result.state.selectedInstanceID == source.id && result.state.selectedDirectoryID == fixture.target.id)
         #expect(result.preservedFiles.isEmpty && result.warning == nil)
         #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))

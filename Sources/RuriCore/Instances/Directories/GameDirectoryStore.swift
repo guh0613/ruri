@@ -24,7 +24,7 @@ public enum GameDirectoryStore {
     }
     @discardableResult public static func select(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         let result = try StateStore.update(paths) { state in
-            guard id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw RuriError.message("此实例文件夹已被取消登记。") }
+            guard id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw RuriError.message("此实例文件夹已从列表移除。") }
             state.selectedDirectoryID = id
             if !state.instances.contains(where: { $0.id == state.selectedInstanceID && ($0.directoryID ?? GameDirectory.defaultID) == id }) {
                 state.selectedInstanceID = state.instances.first(where: { ($0.directoryID ?? GameDirectory.defaultID) == id })?.id
@@ -80,6 +80,7 @@ public enum GameDirectoryStore {
         var leases: [GameRunLease] = [], sharedLeases: [SharedGameDirectoryLease] = []
         defer { withExtendedLifetime(leases) {}; withExtendedLifetime(sharedLeases) {} }
         return try StateStore.update(paths) { state in
+            try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例文件夹。") }
             if directory.isMinecraft {
@@ -87,19 +88,26 @@ public enum GameDirectoryStore {
                 var lockedRoots = Set<String>()
                 for instance in state.instances where instance.directoryID == id {
                     var metadata = instance; metadata.runDirectory = .isolated
-                    leases.append(try GameRunLease.acquire(paths: current.including(metadata), instanceID: instance.id))
+                    let lease = try GameRunLease.acquire(paths: current.including(metadata), instanceID: instance.id)
+                    try lease.excludeLocationOperations()
+                    leases.append(lease)
                     if instance.runDirectory != .isolated, lockedRoots.insert(current.game(instance.id).standardizedFileURL.resolvingSymlinksInPath().path).inserted {
                         sharedLeases.append(try SharedGameDirectoryLease.acquire(paths: current, instanceID: instance.id, ignoringSession: nil))
                     }
                 }
+                let instances = state.instances.filter { $0.directoryID == id }
+                let selected = instances.contains(where: { $0.id == state.selectedInstanceID }) ? state.selectedInstanceID : nil
+                state.detachedMinecraftFolders = (state.detachedMinecraftFolders ?? []) + [
+                    DetachedMinecraftFolder(directory: directory, instances: instances, selectedInstanceID: selected, detachedAt: Date())
+                ]
                 state.instances.removeAll { $0.directoryID == id }
                 if !state.instances.contains(where: { $0.id == state.selectedInstanceID }) { state.selectedInstanceID = nil }
             } else {
-                guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message("文件夹仍有实例，不能取消登记。") }
+                guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message("文件夹仍有实例，暂时不能从列表移除。") }
                 if (try? directory.validateAvailability()) != nil {
                     let instances = directory.url.appendingPathComponent("instances")
                     if FileManager.default.fileExists(atPath: instances.path) {
-                        guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("文件夹中仍有未登记或正在安装的实例，请先处理这些实例再取消登记。") }
+                        guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("文件夹中仍有尚未添加到列表或正在安装的实例，请先处理这些实例，再从列表移除此文件夹。") }
                     }
                 }
             }

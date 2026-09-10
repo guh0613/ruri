@@ -73,7 +73,7 @@ struct LaunchSettingsTests {
         let bytes = try Data(contentsOf: paths.state)
         #expect(throws: (any Error).self) { try StateStore.save(reset, to: paths, basedOn: merged) }
         #expect(try Data(contentsOf: paths.state) == bytes)
-        #expect(try StateStore.load(paths).schemaVersion == 11)
+        #expect(try StateStore.load(paths).schemaVersion == 12)
     }
 
     @Test func portableExportFreezesEffectiveSettingsWithoutImportingGlobalPaths() async throws {

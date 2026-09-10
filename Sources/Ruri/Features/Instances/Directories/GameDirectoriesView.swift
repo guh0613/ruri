@@ -36,6 +36,8 @@ struct GameDirectoriesView: View {
             }
             Text("添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。")
                 .font(.callout).foregroundStyle(.secondary)
+            Text("从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。")
+                .font(.caption).foregroundStyle(.secondary)
             ScrollView {
                 VStack(spacing: 12) {
                     Surface {
@@ -52,6 +54,10 @@ struct GameDirectoriesView: View {
                         }
                     }
                     ForEach(model.state.gameDirectories ?? []) { directory in GameDirectoryRow(directory: directory) }
+                    if let detached = model.state.detachedMinecraftFolders, !detached.isEmpty {
+                        Text("已移除的文件夹").font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                        ForEach(detached) { folder in DetachedMinecraftFolderRow(folder: folder) }
+                    }
                 }.padding(2)
             }
             HStack {
@@ -61,6 +67,36 @@ struct GameDirectoriesView: View {
             }
         }.padding(24).frame(width: 690, height: 560)
         .task { await model.refreshDirectoryAvailability() }
+    }
+}
+
+private struct DetachedMinecraftFolderRow: View {
+    @Environment(AppModel.self) private var model
+    let folder: DetachedMinecraftFolder
+    var body: some View {
+        Surface {
+            HStack(alignment: .top) {
+                Image(systemName: "folder.badge.minus").font(.title2).foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(folder.directory.name).font(.headline)
+                    Text(folder.directory.url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                    Text("保留 \(folder.instances.count) 个实例的设置和运行历史").font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("重新添加") {
+                    model.restoreMinecraftDirectory(folder, at: folder.directory.resolvingBookmark().url)
+                }.disabled(model.busy)
+                Menu {
+                    Button("选择新位置并添加…") {
+                        let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true
+                        panel.allowsMultipleSelection = false; panel.prompt = "重新添加"
+                        panel.message = "选择“\(folder.directory.name)”原文件夹的新位置，恢复其中实例的设置和运行历史。"
+                        guard panel.runModal() == .OK, let url = panel.url else { return }
+                        model.restoreMinecraftDirectory(folder, at: url)
+                    }
+                } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
+            }
+        }
     }
 }
 
@@ -89,7 +125,7 @@ private struct GameDirectoryRow: View {
                     Button("在 Finder 中显示") { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
                     Menu {
                         Button("重新定位原文件夹…") { relocate() }
-                        Button("取消登记") { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
+                        Button("从列表移除") { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
                     } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
                 }
                 if let issue = model.directoryErrors[directory.id] { Text(issue).font(.caption).foregroundStyle(.secondary) }

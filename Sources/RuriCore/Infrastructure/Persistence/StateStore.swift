@@ -5,7 +5,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...11).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...12).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
         try validate(result, paths: paths)
         return result
     }
@@ -37,9 +37,16 @@ public enum StateStore {
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
         for instance in state.instances { try instance.importedInstallation?.validate() }
         try paths.configured(with: state).validateDirectoryConfiguration()
+        let detached = state.detachedMinecraftFolders ?? []
+        let directories = (state.gameDirectories ?? []).map(\.id) + detached.map(\.id)
+        let instances = state.instances.map(\.id) + detached.flatMap { $0.instances.map(\.id) }
+        guard Set(directories).count == directories.count, Set(instances).count == instances.count else {
+            throw RuriError.message("文件夹登记与保留记录包含重复身份，已暂停写入。")
+        }
+        for folder in detached { try folder.validate(paths: paths) }
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
-        var state = input; state.schemaVersion = 11; state.revision = UUID()
+        var state = input; state.schemaVersion = 12; state.revision = UUID()
         normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -64,7 +71,7 @@ public enum StateStore {
     }
     private static func conflict(_ field: String) -> RuriError {
         let parts = field.split(separator: ".").map(String.init)
-        let labels = ["instances": "同一实例", "accounts": "同一账号", "gameDirectories": "同一实例文件夹", "settings": "启动器设置",
+        let labels = ["instances": "同一实例", "accounts": "同一账号", "gameDirectories": "同一实例文件夹", "detachedMinecraftFolders": "保留的文件夹记录", "settings": "启动器设置",
                       "name": "名称", "favorite": "收藏状态", "memoryMB": "内存", "defaultMemoryMB": "默认内存", "javaPath": "Java 选择",
                       "width": "窗口宽度", "height": "窗口高度", "appearance": "外观", "downloadSource": "下载源",
                       "extraJVMArguments": "JVM 参数", "extraGameArguments": "游戏参数", "directoryID": "所属文件夹",

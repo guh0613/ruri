@@ -3,6 +3,20 @@ import AppKit
 import RuriCore
 
 extension AppModel {
+    func restoreMinecraftDirectory(_ folder: DetachedMinecraftFolder, at url: URL) {
+        guard !busy, !readOnly else { return }
+        save()
+        guard !readOnly else { return }
+        let base = basePaths
+        perform("恢复游戏文件夹") { [self] _ in
+            let result = try await Task.detached(priority: .userInitiated) {
+                try MinecraftFolderStore.restore(folder.id, from: url, paths: base)
+            }.value
+            acceptState(result); showDirectories = false; page = .library
+            await refreshDirectoryAvailability()
+        }
+    }
+
     func chooseMinecraftDirectory() {
         guard !busy, !readOnly else { return }
         let panel = NSOpenPanel()

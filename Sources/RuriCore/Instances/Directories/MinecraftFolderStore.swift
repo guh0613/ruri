@@ -4,10 +4,25 @@ import Foundation
 /// game files are resolved from the repository when an instance is launched.
 public enum MinecraftFolderStore {
     @discardableResult public static func add(name: String, url: URL, paths: LauncherPaths) throws -> PersistentState {
+        try attach(name: name, url: url, restoring: nil, paths: paths)
+    }
+
+    @discardableResult public static func restore(_ id: UUID, from url: URL, paths: LauncherPaths) throws -> PersistentState {
+        try attach(name: url.lastPathComponent, url: url, restoring: id, paths: paths)
+    }
+
+    private static func attach(name: String, url: URL, restoring id: UUID?, paths: LauncherPaths) throws -> PersistentState {
         let catalog = try MinecraftDirectoryReader().scanNow(url, allowEmpty: true)
         return try StateStore.update(paths) { state in
+            if let id {
+                guard let retained = state.detachedMinecraftFolders?.first(where: { $0.id == id }) else {
+                    throw RuriError.message("文件夹列表已改变，请刷新后重试。")
+                }
+                var candidate = retained.directory; candidate.url = catalog.directory
+                try candidate.validateAvailability()
+            }
             if let existing = state.gameDirectories?.first(where: { $0.url.standardizedFileURL.resolvingSymlinksInPath() == catalog.directory }) {
-                guard existing.isMinecraft else { throw RuriError.message("此位置已登记为 Ruri 实例文件夹，请直接在文件夹列表中选择。") }
+                guard existing.isMinecraft else { throw RuriError.message("此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。") }
                 try existing.validateAvailability()
                 state.selectedDirectoryID = existing.id
                 try synchronize(catalog, directory: existing, state: &state, paths: paths)
@@ -18,13 +33,26 @@ public enum MinecraftFolderStore {
             let markerFile = directory.url.appendingPathComponent(GameDirectory.markerName)
             if FileManager.default.fileExists(atPath: markerFile.path) {
                 let info = try markerFile.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message("文件夹登记标记无效。") }
+                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message("无法识别此文件夹的 Ruri 标记。") }
                 let marker = try JSONDecoder().decode(GameDirectory.Marker.self, from: Data(contentsOf: markerFile))
                 guard marker.schema == 1, marker.layout == .minecraft, marker.id != GameDirectory.defaultID,
-                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message("此文件夹属于已有的 Ruri 登记或副本，请在文件夹管理中重新定位。") }
+                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message("此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。") }
                 directory = GameDirectory(id: marker.id, name: directory.name, url: directory.url, bookmark: nil, createdAt: directory.createdAt, layout: .minecraft)
             } else {
                 try JSONEncoder().encode(GameDirectory.Marker(schema: 1, id: directory.id, layout: .minecraft)).write(to: markerFile, options: .withoutOverwriting)
+            }
+            let detached = state.detachedMinecraftFolders?.first { $0.id == directory.id }
+            if let detached {
+                let original = detached.directory
+                let located = original.resolvingBookmark()
+                if located.url.standardizedFileURL.resolvingSymlinksInPath().path != directory.url.path,
+                   (try? located.validateAvailability()) != nil {
+                    throw RuriError.message("原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
+                }
+                directory = GameDirectory(id: original.id, name: id == nil ? directory.name : original.name, url: directory.url, bookmark: nil, createdAt: original.createdAt, layout: .minecraft)
+                state.instances.append(contentsOf: detached.instances)
+                state.detachedMinecraftFolders?.removeAll { $0.id == directory.id }
+                state.selectedInstanceID = detached.selectedInstanceID
             }
             directory.bookmark = try directory.url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
             state.gameDirectories = (state.gameDirectories ?? []) + [directory]
@@ -74,7 +102,7 @@ public enum MinecraftFolderStore {
         let found = Set(catalog.versions.map(\.id))
         for index in state.instances.indices where state.instances[index].directoryID == directory.id {
             if let version = state.instances[index].repositoryVersionID, !found.contains(version), state.instances[index].installed {
-                state.instances[index].repositoryIssue = "版本文件夹已移除或改名。请恢复原文件夹，或删除此登记。"
+                state.instances[index].repositoryIssue = "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
             }
         }
         if state.selectedDirectoryID == directory.id, !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
