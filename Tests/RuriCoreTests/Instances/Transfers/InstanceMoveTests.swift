@@ -95,6 +95,40 @@ struct InstanceMoveTests {
         #expect(!InstanceMoveGuard.hasPending(paths: current, instanceID: fixture.source.id))
     }
 
+    @Test(arguments: ["source", "destination", "root-attributes"])
+    func olderReceiptsCanFinishOnlyWhilePreservingTheSource(missing: String) async throws {
+        let fixture = try InstanceMovePreviewTests.Fixture(mode: .isolated); defer { fixture.cleanup() }
+        let service = InstanceMover(paths: fixture.paths)
+        try FileExtendedAttributesTests.set(Data("keep source metadata".utf8), at: fixture.paths.instance(fixture.source.id))
+        let preview = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
+        let operation = Task {
+            try await service.move(preview) { update in
+                if update.phase == .committed { withUnsafeCurrentTask { $0?.cancel() } }
+            }
+        }
+        #expect(try await operation.value.warning != nil)
+        let root = try InstanceMoveJournal.root(paths: fixture.paths, instanceID: fixture.source.id)
+        let journalFile = root.appendingPathComponent("transaction.json")
+        var json = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: journalFile)) as? [String: Any])
+        let name = missing == "destination" ? "destination" : "source"
+        let key = name + "Digest", file = root.appendingPathComponent(name + ".json")
+        let receipt = try FileTreeManifest.load(from: file, expectedDigest: #require(json[key] as? String))
+        let old = FileTreeManifest(version: missing == "root-attributes" ? 2 : 1, entries: receipt.entries.map { entry in
+            var copy = entry
+            if missing != "root-attributes" { copy.attributes = nil }
+            return copy
+        })
+        json[key] = try old.save(to: file)
+        try JSONSerialization.data(withJSONObject: json).write(to: journalFile, options: .atomic)
+        await #expect(throws: (any Error).self) { try await service.recover(instanceID: fixture.source.id, transactionID: preview.id) }
+        try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
+        #expect(try await service.pending(instanceID: fixture.source.id)?.committed == true)
+        let completed = try await service.recover(instanceID: fixture.source.id, transactionID: preview.id, preservingSource: true)
+        #expect(completed.preservedFiles.contains(preview.sourceDirectory))
+        #expect(!InstanceMoveGuard.hasPending(paths: fixture.paths, instanceID: fixture.source.id))
+        try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
+    }
+
     @Test func changedSourceCanBeExplicitlyKeptWhileCompletingTheMove() async throws {
         let fixture = try InstanceMovePreviewTests.Fixture(mode: .isolated); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)

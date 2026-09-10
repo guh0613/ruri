@@ -146,6 +146,10 @@ extension InstanceMover {
             if Self.exists(source) { preserved.append(source) }
             if let parent = try record.retirementParent(paths: current), Self.exists(parent) { preserved.append(parent) }
         } else {
+            guard originalManifest.version >= 2, destinationManifest.version >= 2,
+                  originalManifest.rootAttributes != nil, destinationManifest.rootAttributes != nil else {
+                throw RuriError.message("此移动记录未校验文件附加信息，无法自动清理原文件。请选择保留原文件并完成移动。")
+            }
             if record.retirement == nil {
                 guard record.sourceIdentity.matches(source) else { throw RuriError.message("原实例文件夹的身份改变，已保留，请检查后选择保留原文件完成移动。") }
                 try originalManifest.requireMatch(in: source)
