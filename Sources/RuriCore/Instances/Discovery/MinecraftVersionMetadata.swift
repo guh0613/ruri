@@ -36,27 +36,29 @@ extension MinecraftDirectoryScan {
         let labels = ["fabric": "Fabric", "quilt": "Quilt", "forge": "Forge", "neoforge": "NeoForge", "optifine": "OptiFine", "liteloader": "LiteLoader", "legacyfabric": "Legacy Fabric", "cleanroom": "Cleanroom"]
         for node in nodes {
             if let name = node["id"] as? String, let label = labels[name.lowercased()], let version = node["version"] as? String { components[label] = version }
-            if let libraries = node["libraries"] {
-                guard let libraries = libraries as? [[String: Any]], libraries.count <= 10_000 else { throw RuriError.message("依赖库清单格式或数量无效。") }
-                for library in libraries {
-                    guard let name = library["name"] as? String else { throw RuriError.message("依赖库缺少名称。") }
-                    let parts = name.split(separator: ":").map(String.init)
-                    guard parts.count >= 3 else { throw RuriError.message("依赖库坐标无效：\(name)") }
-                    let coordinate = parts[0] + ":" + parts[1], version = parts[2].components(separatedBy: "@")[0]
-                    switch coordinate {
-                    case "net.fabricmc:fabric-loader": components["Fabric"] = version
-                    case "org.quiltmc:quilt-loader": components["Quilt"] = version
-                    case "net.minecraftforge:forge", "net.minecraftforge:fmlloader", "net.minecraftforge:minecraftforge":
-                        components["Forge"] = Self.forgeVersion(version, game: gameVersion)
-                    case "net.neoforged:neoforge", "net.neoforged:forge":
-                        components["NeoForge"] = Self.forgeVersion(version, game: gameVersion)
-                    case "optifine:OptiFine", "net.optifine:OptiFine": components["OptiFine"] = version
-                    case "com.mumfrey:liteloader": components["LiteLoader"] = version
-                    case "net.legacyfabric:fabric-loader": components["Legacy Fabric"] = version
-                    case "com.cleanroommc:cleanroom": components["Cleanroom"] = version
-                    default: break
-                    }
-                }
+        }
+        guard let rawLibraries = graph.value["libraries"] as? [[String: Any]] else { throw RuriError.message("依赖库清单格式无效。") }
+        let declarations = try rawLibraries.map(MinecraftLibraryDeclaration.readMetadata)
+        let libraries = try MinecraftLibrarySelector.select(declarations).libraries.map(\.library)
+        let architecture = GameInstaller.architecture(for: VersionManifest(id: id, libraries: libraries))
+        // Show a source component even if only another platform declares it,
+        // while giving the matching macOS declaration precedence when present.
+        let applicable = libraries.filter { $0.rules?.isEmpty == true || GameInstaller.allowed($0, architecture: architecture) }
+        for library in libraries + applicable {
+            let parts = library.name.split(separator: ":").map(String.init)
+            let coordinate = parts[0] + ":" + parts[1], version = parts[2].components(separatedBy: "@")[0]
+            switch coordinate {
+            case "net.fabricmc:fabric-loader": components["Fabric"] = version
+            case "org.quiltmc:quilt-loader": components["Quilt"] = version
+            case "net.minecraftforge:forge", "net.minecraftforge:fmlloader", "net.minecraftforge:minecraftforge":
+                components["Forge"] = Self.forgeVersion(version, game: gameVersion)
+            case "net.neoforged:neoforge", "net.neoforged:forge":
+                components["NeoForge"] = Self.forgeVersion(version, game: gameVersion)
+            case "optifine:OptiFine", "net.optifine:OptiFine": components["OptiFine"] = version
+            case "com.mumfrey:liteloader": components["LiteLoader"] = version
+            case "net.legacyfabric:fabric-loader": components["Legacy Fabric"] = version
+            case "com.cleanroommc:cleanroom": components["Cleanroom"] = version
+            default: break
             }
         }
         if let neo = argument("--fml.neoForgeVersion") { components["NeoForge"] = neo; components.removeValue(forKey: "Forge") }

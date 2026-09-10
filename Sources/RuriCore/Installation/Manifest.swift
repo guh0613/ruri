@@ -106,6 +106,7 @@ public struct Library: Codable, Equatable, Sendable {
     }
     public static func mavenPath(_ coordinate: String) throws -> String {
         let extParts = coordinate.split(separator: "@", omittingEmptySubsequences: false)
+        guard extParts.count <= 2 else { throw RuriError.message("无效 Maven 扩展名") }
         let parts = extParts[0].split(separator: ":", omittingEmptySubsequences: false).map(String.init)
         guard (3...4).contains(parts.count), parts.allSatisfy({ !$0.isEmpty && !$0.contains("/") && !$0.contains("\\") && $0 != ".." }) else { throw RuriError.message("无效 Maven 坐标：\(coordinate)") }
         let ext = extParts.count > 1 ? String(extParts[1]) : "jar"

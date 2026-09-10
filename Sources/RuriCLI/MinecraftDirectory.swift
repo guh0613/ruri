@@ -11,7 +11,7 @@ extension CLI {
         var manifests: [String: MinecraftManifestOutput] = [:], issues: [String: String] = [:]
         if flags.contains("--resolve") {
             for version in catalog.versions where version.issue == nil {
-                do { manifests[version.id] = MinecraftManifestOutput(try await reader.resolveManifest(version, in: catalog)) }
+                do { manifests[version.id] = try MinecraftManifestOutput(await reader.resolveManifest(version, in: catalog)) }
                 catch is CancellationError { throw CancellationError() }
                 catch { issues[version.id] = error.localizedDescription }
             }
@@ -26,7 +26,8 @@ extension CLI {
             print("\n\(version.id) · \(version.subtitle)")
             if let issue = version.issue { print("无法读取：\(issue)"); continue }
             if let manifest = manifests[version.id] {
-                print("启动入口：\(manifest.mainClass) · \(manifest.libraryDeclarations) 条依赖声明，其中 \(manifest.localLibraries.count) 条使用本地文件")
+                print("启动入口：\(manifest.mainClass) · \(manifest.libraryDeclarations) 条依赖声明")
+                print("依赖选择：保留 \(manifest.selectedLibraryCount) 条，其中 \(manifest.localLibraries.count) 条使用本地文件；移除 \(manifest.discardedLibraries.count) 条重复或旧版本声明")
                 print("游戏 JAR：\(manifest.clientFile)")
             }
             if let issue = issues[version.id] { print("清单合并失败：\(issue)") }
@@ -44,11 +45,17 @@ private struct MinecraftManifestOutput: Encodable {
     let clientFile: String
     let libraryDeclarations: Int
     let localLibraries: [String]
-    init(_ resolution: MinecraftManifestResolution) {
+    let selectedLibraryCount: Int
+    let discardedLibraries: [Discarded]
+    struct Discarded: Encodable { let name: String; let selectedName: String; let reason: String }
+    init(_ resolution: MinecraftManifestResolution) throws {
+        let selection = try resolution.selectingLibraries()
         mainClass = resolution.manifest.mainClass ?? ""
         clientFile = resolution.clientFile.path
         libraryDeclarations = resolution.libraries.count
-        localLibraries = resolution.libraries.filter { $0.localFile != nil }.map(\.library.name)
+        localLibraries = selection.libraries.filter { $0.localFile != nil }.map(\.library.name)
+        selectedLibraryCount = selection.libraries.count
+        discardedLibraries = selection.discarded.map { .init(name: $0.name, selectedName: $0.selectedName, reason: $0.reason.rawValue) }
     }
 }
 
