@@ -79,6 +79,7 @@ struct RootView: View {
         .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
         .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
         .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
+        .sheet(item: $model.copyingInstance) { instance in InstanceCopyView(instance: instance) }
         .alert("操作未完成", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button("好", role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
     }
@@ -204,6 +205,11 @@ struct LibraryView: View {
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
                                         Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
                                         Button("管理存档与备份", systemImage: "globe") { model.worldInstance = instance }
+                                        if model.pendingInstanceCopyIDs.contains(instance.id) || InstanceCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) {
+                                            Button("恢复实例复制…", systemImage: "arrow.counterclockwise") { model.copyingInstance = instance }.disabled(model.busy)
+                                        } else {
+                                            Button("复制实例…", systemImage: "plus.square.on.square") { model.copyingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                                        }
                                         Button("导出实例…", systemImage: "square.and.arrow.up") { model.exportingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
                                         Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
                                         Divider()

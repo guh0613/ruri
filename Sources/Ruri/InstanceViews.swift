@@ -72,6 +72,7 @@ struct InstanceSettingsView: View {
     @State var instance: GameInstance
     @State private var changingDirectory = false
     @State private var relocatingDirectory = false
+    @State private var copyingInstance = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var preservedWorkspaces: [URL] = []
@@ -99,6 +100,11 @@ struct InstanceSettingsView: View {
                     if locationInstance.customRunDirectory != nil {
                         Button(locationInstance.runDirectory == .custom ? "重新定位原游戏目录…" : "重新定位记住的自定义目录…", systemImage: "folder.badge.questionmark") { relocatingDirectory = true }.disabled(model.busy)
                     }
+                    if model.pendingInstanceCopyIDs.contains(instance.id) || InstanceCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) {
+                        Button("恢复实例复制…", systemImage: "arrow.counterclockwise") { copyingInstance = true }.disabled(model.busy)
+                    } else {
+                        Button("复制实例…", systemImage: "plus.square.on.square") { copyingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                    }
                     if !preservedWorkspaces.isEmpty {
                         Menu("查看保留的复制副本") {
                             ForEach(Array(preservedWorkspaces.enumerated()), id: \.offset) { index, url in
@@ -123,10 +129,11 @@ struct InstanceSettingsView: View {
         }.padding(24).frame(width: 620, height: 590)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
         .sheet(isPresented: $relocatingDirectory) { CustomRunDirectoryRelocationView(instanceID: instance.id) }
+        .sheet(isPresented: $copyingInstance) { InstanceCopyView(instance: locationInstance) }
         .task(id: model.busy) {
             guard !model.busy else { return }
             let paths = model.paths, id = instance.id
-            let locations = await Task.detached(priority: .utility) { RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) }.value
+            let locations = await Task.detached(priority: .utility) { RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) + InstanceCopyGuard.preservedWorkspaces(paths: paths, sourceID: id) }.value
             if !Task.isCancelled { preservedWorkspaces = locations }
         }
     }

@@ -58,6 +58,7 @@ enum Page: String, CaseIterable, Identifiable {
     var directoryErrors: [UUID: String] = [:]
     var customDirectoryErrors: [UUID: String] = [:]
     var pendingDirectoryCopyIDs: Set<UUID> = []
+    var pendingInstanceCopyIDs: Set<UUID> = []
     private var failedSessionReadIDs: Set<UUID> = []
     var showAccount = false
     var editingInstance: GameInstance?
@@ -66,6 +67,7 @@ enum Page: String, CaseIterable, Identifiable {
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
     var exportingInstance: GameInstance?
+    var copyingInstance: GameInstance?
     var error: String?
     var notice: String? { didSet { noticeSessionID = nil; noticeFileURL = nil } }
     var noticeFileURL: URL?
@@ -228,6 +230,32 @@ enum Page: String, CaseIterable, Identifiable {
             let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
             state = try StateStore.load(basePaths); persistedState = state
             notice = result.warning ?? (pending.committed ? "已清理完成的复制记录，目标内容保留。" : "已恢复到切换前的状态，复制工作区另行保留。")
+            noticeFileURL = result.preservedCopy
+        }
+    }
+    func copyInstance(_ preview: InstanceCopyPreview, completed: @escaping @MainActor @Sendable () -> Void) {
+        guard !busy, !readOnly else { return }
+        if state != persistedState { save() }
+        guard !readOnly else { return }
+        perform("复制 \(preview.source.name)") { [self] activity in
+            do {
+                let result = try await InstanceCopier(paths: basePaths).copy(preview) { [weak self] value in Task { @MainActor in self?.progress(activity, value.progress) } }
+                state = try StateStore.load(basePaths); persistedState = state
+                notice = result.warning ?? "已创建“\(preview.copy.name)”，游戏文件独立保存，原实例保留。"
+                noticeFileURL = result.preservedCopy; page = .library; completed()
+            } catch let failure as RunDirectoryCopyFailure {
+                notice = failure.localizedDescription; noticeFileURL = failure.preservedCopy; throw failure
+            }
+        }
+    }
+    func recoverInstanceCopy(_ pending: InstanceCopyRecovery) {
+        guard !busy, !readOnly else { return }
+        if state != persistedState { save() }
+        guard !readOnly else { return }
+        perform("恢复 \(pending.owner.copyName) 的实例复制") { [self] _ in
+            let result = try await InstanceCopier(paths: basePaths).recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
+            state = try StateStore.load(basePaths); persistedState = state
+            notice = result.warning ?? (pending.committed ? "副本已完成，复制记录已清理。" : "未完成的副本已另行保留，原实例可继续使用。")
             noticeFileURL = result.preservedCopy
         }
     }
@@ -401,18 +429,20 @@ enum Page: String, CaseIterable, Identifiable {
         await synchronizeExternalState()
         let ids = state.instances.map(\.id), paths = paths
         let result = await Task.detached(priority: .utility) {
-            var records: [GameSession] = [], failures: [UUID: String] = [:], pending = Set<UUID>()
+            var records: [GameSession] = [], failures: [UUID: String] = [:], pending = Set<UUID>(), instanceCopies = Set<UUID>()
             for id in ids {
                 do { records += try GameSessionStore.list(paths: paths, instanceID: id) } catch { failures[id] = error.localizedDescription }
                 if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { pending.insert(id) }
+                if InstanceCopyGuard.hasPending(paths: paths, instanceID: id) { instanceCopies.insert(id) }
             }
-            return (records, failures, pending)
+            return (records, failures, pending, instanceCopies)
         }.value
         for record in result.0 {
             if let current = sessions.first(where: { $0.id == record.id }), current.updatedAt > record.updatedAt { continue }
             publishSession(record)
         }
         if pendingDirectoryCopyIDs != result.2 { pendingDirectoryCopyIDs = result.2 }
+        if pendingInstanceCopyIDs != result.3 { pendingInstanceCopyIDs = result.3 }
         let failures = Set(result.1.keys)
         if failures != failedSessionReadIDs, let message = result.1.values.first { notice = "部分运行记录暂时无法读取：\(message)" }
         failedSessionReadIDs = failures

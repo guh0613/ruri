@@ -67,6 +67,33 @@ import RuriCore
                 print("原位置：\(preview.source.path)\n找回位置：\(preview.target.path)\n将更新以下实例：")
                 for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? "正在使用此目录" : "记住的目录") · \(item.id)") }
                 if args.count == 4 { _ = try await service.apply(preview); print("已更新目录引用，游戏文件原地保留。") }
+            case "copy-instance":
+                let usage = "用法：ruri-cli copy-instance <源实例UUID> <目标文件夹UUID|default> <副本名称> [--without-worlds] [--with-backups] [--apply]。默认预览，--apply 才复制。"
+                guard (4...7).contains(args.count), let id = UUID(uuidString: args[1]),
+                      let directory = args[2] == "default" ? GameDirectory.defaultID : UUID(uuidString: args[2]) else { throw RuriError.message(usage) }
+                let flags = Array(args.dropFirst(4))
+                guard flags.allSatisfy({ ["--without-worlds", "--with-backups", "--apply"].contains($0) }), Set(flags).count == flags.count else { throw RuriError.message(usage) }
+                let service = InstanceCopier(paths: paths)
+                let preview = try await service.preview(instanceID: id, name: args[3], directoryID: directory, options: .init(includeWorlds: !flags.contains("--without-worlds"), includeBackups: flags.contains("--with-backups")))
+                print("\(preview.source.name) → \(preview.copy.name)\n源游戏目录：\(preview.sourceGame.path)\n副本位置：\(preview.destination.path)\n\(preview.fileCount) 个文件，\(preview.bytes) 字节\n副本使用独立运行目录；原实例保留。")
+                if flags.contains("--apply") {
+                    let result = try await service.copy(preview) { p in
+                        if p.phase != .copying || p.completed % 50 == 0 { try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8)) }
+                    }
+                    print("Copied instance: \(preview.copy.id)")
+                    if let warning = result.warning { print(warning) }
+                    if let file = result.preservedCopy { print("工作副本：\(file.path)") }
+                }
+            case "recover-instance-copy":
+                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message("用法：ruri-cli recover-instance-copy <实例UUID> [--apply]。默认查看，--apply 恢复或清理复制。") }
+                let service = InstanceCopier(paths: paths)
+                guard let pending = try await service.pending(instanceID: id) else { print("没有待恢复的实例复制。"); break }
+                print("\(pending.owner.sourceName) → \(pending.owner.copyName) · \(pending.owner.transactionID)\n\(pending.committed ? "副本已登记，只需清理" : "副本未完成，恢复会保留工作区")\n目标：\(pending.destination.path)\n工作区：\(pending.workspace.path)")
+                if args.count == 3 {
+                    let result = try await service.recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
+                    print(result.warning ?? "已恢复实例复制。")
+                    if let file = result.preservedCopy { print("工作副本：\(file.path)") }
+                }
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
             case "install-java":
@@ -152,6 +179,7 @@ import RuriCore
                 print("Installed \(version.version_number)")
             case "content":
                 guard args.count >= 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message("用法：ruri-cli content <instance-uuid>") }
+                guard try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message("找不到已登记的实例，请先完成创建或复制。") }
                 for file in try await ContentManager(paths: paths, instanceID: id).scan(.mod) { print("\(file.enabled ? "[on]" : "[off]") \(file.title) \(file.version ?? "") — \(file.filename)") }
             case "launch":
                 let state = try StateStore.load(paths)
@@ -270,6 +298,8 @@ import RuriCore
                   run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
                   recover-directory <instance-uuid> [--apply]
                   relocate-directory <instance-uuid> <original-folder-new-path> [--apply]
+                  copy-instance <source-uuid> <directory-uuid|default> <name> [--without-worlds] [--with-backups] [--apply]
+                  recover-instance-copy <instance-uuid> [--apply]
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
