@@ -157,6 +157,26 @@ import RuriCore
                     await transfer.discard(prepared)
                     print("Imported \(imported.id)")
                 } catch { await transfer.discard(prepared); throw error }
+            case "components":
+                guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else {
+                    throw RuriError.message("用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]")
+                }
+                let service = InstanceComponents(paths: paths)
+                if args.count == 2 {
+                    print(instance.subtitle)
+                    if let backup = try await service.backup(for: id) { print("Previous: \(backup.title)") }
+                    if let reason = InstanceComponents.unavailableReason(instance) { print(reason) }
+                } else if args[2] == "versions", args.count == 4, let loader = LoaderKind(rawValue: args[3]) {
+                    for version in try await GameInstaller(paths: paths).loaderVersions(loader, game: instance.gameVersion) { print(version) }
+                } else if args[2] == "set", (4...5).contains(args.count), let loader = LoaderKind(rawValue: args[3]),
+                          (loader == .vanilla ? args.count == 4 : args.count == 5) {
+                    _ = try await service.change(instance, to: loader, version: args.count == 5 ? args[4] : nil) { p in
+                        if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
+                    }
+                    print("Updated components for \(id)")
+                } else if args[2] == "restore", args.count == 3 {
+                    _ = try await service.restore(instance); print("Restored components for \(id)")
+                } else { throw RuriError.message("用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]") }
             case "repair":
                 guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli repair <instance-uuid>") }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
@@ -321,6 +341,7 @@ import RuriCore
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
+                  components <instance-uuid> [versions <loader> | set <loader> [version] | restore]
                   launch [instance-uuid] [--world folder] [--detach] (offline account)
                   quit <instance-uuid> (normal application quit)
                   stop <instance-uuid> (SIGTERM)

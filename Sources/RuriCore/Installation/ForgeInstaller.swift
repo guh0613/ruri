@@ -46,7 +46,10 @@ private final class MavenVersionsParser: NSObject, XMLParserDelegate {
 public actor ForgeInstaller {
     private let paths: LauncherPaths
     private let downloader: DownloadManager
-    public init(paths: LauncherPaths, downloader: DownloadManager) { self.paths = paths; self.downloader = downloader }
+    private let protectExistingFiles: Bool
+    public init(paths: LauncherPaths, downloader: DownloadManager, protectExistingFiles: Bool = false) {
+        self.paths = paths; self.downloader = downloader; self.protectExistingFiles = protectExistingFiles
+    }
     private struct Profile: Decodable {
         let minecraft: String?
         let json: String?
@@ -178,6 +181,12 @@ public actor ForgeInstaller {
         return child
     }
     private func copyAtomically(_ source: URL, to target: URL) throws {
+        if protectExistingFiles, FileManager.default.fileExists(atPath: target.path) {
+            guard try InstanceTransfer.sha1(source) == InstanceTransfer.sha1(target) else {
+                throw RuriError.message("新组件需要替换正在使用的依赖文件，原安装已保留：\(target.lastPathComponent)")
+            }
+            return
+        }
         if let id = paths.repositoryImportID,
            target.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(paths.directoryRoot(paths.directoryID(for: id)).standardizedFileURL.resolvingSymlinksInPath().appendingPathComponent("libraries").path + "/"),
            FileManager.default.fileExists(atPath: target.path) {

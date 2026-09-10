@@ -4,7 +4,10 @@ public actor GameInstaller {
     public static let manifestURL = MinecraftEndpoints.versionManifest
     public let paths: LauncherPaths
     public let downloader: DownloadManager
-    public init(paths: LauncherPaths, downloader: DownloadManager = DownloadManager()) { self.paths = paths; self.downloader = downloader }
+    let protectExistingFiles: Bool
+    public init(paths: LauncherPaths, downloader: DownloadManager = DownloadManager(), protectExistingFiles: Bool = false) {
+        self.paths = paths; self.downloader = downloader; self.protectExistingFiles = protectExistingFiles
+    }
     public func catalog(force: Bool = false) async throws -> VersionCatalog {
         let cache = paths.cache.appendingPathComponent("versions.json")
         do {
@@ -45,7 +48,7 @@ public actor GameInstaller {
             guard let loaderVersion = instance.loaderVersion else { throw RuriError.message("此版本没有可用的 \(instance.loader.title) 加载器。") }
             let child: VersionManifest
             if instance.loader.usesInstaller {
-                child = try await ForgeInstaller(paths: paths, downloader: downloader).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
+                child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
             } else {
                 let url = try LoaderEndpoints.profile(loader: instance.loader, game: instance.gameVersion, version: loaderVersion)
                 child = try await HTTPClient.shared.get(VersionManifest.self, from: url)
@@ -105,7 +108,9 @@ public actor GameInstaller {
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(instance)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
-        if instance.repositoryVersionID != nil || instance.importedInstallation != nil { try prepareRepositoryNatives(instance, manifest: manifest) }
+        // Component changes can alter the native dependencies of managed games
+        // too. Derive them from the active manifest before every launch.
+        try prepareRepositoryNatives(instance, manifest: manifest)
         guard let index = manifest.assetIndex else { return }
         let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.resources(for: instance).assets)
         guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("游戏资源索引缺失，请先修复实例。") }
@@ -195,6 +200,14 @@ public actor GameInstaller {
     }
 
     private func protectRepositoryResources(_ items: [DownloadItem]) throws {
+        if protectExistingFiles {
+            let workspace = paths.root.standardizedFileURL.resolvingSymlinksInPath().path + "/"
+            for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) &&
+                FileManager.default.fileExists(atPath: item.destination.path) && !DownloadManager.valid(item.destination, item: item) {
+                throw RuriError.message("新组件需要替换正在使用的依赖文件，原安装已保留：\(item.destination.lastPathComponent)")
+            }
+            return
+        }
         guard let id = paths.repositoryImportID else { return }
         let workspace = paths.repositoryImportWorkspace(id).standardizedFileURL.resolvingSymlinksInPath().path + "/"
         for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) {

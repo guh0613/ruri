@@ -43,4 +43,23 @@ extension AppModel {
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
+    func changeComponents(_ instance: GameInstance, loader: LoaderKind, version: String?) {
+        guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
+        save()
+        perform("更换 \(instance.name) 的加载器") { [self] id in
+            let service = await InstanceComponents(paths: paths, downloader: installer.downloader)
+            let saved = try await service.change(instance, to: loader, version: version, concurrency: state.settings.concurrentDownloads) { [weak self] p in
+                await self?.progress(id, p)
+            }
+            acceptState(saved); notice = "\(instance.name) 已切换为 \(loader.title)，下次启动生效"
+        }
+    }
+    func restoreComponents(_ instance: GameInstance) {
+        guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
+        save()
+        perform("恢复 \(instance.name) 的加载器配置") { [self] _ in
+            let saved = try await InstanceComponents(paths: paths).restore(instance)
+            acceptState(saved); notice = "已恢复上次的加载器配置"
+        }
+    }
 }

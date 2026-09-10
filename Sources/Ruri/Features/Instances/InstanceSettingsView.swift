@@ -11,6 +11,7 @@ struct InstanceSettingsView: View {
     @State private var relocatingDirectory = false
     @State private var copyingInstance = false
     @State private var movingInstance = false
+    @State private var managingComponents = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var loadingIcon = false
@@ -21,7 +22,7 @@ struct InstanceSettingsView: View {
     init(instance: GameInstance) { _instance = State(initialValue: instance); _launchOverrides = State(initialValue: instance.effectiveLaunchOverrides); original = instance }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            HStack { InstanceIcon(loader: instance.loader, png: instance.iconPNG); SectionHeading(title: "实例设置", subtitle: instance.subtitle) }
+            HStack { InstanceIcon(loader: locationInstance.loader, png: instance.iconPNG); SectionHeading(title: "实例设置", subtitle: locationInstance.subtitle) }
             Form {
                 Section("基本信息") {
                     TextField("名称", text: $instance.name); Toggle("收藏此实例", isOn: $instance.favorite)
@@ -33,6 +34,11 @@ struct InstanceSettingsView: View {
                         }
                     }
                     Text("图片会居中显示为图标，保存后无需保留原图片文件。").font(.caption).foregroundStyle(.secondary)
+                }
+                Section("游戏组件") {
+                    Text(locationInstance.subtitle).font(.callout)
+                    Button("管理加载器…", systemImage: "puzzlepiece.extension") { managingComponents = true }
+                        .disabled(model.busy || model.isInstanceInUse(instance.id) || !locationInstance.installed)
                 }
                 Section("启动设置") {
                     Text("各项可跟随默认设置，或由此实例单独覆盖。修改只影响下一次启动。").font(.callout).foregroundStyle(.secondary)
@@ -85,6 +91,7 @@ struct InstanceSettingsView: View {
         .sheet(isPresented: $relocatingDirectory) { CustomRunDirectoryRelocationView(instanceID: instance.id) }
         .sheet(isPresented: $copyingInstance) { InstanceCopyView(instance: locationInstance) }
         .sheet(isPresented: $movingInstance) { InstanceMoveView(instance: locationInstance) }
+        .sheet(isPresented: $managingComponents) { InstanceComponentsView(instance: locationInstance) }
         .task(id: model.busy) {
             guard !model.busy else { return }
             let paths = model.paths, id = instance.id
