@@ -80,6 +80,7 @@ struct RootView: View {
         .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
         .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
         .sheet(item: $model.copyingInstance) { instance in InstanceCopyView(instance: instance) }
+        .sheet(item: $model.movingInstance) { instance in InstanceMoveView(instance: instance) }
         .alert("操作未完成", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button("好", role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
     }

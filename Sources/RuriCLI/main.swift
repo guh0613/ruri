@@ -18,6 +18,8 @@ import RuriCore
             switch args.first {
             case "launch-settings":
                 try manageLaunchSettings(Array(args.dropFirst()), paths: paths)
+            case "move-instance", "recover-instance-move":
+                try await manageInstanceMoves(args, paths: paths)
             case "directories":
                 try manageDirectories(Array(args.dropFirst()), paths: paths)
             case "isolation-policy":
@@ -300,6 +302,8 @@ import RuriCore
                   relocate-directory <instance-uuid> <original-folder-new-path> [--apply]
                   copy-instance <source-uuid> <directory-uuid|default> <name> [--without-worlds] [--with-backups] [--apply]
                   recover-instance-copy <instance-uuid> [--apply]
+                  move-instance <instance-uuid> <directory-uuid|default> [--apply]
+                  recover-instance-move <instance-uuid> [--apply] [--keep-source]
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]

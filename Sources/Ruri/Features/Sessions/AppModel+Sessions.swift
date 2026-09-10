@@ -6,13 +6,14 @@ extension AppModel {
         await synchronizeExternalState()
         let ids = state.instances.map(\.id), paths = paths
         let result = await Task.detached(priority: .utility) {
-            var records: [GameSession] = [], failures: [UUID: String] = [:], pending = Set<UUID>(), instanceCopies = Set<UUID>()
+            var records: [GameSession] = [], failures: [UUID: String] = [:], pending = Set<UUID>(), instanceCopies = Set<UUID>(), instanceMoves = Set<UUID>()
             for id in ids {
                 do { records += try GameSessionStore.list(paths: paths, instanceID: id) } catch { failures[id] = error.localizedDescription }
                 if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { pending.insert(id) }
                 if InstanceCopyGuard.hasPending(paths: paths, instanceID: id) { instanceCopies.insert(id) }
+                if InstanceMoveGuard.hasPending(paths: paths, instanceID: id) { instanceMoves.insert(id) }
             }
-            return (records, failures, pending, instanceCopies)
+            return (records, failures, pending, instanceCopies, instanceMoves)
         }.value
         for record in result.0 {
             if let current = sessions.first(where: { $0.id == record.id }), current.updatedAt > record.updatedAt { continue }
@@ -20,6 +21,7 @@ extension AppModel {
         }
         if pendingDirectoryCopyIDs != result.2 { pendingDirectoryCopyIDs = result.2 }
         if pendingInstanceCopyIDs != result.3 { pendingInstanceCopyIDs = result.3 }
+        if pendingInstanceMoveIDs != result.4 { pendingInstanceMoveIDs = result.4 }
         let failures = Set(result.1.keys)
         if failures != failedSessionReadIDs, let message = result.1.values.first { notice = "部分运行记录暂时无法读取：\(message)" }
         failedSessionReadIDs = failures

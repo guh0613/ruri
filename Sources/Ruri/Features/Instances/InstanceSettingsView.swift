@@ -10,6 +10,7 @@ struct InstanceSettingsView: View {
     @State private var changingDirectory = false
     @State private var relocatingDirectory = false
     @State private var copyingInstance = false
+    @State private var movingInstance = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var preservedWorkspaces: [URL] = []
@@ -42,8 +43,13 @@ struct InstanceSettingsView: View {
                     } else {
                         Button("复制实例…", systemImage: "plus.square.on.square") { copyingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
                     }
+                    if model.pendingInstanceMoveIDs.contains(instance.id) || InstanceMoveGuard.hasPending(paths: model.paths, instanceID: instance.id) {
+                        Button("恢复实例移动…", systemImage: "arrow.counterclockwise") { movingInstance = true }.disabled(model.busy)
+                    } else {
+                        Button("移动到其他文件夹…", systemImage: "folder.badge.arrow.forward") { movingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                    }
                     if !preservedWorkspaces.isEmpty {
-                        Menu("查看保留的复制副本") {
+                        Menu("查看保留的工作文件") {
                             ForEach(Array(preservedWorkspaces.enumerated()), id: \.offset) { index, url in
                                 Button("副本 \(index + 1) · " + (url.deletingLastPathComponent().lastPathComponent == ".directory-change-workspaces" ? url.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().lastPathComponent : "此实例")) { NSWorkspace.shared.open(url) }
                             }
@@ -67,10 +73,13 @@ struct InstanceSettingsView: View {
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
         .sheet(isPresented: $relocatingDirectory) { CustomRunDirectoryRelocationView(instanceID: instance.id) }
         .sheet(isPresented: $copyingInstance) { InstanceCopyView(instance: locationInstance) }
+        .sheet(isPresented: $movingInstance) { InstanceMoveView(instance: locationInstance) }
         .task(id: model.busy) {
             guard !model.busy else { return }
             let paths = model.paths, id = instance.id
-            let locations = await Task.detached(priority: .utility) { RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) + InstanceCopyGuard.preservedWorkspaces(paths: paths, sourceID: id) }.value
+            let locations = await Task.detached(priority: .utility) {
+                RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) + InstanceCopyGuard.preservedWorkspaces(paths: paths, sourceID: id) + InstanceMoveGuard.preservedWorkspaces(paths: paths, instanceID: id)
+            }.value
             if !Task.isCancelled { preservedWorkspaces = locations }
         }
     }

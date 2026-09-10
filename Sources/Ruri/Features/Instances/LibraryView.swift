@@ -48,6 +48,11 @@ struct LibraryView: View {
                                             Button("复制实例…", systemImage: "plus.square.on.square") { model.copyingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
                                         }
                                         Button("导出实例…", systemImage: "square.and.arrow.up") { model.exportingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
+                                        if model.pendingInstanceMoveIDs.contains(instance.id) || InstanceMoveGuard.hasPending(paths: model.paths, instanceID: instance.id) {
+                                            Button("恢复实例移动…", systemImage: "arrow.counterclockwise") { model.movingInstance = instance }.disabled(model.busy)
+                                        } else {
+                                            Button("移动到其他文件夹…", systemImage: "folder.badge.arrow.forward") { model.movingInstance = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                                        }
                                         Button("修复游戏文件") { model.repair(instance) }.disabled(model.busy || model.isInstanceInUse(instance.id) || !instance.installed)
                                         Divider()
                                         Button("移到废纸篓", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))

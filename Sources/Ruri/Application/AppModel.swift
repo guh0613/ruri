@@ -42,6 +42,7 @@ import RuriCore
     var customDirectoryErrors: [UUID: String] = [:]
     var pendingDirectoryCopyIDs: Set<UUID> = []
     var pendingInstanceCopyIDs: Set<UUID> = []
+    var pendingInstanceMoveIDs: Set<UUID> = []
     var failedSessionReadIDs: Set<UUID> = []
     var showAccount = false
     var editingInstance: GameInstance?
@@ -51,6 +52,7 @@ import RuriCore
     var importingInstance: PreparedInstanceImport?
     var exportingInstance: GameInstance?
     var copyingInstance: GameInstance?
+    var movingInstance: GameInstance?
     var error: String?
     var notice: String? { didSet { noticeSessionID = nil; noticeFileURL = nil } }
     var noticeFileURL: URL?

@@ -8,6 +8,7 @@ extension AppModel {
         return activeSessions[id] != nil || pendingDirectoryCopyIDs.contains(id) || GameRunLease.isHeld(paths: paths, instanceID: id)
     }
     func runningLabel(_ id: UUID) -> String? {
+        if pendingInstanceMoveIDs.contains(id) || InstanceMoveGuard.hasPending(paths: paths, instanceID: id) { return "实例移动待恢复" }
         if pendingInstanceCopyIDs.contains(id) || InstanceCopyGuard.hasPending(paths: paths, instanceID: id) { return "实例复制待恢复" }
         if pendingDirectoryCopyIDs.contains(id) || RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { return "目录复制待恢复" }
         guard let record = activeSessions[id] else {
