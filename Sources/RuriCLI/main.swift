@@ -88,7 +88,7 @@ import RuriCore
                 guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message("用法：ruri-cli recover-instance-copy <实例UUID> [--apply]。默认查看，--apply 恢复或清理复制。") }
                 let service = InstanceCopier(paths: paths)
                 guard let pending = try await service.pending(instanceID: id) else { print("没有待恢复的实例复制。"); break }
-                print("\(pending.owner.sourceName) → \(pending.owner.copyName) · \(pending.owner.transactionID)\n\(pending.committed ? "副本已登记，只需清理" : "副本未完成，恢复会保留工作区")\n目标：\(pending.destination.path)\n工作区：\(pending.workspace.path)")
+                print("\(pending.owner.sourceName) → \(pending.owner.copyName) · \(pending.owner.transactionID)\n\(pending.committed ? "副本已登记，等待校验和清理" : "副本未完成，恢复会保留工作区")\n目标：\(pending.destination.path)\n工作区：\(pending.workspace.path)")
                 if args.count == 3 {
                     let result = try await service.recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
                     print(result.warning ?? "已恢复实例复制。")

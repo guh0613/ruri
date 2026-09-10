@@ -26,9 +26,9 @@ struct InstanceCopyView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if let recovery {
-                        Label(recovery.committed ? "副本已完成，等待清理工作记录" : "复制尚未完成，原实例及其文件保留", systemImage: "arrow.counterclockwise").font(.headline)
+                        Label(recovery.committed ? "副本已登记，等待校验和清理" : "复制尚未完成，原实例及其文件保留", systemImage: "arrow.counterclockwise").font(.headline)
                         Text("目标：\(recovery.destination.path)").font(.caption).textSelection(.enabled)
-                        Text(recovery.committed ? "清理后可以继续使用副本，不会回滚已完成的复制。" : "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。").font(.callout).foregroundStyle(.secondary)
+                        Text(recovery.committed ? "核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。" : "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。").font(.callout).foregroundStyle(.secondary)
                         Button("在 Finder 中查看工作区", systemImage: "folder") { NSWorkspace.shared.open(recovery.workspace) }
                     } else {
                         TextField("副本名称", text: $name).textFieldStyle(.roundedBorder).disabled(model.busy)
@@ -59,7 +59,7 @@ struct InstanceCopyView: View {
                     if model.busy { cancelling = true; model.operation?.cancel() } else { dismiss() }
                 }.keyboardShortcut(.cancelAction).disabled(cancelling || (model.busy && recovery != nil))
                 if let recovery {
-                    Button(recovery.committed ? "清理完成记录" : "恢复并保留副本") { model.recoverInstanceCopy(recovery) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
+                    Button(recovery.committed ? "校验并完成复制" : "恢复并保留副本") { model.recoverInstanceCopy(recovery) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
                 } else {
                     Button("创建副本") { if let preview { model.copyInstance(preview) { dismiss() } } }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
                 }
