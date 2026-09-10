@@ -69,8 +69,8 @@ struct InstanceContentView: View {
                                 }
                                 Menu {
                                     Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
-                                    if let record = file.managed, record.provider == "modrinth" {
-                                        Link("在 Modrinth 查看", destination: URL(string: "https://modrinth.com/\(record.kind.rawValue)/\(record.projectID)")!)
+                                    if let page = file.managed?.modrinthPageURL {
+                                        Link("在 Modrinth 查看", destination: page)
                                     }
                                     Divider()
                                     Button("移到废纸篓", role: .destructive) { deleteTarget = file }.disabled(!canModify)

@@ -24,7 +24,7 @@ struct CurseForgeSettingsSection: View {
             }
             if let error { Text(error).foregroundStyle(.red).font(.caption) }
             Text("用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。").font(.caption).foregroundStyle(.secondary)
-            Link("CurseForge 第三方 API 申请说明", destination: URL(string: "https://support.curseforge.com/support/solutions/articles/9000208346")!)
+            Link("CurseForge 第三方 API 申请说明", destination: AppLinks.curseForgeAPI)
         }
     }
 }

@@ -28,12 +28,12 @@ struct PreferencesView: View {
                     }
                     Stepper("并行下载：\(model.state.settings.concurrentDownloads)", value: $model.state.settings.concurrentDownloads, in: 1...16)
                     Text("自动切换会优先使用官方源，连接失败时尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。支持范围请求的文件可在取消后继续下载。").font(.caption).foregroundStyle(.secondary)
-                    Link("BMCLAPI 镜像服务", destination: URL(string: "https://bmclapidoc.bangbang93.com/")!)
+                    Link("BMCLAPI 镜像服务", destination: AppLinks.bmclapiDocumentation)
                 }
                 Section("Microsoft 登录") {
                     TextField("应用 Client ID", text: $model.state.settings.microsoftClientID).font(.system(.body, design: .monospaced))
                     Text("使用 Ruri 自己注册的 Microsoft 公共客户端应用。应用还需要获准访问 Minecraft 服务；这里不使用其他启动器的 Client ID。").font(.caption).foregroundStyle(.secondary)
-                    Link("Microsoft 应用注册文档", destination: URL(string: "https://learn.microsoft.com/entra/identity-platform/quickstart-register-app")!)
+                    Link("Microsoft 应用注册文档", destination: AppLinks.microsoftRegistration)
                 }
                 CurseForgeSettingsSection()
                 Section("数据") {

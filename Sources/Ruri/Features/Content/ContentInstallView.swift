@@ -33,7 +33,7 @@ struct ContentInstallView: View {
             if project.project_type == "shader" { Text("光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。").font(.caption).foregroundStyle(.secondary) }
             if project.project_type == "mod" { Text("会自动解析并安装此版本的必需依赖。").font(.caption).foregroundStyle(.secondary) }
             HStack {
-                Link("在 Modrinth 查看", destination: URL(string: "https://modrinth.com/\(project.project_type)/\(project.slug)")!)
+                if let page = project.pageURL { Link("在 Modrinth 查看", destination: page) }
                 Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(isPack ? "查看整合包" : "安装") {
                     guard let version = versions.first(where: { $0.id == selectedVersion }) else { return }

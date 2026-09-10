@@ -50,7 +50,7 @@ struct JavaView: View {
                                 }.disabled(model.busy || installed)
                             }
                         }
-                        HStack { Link("Azul Zulu 下载", destination: URL(string: "https://www.azul.com/downloads/?package=jdk#zulu")!); Link("Eclipse Temurin 下载", destination: URL(string: "https://adoptium.net/temurin/releases/?os=mac")!) }.font(.callout)
+                        HStack { Link("Azul Zulu 下载", destination: AppLinks.azulJavaDownloads); Link("Eclipse Temurin 下载", destination: AppLinks.temurinJavaDownloads) }.font(.callout)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
             }.padding(30)
