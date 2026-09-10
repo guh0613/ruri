@@ -6,3 +6,4 @@ references/
 .verification/
 *.xcuserstate
 xcuserdata/
+/.private/
