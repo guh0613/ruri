@@ -144,11 +144,21 @@ public actor ContentManager {
         try writeRecords(journal.oldRecords)
         try fm.removeItem(at: transactionURL)
     }
-    public func install(_ incoming: [ContentInstallation]) throws {
+    public func install(_ incoming: [ContentInstallation], expecting expectedRecords: [ManagedContent]? = nil) throws {
         try lock(); defer { unlock() }
         try recover(); try Task.checkCancellation()
         let fm = FileManager.default
         let oldRecords = try readRecords()
+        if let expectedRecords {
+            for item in incoming {
+                let expected = expectedRecords.first { $0.id == item.record.id }
+                let actual = oldRecords.first { $0.id == item.record.id }
+                let present = try actual.map { FileManager.default.fileExists(atPath: try contentURL($0.relativePath).path) } ?? true
+                guard actual == expected, present else {
+                    throw RuriError.message("\(item.record.title) 在预览后发生变化，请重新检查更新。整批文件尚未替换。")
+                }
+            }
+        }
         var installs = incoming
         guard Set(installs.map { $0.record.id }).count == installs.count else { throw RuriError.message("安装计划包含同一项目的多个版本") }
         // Preserve a user's disabled state when updating a project.

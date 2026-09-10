@@ -227,7 +227,10 @@ public actor CurseForgeService {
         }
     }
     public func plan(file: CurseForgeFile, instance: GameInstance, paths: LauncherPaths) async throws -> CurseForgeContentPlan {
-        var queue = [file]; var resolved: [PlannedCurseFile] = []; var seen: [Int: Int] = [:]
+        try await plan(files: [file], instance: instance, paths: paths)
+    }
+    public func plan(files roots: [CurseForgeFile], instance: GameInstance, paths: LauncherPaths) async throws -> CurseForgeContentPlan {
+        var queue = roots; var resolved: [PlannedCurseFile] = []; var seen: [Int: Int] = [:]
         let installed = try await ContentManager(paths: paths, instanceID: instance.id).records()
         while !queue.isEmpty {
             try Task.checkCancellation(); let file = queue.removeFirst()
@@ -240,6 +243,7 @@ public actor CurseForgeService {
             if kind == .mod {
                 for dependency in file.dependencies where dependency.relationType == 3 {
                     if seen[dependency.modId] != nil { continue }
+                    if let selected = roots.first(where: { $0.modId == dependency.modId }) { queue.append(selected); continue }
                     let options = try await files(project: dependency.modId, game: instance.gameVersion, loader: instance.loader).data.filter { $0.supports(instance, kind: .mod) && $0.isAvailable != false }
                     guard let match = options.first(where: { $0.releaseType == 1 }) ?? options.first else { throw RuriError.message("找不到兼容的必需依赖：\(dependency.modId)") }
                     queue.append(match)
@@ -251,7 +255,7 @@ public actor CurseForgeService {
         }
         let ids = Set(resolved.map { $0.project.id })
         guard !resolved.contains(where: { $0.file.dependencies.contains(where: { $0.relationType == 5 && ids.contains($0.modId) }) }) else { throw RuriError.message("必需依赖之间存在不兼容关系") }
-        return CurseForgeContentPlan(instance: instance, title: resolved.first?.project.name ?? file.displayName, files: resolved)
+        return CurseForgeContentPlan(instance: instance, title: roots.count == 1 ? (resolved.first?.project.name ?? roots[0].displayName) : "批量内容更新", files: resolved)
     }
     public func install(_ plan: CurseForgeContentPlan, paths: LauncherPaths, downloader: DownloadManager, manualFiles: [Int: URL] = [:], progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let files = try await materialize(plan.files, paths: paths, downloader: downloader, manualFiles: manualFiles, progress: progress)

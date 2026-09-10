@@ -18,6 +18,7 @@ struct InstanceContentView: View {
     @State private var updates: [String: ContentUpdate] = [:]
     @State private var curseUpdates: [String: CurseForgeUpdate] = [:]
     @State private var cursePlan: CurseForgeContentPlan?
+    @State private var batchPlan: ContentBatchUpdatePlan?
     @State private var updateTask: Task<Void, Never>?
     @State private var updatesChecked = false
     @State private var showImporter = false
@@ -41,6 +42,12 @@ struct InstanceContentView: View {
                 Picker("内容", selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270).disabled(model.busy)
                 Spacer()
                 Button("检查更新", systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
+                if !updates.isEmpty || !curseUpdates.isEmpty {
+                    Menu("批量更新…") {
+                        Button("更新所选内容…") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
+                        Button("更新当前结果…") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
+                    }.disabled(!canModify || updateTask != nil)
+                }
                 Button("导入…", systemImage: "plus") { showImporter = true }.disabled(!canModify)
                 Button { model.reveal(instance, folder: kind.folder) } label: { Image(systemName: "folder") }.help("在 Finder 中打开内容文件夹")
             }
@@ -118,6 +125,7 @@ struct InstanceContentView: View {
         .onChange(of: statusFilter) { pruneSelection() }
         .onChange(of: model.busy) { if !model.busy { Task { await reload() } } }
         .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
+        .sheet(item: $batchPlan) { plan in ContentBatchUpdateView(plan: plan) }
         .sheet(item: $versionTarget) { file in
             if let record = file.managed { ContentVersionView(record: record, instanceID: instance.id) }
         }
@@ -195,6 +203,22 @@ struct InstanceContentView: View {
             do {
                 let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).plan(file: update.available, instance: instance, paths: model.paths)
                 try Task.checkCancellation(); cursePlan = result
+            } catch { self.error = error.localizedDescription; throw error }
+        }
+    }
+    private func hasUpdates(_ files: [LocalContentFile]) -> Bool {
+        files.contains { file in file.managed.map { updates[$0.id] != nil || curseUpdates[$0.id] != nil } ?? false }
+    }
+    private func prepareBatch(_ files: [LocalContentFile]) {
+        let ids = Set(files.compactMap { $0.managed?.id })
+        let selected = updates.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
+        let curseSelected = curseUpdates.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
+        error = nil
+        model.perform("准备批量更新", presentErrors: false) { _ in
+            do {
+                let updater = ContentBatchUpdater(curseforge: CurseForgeService(apiKey: curseSelected.isEmpty ? "" : try CurseForgeKeyStore.load()))
+                let result = try await updater.prepare(modrinth: selected, curseforge: curseSelected, instance: instance, paths: model.paths)
+                try Task.checkCancellation(); batchPlan = result
             } catch { self.error = error.localizedDescription; throw error }
         }
     }

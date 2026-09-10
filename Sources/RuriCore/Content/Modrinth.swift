@@ -46,43 +46,8 @@ public actor ModrinthService {
     }
     public func install(version: ModrinthVersion, type: String, instance: GameInstance, paths: LauncherPaths, downloader: DownloadManager, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         guard let kind = ContentKind(rawValue: type) else { throw RuriError.message("不支持的内容类型") }
-        if type == "mod", instance.loader == .vanilla { throw RuriError.message("模组需要已安装加载器的实例，请先创建相应实例。") }
-        var queue = [version]; var resolved: [ModrinthVersion] = []; var seen = Set<String>()
-        while !queue.isEmpty {
-            try Task.checkCancellation()
-            let current = queue.removeFirst()
-            if !seen.insert(current.id).inserted { continue }
-            if let other = resolved.first(where: { $0.project_id == current.project_id }), other.id != current.id { throw RuriError.message("依赖要求同一项目的不同版本：\(current.name)。请选择其他兼容版本。") }
-            guard seen.count <= 200 else { throw RuriError.message("模组依赖数量超出限制") }
-            guard current.game_versions.contains(instance.gameVersion) else { throw RuriError.message("\(current.name) 不支持 Minecraft \(instance.gameVersion)") }
-            if type == "mod", !current.loaders.contains(instance.loader.modrinthLoader) { throw RuriError.message("\(current.name) 不支持此实例的加载器") }
-            resolved.append(current)
-            if type == "mod" {
-                for dependency in current.dependencies where dependency.dependency_type == "required" {
-                    if let id = dependency.version_id {
-                        queue.append(try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(id)))
-                    } else if let project = dependency.project_id {
-                        guard let match = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.modrinthLoader).first else { throw RuriError.message("找不到兼容的必需依赖：\(project)") }
-                        queue.append(match)
-                    } else { throw RuriError.message("必需依赖缺少下载标识") }
-                }
-            }
-        }
-        let staging = paths.cache.appendingPathComponent("content-\(UUID().uuidString)")
-        defer { try? FileManager.default.removeItem(at: staging) }
-        var files: [ContentInstallation] = []
-        for item in resolved {
-            guard let file = item.primaryFile else { throw RuriError.message("\(item.name) 没有可下载的文件") }
-            guard file.hashes["sha1"] != nil || file.hashes["sha512"] != nil else { throw RuriError.message("\(file.filename) 缺少校验信息") }
-            let temp = try LauncherPaths.safePath("\(item.id)/\(file.filename)", within: staging)
-            await progress(InstallProgress("下载 \(file.filename)", completed: files.count, total: resolved.count))
-            try await downloader.fetch(DownloadItem(url: file.url, destination: temp, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size))
-            let required = item.dependencies.filter { $0.dependency_type == "required" }.compactMap { dependency in
-                dependency.project_id ?? resolved.first(where: { $0.id == dependency.version_id })?.project_id
-            }
-            let record = ManagedContent(projectID: item.project_id, versionID: item.id, title: item.name, versionName: item.version_number, publishedAt: item.date_published, kind: kind, filename: file.filename, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size, requiredProjects: required)
-            files.append(ContentInstallation(record: record, source: temp))
-        }
+        let plan = try await plan(versions: [version], kind: kind, instance: instance)
+        let files = try await materialize(plan, paths: paths, downloader: downloader, progress: progress)
         try Task.checkCancellation()
         await progress(InstallProgress("正在应用内容更新", completed: files.count, total: files.count))
         try await ContentManager(paths: paths, instanceID: instance.id).install(files)

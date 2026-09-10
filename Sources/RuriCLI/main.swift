@@ -206,7 +206,7 @@ import RuriCore
                 guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message("找不到兼容内容版本") }
                 try await service.install(version: version, type: "mod", instance: instance, paths: paths, downloader: DownloadManager()) { p in print("\(p.stage) \(p.completed)/\(p.total)") }
                 print("Installed \(version.version_number)")
-            case "content", "content-action":
+            case "content", "content-action", "update-content":
                 try await manageContent(args, paths: paths)
             case "datapacks":
                 try await manageDataPacks(args, paths: paths)
@@ -339,6 +339,7 @@ import RuriCore
                   content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]
                   plan [instance-uuid]
                   launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
+                  update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]
                   directories <list|add|select|rename|relocate|remove> ...
                   run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
                   recover-directory <instance-uuid> [--apply]
