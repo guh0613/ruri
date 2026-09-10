@@ -20,6 +20,9 @@ extension AppModel {
             liveLogs = liveLogs.filter { activeIDs.contains($0.key) }
             logs.removeAll(); lastGameExit = nil; crashReports = []; recordingErrorShown = false
             publishSession(recorder.record)
+            let presentation = stored.resolvedLaunchSettings(defaults: defaults).presentation
+            launchPresentations[recorder.record.id] = presentation
+            if presentation.showLogs { showLogs = true }
             perform("启动 \(stored.name)", presentErrors: false) { [self] id in
                 do {
                     var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability)
@@ -81,6 +84,7 @@ extension AppModel {
                     try? GameMonitorClient.recordEvent(.connected, paths: paths, session: recorder.record)
                     publishSession(recorder.record)
                 } catch {
+                    finishLaunchPresentation(recorder.record.id)
                     do { try recorder.fail(error, cancelled: Task.isCancelled) } catch { showRecordingError(error) }
                     publishSession(recorder.record)
                     if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }

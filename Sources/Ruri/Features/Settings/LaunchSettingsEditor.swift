@@ -43,10 +43,31 @@ struct LaunchSettingsEditor: View {
             TextField("附加游戏参数", text: Binding(get: { effective.gameArguments }, set: { overrides.gameArguments = $0 }), axis: .vertical).lineLimit(2...4).font(.system(.body, design: .monospaced))
             Text("含空格的参数请加引号；参数直接传给游戏。").font(.caption).foregroundStyle(.secondary)
         case .window:
-            TextField("宽度", value: Binding(get: { effective.window.width }, set: { overrides.window = .init(width: $0, height: effective.window.height) }), format: .number)
-            TextField("高度", value: Binding(get: { effective.window.height }, set: { overrides.window = .init(width: effective.window.width, height: $0) }), format: .number)
+            Toggle("全屏启动", isOn: windowBinding(\.fullscreen))
+            Text("开启时请求游戏进入全屏；关闭时沿用游戏内保存的全屏状态。").font(.caption).foregroundStyle(.secondary)
+            HStack {
+                TextField("宽度", value: windowBinding(\.width), format: .number)
+                TextField("高度", value: windowBinding(\.height), format: .number)
+            }
+            Menu("常用窗口尺寸") {
+                ForEach([GameWindowSize(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)], id: \.width) { size in
+                    Button("\(size.width) × \(size.height)") { var value = effective.window; value.width = size.width; value.height = size.height; overrides.window = value }
+                }
+            }
+            Text("附加游戏参数中指定的宽度和高度优先。").font(.caption).foregroundStyle(.secondary)
+        case .presentation:
+            Toggle("启动时自动打开日志", isOn: presentationBinding(\.showLogs))
+            Toggle("游戏运行时隐藏启动器", isOn: presentationBinding(\.hideLauncher)).disabled(effective.presentation.showLogs)
+            Text(effective.presentation.showLogs ? "自动打开日志时，启动器保持可见。" : "游戏进程启动后隐藏 Ruri，退出后恢复窗口。可随时点击 Dock 图标打开启动器。").font(.caption).foregroundStyle(.secondary)
         }
     }
+    private func windowBinding<Value>(_ key: WritableKeyPath<GameWindowSize, Value>) -> Binding<Value> {
+        Binding(get: { effective.window[keyPath: key] }, set: { var value = effective.window; value[keyPath: key] = $0; overrides.window = value })
+    }
+    private func presentationBinding<Value>(_ key: WritableKeyPath<LaunchPresentation, Value>) -> Binding<Value> {
+        Binding(get: { effective.presentation[keyPath: key] }, set: { var value = effective.presentation; value[keyPath: key] = $0; overrides.presentation = value })
+    }
+
 }
 
 struct MemorySettingsEditor: View {

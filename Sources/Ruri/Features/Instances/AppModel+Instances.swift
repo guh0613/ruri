@@ -19,7 +19,7 @@ extension AppModel {
         func setting<Value: Equatable>(_ key: WritableKeyPath<InstanceLaunchOverrides, Value>) {
             if desired[keyPath: key] != baseline[keyPath: key] { overrides[keyPath: key] = desired[keyPath: key] }
         }
-        setting(\.memory); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window)
+        setting(\.memory); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window); setting(\.presentation)
         if overrides != current.effectiveLaunchOverrides { current.launchOverrides = overrides }
         update(current)
         Task { await scanJava() }

@@ -119,4 +119,52 @@ struct LaunchSettingsTests {
         var changed = saved.instances[0]; changed.gameVersion = "1.20.1"
         #expect(throws: (any Error).self) { try changed.applyingInstallation(result, requested: request) }
     }
+    @Test func fullscreenDefaultsAndExplicitWindowArgumentsReachTheLaunchPlan() throws {
+        let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var source = GameInstance(name: "Window", gameVersion: "1.0"); source.launchOverrides = .init()
+        var state = PersistentState(); state.instances = [source]
+        state.settings.defaultWindow = .init(width: 1920, height: 1080, fullscreen: true)
+        state.settings.defaultLaunchPresentation = .init(hideLauncher: true)
+        try StateStore.save(state, to: paths)
+        let jar = paths.versions.appendingPathComponent("1.0/1.0.jar")
+        try FileManager.default.createDirectory(at: jar.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data("client".utf8).write(to: jar)
+        let manifest = VersionManifest(id: "1.0", mainClass: "Main", libraries: [])
+        let java = JavaRuntime(path: "/test/java", version: "8", major: 8, architecture: "x86_64", vendor: "Test")
+        let frozen = try source.launchSnapshot(defaults: state.settings)
+        #expect(frozen.fullscreen == true && frozen.launchPresentation?.hideLauncher == true)
+        let plan = try LaunchBuilder.build(instance: frozen, manifest: manifest, java: java, account: Account(username: "Player"), paths: paths)
+        #expect(plan.arguments.contains("--fullscreen") && plan.arguments.contains("1920"))
+        var custom = frozen; custom.extraGameArguments = "--width=900 --height 500 --fullscreen"
+        let explicit = try LaunchBuilder.build(instance: custom, manifest: manifest, java: java, account: Account(username: "Player"), paths: paths)
+        #expect(explicit.arguments.filter { $0 == "--fullscreen" }.count == 1)
+        #expect(explicit.arguments.contains("--width=900") && !explicit.arguments.contains("--width"))
+        #expect(explicit.arguments.contains("500") && !explicit.arguments.contains("1080"))
+        let old = try JSONDecoder().decode(GameWindowSize.self, from: Data(#"{"width":1280,"height":720}"#.utf8))
+        #expect(!old.fullscreen)
+        var overrides = InstanceLaunchOverrides(); overrides.setInheritance(false, for: .presentation, defaults: state.settings.defaultLaunchSettings)
+        state.settings.defaultLaunchPresentation = .init(showLogs: true)
+        #expect(overrides.resolve(defaults: state.settings.defaultLaunchSettings).presentation.hideLauncher)
+        overrides.setInheritance(true, for: .presentation, defaults: state.settings.defaultLaunchSettings)
+        #expect(overrides.resolve(defaults: state.settings.defaultLaunchSettings).presentation.showLogs)
+    }
+
+    @Test func exportedWindowAndPresentationPreferencesSurviveImport() async throws {
+        let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        var instance = GameInstance(name: "Fullscreen", gameVersion: "1.0"); instance.launchOverrides = .init()
+        var state = PersistentState(); state.instances = [instance]
+        state.settings.defaultWindow = .init(fullscreen: true); state.settings.defaultLaunchPresentation = .init(showLogs: true)
+        try StateStore.save(state, to: paths)
+        try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
+        let service = InstanceTransfer(paths: paths)
+        for format in [InstanceExportFormat.ruri, .multimc] {
+            let archive = paths.cache.appendingPathComponent(format.rawValue + ".zip")
+            try await service.export(instance, to: archive, format: format)
+            let prepared = try await service.prepare(archive)
+            #expect(prepared.instance.fullscreen == true)
+            if format == .ruri { #expect(prepared.instance.launchPresentation?.showLogs == true) }
+            await service.discard(prepared)
+        }
+    }
+
 }

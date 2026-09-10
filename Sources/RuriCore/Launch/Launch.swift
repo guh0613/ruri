@@ -124,7 +124,10 @@ public enum LaunchBuilder {
         let reserved: Set<String> = ["--gameDir", "--assetsDir", "--assetIndex", "--username", "--uuid", "--accessToken", "--session", "--clientId", "--xuid", "--userType", "--userProperties"]
         guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message("附加游戏参数不能覆盖账号身份、令牌或游戏目录。") }
         game += extraGame
-        if !game.contains("--width") { game += ["--width", String(instance.width), "--height", String(instance.height)] }
+        func hasOption(_ name: String) -> Bool { game.contains { $0 == name || $0.hasPrefix(name + "=") } }
+        if !hasOption("--width") { game += ["--width", String(instance.width)] }
+        if !hasOption("--height") { game += ["--height", String(instance.height)] }
+        if instance.fullscreen == true && !hasOption("--fullscreen") { game.append("--fullscreen") }
         var env = ProcessInfo.processInfo.environment
         for key in ["JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "JDK_JAVA_OPTIONS", "CLASSPATH"] { env.removeValue(forKey: key) }
         env["JAVA_HOME"] = URL(fileURLWithPath: java.path).deletingLastPathComponent().deletingLastPathComponent().path

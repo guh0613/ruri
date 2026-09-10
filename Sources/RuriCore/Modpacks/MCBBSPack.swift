@@ -121,6 +121,7 @@ extension InstanceTransfer {
         var gameArguments = try ArgumentTokenizer.split(instance.extraGameArguments ?? "")
         if !gameArguments.contains("--width") { gameArguments += ["--width", String(instance.width)] }
         if !gameArguments.contains("--height") { gameArguments += ["--height", String(instance.height)] }
+        if instance.fullscreen == true && !gameArguments.contains(where: { $0 == "--fullscreen" || $0.hasPrefix("--fullscreen=") }) { gameArguments.append("--fullscreen") }
         let manifest = MCBBSManifest(manifestType: "minecraftModpack", manifestVersion: 2, name: instance.name, version: details.version, author: details.author, description: details.description, forceUpdate: false,
                                      addons: addons, libraries: instance.packLibraries ?? [], files: files,
                                      launchInfo: .init(minMemory: instance.memoryMB, supportJava: instance.supportedJavaMajors ?? [],

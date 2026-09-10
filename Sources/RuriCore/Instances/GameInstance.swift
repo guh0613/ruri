@@ -22,6 +22,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var importedInstallation: ImportedMinecraftInstallation?
     public var width: Int
     public var height: Int
+    public var fullscreen: Bool?
+    public var launchPresentation: LaunchPresentation?
     public var favorite: Bool
     public var iconPNG: Data?
     public var installed: Bool

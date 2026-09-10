@@ -79,12 +79,15 @@ struct PortableInstance: Codable {
     let packLibraries: [Library]?
     let width: Int
     let height: Int
+    let fullscreen: Bool?
+    let launchPresentation: LaunchPresentation?
     let iconPNG: Data?
     let installation: ImportedMinecraftInstallation?
     init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
+        fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation
         iconPNG = instance.iconPNG; self.installation = installation
         if installation != nil { formatVersion = 2 }
     }
@@ -94,6 +97,7 @@ struct PortableInstance: Codable {
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
+        result.fullscreen = fullscreen; result.launchPresentation = launchPresentation
         result.iconPNG = iconPNG; result.importedInstallation = installation
         return result
     }
@@ -304,7 +308,7 @@ public actor InstanceTransfer {
             }
             extra["mmc-pack.json"] = try encoder.encode(MultiMCPack(components: components))
             let cfg = ["InstanceType=OneSix", "name=\(Self.iniEncode(instance.name))", "OverrideMemory=true", "MaxMemAlloc=\(instance.memoryMB)",
-                       "OverrideWindow=true", "MinecraftWinWidth=\(instance.width)", "MinecraftWinHeight=\(instance.height)",
+                       "OverrideWindow=true", "LaunchMaximized=\(instance.fullscreen == true)", "MinecraftWinWidth=\(instance.width)", "MinecraftWinHeight=\(instance.height)",
                        "OverrideJavaArgs=\(!instance.extraJVMArguments.isEmpty)", "JvmArgs=\(Self.iniEncode(instance.extraJVMArguments))"].joined(separator: "\n") + "\n"
             extra["instance.cfg"] = Data(cfg.utf8)
         }
@@ -366,10 +370,10 @@ public actor InstanceTransfer {
             if cfg["OverrideMemory"]?.lowercased() == "true", let value = cfg["MaxMemAlloc"].flatMap(Int.init) { instance.memoryMB = value }
             if cfg["OverrideWindow"]?.lowercased() == "true" {
                 instance.width = cfg["MinecraftWinWidth"].flatMap(Int.init) ?? instance.width; instance.height = cfg["MinecraftWinHeight"].flatMap(Int.init) ?? instance.height
+                instance.fullscreen = cfg["LaunchMaximized"]?.lowercased() == "true"
             }
             if cfg["OverrideJavaArgs"]?.lowercased() == "true" { instance.extraJVMArguments = cfg["JvmArgs"] ?? "" }
             if ["PreLaunchCommand", "PostExitCommand", "WrapperCommand"].contains(where: { !(cfg[$0] ?? "").isEmpty }) { warnings.append("原实例的启动前、退出后或包装命令不会执行。需要这些命令的整合包可能需要额外设置。") }
-            if cfg["LaunchMaximized"]?.lowercased() == "true" { warnings.append("窗口将使用所选分辨率；进入游戏后可切换全屏。") }
         }
         try validate(instance)
         let games = ["minecraft", ".minecraft"].map { root.appendingPathComponent($0) }.filter { fm.fileExists(atPath: $0.path) }

@@ -56,6 +56,7 @@ extension AppModel {
     }
     func didRecoverSession(_ record: GameSession) async {
         publishSession(record)
+        finishLaunchPresentation(record.id)
         await readMonitorLog(record, final: true)
         logCursors.removeValue(forKey: record.id)
         if activeSessions[record.instanceID]?.id == record.id { activeSessions.removeValue(forKey: record.instanceID) }
@@ -110,6 +111,8 @@ extension AppModel {
         var presentedAttention = false
         for record in snapshot where record.monitorIdentity != nil {
             let activity = GameMonitorClient.activity(record)
+            if activity == .inactive || record.state.isFinished { finishLaunchPresentation(record.id) }
+            else { applyLaunchPresentation(record) }
             if activity != .inactive {
                 if previous[record.instanceID]?.id != record.id { try? GameMonitorClient.recordEvent(.connected, paths: paths, session: record) }
                 if active[record.instanceID] == nil { active[record.instanceID] = record }
@@ -147,6 +150,23 @@ extension AppModel {
         }
         if activeSessions != active { activeSessions = active }
         restorePlaytime()
+    }
+    private func applyLaunchPresentation(_ record: GameSession) {
+        guard let presentation = launchPresentations[record.id], record.gameIdentity?.isAlive == true else { return }
+        launchPresentations.removeValue(forKey: record.id)
+        guard presentation.hideLauncher, !presentation.showLogs, !showLogs else { return }
+        if !NSApp.isHidden {
+            automaticallyHiddenSessions.insert(record.id)
+            NSApp.hide(nil)
+        } else if !automaticallyHiddenSessions.isEmpty {
+            automaticallyHiddenSessions.insert(record.id)
+        }
+    }
+    func finishLaunchPresentation(_ sessionID: UUID) {
+        launchPresentations.removeValue(forKey: sessionID)
+        guard automaticallyHiddenSessions.remove(sessionID) != nil, automaticallyHiddenSessions.isEmpty, NSApp.isHidden else { return }
+        NSApp.unhide(nil)
+        openMainWindow?()
     }
     private func readMonitorLog(_ record: GameSession, final: Bool) async {
         do {

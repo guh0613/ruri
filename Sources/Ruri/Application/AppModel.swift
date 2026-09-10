@@ -35,6 +35,8 @@ import RuriCore
     @ObservationIgnored var monitorTask: Task<Void, Never>?
     @ObservationIgnored var logCursors: [UUID: GameSessionLogCursor] = [:]
     @ObservationIgnored var handledExits: Set<UUID> = []
+    @ObservationIgnored var launchPresentations: [UUID: LaunchPresentation] = [:]
+    @ObservationIgnored var automaticallyHiddenSessions: Set<UUID> = []
     @ObservationIgnored var bootTask: Task<Void, Never>?
     var showCreate = false
     var showDirectories = false
