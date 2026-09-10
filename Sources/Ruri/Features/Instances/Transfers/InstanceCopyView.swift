@@ -26,7 +26,7 @@ struct InstanceCopyView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if let recovery {
-                        Label(recovery.committed ? "副本已登记，等待校验和清理" : "复制尚未完成，原实例及其文件保留", systemImage: "arrow.counterclockwise").font(.headline)
+                        Label(recovery.committed ? "副本已创建，等待清理" : "复制尚未完成，原实例及其文件保留", systemImage: "arrow.counterclockwise").font(.headline)
                         Text("目标：\(recovery.destination.path)").font(.caption).textSelection(.enabled)
                         Text(recovery.committed ? "核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。" : "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。").font(.callout).foregroundStyle(.secondary)
                         Button("在 Finder 中查看工作区", systemImage: "folder") { NSWorkspace.shared.open(recovery.workspace) }
@@ -39,7 +39,7 @@ struct InstanceCopyView: View {
                         Button("添加目标文件夹…", systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
                         Toggle("复制存档", isOn: $includeWorlds).disabled(model.busy)
                         Toggle("复制存档备份", isOn: $includeBackups).disabled(model.busy)
-                        Text(instance.importedInstallation == nil
+                        Text(instance.repositoryVersionID == nil && instance.importedInstallation == nil
                              ? "副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。"
                              : "副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。")
                             .font(.callout).foregroundStyle(.secondary)
@@ -86,10 +86,10 @@ struct InstanceCopyView: View {
     }
     private func addDirectory() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = "选择空文件夹保存实例，也可以在这里新建文件夹。"
+        panel.message = "选择 Minecraft 文件夹保存副本，也可以新建空文件夹。"
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
-            model.changeDirectory { try GameDirectoryStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
+            model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
             if let added = model.state.gameDirectories?.first(where: { $0.url.standardizedFileURL.path == url.standardizedFileURL.resolvingSymlinksInPath().path }) { directoryID = added.id }
         }
     }

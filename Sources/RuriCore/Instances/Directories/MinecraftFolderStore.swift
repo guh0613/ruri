@@ -104,7 +104,7 @@ public enum MinecraftFolderStore {
             if let version = state.instances[index].repositoryVersionID, !found.contains(version), state.instances[index].installed {
                 let current = paths.configured(with: state)
                 state.instances[index].repositoryIssue = FileManager.default.fileExists(atPath: current.repositoryImportWorkspace(state.instances[index].id).path)
-                    ? "整合包导入尚需完成，请处理实例库中的未完成导入。"
+                    ? "导入或复制尚需完成，请处理实例库中的工作文件。"
                     : "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
             }
         }

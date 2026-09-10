@@ -27,7 +27,7 @@ public final class InstanceLocationLease: @unchecked Sendable {
     static func requireCurrentDirectory(paths: LauncherPaths, instanceID: UUID) throws {
         if paths.repositoryImportID != instanceID, paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
            FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
-            throw RuriError.message("此实例的整合包导入尚未完成，请先在实例库处理未完成的导入。")
+            throw RuriError.message("此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
         }
         let state = try StateStore.load(paths)
         guard !(state.detachedMinecraftFolders ?? []).contains(where: { folder in folder.instances.contains(where: { $0.id == instanceID }) }) else {

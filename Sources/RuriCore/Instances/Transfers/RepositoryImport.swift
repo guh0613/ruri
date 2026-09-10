@@ -8,6 +8,7 @@ public struct RepositoryImportRecovery: Identifiable, Sendable {
     public let workspace: URL
     public let canFinish: Bool
     public let registered: Bool
+    public var copySource: InstanceCopyOwner? = nil
 }
 
 public struct RepositoryImportFailure: LocalizedError, Sendable {
@@ -27,6 +28,7 @@ struct RepositoryImportJournal: Codable, Equatable {
     var publishedMetadata: RunDirectoryCopyJournal.Identity?
     var publishedVersion: RunDirectoryCopyJournal.Identity?
     var manifestDigest: String?
+    var copySource: InstanceCopyOwner?
     var metadataIdentity: RunDirectoryCopyJournal.Identity? { publishedMetadata ?? stagedMetadata }
     var versionIdentity: RunDirectoryCopyJournal.Identity? { publishedVersion ?? stagedVersion }
 }
@@ -43,21 +45,21 @@ final class RepositoryImportTransaction {
     private let operation = GameDataOperationLock()
     private let nameLock = GameDataOperationLock()
 
-    init(instance: GameInstance, paths: LauncherPaths) throws {
+    init(instance: GameInstance, paths: LauncherPaths, copySource: InstanceCopyOwner? = nil) throws {
         self.paths = paths.including(instance)
         staging = paths.stagingRepositoryImport(instance)
         workspace = staging.repositoryImportWorkspace(instance.id)
         guard let directory = paths.directories.first(where: { $0.id == instance.directoryID }), directory.isMinecraft else {
             throw RuriError.message("请选择 Minecraft 文件夹。")
         }
-        journal = .init(instance: instance, directory: directory)
+        journal = .init(instance: instance, directory: directory, copySource: copySource)
         try Self.validateDirectory(directory, paths: paths)
         try Self.lockName(instance.repositoryVersionID ?? "", directory: directory, lock: nameLock)
         try RepositoryImportStore.requireNameAvailable(instance.repositoryVersionID ?? "", directory: directory, paths: paths)
         // Older launchers must stop before a journal they cannot recover appears.
         try StateStore.update(paths) { _ in try Self.validateDirectory(directory, paths: paths) }
         try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-        guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message("无法创建整合包导入工作目录。") }
+        guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message("无法创建实例工作目录。") }
         do {
             try operation.acquire(directory: workspace, name: ".operation.lock")
             try save()
@@ -140,7 +142,7 @@ final class RepositoryImportTransaction {
         try Self.validateDirectory(journal.directory, paths: paths)
         let instance = journal.instance
         guard !(try StateStore.load(paths)).instances.contains(where: { $0.id == instance.id }) else {
-            throw RuriError.message("此导入已经完成，请选择完成导入以清理工作记录。")
+            throw RuriError.message("此实例已经创建，请完成操作以清理工作记录。")
         }
         for (folder, source, original, published) in [
             (paths.versionDirectory(instance.id), staging.versionDirectory(instance.id), journal.stagedVersion, journal.publishedVersion),
@@ -174,7 +176,7 @@ final class RepositoryImportTransaction {
               journal.versionIdentity?.matches(paths.versionDirectory(journal.instance.id)) == true,
               journal.metadataIdentity?.matches(paths.instance(journal.instance.id)) == true,
               manifestMatches else {
-            throw RuriError.message("导入尚未完整发布，或版本清单已改变。请保留工作文件后重新导入。")
+            throw RuriError.message("实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。")
         }
         try Self.validateDirectory(journal.directory, paths: paths)
     }
@@ -211,6 +213,12 @@ final class RepositoryImportTransaction {
               record.instance.runDirectory == .isolated, record.instance.importedInstallation == nil else { throw RuriError.message("整合包导入记录无效：\(workspace.path)") }
         try MinecraftDirectoryScan.checkIdentifier(version)
         try InstanceTransfer.validate(record.instance)
+        if let owner = record.copySource {
+            guard owner.copyID == record.instance.id, owner.transactionID == record.instance.lastInstanceCopyID,
+                  owner.sourceID != owner.copyID, owner.sourceName.count <= 1024, owner.copyName == record.instance.name else {
+                throw RuriError.message("实例复制记录无效。")
+            }
+        }
         return record
     }
     static func recover(_ recovery: RepositoryImportRecovery, directory: GameDirectory, paths: LauncherPaths, finish: Bool) throws -> URL? {
@@ -250,25 +258,25 @@ public enum RepositoryImportStore {
         return try FileTree.children(in: root).filter { UUID(uuidString: $0.lastPathComponent) != nil }.map { workspace in
             let journal = try RepositoryImportTransaction.read(workspace, directory: directory)
             return .init(id: journal.instance.id, name: journal.instance.name, workspace: workspace, canFinish: journal.phase == .published,
-                         registered: state.instances.contains { $0.id == journal.instance.id })
+                         registered: state.instances.contains { $0.id == journal.instance.id }, copySource: journal.copySource)
         }
     }
     @discardableResult public static func recover(_ id: UUID, directoryID: UUID, finish: Bool, paths: LauncherPaths) throws -> URL? {
         let state = try StateStore.load(paths)
         guard let directory = state.gameDirectories?.first(where: { $0.id == directoryID }),
-              let recovery = try pending(directoryID: directoryID, paths: paths).first(where: { $0.id == id }) else { throw RuriError.message("没有找到未完成的整合包导入。") }
+              let recovery = try pending(directoryID: directoryID, paths: paths).first(where: { $0.id == id }) else { throw RuriError.message("没有找到未完成的导入或复制。") }
         return try RepositoryImportTransaction.recover(recovery, directory: directory, paths: paths, finish: finish)
     }
     static func requireNameAvailable(_ name: String, directory: GameDirectory, paths: LauncherPaths) throws {
         for pending in try pending(directoryID: directory.id, paths: paths) {
             let journal = try RepositoryImportTransaction.read(pending.workspace, directory: directory)
             guard journal.instance.repositoryVersionID?.localizedCaseInsensitiveCompare(name) != .orderedSame else {
-                throw RuriError.message("此名称仍有未完成的整合包导入，请先处理导入工作文件。")
+                throw RuriError.message("此名称仍有未完成的导入或复制，请先处理工作文件。")
             }
         }
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
-        guard try pending(directoryID: id, paths: paths).isEmpty else { throw RuriError.message("此文件夹仍有未完成的整合包导入，请先完成或取消导入。") }
+        guard try pending(directoryID: id, paths: paths).isEmpty else { throw RuriError.message("此文件夹仍有未完成的导入或复制，请先完成或取消操作。") }
     }
     static func requireDirectoryAvailable(_ directory: GameDirectory) throws {
         guard directory.isMinecraft else { return }
@@ -276,7 +284,7 @@ public enum RepositoryImportStore {
         let root = try LauncherPaths.safePath(".ruri/imports", within: directory.url)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         guard try !FileTree.children(in: root).contains(where: { UUID(uuidString: $0.lastPathComponent) != nil }) else {
-            throw RuriError.message("此文件夹仍有未完成的整合包导入，请恢复原位置并处理导入后再移动。")
+            throw RuriError.message("此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。")
         }
     }
 }

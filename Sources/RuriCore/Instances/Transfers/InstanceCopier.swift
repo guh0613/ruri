@@ -13,11 +13,12 @@ public struct InstanceCopyPreview: Identifiable, Sendable {
     public let sourceGame: URL
     public let destination: URL
     public let options: InstanceCopyOptions
-    public var fileCount: Int { entries.filter { !$0.directory }.count }
-    public var bytes: Int64 { entries.filter { !$0.directory }.reduce(0) { $0 + $1.size } }
+    public var fileCount: Int { entries.filter { !$0.directory }.count + (installation?.fileCount ?? 0) }
+    public var bytes: Int64 { entries.filter { !$0.directory }.reduce(0) { $0 + $1.size } + (installation?.bytes ?? 0) }
     let targetCollection: GameDirectory?
     let entries: [FileTree.Entry]
     let manifest: FileTreeManifest
+    var installation: MinecraftInstallationCopy? = nil
 }
 public struct InstanceCopyRecovery: Sendable {
     public let owner: InstanceCopyOwner
@@ -32,7 +33,6 @@ public actor InstanceCopier {
     public func preview(instanceID: UUID, name: String, directoryID: UUID, options: InstanceCopyOptions = .init()) async throws -> InstanceCopyPreview {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         let original = try instance(instanceID, in: state)
-        guard original.repositoryVersionID == nil, !current.isMinecraftDirectory(directoryID) else { throw RuriError.message("已有 Minecraft 目录的跨文件夹复制尚未开放。可在 Finder 中复制整个文件夹后添加。") }
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("副本名称需为 1–256 个字符。") }
         var copy = original; copy.id = UUID(); copy.name = name; copy.createdAt = Date(); copy.lastPlayed = nil; copy.playTime = 0; copy.favorite = false
@@ -40,6 +40,10 @@ public actor InstanceCopier {
         let id = UUID(); copy.lastInstanceCopyID = id
         var collection = current.directories.first(where: { $0.id == directoryID }); collection?.bookmark = nil
         guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message("找不到目标实例文件夹。") }
+        if current.isMinecraftDirectory(directoryID) {
+            return try await repositoryPreview(original: original, copy: copy, id: id, collection: collection!, paths: current, options: options)
+        }
+        guard original.repositoryVersionID == nil else { throw RuriError.message("此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。") }
         let journal = InstanceCopyJournal(id: id, original: original, copy: copy, targetCollection: collection, createdAt: Date(), phase: .copying)
         try journal.validate()
         try journal.validateTarget(paths: current)
@@ -51,6 +55,7 @@ public actor InstanceCopier {
     }
 
     public func copy(_ preview: InstanceCopyPreview, progress: @Sendable (RunDirectoryCopyProgress) -> Void = { _ in }) async throws -> RunDirectoryCopyResult {
+        if preview.installation != nil { return try await copyToRepository(preview, progress: progress) }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         try validate(preview, state: state)
         let source = try instance(preview.source.id, in: state)
@@ -138,7 +143,11 @@ public actor InstanceCopier {
 
     public func pending(instanceID: UUID) throws -> InstanceCopyRecovery? {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let owner = try InstanceCopyGuard.owner(paths: current, instanceID: instanceID) else { return nil }
+        guard let owner = try InstanceCopyGuard.owner(paths: current, instanceID: instanceID) else {
+            guard let pending = try repositoryPending(instanceID: instanceID, state: state), let owner = pending.recovery.copySource else { return nil }
+            return .init(owner: owner, destination: pending.directory.url.appendingPathComponent("versions/" + owner.copyName),
+                         workspace: pending.recovery.workspace, committed: pending.recovery.registered)
+        }
         let journal = try InstanceCopyJournal.load(paths: current, sourceID: owner.sourceID)
         let workspace = try journal.workspace(paths: current)
         return .init(owner: journal.owner, destination: try journal.destination(paths: current),
@@ -147,6 +156,11 @@ public actor InstanceCopier {
     }
     public func recover(sourceID: UUID, transactionID: UUID) throws -> RunDirectoryCopyResult {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
+        if let pending = try repositoryPending(instanceID: sourceID, state: state), pending.recovery.copySource?.transactionID == transactionID {
+            let kept = try RepositoryImportStore.recover(pending.recovery.id, directoryID: pending.directory.id,
+                                                        finish: pending.recovery.registered, paths: paths)
+            return .init(state: try StateStore.load(paths), preservedCopy: kept, warning: kept.map { _ in "复制尚未完成，工作文件已保留，可以重新复制。" })
+        }
         let journal = try InstanceCopyJournal.load(paths: current, sourceID: sourceID)
         guard journal.id == transactionID else { throw RuriError.message("待恢复的实例复制已改变，请刷新后重试。") }
         var source = try instance(sourceID, in: state); source.runDirectory = .isolated
@@ -180,7 +194,7 @@ public actor InstanceCopier {
               try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(paths.instance(preview.source.id))) == preview.manifest,
               try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message("源文件内容在预览后改变，请重新预览再复制。") }
     }
-    private func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
+    func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
         let access = try InstanceCopyAccess(instance: instance, paths: paths)
         try await ContentManager(paths: paths, instanceID: instance.id).recover()
         try await WorldManager(paths: paths, instanceID: instance.id).recover()
@@ -282,7 +296,7 @@ public actor InstanceCopier {
     }
 }
 
-private final class InstanceCopyAccess {
+final class InstanceCopyAccess {
     let instance: GameInstance
     let paths: LauncherPaths
     let lease: GameRunLease

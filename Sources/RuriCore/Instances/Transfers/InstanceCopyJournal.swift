@@ -1,7 +1,7 @@
 import Foundation
 import Darwin
 
-public struct InstanceCopyOwner: Codable, Sendable {
+public struct InstanceCopyOwner: Codable, Equatable, Sendable {
     public let transactionID: UUID
     public let sourceID: UUID
     public let copyID: UUID
