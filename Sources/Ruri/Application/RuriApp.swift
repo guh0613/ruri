@@ -16,6 +16,7 @@ import RuriCore
                 Divider()
                 Button("新建游戏实例") { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
                 Button("导入实例或整合包…") { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
+                Button("查看已有 Minecraft 目录…") { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
             }
             CommandGroup(replacing: .appSettings) {
                 Button("设置…") { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
@@ -55,7 +56,7 @@ private struct MainWindowContent: View {
             }
             .task(id: model.pendingOpenURLs.first) {
                 guard model.pendingOpenURLs.first != nil else { return }
-                while model.busy || model.showLogs || model.showCreate || model.showAccount || model.importingInstance != nil || model.exportingInstance != nil {
+                while model.busy || model.showLogs || model.showCreate || model.showAccount || model.importingInstance != nil || model.minecraftDirectory != nil || model.exportingInstance != nil {
                     do { try await Task.sleep(for: .milliseconds(200)) } catch { return }
                 }
                 guard !Task.isCancelled, let url = model.pendingOpenURLs.first else { return }

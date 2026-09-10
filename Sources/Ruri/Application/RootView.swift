@@ -78,6 +78,7 @@ struct RootView: View {
         .sheet(item: $model.contentInstance) { instance in InstanceContentView(instance: instance) }
         .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
         .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
+        .sheet(item: $model.minecraftDirectory) { catalog in MinecraftDirectoryView(catalog: catalog) }
         .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
         .sheet(item: $model.copyingInstance) { instance in InstanceCopyView(instance: instance) }
         .sheet(item: $model.movingInstance) { instance in InstanceMoveView(instance: instance) }

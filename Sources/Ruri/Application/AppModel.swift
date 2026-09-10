@@ -50,6 +50,7 @@ import RuriCore
     var worldInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
+    var minecraftDirectory: MinecraftDirectoryCatalog?
     var exportingInstance: GameInstance?
     var copyingInstance: GameInstance?
     var movingInstance: GameInstance?

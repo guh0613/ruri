@@ -13,7 +13,10 @@ struct LibraryView: View {
                 HStack {
                     SectionHeading(title: model.selectedDirectoryName, subtitle: "\(model.directoryInstances.count) 个实例 · 在实例设置中查看运行目录。")
                     Spacer()
-                    Button("导入…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }.disabled(model.busy)
+                    Menu {
+                        Button("导入实例或整合包…") { model.chooseInstanceImport() }
+                        Button("查看已有 Minecraft 目录…") { model.chooseMinecraftDirectory() }
+                    } label: { Label("导入", systemImage: "square.and.arrow.down") }.disabled(model.busy)
                     Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
                 }
                 TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
