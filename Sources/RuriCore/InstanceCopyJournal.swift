@@ -27,18 +27,26 @@ struct InstanceCopyJournal: Codable, Sendable {
     static func load(paths: LauncherPaths, sourceID: UUID, at directory: URL? = nil) throws -> Self {
         let parent = try directory ?? root(paths: paths, sourceID: sourceID)
         let record: Self = try RunDirectoryCopyGuard.decode(parent.appendingPathComponent("transaction.json"), limit: 8_388_608)
-        guard record.version == 1, record.original.id == sourceID, record.copy.id != sourceID,
-              record.copy.runDirectory == .isolated, record.copy.customRunDirectory == nil,
-              record.copy.lastInstanceCopyID == record.id, record.copy.frozenMemory == nil,
-              record.copy.directoryID == (record.targetCollection?.id ?? GameDirectory.defaultID),
-              !record.copy.name.isEmpty, record.copy.name.count <= 256, record.original.name.count <= 1024 else { throw RuriError.message("实例复制记录无效，工作副本已保留。") }
-        if let collection = record.targetCollection {
+        guard record.original.id == sourceID else { throw RuriError.message("实例复制记录不属于所选实例。") }
+        try record.validate(); return record
+    }
+    func validate() throws {
+        guard version == 1, copy.id != original.id, copy.runDirectory == .isolated, copy.customRunDirectory == nil,
+              copy.lastInstanceCopyID == id, copy.frozenMemory == nil,
+              copy.directoryID == (targetCollection?.id ?? GameDirectory.defaultID),
+              !copy.name.isEmpty, copy.name.count <= 256, !original.name.isEmpty, original.name.count <= 1024 else { throw RuriError.message("实例复制信息无效，请检查源实例和副本设置。") }
+        _ = try ownerData()
+        if let collection = targetCollection {
             guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), (collection.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("复制目标的文件夹记录无效。") }
         }
-        for identity in [record.stagedIdentity, record.publishedIdentity].compactMap({ $0 }) {
+        for identity in [stagedIdentity, publishedIdentity].compactMap({ $0 }) {
             guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message("实例副本的文件身份记录无效。") }
         }
-        return record
+    }
+    func ownerData() throws -> Data {
+        let data = try JSONEncoder().encode(owner)
+        guard data.count <= 8192 else { throw RuriError.message("源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。") }
+        return data
     }
     func validateTarget(paths: LauncherPaths) throws {
         if let targetCollection {
@@ -56,6 +64,7 @@ struct InstanceCopyJournal: Codable, Sendable {
         try LauncherPaths.safePath("instances/\(copy.id.uuidString)", within: targetCollection?.url ?? paths.root)
     }
     func save(paths: LauncherPaths, at directory: URL? = nil) throws {
+        try validate()
         let parent = try directory ?? Self.root(paths: paths, sourceID: original.id)
         let data = try JSONEncoder().encode(self)
         guard data.count <= 8_388_608 else { throw RuriError.message("实例复制记录超过大小限制。") }
@@ -83,7 +92,7 @@ public enum InstanceCopyGuard {
         guard owner.transactionID == id else { throw RuriError.message("“\(owner.sourceName)”有未完成的实例复制，请先在实例菜单中恢复复制。") }
     }
     static func mark(_ journal: InstanceCopyJournal, at directory: URL) throws {
-        try JSONEncoder().encode(journal.owner).write(to: directory.appendingPathComponent(markerName), options: .withoutOverwriting)
+        try journal.ownerData().write(to: directory.appendingPathComponent(markerName), options: .withoutOverwriting)
     }
     static func clear(_ journal: InstanceCopyJournal, at directory: URL) throws {
         let file = try LauncherPaths.safePath(markerName, within: directory)

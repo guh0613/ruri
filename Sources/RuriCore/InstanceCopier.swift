@@ -39,6 +39,7 @@ public actor InstanceCopier {
         var collection = current.directories.first(where: { $0.id == directoryID }); collection?.bookmark = nil
         guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message("找不到目标实例文件夹。") }
         let journal = InstanceCopyJournal(id: id, original: original, copy: copy, targetCollection: collection, createdAt: Date(), phase: .copying)
+        try journal.validate()
         try journal.validateTarget(paths: current)
         let access = try await acquire(original, paths: current); defer { withExtendedLifetime(access) {} }
         let snapshot = try entries(original, paths: current, options: options)

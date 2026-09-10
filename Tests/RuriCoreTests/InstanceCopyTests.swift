@@ -181,4 +181,16 @@ struct InstanceCopyTests {
         #expect(try String(contentsOf: incoming.appendingPathComponent("file.txt"), encoding: .utf8) == "complete data")
         #expect(!FileManager.default.fileExists(atPath: preview.destination.path))
     }
+
+    @Test func oversizedUnicodeNamesCannotCreateAnUnreadableCopyReservation() async throws {
+        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        // Grapheme count alone does not bound the encoded marker size.
+        let name = "e" + String(repeating: "\u{0301}", count: 5000)
+        #expect(name.count == 1)
+        try StateStore.update(paths) { $0.instances[0].name = name }
+        await #expect(throws: (any Error).self) { try await InstanceCopier(paths: paths).preview(instanceID: source.id, name: "Copy", directoryID: target.id) }
+        #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
+        #expect(try StateStore.load(paths).instances.count == 1)
+        #expect(try String(contentsOf: paths.game(source.id).appendingPathComponent("options.txt"), encoding: .utf8) == "options")
+    }
 }
