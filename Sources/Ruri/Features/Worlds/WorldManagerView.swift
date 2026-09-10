@@ -17,6 +17,8 @@ struct WorldManagerView: View {
     @State private var restoreTarget: WorldBackup?
     @State private var deletingWorld: WorldSnapshot?
     @State private var deletingBackup: WorldBackup?
+    @State private var launchingWorld: WorldSnapshot?
+    @State private var quickPlaySupported = false
     private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
@@ -29,6 +31,7 @@ struct WorldManagerView: View {
                 Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help("打开存档文件夹")
             }
             if model.isInstanceInUse(instance.id) { Label("请先结束游戏，再修改或备份存档。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if !loading && !quickPlaySupported { Text("此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。").font(.caption).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let status { Text(status).font(.callout).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -53,6 +56,9 @@ struct WorldManagerView: View {
             }
         }.padding(24).frame(width: 820, height: 650)
         .task { await reload() }
+        .onDisappear {
+            if let world = launchingWorld { launchingWorld = nil; model.launch(instance, world: world) }
+        }
         .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip]) { result in
             do {
                 let url = try result.get()
@@ -87,6 +93,9 @@ struct WorldManagerView: View {
                 if let error = world.metadataError { Text(error).font(.caption).foregroundStyle(.orange) }
             }
             Spacer()
+            Button("进入存档", systemImage: "play.fill") { launchingWorld = world; dismiss() }
+                .disabled(!canModify || !quickPlaySupported || world.metadataError != nil)
+                .help(quickPlaySupported ? "启动并进入这个单人世界" : "此版本不支持直接进入存档")
             Button("备份", systemImage: "clock.arrow.circlepath") {
                 mutate("备份 \(world.name)") { id in
                     _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = "\(world.name) 已备份"
@@ -118,7 +127,12 @@ struct WorldManagerView: View {
     }
     private func reload() async {
         loading = true
-        do { worlds = try await manager.worlds(); backups = try await manager.backups() }
+        do {
+            worlds = try await manager.worlds(); backups = try await manager.backups()
+            let current = model.state.instances.first { $0.id == instance.id } ?? instance
+            if let manifest = try? await model.installer.loadManifest(current) { quickPlaySupported = WorldQuickPlay.supports(instance: current, manifest: manifest) }
+            else { quickPlaySupported = false }
+        }
         catch { self.error = error.localizedDescription }
         loading = false
     }

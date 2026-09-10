@@ -2,7 +2,7 @@ import Foundation
 import RuriCore
 
 extension AppModel {
-    func launch(_ requested: GameInstance) {
+    func launch(_ requested: GameInstance, world: WorldSnapshot? = nil) {
         guard !busy, !readOnly else { return }
         // Refresh/merge before taking a launch snapshot: another client may
         // have just committed a directory change while this window was idle.
@@ -51,6 +51,7 @@ extension AppModel {
                     }
                     try advanceSession(.manifest)
                     let manifest = try await installer.loadManifest(instance)
+                    if world != nil { try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest) }
                     let architecture = GameInstaller.architecture(for: manifest)
                     let requiredJava = try instance.preferredJavaMajor(default: manifest.requiredJava)
                     try advanceSession(.java)
@@ -74,7 +75,8 @@ extension AppModel {
                     try recorder.setJava(java.label + " · " + java.version)
                     try advanceSession(.arguments)
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
-                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world)
+                    if let world { appendLog("[Ruri] 进入存档：" + world.name) }
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
                     try advanceSession(.starting)

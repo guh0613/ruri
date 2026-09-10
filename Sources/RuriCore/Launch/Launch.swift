@@ -38,10 +38,11 @@ public enum ArgumentTokenizer {
 }
 
 public enum LaunchBuilder {
-    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths) throws -> LaunchPlan {
+    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil) throws -> LaunchPlan {
         guard paths.repositoryImportID == nil else { throw RuriError.message("整合包尚未完成导入，请先完成导入后再启动。") }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
+        if let world { try WorldQuickPlay.validate(world, instance: instance, manifest: manifest, paths: paths) }
         guard let mainClass = manifest.mainClass else { throw RuriError.message("启动清单没有主类") }
         guard manifest.inheritsFrom == nil else { throw RuriError.message("启动清单尚未合并父版本") }
         guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message("内存或窗口大小设置无效") }
@@ -84,7 +85,9 @@ public enum LaunchBuilder {
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
             "library_directory": libraries.path, "version_directory": jar.deletingLastPathComponent().path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
             "resolution_width": String(instance.width), "resolution_height": String(instance.height),
-            "game_assets": resources.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path
+            "game_assets": resources.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path,
+            "quickPlaySingleplayer": world?.folder ?? "", "quickPlayMultiplayer": "", "quickPlayRealms": "",
+            "quickPlayPath": paths.instance(instance.id).appendingPathComponent("quick-play.json").path
         ]
         func expand(_ input: String) throws -> String {
             var result = input
@@ -92,7 +95,8 @@ public enum LaunchBuilder {
             guard result.range(of: #"\$\{[^}]+\}"#, options: .regularExpression) == nil else { throw RuriError.message("启动清单包含未支持的变量：\(input)") }
             return result
         }
-        let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": false]
+        let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": world != nil,
+                        "is_quick_play_singleplayer": world != nil, "is_quick_play_multiplayer": false, "is_quick_play_realms": false]
         var jvm = try (manifest.arguments?.jvm ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand)
         if mainClass == "cpw.mods.bootstraplauncher.BootstrapLauncher" {
             jvm = jvm.map { value in
@@ -124,6 +128,7 @@ public enum LaunchBuilder {
         let reserved: Set<String> = ["--gameDir", "--assetsDir", "--assetIndex", "--username", "--uuid", "--accessToken", "--session", "--clientId", "--xuid", "--userType", "--userProperties"]
         guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message("附加游戏参数不能覆盖账号身份、令牌或游戏目录。") }
         game += extraGame
+        if let world { game = WorldQuickPlay.applying(world, to: game, instance: instance, paths: paths) }
         func hasOption(_ name: String) -> Bool { game.contains { $0 == name || $0.hasPrefix(name + "=") } }
         if !hasOption("--width") { game += ["--width", String(instance.width)] }
         if !hasOption("--height") { game += ["--height", String(instance.height)] }

@@ -189,8 +189,13 @@ import RuriCore
                 for file in try await ContentManager(paths: paths, instanceID: id).scan(.mod) { print("\(file.enabled ? "[on]" : "[off]") \(file.title) \(file.version ?? "") — \(file.filename)") }
             case "launch":
                 let state = try StateStore.load(paths)
-                let launchArgs = args.dropFirst().filter { $0 != "--detach" }
-                guard launchArgs.count <= 1 else { throw RuriError.message("用法：ruri-cli launch [instance-uuid] [--detach]") }
+                var launchArgs = args.dropFirst().filter { $0 != "--detach" }
+                var worldFolder: String?
+                if let index = launchArgs.firstIndex(of: "--world") {
+                    guard index + 1 < launchArgs.count else { throw RuriError.message("--world 后需要存档文件夹名。") }
+                    worldFolder = launchArgs[index + 1]; launchArgs.removeSubrange(index...index + 1)
+                }
+                guard launchArgs.count <= 1 else { throw RuriError.message("用法：ruri-cli launch [instance-uuid] [--world 存档文件夹名] [--detach]") }
                 let requestedID = launchArgs.first.flatMap(UUID.init(uuidString:)) ?? (launchArgs.isEmpty ? state.selectedInstanceID : nil)
                 if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message("无效的实例 UUID") }
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
@@ -205,12 +210,16 @@ import RuriCore
                     try await WorldManager(paths: paths, instanceID: instance.id).recover()
                     try recorder.transition(.manifest)
                     let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
+                    let world = try worldFolder.map { folder in
+                        try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
+                        return try WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths)
+                    }
                     try recorder.transition(.java)
                     let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 }), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
                     try recorder.setJava(java.label + " · " + java.version)
                     try recorder.transition(.arguments)
                     try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)
-                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, world: world)
                     try recorder.append("[Ruri] \(plan.redactedCommand)")
                     try recorder.transition(.starting)
                     try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])
@@ -312,7 +321,7 @@ import RuriCore
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
-                  launch [instance-uuid] [--detach] (offline account)
+                  launch [instance-uuid] [--world folder] [--detach] (offline account)
                   quit <instance-uuid> (normal application quit)
                   stop <instance-uuid> (SIGTERM)
 
