@@ -70,6 +70,7 @@ public actor GameInstaller {
         for library in libraries {
             _ = try Library.mavenPath(library.name)
             for artifact in [try library.artifact()].compactMap({ $0 }) + Array(library.downloads?.classifiers?.values ?? [:].values) {
+                guard artifact.repositoryPath == nil else { throw RuriError.message("整合包依赖不能指定已有游戏文件的位置。") }
                 if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message("整合包依赖库的下载地址无效") } }
             }
         }
@@ -147,7 +148,7 @@ public actor GameInstaller {
         }
         let client = manifest.downloads?["client"] ?? Artifact(url: nil)
         let jarID = manifest.jar ?? instance.gameVersion
-        let clientFile = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)
+        let clientFile = try paths.clientJar(jarID, instance: instance)
         var files = [DownloadItem(client, to: clientFile)]
         for artifact in manifest.generatedLibraries ?? [] {
             guard let path = artifact.path else { throw RuriError.message("生成依赖缺少路径") }
@@ -170,9 +171,11 @@ public actor GameInstaller {
             files.append(DownloadItem(url: logging.file.url, destination: target, sha1: logging.file.sha1, size: logging.file.size))
         }
         await progress(InstallProgress("正在下载游戏与依赖库", total: files.count))
+        try protectRepositoryResources(files)
         try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏与依赖库", completed: done, total: total)) }
         if let index = manifest.assetIndex {
             let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
+            try protectRepositoryResources([DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size)])
             try await downloader.fetch(DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size))
             let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: indexFile))
             let objects = try assets.objects.values.map { object -> DownloadItem in
@@ -180,6 +183,7 @@ public actor GameInstaller {
                 let subpath = "\(object.hash.prefix(2))/\(object.hash)"
                 return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: resources.assets), sha1: object.hash, size: object.size)
             }
+            try protectRepositoryResources(objects)
             try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏资源", completed: done, total: total)) }
             try mapLegacyAssets(assets, indexID: index.id, instance: instance)
         }
@@ -188,5 +192,15 @@ public actor GameInstaller {
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         try FileManager.default.createDirectory(at: natives, withIntermediateDirectories: true)
         for (file, excluded) in nativeFiles { try SafeArchive.extract(file, to: natives, excluding: excluded) }
+    }
+
+    private func protectRepositoryResources(_ items: [DownloadItem]) throws {
+        guard let id = paths.repositoryImportID else { return }
+        let workspace = paths.repositoryImportWorkspace(id).standardizedFileURL.resolvingSymlinksInPath().path + "/"
+        for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) {
+            if FileManager.default.fileExists(atPath: item.destination.path), !DownloadManager.valid(item.destination, item: item) {
+                throw RuriError.message("已有游戏文件与整合包所需文件不同，未覆盖：\(item.destination.path)\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。")
+            }
+        }
     }
 }

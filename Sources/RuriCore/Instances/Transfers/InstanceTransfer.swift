@@ -153,10 +153,27 @@ public actor InstanceTransfer {
 
     public func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [], installer: GameInstaller, concurrency: Int = 8,
                         progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
+        try validateDestination(prepared, name: name)
         try await completeFiles(prepared, downloader: installer.downloader, concurrency: concurrency, progress: progress)
-        return try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: content) { instance in
-            try await installer.install(instance, concurrency: concurrency, progress: progress)
-        }
+        return try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: content, installing: { instance, location in
+            try await GameInstaller(paths: location, downloader: installer.downloader).install(instance, concurrency: concurrency, progress: progress)
+        })
+    }
+
+    public func validateDestination(_ prepared: PreparedInstanceImport, name: String) throws {
+        _ = try destinationInstance(prepared, name: name, importJVMArguments: false)
+    }
+
+    private func destinationInstance(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool) throws -> GameInstance {
+        var instance = prepared.instance
+        instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        instance.directoryID = paths.newInstanceDirectoryID; instance.runDirectory = .isolated
+        if instance.name.isEmpty { instance.name = prepared.instance.name }
+        instance.javaPath = nil; instance.installed = false
+        if !importJVMArguments { instance.extraJVMArguments = "" }
+        instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths)
+        try Self.validate(instance)
+        return instance
     }
     public func completeFiles(_ prepared: PreparedInstanceImport, downloader: DownloadManager, concurrency: Int = 8,
                               progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
@@ -185,37 +202,46 @@ public actor InstanceTransfer {
     // The closure makes filesystem rollback testable without contacting game services.
     func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [],
                  installGame: @Sendable (GameInstance) async throws -> GameInstance) async throws -> GameInstance {
-        guard !paths.isMinecraftDirectory(paths.newInstanceDirectoryID) else { throw RuriError.message("整合包导入到 Minecraft 目录尚未开放，请先选择默认实例文件夹。") }
-        var instance = prepared.instance
-        instance.id = UUID(); instance.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        instance.directoryID = paths.directoryID(for: instance.id)
-        instance.runDirectory = .isolated
-        if instance.name.isEmpty { instance.name = prepared.instance.name }
-        instance.javaPath = nil; instance.installed = false
-        if !importJVMArguments { instance.extraJVMArguments = "" }
-        try Self.validate(instance)
+        try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: content, installing: { instance, _ in try await installGame(instance) })
+    }
+
+    func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [],
+                 installing: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance) async throws -> GameInstance {
+        var instance = try destinationInstance(prepared, name: name, importJVMArguments: importJVMArguments)
         for file in prepared.selectedPackFiles {
             let item = try file.item(in: prepared.game)
             guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包文件缺失或已修改：\(file.path)") }
         }
         try Self.validatePackContent(content, references: prepared.curseForgeFiles)
-        try paths.prepareInstance(instance.id)
+        let transaction = try instance.repositoryVersionID == nil ? nil : RepositoryImportTransaction(instance: instance, paths: paths)
+        let location = transaction?.staging ?? paths.including(instance)
         do {
+            try location.prepareInstance(instance.id)
             // User files are copied first; official installer then supplies any
             // generated legacy resources without a destructive directory merge.
-            try FileTree.copy(from: prepared.game, to: paths.game(instance.id), excluding: prepared.omittedOptionalPaths)
+            try FileTree.copy(from: prepared.game, to: location.game(instance.id), excluding: prepared.omittedOptionalPaths)
             if let records = prepared.records {
-                try records.write(to: paths.gameDataState(instance.id).appendingPathComponent("content.json"), options: .atomic)
-                _ = try await ContentManager(paths: paths, instanceID: instance.id).records()
+                try records.write(to: location.gameDataState(instance.id).appendingPathComponent("content.json"), options: .atomic)
+                _ = try await ContentManager(paths: location, instanceID: instance.id).records()
             }
-            if let source = prepared.sourceMetadata { try source.write(to: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta"), options: .atomic) }
-            try Self.copyPackContent(content, to: paths, instanceID: instance.id)
-            let pack = try ModpackRegistry.capture(prepared, instance: instance, paths: paths, content: content)
-            instance = try await installGame(instance)
-            if let pack { try ModpackRegistry.save(pack, paths: paths, instanceID: instance.id) }
+            if let source = prepared.sourceMetadata { try source.write(to: location.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta"), options: .atomic) }
+            try Self.copyPackContent(content, to: location, instanceID: instance.id)
+            let pack = try ModpackRegistry.capture(prepared, instance: instance, paths: location, content: content)
+            instance = try await installing(instance, location)
+            if let pack { try ModpackRegistry.save(pack, paths: location, instanceID: instance.id) }
             try Task.checkCancellation()
-            return instance
-        } catch { try? FileManager.default.removeItem(at: paths.instance(instance.id)); throw error }
+            return try transaction?.publish(instance) ?? instance
+        } catch {
+            if let transaction {
+                let reason = Task.isCancelled || error is CancellationError ? "操作已取消。" : error.localizedDescription
+                do {
+                    let kept = try transaction.preserve()
+                    throw RepositoryImportFailure(message: "整合包导入未完成，工作文件已保留，可重新导入。\n\(reason)", preservedFiles: kept)
+                } catch let failure as RepositoryImportFailure { throw failure }
+                catch { throw RepositoryImportFailure(message: "整合包导入需要恢复，请在实例库处理未完成的导入。\n\(reason)\n\(error.localizedDescription)", preservedFiles: transaction.workspace) }
+            }
+            try? FileManager.default.removeItem(at: location.instance(instance.id)); throw error
+        }
     }
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),

@@ -32,6 +32,9 @@ struct LibraryView: View {
                         HStack { Button("重新检查") { Task { await model.refreshDirectoryAvailability() } }; Button("管理文件夹…") { model.showDirectories = true } }
                     }.padding().frame(maxWidth: .infinity, alignment: .leading).background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
                 }
+                if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
+                    RepositoryImportRecoveryView(directoryID: model.selectedDirectoryID)
+                }
                 if filtered.isEmpty {
                     EmptyPanel(symbol: "square.stack.3d.up", title: model.directoryInstances.isEmpty ? "这个文件夹还没有实例" : "没有匹配的实例", detail: "创建一个游戏实例，或导入你喜爱的整合包。")
                 }

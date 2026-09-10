@@ -46,6 +46,8 @@ extension LauncherPaths {
         directoriesByInstance[instance.id] = instance.directoryID ?? directoryID(for: instance.id)
         modes[instance.id] = instance.runDirectory ?? .isolated
         custom[instance.id] = instance.runDirectory == .custom ? instance.customRunDirectory : nil
-        return LauncherPaths(root: root, directories: directories, instanceDirectories: directoriesByInstance, newInstanceDirectoryID: newInstanceDirectoryID, instanceRunDirectories: modes, instanceCustomDirectories: custom, instanceRepositoryVersions: versions)
+        var result = LauncherPaths(root: root, directories: directories, instanceDirectories: directoriesByInstance, newInstanceDirectoryID: newInstanceDirectoryID, instanceRunDirectories: modes, instanceCustomDirectories: custom, instanceRepositoryVersions: versions)
+        result.repositoryImportID = repositoryImportID
+        return result
     }
 }

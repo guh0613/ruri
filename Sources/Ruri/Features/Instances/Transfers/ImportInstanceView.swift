@@ -23,6 +23,7 @@ struct ImportInstanceView: View {
         VStack(alignment: .leading, spacing: 20) {
             Label("导入游戏实例", systemImage: "square.and.arrow.down").font(.title2.bold())
             Label("保存到：\(model.selectedDirectoryName)", systemImage: "folder").font(.callout).foregroundStyle(.secondary)
+            Text("整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。").font(.caption).foregroundStyle(.secondary)
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("已识别 \(prepared.format) 实例。游戏依赖将按这台 Mac 的系统与架构安装。").foregroundStyle(.secondary)

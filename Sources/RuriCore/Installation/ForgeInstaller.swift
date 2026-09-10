@@ -76,7 +76,7 @@ public actor ForgeInstaller {
         let work = try LauncherPaths.safePath("loader-work/\(instance.id.uuidString)/\(instance.loader.rawValue)-\(version)", within: paths.cache)
         try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)
         let jarID = instance.repositoryVersionID ?? instance.gameVersion
-        let sourceJar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)
+        let sourceJar = try paths.clientJar(jarID, instance: instance)
         guard let client = base.downloads?["client"] else { throw RuriError.message("缺少原版客户端信息") }
         try await downloader.fetch(DownloadItem(client, to: sourceJar))
         let vanilla = try LauncherPaths.safePath("versions/\(instance.gameVersion)", within: work)
@@ -178,6 +178,14 @@ public actor ForgeInstaller {
         return child
     }
     private func copyAtomically(_ source: URL, to target: URL) throws {
+        if let id = paths.repositoryImportID,
+           target.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(paths.directoryRoot(paths.directoryID(for: id)).standardizedFileURL.resolvingSymlinksInPath().appendingPathComponent("libraries").path + "/"),
+           FileManager.default.fileExists(atPath: target.path) {
+            guard try InstanceTransfer.sha1(source) == InstanceTransfer.sha1(target) else {
+                throw RuriError.message("已有加载器依赖与整合包所需文件不同，未覆盖：\(target.path)\n请先检查此文件，或选择另一个 Minecraft 文件夹。")
+            }
+            return
+        }
         try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
         let staging = target.deletingLastPathComponent().appendingPathComponent(".\(UUID().uuidString).part")
         defer { try? FileManager.default.removeItem(at: staging) }

@@ -25,6 +25,10 @@ public final class InstanceLocationLease: @unchecked Sendable {
     func excludeOtherOperations() throws { try Self.lock(descriptor, exclusive: true) }
 
     static func requireCurrentDirectory(paths: LauncherPaths, instanceID: UUID) throws {
+        if paths.repositoryImportID != instanceID, paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
+           FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
+            throw RuriError.message("此实例的整合包导入尚未完成，请先在实例库处理未完成的导入。")
+        }
         let state = try StateStore.load(paths)
         guard !(state.detachedMinecraftFolders ?? []).contains(where: { folder in folder.instances.contains(where: { $0.id == instanceID }) }) else {
             throw RuriError.message("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")

@@ -10,6 +10,7 @@ public actor MinecraftDirectoryReader {
     nonisolated func scanNow(_ selection: URL, allowEmpty: Bool = false) throws -> MinecraftDirectoryCatalog {
         let (root, selected) = try Self.repository(for: selection, allowEmpty: allowEmpty)
         let identity = try RunDirectoryCopyJournal.Identity.read(root)
+        let importing = try RepositoryImportStore.reservedVersionNames(in: root)
         let versions = root.appendingPathComponent("versions")
         let children = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
         guard children.count <= 2_000 else { throw RuriError.message("此目录的版本数量超过读取限制。") }
@@ -17,6 +18,10 @@ public actor MinecraftDirectoryReader {
         var result: [MinecraftDirectoryVersion] = []
         for directory in children {
             try Task.checkCancellation()
+            // A repository import publishes files before registering its UUID.
+            // Its journal, rather than discovery, owns the incomplete profile.
+            if importing.contains(directory.lastPathComponent.precomposedStringWithCanonicalMapping.lowercased()) ||
+                FileManager.default.fileExists(atPath: directory.appendingPathComponent(RepositoryImportTransaction.markerName).path) { continue }
             let info = try directory.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard info.isDirectory == true || info.isSymbolicLink == true else { continue }
             let id = directory.lastPathComponent
@@ -35,7 +40,8 @@ public actor MinecraftDirectoryReader {
             reader.documents = []
         }
         let currentChildren = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
-        guard identity.matches(root), currentChildren.map(\.lastPathComponent) == children.map(\.lastPathComponent) else {
+        guard identity.matches(root), currentChildren.map(\.lastPathComponent) == children.map(\.lastPathComponent),
+              try RepositoryImportStore.reservedVersionNames(in: root) == importing else {
             throw RuriError.message("读取期间游戏目录发生变化，请重新扫描。")
         }
         guard allowEmpty || !result.isEmpty else { throw RuriError.message("此目录的 versions 文件夹里没有找到版本。") }

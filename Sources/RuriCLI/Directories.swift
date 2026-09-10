@@ -24,6 +24,18 @@ extension CLI {
         case "refresh":
             guard args.count == 1 else { throw usage }
             _ = try MinecraftFolderStore.refresh(state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths)
+        case "imports":
+            guard args.count == 1 else { throw usage }
+            for item in try RepositoryImportStore.pending(directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths) {
+                print("\(item.id) \(item.name) · \(item.canFinish ? "可完成导入" : "未完成安装")\n  \(item.workspace.path)")
+            }
+            return
+        case "recover-import":
+            guard args.count == 3, let id = UUID(uuidString: args[1]), ["--finish", "--keep-files"].contains(args[2]) else { throw usage }
+            if let kept = try RepositoryImportStore.recover(id, directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, finish: args[2] == "--finish", paths: paths) {
+                print("导入已取消，工作文件保留在：\(kept.path)")
+            } else { print("导入已完成") }
+            return
         case "restore":
             guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]),
                   let folder = state.detachedMinecraftFolders?.first(where: { $0.id == id }) else { throw usage }
@@ -42,5 +54,5 @@ extension CLI {
         }
         print("Updated directory settings")
     }
-    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder]]") }
+    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder] | imports | recover-import <uuid> <--finish|--keep-files>]") }
 }

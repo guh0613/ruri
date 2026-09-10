@@ -151,7 +151,9 @@ import RuriCore
                 for warning in prepared.warnings { print(warning) }
                 do {
                     let imported = try await transfer.install(prepared, name: args.count > 2 ? args[2] : prepared.instance.name, importJVMArguments: prepared.format == "MCBBS", installer: GameInstaller(paths: paths)) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                    try StateStore.update(paths) { state in state.instances.append(imported); state.selectedInstanceID = imported.id }
+                    if imported.repositoryVersionID == nil {
+                        try StateStore.update(paths) { state in state.instances.append(imported); state.selectedInstanceID = imported.id }
+                    }
                     await transfer.discard(prepared)
                     print("Imported \(imported.id)")
                 } catch { await transfer.discard(prepared); throw error }

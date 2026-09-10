@@ -157,6 +157,10 @@ extension LauncherPaths {
             try MinecraftDirectoryScan.checkIdentifier(version)
             _ = try Self.safePath("versions/\(version)/\(version).json", within: root)
             _ = try Self.safePath(".ruri/instances/\(instanceID.uuidString)", within: root)
+            if repositoryImportID == instanceID {
+                _ = try Self.safePath(".ruri/imports/\(instanceID.uuidString)/version/\(version).json", within: root)
+                _ = try Self.safePath(".ruri/imports/\(instanceID.uuidString)/metadata", within: root)
+            }
         } else {
             _ = try Self.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)
             if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }

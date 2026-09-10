@@ -102,7 +102,10 @@ public enum MinecraftFolderStore {
         let found = Set(catalog.versions.map(\.id))
         for index in state.instances.indices where state.instances[index].directoryID == directory.id {
             if let version = state.instances[index].repositoryVersionID, !found.contains(version), state.instances[index].installed {
-                state.instances[index].repositoryIssue = "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
+                let current = paths.configured(with: state)
+                state.instances[index].repositoryIssue = FileManager.default.fileExists(atPath: current.repositoryImportWorkspace(state.instances[index].id).path)
+                    ? "整合包导入尚需完成，请处理实例库中的未完成导入。"
+                    : "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
             }
         }
         if state.selectedDirectoryID == directory.id, !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
@@ -146,6 +149,9 @@ public enum MinecraftFolderStore {
         let name = input.name.trimmingCharacters(in: .whitespacesAndNewlines)
         try MinecraftDirectoryScan.checkIdentifier(name)
         let root = paths.directoryRoot(input.directoryID ?? paths.newInstanceDirectoryID)
+        if let directory = paths.directories.first(where: { $0.id == (input.directoryID ?? paths.newInstanceDirectoryID) }) {
+            try RepositoryImportStore.requireNameAvailable(name, directory: directory, paths: paths)
+        }
         let file = try LauncherPaths.safePath("versions/\(name)", within: root)
         let state = try StateStore.load(paths)
         guard !FileManager.default.fileExists(atPath: file.path), !state.instances.contains(where: {

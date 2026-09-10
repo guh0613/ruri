@@ -74,8 +74,8 @@ struct StateStoreTests {
         try JSONEncoder().encode(earlier).write(to: paths.state)
         let loaded = try StateStore.load(paths)
         #expect(loaded.instances.first?.importedInstallation == nil)
-        #expect(try StateStore.save(loaded, to: paths).schemaVersion == 12)
-        earlier.schemaVersion = 13
+        #expect(try StateStore.save(loaded, to: paths).schemaVersion == StateStore.currentSchemaVersion)
+        earlier.schemaVersion = StateStore.currentSchemaVersion + 1
         try JSONEncoder().encode(earlier).write(to: paths.state)
         #expect(throws: (any Error).self) { try StateStore.load(paths) }
     }

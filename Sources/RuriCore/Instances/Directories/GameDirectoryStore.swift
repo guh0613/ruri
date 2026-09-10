@@ -50,7 +50,9 @@ public enum GameDirectoryStore {
             try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             let current = paths.configured(with: state)
-            state.gameDirectories?[index] = try original.relocated(to: url, paths: current)
+            let candidate = try original.relocated(to: url, paths: current)
+            try RepositoryImportStore.requireDirectoryAvailable(candidate)
+            state.gameDirectories?[index] = candidate
             if original.url.standardizedFileURL.resolvingSymlinksInPath().path != url.standardizedFileURL.resolvingSymlinksInPath().path,
                (try? original.validateAvailability()) != nil { throw RuriError.message("原实例文件夹仍可访问，请先完成移动，或通过导入处理另一份副本。") }
             let relocated = paths.configured(with: state)
@@ -82,6 +84,7 @@ public enum GameDirectoryStore {
         return try StateStore.update(paths) { state in
             try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
+            try RepositoryImportStore.requireDirectoryAvailable(id, paths: paths)
             guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例文件夹。") }
             if directory.isMinecraft {
                 let current = paths.configured(with: state)

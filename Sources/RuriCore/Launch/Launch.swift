@@ -39,6 +39,7 @@ public enum ArgumentTokenizer {
 
 public enum LaunchBuilder {
     public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths) throws -> LaunchPlan {
+        guard paths.repositoryImportID == nil else { throw RuriError.message("整合包尚未完成导入，请先完成导入后再启动。") }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
         guard let mainClass = manifest.mainClass else { throw RuriError.message("启动清单没有主类") }

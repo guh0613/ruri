@@ -29,11 +29,18 @@ extension AppModel {
         perform("导入 \(name)") { [self] id in
             let service = InstanceTransfer(paths: paths)
             do {
+                try await service.validateDestination(prepared, name: name)
                 let content = try await CurseForgeService(apiKey: "").materialize(curseFiles, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
                 let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, content: content, installer: installer, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
-                state.instances.append(instance); select(instance); notice = "\(instance.name) 已导入"
+                if instance.repositoryVersionID != nil { acceptState(try StateStore.load(basePaths)) }
+                else { state.instances.append(instance); select(instance) }
+                notice = "\(instance.name) 已导入"
                 await service.discard(prepared)
-            } catch { importingInstance = prepared; throw error }
+            } catch {
+                importingInstance = prepared
+                if let failure = error as? RepositoryImportFailure { notice = failure.message; noticeFileURL = failure.preservedFiles }
+                throw error
+            }
         }
     }
     func export(_ instance: GameInstance, to url: URL, format: InstanceExportFormat, includeWorlds: Bool, details: ModpackExportDetails = .init()) {

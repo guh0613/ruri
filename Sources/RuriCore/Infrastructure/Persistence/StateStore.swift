@@ -2,10 +2,11 @@ import Foundation
 import Darwin
 
 public enum StateStore {
+    public static let currentSchemaVersion = 13
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...12).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...currentSchemaVersion).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
         try validate(result, paths: paths)
         return result
     }
@@ -49,7 +50,7 @@ public enum StateStore {
         for folder in detached { try folder.validate(paths: paths) }
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
-        var state = input; state.schemaVersion = 12; state.revision = UUID()
+        var state = input; state.schemaVersion = currentSchemaVersion; state.revision = UUID()
         normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]

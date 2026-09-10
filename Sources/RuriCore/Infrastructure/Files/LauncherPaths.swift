@@ -8,6 +8,8 @@ public struct LauncherPaths: Codable, Sendable {
     public let instanceRunDirectories: [UUID: GameRunDirectory]?
     public let instanceCustomDirectories: [UUID: CustomRunDirectory]?
     public let instanceRepositoryVersions: [UUID: String]?
+    /// Used only while installing an unpublished repository import.
+    var repositoryImportID: UUID?
     public init(root: URL? = nil, directories: [GameDirectory] = [], instanceDirectories: [UUID: UUID] = [:], newInstanceDirectoryID: UUID = GameDirectory.defaultID, instanceRunDirectories: [UUID: GameRunDirectory]? = nil, instanceCustomDirectories: [UUID: CustomRunDirectory]? = nil, instanceRepositoryVersions: [UUID: String]? = nil) {
         self.root = root ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Ruri", isDirectory: true)
         self.directories = directories; self.instanceDirectories = instanceDirectories; self.newInstanceDirectoryID = newInstanceDirectoryID
@@ -22,9 +24,23 @@ public struct LauncherPaths: Codable, Sendable {
     public var runtimes: URL { root.appendingPathComponent("runtimes") }
     public var cache: URL { root.appendingPathComponent("cache") }
     public var state: URL { root.appendingPathComponent("state.json") }
-    public func instance(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances").appendingPathComponent(id.uuidString) }
+    public func instance(_ id: UUID) -> URL {
+        if repositoryImportID == id { return repositoryImportWorkspace(id).appendingPathComponent("metadata") }
+        return directoryRoot(directoryID(for: id)).appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances").appendingPathComponent(id.uuidString)
+    }
     public func versionDirectory(_ id: UUID) -> URL {
-        directoryRoot(directoryID(for: id)).appendingPathComponent("versions").appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
+        if repositoryImportID == id { return repositoryImportWorkspace(id).appendingPathComponent("version") }
+        return directoryRoot(directoryID(for: id)).appendingPathComponent("versions").appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
+    }
+    func repositoryImportWorkspace(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent(".ruri/imports/\(id.uuidString)") }
+    func stagingRepositoryImport(_ instance: GameInstance) -> LauncherPaths {
+        var result = including(instance); result.repositoryImportID = instance.id; return result
+    }
+    func clientJar(_ jarID: String, instance: GameInstance) throws -> URL {
+        if repositoryImportID == instance.id, jarID == instance.repositoryVersionID {
+            return try Self.safePath(jarID + ".jar", within: versionDirectory(instance.id))
+        }
+        return try Self.safePath("\(jarID)/\(jarID).jar", within: resources(for: instance).versions)
     }
     public func game(_ id: UUID) -> URL {
         if runDirectory(for: id) == .custom { return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)") }
