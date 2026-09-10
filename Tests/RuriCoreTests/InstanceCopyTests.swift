@@ -143,6 +143,14 @@ struct InstanceCopyTests {
             #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths.including(preview.copy), instanceID: preview.copy.id) }
             #expect(throws: (any Error).self) { try GameDirectoryStore.relocate(target.id, to: target.url, paths: paths) }
             #expect(try await service.pending(instanceID: committed ? preview.copy.id : source.id)?.committed == committed)
+            if committed {
+                let moved = target.url.appendingPathComponent("Moved completed copy")
+                try FileManager.default.moveItem(at: preview.destination, to: moved)
+                await #expect(throws: (any Error).self) { try await service.recover(sourceID: source.id, transactionID: journal.id) }
+                #expect(InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
+                #expect(FileManager.default.fileExists(atPath: root.path))
+                try FileManager.default.moveItem(at: moved, to: preview.destination)
+            }
             let result = try await service.recover(sourceID: source.id, transactionID: journal.id)
             #expect(result.state.instances.count == (committed ? 2 : 1))
             #expect((result.preservedCopy == nil) == committed)

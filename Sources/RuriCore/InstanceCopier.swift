@@ -211,7 +211,11 @@ public actor InstanceCopier {
     }
     private func cleanup(_ journal: InstanceCopyJournal, paths: LauncherPaths) throws -> URL? {
         try journal.validateTarget(paths: paths)
-        try InstanceCopyGuard.clear(journal, at: journal.destination(paths: paths))
+        let destination = try journal.destination(paths: paths)
+        guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else {
+            throw RuriError.message("已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。")
+        }
+        try InstanceCopyGuard.clear(journal, at: destination)
         let record = try retire(journal, paths: paths), workspace = try journal.workspace(paths: paths)
         do {
             if FileManager.default.fileExists(atPath: workspace.path) {
