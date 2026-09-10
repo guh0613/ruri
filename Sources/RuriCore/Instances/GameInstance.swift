@@ -13,6 +13,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var javaPath: String?
     public var javaMajor: Int?
     public var environmentVariables: String?
+    public var launchCommands: LaunchCommands?
     public var extraJVMArguments: String
     public var extraGameArguments: String?
     public var supportedJavaMajors: [Int]?

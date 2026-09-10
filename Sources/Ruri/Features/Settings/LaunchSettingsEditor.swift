@@ -50,6 +50,7 @@ struct LaunchSettingsEditor: View {
         case .presentation: return effective.presentation.showLogs ? "启动时打开日志" : effective.presentation.hideLauncher ? "游戏运行时隐藏 Ruri" : "保持 Ruri 可见"
         case .jvmArguments: return effective.jvmArguments.isEmpty ? "无附加 JVM 参数" : effective.jvmArguments
         case .gameArguments: return effective.gameArguments.isEmpty ? "无附加游戏参数" : effective.gameArguments
+        case .commands: return effective.commands.enabled && !effective.commands.isEmpty ? "已启用自定义启动命令" : "不运行自定义启动命令"
         case .environment:
             guard let environment = try? LaunchEnvironment(effective.environment) else { return "默认环境配置需要修正" }
             return environment.entries.isEmpty ? "无自定义环境变量" : "\(environment.entries.count) 项自定义环境变量"
@@ -112,6 +113,8 @@ struct LaunchSettingsEditor: View {
             Text(effective.presentation.showLogs ? "打开日志时，Ruri 保持可见。" : "隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。").font(.caption).foregroundStyle(.secondary)
         case .environment:
             EnvironmentVariablesEditor(text: Binding(get: { effective.environment }, set: { overrides.environment = $0 }))
+        case .commands:
+            LaunchCommandsEditor(commands: Binding(get: { effective.commands }, set: { overrides.commands = $0 }))
         }
     }
     private func chooseJava() {

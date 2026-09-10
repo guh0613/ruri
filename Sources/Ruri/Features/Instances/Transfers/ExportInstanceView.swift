@@ -12,7 +12,8 @@ struct ExportInstanceView: View {
     @State private var details = ModpackExportDetails()
     private var localInstallation: Bool { instance.repositoryVersionID != nil || instance.importedInstallation != nil }
     private var complete: Bool { format == .complete || (format == .ruri && localInstallation) }
-    private var formats: [InstanceExportFormat] { localInstallation ? [.complete] : InstanceExportFormat.allCases }
+    private var containsCommands: Bool { !instance.resolvedLaunchSettings(defaults: model.state.settings).commands.isEmpty }
+    private var formats: [InstanceExportFormat] { localInstallation ? [.complete] : containsCommands ? [.ruri, .complete] : InstanceExportFormat.allCases }
     init(instance: GameInstance) {
         self.instance = instance
         _format = State(initialValue: instance.repositoryVersionID != nil || instance.importedInstallation != nil ? .complete : .ruri)
@@ -29,6 +30,7 @@ struct ExportInstanceView: View {
             }
             if format == .mrpack { Toggle("从 Modrinth 引用可下载文件", isOn: $details.referenceDownloads) }
             Toggle("包含存档", isOn: $includeWorlds)
+            if containsCommands { Text("启动命令会包含在导出文件中，导入后保持停用。").font(.caption).foregroundStyle(.secondary) }
             if !instance.resolvedLaunchSettings(defaults: model.state.settings).environment.isEmpty {
                 Text("本机环境变量不包含在导出文件中。").font(.caption).foregroundStyle(.secondary)
             }

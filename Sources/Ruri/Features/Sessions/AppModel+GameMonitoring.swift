@@ -22,6 +22,7 @@ extension AppModel {
         case .monitoring:
             if record.state.isFinished { return "正在保存记录" }
             if record.stage == .quitting { return "等待游戏退出" }
+            if record.stage == .beforeCommand || record.stage == .afterCommand { return record.stage.title }
             if record.stage == .stopping { return "正在终止进程" }
             return record.gameIdentity == nil ? "正在启动" : "运行中"
         }
@@ -44,6 +45,11 @@ extension AppModel {
     }
     func confirmGameTermination(_ instanceID: UUID) {
         guard let record = activeSessions[instanceID], !record.state.isFinished, record.monitorIdentity?.isAlive == true else { return }
+        if record.stage == .beforeCommand || record.stage == .afterCommand {
+            do { try GameMonitorClient.requestStop(paths: paths, record: record) }
+            catch { notice = error.localizedDescription; noticeSessionID = record.id }
+            return
+        }
         let alert = NSAlert()
         alert.messageText = "终止“\(record.instanceName)”的游戏进程？"
         alert.informativeText = "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。"
@@ -79,7 +85,7 @@ extension AppModel {
     }
     private func needsReview(_ record: GameSession) -> Bool {
         guard record.monitorIdentity != nil, !reviewed(record) else { return false }
-        return record.state == .failed || (!record.state.isFinished && GameMonitorClient.activity(record) != .monitoring)
+        return record.state == .failed || record.commandResults?.contains(where: { !$0.succeeded && !$0.cancelled }) == true || (!record.state.isFinished && GameMonitorClient.activity(record) != .monitoring)
     }
     func recordClientEvent(_ event: GameMonitorClient.ClientEvent) {
         for record in activeSessions.values { try? GameMonitorClient.recordEvent(event, paths: paths, session: record) }
@@ -111,7 +117,7 @@ extension AppModel {
         var presentedAttention = false
         for record in snapshot where record.monitorIdentity != nil {
             let activity = GameMonitorClient.activity(record)
-            if activity == .inactive || record.state.isFinished { finishLaunchPresentation(record.id) }
+            if activity == .inactive || record.state.isFinished || record.exit != nil { finishLaunchPresentation(record.id) }
             else { applyLaunchPresentation(record) }
             if activity != .inactive {
                 if previous[record.instanceID]?.id != record.id { try? GameMonitorClient.recordEvent(.connected, paths: paths, session: record) }
@@ -122,14 +128,14 @@ extension AppModel {
                 await readMonitorLog(record, final: true)
                 logCursors.removeValue(forKey: record.id)
                 if let exit = record.exit { lastGameExit = exit }
-                notice = record.interruption != nil ? record.title : record.exit?.summary ?? "游戏进程已结束，监控没有留下退出原因。"
+                notice = record.title
                 noticeSessionID = record.id
             }
             if needsReview(record) && !handledExits.contains(record.id) {
                 handledExits.insert(record.id)
                 NSApp.dockTile.badgeLabel = "!"
                 if !presentedAttention {
-                    let summary = activity == .orphaned ? "游戏仍在运行，监控已中断" : activity == .uncertain ? "监控已中断，游戏状态待确认" : record.exit?.summary ?? record.title
+                    let summary = activity == .orphaned ? "游戏或启动命令仍在运行，监控已中断" : activity == .uncertain ? "监控已中断，运行状态待确认" : record.title
                     notice = "\(record.instanceName)：\(summary)"
                     noticeSessionID = record.id
                     if NSApp.isActive && NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {

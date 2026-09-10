@@ -3,12 +3,13 @@ import RuriCore
 
 extension CLI {
     static func manageLaunchSettings(_ args: [String], paths: LauncherPaths) throws {
-        let usage = "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。默认只查看生效值与继承来源。"
+        let usage = "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。"
         guard let scope = args.first, scope == "defaults" || UUID(uuidString: scope) != nil else { throw RuriError.message(usage) }
         let id = UUID(uuidString: scope)
         if args.count > 1 {
             guard (args.count == 4 && args[1] == "set") || (args.count == 3 && args[1] == "inherit" && id != nil) else { throw RuriError.message(usage) }
-            let key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : args[1] == "set" && args[2] == "environment-file" ? .environment : LaunchSettingKey(rawValue: args[2])
+            var key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : args[1] == "set" && args[2] == "environment-file" ? .environment : LaunchSettingKey(rawValue: args[2])
+            if args[1] == "set", ["preLaunchCommand", "postExitCommand", "commandWrapper", "commandTimeout"].contains(args[2]) { key = .commands }
             let memoryDetail = args[1] == "set" && ["initialMemory", "metaspace"].contains(args[2])
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
@@ -46,6 +47,18 @@ extension CLI {
                     case .presentation:
                         guard ["keep", "hide", "logs"].contains(value) else { throw RuriError.message(usage) }
                         overrides.presentation = .init(hideLauncher: value == "hide", showLogs: value == "logs")
+                    case .commands:
+                        var commands = overrides.resolve(defaults: defaults).commands
+                        switch args[2] {
+                        case "preLaunchCommand": commands.before = value
+                        case "postExitCommand": commands.after = value
+                        case "commandWrapper": commands.wrapper = value
+                        case "commandTimeout":
+                            guard let seconds = Int(value) else { throw RuriError.message(usage) }; commands.timeoutSeconds = seconds
+                        default:
+                            guard let enabled = Bool(value) else { throw RuriError.message("commands 应为 true 或 false。") }; commands.enabled = enabled
+                        }
+                        overrides.commands = commands
                     case .environment:
                         if args[2] == "environment-file" {
                             let file = URL(fileURLWithPath: value)

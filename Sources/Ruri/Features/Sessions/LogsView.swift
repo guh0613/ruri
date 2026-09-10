@@ -108,6 +108,9 @@ struct LogsView: View {
             } else if let failure = record.failure {
                 Text(failure).font(.callout).foregroundStyle(.orange).lineLimit(3).textSelection(.enabled)
             }
+            ForEach(Array((record.commandResults ?? []).enumerated()), id: \.offset) { _, result in
+                Text(result.summary).font(.caption).foregroundStyle(result.succeeded ? Color.secondary : .orange).textSelection(.enabled)
+            }
             DisclosureGroup("阶段、环境与报告") {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 7) {

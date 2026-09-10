@@ -6,6 +6,13 @@ struct GameQuitControls: View {
     let session: GameSession
     var body: some View {
         VStack(alignment: .leading, spacing: 7) {
+            if session.stage == .beforeCommand || session.stage == .afterCommand {
+                HStack {
+                    Text(session.stage == .beforeCommand ? "取消命令后将停止本次启动。" : "游戏已退出，可以取消仍在运行的收尾命令。").font(.caption).foregroundStyle(.secondary)
+                    Spacer()
+                    Button("取消命令") { model.confirmGameTermination(session.instanceID) }
+                }
+            } else {
             if let attempt = session.normalQuitAttempt {
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     VStack(alignment: .leading, spacing: 4) {
@@ -28,6 +35,7 @@ struct GameQuitControls: View {
                 Menu {
                     Button("终止游戏进程…", role: .destructive) { model.confirmGameTermination(session.instanceID) }
                 } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().help("游戏没有响应时的操作")
+            }
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
     }

@@ -6,7 +6,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         public var isFinished: Bool { self != .preparing && self != .running }
     }
     public enum Stage: String, Codable, Sendable {
-        case preparing, installation, recovery, account, manifest, java, arguments, starting, running, quitting, stopping, finished, monitorRecovery
+        case preparing, installation, recovery, account, manifest, java, arguments, beforeCommand, starting, running, quitting, stopping, afterCommand, finished, monitorRecovery
         public var title: String {
             switch self {
             case .preparing: "准备启动"
@@ -16,6 +16,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
             case .manifest: "读取版本"
             case .java: "准备 Java"
             case .arguments: "构建启动参数"
+            case .beforeCommand: "执行启动前命令"
+            case .afterCommand: "执行退出后命令"
             case .starting: "创建游戏进程"
             case .running: "游戏进程运行"
             case .stopping: "请求结束游戏"
@@ -59,6 +61,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var processID: Int32?
     public var monitorIdentity: ProcessIdentity?
     public var gameIdentity: ProcessIdentity?
+    public var commandIdentity: ProcessIdentity?
+    public var commandResults: [GameCommandResult]?
     public var failure: String?
     public var exit: GameExit?
     public var interruption: GameSessionInterruption?
@@ -67,6 +71,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
+        if stage == .afterCommand && !state.isFinished { return "游戏已退出 · 正在执行退出后命令" }
+        if let command = commandResults?.last, command.phase == .after, !command.succeeded, state.isFinished { return (exit?.summary ?? "游戏已退出") + " · " + command.summary }
         if let exit { return exit.summary }
         switch state {
         case .preparing: return "\(stage.title) · 尚无完成记录"
@@ -262,13 +268,24 @@ public enum GameSessionReviewStore {
         record.processID = processID; record.gameIdentity = ProcessIdentity.read(processID)
         record.state = .running; try transition(.running)
     }
+    func commandStarted(processID: Int32) throws { record.commandIdentity = ProcessIdentity.read(processID); record.updatedAt = Date(); try save() }
+    func commandFinished(_ result: GameCommandResult) throws {
+        record.commandResults = (record.commandResults ?? []) + [result]
+        record.commandIdentity = nil; record.updatedAt = result.endedAt
+        try save(); try append("[Ruri] " + result.summary)
+    }
+    func recordGameExit(_ exit: GameExit) throws {
+        record.exit = exit; record.updatedAt = Date()
+        try save()
+        try exit.save(paths: paths, instanceID: record.instanceID)
+    }
     public func finish(exit: GameExit) throws {
         guard !record.state.isFinished else { throw RuriError.message("运行会话已经结束。") }
         defer { try? close() }
-        record.exit = exit; record.updatedAt = exit.endedAt
+        record.exit = exit; record.updatedAt = Date()
         record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
         record.stage = .finished
-        record.events.append(.init(id: UUID(), date: exit.endedAt, stage: .finished, message: exit.summary))
+        record.events.append(.init(id: UUID(), date: record.updatedAt, stage: .finished, message: exit.summary))
         try save()
         try append(exit.logDescription); try append("[Ruri] \(exit.explanation)")
         do { try GamePlaytimeStore.record(record, paths: paths) }

@@ -8,10 +8,14 @@ public struct LaunchPlan: Codable, Sendable {
     public var nativeQuitSupported: Bool?
     public var memory: LaunchMemory?
     public var customEnvironmentNames: [String]?
+    public var commands: LaunchCommands?
+    public var wrapper: [String]?
+    var processExecutable: URL { wrapper?.first.map { URL(fileURLWithPath: $0) } ?? executable }
+    var processArguments: [String] { wrapper?.isEmpty == false ? Array(wrapper!.dropFirst()) + [executable.path] + arguments : arguments }
     public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
     public var redactedCommand: String {
         var redactNext = false
-        return ([executable.path] + arguments).map { value in
+        return ([processExecutable.path] + processArguments).map { value in
             if redactNext { redactNext = false; return "<redacted>" }
             if ["--accessToken", "--clientId", "--xuid", "--session"].contains(value) { redactNext = true }
             return value.contains(" ") ? "\"\(value)\"" : value
@@ -137,9 +141,16 @@ public enum LaunchBuilder {
         if !hasOption("--height") { game += ["--height", String(instance.height)] }
         if instance.fullscreen == true && !hasOption("--fullscreen") { game.append("--fullscreen") }
         let customEnvironment = try LaunchEnvironment(instance.environmentVariables ?? "")
-        let env = customEnvironment.applying(to: ProcessInfo.processInfo.environment, java: URL(fileURLWithPath: java.path))
+        var env = customEnvironment.applying(to: ProcessInfo.processInfo.environment, java: URL(fileURLWithPath: java.path))
+        let commands = instance.launchCommands ?? .init()
+        try commands.validate()
+        if commands.enabled {
+            env.merge(["RURI_GAME_DIRECTORY": paths.game(instance.id).path, "RURI_INSTANCE_DIRECTORY": paths.instance(instance.id).path,
+                       "RURI_INSTANCE_NAME": instance.name, "RURI_INSTANCE_ID": instance.id.uuidString, "RURI_GAME_VERSION": instance.gameVersion, "RURI_JAVA": java.path]) { _, value in value }
+        }
+        let wrapper = try commands.resolveWrapper(environment: env, directory: paths.game(instance.id))
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name))
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper)
     }
 }
 
@@ -168,7 +179,7 @@ public final class GameProcess {
         let startedAt = Date()
         let startedClock = ContinuousClock.now
         let process = Process(); let pipe = Pipe()
-        process.executableURL = plan.executable; process.arguments = plan.arguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
+        process.executableURL = plan.processExecutable; process.arguments = plan.processArguments; process.currentDirectoryURL = plan.directory; process.environment = plan.environment
         process.standardOutput = pipe; process.standardError = pipe
         process.standardInput = FileHandle.nullDevice
         let reader = try ProcessOutputReader(handle: pipe.fileHandleForReading) { [weak self] data in

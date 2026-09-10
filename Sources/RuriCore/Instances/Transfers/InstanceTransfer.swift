@@ -82,6 +82,7 @@ struct PortableInstance: Codable {
     let height: Int
     let fullscreen: Bool?
     let launchPresentation: LaunchPresentation?
+    let launchCommands: LaunchCommands?
     let iconPNG: Data?
     let installation: ImportedMinecraftInstallation?
     init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
@@ -90,6 +91,7 @@ struct PortableInstance: Codable {
         javaMajor = instance.javaMajor
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
         fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation
+        launchCommands = instance.launchCommands?.isEmpty == false ? instance.launchCommands : nil
         iconPNG = instance.iconPNG; self.installation = installation
         if installation != nil { formatVersion = 2 }
     }
@@ -101,6 +103,8 @@ struct PortableInstance: Codable {
         result.javaMajor = javaMajor
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
         result.fullscreen = fullscreen; result.launchPresentation = launchPresentation
+        result.launchCommands = launchCommands
+        result.launchCommands?.enabled = false
         result.iconPNG = iconPNG; result.importedInstallation = installation
         return result
     }
@@ -286,6 +290,9 @@ public actor InstanceTransfer {
             throw RuriError.message("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
         }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
+        if instance.launchCommands?.isEmpty == false, ![.ruri, .complete].contains(format) {
+            throw RuriError.message("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
+        }
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
         // preserving their original precedence in every supported format.
@@ -382,9 +389,12 @@ public actor InstanceTransfer {
                 instance.fullscreen = cfg["LaunchMaximized"]?.lowercased() == "true"
             }
             if cfg["OverrideJavaArgs"]?.lowercased() == "true" { instance.extraJVMArguments = cfg["JvmArgs"] ?? "" }
-            if ["PreLaunchCommand", "PostExitCommand", "WrapperCommand"].contains(where: { !(cfg[$0] ?? "").isEmpty }) { warnings.append("原实例的启动前、退出后或包装命令不会执行。需要这些命令的整合包可能需要额外设置。") }
+            var commands = LaunchCommands()
+            commands.before = cfg["PreLaunchCommand"] ?? ""; commands.after = cfg["PostExitCommand"] ?? ""; commands.wrapper = cfg["WrapperCommand"] ?? ""
+            if !commands.isEmpty { instance.launchCommands = commands }
         }
         try validate(instance)
+        if instance.launchCommands?.isEmpty == false { warnings.append("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。") }
         let games = ["minecraft", ".minecraft"].map { root.appendingPathComponent($0) }.filter { fm.fileExists(atPath: $0.path) }
         guard games.count == 1, try games[0].resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isDirectory == true,
               try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("实例需要唯一的 minecraft 或 .minecraft 游戏目录。") }
@@ -396,6 +406,7 @@ public actor InstanceTransfer {
                                          installation: instance.importedInstallation != nil ? try LauncherPaths.safePath("installation", within: root) : nil)
     }
     static func validate(_ instance: GameInstance) throws {
+        try instance.launchCommands?.validate()
         if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,

@@ -35,7 +35,7 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
         switch self {
         case .runtime: [.java, .memory]
         case .launch: [.window, .presentation]
-        case .advanced: [.jvmArguments, .gameArguments, .environment]
+        case .advanced: [.jvmArguments, .gameArguments, .environment, .commands]
         default: []
         }
     }
@@ -140,6 +140,7 @@ enum SettingsValidation {
             case .window: field.window = values.window
             case .presentation: field.presentation = values.presentation
             case .environment: field.environment = values.environment
+            case .commands: field.commands = values.commands
             }
             do { try field.validate() }
             catch { return (key, error.localizedDescription) }

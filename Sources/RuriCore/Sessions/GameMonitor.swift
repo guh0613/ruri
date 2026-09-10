@@ -36,7 +36,7 @@ public enum GameMonitorClient {
         if record.monitorIdentity?.isAlive == true { return .monitoring }
         if record.state.isFinished || record.monitorIdentity == nil { return .inactive }
         if record.monitorIdentity?.liveness == .unverifiable { return .uncertain }
-        if record.gameIdentity?.isAlive == true { return .orphaned }
+        if record.gameIdentity?.isAlive == true || record.commandIdentity?.isAlive == true { return .orphaned }
         // A monitor may have died between spawning Java and saving its identity.
         if record.gameIdentity == nil || record.gameIdentity?.liveness == .unverifiable { return .uncertain }
         return .inactive
@@ -62,7 +62,7 @@ public enum GameMonitorClient {
         try process.run()
         defer { try? input.fileHandleForWriting.close() }
         guard let identity = ProcessIdentity.read(process.processIdentifier) else { throw RuriError.message("无法确认游戏监控组件的身份。") }
-        let request = MonitorLaunchRequest(version: 5, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
+        let request = MonitorLaunchRequest(version: 6, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
                                            monitor: identity, plan: plan, secrets: secrets, storage: paths.monitorSnapshot(for: recorder.record.instanceID))
         let data = try JSONEncoder().encode(request)
         guard data.count <= 2_097_152 else { throw RuriError.message("游戏启动信息超过监控组件限制。") }
@@ -105,7 +105,7 @@ public enum GameMonitorService {
             }
             let decoded = try JSONDecoder().decode(MonitorLaunchRequest.self, from: data)
             request = decoded
-            guard (1...5).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+            guard (1...6).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
                   decoded.monitor == ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier) else { throw RuriError.message("游戏监控请求无效。") }
             let paths = try validatedPaths(decoded)
             guard decoded.plan.directory.resolvingSymlinksInPath() == paths.game(decoded.instanceID).resolvingSymlinksInPath() else { throw RuriError.message("游戏目录与运行会话不一致。") }
@@ -118,21 +118,29 @@ public enum GameMonitorService {
         }
     }
     @MainActor private static func run(_ plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String]) async throws -> Int32 {
+        try plan.commands?.validate()
         let javaLease = try JavaRuntimeLease.shared(binary: plan.executable, paths: paths)
         defer { withExtendedLifetime(javaLease) {} }
+        if stopRequested(recorder) { try recorder.fail(CancellationError(), cancelled: true); return 130 }
+        if let commands = plan.commands, commands.enabled, !commands.before.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            let result = await GameCommandRunner.run(commands.before, phase: .before, plan: plan, timeoutSeconds: commands.timeoutSeconds, recorder: recorder) { stopRequested(recorder) }
+            if !result.succeeded {
+                try recorder.fail(RuriError.message(result.summary), cancelled: result.cancelled)
+                return result.cancelled ? 130 : 1
+            }
+        }
+        if stopRequested(recorder) { try recorder.fail(CancellationError(), cancelled: true); return 130 }
+        if recorder.record.stage != .starting { try recorder.transition(.starting) }
         let game = GameProcess()
         try recorder.setNativeQuitSupported(plan.nativeQuitSupported == true)
         var stopTask: Task<Void, Never>?
         defer { stopTask?.cancel() }
-        return try await withCheckedThrowingContinuation { continuation in
+        let result = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
             do {
                 try game.start(plan: plan, secrets: secrets) { line in
                     try? recorder.append(line)
                 } onExit: { result in
-                    do { try recorder.finish(exit: result) }
-                    catch { try? recorder.close() }
-                    try? result.save(paths: paths, instanceID: recorder.record.instanceID)
-                    continuation.resume(returning: result.shellStatus)
+                    continuation.resume(returning: result)
                 }
                 if let pid = game.processIdentifier {
                     do { try recorder.started(processID: pid) }
@@ -156,6 +164,13 @@ public enum GameMonitorService {
                 }
             } catch { continuation.resume(throwing: error) }
         }
+        stopTask?.cancel()
+        try recorder.recordGameExit(result)
+        if !result.stopRequested, let commands = plan.commands, commands.enabled, !commands.after.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            _ = await GameCommandRunner.run(commands.after, phase: .after, plan: plan, timeoutSeconds: commands.timeoutSeconds, exit: result, recorder: recorder) { stopRequested(recorder) }
+        }
+        try recorder.finish(exit: result)
+        return result.shellStatus
     }
     @MainActor private static func stopRequested(_ recorder: GameSessionRecorder) -> Bool {
         guard let url = try? LauncherPaths.safePath("stop-request.json", within: recorder.directory),
@@ -178,7 +193,7 @@ public enum GameMonitorService {
     }
     static func validatedPaths(_ request: MonitorLaunchRequest) throws -> LauncherPaths {
         if request.version == 1 { return LauncherPaths(root: request.root) }
-        guard (2...5).contains(request.version), let paths = request.storage, paths.root == request.root,
+        guard (2...6).contains(request.version), let paths = request.storage, paths.root == request.root,
               paths.instanceDirectories.count == 1, paths.instanceDirectories[request.instanceID] != nil else { throw RuriError.message("游戏监控缺少实例文件夹信息。") }
         guard request.version >= 3 || paths.runDirectory(for: request.instanceID) == .isolated else { throw RuriError.message("共享运行目录需要新版监控协议。") }
         if request.version >= 3, paths.instanceRunDirectories?[request.instanceID] == nil { throw RuriError.message("游戏监控缺少运行目录策略。") }

@@ -18,5 +18,6 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var defaultWindow: GameWindowSize?
     public var defaultLaunchPresentation: LaunchPresentation?
     public var defaultEnvironment: String?
+    public var defaultLaunchCommands: LaunchCommands?
     public init() {}
 }
