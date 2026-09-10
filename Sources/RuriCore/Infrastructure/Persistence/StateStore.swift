@@ -35,7 +35,10 @@ public enum StateStore {
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
         guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message("启动快照不能覆盖实例设置，请保存原实例的覆盖项。") }
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
-        for instance in state.instances { try instance.importedInstallation?.validate() }
+        for instance in state.instances {
+            try instance.importedInstallation?.validate()
+            if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
+        }
         try paths.configured(with: state).validateDirectoryConfiguration()
         let detached = state.detachedMinecraftFolders ?? []
         let directories = (state.gameDirectories ?? []).map(\.id) + detached.map(\.id)

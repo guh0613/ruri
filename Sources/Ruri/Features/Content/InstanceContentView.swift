@@ -25,7 +25,7 @@ struct InstanceContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 14) {
-                InstanceIcon(loader: instance.loader)
+                InstanceIcon(loader: instance.loader, png: instance.iconPNG)
                 SectionHeading(title: "管理游戏内容", subtitle: instance.name + " · " + instance.subtitle)
                 Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
             }

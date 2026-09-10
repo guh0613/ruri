@@ -13,6 +13,7 @@ struct InstanceSettingsView: View {
     @State private var movingInstance = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
+    @State private var loadingIcon = false
     @State private var preservedWorkspaces: [URL] = []
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
@@ -20,9 +21,19 @@ struct InstanceSettingsView: View {
     init(instance: GameInstance) { _instance = State(initialValue: instance); _launchOverrides = State(initialValue: instance.effectiveLaunchOverrides); original = instance }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            HStack { InstanceIcon(loader: instance.loader); SectionHeading(title: "实例设置", subtitle: instance.subtitle) }
+            HStack { InstanceIcon(loader: instance.loader, png: instance.iconPNG); SectionHeading(title: "实例设置", subtitle: instance.subtitle) }
             Form {
-                Section("基本信息") { TextField("名称", text: $instance.name); Toggle("收藏此实例", isOn: $instance.favorite) }
+                Section("基本信息") {
+                    TextField("名称", text: $instance.name); Toggle("收藏此实例", isOn: $instance.favorite)
+                    LabeledContent("图标") {
+                        HStack {
+                            if loadingIcon { ProgressView().controlSize(.small) }
+                            Button("选择图片…", action: chooseIcon).disabled(loadingIcon)
+                            if instance.iconPNG != nil { Button("恢复默认") { instance.iconPNG = nil }.disabled(loadingIcon) }
+                        }
+                    }
+                    Text("图片会居中显示为图标，保存后无需保留原图片文件。").font(.caption).foregroundStyle(.secondary)
+                }
                 Section("启动设置") {
                     Text("各项可跟随默认设置，或由此实例单独覆盖。修改只影响下一次启动。").font(.callout).foregroundStyle(.secondary)
                     Button("所有启动设置恢复默认") { launchOverrides = .init() }
@@ -68,7 +79,7 @@ struct InstanceSettingsView: View {
                     try launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).validate()
                     instance.launchOverrides = launchOverrides; model.updateSettings(instance, basedOn: original); dismiss()
                 } catch { settingsIssue = error.localizedDescription }
-            }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
+            }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(loadingIcon || instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
         }.padding(24).frame(width: 620, height: 590)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
         .sheet(isPresented: $relocatingDirectory) { CustomRunDirectoryRelocationView(instanceID: instance.id) }
@@ -81,6 +92,18 @@ struct InstanceSettingsView: View {
                 RunDirectoryCopyGuard.preservedWorkspaces(paths: paths, instanceID: id) + InstanceCopyGuard.preservedWorkspaces(paths: paths, sourceID: id) + InstanceMoveGuard.preservedWorkspaces(paths: paths, instanceID: id)
             }.value
             if !Task.isCancelled { preservedWorkspaces = locations }
+        }
+    }
+
+    private func chooseIcon() {
+        let panel = NSOpenPanel(); panel.allowedContentTypes = [.image]
+        panel.canChooseDirectories = false; panel.allowsMultipleSelection = false; panel.prompt = "选择图标"
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        loadingIcon = true
+        Task {
+            defer { loadingIcon = false }
+            do { instance.iconPNG = try await Task.detached(priority: .userInitiated) { try InstanceIconImage.load(url) }.value }
+            catch { settingsIssue = error.localizedDescription }
         }
     }
 }

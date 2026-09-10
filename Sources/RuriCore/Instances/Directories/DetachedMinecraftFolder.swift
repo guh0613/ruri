@@ -18,7 +18,10 @@ public struct DetachedMinecraftFolder: Codable, Identifiable, Equatable, Sendabl
         }
         var snapshot = PersistentState()
         snapshot.gameDirectories = [directory]; snapshot.instances = instances
-        for instance in instances { try instance.importedInstallation?.validate() }
+        for instance in instances {
+            try instance.importedInstallation?.validate()
+            if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
+        }
         try paths.configured(with: snapshot).validateDirectoryConfiguration()
     }
 }

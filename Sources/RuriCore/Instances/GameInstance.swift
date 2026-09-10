@@ -23,6 +23,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var width: Int
     public var height: Int
     public var favorite: Bool
+    public var iconPNG: Data?
     public var installed: Bool
     /// Missing in older states: the original Application Support directory.
     public var directoryID: UUID?

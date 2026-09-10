@@ -18,7 +18,7 @@ struct HomeView: View {
                         HStack { Text("继续冒险").font(.title3.weight(.semibold)); Spacer(); Button("全部实例", systemImage: "arrow.right") { model.page = .library }.buttonStyle(.plain).font(.callout).foregroundStyle(Theme.accent) }
                         Surface {
                             HStack(spacing: 16) {
-                                InstanceIcon(loader: instance.loader, size: 60)
+                                InstanceIcon(loader: instance.loader, size: 60, png: instance.iconPNG)
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(instance.name).font(.headline)
                                     Text(instance.subtitle).font(.callout).foregroundStyle(.secondary)

@@ -76,16 +76,19 @@ struct PortableInstance: Codable {
     let packLibraries: [Library]?
     let width: Int
     let height: Int
+    let iconPNG: Data?
     init(_ instance: GameInstance) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
+        iconPNG = instance.iconPNG
     }
     func instance() throws -> GameInstance {
         guard formatVersion == 1 else { throw RuriError.message("此实例包需要更新版本的 Ruri。") }
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
+        result.iconPNG = iconPNG
         return result
     }
 }
@@ -327,6 +330,7 @@ public actor InstanceTransfer {
                                          inheritedModpack: format == "Ruri" && fm.fileExists(atPath: root.appendingPathComponent("ruri-modpack-state.json").path) ? try ModpackRegistry.read(root.appendingPathComponent("ruri-modpack-state.json"), game: games[0]) : nil)
     }
     static func validate(_ instance: GameInstance) throws {
+        if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,
               (512...131072).contains(instance.memoryMB), (320...16384).contains(instance.width), (240...16384).contains(instance.height),

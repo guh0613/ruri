@@ -35,11 +35,32 @@ struct TagPill: View {
 struct InstanceIcon: View {
     let loader: LoaderKind
     var size: CGFloat = 48
+    var png: Data?
     var body: some View {
-        Image(systemName: loader.symbol).font(.system(size: size * 0.44, weight: .medium))
-            .foregroundStyle(loader == .vanilla ? Theme.accent : Color.orange.opacity(0.8))
-            .frame(width: size, height: size)
-            .background((loader == .vanilla ? Theme.accent : Color.orange).opacity(0.10), in: RoundedRectangle(cornerRadius: size * 0.26))
+        Group {
+            if let png, let image = InstanceIconCache.image(png) {
+                Image(nsImage: image).resizable().scaledToFill()
+            } else {
+                Image(systemName: loader.symbol).font(.system(size: size * 0.44, weight: .medium))
+                    .foregroundStyle(loader == .vanilla ? Theme.accent : Color.orange.opacity(0.8))
+                    .frame(width: size, height: size)
+                    .background((loader == .vanilla ? Theme.accent : Color.orange).opacity(0.10))
+            }
+        }.frame(width: size, height: size).clipShape(RoundedRectangle(cornerRadius: size * 0.26))
+            .accessibilityHidden(true)
+    }
+}
+
+@MainActor private enum InstanceIconCache {
+    static let images: NSCache<NSData, NSImage> = {
+        let cache = NSCache<NSData, NSImage>(); cache.countLimit = 256; cache.totalCostLimit = 16 * 1024 * 1024
+        return cache
+    }()
+    static func image(_ data: Data) -> NSImage? {
+        if let cached = images.object(forKey: data as NSData) { return cached }
+        guard (try? InstanceIconImage.validate(data)) != nil, let image = NSImage(data: data) else { return nil }
+        images.setObject(image, forKey: data as NSData, cost: 128 * 128 * 4)
+        return image
     }
 }
 

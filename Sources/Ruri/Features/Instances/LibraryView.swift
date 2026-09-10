@@ -40,7 +40,9 @@ struct LibraryView: View {
                         Surface {
                             VStack(alignment: .leading, spacing: 16) {
                                 HStack {
-                                    InstanceIcon(loader: instance.loader)
+                                    Button { model.editingInstance = instance } label: {
+                                        InstanceIcon(loader: instance.loader, png: instance.iconPNG)
+                                    }.buttonStyle(.plain).help("更换图标或编辑实例设置").accessibilityLabel("编辑 \(instance.name) 的图标和设置")
                                     Spacer()
                                     if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption) }
                                     Menu {
