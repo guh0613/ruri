@@ -33,6 +33,7 @@ enum RunDirectoryFileCopy {
         }
         try output.synchronize()
         try validate()
+        try FileExtendedAttributes.copy(from: inputFD, to: outputFD)
         let attributes = try FileManager.default.attributesOfItem(atPath: source.path)
         try FileManager.default.setAttributes([.posixPermissions: info.st_mode & 0o777, .modificationDate: attributes[.modificationDate] ?? Date()], ofItemAtPath: target.path)
     }
@@ -54,6 +55,7 @@ enum RunDirectoryFileCopy {
             try validate()
             let target = try LauncherPaths.safePath(entry.path, within: root)
             let attributes = try FileManager.default.attributesOfItem(atPath: entry.url.path)
+            try FileExtendedAttributes.copy(from: entry.url, to: target)
             try FileManager.default.setAttributes([.posixPermissions: attributes[.posixPermissions] ?? 0o755, .modificationDate: entry.modified], ofItemAtPath: target.path)
         }
     }
@@ -87,6 +89,7 @@ enum RunDirectoryFileCopy {
             try entries(FileTree.entries(in: source, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles), to: target, validate: check) { amount, _ in progress(amount) }
             try check()
             let attributes = try FileManager.default.attributesOfItem(atPath: source.path)
+            try FileExtendedAttributes.copy(from: source, to: target)
             try FileManager.default.setAttributes([.posixPermissions: attributes[.posixPermissions] ?? 0o755, .modificationDate: attributes[.modificationDate] ?? Date()], ofItemAtPath: target.path)
         } else {
             try file(source, to: target, preferClone: false, stabilizeIdentity: true, created: record, validate: check, progress: progress)

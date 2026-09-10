@@ -11,7 +11,8 @@ struct InstanceMoveSnapshot: Sendable {
     static func capture(instance: GameInstance, paths: LauncherPaths, transactionID: UUID) throws -> Self {
         let metadata = paths.instance(instance.id)
         let before = try FileTree.entries(in: metadata, ignoringTransientFiles: false)
-        let original = try FileTreeManifest.capture(before)
+        let rootAttributes = try FileExtendedAttributes.capture(metadata)
+        let original = try FileTreeManifest.capture(before, rootAttributes: rootAttributes)
         var files = before, hasPreviousData = false
         var sharedGame: [FileTree.Entry] = [], sharedMetadata: [FileTree.Entry] = []
         if instance.runDirectory == .shared {
@@ -26,13 +27,15 @@ struct InstanceMoveSnapshot: Sendable {
             let game = paths.game(instance.id)
             if FileManager.default.fileExists(atPath: game.path) {
                 sharedGame = try FileTree.entries(in: game, excluding: [".ruri"], ignoringTransientFiles: false)
+                let attributes = try game.resourceValues(forKeys: [.contentModificationDateKey])
+                files.append(.init(url: game, path: "minecraft", directory: true, size: 0, modified: attributes.contentModificationDate ?? .distantPast))
                 files += sharedGame.map { $0.mapped(to: "minecraft/" + $0.path) }
             }
             sharedMetadata = try sharedContentEntries(instance: instance, paths: paths)
             files += sharedMetadata
         }
         let required: Set<String> = instance.runDirectory == .shared ? ["minecraft"] : []
-        let destination = try FileTreeManifest.capture(files, requiringDirectories: required)
+        let destination = try FileTreeManifest.capture(files, requiringDirectories: required, rootAttributes: rootAttributes)
         // Capture again because the mapped shared files do not all belong to the
         // metadata tree whose identity and digest guard source retirement.
         guard try FileTree.entries(in: metadata, ignoringTransientFiles: false) == before,

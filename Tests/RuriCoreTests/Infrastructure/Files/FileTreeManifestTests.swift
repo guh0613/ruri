@@ -70,7 +70,7 @@ struct FileTreeManifestTests {
             #expect(throws: (any Error).self) { try bad.validate() }
         }
         let entry = try #require(good.entries.first)
-        for bad in [FileTreeManifest(version: 2, entries: []), FileTreeManifest(version: 1, entries: [entry, entry]),
+        for bad in [FileTreeManifest(version: 3, entries: []), FileTreeManifest(version: 1, entries: [entry, entry]),
                     FileTreeManifest(version: 1, entries: [.init(path: "a/b", directory: true, size: 0, sha256: nil)]),
                     FileTreeManifest(version: 1, entries: [.init(path: "a", directory: false, size: .max, sha256: entry.sha256)]),
                     FileTreeManifest(version: 1, entries: [.init(path: "a", directory: false, size: 0, sha256: "invalid")])] {

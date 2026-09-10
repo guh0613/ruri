@@ -4,12 +4,11 @@ import ZIPFoundation
 public enum FileTree {
     struct Entry: Equatable, Sendable { let url: URL; let path: String; let directory: Bool; let size: Int64; let modified: Date }
     static func entries(in root: URL, excluding: Set<String> = [], ignoringTransientFiles: Bool = true) throws -> [Entry] {
-        let fm = FileManager.default
         guard try root.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("请选择实际目录，而不是符号链接。") }
         var pending: [(URL, String)] = [(root, "")]; var entries: [Entry] = []
         while let (directory, prefix) = pending.popLast() {
             try Task.checkCancellation()
-            for url in try fm.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey]).sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
+            for url in try children(in: directory) {
                 let relative = prefix + url.lastPathComponent
                 if (ignoringTransientFiles && [".DS_Store", ".ruri-partials"].contains(url.lastPathComponent)) || excluding.contains(relative) || excluding.contains(where: { $0.hasSuffix("/") && relative.hasPrefix($0) }) { continue }
                 let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])

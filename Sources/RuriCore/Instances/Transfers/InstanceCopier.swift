@@ -44,7 +44,7 @@ public actor InstanceCopier {
         try journal.validateTarget(paths: current)
         let access = try await acquire(original, paths: current); defer { withExtendedLifetime(access) {} }
         let snapshot = try entries(original, paths: current, options: options)
-        let manifest = try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"])
+        let manifest = try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(current.instance(original.id)))
         guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message("源文件在预览期间改变，请重新预览。") }
         return .init(id: id, source: original, copy: copy, sourceGame: current.game(original.id), destination: try journal.destination(paths: current), options: options, targetCollection: collection, entries: snapshot, manifest: manifest)
     }
@@ -84,6 +84,7 @@ public actor InstanceCopier {
                 }
             }
             try FileManager.default.createDirectory(at: incoming.appendingPathComponent("minecraft"), withIntermediateDirectories: true)
+            try FileExtendedAttributes.copy(from: current.instance(source.id), to: incoming)
             progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: preview.bytes))
             try preview.manifest.requireMatch(in: incoming, ignoringTransientFiles: true)
             try rebindModpack(incoming, copy: journal.copy)
@@ -175,7 +176,7 @@ public actor InstanceCopier {
     private func validateFiles(_ preview: InstanceCopyPreview, paths: LauncherPaths) throws {
         let snapshot = try entries(preview.source, paths: paths, options: preview.options)
         guard snapshot == preview.entries,
-              try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"]) == preview.manifest,
+              try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(paths.instance(preview.source.id))) == preview.manifest,
               try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message("源文件内容在预览后改变，请重新预览再复制。") }
     }
     private func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
@@ -191,6 +192,9 @@ public actor InstanceCopier {
         excluded.subtract(declared)
         var result: [FileTree.Entry] = []
         if FileManager.default.fileExists(atPath: paths.game(source.id).path) {
+            let game = paths.game(source.id)
+            let attributes = try game.resourceValues(forKeys: [.contentModificationDateKey])
+            result.append(.init(url: game, path: "minecraft", directory: true, size: 0, modified: attributes.contentModificationDate ?? .distantPast))
             result += try FileTree.entries(in: paths.game(source.id), excluding: excluded).map { .init(url: $0.url, path: "minecraft/" + $0.path, directory: $0.directory, size: $0.size, modified: $0.modified) }
         }
         for name in ["version.json", "natives", "source-mcbbs.packmeta", "modpack-state.json", "content.json"] + (options.includeBackups ? ["world-backups"] : []) {
@@ -219,7 +223,7 @@ public actor InstanceCopier {
         var record = try ModpackRegistry.read(file, game: root.appendingPathComponent("minecraft"))
         record.settings.id = copy.id; record.settings.directoryID = copy.directoryID; record.settings.runDirectory = .isolated
         record.settings.customRunDirectory = nil; record.settings.lastRunDirectoryChangeID = nil; record.settings.lastInstanceCopyID = nil; record.settings.lastInstanceMoveID = nil; record.settings.frozenMemory = nil
-        try JSONEncoder().encode(record).write(to: file, options: .atomic)
+        try FileExtendedAttributes.rewrite(JSONEncoder().encode(record), at: file)
     }
     private func retire(_ journal: InstanceCopyJournal, paths: LauncherPaths) throws -> URL {
         let destination = try LauncherPaths.safePath("instance-copy-recovery/\(journal.original.id.uuidString)-\(journal.id.uuidString)-\(UUID().uuidString)", within: paths.root)

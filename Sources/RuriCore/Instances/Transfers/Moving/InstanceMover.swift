@@ -42,6 +42,7 @@ extension InstanceMover {
                 }
             }
             if preview.source.runDirectory == .shared { try FileManager.default.createDirectory(at: incoming.appendingPathComponent("minecraft"), withIntermediateDirectories: true) }
+            try FileExtendedAttributes.copy(from: preview.sourceDirectory, to: incoming)
             progress(.init(phase: .verifying))
             try preview.snapshot.destination.requireMatch(in: incoming)
             try rebindModpack(incoming, moved: preview.moved)
@@ -121,7 +122,7 @@ extension InstanceMover {
         record.settings.id = moved.id; record.settings.directoryID = moved.directoryID
         record.settings.runDirectory = moved.runDirectory; record.settings.customRunDirectory = moved.customRunDirectory
         record.settings.lastRunDirectoryChangeID = nil; record.settings.lastInstanceCopyID = nil; record.settings.lastInstanceMoveID = nil
-        try JSONEncoder().encode(record).write(to: file, options: .atomic)
+        try FileExtendedAttributes.rewrite(JSONEncoder().encode(record), at: file)
     }
     private func verifyDestination(_ record: InstanceMoveJournal, manifest: FileTreeManifest, paths: LauncherPaths) throws {
         let destination = try record.destination(paths: paths)

@@ -10,16 +10,20 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
         let directory: Bool
         let size: Int64
         let sha256: String?
+        var attributes: [FileExtendedAttributes.Receipt]? = nil
     }
     let version: Int
     let entries: [Entry]
+    var rootAttributes: [FileExtendedAttributes.Receipt]? = nil
     static let maximumRecordBytes = 64 * 1024 * 1024
     static let maximumFileBytes: Int64 = 128 * 1024 * 1024 * 1024
 
     static func capture(in root: URL, excluding: Set<String> = [], ignoringTransientFiles: Bool = false) throws -> Self {
         let before = try FileTree.entries(in: root, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles)
-        let result = try capture(before)
-        guard try FileTree.entries(in: root, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles) == before else {
+        let attributes = try FileExtendedAttributes.capture(root)
+        let result = try capture(before, rootAttributes: attributes)
+        guard try FileTree.entries(in: root, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles) == before,
+              try FileExtendedAttributes.capture(root) == attributes else {
             throw RuriError.message("校验期间目录内容改变，请重试。")
         }
         return result
@@ -27,7 +31,7 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
 
     /// Entries may come from several source roots and use mapped destination
     /// paths. Include their implicit parents so a staged tree compares equally.
-    static func capture(_ files: [FileTree.Entry], requiringDirectories: Set<String> = []) throws -> Self {
+    static func capture(_ files: [FileTree.Entry], requiringDirectories: Set<String> = [], rootAttributes: [FileExtendedAttributes.Receipt]? = nil) throws -> Self {
         guard files.count <= 150_000 else { throw RuriError.message("待校验文件数量超过限制。") }
         var result: [String: Entry] = [:], bytes: Int64 = 0
         for file in files {
@@ -37,23 +41,25 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
                 guard file.size >= 0, file.size <= maximumFileBytes - bytes else { throw RuriError.message("待校验文件大小超过限制。") }
                 bytes += file.size
             }
+            let attributes = try FileExtendedAttributes.capture(file.url)
             result[file.path] = .init(path: file.path, directory: file.directory, size: file.directory ? 0 : file.size,
-                                      sha256: file.directory ? nil : try digest(file.url, expectedSize: file.size))
+                                      sha256: file.directory ? nil : try digest(file.url, expectedSize: file.size), attributes: attributes)
+            guard try FileExtendedAttributes.capture(file.url) == attributes else { throw RuriError.message("校验期间文件附加信息改变，请重试。") }
         }
         let required = Set((Set(result.keys).union(requiringDirectories)).flatMap { parents($0) }).union(requiringDirectories)
         for path in required {
             try validatePath(path)
             if let entry = result[path] {
                 guard entry.directory else { throw RuriError.message("文件与目录路径冲突：\(path)") }
-            } else { result[path] = .init(path: path, directory: true, size: 0, sha256: nil) }
+            } else { result[path] = .init(path: path, directory: true, size: 0, sha256: nil, attributes: []) }
         }
-        let manifest = Self(version: 1, entries: result.values.sorted { $0.path < $1.path })
+        let manifest = Self(version: 2, entries: result.values.sorted { $0.path < $1.path }, rootAttributes: rootAttributes)
         try manifest.validate(); return manifest
     }
 
     func requireMatch(in root: URL, excluding: Set<String> = [], ignoringTransientFiles: Bool = false) throws {
         try validate()
-        guard try Self.capture(in: root, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles) == self else {
+        guard try Self.capture(in: root, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles).matchingFormat(of: self) == self else {
             throw RuriError.message("文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。")
         }
     }
@@ -63,8 +69,8 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
     func requireRemainingMatch(in root: URL) throws {
         try validate()
         let expected = Dictionary(uniqueKeysWithValues: entries.map { ($0.path, $0) })
-        let remaining = try Self.capture(in: root)
-        guard remaining.entries.allSatisfy({ expected[$0.path] == $0 }) else {
+        let remaining = try Self.capture(in: root).matchingFormat(of: self)
+        guard remaining.rootAttributes == rootAttributes, remaining.entries.allSatisfy({ expected[$0.path] == $0 }) else {
             throw RuriError.message("原文件清理期间出现新增或改变的内容，剩余文件已保留。")
         }
     }
@@ -85,10 +91,15 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
     }
 
     func validate() throws {
-        guard version == 1, entries.count <= 150_000 else { throw RuriError.message("文件校验记录版本或数量无效。") }
+        guard (1...2).contains(version), entries.count <= 150_000 else { throw RuriError.message("文件校验记录版本或数量无效。") }
+        if let rootAttributes { guard version >= 2 else { throw RuriError.message("文件校验记录版本无效。") }; try FileExtendedAttributes.validate(rootAttributes) }
         var seen: [String: Bool] = [:], bytes: Int64 = 0
         for entry in entries {
             try Self.validatePath(entry.path)
+            if version >= 2 {
+                guard let attributes = entry.attributes else { throw RuriError.message("文件校验记录缺少附加信息。") }
+                try FileExtendedAttributes.validate(attributes)
+            } else if entry.attributes != nil { throw RuriError.message("文件校验记录版本无效。") }
             guard seen[entry.path] == nil, entry.size >= 0, entry.size <= Self.maximumFileBytes - bytes else { throw RuriError.message("文件校验记录包含重复路径或无效大小。") }
             if entry.directory {
                 guard entry.size == 0, entry.sha256 == nil else { throw RuriError.message("目录校验记录无效。") }
@@ -105,6 +116,11 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
     }
 
     static func validDigest(_ value: String) -> Bool { value.utf8.count == 64 && value.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) } }
+    private func matchingFormat(of receipt: Self) -> Self {
+        Self(version: receipt.version, entries: entries.map { entry in
+            var value = entry; if receipt.version == 1 { value.attributes = nil }; return value
+        }, rootAttributes: receipt.rootAttributes == nil ? nil : rootAttributes)
+    }
     private static func validatePath(_ path: String) throws {
         guard !path.isEmpty, path.utf8.count <= 4096, !path.contains("\\"), !path.contains("\0"),
               !path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == "." || $0 == ".." }) else { throw RuriError.message("文件校验记录包含无效路径。") }

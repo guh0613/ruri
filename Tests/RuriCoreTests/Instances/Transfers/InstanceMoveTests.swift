@@ -12,6 +12,12 @@ struct InstanceMoveTests {
         let oldHistory = try Data(contentsOf: recorder.directory.appendingPathComponent("session.json"))
         let pack = InstalledModpack(format: "Modrinth", name: "Fixture", version: "1", origin: .init(provider: .modrinth, projectID: "fixture", versionID: "v1"), settings: source, files: [])
         try ModpackRegistry.save(pack, paths: paths, instanceID: source.id)
+        try FileExtendedAttributesTests.set(Data("instance label".utf8), at: paths.instance(source.id))
+        try FileExtendedAttributesTests.set(Data("game label".utf8), at: paths.game(source.id))
+        try FileExtendedAttributesTests.set(Data("pack label".utf8), at: paths.instance(source.id).appendingPathComponent("modpack-state.json"))
+        let rootAttributes = try FileExtendedAttributes.capture(paths.instance(source.id))
+        let gameAttributes = try FileExtendedAttributes.capture(paths.game(source.id))
+        let packAttributes = try FileExtendedAttributes.capture(paths.instance(source.id).appendingPathComponent("modpack-state.json"))
         if mode == .shared { try fixture.write("dormant world", "minecraft/saves/Old/level.dat", in: paths.instance(source.id)) }
         let service = InstanceMover(paths: paths)
         let preview = try await service.preview(instanceID: source.id, directoryID: fixture.target.id)
@@ -31,6 +37,9 @@ struct InstanceMoveTests {
         let movedPack = try #require(try ModpackRegistry.load(paths: current, instanceID: source.id))
         #expect(movedPack.origin == pack.origin && movedPack.settings.id == source.id && movedPack.settings.directoryID == fixture.target.id)
         #expect(movedPack.settings.runDirectory == preview.moved.runDirectory)
+        #expect(try FileExtendedAttributes.capture(current.instance(source.id)) == rootAttributes)
+        #expect(try FileExtendedAttributes.capture(current.game(source.id)) == gameAttributes)
+        #expect(try FileExtendedAttributes.capture(current.instance(source.id).appendingPathComponent("modpack-state.json")) == packAttributes)
         #expect(!InstanceMoveGuard.hasPending(paths: current, instanceID: source.id))
         #expect(try await service.pending(instanceID: source.id) == nil)
         if let originalGame { try originalGame.requireMatch(in: paths.game(source.id)) }
