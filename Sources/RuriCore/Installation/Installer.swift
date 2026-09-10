@@ -131,6 +131,9 @@ public actor GameInstaller {
     private func prepareFiles(_ manifest: VersionManifest, instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let resources = try paths.resources(for: instance)
         let arch = Self.architecture(for: manifest)
+        guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
+            throw RuriError.message("此版本的兼容规则不支持当前 macOS 环境。")
+        }
         guard let client = manifest.downloads?["client"] else { throw RuriError.message("版本清单缺少客户端文件") }
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)

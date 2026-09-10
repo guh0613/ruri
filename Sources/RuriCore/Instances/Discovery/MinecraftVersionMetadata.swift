@@ -8,31 +8,9 @@ extension MinecraftDirectoryScan {
         let warnings: [String]
     }
     mutating func version(_ id: String) throws -> VersionMetadata {
-        var chain: [(String, [String: Any])] = [], seen: Set<String> = []
-        var current: String? = id
-        while let name = current {
-            try Task.checkCancellation()
-            guard seen.insert(name).inserted, seen.count <= 32 else { throw RuriError.message("版本继承存在循环或层级过深。") }
-            try Self.checkIdentifier(name)
-            let value = try object(path("versions/\(name)/\(name).json"))
-            chain.append((name, value)); current = try Self.identifier(value["inheritsFrom"])
-        }
-        var nodes: [[String: Any]] = []
-        for (_, value) in chain.reversed() {
-            var pending = [value], index = 0
-            while index < pending.count {
-                guard nodes.count < 1_024 else { throw RuriError.message("版本组件数量超过读取限制。") }
-                let node = pending[index]; index += 1; nodes.append(node)
-                if let patches = node["patches"] {
-                    guard let patches = patches as? [[String: Any]] else { throw RuriError.message("版本补丁清单格式无效。") }
-                    pending += patches
-                }
-            }
-        }
-        let arguments = try nodes.flatMap { node -> [String] in
-            let modern = (node["arguments"] as? [String: Any])?["game"] as? [Any] ?? []
-            return modern.compactMap { $0 as? String } + (try (node["minecraftArguments"] as? String).map(ArgumentTokenizer.split) ?? [])
-        }
+        let graph = try manifestGraph(id), nodes = graph.layers
+        let modern = (graph.value["arguments"] as? [String: Any])?["game"] as? [Any] ?? []
+        let arguments = modern.compactMap { $0 as? String } + (try (graph.value["minecraftArguments"] as? String).map(ArgumentTokenizer.split) ?? [])
         func argument(_ key: String) -> String? {
             guard let index = arguments.lastIndex(of: key), arguments.indices.contains(index + 1) else { return nil }
             return arguments[index + 1]
@@ -40,10 +18,10 @@ extension MinecraftDirectoryScan {
         let declared = nodes.reversed().compactMap { $0["clientVersion"] as? String }.first
             ?? nodes.last(where: { ($0["id"] as? String) == "game" })?["version"] as? String
             ?? argument("--fml.mcVersion")
-        let reference = try chain.compactMap { try Self.identifier($0.1["jar"]) }.first ?? chain.last!.0
+        let reference = try Self.identifier(graph.value["jar"]) ?? id
         try Self.checkIdentifier(reference)
         let jar = try path("versions/\(reference)/\(reference).jar")
-        var warnings: [String] = []
+        var warnings = graph.warnings
         var jarVersion: String?
         if exists(jar) {
             do { jarVersion = try Self.jarVersion(jar) }
@@ -51,7 +29,7 @@ extension MinecraftDirectoryScan {
             catch { warnings.append("无法从游戏 JAR 读取版本信息：\(error.localizedDescription)") }
         } else { warnings.append("本地游戏 JAR 缺失，接入时需要补齐游戏文件。") }
         let gameVersion = [jarVersion, declared].compactMap { $0 }.first(where: { !$0.isEmpty && $0.count <= 128 && !$0.contains("/") && !$0.contains("\\") && !$0.contains("\0") })
-            ?? [reference, chain.last!.0].first(where: Self.isGameVersion)
+            ?? [reference, id].first(where: Self.isGameVersion)
         if gameVersion == nil { warnings.append("无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。") }
         if let jarVersion, let declared, jarVersion != declared { warnings.append("游戏 JAR 与清单声明的版本不同，需要在接入前核对。") }
         var components: [String: String] = [:]
@@ -90,14 +68,15 @@ extension MinecraftDirectoryScan {
         return .init(gameVersion: gameVersion, components: components.sorted { $0.key < $1.key }.map { .init(name: $0.key, version: $0.value) }, warnings: warnings)
     }
 
-    private static func identifier(_ value: Any?) throws -> String? {
+    static func identifier(_ value: Any?) throws -> String? {
         guard let value, !(value is NSNull) else { return nil }
         if let value = value as? String { return value }
         if let value = value as? [String: Any], let id = value["id"] as? String { return id }
         throw RuriError.message("版本引用格式无效。")
     }
-    private static func checkIdentifier(_ name: String) throws {
-        guard !name.isEmpty, name.utf8.count <= 255, name != ".", name != "..", !name.contains("/"), !name.contains("\\"), !name.contains("\0") else { throw RuriError.message("版本名称或继承路径无效。") }
+    static func checkIdentifier(_ name: String) throws {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, name.utf8.count <= 255, name != ".", name != "..", !name.contains("/"), !name.contains("\\"),
+              !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("版本名称或继承路径无效。") }
     }
     private static func isGameVersion(_ value: String) -> Bool {
         value.count <= 128 && value.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:(?:-pre|-rc)[0-9]+| Pre-Release [0-9]+| Release Candidate [0-9]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil

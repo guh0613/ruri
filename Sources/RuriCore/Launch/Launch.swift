@@ -45,6 +45,9 @@ public enum LaunchBuilder {
         guard manifest.inheritsFrom == nil else { throw RuriError.message("启动清单尚未合并父版本") }
         guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message("内存或窗口大小设置无效") }
         let architecture = GameInstaller.architecture(for: manifest)
+        guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: architecture) else {
+            throw RuriError.message("此版本的兼容规则不支持当前 macOS 环境。")
+        }
         guard java.architecture == architecture else { throw RuriError.message("Java 与游戏原生库的架构不匹配。需要 \(architecture)。") }
         guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message("所选 Java 不符合游戏或整合包的版本要求。") }
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
