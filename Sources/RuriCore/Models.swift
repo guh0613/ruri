@@ -40,6 +40,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     /// Stored with the binding in the same state transaction; proves a copy
     /// committed even if its process died before cleaning its journal.
     public var lastRunDirectoryChangeID: UUID?
+    /// Publication receipt for a directly duplicated instance.
+    public var lastInstanceCopyID: UUID?
     public var launchOverrides: InstanceLaunchOverrides?
     /// Only set on a launch/export snapshot, never written over live preferences.
     public var frozenMemory: LaunchMemory?

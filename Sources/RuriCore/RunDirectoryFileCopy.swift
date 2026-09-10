@@ -64,13 +64,13 @@ enum RunDirectoryFileCopy {
     /// Some removable filesystems (including macOS ExFAT) do not implement
     /// RENAME_EXCL. Claim an empty destination exclusively, record its identity,
     /// then copy into it while retaining the complete staged original.
-    static func publish(_ source: URL, to target: URL, directory: Bool, created: (RunDirectoryCopyJournal.Identity) throws -> Void, validate: () throws -> Void, progress: (Int64) -> Void) throws {
+    static func publish(_ source: URL, to target: URL, directory: Bool, excluding: Set<String> = [], created: (RunDirectoryCopyJournal.Identity) throws -> Void, validate: () throws -> Void, progress: (Int64) -> Void) throws {
         if renamex_np(source.path, target.path, UInt32(RENAME_EXCL)) == 0 { return }
         guard errno == ENOTSUP else { throw RuriError.message("无法发布复制项目，目标可能已存在或磁盘位置发生变化：\(target.lastPathComponent)") }
-        try copyForPublication(source, to: target, directory: directory, created: created, validate: validate, progress: progress)
+        try copyForPublication(source, to: target, directory: directory, excluding: excluding, created: created, validate: validate, progress: progress)
     }
 
-    static func copyForPublication(_ source: URL, to target: URL, directory: Bool, created: (RunDirectoryCopyJournal.Identity) throws -> Void, validate: () throws -> Void, progress: (Int64) -> Void) throws {
+    static func copyForPublication(_ source: URL, to target: URL, directory: Bool, excluding: Set<String> = [], created: (RunDirectoryCopyJournal.Identity) throws -> Void, validate: () throws -> Void, progress: (Int64) -> Void) throws {
         var identity: RunDirectoryCopyJournal.Identity?
         func record() throws {
             let value = try RunDirectoryCopyJournal.Identity.read(target)
@@ -84,7 +84,7 @@ enum RunDirectoryFileCopy {
         if directory {
             guard mkdir(target.path, S_IRWXU) == 0 else { throw RuriError.message("无法创建发布目录，已有内容未覆盖：\(target.lastPathComponent)") }
             try record()
-            try entries(FileTree.entries(in: source), to: target, validate: check) { amount, _ in progress(amount) }
+            try entries(FileTree.entries(in: source, excluding: excluding), to: target, validate: check) { amount, _ in progress(amount) }
             try check()
             let attributes = try FileManager.default.attributesOfItem(atPath: source.path)
             try FileManager.default.setAttributes([.posixPermissions: attributes[.posixPermissions] ?? 0o755, .modificationDate: attributes[.modificationDate] ?? Date()], ofItemAtPath: target.path)

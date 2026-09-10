@@ -145,6 +145,7 @@ public enum RunDirectoryCopyGuard {
         return try sharedMarker(paths: paths, instanceID: instanceID)?.owner
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
+        try InstanceCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: id)
         if FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent("run-directory-change").path) {
             guard let id, try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).id == id else { throw RuriError.message("此实例有未完成的运行目录复制，请在实例设置中恢复后继续。") }
         }

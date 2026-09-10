@@ -40,6 +40,7 @@ public enum GameDirectoryStore {
         defer { withExtendedLifetime(leases) {}; withExtendedLifetime(sharedLease) {} }
         return try StateStore.update(paths) { state in
             guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }), let original = state.gameDirectories?[index] else { throw RuriError.message("找不到实例文件夹。") }
+            try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             let current = paths.configured(with: state)
             state.gameDirectories?[index] = try original.relocated(to: url, paths: current)
             if original.url.standardizedFileURL.resolvingSymlinksInPath().path != url.standardizedFileURL.resolvingSymlinksInPath().path,

@@ -62,6 +62,7 @@ public final class GameRunLease: @unchecked Sendable {
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
         guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
         if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
+        if InstanceCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
         if paths.runDirectory(for: instanceID) != .isolated, SharedGameDirectoryLease.isHeld(paths: paths, instanceID: instanceID) { return true }
         guard let file = try? LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID)) else { return true }
         guard FileManager.default.fileExists(atPath: file.path) else { return false }
