@@ -5,6 +5,7 @@ import RuriCore
     @MainActor static func main() async {
         do {
             let args = Array(CommandLine.arguments.dropFirst())
+            if args.first == "scan-minecraft" { try await scanMinecraft(args); return }
             let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
             let basePaths = LauncherPaths(root: root)
             let paths = try basePaths.configured(with: StateStore.load(basePaths))
@@ -304,6 +305,7 @@ import RuriCore
                   recover-instance-copy <instance-uuid> [--apply]
                   move-instance <instance-uuid> <directory-uuid|default> [--apply]
                   recover-instance-move <instance-uuid> [--apply] [--keep-source]
+                  scan-minecraft <directory-or-version-json> [--json]
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
