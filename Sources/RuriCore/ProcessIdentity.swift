@@ -37,8 +37,8 @@ public final class GameRunLease: @unchecked Sendable {
     private init(_ descriptor: Int32, sharedDirectory: SharedGameDirectoryLease?) { self.descriptor = descriptor; self.sharedDirectory = sharedDirectory }
     deinit { Darwin.close(descriptor) }
     public static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID? = nil, directoryChangeID: UUID? = nil) throws -> GameRunLease {
-        try paths.prepareInstance(instanceID)
         try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
+        try paths.prepareInstance(instanceID)
         let file = try LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID))
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
         guard fd >= 0 else { throw RuriError.message("无法取得实例运行锁。") }

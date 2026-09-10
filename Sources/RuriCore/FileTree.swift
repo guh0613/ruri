@@ -3,7 +3,7 @@ import ZIPFoundation
 
 public enum FileTree {
     struct Entry: Equatable, Sendable { let url: URL; let path: String; let directory: Bool; let size: Int64; let modified: Date }
-    static func entries(in root: URL, excluding: Set<String> = []) throws -> [Entry] {
+    static func entries(in root: URL, excluding: Set<String> = [], ignoringTransientFiles: Bool = true) throws -> [Entry] {
         let fm = FileManager.default
         guard try root.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("请选择实际目录，而不是符号链接。") }
         var pending: [(URL, String)] = [(root, "")]; var entries: [Entry] = []
@@ -11,7 +11,7 @@ public enum FileTree {
             try Task.checkCancellation()
             for url in try fm.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey]).sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
                 let relative = prefix + url.lastPathComponent
-                if [".DS_Store", ".ruri-partials"].contains(url.lastPathComponent) || excluding.contains(relative) || excluding.contains(where: { $0.hasSuffix("/") && relative.hasPrefix($0) }) { continue }
+                if (ignoringTransientFiles && [".DS_Store", ".ruri-partials"].contains(url.lastPathComponent)) || excluding.contains(relative) || excluding.contains(where: { $0.hasSuffix("/") && relative.hasPrefix($0) }) { continue }
                 let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
                 guard info.isSymbolicLink != true else { throw RuriError.message("目录包含符号链接，无法完整复制：\(relative)") }
                 guard info.isDirectory == true || info.isRegularFile == true else { throw RuriError.message("不支持的文件类型：\(relative)") }

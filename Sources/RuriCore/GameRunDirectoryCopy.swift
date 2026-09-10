@@ -2,7 +2,7 @@ import Foundation
 import Darwin
 
 public struct RunDirectoryCopyProgress: Sendable {
-    public enum Phase: String, Sendable { case copying, publishing, committed }
+    public enum Phase: String, Sendable { case verifying, copying, publishing, committed }
     public let phase: Phase
     public let completed: Int
     public let total: Int
@@ -10,6 +10,7 @@ public struct RunDirectoryCopyProgress: Sendable {
     public let totalBytes: Int64
     public var progress: InstallProgress {
         switch phase {
+        case .verifying: .init("正在校验文件内容…", completed: completed, total: total)
         case .copying: .init("正在复制游戏文件（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: completed, total: total)
         case .publishing: .init("正在写入目标（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
         case .committed: .init("目录已更新，正在清理复制记录", completed: 1, total: 1)

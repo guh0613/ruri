@@ -17,6 +17,7 @@ public struct InstanceCopyPreview: Identifiable, Sendable {
     public var bytes: Int64 { entries.filter { !$0.directory }.reduce(0) { $0 + $1.size } }
     let targetCollection: GameDirectory?
     let entries: [FileTree.Entry]
+    let manifest: FileTreeManifest
 }
 public struct InstanceCopyRecovery: Sendable {
     public let owner: InstanceCopyOwner
@@ -43,7 +44,9 @@ public actor InstanceCopier {
         try journal.validateTarget(paths: current)
         let access = try await acquire(original, paths: current); defer { withExtendedLifetime(access) {} }
         let snapshot = try entries(original, paths: current, options: options)
-        return .init(id: id, source: original, copy: copy, sourceGame: current.game(original.id), destination: try journal.destination(paths: current), options: options, targetCollection: collection, entries: snapshot)
+        let manifest = try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"])
+        guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message("源文件在预览期间改变，请重新预览。") }
+        return .init(id: id, source: original, copy: copy, sourceGame: current.game(original.id), destination: try journal.destination(paths: current), options: options, targetCollection: collection, entries: snapshot, manifest: manifest)
     }
 
     public func copy(_ preview: InstanceCopyPreview, progress: @Sendable (RunDirectoryCopyProgress) -> Void = { _ in }) async throws -> RunDirectoryCopyResult {
@@ -51,7 +54,8 @@ public actor InstanceCopier {
         try validate(preview, state: state)
         let source = try instance(preview.source.id, in: state)
         let access = try await acquire(source, paths: current); defer { withExtendedLifetime(access) {} }
-        guard try entries(source, paths: current, options: preview.options) == preview.entries else { throw RuriError.message("源文件在预览后改变，请重新预览再复制。") }
+        progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: preview.bytes))
+        try validateFiles(preview, paths: current)
         var journal = InstanceCopyJournal(id: preview.id, original: preview.source, copy: preview.copy, targetCollection: preview.targetCollection, createdAt: Date(), phase: .copying)
         try journal.validateTarget(paths: current)
         let root = try InstanceCopyJournal.root(paths: current, sourceID: source.id)
@@ -80,9 +84,13 @@ public actor InstanceCopier {
                 }
             }
             try FileManager.default.createDirectory(at: incoming.appendingPathComponent("minecraft"), withIntermediateDirectories: true)
+            progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: preview.bytes))
+            try preview.manifest.requireMatch(in: incoming, ignoringTransientFiles: true)
             try rebindModpack(incoming, copy: journal.copy)
             try Task.checkCancellation()
-            guard try entries(source, paths: current, options: preview.options) == preview.entries else { throw RuriError.message("源文件在复制期间改变，工作副本已保留，请重新预览。") }
+            try validateFiles(preview, paths: current)
+            let publishedManifest = try FileTreeManifest.capture(in: incoming, ignoringTransientFiles: true)
+            journal.verificationDigest = try publishedManifest.save(to: root.appendingPathComponent("verification.json"))
             try InstanceCopyGuard.mark(journal, at: incoming)
             journal.stagedIdentity = try .read(incoming); journal.phase = .publishing; try journal.save(paths: current)
             let publicationBytes = try FileTree.entries(in: incoming, excluding: [InstanceCopyGuard.markerName]).filter { !$0.directory }.reduce(Int64(0)) { $0 + $1.size }
@@ -98,6 +106,9 @@ public actor InstanceCopier {
             guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else { throw RuriError.message("发布副本的文件身份改变，工作区已保留。") }
             progress(.init(phase: .publishing, completed: 1, total: 1, bytesCopied: publicationBytes, totalBytes: publicationBytes))
             try Task.checkCancellation()
+            progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: publicationBytes))
+            try validateFiles(preview, paths: current)
+            try publishedManifest.requireMatch(in: destination, excluding: [InstanceCopyGuard.markerName], ignoringTransientFiles: true)
             committed = try StateStore.update(paths) { latest in
                 try validate(preview, state: latest)
                 try journal.validateTarget(paths: paths.configured(with: latest))
@@ -161,6 +172,12 @@ public actor InstanceCopier {
         let journal = InstanceCopyJournal(id: preview.id, original: original, copy: preview.copy, targetCollection: preview.targetCollection, createdAt: Date(), phase: .copying)
         try journal.validateTarget(paths: paths.configured(with: state))
     }
+    private func validateFiles(_ preview: InstanceCopyPreview, paths: LauncherPaths) throws {
+        let snapshot = try entries(preview.source, paths: paths, options: preview.options)
+        guard snapshot == preview.entries,
+              try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"]) == preview.manifest,
+              try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message("源文件内容在预览后改变，请重新预览再复制。") }
+    }
     private func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
         let access = try InstanceCopyAccess(instance: instance, paths: paths)
         try await ContentManager(paths: paths, instanceID: instance.id).recover()
@@ -215,6 +232,10 @@ public actor InstanceCopier {
         let destination = try journal.destination(paths: paths)
         guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else {
             throw RuriError.message("已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。")
+        }
+        if let digest = journal.verificationDigest {
+            let record = try InstanceCopyJournal.root(paths: paths, sourceID: journal.original.id).appendingPathComponent("verification.json")
+            try FileTreeManifest.load(from: record, expectedDigest: digest).requireMatch(in: destination, excluding: [InstanceCopyGuard.markerName], ignoringTransientFiles: true)
         }
         try InstanceCopyGuard.clear(journal, at: destination)
         let record = try retire(journal, paths: paths), workspace = try journal.workspace(paths: paths)

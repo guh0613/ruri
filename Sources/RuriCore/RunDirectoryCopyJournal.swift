@@ -173,6 +173,9 @@ public enum RunDirectoryCopyGuard {
         try FileManager.default.removeItem(at: markerURL(paths: paths, instanceID: journal.original.id))
     }
     static func decode<T: Decodable>(_ url: URL, limit: Int) throws -> T {
+        try JSONDecoder().decode(T.self, from: read(url, limit: limit))
+    }
+    static func read(_ url: URL, limit: Int) throws -> Data {
         let fd = open(url.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
         guard fd >= 0 else { throw RuriError.message("无法读取运行目录复制记录，请检查 \(url.path)。") }
         let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true); defer { try? handle.close() }
@@ -180,6 +183,6 @@ public enum RunDirectoryCopyGuard {
         guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= limit else { throw RuriError.message("运行目录复制记录不是有效文件或超过大小限制。") }
         let data = try handle.read(upToCount: limit + 1) ?? Data()
         guard data.count <= limit else { throw RuriError.message("运行目录复制记录超过大小限制。") }
-        return try JSONDecoder().decode(T.self, from: data)
+        return data
     }
 }

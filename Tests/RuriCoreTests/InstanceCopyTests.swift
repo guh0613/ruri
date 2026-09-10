@@ -131,6 +131,7 @@ struct InstanceCopyTests {
             let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
+            journal.version = 1 // Recovery remains compatible with pre-verification journals.
             let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id), incoming = try journal.incoming(paths: paths)
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
             try FileManager.default.createDirectory(at: incoming.appendingPathComponent("minecraft"), withIntermediateDirectories: true)
@@ -165,6 +166,7 @@ struct InstanceCopyTests {
         let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
         var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
+        journal.version = 1
         let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id), incoming = try journal.incoming(paths: paths)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         try FileManager.default.createDirectory(at: incoming, withIntermediateDirectories: true)
@@ -192,5 +194,74 @@ struct InstanceCopyTests {
         #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
         #expect(try StateStore.load(paths).instances.count == 1)
         #expect(try String(contentsOf: paths.game(source.id).appendingPathComponent("options.txt"), encoding: .utf8) == "options")
+    }
+    @Test func equalSizeSourceEditsCannotBypassPreviewOrPublicationChecks() async throws {
+        for afterPublication in [false, true] {
+            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
+            let file = paths.game(source.id).appendingPathComponent("options.txt")
+            let date = try #require(try file.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate)
+            @Sendable func edit() throws {
+                let handle = try FileHandle(forWritingTo: file); defer { try? handle.close() }
+                try handle.write(contentsOf: Data("changed".utf8)); try handle.synchronize()
+                try FileManager.default.setAttributes([.modificationDate: date], ofItemAtPath: file.path)
+            }
+            if !afterPublication { try edit() }
+            await #expect(throws: (any Error).self) {
+                _ = try await service.copy(preview) { progress in
+                    if afterPublication && progress.phase == .publishing && progress.completed == 1 {
+                        do { try edit() } catch { Issue.record(error) }
+                    }
+                }
+            }
+            #expect(try StateStore.load(paths).instances == [source])
+            #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
+            #expect(try String(contentsOf: file, encoding: .utf8) == "changed")
+        }
+    }
+
+    @Test func committedCopiesKeepRecoveryDataUntilContentAndReceiptAreRestored() async throws {
+        for damage in ["content", "record", "missing-record"] {
+            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
+            let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id)
+            let record = root.appendingPathComponent("verification.json"), backup = paths.cache.appendingPathComponent("receipt-backup.json")
+            let file = preview.destination.appendingPathComponent("minecraft/options.txt")
+            let result = try await service.copy(preview) { progress in
+                if progress.phase == .committed {
+                    do {
+                        try FileManager.default.copyItem(at: record, to: backup)
+                        if damage == "content" { try Data("changed".utf8).write(to: file) }
+                        else if damage == "record" { try Data("{}".utf8).write(to: record) }
+                        else { try FileManager.default.removeItem(at: record) }
+                    } catch { Issue.record(error) }
+                }
+            }
+            #expect(result.state.instances.count == 2 && result.warning != nil)
+            #expect(InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
+            await #expect(throws: (any Error).self) { try await service.recover(sourceID: source.id, transactionID: preview.id) }
+            #expect(FileManager.default.fileExists(atPath: root.path))
+            if damage == "content" { try Data("options".utf8).write(to: file) }
+            else { try Data(contentsOf: backup).write(to: record, options: .atomic) }
+            let recovered = try await service.recover(sourceID: source.id, transactionID: preview.id)
+            #expect(recovered.warning == nil && recovered.preservedCopy == nil)
+            #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
+        }
+    }
+
+    @Test func newPublicationJournalsRequireContentReceiptsAndPendingTargetsAreNotPrepared() async throws {
+        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let preview = try await InstanceCopier(paths: paths).preview(instanceID: source.id, name: "Copy", directoryID: target.id)
+        var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
+        #expect(throws: (any Error).self) { try journal.validate() }
+        journal.phase = .copying
+        let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try journal.save(paths: paths)
+        try FileManager.default.createDirectory(at: preview.destination, withIntermediateDirectories: true)
+        try InstanceCopyGuard.mark(journal, at: preview.destination)
+        let before = try FileTreeManifest.capture(in: preview.destination)
+        #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths.including(preview.copy), instanceID: preview.copy.id) }
+        try before.requireMatch(in: preview.destination)
     }
 }

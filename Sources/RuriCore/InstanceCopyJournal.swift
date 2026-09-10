@@ -11,7 +11,7 @@ public struct InstanceCopyOwner: Codable, Sendable {
 
 struct InstanceCopyJournal: Codable, Sendable {
     enum Phase: String, Codable, Sendable { case copying, publishing, committed, recovering }
-    var version = 1
+    var version = 2
     let id: UUID
     let original: GameInstance
     let copy: GameInstance
@@ -20,6 +20,9 @@ struct InstanceCopyJournal: Codable, Sendable {
     var phase: Phase
     var stagedIdentity: RunDirectoryCopyJournal.Identity?
     var publishedIdentity: RunDirectoryCopyJournal.Identity?
+    /// Older copy journals have no content receipt. New copies persist a bounded
+    /// manifest before publication and keep its digest in this atomic record.
+    var verificationDigest: String?
     var owner: InstanceCopyOwner { .init(transactionID: id, sourceID: original.id, copyID: copy.id, sourceName: original.name, copyName: copy.name) }
     static func root(paths: LauncherPaths, sourceID: UUID) throws -> URL {
         try LauncherPaths.safePath("instance-copy-transactions/\(sourceID.uuidString)", within: paths.root)
@@ -31,11 +34,15 @@ struct InstanceCopyJournal: Codable, Sendable {
         try record.validate(); return record
     }
     func validate() throws {
-        guard version == 1, copy.id != original.id, copy.runDirectory == .isolated, copy.customRunDirectory == nil,
+        guard (1...2).contains(version), copy.id != original.id, copy.runDirectory == .isolated, copy.customRunDirectory == nil,
               copy.lastInstanceCopyID == id, copy.frozenMemory == nil,
               copy.directoryID == (targetCollection?.id ?? GameDirectory.defaultID),
               !copy.name.isEmpty, copy.name.count <= 256, !original.name.isEmpty, original.name.count <= 1024 else { throw RuriError.message("实例复制信息无效，请检查源实例和副本设置。") }
         _ = try ownerData()
+        if version >= 2, stagedIdentity != nil || publishedIdentity != nil || phase == .publishing || phase == .committed {
+            guard verificationDigest != nil else { throw RuriError.message("实例副本缺少文件校验记录，工作副本已保留。") }
+        }
+        if let verificationDigest, !FileTreeManifest.validDigest(verificationDigest) { throw RuriError.message("实例副本的校验记录摘要无效。") }
         if let collection = targetCollection {
             guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), (collection.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("复制目标的文件夹记录无效。") }
         }
