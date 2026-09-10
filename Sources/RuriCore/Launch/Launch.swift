@@ -50,13 +50,16 @@ public enum LaunchBuilder {
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         let jarID = manifest.jar ?? instance.gameVersion
         let jar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: paths.versions)
+        // Bootstrap loaders compare classpath and module-path locations. Expand
+        // both from the same canonical root when the library folder is an alias.
+        let libraries = paths.libraries.standardizedFileURL.resolvingSymlinksInPath()
         var classpath: [String] = []
         for library in manifest.libraries where GameInstaller.allowed(library, architecture: architecture) {
-            if let artifact = try library.artifact() { classpath.append(try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: paths.libraries).path) }
+            if let artifact = try library.artifact() { classpath.append(try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: libraries).path) }
         }
         classpath.append(jar.path)
         for artifact in manifest.generatedLibraries ?? [] {
-            guard let relative = artifact.path, FileManager.default.fileExists(atPath: try LauncherPaths.safePath(relative, within: paths.libraries).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
+            guard let relative = artifact.path, FileManager.default.fileExists(atPath: try LauncherPaths.safePath(relative, within: libraries).path) else { throw RuriError.message("加载器生成文件缺失，请先修复实例。") }
         }
         for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message("游戏文件缺失：\(URL(fileURLWithPath: file).lastPathComponent)。请先修复实例。") }
         let values: [String: String] = [
@@ -69,7 +72,7 @@ public enum LaunchBuilder {
             "version_type": manifest.type ?? "release", "user_properties": "{}",
             "natives_directory": natives.path, "launcher_name": "Ruri", "launcher_version": "0.1.0",
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
-            "library_directory": paths.libraries.path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
+            "library_directory": libraries.path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
             "resolution_width": String(instance.width), "resolution_height": String(instance.height),
             "game_assets": paths.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path
         ]
