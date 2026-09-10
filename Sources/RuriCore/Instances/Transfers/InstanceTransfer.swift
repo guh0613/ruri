@@ -114,7 +114,7 @@ struct MultiMCPack: Codable {
 
 public actor InstanceTransfer {
     let paths: LauncherPaths
-    static let loaderIDs: [String: LoaderKind] = ["net.fabricmc.fabric-loader": .fabric, "org.quiltmc.quilt-loader": .quilt, "net.minecraftforge": .forge, "net.neoforged": .neoforge]
+    static let loaderIDs: [String: LoaderKind] = ["net.fabricmc.fabric-loader": .fabric, "org.quiltmc.quilt-loader": .quilt, "net.minecraftforge": .forge, "net.neoforged": .neoforge, "com.mumfrey.liteloader": .liteloader]
     static let excluded: Set<String> = [".ruri", "logs", "crash-reports", "assets", "libraries", "versions", "natives", "webcache", "launcher_accounts.json", "launcher_profiles.json", "usercache.json", "usernamecache.json", "launcher_msa_credentials.bin", ".fabric", ".quilt", ".mixin.out", ".optifine", "downloads", "server-resource-packs", "mods/.connector", "CustomSkinLoader/caches", "local/crash_assistant"]
     public init(paths: LauncherPaths) { self.paths = paths }
 
@@ -281,6 +281,9 @@ public actor InstanceTransfer {
         guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。") }
         if instance.loader == .legacyfabric && [.multimc, .mrpack].contains(format) {
             throw RuriError.message("此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
+        }
+        if instance.loader == .liteloader && [.multimc, .mrpack].contains(format) {
+            throw RuriError.message("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
         }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         // Portable formats already carry the maximum heap. Encode additional

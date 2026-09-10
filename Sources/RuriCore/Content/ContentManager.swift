@@ -7,6 +7,7 @@ public enum ContentKind: String, Codable, CaseIterable, Sendable, Identifiable {
     public var title: String { switch self { case .mod: "模组"; case .resourcepack: "资源包"; case .shader: "光影" } }
     public var folder: String { switch self { case .mod: "mods"; case .resourcepack: "resourcepacks"; case .shader: "shaderpacks" } }
     public var fileExtension: String { self == .mod ? "jar" : "zip" }
+    public var fileExtensions: [String] { self == .mod ? ["jar", "litemod"] : ["zip"] }
 }
 
 public struct ManagedContent: Codable, Identifiable, Equatable, Sendable {
@@ -154,7 +155,7 @@ public actor ContentManager {
         for i in installs.indices {
             if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
             let record = installs[i].record
-            guard !record.filename.contains("/"), !record.filename.contains("\\"), URL(fileURLWithPath: record.filename).pathExtension.lowercased() == record.kind.fileExtension else { throw RuriError.message("无效内容文件名：\(record.filename)") }
+            guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()) else { throw RuriError.message("无效内容文件名：\(record.filename)") }
             let check = DownloadItem(url: nil, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)
             guard DownloadManager.valid(installs[i].source, item: check) else { throw RuriError.message("待安装文件校验失败：\(record.filename)") }
         }
@@ -211,7 +212,7 @@ public actor ContentManager {
             guard attributes.isRegularFile == true else { return nil }
             let enabled = !url.lastPathComponent.hasSuffix(".disabled")
             let filename = enabled ? url.lastPathComponent : String(url.lastPathComponent.dropLast(9))
-            guard URL(fileURLWithPath: filename).pathExtension.lowercased() == kind.fileExtension else { return nil }
+            guard kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) else { return nil }
             let record = managed.first { $0.kind == kind && $0.filename == filename && $0.enabled == enabled }
             let info = kind == .mod ? Self.modInfo(url) : nil
             return LocalContentFile(url: url, filename: filename, title: info?.name ?? record?.title ?? URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent, version: info?.version ?? record?.versionName, modID: info?.id, kind: kind, enabled: enabled, size: Int64(attributes.fileSize ?? 0), managed: record)
@@ -226,7 +227,7 @@ public actor ContentManager {
         let existing = try scan(kind)
         var importedIDs = Set<String>()
         for file in files {
-            guard file.pathExtension.lowercased() == kind.fileExtension else { throw RuriError.message("请选择 .\(kind.fileExtension) 文件") }
+            guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message("请选择 \(kind.fileExtensions.map { "." + $0 }.joined(separator: " 或 ")) 文件") }
             _ = try Archive(url: file, accessMode: .read)
             let size = try file.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
             let info = kind == .mod ? Self.modInfo(file) : nil
@@ -241,7 +242,7 @@ public actor ContentManager {
     static func modInfo(_ url: URL) -> ModInfo? {
         let archive: Archive
         do { archive = try Archive(url: url, accessMode: .read) } catch { return nil }
-        for path in ["fabric.mod.json", "quilt.mod.json"] {
+        for path in ["fabric.mod.json", "quilt.mod.json", "litemod.json"] {
             guard let entry = archive[path], entry.uncompressedSize <= 1024 * 1024 else { continue }
             var data = Data()
             guard (try? archive.extract(entry) { data.append($0) }) != nil,
@@ -250,6 +251,7 @@ public actor ContentManager {
                 let metadata = quilt["metadata"] as? [String: Any]
                 return ModInfo(id: quilt["id"] as? String, name: metadata?["name"] as? String, version: quilt["version"] as? String)
             }
+            if path == "litemod.json" { return ModInfo(id: object["name"] as? String, name: object["displayName"] as? String ?? object["name"] as? String, version: object["version"] as? String) }
             return ModInfo(id: object["id"] as? String, name: object["name"] as? String, version: object["version"] as? String)
         }
         return nil

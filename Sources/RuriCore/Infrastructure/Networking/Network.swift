@@ -44,7 +44,7 @@ public struct DownloadItem: Sendable {
     public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64? = nil) {
         self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.md5 = md5; self.size = size
     }
-    public init(_ artifact: Artifact, to destination: URL) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, size: artifact.size) }
+    public init(_ artifact: Artifact, to destination: URL) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, md5: artifact.md5, size: artifact.size) }
 }
 
 public actor DownloadManager {

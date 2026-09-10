@@ -23,6 +23,7 @@ public actor GameInstaller {
     public func loaderVersions(_ loader: LoaderKind, game: String) async throws -> [String] {
         struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
         guard loader != .vanilla else { return [] }
+        if loader == .liteloader { return try await LiteLoaderCatalog.releases(game: game).map(\.version) }
         if loader == .legacyfabric {
             struct Game: Decodable, Sendable { let version: String }
             let games = try await HTTPClient.shared.get([Game].self, from: LoaderEndpoints.legacyFabricGames)
@@ -54,6 +55,9 @@ public actor GameInstaller {
             let child: VersionManifest
             if instance.loader.usesInstaller {
                 child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
+            } else if instance.loader == .liteloader {
+                let result = try await LiteLoaderCatalog.profile(game: instance.gameVersion, version: loaderVersion, base: manifest)
+                child = result.0; instance.loaderVersion = result.1
             } else {
                 let url = try LoaderEndpoints.profile(loader: instance.loader, game: instance.gameVersion, version: loaderVersion)
                 child = try await HTTPClient.shared.get(VersionManifest.self, from: url)

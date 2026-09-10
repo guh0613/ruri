@@ -49,7 +49,7 @@ extension InstanceTransfer {
               actual.count == content.count, Set(content.map { $0.record.relativePath.lowercased() }).count == content.count else { throw RuriError.message("请先解析并下载整合包清单中的 CurseForge 文件。") }
         for item in content {
             let record = item.record
-            guard !record.filename.contains("/"), !record.filename.contains("\\"), URL(fileURLWithPath: record.filename).pathExtension.lowercased() == record.kind.fileExtension,
+            guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()),
                   record.sha1 != nil || record.md5 != nil,
                   DownloadManager.valid(item.source, item: DownloadItem(url: nil, destination: item.source, sha1: record.sha1, md5: record.md5, size: record.size)) else { throw RuriError.message("整合包文件校验失败：\(record.filename)") }
         }

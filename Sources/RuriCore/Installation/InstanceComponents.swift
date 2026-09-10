@@ -23,6 +23,9 @@ public actor InstanceComponents {
         let supported = Set(LoaderKind.allCases.map(\.title))
         let additional = (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter { !supported.contains($0.name) }
         if !additional.isEmpty { return "此实例还有 " + additional.map(\.name).joined(separator: "、") + "，暂不支持保留这些组件的更换操作。" }
+        if (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter({ supported.contains($0.name) }).count > 1 {
+            return "此实例同时使用多个加载器，暂不支持保留组合的更换操作。"
+        }
         return nil
     }
 
@@ -182,7 +185,7 @@ public actor InstanceComponents {
     }
     private func backupFile(_ id: UUID, paths: LauncherPaths) throws -> URL { try LauncherPaths.safePath("previous-components.json", within: paths.instance(id)) }
     private static func isLoaderLibrary(_ library: Library) -> Bool {
-        ["net.fabricmc:", "net.legacyfabric:", "org.quiltmc:", "net.minecraftforge:", "net.neoforged:", "cpw.mods:"].contains { library.name.hasPrefix($0) }
+        ["net.fabricmc:", "net.legacyfabric:", "com.mumfrey:liteloader:", "org.quiltmc:", "net.minecraftforge:", "net.neoforged:", "cpw.mods:"].contains { library.name.hasPrefix($0) }
             || library.name.hasPrefix("org.lwjgl.lwjgl:") && library.name.contains("+legacyfabric.")
     }
     private func encode(_ manifest: VersionManifest, gameVersion: String, components: [MinecraftDirectoryComponent]) throws -> Data {

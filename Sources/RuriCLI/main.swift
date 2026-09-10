@@ -121,7 +121,7 @@ import RuriCore
                 print("Latest release: \(catalog.latest.release)")
                 for version in catalog.versions.prefix(20) { print("\(version.id) [\(version.type)]") }
             case "install":
-                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric]") }
+                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader]") }
                 guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
                 instance.launchOverrides = .init()

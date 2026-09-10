@@ -87,7 +87,7 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
         guard gameVersions.contains(instance.gameVersion) else { return false }
         guard kind == .mod else { return true }
         guard instance.loader != .vanilla else { return false }
-        let tags = Set(gameVersions.map { $0.lowercased() }).intersection(["fabric", "quilt", "forge", "neoforge"])
+        let tags = Set(gameVersions.map { $0.lowercased() }).intersection(["fabric", "quilt", "forge", "neoforge", "liteloader"])
         return tags.isEmpty || tags.contains(instance.loader == .legacyfabric ? "fabric" : instance.loader.rawValue)
     }
 }
@@ -199,7 +199,7 @@ public actor CurseForgeService {
         guard id > 0 else { throw RuriError.message("无效的 CurseForge 项目标识") }
         var query: [URLQueryItem] = [.init(name: "pageSize", value: "50"), .init(name: "index", value: String(max(0, offset)))]
         if let game { query.append(.init(name: "gameVersion", value: game)) }
-        let loaders: [LoaderKind: Int] = [.forge: 1, .fabric: 4, .legacyfabric: 4, .quilt: 5, .neoforge: 6]
+        let loaders: [LoaderKind: Int] = [.forge: 1, .liteloader: 3, .fabric: 4, .legacyfabric: 4, .quilt: 5, .neoforge: 6]
         if let loader, let value = loaders[loader] { query.append(.init(name: "modLoaderType", value: String(value))) }
         let result = try await request(CurseForgePage<CurseForgeFile>.self, route: .projectFiles(id), query: query)
         guard result.data.allSatisfy({ $0.modId == id }) else { throw RuriError.message("CurseForge 返回的版本列表与项目不一致") }

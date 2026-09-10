@@ -130,7 +130,7 @@ struct InstanceContentView: View {
             }
         }
         .onDisappear { updateTask?.cancel() }
-        .fileImporter(isPresented: $showImporter, allowedContentTypes: [kind == .mod ? (UTType(filenameExtension: "jar") ?? .data) : .zip], allowsMultipleSelection: true) { result in
+        .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data }, allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
                 mutate("导入 \(urls.count) 个\(kind.title)") {
