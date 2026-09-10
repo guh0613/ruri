@@ -23,7 +23,7 @@ public struct MinecraftDirectoryVersion: Identifiable, Sendable {
     let documents: [MinecraftDirectoryDocument]
 }
 
-public struct MinecraftDirectoryComponent: Identifiable, Equatable, Sendable {
+public struct MinecraftDirectoryComponent: Identifiable, Codable, Equatable, Sendable {
     public var id: String { name + ":" + version }
     public let name: String
     public let version: String

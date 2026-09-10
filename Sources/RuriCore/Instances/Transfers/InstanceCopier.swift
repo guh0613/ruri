@@ -197,15 +197,17 @@ public actor InstanceCopier {
             result.append(.init(url: game, path: "minecraft", directory: true, size: 0, modified: attributes.contentModificationDate ?? .distantPast))
             result += try FileTree.entries(in: paths.game(source.id), excluding: excluded).map { .init(url: $0.url, path: "minecraft/" + $0.path, directory: $0.directory, size: $0.size, modified: $0.modified) }
         }
-        for name in ["version.json", "natives", "source-mcbbs.packmeta", "modpack-state.json", "content.json"] + (options.includeBackups ? ["world-backups"] : []) {
+        for name in ["version.json", "natives", "source-mcbbs.packmeta", "modpack-state.json", "content.json"] + (source.importedInstallation != nil ? ["installation"] : []) + (options.includeBackups ? ["world-backups"] : []) {
             let root = ["content.json", "world-backups"].contains(name) ? paths.gameDataState(source.id) : paths.instance(source.id)
             let file = try LauncherPaths.safePath(name, within: root)
             guard FileManager.default.fileExists(atPath: file.path) else {
                 if name == "version.json" && source.installed { throw RuriError.message("已安装实例缺少版本清单，请先修复再复制。") }
+                if name == "installation" && source.installed { throw RuriError.message("本地游戏安装文件夹缺失，请恢复文件后再复制。") }
                 continue
             }
             let values = try file.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
             guard values.isSymbolicLink != true, values.isDirectory == true || values.isRegularFile == true else { throw RuriError.message("实例元数据包含不支持的文件：\(name)") }
+            if name == "installation" && values.isDirectory != true { throw RuriError.message("本地游戏安装位置不是文件夹，请检查实例文件。") }
             if name == "version.json" && source.installed {
                 guard values.isRegularFile == true, (values.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message("实例版本清单无效。") }
                 let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: file))

@@ -15,6 +15,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var extraGameArguments: String?
     public var supportedJavaMajors: [Int]?
     public var packLibraries: [Library]?
+    public var importedInstallation: ImportedMinecraftInstallation?
     public var width: Int
     public var height: Int
     public var favorite: Bool
@@ -43,5 +44,11 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
         guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message("整合包指定的 Java 版本与游戏要求的 Java \(minimum) 不兼容。") }
         return selected
     }
-    public var subtitle: String { loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")" }
+    public var subtitle: String {
+        if let importedInstallation {
+            let components = importedInstallation.components.map { $0.name + " " + $0.version }
+            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? ["本地版本"] : components)).joined(separator: " · ")
+        }
+        return loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")"
+    }
 }

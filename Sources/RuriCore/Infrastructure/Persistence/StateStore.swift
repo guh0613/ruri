@@ -5,7 +5,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...9).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...10).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
         try validate(result, paths: paths)
         return result
     }
@@ -35,10 +35,11 @@ public enum StateStore {
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
         guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message("启动快照不能覆盖实例设置，请保存原实例的覆盖项。") }
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
+        for instance in state.instances { try instance.importedInstallation?.validate() }
         try paths.configured(with: state).validateDirectoryConfiguration()
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
-        var state = input; state.schemaVersion = 9; state.revision = UUID()
+        var state = input; state.schemaVersion = 10; state.revision = UUID()
         normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -102,7 +103,7 @@ public enum StateStore {
             // Mode and limits form one policy. Combining two valid edits can
             // otherwise produce an initial heap larger than its new maximum,
             // or silently turn a manual edit into automatic allocation.
-            else if field == "settings.defaultMemorySettings" || field.hasSuffix(".launchOverrides.memory") || field.hasSuffix(".customRunDirectory") { throw conflict(field) }
+            else if field == "settings.defaultMemorySettings" || field.hasSuffix(".launchOverrides.memory") || field.hasSuffix(".customRunDirectory") || field.hasSuffix(".importedInstallation") { throw conflict(field) }
             else if let b = b as? [String: Any], let l = l as? [String: Any], let r = r as? [String: Any] {
                 result[key] = try mergeObject(base: b, local: l, remote: r, path: field)
             } else if path.isEmpty && ["instances", "accounts", "gameDirectories"].contains(key) {

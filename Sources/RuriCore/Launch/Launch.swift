@@ -48,11 +48,12 @@ public enum LaunchBuilder {
         guard java.architecture == architecture else { throw RuriError.message("Java 与游戏原生库的架构不匹配。需要 \(architecture)。") }
         guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message("所选 Java 不符合游戏或整合包的版本要求。") }
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
+        let resources = try paths.resources(for: instance)
         let jarID = manifest.jar ?? instance.gameVersion
-        let jar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: paths.versions)
+        let jar = try LauncherPaths.safePath("\(jarID)/\(jarID).jar", within: resources.versions)
         // Bootstrap loaders compare classpath and module-path locations. Expand
         // both from the same canonical root when the library folder is an alias.
-        let libraries = paths.libraries.standardizedFileURL.resolvingSymlinksInPath()
+        let libraries = resources.libraries.standardizedFileURL.resolvingSymlinksInPath()
         var classpath: [String] = []
         for library in manifest.libraries where GameInstaller.allowed(library, architecture: architecture) {
             if let artifact = try library.artifact() { classpath.append(try LauncherPaths.safePath(artifact.path ?? Library.mavenPath(library.name), within: libraries).path) }
@@ -64,7 +65,7 @@ public enum LaunchBuilder {
         for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message("游戏文件缺失：\(URL(fileURLWithPath: file).lastPathComponent)。请先修复实例。") }
         let values: [String: String] = [
             "auth_player_name": account.username, "version_name": manifest.id,
-            "game_directory": paths.game(instance.id).path, "assets_root": paths.assets.path,
+            "game_directory": paths.game(instance.id).path, "assets_root": resources.assets.path,
             "assets_index_name": manifest.assetIndex?.id ?? manifest.assets ?? "legacy",
             "auth_uuid": account.uuid, "auth_access_token": accessToken,
             "auth_session": account.kind == .offline ? "0" : "token:\(accessToken):\(account.uuid)",
@@ -74,7 +75,7 @@ public enum LaunchBuilder {
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
             "library_directory": libraries.path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
             "resolution_width": String(instance.width), "resolution_height": String(instance.height),
-            "game_assets": paths.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path
+            "game_assets": resources.assets.appendingPathComponent("virtual/\(manifest.assetIndex?.id ?? "legacy")").path
         ]
         func expand(_ input: String) throws -> String {
             var result = input
@@ -99,7 +100,7 @@ public enum LaunchBuilder {
         var memoryArguments = jvm
         jvm.insert(contentsOf: baseMemory.arguments + ["-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
         if let logging = manifest.logging?.client {
-            let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: paths.assets)
+            let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: resources.assets)
             jvm.append(logging.argument.replacingOccurrences(of: "${path}", with: file.path))
         }
         let extras = try ArgumentTokenizer.split(instance.extraJVMArguments)

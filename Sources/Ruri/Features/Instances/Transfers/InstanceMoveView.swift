@@ -42,7 +42,10 @@ struct InstanceMoveView: View {
                             ForEach(choices, id: \.self) { id in Text(directoryName(id)).tag(Optional(id)) }
                         }.disabled(model.busy)
                         Button("添加目标文件夹…", systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
-                        Text("实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。").font(.callout).foregroundStyle(.secondary)
+                        Text(source.importedInstallation == nil
+                             ? "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。"
+                             : "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。")
+                            .font(.callout).foregroundStyle(.secondary)
                         switch source.runDirectory ?? .isolated {
                         case .isolated: Text("存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。")
                         case .shared: Text("当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。")

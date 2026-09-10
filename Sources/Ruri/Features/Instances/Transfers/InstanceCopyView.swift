@@ -39,7 +39,10 @@ struct InstanceCopyView: View {
                         Button("添加目标文件夹…", systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
                         Toggle("复制存档", isOn: $includeWorlds).disabled(model.busy)
                         Toggle("复制存档备份", isOn: $includeBackups).disabled(model.busy)
-                        Text("副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。").font(.callout).foregroundStyle(.secondary)
+                        Text(instance.importedInstallation == nil
+                             ? "副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。"
+                             : "副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。")
+                            .font(.callout).foregroundStyle(.secondary)
                         if let preview {
                             Divider()
                             LabeledContent("文件", value: "\(preview.fileCount) 个 · " + ByteCountFormatter.string(fromByteCount: preview.bytes, countStyle: .file))

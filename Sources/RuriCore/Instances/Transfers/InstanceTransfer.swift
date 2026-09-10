@@ -216,6 +216,7 @@ public actor InstanceTransfer {
 
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
+        guard instance.importedInstallation == nil else { throw RuriError.message("此实例含有本地游戏本体和依赖，当前整合包格式无法完整保存它们。可使用复制实例保留完整副本。") }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
