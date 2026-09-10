@@ -11,6 +11,7 @@ public final class InstanceLocationLease: @unchecked Sendable {
 
     public static func acquire(paths: LauncherPaths, instanceID: UUID) throws -> InstanceLocationLease {
         let result = try openLease(paths: paths, instanceID: instanceID, exclusive: false)
+        try InstanceMoveGuard.requireAvailable(paths: paths, instanceID: instanceID)
         try requireCurrentDirectory(paths: paths, instanceID: instanceID)
         return result
     }

@@ -41,6 +41,7 @@ public enum GameDirectoryStore {
         return try StateStore.update(paths) { state in
             guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }), let original = state.gameDirectories?[index] else { throw RuriError.message("找不到实例文件夹。") }
             try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
+            try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             let current = paths.configured(with: state)
             state.gameDirectories?[index] = try original.relocated(to: url, paths: current)
             if original.url.standardizedFileURL.resolvingSymlinksInPath().path != url.standardizedFileURL.resolvingSymlinksInPath().path,
@@ -70,6 +71,7 @@ public enum GameDirectoryStore {
     }
     @discardableResult public static func remove(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
+            try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message("文件夹仍有实例，不能取消登记。") }
             guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例文件夹。") }
             if (try? directory.validateAvailability()) != nil {

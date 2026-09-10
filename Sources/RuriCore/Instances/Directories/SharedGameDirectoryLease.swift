@@ -54,6 +54,17 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         guard reservation.instanceID == session.instanceID, reservation.sessionID == session.id else { return }
         try FileManager.default.removeItem(at: file)
     }
+    func clearFinishedReservation(paths: LauncherPaths, instanceID: UUID) throws {
+        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        guard FileManager.default.fileExists(atPath: file.path) else { return }
+        let reservation: Reservation = try RunDirectoryCopyGuard.decode(file, limit: 131_072)
+        guard reservation.instanceID == instanceID else { return }
+        let session = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: reservation.sessionID)
+        guard session.state.isFinished,
+              session.monitorIdentity.map({ $0.liveness == .exited }) ?? true,
+              session.gameIdentity.map({ $0.liveness == .exited }) ?? true else { throw RuriError.message("共享目录的上次运行尚未确认结束，无法移动其历史。") }
+        try clearReservation(session: session)
+    }
     private func checkReservation(instanceID: UUID, ignoringSession: UUID?, paths: LauncherPaths) throws {
         let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }

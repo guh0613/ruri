@@ -34,6 +34,7 @@ public final class GameRunLease: @unchecked Sendable {
         return GameRunLease(fd, sharedDirectory: shared, location: location)
     }
     func excludeLocationOperations() throws { try location.excludeOtherOperations() }
+    func clearFinishedReservation(paths: LauncherPaths, instanceID: UUID) throws { try sharedDirectory?.clearFinishedReservation(paths: paths, instanceID: instanceID) }
     func reserve(paths: LauncherPaths, session: GameSession) throws { try sharedDirectory?.reserve(paths: paths, session: session) }
     func clearReservation(session: GameSession) throws { try sharedDirectory?.clearReservation(session: session) }
     public static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
@@ -41,6 +42,7 @@ public final class GameRunLease: @unchecked Sendable {
         guard (try? paths.validateInstanceLocation(instanceID)) != nil else { return true }
         if RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
         if InstanceCopyGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
+        if InstanceMoveGuard.hasPending(paths: paths, instanceID: instanceID) { return true }
         if paths.runDirectory(for: instanceID) != .isolated, SharedGameDirectoryLease.isHeld(paths: paths, instanceID: instanceID) { return true }
         guard let file = try? LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID)) else { return true }
         guard FileManager.default.fileExists(atPath: file.path) else { return false }

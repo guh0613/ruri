@@ -28,6 +28,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var lastRunDirectoryChangeID: UUID?
     /// Publication receipt for a directly duplicated instance.
     public var lastInstanceCopyID: UUID?
+    /// Stored atomically with a cross-collection move's new binding.
+    public var lastInstanceMoveID: UUID?
     public var launchOverrides: InstanceLaunchOverrides?
     /// Only set on a launch/export snapshot, never written over live preferences.
     public var frozenMemory: LaunchMemory?

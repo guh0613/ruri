@@ -27,7 +27,7 @@ struct CustomRunDirectoryTests {
         #expect(try String(contentsOf: custom.url.appendingPathComponent("options.txt"), encoding: .utf8) == "original-options")
         let again = try CustomRunDirectory.register(at: custom.url, paths: paths)
         #expect(again.isSameLocation(as: custom))
-        #expect(try StateStore.load(paths).schemaVersion == 8)
+        #expect(try StateStore.load(paths).schemaVersion == 9)
         var wrong = a; wrong.customRunDirectory = .init(id: UUID(), url: custom.url, bookmark: nil, createdAt: Date())
         #expect(throws: (any Error).self) { try paths.validateBinding(wrong) }
         #expect(throws: (any Error).self) { try a.applyingInstallation(wrong, requested: a) }

@@ -58,6 +58,17 @@ struct FileTreeManifest: Codable, Equatable, Sendable {
         }
     }
 
+    /// After source deletion has started, missing original entries are expected.
+    /// Every remaining entry must still belong to the original content receipt.
+    func requireRemainingMatch(in root: URL) throws {
+        try validate()
+        let expected = Dictionary(uniqueKeysWithValues: entries.map { ($0.path, $0) })
+        let remaining = try Self.capture(in: root)
+        guard remaining.entries.allSatisfy({ expected[$0.path] == $0 }) else {
+            throw RuriError.message("原文件清理期间出现新增或改变的内容，剩余文件已保留。")
+        }
+    }
+
     func save(to file: URL) throws -> String {
         try validate()
         let data = try JSONEncoder().encode(self)

@@ -53,7 +53,7 @@ struct InstanceMovePreviewTests {
         try GameSessionReviewStore.mark(history.record, paths: paths)
         let service = InstanceMover(paths: paths)
         let preview = try await service.preview(instanceID: source.id, directoryID: fixture.target.id)
-        var expected = source; expected.directoryID = fixture.target.id
+        var expected = source; expected.directoryID = fixture.target.id; expected.lastInstanceMoveID = preview.id
         if mode == .shared { expected.runDirectory = .isolated; expected.customRunDirectory = nil; expected.lastRunDirectoryChangeID = nil }
         #expect(preview.source == source && preview.moved == expected)
         #expect(preview.sourceDirectory == paths.instance(source.id) && preview.destination != preview.sourceDirectory)

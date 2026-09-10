@@ -35,7 +35,7 @@ public actor InstanceCopier {
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("副本名称需为 1–256 个字符。") }
         var copy = original; copy.id = UUID(); copy.name = name; copy.createdAt = Date(); copy.lastPlayed = nil; copy.playTime = 0; copy.favorite = false
-        copy.directoryID = directoryID; copy.runDirectory = .isolated; copy.customRunDirectory = nil; copy.lastRunDirectoryChangeID = nil; copy.frozenMemory = nil
+        copy.directoryID = directoryID; copy.runDirectory = .isolated; copy.customRunDirectory = nil; copy.lastRunDirectoryChangeID = nil; copy.lastInstanceMoveID = nil; copy.frozenMemory = nil
         let id = UUID(); copy.lastInstanceCopyID = id
         var collection = current.directories.first(where: { $0.id == directoryID }); collection?.bookmark = nil
         guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message("找不到目标实例文件夹。") }
@@ -218,7 +218,7 @@ public actor InstanceCopier {
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         var record = try ModpackRegistry.read(file, game: root.appendingPathComponent("minecraft"))
         record.settings.id = copy.id; record.settings.directoryID = copy.directoryID; record.settings.runDirectory = .isolated
-        record.settings.customRunDirectory = nil; record.settings.lastRunDirectoryChangeID = nil; record.settings.lastInstanceCopyID = nil; record.settings.frozenMemory = nil
+        record.settings.customRunDirectory = nil; record.settings.lastRunDirectoryChangeID = nil; record.settings.lastInstanceCopyID = nil; record.settings.lastInstanceMoveID = nil; record.settings.frozenMemory = nil
         try JSONEncoder().encode(record).write(to: file, options: .atomic)
     }
     private func retire(_ journal: InstanceCopyJournal, paths: LauncherPaths) throws -> URL {
