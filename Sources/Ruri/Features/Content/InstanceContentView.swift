@@ -10,6 +10,9 @@ struct InstanceContentView: View {
     @State private var kind = ContentKind.mod
     @State private var files: [LocalContentFile] = []
     @State private var search = ""
+    @State private var statusFilter = ContentStatusFilter.all
+    @State private var selection = Set<String>()
+    @State private var bulkRemoval: ContentRemovalSelection?
     @State private var loading = false
     @State private var error: String?
     @State private var updates: [String: ContentUpdate] = [:]
@@ -22,7 +25,11 @@ struct InstanceContentView: View {
     @State private var versionTarget: LocalContentFile?
     private var manager: ContentManager { ContentManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
-    private var filtered: [LocalContentFile] { files.filter { search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) || $0.filename.localizedCaseInsensitiveContains(search) } }
+    private var filtered: [LocalContentFile] { files.filter {
+        (statusFilter == .all || $0.enabled == (statusFilter == .enabled)) &&
+        (search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) || $0.filename.localizedCaseInsensitiveContains(search))
+    } }
+    private var selectedFiles: [LocalContentFile] { filtered.filter { selection.contains($0.id) } }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 14) {
@@ -31,7 +38,7 @@ struct InstanceContentView: View {
                 Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
             }
             HStack {
-                Picker("内容", selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270)
+                Picker("内容", selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270).disabled(model.busy)
                 Spacer()
                 Button("检查更新", systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
                 Button("导入…", systemImage: "plus") { showImporter = true }.disabled(!canModify)
@@ -39,7 +46,20 @@ struct InstanceContentView: View {
             }
             HStack {
                 TextField("搜索已安装内容", text: $search).textFieldStyle(.roundedBorder)
+                Picker("状态", selection: $statusFilter) { ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) } }.labelsHidden().frame(width: 110)
                 Text("\(files.filter(\.enabled).count) / \(files.count) 已启用").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            }
+            HStack {
+                Button("全选当前结果") { selection = Set(filtered.map(\.id)) }.disabled(filtered.isEmpty || loading)
+                if selectedFiles.isEmpty { Text("按住 ⌘ 多选，⇧ 连续选择").font(.caption).foregroundStyle(.secondary) }
+                else {
+                    Button("取消选择") { selection.removeAll() }
+                    Text("已选 \(selectedFiles.count) 项").font(.caption).foregroundStyle(.secondary)
+                    Spacer()
+                    Button("启用所选") { setSelectedEnabled(true) }.disabled(!canModify || selectedFiles.allSatisfy(\.enabled))
+                    Button("停用所选") { setSelectedEnabled(false) }.disabled(!canModify || selectedFiles.allSatisfy { !$0.enabled })
+                    Button("移除所选…", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }.disabled(!canModify)
+                }
             }
             if model.isInstanceInUse(instance.id) { Label("游戏运行期间，内容修改暂不可用。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
@@ -49,8 +69,7 @@ struct InstanceContentView: View {
             else if filtered.isEmpty {
                 EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? "还没有安装\(kind.title)" : "没有匹配内容", detail: "从本地导入文件，或到“发现内容”安装兼容版本。").frame(maxHeight: .infinity)
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 10) {
+                List(selection: $selection) {
                         ForEach(filtered) { file in
                             HStack(alignment: .center, spacing: 14) {
                                 Toggle("启用 \(file.title)", isOn: Binding(get: { file.enabled }, set: { enabled in
@@ -82,10 +101,9 @@ struct InstanceContentView: View {
                                     Divider()
                                     Button("移到废纸篓", role: .destructive) { deleteTarget = file }.disabled(!canModify)
                                 } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-                            }.padding(14).background(.background, in: RoundedRectangle(cornerRadius: 12))
+                            }.padding(.vertical, 8).tag(file.id)
                         }
-                    }
-                }
+                }.listStyle(.bordered)
             }
             Divider()
             HStack {
@@ -95,11 +113,21 @@ struct InstanceContentView: View {
                 else { Button("发现更多内容", systemImage: "safari") { model.page = .discover; dismiss() } }
             }
         }.padding(24).frame(width: 800, height: 650)
-        .task(id: kind) { updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
+        .task(id: kind) { selection.removeAll(); updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
+        .onChange(of: search) { pruneSelection() }
+        .onChange(of: statusFilter) { pruneSelection() }
         .onChange(of: model.busy) { if !model.busy { Task { await reload() } } }
         .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
         .sheet(item: $versionTarget) { file in
             if let record = file.managed { ContentVersionView(record: record, instanceID: instance.id) }
+        }
+        .sheet(item: $bulkRemoval) { selected in
+            ContentRemovalView(files: selected.files, instanceID: instance.id) {
+                mutate("移除 \(selected.files.count) 项内容") {
+                    model.noticeFileURL = try await manager.remove(selected.files)
+                    model.notice = "已将 \(selected.files.count) 项内容移到废纸篓"
+                }
+            }
         }
         .onDisappear { updateTask?.cancel() }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [kind == .mod ? (UTType(filenameExtension: "jar") ?? .data) : .zip], allowsMultipleSelection: true) { result in
@@ -118,7 +146,7 @@ struct InstanceContentView: View {
     }
     private func reload() async {
         loading = true
-        do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items
+        do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items; pruneSelection()
             let versions = Dictionary(items.compactMap(\.managed).map { ($0.id, $0.versionID) }, uniquingKeysWith: { first, _ in first })
             updates = updates.filter { versions[$0.key] == $0.value.installed.versionID }
             curseUpdates = curseUpdates.filter { versions[$0.key] == $0.value.installed.versionID } }
@@ -127,11 +155,17 @@ struct InstanceContentView: View {
     }
     private func mutate(_ title: String, action: @escaping @MainActor @Sendable () async throws -> Void) {
         guard canModify else { return }
+        updateTask?.cancel()
         error = nil
         model.perform(title, presentErrors: false, instanceID: instance.id) { _ in
             do { try await action(); await reload() }
             catch { self.error = error.localizedDescription; throw error }
         }
+    }
+    private func pruneSelection() { selection.formIntersection(Set(filtered.map(\.id))) }
+    private func setSelectedEnabled(_ enabled: Bool) {
+        let selected = selectedFiles
+        mutate("\(enabled ? "启用" : "停用") \(selected.count) 项内容") { try await manager.setEnabled(enabled, files: selected) }
     }
     private func checkUpdates() {
         error = nil; updatesChecked = false

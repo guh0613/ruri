@@ -65,7 +65,7 @@ public actor ContentManager {
     var recordsURL: URL { paths.gameDataState(instanceID).appendingPathComponent("content.json") }
     var transactionURL: URL { paths.gameDataState(instanceID).appendingPathComponent("content-transaction") }
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
-    private func lock() throws {
+    func lock() throws {
         Self.diskLock.lock()
         var acquired = false, located = false
         do {
@@ -76,13 +76,13 @@ public actor ContentManager {
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
         } catch { if acquired { operationLock.release() }; if located { locationLock.release() }; Self.diskLock.unlock(); throw error }
     }
-    private func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
+    func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
     struct Journal: Codable {
         let affected: [String]
         let originals: [String]
         let oldRecords: [ManagedContent]
     }
-    private func contentURL(_ path: String) throws -> URL {
+    func contentURL(_ path: String) throws -> URL {
         let pieces = path.split(separator: "/", omittingEmptySubsequences: false)
         guard pieces.count == 2, ContentKind.allCases.contains(where: { $0.folder == pieces[0] }) else { throw RuriError.message("无效的内容路径：\(path)") }
         let directory = root.appendingPathComponent(String(pieces[0]))
@@ -97,7 +97,7 @@ public actor ContentManager {
         try recover()
         return try readRecords()
     }
-    private func readRecords() throws -> [ManagedContent] {
+    func readRecords() throws -> [ManagedContent] {
         guard FileManager.default.fileExists(atPath: recordsURL.path) else { return [] }
         return try JSONDecoder().decode([ManagedContent].self, from: Data(contentsOf: recordsURL)).map { record in
             var record = record
@@ -110,7 +110,7 @@ public actor ContentManager {
             return record
         }
     }
-    private func writeRecords(_ records: [ManagedContent]) throws {
+    func writeRecords(_ records: [ManagedContent]) throws {
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try FileManager.default.createDirectory(at: recordsURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try encoder.encode(records).write(to: recordsURL, options: .atomic)
@@ -187,23 +187,7 @@ public actor ContentManager {
             guard !fm.fileExists(atPath: target.path) else { throw RuriError.message("目标文件已存在且不属于本次更新：\(target.lastPathComponent)。请先在内容管理中处理同名文件。") }
         }
         let affected = Array(Set(newPaths).union(replacedPaths)).sorted()
-        var originals: [String] = []
-        do {
-            for path in affected {
-                let source = try contentURL(path)
-                if fm.fileExists(atPath: source.path) {
-                    let attributes = try fm.attributesOfItem(atPath: source.path)
-                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message("内容目录中存在不支持的文件类型：\(path)") }
-                    let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
-                    try fm.createDirectory(at: backup.deletingLastPathComponent(), withIntermediateDirectories: true)
-                    try fm.copyItem(at: source, to: backup); originals.append(path)
-                }
-            }
-            try fm.createDirectory(at: transactionURL, withIntermediateDirectories: true)
-            let journal = Journal(affected: affected, originals: originals, oldRecords: oldRecords)
-            try JSONEncoder().encode(journal).write(to: transactionURL.appendingPathComponent("journal.json"), options: .atomic)
-            // Once the journal exists, finish or roll back this short disk commit;
-            // cancellation never leaves only half of a dependency set installed.
+        try changeFiles(affected: affected, oldRecords: oldRecords) {
             for path in affected {
                 let file = try contentURL(path)
                 if fm.fileExists(atPath: file.path) { try fm.removeItem(at: file) }
@@ -214,12 +198,7 @@ public actor ContentManager {
                 try fm.copyItem(at: item.source, to: target)
             }
             try writeRecords(oldRecords.filter { !incomingIDs.contains($0.id) } + installs.map(\.record))
-            try Data().write(to: transactionURL.appendingPathComponent("committed"), options: .atomic)
-        } catch {
-            do { try recover() } catch { throw RuriError.message("内容安装恢复失败，备份保留在 \(transactionURL.path)。\(error.localizedDescription)") }
-            throw error
         }
-        try? fm.removeItem(at: transactionURL)
     }
     public func scan(_ kind: ContentKind) throws -> [LocalContentFile] {
         try lock(); defer { unlock() }
@@ -239,26 +218,7 @@ public actor ContentManager {
         }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
     public func setEnabled(_ enabled: Bool, file: LocalContentFile) throws {
-        try lock(); defer { unlock() }
-        try recover()
-        let source = try contentURL("\(file.kind.folder)/\(file.filename)\(file.enabled ? "" : ".disabled")")
-        guard enabled != file.enabled else { return }
-        var records = try readRecords()
-        if enabled, let record = file.managed {
-            let missing = record.requiredProjects.filter { id in !records.contains(where: { $0.provider == record.provider && $0.projectID == id && $0.enabled }) }
-            guard missing.isEmpty else { throw RuriError.message("请先安装并启用此模组的必需依赖。") }
-        }
-        if !enabled, let record = file.managed {
-            let dependents = records.filter { $0.provider == record.provider && $0.enabled && $0.requiredProjects.contains(record.projectID) }
-            guard dependents.isEmpty else { throw RuriError.message("以下内容依赖此模组，请先停用它们：\(dependents.map(\.title).joined(separator: "、"))") }
-        }
-        let target = try contentURL("\(file.kind.folder)/\(file.filename)\(enabled ? "" : ".disabled")")
-        guard !FileManager.default.fileExists(atPath: target.path) else { throw RuriError.message("目标文件已存在：\(target.lastPathComponent)") }
-        try FileManager.default.moveItem(at: source, to: target)
-        do {
-            if let index = records.firstIndex(where: { $0.kind == file.kind && $0.filename == file.filename }) { records[index].enabled = enabled }
-            try writeRecords(records)
-        } catch { try? FileManager.default.moveItem(at: target, to: source); throw error }
+        try setEnabled(enabled, files: [file])
     }
     public func importFiles(_ files: [URL], kind: ContentKind) throws {
         try lock(); defer { unlock() }
@@ -276,20 +236,7 @@ public actor ContentManager {
         }
         try install(plans)
     }
-    public func remove(_ file: LocalContentFile) throws {
-        try lock(); defer { unlock() }
-        try recover()
-        var records = try readRecords()
-        if let record = file.managed {
-            let dependents = records.filter { $0.provider == record.provider && $0.enabled && $0.requiredProjects.contains(record.projectID) }
-            guard dependents.isEmpty else { throw RuriError.message("以下内容依赖此文件：\(dependents.map(\.title).joined(separator: "、"))") }
-        }
-        let source = try contentURL("\(file.kind.folder)/\(file.filename)\(file.enabled ? "" : ".disabled")")
-        var trashed: NSURL?
-        try FileManager.default.trashItem(at: source, resultingItemURL: &trashed)
-        do { records.removeAll { $0.kind == file.kind && $0.filename == file.filename && $0.enabled == file.enabled }; try writeRecords(records) }
-        catch { if let trashed { try? FileManager.default.moveItem(at: trashed as URL, to: source) }; throw error }
-    }
+    public func remove(_ file: LocalContentFile) throws { _ = try remove([file]) }
     struct ModInfo { let id: String?; let name: String?; let version: String? }
     static func modInfo(_ url: URL) -> ModInfo? {
         let archive: Archive

@@ -205,10 +205,8 @@ import RuriCore
                 guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message("找不到兼容内容版本") }
                 try await service.install(version: version, type: "mod", instance: instance, paths: paths, downloader: DownloadManager()) { p in print("\(p.stage) \(p.completed)/\(p.total)") }
                 print("Installed \(version.version_number)")
-            case "content":
-                guard args.count >= 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message("用法：ruri-cli content <instance-uuid>") }
-                guard try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message("找不到已登记的实例，请先完成创建或复制。") }
-                for file in try await ContentManager(paths: paths, instanceID: id).scan(.mod) { print("\(file.enabled ? "[on]" : "[off]") \(file.title) \(file.version ?? "") — \(file.filename)") }
+            case "content", "content-action":
+                try await manageContent(args, paths: paths)
             case "launch":
                 let state = try StateStore.load(paths)
                 var launchArgs = args.dropFirst().filter { $0 != "--detach" }
@@ -333,7 +331,8 @@ import RuriCore
                   install-java <major> [aarch64|x86_64]
                   repair <instance-uuid>
                   install-content <project> <instance-uuid> [version-id]
-                  content <instance-uuid>
+                  content <instance-uuid> [mod|resourcepack|shader]
+                  content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]
                   plan [instance-uuid]
                   launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
                   directories <list|add|select|rename|relocate|remove> ...
