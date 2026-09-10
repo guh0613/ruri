@@ -9,7 +9,10 @@ extension AppModel {
     }
     func runningLabel(_ id: UUID) -> String? {
         if pendingDirectoryCopyIDs.contains(id) || RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { return "目录复制待恢复" }
-        guard let record = activeSessions[id] else { return directoryErrors[paths.directoryID(for: id)] == nil ? nil : "文件夹无法访问" }
+        guard let record = activeSessions[id] else {
+            if customDirectoryErrors[id] != nil { return "游戏目录无法访问" }
+            return directoryErrors[paths.directoryID(for: id)] == nil ? nil : "文件夹无法访问"
+        }
         switch GameMonitorClient.activity(record) {
         case .orphaned: return "监控已断开"
         case .uncertain: return "状态待确认"

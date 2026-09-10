@@ -56,6 +56,7 @@ enum Page: String, CaseIterable, Identifiable {
     var showCreate = false
     var showDirectories = false
     var directoryErrors: [UUID: String] = [:]
+    var customDirectoryErrors: [UUID: String] = [:]
     var pendingDirectoryCopyIDs: Set<UUID> = []
     private var failedSessionReadIDs: Set<UUID> = []
     var showAccount = false
@@ -87,8 +88,6 @@ enum Page: String, CaseIterable, Identifiable {
         do {
             state = try StateStore.load(basePaths)
             persistedState = state
-            state.gameDirectories = state.gameDirectories?.map { $0.resolvingBookmark() }
-            state = state.resolvingCustomRunDirectoryBookmarks()
             try basePaths.configured(with: state).validateDirectoryConfiguration()
         }
         catch { state = PersistentState(); self.error = "无法读取 Ruri 数据，已暂停写入以保护原文件。\n\(error.localizedDescription)"; readOnly = true }
@@ -108,6 +107,13 @@ enum Page: String, CaseIterable, Identifiable {
         await work.value
     }
     private func initializeApplication() async {
+        if !readOnly {
+            do {
+                let basePaths = basePaths
+                _ = try await Task.detached(priority: .utility) { try GameDirectoryStore.resolveBookmarks(paths: basePaths) }.value
+                state = try await CustomRunDirectoryRelocation(paths: basePaths).resolveBookmarks(); persistedState = state
+            } catch { self.error = "无法恢复目录登记：\(error.localizedDescription)" }
+        }
         await refreshDirectoryAvailability()
         await refreshSessions()
         await pollGames()
@@ -141,14 +147,35 @@ enum Page: String, CaseIterable, Identifiable {
     }
     func refreshDirectoryAvailability() async {
         let directories = state.gameDirectories ?? []
+        let custom = state.instances.filter { $0.runDirectory == .custom }.compactMap { item in item.customRunDirectory.map { (item.id, $0) } }
         let errors = await Task.detached(priority: .utility) {
-            var result: [UUID: String] = [:]
+            var result: [UUID: String] = [:], customErrors: [UUID: String] = [:]
             for directory in directories {
                 do { try directory.validateAvailability() } catch { result[directory.id] = error.localizedDescription }
             }
-            return result
+            for (id, location) in custom {
+                do { try location.validateAvailability() } catch { customErrors[id] = error.localizedDescription }
+            }
+            return (result, customErrors)
         }.value
-        directoryErrors = errors.filter { id, _ in state.gameDirectories?.contains(where: { $0.id == id }) == true }
+        directoryErrors = errors.0.filter { id, _ in state.gameDirectories?.contains(where: { $0.id == id }) == true }
+        customDirectoryErrors = errors.1.filter { id, _ in
+            guard let checked = custom.first(where: { $0.0 == id })?.1,
+                  let instance = state.instances.first(where: { $0.id == id }), instance.runDirectory == .custom else { return false }
+            return instance.customRunDirectory?.isSameLocation(as: checked) == true
+        }
+    }
+    func relocateCustomDirectory(_ preview: CustomRunDirectoryRelocationPreview, completed: @escaping @MainActor @Sendable () -> Void) {
+        guard !busy, !readOnly else { return }
+        if state != persistedState { save() }
+        guard !readOnly else { return }
+        perform("重新定位自定义游戏目录") { [self] _ in
+            _ = try await CustomRunDirectoryRelocation(paths: basePaths).apply(preview)
+            state = try StateStore.load(basePaths); persistedState = state
+            await refreshDirectoryAvailability()
+            notice = "已更新 \(preview.instances.count) 个实例的目录位置，游戏文件保留在所选文件夹。"
+            completed()
+        }
     }
     func update(_ instance: GameInstance) {
         guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { return }

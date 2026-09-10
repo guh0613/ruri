@@ -60,6 +60,13 @@ import RuriCore
                     print(result.warning ?? "恢复完成。")
                     if let url = result.preservedCopy { print("工作副本：\(url.path)") }
                 }
+            case "relocate-directory":
+                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 3 || args[3] == "--apply" else { throw RuriError.message("用法：ruri-cli relocate-directory <实例UUID> <原游戏目录的新路径> [--apply]。默认预览；只更新同一目录的引用，不移动或合并游戏文件。") }
+                let service = CustomRunDirectoryRelocation(paths: paths)
+                let preview = try await service.preview(instanceID: id, target: URL(fileURLWithPath: args[2]))
+                print("原位置：\(preview.source.path)\n找回位置：\(preview.target.path)\n将更新以下实例：")
+                for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? "正在使用此目录" : "记住的目录") · \(item.id)") }
+                if args.count == 4 { _ = try await service.apply(preview); print("已更新目录引用，游戏文件原地保留。") }
             case "java":
                 for java in await JavaDiscovery.scan(paths: paths) { print("\(java.label)\n  \(java.path)") }
             case "install-java":
@@ -262,6 +269,7 @@ import RuriCore
                   directories <list|add|select|rename|relocate|remove> ...
                   run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
                   recover-directory <instance-uuid> [--apply]
+                  relocate-directory <instance-uuid> <original-folder-new-path> [--apply]
                   sessions [instance-uuid]
                   diagnose <instance-uuid> <session-uuid>
                   recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]

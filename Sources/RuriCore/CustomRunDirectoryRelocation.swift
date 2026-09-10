@@ -89,7 +89,7 @@ public actor CustomRunDirectoryRelocation {
     }
     private func validateOriginal(_ original: CustomRunDirectory, replacement: CustomRunDirectory) throws {
         if !original.isSameLocation(as: replacement), (try? original.validateAvailability()) != nil {
-            throw RuriError.message("原目录仍可访问，所选位置可能是它的副本。若要改用另一份游戏数据，请使用“切换运行目录”，或先在 Finder 中完成原目录的移动。")
+            throw RuriError.message("原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。")
         }
     }
     private func validate(_ preview: CustomRunDirectoryRelocationPreview, state: PersistentState) throws {

@@ -71,6 +71,7 @@ struct InstanceSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State var instance: GameInstance
     @State private var changingDirectory = false
+    @State private var relocatingDirectory = false
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var preservedWorkspaces: [URL] = []
@@ -93,7 +94,11 @@ struct InstanceSettingsView: View {
                     LabeledContent("运行目录", value: (locationInstance.runDirectory ?? .isolated).title)
                     Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
                     Text(model.paths.game(instance.id).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                    if let error = model.customDirectoryErrors[instance.id] { Label(error, systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.orange) }
                     Button(directoryCopyPending ? "恢复目录复制…" : "切换运行目录…", systemImage: "arrow.triangle.swap") { changingDirectory = true }.disabled(model.busy || (!directoryCopyPending && model.isInstanceInUse(instance.id)))
+                    if locationInstance.customRunDirectory != nil {
+                        Button(locationInstance.runDirectory == .custom ? "重新定位原游戏目录…" : "重新定位记住的自定义目录…", systemImage: "folder.badge.questionmark") { relocatingDirectory = true }.disabled(model.busy)
+                    }
                     if !preservedWorkspaces.isEmpty {
                         Menu("查看保留的复制副本") {
                             ForEach(Array(preservedWorkspaces.enumerated()), id: \.offset) { index, url in
@@ -117,6 +122,7 @@ struct InstanceSettingsView: View {
             }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(instance.name.trimmingCharacters(in: .whitespaces).isEmpty) }
         }.padding(24).frame(width: 620, height: 590)
         .sheet(isPresented: $changingDirectory) { GameRunDirectoryChangeView(instance: locationInstance) }
+        .sheet(isPresented: $relocatingDirectory) { CustomRunDirectoryRelocationView(instanceID: instance.id) }
         .task(id: model.busy) {
             guard !model.busy else { return }
             let paths = model.paths, id = instance.id
