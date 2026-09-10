@@ -125,7 +125,7 @@ import RuriCore
             } catch {
                 if let i = activities.firstIndex(where: { $0.id == activity.id }) {
                     activities[i].status = Task.isCancelled ? .cancelled : .failed
-                    activities[i].error = error is RunDirectoryCopyFailure ? error.localizedDescription : Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
+                    activities[i].error = error is RunDirectoryCopyFailure || error is InstanceMoveFailure ? error.localizedDescription : Task.isCancelled ? "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。" : error.localizedDescription
                 }
                 if !Task.isCancelled && (presentErrors || (instanceID != nil && lease == nil)) { self.error = error.localizedDescription }
             }

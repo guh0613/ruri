@@ -34,5 +34,6 @@ public struct InstanceMoveFailure: LocalizedError, Sendable {
     public let message: String
     public let preservedFiles: [URL]
     public let cancelled: Bool
+    public init(message: String, preservedFiles: [URL], cancelled: Bool) { self.message = message; self.preservedFiles = preservedFiles; self.cancelled = cancelled }
     public var errorDescription: String? { message }
 }

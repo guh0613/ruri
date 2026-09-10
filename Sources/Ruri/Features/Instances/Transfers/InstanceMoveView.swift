@@ -12,6 +12,7 @@ struct InstanceMoveView: View {
     @State private var checking = false
     @State private var cancelling = false
     @State private var issue: String?
+    @State private var operationIssue: String?
     @State private var refresh = UUID()
     private var source: GameInstance { model.state.instances.first { $0.id == instance.id } ?? instance }
     private var choices: [UUID] { ([GameDirectory.defaultID] + (model.state.gameDirectories ?? []).map(\.id)).filter { $0 != (source.directoryID ?? GameDirectory.defaultID) } }
@@ -60,6 +61,7 @@ struct InstanceMoveView: View {
                     }
                     if checking { ProgressView("正在核对实例、运行历史与文件…") }
                     if let issue { Label(issue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
+                    if let operationIssue { Label(operationIssue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(2)
             }
             if model.busy {
@@ -67,7 +69,7 @@ struct InstanceMoveView: View {
                 if cancelling { Text("正在结束当前步骤；已提交的移动会保留恢复入口。").font(.caption).foregroundStyle(.secondary) }
             }
             HStack {
-                Button("刷新", systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(checking || model.busy)
+                Button("刷新", systemImage: "arrow.clockwise") { operationIssue = nil; refresh = UUID() }.disabled(checking || model.busy)
                 Spacer()
                 Button(model.busy ? "取消" : "关闭") {
                     if model.busy { cancelling = true; model.operation?.cancel() } else { dismiss() }
@@ -78,12 +80,14 @@ struct InstanceMoveView: View {
                             Button("校验并清理原文件") { recover(recovery, preserving: false) }
                             Button("保留原文件并完成") { recover(recovery, preserving: true) }
                         } primaryAction: { recover(recovery, preserving: false) }
-                        .menuStyle(.borderedButton).disabled(checking || model.busy)
+                        .menuStyle(.borderedButton).fixedSize().disabled(checking || model.busy)
                     } else {
                         Button("恢复并保留副本") { recover(recovery, preserving: false) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
                     }
                 } else {
-                    Button("移动实例") { if let preview { model.moveInstance(preview) { dismiss() } } }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
+                    Button("移动实例") {
+                        if let preview { operationIssue = nil; model.moveInstance(preview, failed: { operationIssue = $0 }) { dismiss() } }
+                    }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
                 }
             }
         }.padding(24).frame(width: 660, height: 535)
@@ -103,13 +107,17 @@ struct InstanceMoveView: View {
             if !Task.isCancelled { checking = false }
         }
         .onChange(of: model.busy) { if !model.busy { cancelling = false; refresh = UUID() } }
+        .onChange(of: directoryID) { operationIssue = nil }
     }
     private func path(_ label: String, _ url: URL) -> some View { Text("\(label)：\(url.path)").font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
     private func reveal(_ url: URL) {
         if FileManager.default.fileExists(atPath: url.path) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
         else { issue = "此位置暂时无法访问，请连接磁盘后重试：\(url.path)" }
     }
-    private func recover(_ pending: InstanceMoveRecovery, preserving: Bool) { model.recoverInstanceMove(pending, preservingSource: preserving) { dismiss() } }
+    private func recover(_ pending: InstanceMoveRecovery, preserving: Bool) {
+        operationIssue = nil
+        model.recoverInstanceMove(pending, preservingSource: preserving, failed: { operationIssue = $0 }) { dismiss() }
+    }
     private func addDirectory() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
         panel.message = "选择空文件夹保存实例，也可以在这里新建文件夹。"
