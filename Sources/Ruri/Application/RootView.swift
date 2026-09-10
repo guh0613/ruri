@@ -77,6 +77,7 @@ struct RootView: View {
         .sheet(item: $model.editingInstance) { instance in InstanceSettingsView(instance: instance) }
         .sheet(item: $model.contentInstance) { instance in InstanceContentView(instance: instance) }
         .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
+        .sheet(item: $model.schematicInstance) { instance in SchematicManagerView(instance: instance) }
         .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
         .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
         .sheet(item: $model.copyingInstance) { instance in InstanceCopyView(instance: instance) }

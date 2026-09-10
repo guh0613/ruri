@@ -55,6 +55,7 @@ struct LibraryView: View {
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
                                         Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
                                         Button("管理存档与备份", systemImage: "globe") { model.worldInstance = instance }
+                                        Button("管理原理图", systemImage: "square.3.layers.3d") { model.schematicInstance = instance }
                                         if model.pendingInstanceCopyIDs.contains(instance.id) || InstanceCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) {
                                             Button("恢复实例复制…", systemImage: "arrow.counterclockwise") { model.copyingInstance = instance }.disabled(model.busy)
                                         } else {

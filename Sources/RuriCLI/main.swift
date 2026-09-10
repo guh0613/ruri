@@ -210,6 +210,8 @@ import RuriCore
                 try await manageContent(args, paths: paths)
             case "datapacks":
                 try await manageDataPacks(args, paths: paths)
+            case "schematics":
+                try await manageSchematics(args, paths: paths)
             case "launch":
                 let state = try StateStore.load(paths)
                 var launchArgs = args.dropFirst().filter { $0 != "--detach" }
@@ -340,6 +342,7 @@ import RuriCore
                   plan [instance-uuid]
                   launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
                   update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]
+                  schematics <instance-uuid> [list|info|import|mkdir|export|remove ...] [--apply]
                   directories <list|add|select|rename|relocate|remove> ...
                   run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
                   recover-directory <instance-uuid> [--apply]
