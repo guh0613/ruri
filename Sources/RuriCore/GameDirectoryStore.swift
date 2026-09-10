@@ -35,18 +35,37 @@ public enum GameDirectoryStore {
         }
     }
     @discardableResult public static func relocate(_ id: UUID, to url: URL, paths: LauncherPaths) throws -> PersistentState {
-        try StateStore.update(paths) { state in
+        var leases: [GameRunLease] = []
+        var sharedLease: SharedGameDirectoryLease?
+        defer { withExtendedLifetime(leases) {}; withExtendedLifetime(sharedLease) {} }
+        return try StateStore.update(paths) { state in
             guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }), let original = state.gameDirectories?[index] else { throw RuriError.message("找不到实例文件夹。") }
             let current = paths.configured(with: state)
             state.gameDirectories?[index] = try original.relocated(to: url, paths: current)
+            if original.url.standardizedFileURL.resolvingSymlinksInPath().path != url.standardizedFileURL.resolvingSymlinksInPath().path,
+               (try? original.validateAvailability()) != nil { throw RuriError.message("原实例文件夹仍可访问，请先完成移动，或通过导入处理另一份副本。") }
             let relocated = paths.configured(with: state)
             for instance in state.instances where instance.directoryID == id {
-                guard !GameRunLease.isHeld(paths: relocated, instanceID: instance.id),
-                      try !GameSessionStore.list(paths: relocated, instanceID: instance.id).contains(where: { !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
-                    throw RuriError.message("此文件夹仍有游戏运行或会话状态待确认，请先在游戏中退出并检查运行记录。")
-                }
+                // Only the managed history/metadata moved. A custom game root
+                // may independently be offline and must not prevent finding it.
+                var metadata = instance; metadata.runDirectory = .isolated
+                leases.append(try GameRunLease.acquire(paths: relocated.including(metadata), instanceID: instance.id))
+            }
+            if let shared = state.instances.first(where: { $0.directoryID == id && $0.runDirectory == .shared }) {
+                sharedLease = try SharedGameDirectoryLease.acquire(paths: relocated, instanceID: shared.id, ignoringSession: nil)
             }
         }
+    }
+    public static func resolveBookmarks(paths: LauncherPaths) throws -> PersistentState {
+        let initial = try StateStore.load(paths)
+        for directory in initial.gameDirectories ?? [] where (try? directory.validateAvailability()) == nil {
+            let candidate = directory.resolvingBookmark()
+            guard candidate.url.standardizedFileURL.path != directory.url.standardizedFileURL.path else { continue }
+            // Busy or uncertain locations stay at their recorded paths. The
+            // normal availability UI can explain how to reconnect them.
+            _ = try? relocate(directory.id, to: candidate.url, paths: paths)
+        }
+        return try StateStore.load(paths)
     }
     @discardableResult public static func remove(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in

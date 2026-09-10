@@ -28,7 +28,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         }
         let result = SharedGameDirectoryLease(fd, root: root)
         try RunDirectoryCopyGuard.requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
-        try result.checkReservation(instanceID: instanceID, ignoringSession: ignoringSession, custom: paths.instanceCustomDirectories?[instanceID])
+        try result.checkReservation(instanceID: instanceID, ignoringSession: ignoringSession, paths: paths)
         return result
     }
     static func isHeld(paths: LauncherPaths, instanceID: UUID) -> Bool {
@@ -54,7 +54,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         guard reservation.instanceID == session.instanceID, reservation.sessionID == session.id else { return }
         try FileManager.default.removeItem(at: file)
     }
-    private func checkReservation(instanceID: UUID, ignoringSession: UUID?, custom: CustomRunDirectory?) throws {
+    private func checkReservation(instanceID: UUID, ignoringSession: UUID?, paths: LauncherPaths) throws {
         let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
@@ -68,21 +68,26 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         if reservation.paths.runDirectory(for: reservation.instanceID) == .custom, reservation.version < 2 { throw RuriError.message("自定义运行目录的占用记录版本无效。") }
         try reservation.paths.validateDirectoryConfiguration()
         var checked = reservation.paths
-        if let custom, let original = reservation.paths.instanceCustomDirectories?[reservation.instanceID], original.id == custom.id {
+        if let collection = paths.directories.first(where: { $0.id == reservation.paths.directoryID(for: reservation.instanceID) }) {
+            let directories = checked.directories.map { $0.id == collection.id ? collection : $0 }
+            checked = LauncherPaths(root: checked.root, directories: directories, instanceDirectories: checked.instanceDirectories,
+                                    newInstanceDirectoryID: checked.newInstanceDirectoryID, instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: checked.instanceCustomDirectories)
+        }
+        if let custom = paths.instanceCustomDirectories?[instanceID], let original = checked.instanceCustomDirectories?[reservation.instanceID], original.id == custom.id {
             // The marker identifies a moved custom root, while its history
             // remains in the original collection. Liveness is still checked
             // below; matching a marker never clears an active reservation.
-            var locations = reservation.paths.instanceCustomDirectories ?? [:]; locations[reservation.instanceID] = custom
-            checked = LauncherPaths(root: reservation.paths.root, directories: reservation.paths.directories,
-                                    instanceDirectories: reservation.paths.instanceDirectories, newInstanceDirectoryID: reservation.paths.newInstanceDirectoryID,
-                                    instanceRunDirectories: reservation.paths.instanceRunDirectories, instanceCustomDirectories: locations)
+            var locations = checked.instanceCustomDirectories ?? [:]; locations[reservation.instanceID] = custom
+            checked = LauncherPaths(root: checked.root, directories: checked.directories,
+                                    instanceDirectories: checked.instanceDirectories, newInstanceDirectoryID: checked.newInstanceDirectoryID,
+                                    instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: locations)
         } else {
-            guard reservation.paths.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath().path == root.standardizedFileURL.resolvingSymlinksInPath().path else { throw RuriError.message("共享运行目录与上次运行记录不一致，请检查原实例。") }
+            guard checked.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath().path == root.standardizedFileURL.resolvingSymlinksInPath().path else { throw RuriError.message("共享运行目录与上次运行记录不一致，请检查原实例。") }
         }
         try checked.validateDirectoryConfiguration()
         try checked.validateInstanceLocation(reservation.instanceID)
         if reservation.instanceID == instanceID && reservation.sessionID == ignoringSession { return }
-        let record = try GameSessionStore.load(paths: reservation.paths, instanceID: reservation.instanceID, sessionID: reservation.sessionID)
+        let record = try GameSessionStore.load(paths: checked, instanceID: reservation.instanceID, sessionID: reservation.sessionID)
         guard record.state.isFinished || (record.monitorIdentity != nil && GameMonitorClient.activity(record) == .inactive) else {
             throw RuriError.message("“\(record.instanceName)”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。")
         }

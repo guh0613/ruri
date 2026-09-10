@@ -33,6 +33,21 @@ public actor CustomRunDirectoryRelocation {
     let paths: LauncherPaths
     public init(paths: LauncherPaths) { self.paths = paths }
 
+    public func resolveBookmarks() throws -> PersistentState {
+        let initial = try StateStore.load(paths), suggested = initial.resolvingCustomRunDirectoryBookmarks()
+        var considered = Set<String>()
+        for instance in initial.instances {
+            guard let original = instance.customRunDirectory,
+                  let target = suggested.instances.first(where: { $0.id == instance.id })?.customRunDirectory,
+                  !original.isSameLocation(as: target), considered.insert(original.id.uuidString + original.url.path).inserted else { continue }
+            // Automatic Finder following must pass the same checks and atomic
+            // binding update as manual relocation, including pending copies.
+            do { _ = try apply(preview(instanceID: instance.id, target: target.url)) }
+            catch { continue }
+        }
+        return try StateStore.load(paths)
+    }
+
     public func preview(instanceID: UUID, target: URL) throws -> CustomRunDirectoryRelocationPreview {
         let state = try StateStore.load(paths)
         guard let original = state.instances.first(where: { $0.id == instanceID })?.customRunDirectory else { throw RuriError.message("此实例没有保存过自定义运行目录。") }

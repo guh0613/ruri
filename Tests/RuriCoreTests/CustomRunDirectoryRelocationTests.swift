@@ -134,4 +134,51 @@ struct CustomRunDirectoryRelocationTests {
         #expect(throws: (any Error).self) { try StateStore.save(local, to: paths, basedOn: baseline) }
         #expect(try StateStore.load(paths).instances[2].customRunDirectory?.url == moved)
     }
+
+    @Test func automaticBookmarkFollowingUsesTheSameLocksAndDoesNotRewriteUnchangedState() async throws {
+        let (paths, a, custom, moved) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        var lease: GameRunLease? = try GameRunLease.acquire(paths: paths, instanceID: a.id)
+        try FileManager.default.moveItem(at: custom.url, to: moved)
+        let service = CustomRunDirectoryRelocation(paths: paths), initial = try StateStore.load(paths)
+        let busy = try await service.resolveBookmarks()
+        #expect(busy == initial)
+        withExtendedLifetime(lease) {}; lease = nil
+        let resolved = try await service.resolveBookmarks()
+        #expect(resolved.instances.allSatisfy { $0.customRunDirectory?.url.path == moved.path })
+        #expect(resolved.revision != initial.revision)
+        #expect(try await service.resolveBookmarks() == resolved)
+    }
+
+    @Test func automaticResolutionCanFindBothMovedMetadataAndCustomGameFolders() async throws {
+        let (paths, _, custom, moved) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let initial = try StateStore.load(paths), folder = try #require(initial.gameDirectories?.first)
+        let movedMetadata = folder.url.deletingLastPathComponent().appendingPathComponent("Moved metadata")
+        try FileManager.default.moveItem(at: folder.url, to: movedMetadata)
+        try FileManager.default.moveItem(at: custom.url, to: moved)
+        let metadata = try GameDirectoryStore.resolveBookmarks(paths: paths)
+        #expect(metadata.gameDirectories?.first?.url.path == movedMetadata.path)
+        let resolved = try await CustomRunDirectoryRelocation(paths: paths).resolveBookmarks()
+        #expect(resolved.instances.allSatisfy { $0.customRunDirectory?.url.path == moved.path })
+        for instance in resolved.instances where instance.runDirectory == .custom {
+            let lease = try GameRunLease.acquire(paths: paths.configured(with: resolved), instanceID: instance.id)
+            withExtendedLifetime(lease) {}
+        }
+    }
+
+    @Test @MainActor func movedSharedCollectionCanValidateAnOldFinishedReservationWithoutLosingItsHistory() throws {
+        let (paths, _, _, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let folder = try #require(StateStore.load(paths).gameDirectories?.first)
+        var shared = GameInstance(name: "Shared history", gameVersion: "1.21.1"); shared.directoryID = folder.id; shared.runDirectory = .shared
+        let initial = try StateStore.update(paths) { $0.instances.append(shared) }, current = paths.configured(with: initial)
+        let recorder = try GameSessionRecorder(paths: current, instance: shared, accountMode: "offline")
+        let marker = current.gameDataState(shared.id).appendingPathComponent("active-session.json")
+        let reservation = try Data(contentsOf: marker)
+        try recorder.fail(RuriError.message("fixture ended"), cancelled: true)
+        try reservation.write(to: marker)
+        let moved = folder.url.deletingLastPathComponent().appendingPathComponent("Moved shared collection")
+        try FileManager.default.moveItem(at: folder.url, to: moved)
+        let updated = try GameDirectoryStore.relocate(folder.id, to: moved, paths: paths), relocated = paths.configured(with: updated)
+        let lease = try GameRunLease.acquire(paths: relocated, instanceID: shared.id); withExtendedLifetime(lease) {}
+        #expect(try GameSessionStore.load(paths: relocated, instanceID: shared.id, sessionID: recorder.record.id).state == .cancelled)
+    }
 }
