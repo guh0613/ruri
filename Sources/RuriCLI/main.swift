@@ -225,7 +225,7 @@ import RuriCore
                 if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message("无效的实例 UUID") }
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
                 guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
-                guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 账号请在应用中启动。") }
+                guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 或外置认证账号请在应用中启动。") }
                 let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {

@@ -13,8 +13,10 @@ struct AddAccountView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             SectionHeading(title: "添加玩家账号", subtitle: "登录一次，随时回到你的世界。")
-            Picker("账号类型", selection: $mode) { Text("Microsoft").tag("microsoft"); Text("离线账号").tag("offline") }.pickerStyle(.segmented).disabled(task != nil)
-            if mode == "offline" {
+            Picker("账号类型", selection: $mode) { Text("Microsoft").tag("microsoft"); Text("外置认证").tag("external"); Text("离线账号").tag("offline") }.pickerStyle(.segmented).disabled(task != nil)
+            if mode == "external" {
+                ExternalAccountForm()
+            } else if mode == "offline" {
                 TextField("玩家名", text: $username).textFieldStyle(.roundedBorder)
                 Text("使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。").font(.callout).foregroundStyle(.secondary)
             } else if model.state.settings.microsoftClientID.isEmpty {
@@ -35,7 +37,7 @@ struct AddAccountView: View {
                 Spacer(); Button("取消") { task?.cancel(); dismiss() }.keyboardShortcut(.cancelAction)
                 if mode == "offline" {
                     Button("添加账号") { do { try model.addOffline(username); dismiss() } catch { self.error = error.localizedDescription } }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(username.isEmpty)
-                } else if code == nil {
+                } else if mode == "microsoft", code == nil {
                     Button("继续登录") { login() }.buttonStyle(.borderedProminent).disabled(task != nil || model.state.settings.microsoftClientID.isEmpty)
                 }
             }

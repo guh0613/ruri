@@ -17,7 +17,8 @@ public struct LaunchPlan: Codable, Sendable {
         var redactNext = false
         return ([processExecutable.path] + processArguments).map { value in
             if redactNext { redactNext = false; return "<redacted>" }
-            if ["--accessToken", "--clientId", "--xuid", "--session"].contains(value) { redactNext = true }
+            if ["--accessToken", "--clientId", "--xuid", "--session", "--userProperties"].contains(value) { redactNext = true }
+            if value.hasPrefix("-Dauthlibinjector.yggdrasil.prefetched=") { return "-Dauthlibinjector.yggdrasil.prefetched=<metadata>" }
             return value.contains(" ") ? "\"\(value)\"" : value
         }.joined(separator: " ")
     }
@@ -44,7 +45,8 @@ public enum ArgumentTokenizer {
 }
 
 public enum LaunchBuilder {
-    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil) throws -> LaunchPlan {
+    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, externalAuth: ExternalAuthLaunch? = nil) throws -> LaunchPlan {
+        guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message("请先完成外置认证并准备认证组件。") }
         guard paths.repositoryImportID == nil else { throw RuriError.message("整合包尚未完成导入，请先完成导入后再启动。") }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
@@ -85,9 +87,9 @@ public enum LaunchBuilder {
             "game_directory": paths.game(instance.id).path, "assets_root": resources.assets.path,
             "assets_index_name": manifest.assetIndex?.id ?? manifest.assets ?? "legacy",
             "auth_uuid": account.uuid, "auth_access_token": accessToken,
-            "auth_session": account.kind == .offline ? "0" : "token:\(accessToken):\(account.uuid)",
-            "clientid": "", "auth_xuid": "", "user_type": account.kind == .microsoft ? "msa" : "legacy",
-            "version_type": manifest.type ?? "release", "user_properties": "{}",
+            "auth_session": account.kind == .offline ? "0" : (account.kind == .external ? accessToken : "token:\(accessToken):\(account.uuid)"),
+            "clientid": "", "auth_xuid": "", "user_type": account.kind == .microsoft ? "msa" : (account.kind == .external ? "mojang" : "legacy"),
+            "version_type": manifest.type ?? "release", "user_properties": externalAuth?.userProperties ?? "{}",
             "natives_directory": natives.path, "launcher_name": "Ruri", "launcher_version": "0.1.0",
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
             "library_directory": libraries.path, "version_directory": jar.deletingLastPathComponent().path, "primary_jar": jar.path, "primary_jar_name": jar.lastPathComponent,
@@ -126,6 +128,7 @@ public enum LaunchBuilder {
         let extras = try ArgumentTokenizer.split(instance.extraJVMArguments).map(expand)
         guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message("附加 JVM 参数不能覆盖游戏主类或 classpath。") }
         jvm += extras
+        if let externalAuth { jvm += try externalAuth.arguments(for: account) }
         memoryArguments += extras
         let memory = try JVMHeapArguments.resolve(base: baseMemory, arguments: memoryArguments)
         var game: [String]

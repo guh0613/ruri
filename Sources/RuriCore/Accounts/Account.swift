@@ -2,11 +2,19 @@ import Foundation
 import CryptoKit
 
 public struct Account: Codable, Identifiable, Equatable, Sendable {
-    public enum Kind: String, Codable, Sendable { case offline, microsoft }
+    public enum Kind: String, Codable, Sendable { case offline, microsoft, external }
     public var id: UUID
     public var kind: Kind
     public var username: String
     public var uuid: String
+    public var externalLogin: ExternalAccountLogin?
+    public var kindLabel: String {
+        switch kind {
+        case .offline: "离线账号"
+        case .microsoft: "Microsoft 账号"
+        case .external: "外置认证 · " + (externalLogin?.server.name ?? "认证服务器")
+        }
+    }
     public init(username: String) throws {
         guard username.range(of: "^[A-Za-z0-9_]{3,16}$", options: .regularExpression) != nil else {
             throw RuriError.message("玩家名需为 3–16 位英文字母、数字或下划线。")

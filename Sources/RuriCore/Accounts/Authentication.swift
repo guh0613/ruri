@@ -10,8 +10,22 @@ public struct AccountCredentials: Codable, Sendable {
 
 public enum CredentialStore {
     private static let service = "dev.ruri.launcher.microsoft"
+    private static let externalService = "dev.ruri.launcher.external"
     public static func save(_ credentials: AccountCredentials, for id: UUID) throws {
-        let data = try JSONEncoder().encode(credentials)
+        try saveData(JSONEncoder().encode(credentials), for: id, service: service)
+    }
+    public static func load(for id: UUID) throws -> AccountCredentials {
+        try JSONDecoder().decode(AccountCredentials.self, from: loadData(for: id, service: service))
+    }
+    public static func remove(for id: UUID) throws { try removeData(for: id, service: service) }
+    public static func saveExternal(_ credentials: ExternalAccountCredentials, for id: UUID) throws {
+        try saveData(JSONEncoder().encode(credentials), for: id, service: externalService)
+    }
+    public static func loadExternal(for id: UUID) throws -> ExternalAccountCredentials {
+        try JSONDecoder().decode(ExternalAccountCredentials.self, from: loadData(for: id, service: externalService))
+    }
+    public static func removeExternal(for id: UUID) throws { try removeData(for: id, service: externalService) }
+    private static func saveData(_ data: Data, for id: UUID, service: String) throws {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: id.uuidString]
         let update = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
         if update == errSecItemNotFound {
@@ -20,14 +34,14 @@ public enum CredentialStore {
             guard status == errSecSuccess else { throw failure(status) }
         } else if update != errSecSuccess { throw failure(update) }
     }
-    public static func load(for id: UUID) throws -> AccountCredentials {
+    private static func loadData(for id: UUID, service: String) throws -> Data {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: id.uuidString, kSecReturnData as String: true, kSecMatchLimit as String: kSecMatchLimitOne]
         var result: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
         guard status == errSecSuccess, let data = result as? Data else { throw failure(status) }
-        return try JSONDecoder().decode(AccountCredentials.self, from: data)
+        return data
     }
-    public static func remove(for id: UUID) throws {
+    private static func removeData(for id: UUID, service: String) throws {
         let status = SecItemDelete([kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: id.uuidString] as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else { throw failure(status) }
     }

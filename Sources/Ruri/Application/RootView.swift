@@ -35,7 +35,7 @@ struct RootView: View {
                         Image(systemName: "person.crop.square.fill").font(.system(size: 26)).foregroundStyle(Theme.accent)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(model.activeAccount?.username ?? "添加玩家账号").font(.system(size: 12, weight: .semibold))
-                            Text(model.activeAccount.map { $0.kind == .microsoft ? "Microsoft 账号" : "离线模式" } ?? "准备好你的下一场冒险").font(.system(size: 10)).foregroundStyle(.secondary)
+                            Text(model.activeAccount?.kindLabel ?? "准备好你的下一场冒险").font(.system(size: 10)).foregroundStyle(.secondary)
                         }
                         Spacer(); Image(systemName: "chevron.up.chevron.down").font(.caption2).foregroundStyle(.tertiary)
                     }.padding(18)

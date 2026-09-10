@@ -39,6 +39,7 @@ extension AppModel {
                     try advanceSession(.account)
                     progress(id, InstallProgress("正在检查账号和 Java"))
                     var token = "0"
+                    var externalAuth: ExternalAuthLaunch?
                     if account.kind == .microsoft {
                         var credentials = try CredentialStore.load(for: account.id)
                         recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
@@ -47,6 +48,18 @@ extension AppModel {
                             recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
                             try addMicrosoft(account, credentials: credentials)
                         }
+                        token = credentials.accessToken
+                    } else if account.kind == .external {
+                        var credentials = try CredentialStore.loadExternal(for: account.id)
+                        recorder.addSecrets([credentials.accessToken, credentials.clientToken])
+                        (account, credentials) = try await ExternalAuthentication().refresh(account: account, credentials: credentials)
+                        recorder.addSecrets([credentials.accessToken, credentials.clientToken])
+                        try addExternal(account, credentials: credentials, requireExisting: true, activate: false)
+                        guard let server = account.externalLogin?.server else { throw RuriError.message("请重新添加外置认证账号。") }
+                        progress(id, InstallProgress("正在准备外置认证组件"))
+                        async let metadata = ExternalAuthentication().metadata(for: server)
+                        async let jar = AuthlibInjector().prepare(paths: paths)
+                        externalAuth = try await ExternalAuthLaunch(jar: jar, metadata: metadata, userProperties: credentials.user?.propertiesJSON ?? "{}")
                         token = credentials.accessToken
                     }
                     try advanceSession(.manifest)
@@ -75,7 +88,7 @@ extension AppModel {
                     try recorder.setJava(java.label + " · " + java.version)
                     try advanceSession(.arguments)
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
-                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth)
                     recorder.addSecrets(plan.environmentRedactions)
                     if let world { appendLog("[Ruri] 进入存档：" + world.name) }
                     appendLog("[Ruri] \(java.label)")

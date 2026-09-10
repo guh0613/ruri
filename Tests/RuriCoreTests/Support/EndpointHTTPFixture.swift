@@ -3,6 +3,11 @@ import Foundation
 /// In-memory transport keyed by an isolated session header. Unregistered URLs
 /// fail immediately instead of escaping to the network.
 final class EndpointHTTPFixture: @unchecked Sendable {
+    struct Response: Sendable {
+        var data: Data = Data()
+        var status = 200
+        var headers = ["Content-Type": "application/json"]
+    }
     struct Request: Sendable {
         let url: URL
         let method: String
@@ -12,12 +17,15 @@ final class EndpointHTTPFixture: @unchecked Sendable {
     }
     private let id = UUID().uuidString
     private let lock = NSLock()
-    private let responses: [String: Data]
+    private let handler: @Sendable (Request) -> Response?
     private var received: [Request] = []
     let session: URLSession
     var requests: [Request] { lock.withLock { received } }
-    init(_ responses: [String: Data]) {
-        self.responses = responses
+    convenience init(_ responses: [String: Data]) {
+        self.init { request in responses[(request.url.host ?? "") + request.url.path].map { Response(data: $0) } }
+    }
+    init(handler: @escaping @Sendable (Request) -> Response?) {
+        self.handler = handler
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [EndpointHTTPFixtureProtocol.self]
         configuration.httpAdditionalHeaders = ["Ruri-Stub-ID": id]
@@ -25,7 +33,7 @@ final class EndpointHTTPFixture: @unchecked Sendable {
         EndpointHTTPFixtureProtocol.registry.set(self, for: id)
     }
     func close() { session.invalidateAndCancel(); EndpointHTTPFixtureProtocol.registry.set(nil, for: id) }
-    fileprivate func respond(_ request: URLRequest) -> Data? {
+    fileprivate func respond(_ request: URLRequest) -> Response? {
         guard let url = request.url else { return nil }
         var body = request.httpBody ?? Data()
         if body.isEmpty, let stream = request.httpBodyStream {
@@ -36,10 +44,9 @@ final class EndpointHTTPFixture: @unchecked Sendable {
                 guard count > 0 else { break }; body.append(contentsOf: buffer.prefix(count))
             }
         }
-        return lock.withLock {
-            received.append(.init(url: url, method: request.httpMethod ?? "GET", headers: request.allHTTPHeaderFields ?? [:], body: body))
-            return responses[(url.host ?? "") + url.path]
-        }
+        let value = Request(url: url, method: request.httpMethod ?? "GET", headers: request.allHTTPHeaderFields ?? [:], body: body)
+        lock.withLock { received.append(value) }
+        return handler(value)
     }
 }
 
@@ -54,12 +61,12 @@ private final class EndpointHTTPFixtureProtocol: URLProtocol, @unchecked Sendabl
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
-        guard let data = Self.registry.get(request.value(forHTTPHeaderField: "Ruri-Stub-ID") ?? "")?.respond(request),
-              let url = request.url, let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "application/json"]) else {
+        guard let result = Self.registry.get(request.value(forHTTPHeaderField: "Ruri-Stub-ID") ?? "")?.respond(request),
+              let url = request.url, let response = HTTPURLResponse(url: url, statusCode: result.status, httpVersion: "HTTP/1.1", headerFields: result.headers) else {
             client?.urlProtocol(self, didFailWithError: URLError(.resourceUnavailable)); return
         }
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        client?.urlProtocol(self, didLoad: data)
+        client?.urlProtocol(self, didLoad: result.data)
         client?.urlProtocolDidFinishLoading(self)
     }
     override func stopLoading() {}
