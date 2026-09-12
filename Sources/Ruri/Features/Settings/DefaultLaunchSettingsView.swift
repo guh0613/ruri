@@ -41,16 +41,9 @@ struct DefaultLaunchSettingsView: View {
     let pane: InstanceSettingsPane
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(Messages.AppPreferencesView.globalGameSettings.localized).font(.headline)
-                Text(Messages.AppPreferencesView.inheritedLaunchSettingsDetails.localized)
-                    .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            }.padding(.horizontal, 20).padding(.top, 16).padding(.bottom, 4)
-            Form {
-                LaunchSettingsEditor(overrides: $draft.overrides, defaults: draft.original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
-                    .disabled(model.readOnly)
-            }.formStyle(.grouped)
-        }
+        Form {
+            LaunchSettingsEditor(overrides: $draft.overrides, defaults: draft.original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
+                .disabled(model.readOnly)
+        }.formStyle(.grouped).scrollContentBackground(.hidden)
     }
 }

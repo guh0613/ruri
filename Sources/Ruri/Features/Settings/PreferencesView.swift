@@ -4,64 +4,57 @@ import AppKit
 import RuriCore
 
 enum PreferencesPane: String, CaseIterable, Identifiable {
-    case general, runtime, launch, advanced, network
+    case general, game, network
     var id: String { rawValue }
     var title: String {
         switch self {
         case .general: Messages.AppPreferencesView.general.localized
-        case .runtime: InstanceSettingsPane.runtime.title
-        case .launch: InstanceSettingsPane.launch.title
-        case .advanced: InstanceSettingsPane.advanced.title
+        case .game: Messages.AppPreferencesView.globalGameSettings.localized
         case .network: Messages.AppPreferencesView.networkAndServices.localized
         }
-    }
-    var symbol: String {
-        switch self {
-        case .general: "gearshape"
-        case .runtime: "memorychip"
-        case .launch: "macwindow"
-        case .advanced: "terminal"
-        case .network: "network"
-        }
-    }
-    var launchPane: InstanceSettingsPane? {
-        switch self {
-        case .runtime: .runtime
-        case .launch: .launch
-        case .advanced: .advanced
-        default: nil
-        }
-    }
-    static func containing(_ key: LaunchSettingKey) -> Self {
-        allCases.first { $0.launchPane?.launchKeys.contains(key) == true } ?? .runtime
     }
 }
 
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
+    @State private var curseForgeKey = ""
     @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
     var body: some View {
         @Bindable var model = model
         VStack(spacing: 0) {
-            TabView(selection: $model.preferencesPane) {
-                ForEach(PreferencesPane.allCases) { pane in
-                    Group {
-                        if let launchPane = pane.launchPane, let draft = model.defaultLaunchSettingsDraft {
-                            DefaultLaunchSettingsView(draft: draft, pane: launchPane)
-                        } else if pane == .general {
-                            Form { general }.formStyle(.grouped)
-                        } else if pane == .network {
-                            Form { network }.formStyle(.grouped)
-                        }
+            VStack(alignment: .leading, spacing: 20) {
+                Picker(Messages.AppSettingsLayout.settingsCategory.localized, selection: $model.preferencesPane) {
+                    ForEach(PreferencesPane.allCases) { pane in Text(pane.title).tag(pane) }
+                }.pickerStyle(.segmented).labelsHidden().controlSize(.large).frame(maxWidth: .infinity)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(model.preferencesPane.title).font(.title2.weight(.semibold))
+                    if model.preferencesPane == .game {
+                        Text(Messages.AppPreferencesView.inheritedLaunchSettingsDetails.localized)
+                            .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                     }
-                    .tabItem { Label(pane.title, systemImage: pane.symbol) }
-                    .tag(pane)
                 }
-            }.padding(16)
+                if model.preferencesPane == .game {
+                    Picker(Messages.AppPreferencesView.globalGameSettings.localized, selection: $model.defaultLaunchSettingsPane) {
+                        ForEach([InstanceSettingsPane.runtime, .launch, .advanced]) { pane in Text(pane.title).tag(pane) }
+                    }.pickerStyle(.segmented).labelsHidden()
+                }
+            }.frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 8)
+            Group {
+                if model.preferencesPane == .game, let draft = model.defaultLaunchSettingsDraft {
+                    DefaultLaunchSettingsView(draft: draft, pane: model.defaultLaunchSettingsPane)
+                } else if model.preferencesPane == .general {
+                    Form { general }.formStyle(.grouped).scrollContentBackground(.hidden)
+                } else if model.preferencesPane == .network {
+                    Form { network }.formStyle(.grouped).scrollContentBackground(.hidden)
+                }
+            }.frame(maxWidth: .infinity, maxHeight: .infinity)
             if let draft = model.defaultLaunchSettingsDraft, draft.hasChanges {
                 launchSettingsActions(draft)
             }
         }
+        .frame(maxWidth: 740, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { synchronizeLaunchSettings() }
         .onChange(of: model.state.settings.defaultLaunchSettings) { synchronizeLaunchSettings() }
         .onChange(of: model.state.settings.appearance) { model.save() }
@@ -168,7 +161,7 @@ struct PreferencesView: View {
                 Link(Messages.AppPreferencesView.microsoftRegistrationDocs.localized, destination: AppLinks.microsoftRegistration)
             }.fixedSize(horizontal: false, vertical: true)
         }
-        CurseForgeSettingsSection()
+        CurseForgeSettingsSection(key: $curseForgeKey)
     }
 
     private func launchSettingsActions(_ draft: DefaultLaunchSettingsDraft) -> some View {
@@ -194,7 +187,8 @@ struct PreferencesView: View {
     private func saveLaunchSettings(_ draft: DefaultLaunchSettingsDraft) {
         let values = draft.values
         if let failure = SettingsValidation.issue(in: values) {
-            model.preferencesPane = .containing(failure.key)
+            model.preferencesPane = .game
+            model.defaultLaunchSettingsPane = .containing(failure.key)
             draft.issue = failure.message
             return
         }

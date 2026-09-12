@@ -5,7 +5,7 @@ import RuriCore
 
 struct CurseForgeSettingsSection: View {
     @Environment(AppModel.self) private var model
-    @State private var key = ""
+    @Binding var key: String
     @State private var error: String?
     var body: some View {
         Section {
@@ -23,7 +23,7 @@ struct CurseForgeSettingsSection: View {
                     }
                 }
                 HStack(spacing: 12) {
-                    SecureField(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized, text: $key)
+                    SecureField("API Key", text: $key, prompt: Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized))
                         .labelsHidden().textFieldStyle(.roundedBorder).multilineTextAlignment(.leading)
                         .accessibilityLabel("API Key")
                     Button(Messages.AppCurseForgeSettingsSection.saveToKeychain.localized) {

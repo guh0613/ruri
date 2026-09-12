@@ -87,7 +87,7 @@ struct LaunchSettingsEditor: View {
                 Spacer(minLength: 8)
                 HStack(spacing: 8) {
                     SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.windowWidth.localized, value: windowBinding(\.width), unit: "")
-                    Text("×").foregroundStyle(.secondary).accessibilityHidden(true)
+                    Text("×").foregroundStyle(.secondary).fixedSize().accessibilityHidden(true)
                     SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.windowHeight.localized, value: windowBinding(\.height), unit: "px")
                 }
                 Menu(Messages.AppLaunchSettingsEditor.commonWindowSize.localized) {

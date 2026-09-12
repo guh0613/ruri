@@ -12,6 +12,7 @@ import RuriCore
     var installer: GameInstaller { GameInstaller(paths: paths, downloader: downloader) }
     var page = Page.home
     var preferencesPane = PreferencesPane.general
+    var defaultLaunchSettingsPane = InstanceSettingsPane.runtime
     var defaultLaunchSettingsDraft: DefaultLaunchSettingsDraft?
     var catalog: VersionCatalog?
     var catalogLoading = false
