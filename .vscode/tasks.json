@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+            "RURI_BUILD_DIR": "${config:swift.buildPath}"
+        }
+    },
+    "problemMatcher": ["$swiftc"],
+    "tasks": [
+        {
+            "label": "swift: Build All",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "debug", "--build-tests"],
+            "group": { "kind": "build", "isDefault": true }
+        },
+        {
+            "label": "swift: Build Debug Ruri",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "debug", "--product", "Ruri"],
+            "group": "build"
+        },
+        {
+            "label": "swift: Build Release Ruri",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "release", "--product", "Ruri"],
+            "group": "build"
+        },
+        {
+            "label": "swift: Build Debug ruri-cli",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "debug", "--product", "ruri-cli"],
+            "group": "build"
+        },
+        {
+            "label": "swift: Build Release ruri-cli",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "release", "--product", "ruri-cli"],
+            "group": "build"
+        },
+        {
+            "label": "swift: Build Debug ruri-monitor",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "debug", "--product", "ruri-monitor"],
+            "group": "build"
+        },
+        {
+            "label": "swift: Build Release ruri-monitor",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/swift-build.sh",
+            "args": ["-c", "release", "--product", "ruri-monitor"],
+            "group": "build"
+        }
+    ]
+}

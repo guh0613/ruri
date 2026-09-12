@@ -5,10 +5,10 @@ if [[ -z "${DEVELOPER_DIR:-}" && -d /Applications/Xcode-beta.app/Contents/Develo
   export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer
 fi
 configuration="${1:-release}"
-scratch="${RURI_BUILD_DIR:-.build/validation}"
-xcrun swift build --scratch-path "$scratch" -c "$configuration" --product Ruri
-xcrun swift build --scratch-path "$scratch" -c "$configuration" --product ruri-monitor
-binary_dir="$(xcrun swift build --scratch-path "$scratch" -c "$configuration" --show-bin-path)"
+export RURI_BUILD_DIR="${RURI_BUILD_DIR:-.build/validation}"
+scripts/swift-build.sh -c "$configuration" --product Ruri
+scripts/swift-build.sh -c "$configuration" --product ruri-monitor
+binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
 mkdir -p build
 stage_dir="$(mktemp -d "$(pwd)/build/.ruri-build.XXXXXX")"
 trap 'rm -rf "$stage_dir"' EXIT
