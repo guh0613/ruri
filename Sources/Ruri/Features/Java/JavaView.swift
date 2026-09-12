@@ -69,13 +69,15 @@ struct JavaView: View {
             Spacer()
             if let remote { Button(Messages.AppJavaView.repair.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
             Menu {
-                if entry.runtime != nil { Button(Messages.AppJavaView.setDefaultJava.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
-                Button(Messages.AppJavaView.relocatePath.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
-                Button(Messages.AppJavaView.showInFinder.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
-                if entry.manual { Button(Messages.AppJavaView.removeManualJava.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
-                if let id = entry.managedID {
-                    Divider(); Button(Messages.AppJavaView.trashJava.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
-                }
+                Group {
+                    if entry.runtime != nil { Button(Messages.AppJavaView.setDefaultJava.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
+                    Button(Messages.AppJavaView.relocatePath.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
+                    Button(Messages.AppJavaView.showInFinder.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
+                    if entry.manual { Button(Messages.AppJavaView.removeManualJava.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
+                    if let id = entry.managedID {
+                        Divider(); Button(Messages.AppJavaView.trashJava.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
+                    }
+                }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy)
         }
         .padding(.vertical, 4)

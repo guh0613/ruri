@@ -98,8 +98,10 @@ struct InstanceContentView: View {
                     .disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
                 if !updates.isEmpty || !curseUpdates.isEmpty {
                     Menu {
-                        Button(Messages.AppInstanceContentView.updateSelectedContent.localized, systemImage: "arrow.down.circle") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
-                        Button(Messages.AppInstanceContentView.updateCurrentResults.localized, systemImage: "arrow.down.circle") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
+                        Group {
+                            Button(Messages.AppInstanceContentView.updateSelectedContent.localized, systemImage: "arrow.down.circle") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
+                            Button(Messages.AppInstanceContentView.updateCurrentResults.localized, systemImage: "arrow.down.circle") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
+                        }.labelStyle(.titleAndIcon)
                     } label: {
                         Label(Messages.AppInstanceContentView.batchUpdate.localized, systemImage: "square.and.arrow.down.on.square")
                             .labelStyle(.iconOnly)
@@ -164,7 +166,7 @@ struct InstanceContentView: View {
                             .labelStyle(.iconOnly).buttonStyle(.borderless).disabled(!canModify)
                             .help(Messages.AppInstanceContentView.updateTo(update.available.displayName).localized)
                     }
-                    Menu { fileActions(file) } label: { Image(systemName: "ellipsis") }
+                    Menu { fileActions(file).labelStyle(.titleAndIcon) } label: { Image(systemName: "ellipsis") }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
                         .help(Messages.AppInstanceContentView.actionsColumn.localized)
                 }
@@ -190,16 +192,18 @@ struct InstanceContentView: View {
     private var footer: some View {
         HStack(spacing: 12) {
             Menu {
-                Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized, systemImage: "checkmark.square") { selection = Set(filtered.map(\.id)) }
-                    .disabled(filtered.isEmpty || loading)
-                Button(Messages.AppInstanceContentView.deselect.localized) { selection.removeAll() }.disabled(selectedFiles.isEmpty)
-                Divider()
-                Button(Messages.AppInstanceContentView.enableSelected.localized, systemImage: "checkmark.circle") { setSelectedEnabled(true) }
-                    .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy(\.enabled))
-                Button(Messages.AppInstanceContentView.disableSelected.localized, systemImage: "pause.circle") { setSelectedEnabled(false) }
-                    .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy { !$0.enabled })
-                Button(Messages.AppInstanceContentView.removeSelected.localized, systemImage: "trash", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }
-                    .disabled(!canModify || selectedFiles.isEmpty)
+                Group {
+                    Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized, systemImage: "checkmark.square") { selection = Set(filtered.map(\.id)) }
+                        .disabled(filtered.isEmpty || loading)
+                    Button(Messages.AppInstanceContentView.deselect.localized) { selection.removeAll() }.disabled(selectedFiles.isEmpty)
+                    Divider()
+                    Button(Messages.AppInstanceContentView.enableSelected.localized, systemImage: "checkmark.circle") { setSelectedEnabled(true) }
+                        .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy(\.enabled))
+                    Button(Messages.AppInstanceContentView.disableSelected.localized, systemImage: "pause.circle") { setSelectedEnabled(false) }
+                        .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy { !$0.enabled })
+                    Button(Messages.AppInstanceContentView.removeSelected.localized, systemImage: "trash", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }
+                        .disabled(!canModify || selectedFiles.isEmpty)
+                }.labelStyle(.titleAndIcon)
             } label: {
                 Label(Messages.AppInstanceContentView.selectionActions.localized, systemImage: "checklist").labelStyle(.iconOnly)
             }.menuIndicator(.hidden).labelStyle(.titleAndIcon).help(Messages.AppInstanceContentView.selectionActions.localized)

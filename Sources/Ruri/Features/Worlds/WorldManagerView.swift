@@ -125,15 +125,17 @@ struct WorldManagerView: View {
                 }
             }.disabled(!canModify)
             Menu {
-                if !quickPlaySupported {
-                    Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }.disabled(true)
-                        .help(Messages.AppWorldManagerView.worldLaunchUnsupported.localized)
-                }
-                Button(Messages.AppWorldManagerView.manageDatapacks.localized, systemImage: "shippingbox") { dataPackWorld = world }.disabled(world.metadataError != nil)
-                Button(Messages.AppWorldManagerView.exportZip.localized, systemImage: "square.and.arrow.up") { export(world) }.disabled(!canModify)
-                Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
-                Divider()
-                Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingWorld = world }.disabled(!canModify)
+                Group {
+                    if !quickPlaySupported {
+                        Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }.disabled(true)
+                            .help(Messages.AppWorldManagerView.worldLaunchUnsupported.localized)
+                    }
+                    Button(Messages.AppWorldManagerView.manageDatapacks.localized, systemImage: "shippingbox") { dataPackWorld = world }.disabled(world.metadataError != nil)
+                    Button(Messages.AppWorldManagerView.exportZip.localized, systemImage: "square.and.arrow.up") { export(world) }.disabled(!canModify)
+                    Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
+                    Divider()
+                    Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingWorld = world }.disabled(!canModify)
+                }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis") }
                 .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
                 .help(Messages.AppWorldManagerView.moreActions.localized)
@@ -155,10 +157,12 @@ struct WorldManagerView: View {
             Spacer(minLength: 12)
             Button(Messages.AppWorldManagerView.restoreAsCopy.localized, systemImage: "arrow.counterclockwise") { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
             Menu {
-                Button(Messages.AppWorldManagerView.replaceOriginal.localized, systemImage: "arrow.triangle.2.circlepath") { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
-                Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
-                Divider()
-                Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingBackup = backup }.disabled(!canModify)
+                Group {
+                    Button(Messages.AppWorldManagerView.replaceOriginal.localized, systemImage: "arrow.triangle.2.circlepath") { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
+                    Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
+                    Divider()
+                    Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingBackup = backup }.disabled(!canModify)
+                }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis") }
                 .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
                 .help(Messages.AppWorldManagerView.moreActions.localized)

@@ -78,20 +78,22 @@ private struct AccountSidebarFooter: View {
         VStack(spacing: 0) {
             Divider()
             Menu {
-                if !model.state.accounts.isEmpty {
-                    Picker(Messages.AppRootView.switchAccount.localized, selection: Binding(get: { model.state.activeAccountID }, set: { id in
-                        guard id != model.state.activeAccountID else { return }
-                        model.state.activeAccountID = id
-                        model.save()
-                    })) {
-                        ForEach(model.state.accounts) { account in
-                            Text(account.username).tag(Optional(account.id))
-                        }
-                    }.pickerStyle(.inline).labelsHidden()
-                    Divider()
-                }
-                Button(Messages.AppRootView.addAccount.localized, systemImage: "person.badge.plus") { model.showAccount = true }
-                Button(Messages.AppRootView.manageAccounts.localized, systemImage: "person.2") { model.page = .accounts }
+                Group {
+                    if !model.state.accounts.isEmpty {
+                        Picker(Messages.AppRootView.switchAccount.localized, selection: Binding(get: { model.state.activeAccountID }, set: { id in
+                            guard id != model.state.activeAccountID else { return }
+                            model.state.activeAccountID = id
+                            model.save()
+                        })) {
+                            ForEach(model.state.accounts) { account in
+                                Text(account.username).tag(Optional(account.id))
+                            }
+                        }.pickerStyle(.inline).labelsHidden()
+                        Divider()
+                    }
+                    Button(Messages.AppRootView.addAccount.localized, systemImage: "person.badge.plus") { model.showAccount = true }
+                    Button(Messages.AppRootView.manageAccounts.localized, systemImage: "person.2") { model.page = .accounts }
+                }.labelStyle(.titleAndIcon)
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: model.activeAccount == nil ? "person.crop.circle.badge.plus" : "person.crop.circle.fill")

@@ -51,8 +51,10 @@ struct LibraryView: View {
                     Label(Messages.AppLibraryView.list.localized, systemImage: "list.bullet").tag(Layout.list)
                 }.pickerStyle(.segmented).help(Messages.AppLibraryView.gridOrList.localized)
                 Menu {
-                    Button(Messages.AppLibraryView.importInstanceOrModpack.localized, systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }
-                    Button(Messages.AppLibraryView.addGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+                    Group {
+                        Button(Messages.AppLibraryView.importInstanceOrModpack.localized, systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }
+                        Button(Messages.AppLibraryView.addGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+                    }.labelStyle(.titleAndIcon)
                 } label: { Label(Messages.AppLibraryView.importContentAction.localized, systemImage: "square.and.arrow.down").labelStyle(.iconOnly) }.labelStyle(.titleAndIcon).help(Messages.AppLibraryView.importInstanceModpackOrGameFolder.localized).disabled(model.busy)
                 Button { model.showCreate = true } label: { Label(Messages.AppLibraryView.newInstance.localized, systemImage: "plus") }.help(Messages.AppLibraryView.newInstanceShortcut.localized).disabled(model.busy)
             }

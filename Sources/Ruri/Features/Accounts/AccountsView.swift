@@ -39,14 +39,16 @@ struct AccountsView: View {
             if model.state.activeAccountID == account.id { TagPill(text: Messages.AppAccountsView.currentAccount.localized) }
             else { Button(Messages.AppAccountsView.useAccount.localized) { model.state.activeAccountID = account.id; model.save() }.disabled(model.readOnly) }
             Menu {
-                if account.kind != .offline { Button(Messages.AppAccountsView.appearance.localized, systemImage: "tshirt") { appearanceAccount = account } }
-                if account.kind == .external {
-                    Button(Messages.AppAccountsView.refreshLogin.localized, systemImage: "arrow.clockwise") { run { try await model.refreshExternal(account) } }
-                    Button(Messages.AppAccountsView.relogin.localized, systemImage: "key") { relogin = account }
-                    Button(Messages.AppAccountsView.removeLogin.localized, systemImage: "rectangle.portrait.and.arrow.right", role: .destructive) { run { try await model.logoutExternal(account) } }
-                    Divider()
-                }
-                Button(Messages.AppAccountsView.removeFromRuri.localized, systemImage: "trash", role: .destructive) { model.removeAccount(account) }
+                Group {
+                    if account.kind != .offline { Button(Messages.AppAccountsView.appearance.localized, systemImage: "tshirt") { appearanceAccount = account } }
+                    if account.kind == .external {
+                        Button(Messages.AppAccountsView.refreshLogin.localized, systemImage: "arrow.clockwise") { run { try await model.refreshExternal(account) } }
+                        Button(Messages.AppAccountsView.relogin.localized, systemImage: "key") { relogin = account }
+                        Button(Messages.AppAccountsView.removeLogin.localized, systemImage: "rectangle.portrait.and.arrow.right", role: .destructive) { run { try await model.logoutExternal(account) } }
+                        Divider()
+                    }
+                    Button(Messages.AppAccountsView.removeFromRuri.localized, systemImage: "trash", role: .destructive) { model.removeAccount(account) }
+                }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy || model.readOnly)
         }
         .padding(.vertical, 4)
