@@ -9,11 +9,11 @@ extension Messages {
         public static var noDownloadTasks: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText1", table: "Interface", fallback: "没有下载任务")
         }
-        /// 安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。
+        /// 游戏安装和内容下载的进度会显示在此处。
         ///
         /// Resource: `Interface.appDownloadsView.bodyText2`.
         public static var downloadProgressDetails: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText2", table: "Interface", fallback: "安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。")
+            .init(key: "appDownloadsView.bodyText2", table: "Interface", fallback: "游戏安装和内容下载的进度会显示在此处。")
         }
         /// 已完成
         ///
@@ -53,7 +53,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appDownloadsView.bodyText1": .init("没有下载任务", []),
-            "Interface:appDownloadsView.bodyText2": .init("安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。", []),
+            "Interface:appDownloadsView.bodyText2": .init("游戏安装和内容下载的进度会显示在此处。", []),
             "Interface:appDownloadsView.bodyText3": .init("已完成", []),
             "Interface:appDownloadsView.bodyText4": .init("已取消", []),
             "Interface:appDownloadsView.bodyText5": .init("失败", []),

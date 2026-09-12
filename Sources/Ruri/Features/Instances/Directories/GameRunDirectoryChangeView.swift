@@ -71,7 +71,6 @@ struct GameRunDirectoryChangeView: View {
                         }
                         Text(copyFiles ? Messages.AppGameRunDirectoryChangeView.copyBeforeSwitching.localized : preview.targetFileCount == 0 ? Messages.AppGameRunDirectoryChangeView.emptyTargetDetails.localized : Messages.AppGameRunDirectoryChangeView.useExistingTargetDetails.localized)
                             .font(.callout).fixedSize(horizontal: false, vertical: true)
-                        Text(Messages.AppGameRunDirectoryChangeView.fileStatistics.localized).font(.caption).foregroundStyle(.secondary)
                         if instance.repositoryVersionID != nil { Text(Messages.AppGameRunDirectoryChangeView.gameFilesStayInPlace.localized).font(.caption).foregroundStyle(.secondary) }
                     }.padding(2)
                 }.frame(minHeight: 230)

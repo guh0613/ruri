@@ -19,7 +19,7 @@ struct CreateInstanceView: View {
     var versions: [VersionEntry] { (model.catalog?.versions ?? []).filter { (snapshots || $0.isRelease) && (search.isEmpty || $0.id.localizedCaseInsensitiveContains(search)) } }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            HStack { SectionHeading(title: Messages.AppCreateInstanceView.createWorld.localized, subtitle: Messages.AppCreateInstanceView.createDescription.localized); Spacer(); Button { dismiss() } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
+            HStack { SectionHeading(title: Messages.AppCreateInstanceView.createInstance.localized); Spacer(); Button { dismiss() } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
             TextField(Messages.AppCreateInstanceView.instanceNameOptional.localized, text: $name).textFieldStyle(.roundedBorder)
             Label(Messages.AppCreateInstanceView.saveLocation(String(describing: model.selectedDirectoryName)).localized, systemImage: "folder").font(.callout).foregroundStyle(.secondary)
             HStack { TextField(Messages.AppCreateInstanceView.searchVersions.localized, text: $search).textFieldStyle(.roundedBorder); Toggle(Messages.AppCreateInstanceView.snapshotsAndOldVersions.localized, isOn: $snapshots).toggleStyle(.checkbox) }

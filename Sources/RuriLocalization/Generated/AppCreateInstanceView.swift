@@ -3,17 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppCreateInstanceView {
-        /// 创建一个新世界
+        /// 新建实例
         ///
         /// Resource: `Interface.appCreateInstanceView.bodyText1`.
-        public static var createWorld: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText1", table: "Interface", fallback: "创建一个新世界")
-        }
-        /// 选择版本，剩下的交给 Ruri。
-        ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText2`.
-        public static var createDescription: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText2", table: "Interface", fallback: "选择版本，剩下的交给 Ruri。 ")
+        public static var createInstance: LocalizedMessage {
+            .init(key: "appCreateInstanceView.bodyText1", table: "Interface", fallback: "新建实例")
         }
         /// 实例名称（可选）
         ///
@@ -94,8 +88,7 @@ extension Messages {
             .init(key: "appCreateInstanceView.resultText1", table: "Interface", fallback: "此 Minecraft 版本暂无兼容加载器。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appCreateInstanceView.bodyText1": .init("创建一个新世界", []),
-            "Interface:appCreateInstanceView.bodyText2": .init("选择版本，剩下的交给 Ruri。 ", []),
+            "Interface:appCreateInstanceView.bodyText1": .init("新建实例", []),
             "Interface:appCreateInstanceView.bodyText3": .init("实例名称（可选）", []),
             "Interface:appCreateInstanceView.bodyText4": .init("保存到：%1$@", [.text]),
             "Interface:appCreateInstanceView.bodyText5": .init("搜索 Minecraft 版本", []),

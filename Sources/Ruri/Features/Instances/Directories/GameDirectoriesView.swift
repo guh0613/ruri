@@ -32,7 +32,7 @@ struct GameDirectoriesView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                SectionHeading(title: Messages.AppGameDirectoriesView.instanceFolders.localized, subtitle: Messages.AppGameDirectoriesView.organizeInstances.localized)
+                SectionHeading(title: Messages.AppGameDirectoriesView.instanceFolders.localized)
                 Spacer()
                 Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "plus") { model.chooseMinecraftDirectory() }.disabled(model.busy)
             }

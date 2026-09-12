@@ -9,17 +9,11 @@ extension Messages {
         public static var recoverDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText1", table: "Interface", fallback: "找回原游戏目录")
         }
-        /// 文件夹移动或磁盘位置改变后，更新实例引用。
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText2`.
-        public static var relocationHelp: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText2", table: "Interface", fallback: "文件夹移动或磁盘位置改变后，更新实例引用。")
-        }
-        /// 请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。
+        /// 选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。
         ///
         /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText3`.
         public static var relocationInstructions: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText3", table: "Interface", fallback: "请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。")
+            .init(key: "appCustomRunDirectoryRelocationView.bodyText3", table: "Interface", fallback: "选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。")
         }
         /// 原位置
         ///
@@ -63,17 +57,17 @@ extension Messages {
         public static var useDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.previewText2", table: "Interface", fallback: "使用此目录")
         }
-        /// 记住此位置
+        /// 已保存，未使用
         ///
         /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText3`.
         public static var rememberLocation: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText3", table: "Interface", fallback: "记住此位置")
+            .init(key: "appCustomRunDirectoryRelocationView.previewText3", table: "Interface", fallback: "已保存，未使用")
         }
-        /// 确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。
+        /// 仅更新路径，不移动游戏文件或运行记录。
         ///
         /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText4`.
         public static var locationHelp: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText4", table: "Interface", fallback: "确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。")
+            .init(key: "appCustomRunDirectoryRelocationView.previewText4", table: "Interface", fallback: "仅更新路径，不移动游戏文件或运行记录。")
         }
         /// 重新检查
         ///
@@ -93,16 +87,15 @@ extension Messages {
         public static var updateDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.issueText3", table: "Interface", fallback: "更新目录位置")
         }
-        /// 请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。
+        /// 选择原自定义游戏文件夹的新位置。
         ///
         /// Resource: `Interface.appCustomRunDirectoryRelocationView.panelText1`.
         public static var chooseOriginalDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.panelText1", table: "Interface", fallback: "请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。")
+            .init(key: "appCustomRunDirectoryRelocationView.panelText1", table: "Interface", fallback: "选择原自定义游戏文件夹的新位置。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appCustomRunDirectoryRelocationView.bodyText1": .init("找回原游戏目录", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText2": .init("文件夹移动或磁盘位置改变后，更新实例引用。", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText3": .init("请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。", []),
+            "Interface:appCustomRunDirectoryRelocationView.bodyText3": .init("选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。", []),
             "Interface:appCustomRunDirectoryRelocationView.bodyText4": .init("原位置", []),
             "Interface:appCustomRunDirectoryRelocationView.bodyText5": .init("未登记自定义目录", []),
             "Interface:appCustomRunDirectoryRelocationView.bodyText6": .init("尚未选择新位置", []),
@@ -110,12 +103,12 @@ extension Messages {
             "Interface:appCustomRunDirectoryRelocationView.bodyText8": .init("正在核对目录身份与运行状态…", []),
             "Interface:appCustomRunDirectoryRelocationView.previewText1": .init("将更新 %1$lld 个实例", [.integer]),
             "Interface:appCustomRunDirectoryRelocationView.previewText2": .init("使用此目录", []),
-            "Interface:appCustomRunDirectoryRelocationView.previewText3": .init("记住此位置", []),
-            "Interface:appCustomRunDirectoryRelocationView.previewText4": .init("确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。", []),
+            "Interface:appCustomRunDirectoryRelocationView.previewText3": .init("已保存，未使用", []),
+            "Interface:appCustomRunDirectoryRelocationView.previewText4": .init("仅更新路径，不移动游戏文件或运行记录。", []),
             "Interface:appCustomRunDirectoryRelocationView.issueText1": .init("重新检查", []),
             "Interface:appCustomRunDirectoryRelocationView.issueText2": .init("关闭", []),
             "Interface:appCustomRunDirectoryRelocationView.issueText3": .init("更新目录位置", []),
-            "Interface:appCustomRunDirectoryRelocationView.panelText1": .init("请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。", []),
+            "Interface:appCustomRunDirectoryRelocationView.panelText1": .init("选择原自定义游戏文件夹的新位置。", []),
         ]
     }
 }

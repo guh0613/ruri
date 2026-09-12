@@ -21,11 +21,11 @@ extension Messages {
         public static var beforeLaunchPlaceholder: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText3", table: "Interface", fallback: "例如：printf '%%s\\n' \"$RURI_GAME_DIRECTORY\"")
         }
-        /// 留空跳过。由 /bin/sh 在游戏目录中执行，成功后启动游戏；失败或超时会停止本次启动。
+        /// 启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。
         ///
         /// Resource: `Interface.appLaunchCommandsEditor.bodyText4`.
         public static var beforeLaunchHelp: LocalizedMessage {
-            .init(key: "appLaunchCommandsEditor.bodyText4", table: "Interface", fallback: "留空跳过。由 /bin/sh 在游戏目录中执行，成功后启动游戏；失败或超时会停止本次启动。")
+            .init(key: "appLaunchCommandsEditor.bodyText4", table: "Interface", fallback: "启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。")
         }
         /// 退出后命令
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var afterLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText5", table: "Interface", fallback: "退出后命令")
         }
-        /// 留空跳过。游戏自行退出后由 /bin/sh 执行，包括崩溃退出；手动终止游戏时跳过，结果显示在日志中。
+        /// 游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。
         ///
         /// Resource: `Interface.appLaunchCommandsEditor.bodyText6`.
         public static var afterLaunchHelp: LocalizedMessage {
-            .init(key: "appLaunchCommandsEditor.bodyText6", table: "Interface", fallback: "留空跳过。游戏自行退出后由 /bin/sh 执行，包括崩溃退出；手动终止游戏时跳过，结果显示在日志中。")
+            .init(key: "appLaunchCommandsEditor.bodyText6", table: "Interface", fallback: "游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。")
         }
         /// 每条命令最长运行时间
         ///
@@ -63,11 +63,11 @@ extension Messages {
         public static var wrapperPlaceholder: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText10", table: "Interface", fallback: "可执行文件与参数；留空直接运行 Java")
         }
-        /// Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec "$@" 转交启动。
+        /// 自动追加 Java 路径和启动参数，不支持 shell 管道。脚本需使用 exec "$@" 启动游戏。
         ///
         /// Resource: `Interface.appLaunchCommandsEditor.bodyText11`.
         public static var wrapperHelp: LocalizedMessage {
-            .init(key: "appLaunchCommandsEditor.bodyText11", table: "Interface", fallback: "Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec \"$@\" 转交启动。")
+            .init(key: "appLaunchCommandsEditor.bodyText11", table: "Interface", fallback: "自动追加 Java 路径和启动参数，不支持 shell 管道。脚本需使用 exec \"$@\" 启动游戏。")
         }
         /// 可用变量
         ///
@@ -92,28 +92,28 @@ extension Messages {
         public static var availableVariables: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText14", table: "Interface", fallback: "RURI_GAME_DIRECTORY：游戏运行目录\nRURI_INSTANCE_DIRECTORY：实例配置目录\nRURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识\nRURI_GAME_VERSION：游戏版本\nRURI_JAVA：Java 可执行文件\nRURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用")
         }
-        /// 包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。
+        /// 包装命令支持 ${RURI_GAME_DIRECTORY} 等占位符；含空格的参数需加引号。
         ///
         /// Resource: `Interface.appLaunchCommandsEditor.bodyText15`.
         public static var wrapperPlaceholderHelp: LocalizedMessage {
-            .init(key: "appLaunchCommandsEditor.bodyText15", table: "Interface", fallback: "包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。")
+            .init(key: "appLaunchCommandsEditor.bodyText15", table: "Interface", fallback: "包装命令支持 ${RURI_GAME_DIRECTORY} 等占位符；含空格的参数需加引号。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appLaunchCommandsEditor.bodyText1": .init("运行自定义启动命令", []),
             "Interface:appLaunchCommandsEditor.bodyText2": .init("启动前命令", []),
             "Interface:appLaunchCommandsEditor.bodyText3": .init("例如：printf '%%s\\n' \"$RURI_GAME_DIRECTORY\"", []),
-            "Interface:appLaunchCommandsEditor.bodyText4": .init("留空跳过。由 /bin/sh 在游戏目录中执行，成功后启动游戏；失败或超时会停止本次启动。", []),
+            "Interface:appLaunchCommandsEditor.bodyText4": .init("启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。", []),
             "Interface:appLaunchCommandsEditor.bodyText5": .init("退出后命令", []),
-            "Interface:appLaunchCommandsEditor.bodyText6": .init("留空跳过。游戏自行退出后由 /bin/sh 执行，包括崩溃退出；手动终止游戏时跳过，结果显示在日志中。", []),
+            "Interface:appLaunchCommandsEditor.bodyText6": .init("游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。", []),
             "Interface:appLaunchCommandsEditor.bodyText7": .init("每条命令最长运行时间", []),
             "Interface:appLaunchCommandsEditor.bodyText8": .init("秒", []),
             "Interface:appLaunchCommandsEditor.bodyText9": .init("包装命令", []),
             "Interface:appLaunchCommandsEditor.bodyText10": .init("可执行文件与参数；留空直接运行 Java", []),
-            "Interface:appLaunchCommandsEditor.bodyText11": .init("Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec \"$@\" 转交启动。", []),
+            "Interface:appLaunchCommandsEditor.bodyText11": .init("自动追加 Java 路径和启动参数，不支持 shell 管道。脚本需使用 exec \"$@\" 启动游戏。", []),
             "Interface:appLaunchCommandsEditor.bodyText12": .init("可用变量", []),
             "Interface:appLaunchCommandsEditor.bodyText13": .init("前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。", []),
             "Interface:appLaunchCommandsEditor.bodyText14": .init("RURI_GAME_DIRECTORY：游戏运行目录\nRURI_INSTANCE_DIRECTORY：实例配置目录\nRURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识\nRURI_GAME_VERSION：游戏版本\nRURI_JAVA：Java 可执行文件\nRURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用", []),
-            "Interface:appLaunchCommandsEditor.bodyText15": .init("包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。", []),
+            "Interface:appLaunchCommandsEditor.bodyText15": .init("包装命令支持 ${RURI_GAME_DIRECTORY} 等占位符；含空格的参数需加引号。", []),
         ]
     }
 }

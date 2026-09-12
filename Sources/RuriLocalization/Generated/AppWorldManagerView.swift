@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppWorldManagerView {
-        /// 留住每一次冒险
+        /// 存档与备份
         ///
         /// Resource: `Interface.appWorldManagerView.bodyText1`.
-        public static var keepAdventure: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText1", table: "Interface", fallback: "留住每一次冒险")
+        public static var worldsAndBackups: LocalizedMessage {
+            .init(key: "appWorldManagerView.bodyText1", table: "Interface", fallback: "存档与备份")
         }
         /// 内容
         ///
@@ -51,35 +51,29 @@ extension Messages {
         public static var directWorldLaunchUnsupported: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText8", table: "Interface", fallback: "此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。")
         }
-        /// 世界还在等你创造
+        /// 暂无存档
         ///
         /// Resource: `Interface.appWorldManagerView.statusText1`.
         public static var noWorlds: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText1", table: "Interface", fallback: "世界还在等你创造")
+            .init(key: "appWorldManagerView.statusText1", table: "Interface", fallback: "暂无存档")
         }
-        /// 游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。
+        /// 在游戏中创建世界，或导入存档文件夹、ZIP 文件。
         ///
         /// Resource: `Interface.appWorldManagerView.statusText2`.
         public static var worldDescription: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText2", table: "Interface", fallback: "游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。")
+            .init(key: "appWorldManagerView.statusText2", table: "Interface", fallback: "在游戏中创建世界，或导入存档文件夹、ZIP 文件。")
         }
-        /// 给冒险留一份备份
+        /// 暂无备份
         ///
         /// Resource: `Interface.appWorldManagerView.statusText3`.
-        public static var backupYourAdventure: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText3", table: "Interface", fallback: "给冒险留一份备份")
+        public static var noBackups: LocalizedMessage {
+            .init(key: "appWorldManagerView.statusText3", table: "Interface", fallback: "暂无备份")
         }
-        /// 在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。
+        /// 在存档列表中选择“备份”。
         ///
         /// Resource: `Interface.appWorldManagerView.statusText4`.
         public static var backupDescription: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText4", table: "Interface", fallback: "在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。")
-        }
-        /// 备份保存在实例内，恢复为副本会保留原存档。
-        ///
-        /// Resource: `Interface.appWorldManagerView.statusText5`.
-        public static var backupRetention: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText5", table: "Interface", fallback: "备份保存在实例内，恢复为副本会保留原存档。")
+            .init(key: "appWorldManagerView.statusText4", table: "Interface", fallback: "在存档列表中选择“备份”。")
         }
         /// 取消任务
         ///
@@ -147,11 +141,11 @@ extension Messages {
         public static var enterWorld: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText1", table: "Interface", fallback: "进入存档")
         }
-        /// 启动并进入这个单人世界
+        /// 启动游戏并进入此存档
         ///
         /// Resource: `Interface.appWorldManagerView.errorText2`.
         public static var launchWorldNotice: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText2", table: "Interface", fallback: "启动并进入这个单人世界")
+            .init(key: "appWorldManagerView.errorText2", table: "Interface", fallback: "启动游戏并进入此存档")
         }
         /// 此版本不支持直接进入存档
         ///
@@ -244,7 +238,7 @@ extension Messages {
             .init(key: "appWorldManagerView.progressText1", table: "Progress", fallback: "处理存档文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appWorldManagerView.bodyText1": .init("留住每一次冒险", []),
+            "Interface:appWorldManagerView.bodyText1": .init("存档与备份", []),
             "Interface:appWorldManagerView.bodyText2": .init("内容", []),
             "Interface:appWorldManagerView.bodyText3": .init("存档 %1$lld", [.integer]),
             "Interface:appWorldManagerView.bodyText4": .init("备份 %1$lld", [.integer]),
@@ -252,11 +246,10 @@ extension Messages {
             "Interface:appWorldManagerView.bodyText6": .init("打开存档文件夹", []),
             "Interface:appWorldManagerView.bodyText7": .init("请先结束游戏，再修改或备份存档。", []),
             "Interface:appWorldManagerView.bodyText8": .init("此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。", []),
-            "Interface:appWorldManagerView.statusText1": .init("世界还在等你创造", []),
-            "Interface:appWorldManagerView.statusText2": .init("游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。", []),
-            "Interface:appWorldManagerView.statusText3": .init("给冒险留一份备份", []),
-            "Interface:appWorldManagerView.statusText4": .init("在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。", []),
-            "Interface:appWorldManagerView.statusText5": .init("备份保存在实例内，恢复为副本会保留原存档。", []),
+            "Interface:appWorldManagerView.statusText1": .init("暂无存档", []),
+            "Interface:appWorldManagerView.statusText2": .init("在游戏中创建世界，或导入存档文件夹、ZIP 文件。", []),
+            "Interface:appWorldManagerView.statusText3": .init("暂无备份", []),
+            "Interface:appWorldManagerView.statusText4": .init("在存档列表中选择“备份”。", []),
             "Interface:appWorldManagerView.statusText6": .init("取消任务", []),
             "Interface:appWorldManagerView.urlText1": .init("导入存档", []),
             "Interface:appWorldManagerView.folderText1": .init("已导入到 %1$@", [.text]),
@@ -268,7 +261,7 @@ extension Messages {
             "Interface:appWorldManagerView.worldText1": .init("移除存档", []),
             "Interface:appWorldManagerView.backupText4": .init("移除备份", []),
             "Interface:appWorldManagerView.errorText1": .init("进入存档", []),
-            "Interface:appWorldManagerView.errorText2": .init("启动并进入这个单人世界", []),
+            "Interface:appWorldManagerView.errorText2": .init("启动游戏并进入此存档", []),
             "Interface:appWorldManagerView.errorText3": .init("此版本不支持直接进入存档", []),
             "Interface:appWorldManagerView.errorText4": .init("备份", []),
             "Interface:appWorldManagerView.errorText5": .init("备份 %1$@", [.text]),

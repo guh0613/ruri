@@ -25,7 +25,7 @@ struct WorldManagerView: View {
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.keepAdventure.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
+            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.worldsAndBackups.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
             HStack {
                 Picker(Messages.AppWorldManagerView.content.localized, selection: $tab) { Text(Messages.AppWorldManagerView.worldCount(Int64(worlds.count)).localized).tag("worlds"); Text(Messages.AppWorldManagerView.backupCount(Int64(backups.count)).localized).tag("backups") }.pickerStyle(.segmented).frame(width: 270)
                 Spacer()
@@ -44,17 +44,19 @@ struct WorldManagerView: View {
                             if worlds.isEmpty { EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.noWorlds.localized, detail: Messages.AppWorldManagerView.worldDescription.localized) }
                             ForEach(worlds) { world in worldRow(world) }
                         } else {
-                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.backupYourAdventure.localized, detail: Messages.AppWorldManagerView.backupDescription.localized) }
+                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.noBackups.localized, detail: Messages.AppWorldManagerView.backupDescription.localized) }
                             ForEach(backups) { backup in backupRow(backup) }
                         }
                     }
                 }
             }
-            Divider()
-            HStack {
-                Text(Messages.AppWorldManagerView.backupRetention.localized).font(.caption).foregroundStyle(.secondary)
-                Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppWorldManagerView.cancelTask.localized) { model.operation?.cancel() } }
+            if model.busy {
+                Divider()
+                HStack {
+                    Spacer()
+                    ProgressView().controlSize(.small)
+                    Button(Messages.AppWorldManagerView.cancelTask.localized) { model.operation?.cancel() }
+                }
             }
         }.padding(24).frame(width: 820, height: 650)
         .task { await reload() }

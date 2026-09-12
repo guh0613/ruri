@@ -40,9 +40,7 @@ struct InstanceCopyView: View {
                         Button(Messages.AppInstanceCopyView.addTargetFolder.localized, systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
                         Toggle(Messages.AppInstanceCopyView.copyWorlds.localized, isOn: $includeWorlds).disabled(model.busy)
                         Toggle(Messages.AppInstanceCopyView.copyBackups.localized, isOn: $includeBackups).disabled(model.busy)
-                        Text(instance.repositoryVersionID == nil && instance.importedInstallation == nil
-                             ? Messages.AppInstanceCopyView.copyManagedDescription.localized
-                             : Messages.AppInstanceCopyView.copyPortableDescription.localized)
+                        Text(Messages.AppInstanceCopyView.copyDescription.localized)
                             .font(.callout).foregroundStyle(.secondary)
                         if let preview {
                             Divider()

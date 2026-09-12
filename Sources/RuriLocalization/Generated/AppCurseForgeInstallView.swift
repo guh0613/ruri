@@ -75,11 +75,11 @@ extension Messages {
         public static var packManifest: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.fileText1", table: "Interface", fallback: "整合包清单")
         }
-        /// 光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。
+        /// 使用光影需要安装 Iris 或其他兼容的光影模组。
         ///
         /// Resource: `Interface.appCurseForgeInstallView.fileText2`.
         public static var shaderpackNotice: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.fileText2", table: "Interface", fallback: "光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。")
+            .init(key: "appCurseForgeInstallView.fileText2", table: "Interface", fallback: "使用光影需要安装 Iris 或其他兼容的光影模组。")
         }
         /// 正在解析必需依赖…
         ///
@@ -142,7 +142,7 @@ extension Messages {
             "Interface:appCurseForgeInstallView.planText9": .init("第 %1$lld 页", [.integer]),
             "Interface:appCurseForgeInstallView.planText10": .init("下一页", []),
             "Interface:appCurseForgeInstallView.fileText1": .init("整合包清单", []),
-            "Interface:appCurseForgeInstallView.fileText2": .init("光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。", []),
+            "Interface:appCurseForgeInstallView.fileText2": .init("使用光影需要安装 Iris 或其他兼容的光影模组。", []),
             "Interface:appCurseForgeInstallView.fileText3": .init("正在解析必需依赖…", []),
             "Interface:appCurseForgeInstallView.errorText1": .init("返回", []),
             "Interface:appCurseForgeInstallView.errorText2": .init("读取整合包", []),

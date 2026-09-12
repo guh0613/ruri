@@ -27,17 +27,17 @@ extension Messages {
         public static var isolatedDirectoryDescription: LocalizedMessage {
             .init(key: "coreGameRunDirectory.explanationText1", table: "Core", fallback: "此实例单独保存模组、存档和游戏设置。")
         }
-        /// 与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。
+        /// 使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。
         ///
         /// Resource: `Core.coreGameRunDirectory.explanationText2`.
         public static var sharedDirectoryDescription: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.explanationText2", table: "Core", fallback: "与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。")
+            .init(key: "coreGameRunDirectory.explanationText2", table: "Core", fallback: "使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
         }
-        /// 在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。
+        /// 在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。
         ///
         /// Resource: `Core.coreGameRunDirectory.explanationText3`.
         public static var customDirectoryDescription: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.explanationText3", table: "Core", fallback: "在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。")
+            .init(key: "coreGameRunDirectory.explanationText3", table: "Core", fallback: "在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。")
         }
         /// 所有新实例独立
         ///
@@ -74,8 +74,8 @@ extension Messages {
             "Core:coreGameRunDirectory.titleText2": .init("共享运行目录", []),
             "Core:coreGameRunDirectory.titleText3": .init("自定义运行目录", []),
             "Core:coreGameRunDirectory.explanationText1": .init("此实例单独保存模组、存档和游戏设置。", []),
-            "Core:coreGameRunDirectory.explanationText2": .init("与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。", []),
-            "Core:coreGameRunDirectory.explanationText3": .init("在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。", []),
+            "Core:coreGameRunDirectory.explanationText2": .init("使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
+            "Core:coreGameRunDirectory.explanationText3": .init("在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。", []),
             "Core:coreGameRunDirectory.titleText4": .init("所有新实例独立", []),
             "Core:coreGameRunDirectory.titleText5": .init("有模组加载器的实例独立", []),
             "Core:coreGameRunDirectory.titleText6": .init("新实例使用共享目录", []),

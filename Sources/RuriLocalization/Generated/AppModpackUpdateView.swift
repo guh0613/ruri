@@ -105,11 +105,11 @@ extension Messages {
         public static var rollbackUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText3", table: "Interface", fallback: "回退上次更新")
         }
-        /// 此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。
+        /// 缺少整合包原始文件记录，无法区分整合包文件和个人文件。
         ///
         /// Resource: `Interface.appModpackUpdateView.nextOffsetText4`.
         public static var missingOriginalFiles: LocalizedMessage {
-            .init(key: "appModpackUpdateView.nextOffsetText4", table: "Interface", fallback: "此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。")
+            .init(key: "appModpackUpdateView.nextOffsetText4", table: "Interface", fallback: "缺少整合包原始文件记录，无法区分整合包文件和个人文件。")
         }
         /// 关闭
         ///
@@ -117,17 +117,17 @@ extension Messages {
         public static var close: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText5", table: "Interface", fallback: "关闭")
         }
-        /// 存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。
+        /// 存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。
         ///
         /// Resource: `Interface.appModpackUpdateView.previewText1`.
         public static var localChangesHelp: LocalizedMessage {
-            .init(key: "appModpackUpdateView.previewText1", table: "Interface", fallback: "存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。")
+            .init(key: "appModpackUpdateView.previewText1", table: "Interface", fallback: "存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。")
         }
-        /// Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。
+        /// 此次更新会更换 Minecraft 版本。回退不还原存档，进入新版游戏前请先备份。
         ///
         /// Resource: `Interface.appModpackUpdateView.previewText2`.
         public static var minecraftVersionWarning: LocalizedMessage {
-            .init(key: "appModpackUpdateView.previewText2", table: "Interface", fallback: "Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。")
+            .init(key: "appModpackUpdateView.previewText2", table: "Interface", fallback: "此次更新会更换 Minecraft 版本。回退不还原存档，进入新版游戏前请先备份。")
         }
         /// 保留本地
         ///
@@ -183,10 +183,10 @@ extension Messages {
             "Interface:appModpackUpdateView.nextOffsetText1": .init("更多版本", []),
             "Interface:appModpackUpdateView.nextOffsetText2": .init("回退只恢复上次更新改动的文件；更新后再次修改的游戏文件会保留。", []),
             "Interface:appModpackUpdateView.nextOffsetText3": .init("回退上次更新", []),
-            "Interface:appModpackUpdateView.nextOffsetText4": .init("此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。", []),
+            "Interface:appModpackUpdateView.nextOffsetText4": .init("缺少整合包原始文件记录，无法区分整合包文件和个人文件。", []),
             "Interface:appModpackUpdateView.nextOffsetText5": .init("关闭", []),
-            "Interface:appModpackUpdateView.previewText1": .init("存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。", []),
-            "Interface:appModpackUpdateView.previewText2": .init("Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。", []),
+            "Interface:appModpackUpdateView.previewText1": .init("存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。", []),
+            "Interface:appModpackUpdateView.previewText2": .init("此次更新会更换 Minecraft 版本。回退不还原存档，进入新版游戏前请先备份。", []),
             "Interface:appModpackUpdateView.explanationText1": .init("保留本地", []),
             "Interface:appModpackUpdateView.explanationText2": .init("重新选择版本", []),
             "Interface:appModpackUpdateView.explanationText3": .init("应用 %1$lld 项文件变更", [.integer]),

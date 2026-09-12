@@ -23,15 +23,6 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
         case .files: "folder"
         }
     }
-    var detail: String {
-        switch self {
-        case .overview: Messages.AppSettingsLayout.overviewDetails.localized
-        case .runtime: Messages.AppSettingsLayout.javaAndMemoryDetails.localized
-        case .launch: Messages.AppSettingsLayout.windowAndLaunchDetails.localized
-        case .advanced: Messages.AppSettingsLayout.argumentsAndEnvironmentDetails.localized
-        case .files: Messages.AppSettingsLayout.filesAndDirectoriesDetails.localized
-        }
-    }
     var launchKeys: [LaunchSettingKey] {
         switch self {
         case .runtime: [.java, .memory]
@@ -64,10 +55,8 @@ struct SettingsLayout<Content: View>: View {
             }.frame(width: 180).background(.thinMaterial)
             Divider()
             VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: 7) {
-                    Text(selection.title).font(.title2.weight(.semibold))
-                    Text(selection.detail).font(.callout).foregroundStyle(.secondary)
-                }.padding(.horizontal, 24).padding(.top, 24).padding(.bottom, 8)
+                Text(selection.title).font(.title2.weight(.semibold))
+                    .padding(.horizontal, 24).padding(.top, 24).padding(.bottom, 8)
                 Form { content }.formStyle(.grouped).id(selection)
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
         }

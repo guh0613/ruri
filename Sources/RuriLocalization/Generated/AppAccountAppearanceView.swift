@@ -93,11 +93,11 @@ extension Messages {
         public static var currentlyInUse: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText4", table: "Interface", fallback: "当前正在使用")
         }
-        /// 这个账号尚未拥有披风。
+        /// 此账号暂无披风。
         ///
         /// Resource: `Interface.appAccountAppearanceView.selectedText5`.
         public static var noCapeOwned: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText5", table: "Interface", fallback: "这个账号尚未拥有披风。")
+            .init(key: "appAccountAppearanceView.selectedText5", table: "Interface", fallback: "此账号暂无披风。")
         }
         /// 选择披风 PNG…
         ///
@@ -229,7 +229,7 @@ extension Messages {
             "Interface:appAccountAppearanceView.selectedText2": .init("已更换披风", []),
             "Interface:appAccountAppearanceView.selectedText3": .init("当前未使用披风", []),
             "Interface:appAccountAppearanceView.selectedText4": .init("当前正在使用", []),
-            "Interface:appAccountAppearanceView.selectedText5": .init("这个账号尚未拥有披风。", []),
+            "Interface:appAccountAppearanceView.selectedText5": .init("此账号暂无披风。", []),
             "Interface:appAccountAppearanceView.selectedText6": .init("选择披风 PNG…", []),
             "Interface:appAccountAppearanceView.selectedText7": .init("移除当前披风", []),
             "Interface:appAccountAppearanceView.selectedText8": .init("已移除披风", []),

@@ -39,17 +39,17 @@ extension Messages {
         public static var chooseInstalledInstance: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText6", table: "Interface", fallback: "请先选择已安装的游戏实例。")
         }
-        /// 光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。
+        /// 使用光影需要安装 Iris 或其他兼容的光影模组。
         ///
         /// Resource: `Interface.appContentInstallView.errorText1`.
         public static var shaderHelp: LocalizedMessage {
-            .init(key: "appContentInstallView.errorText1", table: "Interface", fallback: "光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。")
+            .init(key: "appContentInstallView.errorText1", table: "Interface", fallback: "使用光影需要安装 Iris 或其他兼容的光影模组。")
         }
-        /// 会自动解析并安装此版本的必需依赖。
+        /// 自动安装必需依赖。
         ///
         /// Resource: `Interface.appContentInstallView.errorText2`.
         public static var dependencyHelp: LocalizedMessage {
-            .init(key: "appContentInstallView.errorText2", table: "Interface", fallback: "会自动解析并安装此版本的必需依赖。")
+            .init(key: "appContentInstallView.errorText2", table: "Interface", fallback: "自动安装必需依赖。")
         }
         /// 在 Modrinth 查看
         ///
@@ -76,8 +76,8 @@ extension Messages {
             "Interface:appContentInstallView.bodyText4": .init("内容版本", []),
             "Interface:appContentInstallView.bodyText5": .init("没有兼容的版本。", []),
             "Interface:appContentInstallView.bodyText6": .init("请先选择已安装的游戏实例。", []),
-            "Interface:appContentInstallView.errorText1": .init("光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。", []),
-            "Interface:appContentInstallView.errorText2": .init("会自动解析并安装此版本的必需依赖。", []),
+            "Interface:appContentInstallView.errorText1": .init("使用光影需要安装 Iris 或其他兼容的光影模组。", []),
+            "Interface:appContentInstallView.errorText2": .init("自动安装必需依赖。", []),
             "Interface:appContentInstallView.pageText1": .init("在 Modrinth 查看", []),
             "Interface:appContentInstallView.pageText2": .init("查看整合包", []),
             "Interface:appContentInstallView.pageText3": .init("安装", []),

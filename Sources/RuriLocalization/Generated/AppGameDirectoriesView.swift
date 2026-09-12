@@ -33,29 +33,23 @@ extension Messages {
         public static var manageFolders: LocalizedMessage {
             .init(key: "appGameDirectoriesView.bodyText5", table: "Interface", fallback: "管理文件夹…")
         }
-        /// 当前：%1$@。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。
+        /// 当前文件夹：%1$@
         ///
         /// Resource: `Interface.appGameDirectoriesView.bodyText6`.
         public static func currentFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText6", table: "Interface", fallback: "当前：%1$@。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。", arguments: [.text(value0)])
+            .init(key: "appGameDirectoriesView.bodyText6", table: "Interface", fallback: "当前文件夹：%1$@", arguments: [.text(value0)])
         }
-        /// 按整合包、游戏版本或磁盘整理你的实例。
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText7`.
-        public static var organizeInstances: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText7", table: "Interface", fallback: "按整合包、游戏版本或磁盘整理你的实例。")
-        }
-        /// 添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。
+        /// 添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。
         ///
         /// Resource: `Interface.appGameDirectoriesView.bodyText8`.
         public static var folderUsage: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText8", table: "Interface", fallback: "添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。")
+            .init(key: "appGameDirectoriesView.bodyText8", table: "Interface", fallback: "添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。")
         }
-        /// 从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。
+        /// 从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。
         ///
         /// Resource: `Interface.appGameDirectoriesView.bodyText9`.
         public static var removedFolderRecovery: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText9", table: "Interface", fallback: "从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。")
+            .init(key: "appGameDirectoriesView.bodyText9", table: "Interface", fallback: "从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。")
         }
         /// %1$lld 个实例
         ///
@@ -153,11 +147,11 @@ extension Messages {
         public static var removeFromList: LocalizedMessage {
             .init(key: "appGameDirectoriesView.bodyText22", table: "Interface", fallback: "从列表移除")
         }
-        /// 选择“%1$@”原文件夹的新位置。Ruri 会核对目录身份，文件不会被移动。
+        /// 选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。
         ///
         /// Resource: `Interface.appGameDirectoriesView.panelText2`.
         public static func chooseOriginalLocation(_ value0: String) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.panelText2", table: "Interface", fallback: "选择“%1$@”原文件夹的新位置。Ruri 会核对目录身份，文件不会被移动。", arguments: [.text(value0)])
+            .init(key: "appGameDirectoriesView.panelText2", table: "Interface", fallback: "选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", arguments: [.text(value0)])
         }
         /// 重新定位
         ///
@@ -171,10 +165,9 @@ extension Messages {
             "Interface:appGameDirectoriesView.bodyText3": .init("刷新版本列表", []),
             "Interface:appGameDirectoriesView.bodyText4": .init("添加文件夹…", []),
             "Interface:appGameDirectoriesView.bodyText5": .init("管理文件夹…", []),
-            "Interface:appGameDirectoriesView.bodyText6": .init("当前：%1$@。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。", [.text]),
-            "Interface:appGameDirectoriesView.bodyText7": .init("按整合包、游戏版本或磁盘整理你的实例。", []),
-            "Interface:appGameDirectoriesView.bodyText8": .init("添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。", []),
-            "Interface:appGameDirectoriesView.bodyText9": .init("从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。", []),
+            "Interface:appGameDirectoriesView.bodyText6": .init("当前文件夹：%1$@", [.text]),
+            "Interface:appGameDirectoriesView.bodyText8": .init("添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。", []),
+            "Interface:appGameDirectoriesView.bodyText9": .init("从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。", []),
             "Interface:appGameDirectoriesView.bodyText10": .init("%1$lld 个实例", [.integer]),
             "Interface:appGameDirectoriesView.bodyText11": .init("已选择", []),
             "Interface:appGameDirectoriesView.bodyText12": .init("选择", []),
@@ -191,7 +184,7 @@ extension Messages {
             "Interface:appGameDirectoriesView.bodyText20": .init("在 Finder 中显示", []),
             "Interface:appGameDirectoriesView.bodyText21": .init("重新定位原文件夹…", []),
             "Interface:appGameDirectoriesView.bodyText22": .init("从列表移除", []),
-            "Interface:appGameDirectoriesView.panelText2": .init("选择“%1$@”原文件夹的新位置。Ruri 会核对目录身份，文件不会被移动。", [.text]),
+            "Interface:appGameDirectoriesView.panelText2": .init("选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", [.text]),
             "Interface:appGameDirectoriesView.panelText3": .init("重新定位", []),
         ]
     }

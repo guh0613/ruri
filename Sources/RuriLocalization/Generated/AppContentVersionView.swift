@@ -75,11 +75,11 @@ extension Messages {
         public static var nextPage: LocalizedMessage {
             .init(key: "appContentVersionView.planText8", table: "Interface", fallback: "下一页")
         }
-        /// 可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。
+        /// 自动安装必需依赖，并保留当前启用或停用状态。
         ///
         /// Resource: `Interface.appContentVersionView.planText9`.
         public static var versionSelectionInfo: LocalizedMessage {
-            .init(key: "appContentVersionView.planText9", table: "Interface", fallback: "可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。")
+            .init(key: "appContentVersionView.planText9", table: "Interface", fallback: "自动安装必需依赖，并保留当前启用或停用状态。")
         }
         /// 正在解析必需依赖…
         ///
@@ -136,7 +136,7 @@ extension Messages {
             "Interface:appContentVersionView.planText6": .init("上一页", []),
             "Interface:appContentVersionView.planText7": .init("第 %1$lld 页", [.integer]),
             "Interface:appContentVersionView.planText8": .init("下一页", []),
-            "Interface:appContentVersionView.planText9": .init("可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。", []),
+            "Interface:appContentVersionView.planText9": .init("自动安装必需依赖，并保留当前启用或停用状态。", []),
             "Interface:appContentVersionView.planText10": .init("正在解析必需依赖…", []),
             "Interface:appContentVersionView.errorText1": .init("返回版本列表", []),
             "Interface:appContentVersionView.errorText2": .init("安装所选版本", []),

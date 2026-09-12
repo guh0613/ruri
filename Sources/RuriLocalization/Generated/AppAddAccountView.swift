@@ -9,12 +9,6 @@ extension Messages {
         public static var addAccount: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText1", table: "Interface", fallback: "添加玩家账号")
         }
-        /// 登录一次，随时回到你的世界。
-        ///
-        /// Resource: `Interface.appAddAccountView.bodyText2`.
-        public static var accountSubtitle: LocalizedMessage {
-            .init(key: "appAddAccountView.bodyText2", table: "Interface", fallback: "登录一次，随时回到你的世界。")
-        }
         /// 账号类型
         ///
         /// Resource: `Interface.appAddAccountView.bodyText3`.
@@ -113,7 +107,6 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appAddAccountView.bodyText1": .init("添加玩家账号", []),
-            "Interface:appAddAccountView.bodyText2": .init("登录一次，随时回到你的世界。", []),
             "Interface:appAddAccountView.bodyText3": .init("账号类型", []),
             "Interface:appAddAccountView.bodyText4": .init("外置认证", []),
             "Interface:appAddAccountView.bodyText5": .init("离线账号", []),

@@ -75,11 +75,11 @@ extension Messages {
         public static var memory: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText8", table: "Interface", fallback: "内存")
         }
-        /// 还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。
+        /// 请先添加账号再启动游戏。
         ///
         /// Resource: `Interface.appHomeView.featuredSectionText9`.
         public static var noAccountNotice: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText9", table: "Interface", fallback: "还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。")
+            .init(key: "appHomeView.featuredSectionText9", table: "Interface", fallback: "请先添加账号再启动游戏。")
         }
         /// 添加账号
         ///
@@ -226,7 +226,7 @@ extension Messages {
             "Interface:appHomeView.featuredSectionText6": .init("尚未游玩", []),
             "Interface:appHomeView.featuredSectionText7": .init("游戏版本", []),
             "Interface:appHomeView.featuredSectionText8": .init("内存", []),
-            "Interface:appHomeView.featuredSectionText9": .init("还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。", []),
+            "Interface:appHomeView.featuredSectionText9": .init("请先添加账号再启动游戏。", []),
             "Interface:appHomeView.featuredSectionText10": .init("添加账号", []),
             "Interface:appHomeView.statusLineText1": .init("就绪", []),
             "Interface:appHomeView.statusLineText2": .init("未完成安装", []),

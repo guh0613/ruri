@@ -9,17 +9,17 @@ extension Messages {
         public static func exportInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText1", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
-        /// 将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。
+        /// 导出游戏安装文件、模组和配置，保留本地修改。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText2`.
         public static var fullExportDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText2", table: "Interface", fallback: "将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。")
+            .init(key: "appExportInstanceView.bodyText2", table: "Interface", fallback: "导出游戏安装文件、模组和配置，保留本地修改。")
         }
-        /// 将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。
+        /// 导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText3`.
         public static var lightExportDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText3", table: "Interface", fallback: "将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。")
+            .init(key: "appExportInstanceView.bodyText3", table: "Interface", fallback: "导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。")
         }
         /// 导出格式
         ///
@@ -81,35 +81,35 @@ extension Messages {
         public static var javaMajorVersion: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText13", table: "Interface", fallback: "指定的 Java 主版本仅在 Ruri 格式中保留。")
         }
-        /// 完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。
+        /// 适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText14`.
         public static var fullBackupDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText14", table: "Interface", fallback: "完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。")
+            .init(key: "appExportInstanceView.bodyText14", table: "Interface", fallback: "适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。")
         }
-        /// Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。
+        /// 保留模组来源和版本记录，支持后续检查更新。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText15`.
         public static var ruriFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText15", table: "Interface", fallback: "Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。")
+            .init(key: "appExportInstanceView.bodyText15", table: "Interface", fallback: "保留模组来源和版本记录，支持后续检查更新。")
         }
-        /// 可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。
+        /// 可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText16`.
         public static var hmclFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText16", table: "Interface", fallback: "可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。")
+            .init(key: "appExportInstanceView.bodyText16", table: "Interface", fallback: "可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。")
         }
-        /// 已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。
+        /// 已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText17`.
         public static var mrpackFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText17", table: "Interface", fallback: "已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。")
+            .init(key: "appExportInstanceView.bodyText17", table: "Interface", fallback: "已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。")
         }
-        /// 可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。
+        /// 可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。
         ///
         /// Resource: `Interface.appExportInstanceView.bodyText18`.
         public static var prismFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText18", table: "Interface", fallback: "可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。")
+            .init(key: "appExportInstanceView.bodyText18", table: "Interface", fallback: "可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。")
         }
         /// 选择保存位置…
         ///
@@ -119,8 +119,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appExportInstanceView.bodyText1": .init("导出 %1$@", [.text]),
-            "Interface:appExportInstanceView.bodyText2": .init("将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。", []),
-            "Interface:appExportInstanceView.bodyText3": .init("将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。", []),
+            "Interface:appExportInstanceView.bodyText2": .init("导出游戏安装文件、模组和配置，保留本地修改。", []),
+            "Interface:appExportInstanceView.bodyText3": .init("导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。", []),
             "Interface:appExportInstanceView.bodyText4": .init("导出格式", []),
             "Interface:appExportInstanceView.bodyText5": .init("版本", []),
             "Interface:appExportInstanceView.bodyText6": .init("整合包版本", []),
@@ -131,11 +131,11 @@ extension Messages {
             "Interface:appExportInstanceView.bodyText11": .init("启动命令会包含在导出文件中，导入后保持停用。", []),
             "Interface:appExportInstanceView.bodyText12": .init("本机环境变量不包含在导出文件中。", []),
             "Interface:appExportInstanceView.bodyText13": .init("指定的 Java 主版本仅在 Ruri 格式中保留。", []),
-            "Interface:appExportInstanceView.bodyText14": .init("完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。", []),
-            "Interface:appExportInstanceView.bodyText15": .init("Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。", []),
-            "Interface:appExportInstanceView.bodyText16": .init("可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。", []),
-            "Interface:appExportInstanceView.bodyText17": .init("已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。", []),
-            "Interface:appExportInstanceView.bodyText18": .init("可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。", []),
+            "Interface:appExportInstanceView.bodyText14": .init("适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。", []),
+            "Interface:appExportInstanceView.bodyText15": .init("保留模组来源和版本记录，支持后续检查更新。", []),
+            "Interface:appExportInstanceView.bodyText16": .init("可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。", []),
+            "Interface:appExportInstanceView.bodyText17": .init("已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。", []),
+            "Interface:appExportInstanceView.bodyText18": .init("可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。", []),
             "Interface:appExportInstanceView.bodyText19": .init("选择保存位置…", []),
         ]
     }

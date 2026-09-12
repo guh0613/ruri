@@ -195,11 +195,11 @@ extension Messages {
         public static var jvmArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "例如：-Dfile.encoding=UTF-8")
         }
-        /// 用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。
+        /// 参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText3`.
         public static var jvmArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。")
         }
         /// 填写示例
         ///
@@ -225,11 +225,11 @@ extension Messages {
         public static var gameArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText7", table: "Interface", fallback: "例如：--width 1600 --height 900")
         }
-        /// 传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。
+        /// 参数用空格分隔，含空格的值加引号。此处指定的窗口尺寸优先于窗口设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText8`.
         public static var gameArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "参数用空格分隔，含空格的值加引号。此处指定的窗口尺寸优先于窗口设置。")
         }
         /// 含空格的参数加引号；这里填写的窗口尺寸优先。
         ///
@@ -273,11 +273,11 @@ extension Messages {
         public static var fullscreenOption: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText1", table: "Interface", fallback: "全屏启动")
         }
-        /// 关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。
+        /// 关闭“全屏启动”后，使用游戏保存的全屏状态。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.valueText2`.
         public static var fullscreenHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.valueText2", table: "Interface", fallback: "关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。")
+            .init(key: "appLaunchSettingsEditor.valueText2", table: "Interface", fallback: "关闭“全屏启动”后，使用游戏保存的全屏状态。")
         }
         /// 启动时打开游戏日志
         ///
@@ -291,11 +291,11 @@ extension Messages {
         public static var logsKeepLauncherVisible: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText4", table: "Interface", fallback: "打开日志时，Ruri 保持可见。")
         }
-        /// 隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。
+        /// 游戏退出后自动显示 Ruri 窗口。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.valueText5`.
         public static var logsHideLauncherVisible: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.valueText5", table: "Interface", fallback: "隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。")
+            .init(key: "appLaunchSettingsEditor.valueText5", table: "Interface", fallback: "游戏退出后自动显示 Ruri 窗口。")
         }
         /// 选择 java 文件、JDK 包或 Java Home 文件夹。
         ///
@@ -333,11 +333,11 @@ extension Messages {
         public static var chooseMemorySize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText10", table: "Interface", fallback: "选择内存")
         }
-        /// 根据当前可用内存估算，为 macOS 保留余量。
+        /// 按当前可用内存估算。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText11`.
         public static var memoryEstimateHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText11", table: "Interface", fallback: "根据当前可用内存估算，为 macOS 保留余量。")
+            .init(key: "appLaunchSettingsEditor.bodyText11", table: "Interface", fallback: "按当前可用内存估算。")
         }
         /// 重新估算
         ///
@@ -345,11 +345,11 @@ extension Messages {
         public static var reestimateMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText12", table: "Interface", fallback: "重新估算")
         }
-        /// 部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。
+        /// 附加 JVM 参数覆盖了部分内存设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.memoryText1`.
         public static var initialMemoryField: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.memoryText1", table: "Interface", fallback: "部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。")
+            .init(key: "appLaunchSettingsEditor.memoryText1", table: "Interface", fallback: "附加 JVM 参数覆盖了部分内存设置。")
         }
         /// 高级内存选项
         ///
@@ -387,11 +387,11 @@ extension Messages {
         public static var memorySettingsHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText6", table: "Interface", fallback: "初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。")
         }
-        /// 1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。
+        /// 此处设置 Java 堆内存，游戏进程的总内存占用会更高。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.errorText7`.
         public static var heapMemoryExplanation: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.errorText7", table: "Interface", fallback: "1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。")
+            .init(key: "appLaunchSettingsEditor.errorText7", table: "Interface", fallback: "此处设置 Java 堆内存，游戏进程的总内存占用会更高。")
         }
         /// 自选：%1$@
         ///
@@ -432,12 +432,12 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.majorText5": .init("选择文件或 JDK…", []),
             "Interface:appLaunchSettingsEditor.javaIssueText1": .init("附加 JVM 参数", []),
             "Interface:appLaunchSettingsEditor.javaIssueText2": .init("例如：-Dfile.encoding=UTF-8", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText4": .init("填写示例", []),
             "Interface:appLaunchSettingsEditor.javaIssueText5": .init("多个参数用空格分隔，含空格的值加引号。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText6": .init("附加游戏参数", []),
             "Interface:appLaunchSettingsEditor.javaIssueText7": .init("例如：--width 1600 --height 900", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("参数用空格分隔，含空格的值加引号。此处指定的窗口尺寸优先于窗口设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText9": .init("含空格的参数加引号；这里填写的窗口尺寸优先。", []),
             "Interface:appLaunchSettingsEditor.windowSize": .init("窗口尺寸", []),
             "Interface:appLaunchSettingsEditor.javaIssueText10": .init("窗口宽度", []),
@@ -445,26 +445,26 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.javaIssueText12": .init("常用尺寸", []),
             "Interface:appLaunchSettingsEditor.javaIssueText13": .init("选择尺寸", []),
             "Interface:appLaunchSettingsEditor.valueText1": .init("全屏启动", []),
-            "Interface:appLaunchSettingsEditor.valueText2": .init("关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。", []),
+            "Interface:appLaunchSettingsEditor.valueText2": .init("关闭“全屏启动”后，使用游戏保存的全屏状态。", []),
             "Interface:appLaunchSettingsEditor.valueText3": .init("启动时打开游戏日志", []),
             "Interface:appLaunchSettingsEditor.valueText4": .init("打开日志时，Ruri 保持可见。", []),
-            "Interface:appLaunchSettingsEditor.valueText5": .init("隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。", []),
+            "Interface:appLaunchSettingsEditor.valueText5": .init("游戏退出后自动显示 Ruri 窗口。", []),
             "Interface:appLaunchSettingsEditor.panelText1": .init("选择 java 文件、JDK 包或 Java Home 文件夹。", []),
             "Interface:appLaunchSettingsEditor.bodyText6": .init("分配方式", []),
             "Interface:appLaunchSettingsEditor.bodyText7": .init("手动设置", []),
             "Interface:appLaunchSettingsEditor.bodyText8": .init("最大内存", []),
             "Interface:appLaunchSettingsEditor.bodyText9": .init("常用大小", []),
             "Interface:appLaunchSettingsEditor.bodyText10": .init("选择内存", []),
-            "Interface:appLaunchSettingsEditor.bodyText11": .init("根据当前可用内存估算，为 macOS 保留余量。", []),
+            "Interface:appLaunchSettingsEditor.bodyText11": .init("按当前可用内存估算。", []),
             "Interface:appLaunchSettingsEditor.bodyText12": .init("重新估算", []),
-            "Interface:appLaunchSettingsEditor.memoryText1": .init("部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。", []),
+            "Interface:appLaunchSettingsEditor.memoryText1": .init("附加 JVM 参数覆盖了部分内存设置。", []),
             "Interface:appLaunchSettingsEditor.errorText1": .init("高级内存选项", []),
             "Interface:appLaunchSettingsEditor.errorText2": .init("指定初始内存", []),
             "Interface:appLaunchSettingsEditor.errorText3": .init("初始内存", []),
             "Interface:appLaunchSettingsEditor.errorText4": .init("限制类元数据内存", []),
             "Interface:appLaunchSettingsEditor.errorText5": .init("Metaspace 上限", []),
             "Interface:appLaunchSettingsEditor.errorText6": .init("初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。", []),
-            "Interface:appLaunchSettingsEditor.errorText7": .init("1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。", []),
+            "Interface:appLaunchSettingsEditor.errorText7": .init("此处设置 Java 堆内存，游戏进程的总内存占用会更高。", []),
             "Interface:appLaunchSettingsEditor.unavailableJavaPath": .init("自选：%1$@", [.text]),
         ]
     }

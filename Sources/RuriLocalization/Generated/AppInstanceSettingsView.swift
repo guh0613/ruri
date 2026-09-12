@@ -27,11 +27,11 @@ extension Messages {
         public static var restoreLaunchSettings: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText2", table: "Interface", fallback: "全部使用默认设置")
         }
-        /// 让此实例的所有启动选项跟随默认设置。
+        /// 将全部启动选项恢复为全局默认值。
         ///
         /// Resource: `Interface.appInstanceSettingsView.settingsIssueText3`.
         public static var restoreInheritedSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "让此实例的所有启动选项跟随默认设置。")
+            .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "将全部启动选项恢复为全局默认值。")
         }
         /// 有未保存的更改
         ///
@@ -183,11 +183,11 @@ extension Messages {
         public static var relocateOriginalDirectory: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText4", table: "Interface", fallback: "重新定位原游戏目录…")
         }
-        /// 重新定位记住的自定义目录…
+        /// 重新定位已保存的自定义目录…
         ///
         /// Resource: `Interface.appInstanceSettingsView.errorText5`.
         public static var relocateCustomDirectory: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText5", table: "Interface", fallback: "重新定位记住的自定义目录…")
+            .init(key: "appInstanceSettingsView.errorText5", table: "Interface", fallback: "重新定位已保存的自定义目录…")
         }
         /// 打开文件夹
         ///
@@ -213,11 +213,11 @@ extension Messages {
         public static var incompleteCopy: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText9", table: "Interface", fallback: "未完成的实例复制")
         }
-        /// 继续处理上次复制保留的文件。
+        /// 恢复未完成的复制，或完成副本校验。
         ///
         /// Resource: `Interface.appInstanceSettingsView.errorText10`.
         public static var incompleteCopyDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText10", table: "Interface", fallback: "继续处理上次复制保留的文件。")
+            .init(key: "appInstanceSettingsView.errorText10", table: "Interface", fallback: "恢复未完成的复制，或完成副本校验。")
         }
         /// 恢复…
         ///
@@ -249,11 +249,11 @@ extension Messages {
         public static var incompleteMove: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText15", table: "Interface", fallback: "未完成的实例移动")
         }
-        /// 继续处理上次移动保留的文件。
+        /// 恢复未完成的移动，或完成原文件清理。
         ///
         /// Resource: `Interface.appInstanceSettingsView.errorText16`.
         public static var incompleteMoveDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText16", table: "Interface", fallback: "继续处理上次移动保留的文件。")
+            .init(key: "appInstanceSettingsView.errorText16", table: "Interface", fallback: "恢复未完成的移动，或完成原文件清理。")
         }
         /// 移动实例
         ///
@@ -279,11 +279,11 @@ extension Messages {
         public static var copyAndMove: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText20", table: "Interface", fallback: "复制与移动")
         }
-        /// 文件操作会在对应页面确认后执行，无需点击这里的“保存”。
+        /// 文件操作单独生效，无需保存实例设置。
         ///
         /// Resource: `Interface.appInstanceSettingsView.errorText21`.
         public static var fileOperationNotice: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText21", table: "Interface", fallback: "文件操作会在对应页面确认后执行，无需点击这里的“保存”。")
+            .init(key: "appInstanceSettingsView.errorText21", table: "Interface", fallback: "文件操作单独生效，无需保存实例设置。")
         }
         /// 保留的工作文件
         ///
@@ -332,7 +332,7 @@ extension Messages {
             "Interface:appInstanceSettingsView.versionsText1": .init("整合包支持的 Java", []),
             "Interface:appInstanceSettingsView.settingsIssueText1": .init("恢复默认", []),
             "Interface:appInstanceSettingsView.settingsIssueText2": .init("全部使用默认设置", []),
-            "Interface:appInstanceSettingsView.settingsIssueText3": .init("让此实例的所有启动选项跟随默认设置。", []),
+            "Interface:appInstanceSettingsView.settingsIssueText3": .init("将全部启动选项恢复为全局默认值。", []),
             "Interface:appInstanceSettingsView.settingsIssueText4": .init("有未保存的更改", []),
             "Interface:appInstanceSettingsView.settingsIssueText5": .init("设置用于下一次启动", []),
             "Interface:appInstanceSettingsView.settingsIssueText6": .init("保存", []),
@@ -358,23 +358,23 @@ extension Messages {
             "Interface:appInstanceSettingsView.errorText2": .init("恢复目录复制…", []),
             "Interface:appInstanceSettingsView.errorText3": .init("切换运行目录…", []),
             "Interface:appInstanceSettingsView.errorText4": .init("重新定位原游戏目录…", []),
-            "Interface:appInstanceSettingsView.errorText5": .init("重新定位记住的自定义目录…", []),
+            "Interface:appInstanceSettingsView.errorText5": .init("重新定位已保存的自定义目录…", []),
             "Interface:appInstanceSettingsView.errorText6": .init("打开文件夹", []),
             "Interface:appInstanceSettingsView.errorText7": .init("模组", []),
             "Interface:appInstanceSettingsView.errorText8": .init("存档", []),
             "Interface:appInstanceSettingsView.errorText9": .init("未完成的实例复制", []),
-            "Interface:appInstanceSettingsView.errorText10": .init("继续处理上次复制保留的文件。", []),
+            "Interface:appInstanceSettingsView.errorText10": .init("恢复未完成的复制，或完成副本校验。", []),
             "Interface:appInstanceSettingsView.errorText11": .init("恢复…", []),
             "Interface:appInstanceSettingsView.errorText12": .init("复制实例", []),
             "Interface:appInstanceSettingsView.errorText13": .init("保留原实例，创建一份独立副本。", []),
             "Interface:appInstanceSettingsView.errorText14": .init("复制…", []),
             "Interface:appInstanceSettingsView.errorText15": .init("未完成的实例移动", []),
-            "Interface:appInstanceSettingsView.errorText16": .init("继续处理上次移动保留的文件。", []),
+            "Interface:appInstanceSettingsView.errorText16": .init("恢复未完成的移动，或完成原文件清理。", []),
             "Interface:appInstanceSettingsView.errorText17": .init("移动实例", []),
             "Interface:appInstanceSettingsView.errorText18": .init("将实例转移到其他游戏文件夹。", []),
             "Interface:appInstanceSettingsView.errorText19": .init("移动…", []),
             "Interface:appInstanceSettingsView.errorText20": .init("复制与移动", []),
-            "Interface:appInstanceSettingsView.errorText21": .init("文件操作会在对应页面确认后执行，无需点击这里的“保存”。", []),
+            "Interface:appInstanceSettingsView.errorText21": .init("文件操作单独生效，无需保存实例设置。", []),
             "Interface:appInstanceSettingsView.errorText22": .init("保留的工作文件", []),
             "Interface:appInstanceSettingsView.errorText23": .init("副本 %1$@", [.text]),
             "Interface:appInstanceSettingsView.errorText24": .init("在 Finder 中查看", []),

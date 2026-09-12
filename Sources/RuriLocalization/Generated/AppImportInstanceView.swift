@@ -27,11 +27,11 @@ extension Messages {
         public static var modpackUsesIndependentDirectory: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText4", table: "Interface", fallback: "整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。")
         }
-        /// 已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。
+        /// Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。
         ///
         /// Resource: `Interface.appImportInstanceView.updateTargetText5`.
         public static var recognizedFullCopy: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText5", table: "Interface", fallback: "已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。")
+            .init(key: "appImportInstanceView.updateTargetText5", table: "Interface", fallback: "Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。")
         }
         /// 已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。
         ///
@@ -164,7 +164,7 @@ extension Messages {
             "Interface:appImportInstanceView.bodyText2": .init("准备整合包更新", []),
             "Interface:appImportInstanceView.updateTargetText3": .init("保存到：%1$@", [.text]),
             "Interface:appImportInstanceView.updateTargetText4": .init("整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。", []),
-            "Interface:appImportInstanceView.updateTargetText5": .init("已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。", []),
+            "Interface:appImportInstanceView.updateTargetText5": .init("Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。", []),
             "Interface:appImportInstanceView.updateTargetText6": .init("已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。", [.text]),
             "Interface:appImportInstanceView.updateTargetText7": .init("实例名称", []),
             "Interface:appImportInstanceView.updateTargetText8": .init("游戏版本", []),

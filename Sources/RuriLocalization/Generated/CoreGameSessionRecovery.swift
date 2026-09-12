@@ -75,17 +75,17 @@ extension Messages {
         public static var launchCommandStillExists: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText5", table: "Core", fallback: "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。")
         }
-        /// 已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。
+        /// 原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。
         ///
         /// Resource: `Core.coreGameSessionRecovery.explanationText6`.
         public static var originalProcessGone: LocalizedMessage {
-            .init(key: "coreGameSessionRecovery.explanationText6", table: "Core", fallback: "已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。")
+            .init(key: "coreGameSessionRecovery.explanationText6", table: "Core", fallback: "原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。")
         }
-        /// 监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。
+        /// 无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。
         ///
         /// Resource: `Core.coreGameSessionRecovery.explanationText7`.
         public static var unverifiedGameExit: LocalizedMessage {
-            .init(key: "coreGameSessionRecovery.explanationText7", table: "Core", fallback: "监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。")
+            .init(key: "coreGameSessionRecovery.explanationText7", table: "Core", fallback: "无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。")
         }
         /// 监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。
         ///
@@ -184,8 +184,8 @@ extension Messages {
             "Core:coreGameSessionRecovery.explanationText3": .init("系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。", []),
             "Core:coreGameSessionRecovery.explanationText4": .init("进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。", []),
             "Core:coreGameSessionRecovery.explanationText5": .init("命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。", []),
-            "Core:coreGameSessionRecovery.explanationText6": .init("已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。", []),
-            "Core:coreGameSessionRecovery.explanationText7": .init("监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。", []),
+            "Core:coreGameSessionRecovery.explanationText6": .init("原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。", []),
+            "Core:coreGameSessionRecovery.explanationText7": .init("无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。", []),
             "Core:coreGameSessionRecovery.explanationText8": .init("监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。", []),
             "Core:coreGameSessionRecovery.explanationText9": .init("监控中断，命令结果未知", []),
             "Core:coreGameSessionRecovery.explanationText10": .init("监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。", []),

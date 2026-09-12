@@ -63,11 +63,11 @@ extension Messages {
         public static var newInstanceIsolation: LocalizedMessage {
             .init(key: "appPreferencesView.modelText10", table: "Interface", fallback: "新实例隔离规则")
         }
-        /// 仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。
+        /// 仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。
         ///
         /// Resource: `Interface.appPreferencesView.modelText11`.
         public static var newInstanceIsolationDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText11", table: "Interface", fallback: "仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。")
+            .init(key: "appPreferencesView.modelText11", table: "Interface", fallback: "仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
         }
         /// 下载与网络
         ///
@@ -87,11 +87,11 @@ extension Messages {
         public static func parallelDownloads(_ value0: String) -> LocalizedMessage {
             .init(key: "appPreferencesView.modelText14", table: "Interface", fallback: "并行下载：%1$@", arguments: [.text(value0)])
         }
-        /// 自动切换会先使用官方源，连接失败后尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。
+        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。
         ///
         /// Resource: `Interface.appPreferencesView.modelText15`.
         public static var automaticMirrorDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "自动切换会先使用官方源，连接失败后尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。")
+            .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。")
         }
         /// BMCLAPI 镜像服务
         ///
@@ -105,11 +105,11 @@ extension Messages {
         public static var microsoftLogin: LocalizedMessage {
             .init(key: "appPreferencesView.modelText17", table: "Interface", fallback: "Microsoft 登录")
         }
-        /// 已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。
+        /// 留空使用内置登录配置。
         ///
         /// Resource: `Interface.appPreferencesView.modelText18`.
         public static var microsoftLoginDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText18", table: "Interface", fallback: "已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。")
+            .init(key: "appPreferencesView.modelText18", table: "Interface", fallback: "留空使用内置登录配置。")
         }
         /// 自定义应用 Client ID
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var customClientID: LocalizedMessage {
             .init(key: "appPreferencesView.modelText19", table: "Interface", fallback: "自定义应用 Client ID")
         }
-        /// 填写你注册的 Microsoft 公共客户端应用 ID，用于账号登录。该应用需要获准访问 Minecraft 服务。
+        /// 自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。
         ///
         /// Resource: `Interface.appPreferencesView.modelText20`.
         public static var customClientIDDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText20", table: "Interface", fallback: "填写你注册的 Microsoft 公共客户端应用 ID，用于账号登录。该应用需要获准访问 Minecraft 服务。")
+            .init(key: "appPreferencesView.modelText20", table: "Interface", fallback: "自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。")
         }
         /// Microsoft 应用注册文档
         ///
@@ -165,11 +165,11 @@ extension Messages {
         public static var version: LocalizedMessage {
             .init(key: "appPreferencesView.modelText27", table: "Interface", fallback: "版本")
         }
-        /// 原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。
+        /// Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。
         ///
         /// Resource: `Interface.appPreferencesView.modelText28`.
         public static var aboutRuriDescription: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText28", table: "Interface", fallback: "原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。")
+            .init(key: "appPreferencesView.modelText28", table: "Interface", fallback: "Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。")
         }
         /// 通用
         ///
@@ -237,11 +237,11 @@ extension Messages {
         public static var globalGameSettings: LocalizedMessage {
             .init(key: "appPreferencesView.globalGameSettings", table: "Interface", fallback: "全局游戏设置")
         }
-        /// 统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。
+        /// 设置 Java、内存、窗口和启动参数的默认值。
         ///
         /// Resource: `Interface.appPreferencesView.globalGameSettingsDescription`.
         public static var globalGameSettingsDescription: LocalizedMessage {
-            .init(key: "appPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。")
+            .init(key: "appPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "设置 Java、内存、窗口和启动参数的默认值。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appPreferencesView.modelText1": .init("外观", []),
@@ -254,16 +254,16 @@ extension Messages {
             "Interface:appPreferencesView.modelText8": .init("编辑默认启动设置…", []),
             "Interface:appPreferencesView.modelText9": .init("未单独设置的实例将使用这些选项；保存后用于下一次启动。", []),
             "Interface:appPreferencesView.modelText10": .init("新实例隔离规则", []),
-            "Interface:appPreferencesView.modelText11": .init("仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。", []),
+            "Interface:appPreferencesView.modelText11": .init("仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
             "Interface:appPreferencesView.modelText12": .init("下载与网络", []),
             "Interface:appPreferencesView.modelText13": .init("下载源", []),
             "Interface:appPreferencesView.modelText14": .init("并行下载：%1$@", [.text]),
-            "Interface:appPreferencesView.modelText15": .init("自动切换会先使用官方源，连接失败后尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。", []),
+            "Interface:appPreferencesView.modelText15": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。", []),
             "Interface:appPreferencesView.modelText16": .init("BMCLAPI 镜像服务", []),
             "Interface:appPreferencesView.modelText17": .init("Microsoft 登录", []),
-            "Interface:appPreferencesView.modelText18": .init("已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。", []),
+            "Interface:appPreferencesView.modelText18": .init("留空使用内置登录配置。", []),
             "Interface:appPreferencesView.modelText19": .init("自定义应用 Client ID", []),
-            "Interface:appPreferencesView.modelText20": .init("填写你注册的 Microsoft 公共客户端应用 ID，用于账号登录。该应用需要获准访问 Minecraft 服务。", []),
+            "Interface:appPreferencesView.modelText20": .init("自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。", []),
             "Interface:appPreferencesView.modelText21": .init("Microsoft 应用注册文档", []),
             "Interface:appPreferencesView.modelText22": .init("数据", []),
             "Interface:appPreferencesView.modelText23": .init("管理实例文件夹…", []),
@@ -271,7 +271,7 @@ extension Messages {
             "Interface:appPreferencesView.modelText25": .init("在 Finder 中打开数据目录", []),
             "Interface:appPreferencesView.modelText26": .init("关于 Ruri", []),
             "Interface:appPreferencesView.modelText27": .init("版本", []),
-            "Interface:appPreferencesView.modelText28": .init("原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。", []),
+            "Interface:appPreferencesView.modelText28": .init("Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。", []),
             "Interface:appPreferencesView.general": .init("通用", []),
             "Interface:appPreferencesView.networkAndServices": .init("网络与服务", []),
             "Interface:appPreferencesView.newInstances": .init("新建实例", []),
@@ -283,7 +283,7 @@ extension Messages {
             "Interface:appPreferencesView.unsavedGameSettings": .init("全局游戏设置有未保存的更改", []),
             "Interface:appPreferencesView.discardGameChanges": .init("还原更改", []),
             "Interface:appPreferencesView.globalGameSettings": .init("全局游戏设置", []),
-            "Interface:appPreferencesView.globalGameSettingsDescription": .init("统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。", []),
+            "Interface:appPreferencesView.globalGameSettingsDescription": .init("设置 Java、内存、窗口和启动参数的默认值。", []),
         ]
     }
 }

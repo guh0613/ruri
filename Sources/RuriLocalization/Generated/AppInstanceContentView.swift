@@ -111,11 +111,11 @@ extension Messages {
         public static var removeSelected: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText18", table: "Interface", fallback: "移除所选…")
         }
-        /// 游戏运行期间，内容修改暂不可用。
+        /// 请退出游戏后再修改内容。
         ///
         /// Resource: `Interface.appInstanceContentView.bodyText19`.
         public static var contentChangesUnavailableWhileRunning: LocalizedMessage {
-            .init(key: "appInstanceContentView.bodyText19", table: "Interface", fallback: "游戏运行期间，内容修改暂不可用。")
+            .init(key: "appInstanceContentView.bodyText19", table: "Interface", fallback: "请退出游戏后再修改内容。")
         }
         /// 正在检查兼容的正式版本…
         ///
@@ -141,11 +141,11 @@ extension Messages {
         public static var noMatchingContent: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText4", table: "Interface", fallback: "没有匹配内容")
         }
-        /// 从本地导入文件，或到“发现内容”安装兼容版本。
+        /// 从本地导入文件，或在“发现”中安装。
         ///
         /// Resource: `Interface.appInstanceContentView.errorText5`.
         public static var importOrDiscoverContent: LocalizedMessage {
-            .init(key: "appInstanceContentView.errorText5", table: "Interface", fallback: "从本地导入文件，或到“发现内容”安装兼容版本。")
+            .init(key: "appInstanceContentView.errorText5", table: "Interface", fallback: "从本地导入文件，或在“发现”中安装。")
         }
         /// 启用 %1$@
         ///
@@ -292,12 +292,12 @@ extension Messages {
             "Interface:appInstanceContentView.bodyText16": .init("启用所选", []),
             "Interface:appInstanceContentView.bodyText17": .init("停用所选", []),
             "Interface:appInstanceContentView.bodyText18": .init("移除所选…", []),
-            "Interface:appInstanceContentView.bodyText19": .init("游戏运行期间，内容修改暂不可用。", []),
+            "Interface:appInstanceContentView.bodyText19": .init("请退出游戏后再修改内容。", []),
             "Interface:appInstanceContentView.errorText1": .init("正在检查兼容的正式版本…", []),
             "Interface:appInstanceContentView.errorText2": .init("已是最新兼容正式版", []),
             "Interface:appInstanceContentView.errorText3": .init("还没有安装%1$@", [.text]),
             "Interface:appInstanceContentView.errorText4": .init("没有匹配内容", []),
-            "Interface:appInstanceContentView.errorText5": .init("从本地导入文件，或到“发现内容”安装兼容版本。", []),
+            "Interface:appInstanceContentView.errorText5": .init("从本地导入文件，或在“发现”中安装。", []),
             "Interface:appInstanceContentView.errorText6": .init("启用 %1$@", [.text]),
             "Interface:appInstanceContentView.errorText7": .init("启用", []),
             "Interface:appInstanceContentView.errorText8": .init("停用", []),

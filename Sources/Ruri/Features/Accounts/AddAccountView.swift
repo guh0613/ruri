@@ -13,7 +13,7 @@ struct AddAccountView: View {
     @State private var error: String?
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            SectionHeading(title: Messages.AppAddAccountView.addAccount.localized, subtitle: Messages.AppAddAccountView.accountSubtitle.localized)
+            SectionHeading(title: Messages.AppAddAccountView.addAccount.localized)
             Picker(Messages.AppAddAccountView.accountType.localized, selection: $mode) { Text("Microsoft").tag("microsoft"); Text(Messages.AppAddAccountView.externalAuth.localized).tag("external"); Text(Messages.AppAddAccountView.offlineAccount.localized).tag("offline") }.pickerStyle(.segmented).disabled(task != nil)
             if mode == "external" {
                 ExternalAccountForm()

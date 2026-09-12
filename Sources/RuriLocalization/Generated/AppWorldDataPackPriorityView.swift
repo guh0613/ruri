@@ -9,11 +9,11 @@ extension Messages {
         public static var dataPackPriority: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.bodyText1", table: "Interface", fallback: "数据包优先级")
         }
-        /// 越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。
+        /// 优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。
         ///
         /// Resource: `Interface.appWorldDataPackPriorityView.bodyText2`.
         public static var priorityDetails: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.bodyText2", table: "Interface", fallback: "越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。")
+            .init(key: "appWorldDataPackPriorityView.bodyText2", table: "Interface", fallback: "优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。")
         }
         /// 原版
         ///
@@ -59,7 +59,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appWorldDataPackPriorityView.bodyText1": .init("数据包优先级", []),
-            "Interface:appWorldDataPackPriorityView.bodyText2": .init("越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。", []),
+            "Interface:appWorldDataPackPriorityView.bodyText2": .init("优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。", []),
             "Interface:appWorldDataPackPriorityView.snapshotText1": .init("原版", []),
             "Interface:appWorldDataPackPriorityView.snapshotText2": .init("本地文件缺失或未启用，保留原记录", []),
             "Interface:appWorldDataPackPriorityView.snapshotText3": .init("游戏或模组提供", []),

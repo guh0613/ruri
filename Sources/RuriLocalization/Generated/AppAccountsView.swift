@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppAccountsView {
-        /// 还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。
+        /// 添加 Microsoft、外置认证或离线账号。
         ///
         /// Resource: `Interface.appAccountsView.bodyText1`.
         public static var emptyState: LocalizedMessage {
-            .init(key: "appAccountsView.bodyText1", table: "Interface", fallback: "还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。")
+            .init(key: "appAccountsView.bodyText1", table: "Interface", fallback: "添加 Microsoft、外置认证或离线账号。")
         }
         /// 账号
         ///
@@ -76,7 +76,7 @@ extension Messages {
             .init(key: "appAccountsView.runText1", table: "Interface", fallback: "更新账号")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAccountsView.bodyText1": .init("还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。", []),
+            "Interface:appAccountsView.bodyText1": .init("添加 Microsoft、外置认证或离线账号。", []),
             "Interface:appAccountsView.bodyText2": .init("账号", []),
             "Interface:appAccountsView.bodyText3": .init("登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。", []),
             "Interface:appAccountsView.bodyText4": .init("添加账号", []),

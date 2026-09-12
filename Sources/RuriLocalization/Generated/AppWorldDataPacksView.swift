@@ -33,11 +33,11 @@ extension Messages {
         public static var exitGameBeforeEditing: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText5", table: "Interface", fallback: "请退出游戏后再修改数据包。")
         }
-        /// 这个世界还没有本地数据包
+        /// 暂无本地数据包
         ///
         /// Resource: `Interface.appWorldDataPacksView.statusText1`.
         public static var noLocalDataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.statusText1", table: "Interface", fallback: "这个世界还没有本地数据包")
+            .init(key: "appWorldDataPacksView.statusText1", table: "Interface", fallback: "暂无本地数据包")
         }
         /// 导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。
         ///
@@ -141,7 +141,7 @@ extension Messages {
             "Interface:appWorldDataPacksView.bodyText3": .init("导入…", []),
             "Interface:appWorldDataPacksView.bodyText4": .init("适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。", []),
             "Interface:appWorldDataPacksView.bodyText5": .init("请退出游戏后再修改数据包。", []),
-            "Interface:appWorldDataPacksView.statusText1": .init("这个世界还没有本地数据包", []),
+            "Interface:appWorldDataPacksView.statusText1": .init("暂无本地数据包", []),
             "Interface:appWorldDataPacksView.statusText2": .init("导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。", []),
             "Interface:appWorldDataPacksView.formatText1": .init("声明格式：%1$@", [.text]),
             "Interface:appWorldDataPacksView.errorText1": .init("启用", []),

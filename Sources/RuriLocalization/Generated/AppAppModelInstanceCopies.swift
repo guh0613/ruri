@@ -9,11 +9,11 @@ extension Messages {
         public static func copyInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.copyInstanceText1", table: "Interface", fallback: "复制 %1$@", arguments: [.text(value0)])
         }
-        /// 已创建“%1$@”，游戏文件独立保存，原实例保留。
+        /// 已创建副本“%1$@”。
         ///
         /// Resource: `Interface.appAppModelInstanceCopies.resultText1`.
         public static func copyCreated(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.resultText1", table: "Interface", fallback: "已创建“%1$@”，游戏文件独立保存，原实例保留。", arguments: [.text(value0)])
+            .init(key: "appAppModelInstanceCopies.resultText1", table: "Interface", fallback: "已创建副本“%1$@”。", arguments: [.text(value0)])
         }
         /// 恢复 %1$@ 的实例复制
         ///
@@ -35,7 +35,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appAppModelInstanceCopies.copyInstanceText1": .init("复制 %1$@", [.text]),
-            "Interface:appAppModelInstanceCopies.resultText1": .init("已创建“%1$@”，游戏文件独立保存，原实例保留。", [.text]),
+            "Interface:appAppModelInstanceCopies.resultText1": .init("已创建副本“%1$@”。", [.text]),
             "Interface:appAppModelInstanceCopies.recoverInstanceCopyText1": .init("恢复 %1$@ 的实例复制", [.text]),
             "Interface:appAppModelInstanceCopies.resultText2": .init("副本已完成，复制记录已清理。", []),
             "Interface:appAppModelInstanceCopies.resultText3": .init("未完成的副本已另行保留，原实例可继续使用。", []),

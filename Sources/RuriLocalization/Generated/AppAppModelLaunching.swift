@@ -15,11 +15,11 @@ extension Messages {
         public static var javaRuntimeUnavailable: LocalizedMessage {
             .init(key: "appAppModelLaunching.runtimeText1", table: "Errors", fallback: "Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
         }
-        /// 这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。
+        /// 此实例或共享目录正在使用中，请查看运行记录或实例设置。
         ///
         /// Resource: `Interface.appAppModelLaunching.storedText1`.
         public static var instanceInUse: LocalizedMessage {
-            .init(key: "appAppModelLaunching.storedText1", table: "Interface", fallback: "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。")
+            .init(key: "appAppModelLaunching.storedText1", table: "Interface", fallback: "此实例或共享目录正在使用中，请查看运行记录或实例设置。")
         }
         /// 启动 %1$@
         ///
@@ -66,7 +66,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:appAppModelLaunching.serverText1": .init("请重新添加外置认证账号。", []),
             "Errors:appAppModelLaunching.runtimeText1": .init("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。", []),
-            "Interface:appAppModelLaunching.storedText1": .init("这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。", []),
+            "Interface:appAppModelLaunching.storedText1": .init("此实例或共享目录正在使用中，请查看运行记录或实例设置。", []),
             "Interface:appAppModelLaunching.presentationText1": .init("启动 %1$@", [.text]),
             "Interface:appAppModelLaunching.messageText1": .init("运行记录未能完整写入：%1$@", [.text]),
             "Interface:appAppModelLaunching.worldLaunch": .init("[Ruri] 进入存档：%1$@", [.text]),

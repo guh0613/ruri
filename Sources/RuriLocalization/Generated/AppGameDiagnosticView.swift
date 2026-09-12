@@ -27,11 +27,11 @@ extension Messages {
         public static func evidenceLine(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "appGameDiagnosticView.documentText2", table: "Interface", fallback: "%1$@ · 命中%2$@第 %3$@ 行", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        /// 在 Finder 中显示这份证据
+        /// 在 Finder 中显示文件
         ///
         /// Resource: `Interface.appGameDiagnosticView.relativeText1`.
         public static var showEvidenceInFinder: LocalizedMessage {
-            .init(key: "appGameDiagnosticView.relativeText1", table: "Interface", fallback: "在 Finder 中显示这份证据")
+            .init(key: "appGameDiagnosticView.relativeText1", table: "Interface", fallback: "在 Finder 中显示文件")
         }
         /// 修复会联网校验并补全游戏与加载器安装文件。
         ///
@@ -123,11 +123,11 @@ extension Messages {
         public static var showExportedBundle: LocalizedMessage {
             .init(key: "appGameDiagnosticView.exportedText1", table: "Interface", fallback: "显示已导出的诊断包")
         }
-        /// 仅保存已勾选的预览内容；没有上传操作。
+        /// 仅将所选内容保存到本地。
         ///
         /// Resource: `Interface.appGameDiagnosticView.exportedText2`.
         public static var exportNotice: LocalizedMessage {
-            .init(key: "appGameDiagnosticView.exportedText2", table: "Interface", fallback: "仅保存已勾选的预览内容；没有上传操作。")
+            .init(key: "appGameDiagnosticView.exportedText2", table: "Interface", fallback: "仅将所选内容保存到本地。")
         }
         /// 导出诊断包…
         ///
@@ -146,7 +146,7 @@ extension Messages {
             "Interface:appGameDiagnosticView.analysisText1": .init("已记录的事实", []),
             "Interface:appGameDiagnosticView.documentText1": .init("末段", []),
             "Interface:appGameDiagnosticView.documentText2": .init("%1$@ · 命中%2$@第 %3$@ 行", [.text, .text, .text]),
-            "Interface:appGameDiagnosticView.relativeText1": .init("在 Finder 中显示这份证据", []),
+            "Interface:appGameDiagnosticView.relativeText1": .init("在 Finder 中显示文件", []),
             "Interface:appGameDiagnosticView.relativeText2": .init("修复会联网校验并补全游戏与加载器安装文件。", []),
             "Interface:appGameDiagnosticView.activityText1": .init("证据范围", []),
             "Interface:appGameDiagnosticView.activityText2": .init("查看运行文件", []),
@@ -162,7 +162,7 @@ extension Messages {
             "Interface:appGameDiagnosticView.bundleText7": .init("更新预览", []),
             "Interface:appGameDiagnosticView.bundleText8": .init("隐藏文字已修改，请更新预览后导出。", []),
             "Interface:appGameDiagnosticView.exportedText1": .init("显示已导出的诊断包", []),
-            "Interface:appGameDiagnosticView.exportedText2": .init("仅保存已勾选的预览内容；没有上传操作。", []),
+            "Interface:appGameDiagnosticView.exportedText2": .init("仅将所选内容保存到本地。", []),
             "Interface:appGameDiagnosticView.exportedText3": .init("导出诊断包…", []),
             "Interface:appGameDiagnosticView.exportedText4": .init("准备分享预览…", []),
         ]

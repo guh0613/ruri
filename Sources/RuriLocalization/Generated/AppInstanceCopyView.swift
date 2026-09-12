@@ -33,17 +33,17 @@ extension Messages {
         public static func targetLabel(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText3", table: "Interface", fallback: "目标：%1$@", arguments: [.text(value0)])
         }
-        /// 核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。
+        /// 校验副本后完成复制。文件缺失或已更改时，会保留副本供检查。
         ///
         /// Resource: `Interface.appInstanceCopyView.recoveryText4`.
         public static var copyValidationHelp: LocalizedMessage {
-            .init(key: "appInstanceCopyView.recoveryText4", table: "Interface", fallback: "核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。")
+            .init(key: "appInstanceCopyView.recoveryText4", table: "Interface", fallback: "校验副本后完成复制。文件缺失或已更改时，会保留副本供检查。")
         }
-        /// 恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。
+        /// 将本次已复制的文件另存为副本，之后可重新复制。
         ///
         /// Resource: `Interface.appInstanceCopyView.recoveryText5`.
         public static var recoverCopyHelp: LocalizedMessage {
-            .init(key: "appInstanceCopyView.recoveryText5", table: "Interface", fallback: "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。")
+            .init(key: "appInstanceCopyView.recoveryText5", table: "Interface", fallback: "将本次已复制的文件另存为副本，之后可重新复制。")
         }
         /// 在 Finder 中查看工作区
         ///
@@ -87,17 +87,11 @@ extension Messages {
         public static var copyBackups: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText12", table: "Interface", fallback: "复制存档备份")
         }
-        /// 副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。
+        /// 副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。
         ///
         /// Resource: `Interface.appInstanceCopyView.recoveryText13`.
-        public static var copyManagedDescription: LocalizedMessage {
-            .init(key: "appInstanceCopyView.recoveryText13", table: "Interface", fallback: "副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。")
-        }
-        /// 副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。
-        ///
-        /// Resource: `Interface.appInstanceCopyView.recoveryText14`.
-        public static var copyPortableDescription: LocalizedMessage {
-            .init(key: "appInstanceCopyView.recoveryText14", table: "Interface", fallback: "副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。")
+        public static var copyDescription: LocalizedMessage {
+            .init(key: "appInstanceCopyView.recoveryText13", table: "Interface", fallback: "副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。")
         }
         /// 文件
         ///
@@ -183,8 +177,8 @@ extension Messages {
             "Interface:appInstanceCopyView.recoveryText1": .init("副本已创建，等待清理", []),
             "Interface:appInstanceCopyView.recoveryText2": .init("复制尚未完成，原实例及其文件保留", []),
             "Interface:appInstanceCopyView.recoveryText3": .init("目标：%1$@", [.text]),
-            "Interface:appInstanceCopyView.recoveryText4": .init("核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。", []),
-            "Interface:appInstanceCopyView.recoveryText5": .init("恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。", []),
+            "Interface:appInstanceCopyView.recoveryText4": .init("校验副本后完成复制。文件缺失或已更改时，会保留副本供检查。", []),
+            "Interface:appInstanceCopyView.recoveryText5": .init("将本次已复制的文件另存为副本，之后可重新复制。", []),
             "Interface:appInstanceCopyView.recoveryText6": .init("在 Finder 中查看工作区", []),
             "Interface:appInstanceCopyView.recoveryText7": .init("副本名称", []),
             "Interface:appInstanceCopyView.recoveryText8": .init("保存到", []),
@@ -192,8 +186,7 @@ extension Messages {
             "Interface:appInstanceCopyView.recoveryText10": .init("添加目标文件夹…", []),
             "Interface:appInstanceCopyView.recoveryText11": .init("复制存档", []),
             "Interface:appInstanceCopyView.recoveryText12": .init("复制存档备份", []),
-            "Interface:appInstanceCopyView.recoveryText13": .init("副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。", []),
-            "Interface:appInstanceCopyView.recoveryText14": .init("副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。", []),
+            "Interface:appInstanceCopyView.recoveryText13": .init("副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。", []),
             "Interface:appInstanceCopyView.previewText1": .init("文件", []),
             "Interface:appInstanceCopyView.previewText3": .init("源实例尚未安装，副本也会保持待安装状态。", []),
             "Interface:appInstanceCopyView.previewText4": .init("正在检查实例与文件…", []),

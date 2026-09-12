@@ -158,7 +158,7 @@
 "appAccountAppearanceView.selectedText4" = "当前正在使用";
 
 /* @symbol AppAccountAppearanceView.noCapeOwned @args - */
-"appAccountAppearanceView.selectedText5" = "这个账号尚未拥有披风。";
+"appAccountAppearanceView.selectedText5" = "此账号暂无披风。";
 
 /* @symbol AppAccountAppearanceView.chooseCapePNG @args - */
 "appAccountAppearanceView.selectedText6" = "选择披风 PNG…";
@@ -212,7 +212,7 @@
 "appAccountAppearanceView.errorText4" = "没有披风";
 
 /* @symbol AppAccountsView.emptyState @args - */
-"appAccountsView.bodyText1" = "还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。";
+"appAccountsView.bodyText1" = "添加 Microsoft、外置认证或离线账号。";
 
 /* @symbol AppAccountsView.account @args - */
 "appAccountsView.bodyText2" = "账号";
@@ -249,9 +249,6 @@
 
 /* @symbol AppAddAccountView.addAccount @args - */
 "appAddAccountView.bodyText1" = "添加玩家账号";
-
-/* @symbol AppAddAccountView.accountSubtitle @args - */
-"appAddAccountView.bodyText2" = "登录一次，随时回到你的世界。";
 
 /* @symbol AppAddAccountView.accountType @args - */
 "appAddAccountView.bodyText3" = "账号类型";
@@ -380,7 +377,7 @@
 "appContentBatchUpdateView.previousText1" = "更新后继续保持停用";
 
 /* @symbol AppContentBatchUpdateView.replacementDetails @args - */
-"appContentBatchUpdateView.manualText1" = "下载和校验完成后一起替换文件。停用状态保留，取消或失败时保留原文件。";
+"appContentBatchUpdateView.manualText1" = "更新保留停用状态；取消或失败时保留原文件。";
 
 /* @symbol AppContentBatchUpdateView.updateAll @args integer */
 "appContentBatchUpdateView.manualText2" = "更新全部 %1$lld 项";
@@ -410,10 +407,10 @@
 "appContentInstallView.bodyText6" = "请先选择已安装的游戏实例。";
 
 /* @symbol AppContentInstallView.shaderHelp @args - */
-"appContentInstallView.errorText1" = "光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。";
+"appContentInstallView.errorText1" = "使用光影需要安装 Iris 或其他兼容的光影模组。";
 
 /* @symbol AppContentInstallView.dependencyHelp @args - */
-"appContentInstallView.errorText2" = "会自动解析并安装此版本的必需依赖。";
+"appContentInstallView.errorText2" = "自动安装必需依赖。";
 
 /* @symbol AppContentInstallView.viewOnModrinth @args - */
 "appContentInstallView.pageText1" = "在 Modrinth 查看";
@@ -476,7 +473,7 @@
 "appContentVersionView.planText8" = "下一页";
 
 /* @symbol AppContentVersionView.versionSelectionInfo @args - */
-"appContentVersionView.planText9" = "可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。";
+"appContentVersionView.planText9" = "自动安装必需依赖，并保留当前启用或停用状态。";
 
 /* @symbol AppContentVersionView.resolveDependencies @args - */
 "appContentVersionView.planText10" = "正在解析必需依赖…";
@@ -569,7 +566,7 @@
 "appCurseForgeInstallView.fileText1" = "整合包清单";
 
 /* @symbol AppCurseForgeInstallView.shaderpackNotice @args - */
-"appCurseForgeInstallView.fileText2" = "光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。";
+"appCurseForgeInstallView.fileText2" = "使用光影需要安装 Iris 或其他兼容的光影模组。";
 
 /* @symbol AppCurseForgeInstallView.resolveDependencies @args - */
 "appCurseForgeInstallView.fileText3" = "正在解析必需依赖…";
@@ -602,7 +599,7 @@
 "appDiscoverView.bodyText1" = "连接 CurseForge";
 
 /* @symbol AppDiscoverView.curseforgeSetupDetails @args - */
-"appDiscoverView.bodyText2" = "配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。";
+"appDiscoverView.bodyText2" = "请先在设置中配置 CurseForge API Key。";
 
 /* @symbol AppDiscoverView.goToSettings @args - */
 "appDiscoverView.bodyText3" = "前往设置";
@@ -617,7 +614,7 @@
 "appDiscoverView.errorText2" = "没有找到匹配内容";
 
 /* @symbol AppDiscoverView.tryShorterSearch @args - */
-"appDiscoverView.errorText3" = "试试英文名称，或使用更短的关键词。";
+"appDiscoverView.errorText3" = "使用英文名称或更短的关键词搜索。";
 
 /* @symbol AppDiscoverView.previousPage @args - */
 "appDiscoverView.errorText4" = "上一页";
@@ -707,7 +704,7 @@
 "appInstanceContentView.bodyText18" = "移除所选…";
 
 /* @symbol AppInstanceContentView.contentChangesUnavailableWhileRunning @args - */
-"appInstanceContentView.bodyText19" = "游戏运行期间，内容修改暂不可用。";
+"appInstanceContentView.bodyText19" = "请退出游戏后再修改内容。";
 
 /* @symbol AppInstanceContentView.checkingCompatibleReleases @args - */
 "appInstanceContentView.errorText1" = "正在检查兼容的正式版本…";
@@ -722,7 +719,7 @@
 "appInstanceContentView.errorText4" = "没有匹配内容";
 
 /* @symbol AppInstanceContentView.importOrDiscoverContent @args - */
-"appInstanceContentView.errorText5" = "从本地导入文件，或到“发现内容”安装兼容版本。";
+"appInstanceContentView.errorText5" = "从本地导入文件，或在“发现”中安装。";
 
 /* @symbol AppInstanceContentView.enableContent @args text */
 "appInstanceContentView.errorText6" = "启用 %1$@";
@@ -791,7 +788,7 @@
 "appDownloadsView.bodyText1" = "没有下载任务";
 
 /* @symbol AppDownloadsView.downloadProgressDetails @args - */
-"appDownloadsView.bodyText2" = "安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。";
+"appDownloadsView.bodyText2" = "游戏安装和内容下载的进度会显示在此处。";
 
 /* @symbol AppDownloadsView.completed @args - */
 "appDownloadsView.bodyText3" = "已完成";
@@ -848,7 +845,7 @@
 "appHomeView.featuredSectionText8" = "内存";
 
 /* @symbol AppHomeView.noAccountNotice @args - */
-"appHomeView.featuredSectionText9" = "还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。";
+"appHomeView.featuredSectionText9" = "请先添加账号再启动游戏。";
 
 /* @symbol AppHomeView.addAccount @args - */
 "appHomeView.featuredSectionText10" = "添加账号";
@@ -937,11 +934,8 @@
 /* @symbol AppAppModelInstallation.loaderConfigurationRestored @args - */
 "appAppModelInstallation.savedText2" = "已恢复上次的加载器配置";
 
-/* @symbol AppCreateInstanceView.createWorld @args - */
-"appCreateInstanceView.bodyText1" = "创建一个新世界";
-
-/* @symbol AppCreateInstanceView.createDescription @args - */
-"appCreateInstanceView.bodyText2" = "选择版本，剩下的交给 Ruri。 ";
+/* @symbol AppCreateInstanceView.createInstance @args - */
+"appCreateInstanceView.bodyText1" = "新建实例";
 
 /* @symbol AppCreateInstanceView.instanceNameOptional @args - */
 "appCreateInstanceView.bodyText3" = "实例名称（可选）";
@@ -1018,11 +1012,8 @@
 /* @symbol AppCustomRunDirectoryRelocationView.recoverDirectory @args - */
 "appCustomRunDirectoryRelocationView.bodyText1" = "找回原游戏目录";
 
-/* @symbol AppCustomRunDirectoryRelocationView.relocationHelp @args - */
-"appCustomRunDirectoryRelocationView.bodyText2" = "文件夹移动或磁盘位置改变后，更新实例引用。";
-
 /* @symbol AppCustomRunDirectoryRelocationView.relocationInstructions @args - */
-"appCustomRunDirectoryRelocationView.bodyText3" = "请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。";
+"appCustomRunDirectoryRelocationView.bodyText3" = "选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。";
 
 /* @symbol AppCustomRunDirectoryRelocationView.originalLocation @args - */
 "appCustomRunDirectoryRelocationView.bodyText4" = "原位置";
@@ -1046,10 +1037,10 @@
 "appCustomRunDirectoryRelocationView.previewText2" = "使用此目录";
 
 /* @symbol AppCustomRunDirectoryRelocationView.rememberLocation @args - */
-"appCustomRunDirectoryRelocationView.previewText3" = "记住此位置";
+"appCustomRunDirectoryRelocationView.previewText3" = "已保存，未使用";
 
 /* @symbol AppCustomRunDirectoryRelocationView.locationHelp @args - */
-"appCustomRunDirectoryRelocationView.previewText4" = "确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。";
+"appCustomRunDirectoryRelocationView.previewText4" = "仅更新路径，不移动游戏文件或运行记录。";
 
 /* @symbol AppCustomRunDirectoryRelocationView.recheck @args - */
 "appCustomRunDirectoryRelocationView.issueText1" = "重新检查";
@@ -1061,7 +1052,7 @@
 "appCustomRunDirectoryRelocationView.issueText3" = "更新目录位置";
 
 /* @symbol AppCustomRunDirectoryRelocationView.chooseOriginalDirectory @args - */
-"appCustomRunDirectoryRelocationView.panelText1" = "请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。";
+"appCustomRunDirectoryRelocationView.panelText1" = "选择原自定义游戏文件夹的新位置。";
 
 /* @symbol AppGameDirectoriesView.instanceFolders @args - */
 "appGameDirectoriesView.bodyText1" = "实例文件夹";
@@ -1079,16 +1070,13 @@
 "appGameDirectoriesView.bodyText5" = "管理文件夹…";
 
 /* @symbol AppGameDirectoriesView.currentFolder @args text */
-"appGameDirectoriesView.bodyText6" = "当前：%1$@。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。";
-
-/* @symbol AppGameDirectoriesView.organizeInstances @args - */
-"appGameDirectoriesView.bodyText7" = "按整合包、游戏版本或磁盘整理你的实例。";
+"appGameDirectoriesView.bodyText6" = "当前文件夹：%1$@";
 
 /* @symbol AppGameDirectoriesView.folderUsage @args - */
-"appGameDirectoriesView.bodyText8" = "添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。";
+"appGameDirectoriesView.bodyText8" = "添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。";
 
 /* @symbol AppGameDirectoriesView.removedFolderRecovery @args - */
-"appGameDirectoriesView.bodyText9" = "从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。";
+"appGameDirectoriesView.bodyText9" = "从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。";
 
 /* @symbol AppGameDirectoriesView.instanceCount @args integer */
 "appGameDirectoriesView.bodyText10" = "%1$lld 个实例";
@@ -1139,7 +1127,7 @@
 "appGameDirectoriesView.bodyText22" = "从列表移除";
 
 /* @symbol AppGameDirectoriesView.chooseOriginalLocation @args text */
-"appGameDirectoriesView.panelText2" = "选择“%1$@”原文件夹的新位置。Ruri 会核对目录身份，文件不会被移动。";
+"appGameDirectoriesView.panelText2" = "选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。";
 
 /* @symbol AppGameDirectoriesView.relocate @args - */
 "appGameDirectoriesView.panelText3" = "重新定位";
@@ -1160,7 +1148,7 @@
 "appGameRunDirectoryChangeView.bodyText5" = "选择文件夹…";
 
 /* @symbol AppGameRunDirectoryChangeView.directoryPurpose @args - */
-"appGameRunDirectoryChangeView.panelText1" = "选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。";
+"appGameRunDirectoryChangeView.panelText1" = "选择保存模组、存档和游戏设置的文件夹。";
 
 /* @symbol AppGameRunDirectoryChangeView.preparingSelectedDirectory @args - */
 "appGameRunDirectoryChangeView.urlText1" = "正在准备所选目录…";
@@ -1169,16 +1157,16 @@
 "appGameRunDirectoryChangeView.urlText2" = "正在检查目录与文件…";
 
 /* @symbol AppGameRunDirectoryChangeView.copySubmittedAwaitingCleanup @args - */
-"appGameRunDirectoryChangeView.recoveryText1" = "复制已提交，等待清理记录";
+"appGameRunDirectoryChangeView.recoveryText1" = "已切换目录，等待清理";
 
 /* @symbol AppGameRunDirectoryChangeView.copyIncomplete @args - */
 "appGameRunDirectoryChangeView.recoveryText2" = "上次复制尚未完成";
 
 /* @symbol AppGameRunDirectoryChangeView.recoveryCleanupDetails @args - */
-"appGameRunDirectoryChangeView.recoveryText3" = "目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。";
+"appGameRunDirectoryChangeView.recoveryText3" = "已切换到目标目录。完成清理后可继续使用，已复制的文件会保留。";
 
 /* @symbol AppGameRunDirectoryChangeView.recoveryPreservationDetails @args - */
-"appGameRunDirectoryChangeView.recoveryText4" = "原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。";
+"appGameRunDirectoryChangeView.recoveryText4" = "恢复原目录设置，并将本次复制的文件另存为副本。其他程序修改或替换的文件会保留。";
 
 /* @symbol AppGameRunDirectoryChangeView.copyStartedAt @args text */
 "appGameRunDirectoryChangeView.recoveryText5" = "开始于 %1$@";
@@ -1208,19 +1196,16 @@
 "appGameRunDirectoryChangeView.issueText3" = "目标目录";
 
 /* @symbol AppGameRunDirectoryChangeView.copyBeforeSwitching @args - */
-"appGameRunDirectoryChangeView.issueText5" = "先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。";
+"appGameRunDirectoryChangeView.issueText5" = "复制当前游戏内容和存档备份后切换，原目录保留。";
 
 /* @symbol AppGameRunDirectoryChangeView.emptyTargetDetails @args - */
-"appGameRunDirectoryChangeView.issueText6" = "目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。";
+"appGameRunDirectoryChangeView.issueText6" = "目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。";
 
 /* @symbol AppGameRunDirectoryChangeView.useExistingTargetDetails @args - */
-"appGameRunDirectoryChangeView.issueText7" = "切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。";
-
-/* @symbol AppGameRunDirectoryChangeView.fileStatistics @args - */
-"appGameRunDirectoryChangeView.issueText8" = "文件统计包含该目录对应的内容来源记录和世界备份。";
+"appGameRunDirectoryChangeView.issueText7" = "使用目标目录已有的模组、存档和设置。原目录保留，可再次切回。";
 
 /* @symbol AppGameRunDirectoryChangeView.gameFilesStayInPlace @args - */
-"appGameRunDirectoryChangeView.issueText9" = "游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。";
+"appGameRunDirectoryChangeView.issueText9" = "游戏本体、依赖和启动器设置不随运行目录复制。";
 
 /* @symbol AppGameRunDirectoryChangeView.switchUnavailable @args - */
 "appGameRunDirectoryChangeView.issueText10" = "暂时无法切换";
@@ -1301,10 +1286,10 @@
 "appInstanceComponentsView.errorText4" = "移除加载器后按原版启动，模组文件仍会保留。";
 
 /* @symbol AppInstanceComponentsView.changeLoaderDetails @args - */
-"appInstanceComponentsView.errorText5" = "可升级、降级或更换加载器。现有模组需要与所选加载器兼容。";
+"appInstanceComponentsView.errorText5" = "现有模组需与所选加载器兼容。";
 
 /* @symbol AppInstanceComponentsView.applyLoaderDetails @args - */
-"appInstanceComponentsView.errorText6" = "保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。";
+"appInstanceComponentsView.errorText6" = "启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。";
 
 /* @symbol AppInstanceComponentsView.restorePreviousConfiguration @args - */
 "appInstanceComponentsView.backupText2" = "恢复上次配置";
@@ -1391,7 +1376,7 @@
 "appInstanceSettingsView.settingsIssueText2" = "全部使用默认设置";
 
 /* @symbol AppInstanceSettingsView.restoreInheritedSettings @args - */
-"appInstanceSettingsView.settingsIssueText3" = "让此实例的所有启动选项跟随默认设置。";
+"appInstanceSettingsView.settingsIssueText3" = "将全部启动选项恢复为全局默认值。";
 
 /* @symbol AppInstanceSettingsView.unsavedChanges @args - */
 "appInstanceSettingsView.settingsIssueText4" = "有未保存的更改";
@@ -1469,7 +1454,7 @@
 "appInstanceSettingsView.errorText4" = "重新定位原游戏目录…";
 
 /* @symbol AppInstanceSettingsView.relocateCustomDirectory @args - */
-"appInstanceSettingsView.errorText5" = "重新定位记住的自定义目录…";
+"appInstanceSettingsView.errorText5" = "重新定位已保存的自定义目录…";
 
 /* @symbol AppInstanceSettingsView.openFolder @args - */
 "appInstanceSettingsView.errorText6" = "打开文件夹";
@@ -1484,7 +1469,7 @@
 "appInstanceSettingsView.errorText9" = "未完成的实例复制";
 
 /* @symbol AppInstanceSettingsView.incompleteCopyDescription @args - */
-"appInstanceSettingsView.errorText10" = "继续处理上次复制保留的文件。";
+"appInstanceSettingsView.errorText10" = "恢复未完成的复制，或完成副本校验。";
 
 /* @symbol AppInstanceSettingsView.recover @args - */
 "appInstanceSettingsView.errorText11" = "恢复…";
@@ -1502,7 +1487,7 @@
 "appInstanceSettingsView.errorText15" = "未完成的实例移动";
 
 /* @symbol AppInstanceSettingsView.incompleteMoveDescription @args - */
-"appInstanceSettingsView.errorText16" = "继续处理上次移动保留的文件。";
+"appInstanceSettingsView.errorText16" = "恢复未完成的移动，或完成原文件清理。";
 
 /* @symbol AppInstanceSettingsView.moveInstance @args - */
 "appInstanceSettingsView.errorText17" = "移动实例";
@@ -1517,7 +1502,7 @@
 "appInstanceSettingsView.errorText20" = "复制与移动";
 
 /* @symbol AppInstanceSettingsView.fileOperationNotice @args - */
-"appInstanceSettingsView.errorText21" = "文件操作会在对应页面确认后执行，无需点击这里的“保存”。";
+"appInstanceSettingsView.errorText21" = "文件操作单独生效，无需保存实例设置。";
 
 /* @symbol AppInstanceSettingsView.retainedWorkFiles @args - */
 "appInstanceSettingsView.errorText22" = "保留的工作文件";
@@ -1550,7 +1535,7 @@
 "appLibraryView.issueText4" = "没有匹配的实例";
 
 /* @symbol AppLibraryView.tryAnotherNameOrVersion @args - */
-"appLibraryView.issueText5" = "换个名称或版本号试试。";
+"appLibraryView.issueText5" = "使用其他名称或版本号搜索。";
 
 /* @symbol AppLibraryView.searchInstancesOrVersions @args - */
 "appLibraryView.issueText6" = "搜索实例或版本";
@@ -1607,7 +1592,7 @@
 "appLibraryView.totalText2" = "%1$lld / %2$lld 个实例";
 
 /* @symbol AppLibraryView.folderHasNoInstances @args - */
-"appLibraryView.emptyFolderText1" = "这个文件夹还没有实例";
+"appLibraryView.emptyFolderText1" = "此文件夹中暂无实例";
 
 /* @symbol AppLibraryView.createOrImportInstance @args - */
 "appLibraryView.emptyFolderText2" = "新建一个实例，或导入整合包。";
@@ -1640,7 +1625,7 @@
 "appAppModelInstanceCopies.copyInstanceText1" = "复制 %1$@";
 
 /* @symbol AppAppModelInstanceCopies.copyCreated @args text */
-"appAppModelInstanceCopies.resultText1" = "已创建“%1$@”，游戏文件独立保存，原实例保留。";
+"appAppModelInstanceCopies.resultText1" = "已创建副本“%1$@”。";
 
 /* @symbol AppAppModelInstanceCopies.recoverInstanceCopy @args text */
 "appAppModelInstanceCopies.recoverInstanceCopyText1" = "恢复 %1$@ 的实例复制";
@@ -1655,10 +1640,10 @@
 "appAppModelInstanceMoves.moveInstanceText1" = "移动 %1$@";
 
 /* @symbol AppAppModelInstanceMoves.instanceMoved @args text */
-"appAppModelInstanceMoves.resultText1" = "已移动“%1$@”，设置和运行历史已保留。";
+"appAppModelInstanceMoves.resultText1" = "已移动“%1$@”。";
 
 /* @symbol AppAppModelInstanceMoves.moveNeedsRecovery @args - */
-"appAppModelInstanceMoves.resultText2" = "实例已登记，但移动尚需恢复。";
+"appAppModelInstanceMoves.resultText2" = "实例已移至目标位置，还需完成清理。";
 
 /* @symbol AppAppModelInstanceMoves.recoverInstanceMove @args text */
 "appAppModelInstanceMoves.recoverInstanceMoveText1" = "恢复 %1$@ 的移动";
@@ -1712,10 +1697,10 @@
 "appExportInstanceView.bodyText1" = "导出 %1$@";
 
 /* @symbol AppExportInstanceView.fullExportDescription @args - */
-"appExportInstanceView.bodyText2" = "将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。";
+"appExportInstanceView.bodyText2" = "导出游戏安装文件、模组和配置，保留本地修改。";
 
 /* @symbol AppExportInstanceView.lightExportDescription @args - */
-"appExportInstanceView.bodyText3" = "将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。";
+"appExportInstanceView.bodyText3" = "导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。";
 
 /* @symbol AppExportInstanceView.exportFormat @args - */
 "appExportInstanceView.bodyText4" = "导出格式";
@@ -1748,19 +1733,19 @@
 "appExportInstanceView.bodyText13" = "指定的 Java 主版本仅在 Ruri 格式中保留。";
 
 /* @symbol AppExportInstanceView.fullBackupDescription @args - */
-"appExportInstanceView.bodyText14" = "完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。";
+"appExportInstanceView.bodyText14" = "适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。";
 
 /* @symbol AppExportInstanceView.ruriFormatDescription @args - */
-"appExportInstanceView.bodyText15" = "Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。";
+"appExportInstanceView.bodyText15" = "保留模组来源和版本记录，支持后续检查更新。";
 
 /* @symbol AppExportInstanceView.hmclFormatDescription @args - */
-"appExportInstanceView.bodyText16" = "可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。";
+"appExportInstanceView.bodyText16" = "可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。";
 
 /* @symbol AppExportInstanceView.mrpackFormatDescription @args - */
-"appExportInstanceView.bodyText17" = "已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。";
+"appExportInstanceView.bodyText17" = "已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。";
 
 /* @symbol AppExportInstanceView.prismFormatDescription @args - */
-"appExportInstanceView.bodyText18" = "可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。";
+"appExportInstanceView.bodyText18" = "可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。";
 
 /* @symbol AppExportInstanceView.chooseSaveLocation @args - */
 "appExportInstanceView.bodyText19" = "选择保存位置…";
@@ -1778,7 +1763,7 @@
 "appImportInstanceView.updateTargetText4" = "整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。";
 
 /* @symbol AppImportInstanceView.recognizedFullCopy @args - */
-"appImportInstanceView.updateTargetText5" = "已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。";
+"appImportInstanceView.updateTargetText5" = "Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。";
 
 /* @symbol AppImportInstanceView.recognizedInstance @args text */
 "appImportInstanceView.updateTargetText6" = "已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。";
@@ -1853,10 +1838,10 @@
 "appInstanceCopyView.recoveryText3" = "目标：%1$@";
 
 /* @symbol AppInstanceCopyView.copyValidationHelp @args - */
-"appInstanceCopyView.recoveryText4" = "核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。";
+"appInstanceCopyView.recoveryText4" = "校验副本后完成复制。文件缺失或已更改时，会保留副本供检查。";
 
 /* @symbol AppInstanceCopyView.recoverCopyHelp @args - */
-"appInstanceCopyView.recoveryText5" = "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。";
+"appInstanceCopyView.recoveryText5" = "将本次已复制的文件另存为副本，之后可重新复制。";
 
 /* @symbol AppInstanceCopyView.showWorkspace @args - */
 "appInstanceCopyView.recoveryText6" = "在 Finder 中查看工作区";
@@ -1879,11 +1864,8 @@
 /* @symbol AppInstanceCopyView.copyBackups @args - */
 "appInstanceCopyView.recoveryText12" = "复制存档备份";
 
-/* @symbol AppInstanceCopyView.copyManagedDescription @args - */
-"appInstanceCopyView.recoveryText13" = "副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。";
-
-/* @symbol AppInstanceCopyView.copyPortableDescription @args - */
-"appInstanceCopyView.recoveryText14" = "副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。";
+/* @symbol AppInstanceCopyView.copyDescription @args - */
+"appInstanceCopyView.recoveryText13" = "副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。";
 
 /* @symbol AppInstanceCopyView.files @args - */
 "appInstanceCopyView.previewText1" = "文件";
@@ -1946,10 +1928,10 @@
 "appInstanceMoveView.recoveryText4" = "目标位置";
 
 /* @symbol AppInstanceMoveView.moveValidationHelp @args - */
-"appInstanceMoveView.recoveryText5" = "校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。";
+"appInstanceMoveView.recoveryText5" = "校验文件后清理原位置。也可选择“保留原文件并完成”。";
 
 /* @symbol AppInstanceMoveView.recoverMoveHelp @args - */
-"appInstanceMoveView.recoveryText6" = "恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。";
+"appInstanceMoveView.recoveryText6" = "撤回本次移动并保留未完成的副本，原实例仍可使用。";
 
 /* @symbol AppInstanceMoveView.showWorkspace @args - */
 "appInstanceMoveView.recoveryText7" = "查看工作区";
@@ -1972,20 +1954,14 @@
 /* @symbol AppInstanceMoveView.addTargetFolder @args - */
 "appInstanceMoveView.recoveryText13" = "添加目标文件夹…";
 
-/* @symbol AppInstanceMoveView.moveSettingsPreserved @args - */
-"appInstanceMoveView.recoveryText14" = "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。";
-
-/* @symbol AppInstanceMoveView.moveContentPreserved @args - */
-"appInstanceMoveView.recoveryText15" = "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。";
-
-/* @symbol AppInstanceMoveView.moveWorldsPreserved @args - */
-"appInstanceMoveView.recoveryText16" = "存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。";
+/* @symbol AppInstanceMoveView.sourceCleanupNotice @args - */
+"appInstanceMoveView.recoveryText16" = "目标文件校验通过后，原位置的实例文件会被删除。";
 
 /* @symbol AppInstanceMoveView.moveSharedContent @args - */
-"appInstanceMoveView.recoveryText17" = "当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。";
+"appInstanceMoveView.recoveryText17" = "共享目录中的游戏内容和备份会复制到目标，改为独立运行。原共享目录保留。";
 
 /* @symbol AppInstanceMoveView.moveCustomDirectory @args - */
-"appInstanceMoveView.recoveryText18" = "移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。";
+"appInstanceMoveView.recoveryText18" = "自定义运行目录中的游戏文件和备份保留在原位置。";
 
 /* @symbol AppInstanceMoveView.moveFiles @args - */
 "appInstanceMoveView.previewText1" = "移动文件";
@@ -1997,19 +1973,19 @@
 "appInstanceMoveView.keptText1" = "保留的运行目录";
 
 /* @symbol AppInstanceMoveView.previousDirectoryContent @args - */
-"appInstanceMoveView.priorText1" = "以前留下的独立目录内容也会保留在目标实例中。";
+"appInstanceMoveView.priorText1" = "旧的版本配置和未使用的游戏目录内容会单独保存在此处。";
 
-/* @symbol AppInstanceMoveView.oldContent @args - */
-"appInstanceMoveView.priorText2" = "旧内容";
+/* @symbol AppInstanceMoveView.savedLocation @args - */
+"appInstanceMoveView.priorText2" = "保存位置";
 
 /* @symbol AppInstanceMoveView.checkingInstance @args - */
-"appInstanceMoveView.priorText3" = "正在核对实例、运行历史与文件…";
+"appInstanceMoveView.priorText3" = "正在检查文件…";
 
 /* @symbol AppInstanceMoveView.operationMoving @args - */
 "appInstanceMoveView.operationIssueText1" = "正在移动实例…";
 
 /* @symbol AppInstanceMoveView.operationFinishing @args - */
-"appInstanceMoveView.operationIssueText2" = "正在结束当前步骤；已提交的移动会保留恢复入口。";
+"appInstanceMoveView.operationIssueText2" = "正在取消；未完成的移动可稍后恢复。";
 
 /* @symbol AppInstanceMoveView.refresh @args - */
 "appInstanceMoveView.operationIssueText3" = "刷新";
@@ -2090,16 +2066,16 @@
 "appModpackUpdateView.nextOffsetText3" = "回退上次更新";
 
 /* @symbol AppModpackUpdateView.missingOriginalFiles @args - */
-"appModpackUpdateView.nextOffsetText4" = "此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。";
+"appModpackUpdateView.nextOffsetText4" = "缺少整合包原始文件记录，无法区分整合包文件和个人文件。";
 
 /* @symbol AppModpackUpdateView.close @args - */
 "appModpackUpdateView.nextOffsetText5" = "关闭";
 
 /* @symbol AppModpackUpdateView.localChangesHelp @args - */
-"appModpackUpdateView.previewText1" = "存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。";
+"appModpackUpdateView.previewText1" = "存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。";
 
 /* @symbol AppModpackUpdateView.minecraftVersionWarning @args - */
-"appModpackUpdateView.previewText2" = "Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。";
+"appModpackUpdateView.previewText2" = "此次更新会更换 Minecraft 版本。回退不还原存档，进入新版游戏前请先备份。";
 
 /* @symbol AppModpackUpdateView.keepLocalChanges @args - */
 "appModpackUpdateView.explanationText1" = "保留本地";
@@ -2354,7 +2330,7 @@
 "appAppModelGameMonitoring.changedText1" = "无法读取 %1$@ 的运行日志：%2$@";
 
 /* @symbol AppAppModelLaunching.instanceInUse @args - */
-"appAppModelLaunching.storedText1" = "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。";
+"appAppModelLaunching.storedText1" = "此实例或共享目录正在使用中，请查看运行记录或实例设置。";
 
 /* @symbol AppAppModelLaunching.launchingInstance @args text */
 "appAppModelLaunching.presentationText1" = "启动 %1$@";
@@ -2378,7 +2354,7 @@
 "appGameDiagnosticView.documentText2" = "%1$@ · 命中%2$@第 %3$@ 行";
 
 /* @symbol AppGameDiagnosticView.showEvidenceInFinder @args - */
-"appGameDiagnosticView.relativeText1" = "在 Finder 中显示这份证据";
+"appGameDiagnosticView.relativeText1" = "在 Finder 中显示文件";
 
 /* @symbol AppGameDiagnosticView.repairNotice @args - */
 "appGameDiagnosticView.relativeText2" = "修复会联网校验并补全游戏与加载器安装文件。";
@@ -2426,7 +2402,7 @@
 "appGameDiagnosticView.exportedText1" = "显示已导出的诊断包";
 
 /* @symbol AppGameDiagnosticView.exportNotice @args - */
-"appGameDiagnosticView.exportedText2" = "仅保存已勾选的预览内容；没有上传操作。";
+"appGameDiagnosticView.exportedText2" = "仅将所选内容保存到本地。";
 
 /* @symbol AppGameDiagnosticView.exportBundle @args - */
 "appGameDiagnosticView.exportedText3" = "导出诊断包…";
@@ -2444,7 +2420,7 @@
 "appGameQuitControls.bodyText3" = "取消命令";
 
 /* @symbol AppGameQuitControls.gameStillRunning @args - */
-"appGameQuitControls.attemptText1" = "游戏还未退出。可能正在保存或等待操作，可以返回游戏查看；Ruri 会继续等待。";
+"appGameQuitControls.attemptText1" = "游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。";
 
 /* @symbol AppGameQuitControls.normalExitNotice @args - */
 "appGameQuitControls.attemptText2" = "本次启动请通过游戏菜单正常退出。";
@@ -2465,13 +2441,13 @@
 "appGameQuitControls.attemptText7" = "游戏没有响应时的操作";
 
 /* @symbol AppGameSessionRecoveryView.gameExitConfirmed @args - */
-"appGameSessionRecoveryView.bodyText1" = "我已确认这个实例的游戏已退出";
+"appGameSessionRecoveryView.bodyText1" = "已确认此实例的游戏已退出";
 
 /* @symbol AppGameSessionRecoveryView.recoveryDetails @args - */
-"appGameSessionRecoveryView.bodyText2" = "恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。";
+"appGameSessionRecoveryView.bodyText2" = "恢复仅更新运行记录，不会结束进程或删除日志。";
 
 /* @symbol AppGameSessionRecoveryView.instanceBusy @args - */
-"appGameSessionRecoveryView.bodyText3" = "这个实例仍被某项操作占用，请等待该操作完成。";
+"appGameSessionRecoveryView.bodyText3" = "此实例正被其他操作占用，请等待操作完成。";
 
 /* @symbol AppGameSessionRecoveryView.refreshStatus @args - */
 "appGameSessionRecoveryView.messageText1" = "刷新状态";
@@ -2501,7 +2477,7 @@
 "appLogsView.sessionText2" = "暂无运行记录";
 
 /* @symbol AppLogsView.runHistoryDetails @args - */
-"appLogsView.sessionText3" = "启动游戏后，这里会保留每次启动的过程和日志。";
+"appLogsView.sessionText3" = "启动游戏后可在此查看运行日志。";
 
 /* @symbol AppLogsView.selectRecord @args - */
 "appLogsView.sessionText4" = "选择记录";
@@ -2567,7 +2543,7 @@
 "appDefaultLaunchSettingsView.bodyText1" = "默认启动设置";
 
 /* @symbol AppDefaultLaunchSettingsView.followsDefaultHelp @args - */
-"appDefaultLaunchSettingsView.bodyText2" = "供选择“跟随默认”的实例使用";
+"appDefaultLaunchSettingsView.bodyText2" = "用于未单独设置的启动选项";
 
 /* @symbol AppDefaultLaunchSettingsView.unsavedChanges @args - */
 "appDefaultLaunchSettingsView.issueText1" = "有未保存的更改";
@@ -2585,7 +2561,7 @@
 "appEnvironmentVariablesEditor.bodyText1" = "没有自定义环境变量";
 
 /* @symbol AppEnvironmentVariablesEditor.variableHint @args - */
-"appEnvironmentVariablesEditor.bodyText2" = "仅在模组或工具要求时添加，通常无需填写。";
+"appEnvironmentVariablesEditor.bodyText2" = "按模组或工具的要求添加。";
 
 /* @symbol AppEnvironmentVariablesEditor.variableName @args - */
 "appEnvironmentVariablesEditor.bodyText3" = "变量名称";
@@ -2627,7 +2603,7 @@
 "appEnvironmentVariablesEditor.bodyText15" = "添加变量";
 
 /* @symbol AppEnvironmentVariablesEditor.valuePassthroughNotice @args - */
-"appEnvironmentVariablesEditor.errorText1" = "名称使用字母、数字和下划线，且不能以数字开头。值无需引号；“移除”会取消从系统继承的变量。";
+"appEnvironmentVariablesEditor.errorText1" = "值无需引号。“移除”表示不向游戏传递该系统变量。";
 
 /* @symbol AppEnvironmentVariablesEditor.usageGuide @args - */
 "appEnvironmentVariablesEditor.errorText2" = "使用说明";
@@ -2645,13 +2621,13 @@
 "appLaunchCommandsEditor.bodyText3" = "例如：printf '%%s\\n' \"$RURI_GAME_DIRECTORY\"";
 
 /* @symbol AppLaunchCommandsEditor.beforeLaunchHelp @args - */
-"appLaunchCommandsEditor.bodyText4" = "留空跳过。由 /bin/sh 在游戏目录中执行，成功后启动游戏；失败或超时会停止本次启动。";
+"appLaunchCommandsEditor.bodyText4" = "启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。";
 
 /* @symbol AppLaunchCommandsEditor.afterLaunchCommand @args - */
 "appLaunchCommandsEditor.bodyText5" = "退出后命令";
 
 /* @symbol AppLaunchCommandsEditor.afterLaunchHelp @args - */
-"appLaunchCommandsEditor.bodyText6" = "留空跳过。游戏自行退出后由 /bin/sh 执行，包括崩溃退出；手动终止游戏时跳过，结果显示在日志中。";
+"appLaunchCommandsEditor.bodyText6" = "游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。";
 
 /* @symbol AppLaunchCommandsEditor.commandTimeout @args - */
 "appLaunchCommandsEditor.bodyText7" = "每条命令最长运行时间";
@@ -2666,7 +2642,7 @@
 "appLaunchCommandsEditor.bodyText10" = "可执行文件与参数；留空直接运行 Java";
 
 /* @symbol AppLaunchCommandsEditor.wrapperHelp @args - */
-"appLaunchCommandsEditor.bodyText11" = "Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec \"$@\" 转交启动。";
+"appLaunchCommandsEditor.bodyText11" = "自动追加 Java 路径和启动参数，不支持 shell 管道。脚本需使用 exec \"$@\" 启动游戏。";
 
 /* @symbol AppLaunchCommandsEditor.variablesAndExamples @args - */
 "appLaunchCommandsEditor.bodyText12" = "可用变量";
@@ -2678,7 +2654,7 @@
 "appLaunchCommandsEditor.bodyText14" = "RURI_GAME_DIRECTORY：游戏运行目录\nRURI_INSTANCE_DIRECTORY：实例配置目录\nRURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识\nRURI_GAME_VERSION：游戏版本\nRURI_JAVA：Java 可执行文件\nRURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用";
 
 /* @symbol AppLaunchCommandsEditor.wrapperPlaceholderHelp @args - */
-"appLaunchCommandsEditor.bodyText15" = "包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。";
+"appLaunchCommandsEditor.bodyText15" = "包装命令支持 ${RURI_GAME_DIRECTORY} 等占位符；含空格的参数需加引号。";
 
 /* @symbol AppLaunchSettingsEditor.followDefault @args - */
 "appLaunchSettingsEditor.bodyText1" = "跟随默认设置";
@@ -2777,7 +2753,7 @@
 "appLaunchSettingsEditor.javaIssueText2" = "例如：-Dfile.encoding=UTF-8";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText3" = "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。";
+"appLaunchSettingsEditor.javaIssueText3" = "参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsExample @args - */
 "appLaunchSettingsEditor.javaIssueText4" = "填写示例";
@@ -2792,7 +2768,7 @@
 "appLaunchSettingsEditor.javaIssueText7" = "例如：--width 1600 --height 900";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText8" = "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。";
+"appLaunchSettingsEditor.javaIssueText8" = "参数用空格分隔，含空格的值加引号。此处指定的窗口尺寸优先于窗口设置。";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsQuotingHelp @args - */
 "appLaunchSettingsEditor.javaIssueText9" = "含空格的参数加引号；这里填写的窗口尺寸优先。";
@@ -2816,7 +2792,7 @@
 "appLaunchSettingsEditor.valueText1" = "全屏启动";
 
 /* @symbol AppLaunchSettingsEditor.fullscreenHelp @args - */
-"appLaunchSettingsEditor.valueText2" = "关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。";
+"appLaunchSettingsEditor.valueText2" = "关闭“全屏启动”后，使用游戏保存的全屏状态。";
 
 /* @symbol AppLaunchSettingsEditor.openGameLogs @args - */
 "appLaunchSettingsEditor.valueText3" = "启动时打开游戏日志";
@@ -2825,7 +2801,7 @@
 "appLaunchSettingsEditor.valueText4" = "打开日志时，Ruri 保持可见。";
 
 /* @symbol AppLaunchSettingsEditor.logsHideLauncherVisible @args - */
-"appLaunchSettingsEditor.valueText5" = "隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。";
+"appLaunchSettingsEditor.valueText5" = "游戏退出后自动显示 Ruri 窗口。";
 
 /* @symbol AppLaunchSettingsEditor.chooseJavaPanelHelp @args - */
 "appLaunchSettingsEditor.panelText1" = "选择 java 文件、JDK 包或 Java Home 文件夹。";
@@ -2846,13 +2822,13 @@
 "appLaunchSettingsEditor.bodyText10" = "选择内存";
 
 /* @symbol AppLaunchSettingsEditor.memoryEstimateHelp @args - */
-"appLaunchSettingsEditor.bodyText11" = "根据当前可用内存估算，为 macOS 保留余量。";
+"appLaunchSettingsEditor.bodyText11" = "按当前可用内存估算。";
 
 /* @symbol AppLaunchSettingsEditor.reestimateMemory @args - */
 "appLaunchSettingsEditor.bodyText12" = "重新估算";
 
 /* @symbol AppLaunchSettingsEditor.initialMemoryField @args - */
-"appLaunchSettingsEditor.memoryText1" = "部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。";
+"appLaunchSettingsEditor.memoryText1" = "附加 JVM 参数覆盖了部分内存设置。";
 
 /* @symbol AppLaunchSettingsEditor.advancedMemory @args - */
 "appLaunchSettingsEditor.errorText1" = "高级内存选项";
@@ -2873,7 +2849,7 @@
 "appLaunchSettingsEditor.errorText6" = "初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。";
 
 /* @symbol AppLaunchSettingsEditor.heapMemoryExplanation @args - */
-"appLaunchSettingsEditor.errorText7" = "1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。";
+"appLaunchSettingsEditor.errorText7" = "此处设置 Java 堆内存，游戏进程的总内存占用会更高。";
 
 /* @symbol AppPreferencesView.appearance @args - */
 "appPreferencesView.modelText1" = "外观";
@@ -2906,7 +2882,7 @@
 "appPreferencesView.modelText10" = "新实例隔离规则";
 
 /* @symbol AppPreferencesView.newInstanceIsolationDetails @args - */
-"appPreferencesView.modelText11" = "仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。";
+"appPreferencesView.modelText11" = "仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。";
 
 /* @symbol AppPreferencesView.downloadsAndNetwork @args - */
 "appPreferencesView.modelText12" = "下载与网络";
@@ -2918,7 +2894,7 @@
 "appPreferencesView.modelText14" = "并行下载：%1$@";
 
 /* @symbol AppPreferencesView.automaticMirrorDetails @args - */
-"appPreferencesView.modelText15" = "自动切换会先使用官方源，连接失败后尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。";
+"appPreferencesView.modelText15" = "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。";
 
 /* @symbol AppPreferencesView.bmclapiMirror @args - */
 "appPreferencesView.modelText16" = "BMCLAPI 镜像服务";
@@ -2927,13 +2903,13 @@
 "appPreferencesView.modelText17" = "Microsoft 登录";
 
 /* @symbol AppPreferencesView.microsoftLoginDetails @args - */
-"appPreferencesView.modelText18" = "已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。";
+"appPreferencesView.modelText18" = "留空使用内置登录配置。";
 
 /* @symbol AppPreferencesView.customClientID @args - */
 "appPreferencesView.modelText19" = "自定义应用 Client ID";
 
 /* @symbol AppPreferencesView.customClientIDDetails @args - */
-"appPreferencesView.modelText20" = "填写你注册的 Microsoft 公共客户端应用 ID，用于账号登录。该应用需要获准访问 Minecraft 服务。";
+"appPreferencesView.modelText20" = "自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。";
 
 /* @symbol AppPreferencesView.microsoftRegistrationDocs @args - */
 "appPreferencesView.modelText21" = "Microsoft 应用注册文档";
@@ -2957,7 +2933,7 @@
 "appPreferencesView.modelText27" = "版本";
 
 /* @symbol AppPreferencesView.aboutRuriDescription @args - */
-"appPreferencesView.modelText28" = "原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。";
+"appPreferencesView.modelText28" = "Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。";
 
 /* @symbol AppSettingsLayout.overview @args - */
 "appSettingsLayout.titleText1" = "概览";
@@ -2973,21 +2949,6 @@
 
 /* @symbol AppSettingsLayout.filesAndDirectories @args - */
 "appSettingsLayout.titleText5" = "文件与目录";
-
-/* @symbol AppSettingsLayout.overviewDetails @args - */
-"appSettingsLayout.detailText1" = "名称、外观与游戏组件。";
-
-/* @symbol AppSettingsLayout.javaAndMemoryDetails @args - */
-"appSettingsLayout.detailText2" = "选择运行游戏的 Java，以及游戏可以使用的内存。";
-
-/* @symbol AppSettingsLayout.windowAndLaunchDetails @args - */
-"appSettingsLayout.detailText3" = "调整游戏窗口和启动器在游戏运行时的行为。";
-
-/* @symbol AppSettingsLayout.argumentsAndEnvironmentDetails @args - */
-"appSettingsLayout.detailText4" = "为模组或故障排查配置附加参数，通常无需修改。";
-
-/* @symbol AppSettingsLayout.filesAndDirectoriesDetails @args - */
-"appSettingsLayout.detailText5" = "查看游戏文件的位置，或复制、移动这个实例。";
 
 /* @symbol AppSettingsLayout.settingsCategory @args - */
 "appSettingsLayout.bodyText1" = "设置分类";
@@ -3098,7 +3059,7 @@
 "appWorldDataPackPriorityView.bodyText1" = "数据包优先级";
 
 /* @symbol AppWorldDataPackPriorityView.priorityDetails @args - */
-"appWorldDataPackPriorityView.bodyText2" = "越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。";
+"appWorldDataPackPriorityView.bodyText2" = "优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。";
 
 /* @symbol AppWorldDataPackPriorityView.vanilla @args - */
 "appWorldDataPackPriorityView.snapshotText1" = "原版";
@@ -3134,7 +3095,7 @@
 "appWorldDataPackSearchView.errorText2" = "没有找到匹配的数据包";
 
 /* @symbol AppWorldDataPackSearchView.searchHint @args - */
-"appWorldDataPackSearchView.errorText3" = "试试英文名称，或使用更短的关键词。";
+"appWorldDataPackSearchView.errorText3" = "使用英文名称或更短的关键词搜索。";
 
 /* @symbol AppWorldDataPackSearchView.resultCount @args integer */
 "appWorldDataPackSearchView.errorText4" = "%1$lld 个结果";
@@ -3161,7 +3122,7 @@
 "appWorldDataPackSearchView.planText2" = " · 必需依赖";
 
 /* @symbol AppWorldDataPackSearchView.installHelp @args - */
-"appWorldDataPackSearchView.planText3" = "安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。";
+"appWorldDataPackSearchView.planText3" = "安装后启用，下次进入世界时生效。同名文件不会被覆盖。";
 
 /* @symbol AppWorldDataPackSearchView.showPrereleases @args - */
 "appWorldDataPackSearchView.planText4" = "显示 Beta / Alpha 版本";
@@ -3203,7 +3164,7 @@
 "appWorldDataPacksView.bodyText5" = "请退出游戏后再修改数据包。";
 
 /* @symbol AppWorldDataPacksView.noLocalDataPacks @args - */
-"appWorldDataPacksView.statusText1" = "这个世界还没有本地数据包";
+"appWorldDataPacksView.statusText1" = "暂无本地数据包";
 
 /* @symbol AppWorldDataPacksView.dataPackImportInstructions @args - */
 "appWorldDataPacksView.statusText2" = "导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。";
@@ -3253,8 +3214,8 @@
 /* @symbol AppWorldDataPacksView.dataPackOperationCompleted @args text */
 "appWorldDataPacksView.mutateText1" = "%1$@完成，下次进入世界时生效。";
 
-/* @symbol AppWorldManagerView.keepAdventure @args - */
-"appWorldManagerView.bodyText1" = "留住每一次冒险";
+/* @symbol AppWorldManagerView.worldsAndBackups @args - */
+"appWorldManagerView.bodyText1" = "存档与备份";
 
 /* @symbol AppWorldManagerView.content @args - */
 "appWorldManagerView.bodyText2" = "内容";
@@ -3278,19 +3239,16 @@
 "appWorldManagerView.bodyText8" = "此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。";
 
 /* @symbol AppWorldManagerView.noWorlds @args - */
-"appWorldManagerView.statusText1" = "世界还在等你创造";
+"appWorldManagerView.statusText1" = "暂无存档";
 
 /* @symbol AppWorldManagerView.worldDescription @args - */
-"appWorldManagerView.statusText2" = "游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。";
+"appWorldManagerView.statusText2" = "在游戏中创建世界，或导入存档文件夹、ZIP 文件。";
 
-/* @symbol AppWorldManagerView.backupYourAdventure @args - */
-"appWorldManagerView.statusText3" = "给冒险留一份备份";
+/* @symbol AppWorldManagerView.noBackups @args - */
+"appWorldManagerView.statusText3" = "暂无备份";
 
 /* @symbol AppWorldManagerView.backupDescription @args - */
-"appWorldManagerView.statusText4" = "在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。";
-
-/* @symbol AppWorldManagerView.backupRetention @args - */
-"appWorldManagerView.statusText5" = "备份保存在实例内，恢复为副本会保留原存档。";
+"appWorldManagerView.statusText4" = "在存档列表中选择“备份”。";
 
 /* @symbol AppWorldManagerView.cancelTask @args - */
 "appWorldManagerView.statusText6" = "取消任务";
@@ -3326,7 +3284,7 @@
 "appWorldManagerView.errorText1" = "进入存档";
 
 /* @symbol AppWorldManagerView.launchWorldNotice @args - */
-"appWorldManagerView.errorText2" = "启动并进入这个单人世界";
+"appWorldManagerView.errorText2" = "启动游戏并进入此存档";
 
 /* @symbol AppWorldManagerView.worldLaunchUnsupported @args - */
 "appWorldManagerView.errorText3" = "此版本不支持直接进入存档";
@@ -3488,7 +3446,7 @@
 "appPreferencesView.globalGameSettings" = "全局游戏设置";
 
 /* @symbol AppPreferencesView.globalGameSettingsDescription @args - */
-"appPreferencesView.globalGameSettingsDescription" = "统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。";
+"appPreferencesView.globalGameSettingsDescription" = "设置 Java、内存、窗口和启动参数的默认值。";
 
 /* @symbol AppCurseForgeSettingsSection.configured @args - */
 "appCurseForgeSettingsSection.configured" = "已配置";
@@ -3504,3 +3462,5 @@
 
 /* @symbol AppCurseForgeSettingsSection.apiKeyStorageHelp @args - */
 "appCurseForgeSettingsSection.apiKeyStorageHelp" = "密钥保存在 macOS 钥匙串中，不会随实例导出。";
+/* @symbol AppInstanceMoveView.preservedOriginalFiles @args - */
+"appInstanceMoveView.preservedOriginalFiles" = "保留的原文件";

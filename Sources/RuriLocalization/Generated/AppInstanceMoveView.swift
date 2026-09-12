@@ -51,17 +51,17 @@ extension Messages {
         public static var targetLocation: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText4", table: "Interface", fallback: "目标位置")
         }
-        /// 校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。
+        /// 校验文件后清理原位置。也可选择“保留原文件并完成”。
         ///
         /// Resource: `Interface.appInstanceMoveView.recoveryText5`.
         public static var moveValidationHelp: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText5", table: "Interface", fallback: "校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。")
+            .init(key: "appInstanceMoveView.recoveryText5", table: "Interface", fallback: "校验文件后清理原位置。也可选择“保留原文件并完成”。")
         }
-        /// 恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。
+        /// 撤回本次移动并保留未完成的副本，原实例仍可使用。
         ///
         /// Resource: `Interface.appInstanceMoveView.recoveryText6`.
         public static var recoverMoveHelp: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText6", table: "Interface", fallback: "恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。")
+            .init(key: "appInstanceMoveView.recoveryText6", table: "Interface", fallback: "撤回本次移动并保留未完成的副本，原实例仍可使用。")
         }
         /// 查看工作区
         ///
@@ -105,35 +105,23 @@ extension Messages {
         public static var addTargetFolder: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText13", table: "Interface", fallback: "添加目标文件夹…")
         }
-        /// 实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。
-        ///
-        /// Resource: `Interface.appInstanceMoveView.recoveryText14`.
-        public static var moveSettingsPreserved: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText14", table: "Interface", fallback: "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。")
-        }
-        /// 实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。
-        ///
-        /// Resource: `Interface.appInstanceMoveView.recoveryText15`.
-        public static var moveContentPreserved: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText15", table: "Interface", fallback: "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。")
-        }
-        /// 存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。
+        /// 目标文件校验通过后，原位置的实例文件会被删除。
         ///
         /// Resource: `Interface.appInstanceMoveView.recoveryText16`.
-        public static var moveWorldsPreserved: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText16", table: "Interface", fallback: "存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。")
+        public static var sourceCleanupNotice: LocalizedMessage {
+            .init(key: "appInstanceMoveView.recoveryText16", table: "Interface", fallback: "目标文件校验通过后，原位置的实例文件会被删除。")
         }
-        /// 当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。
+        /// 共享目录中的游戏内容和备份会复制到目标，改为独立运行。原共享目录保留。
         ///
         /// Resource: `Interface.appInstanceMoveView.recoveryText17`.
         public static var moveSharedContent: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText17", table: "Interface", fallback: "当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。")
+            .init(key: "appInstanceMoveView.recoveryText17", table: "Interface", fallback: "共享目录中的游戏内容和备份会复制到目标，改为独立运行。原共享目录保留。")
         }
-        /// 移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。
+        /// 自定义运行目录中的游戏文件和备份保留在原位置。
         ///
         /// Resource: `Interface.appInstanceMoveView.recoveryText18`.
         public static var moveCustomDirectory: LocalizedMessage {
-            .init(key: "appInstanceMoveView.recoveryText18", table: "Interface", fallback: "移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。")
+            .init(key: "appInstanceMoveView.recoveryText18", table: "Interface", fallback: "自定义运行目录中的游戏文件和备份保留在原位置。")
         }
         /// 移动文件
         ///
@@ -153,23 +141,23 @@ extension Messages {
         public static var keepRunDirectory: LocalizedMessage {
             .init(key: "appInstanceMoveView.keptText1", table: "Interface", fallback: "保留的运行目录")
         }
-        /// 以前留下的独立目录内容也会保留在目标实例中。
+        /// 旧的版本配置和未使用的游戏目录内容会单独保存在此处。
         ///
         /// Resource: `Interface.appInstanceMoveView.priorText1`.
         public static var previousDirectoryContent: LocalizedMessage {
-            .init(key: "appInstanceMoveView.priorText1", table: "Interface", fallback: "以前留下的独立目录内容也会保留在目标实例中。")
+            .init(key: "appInstanceMoveView.priorText1", table: "Interface", fallback: "旧的版本配置和未使用的游戏目录内容会单独保存在此处。")
         }
-        /// 旧内容
+        /// 保存位置
         ///
         /// Resource: `Interface.appInstanceMoveView.priorText2`.
-        public static var oldContent: LocalizedMessage {
-            .init(key: "appInstanceMoveView.priorText2", table: "Interface", fallback: "旧内容")
+        public static var savedLocation: LocalizedMessage {
+            .init(key: "appInstanceMoveView.priorText2", table: "Interface", fallback: "保存位置")
         }
-        /// 正在核对实例、运行历史与文件…
+        /// 正在检查文件…
         ///
         /// Resource: `Interface.appInstanceMoveView.priorText3`.
         public static var checkingInstance: LocalizedMessage {
-            .init(key: "appInstanceMoveView.priorText3", table: "Interface", fallback: "正在核对实例、运行历史与文件…")
+            .init(key: "appInstanceMoveView.priorText3", table: "Interface", fallback: "正在检查文件…")
         }
         /// 正在移动实例…
         ///
@@ -177,11 +165,11 @@ extension Messages {
         public static var operationMoving: LocalizedMessage {
             .init(key: "appInstanceMoveView.operationIssueText1", table: "Interface", fallback: "正在移动实例…")
         }
-        /// 正在结束当前步骤；已提交的移动会保留恢复入口。
+        /// 正在取消；未完成的移动可稍后恢复。
         ///
         /// Resource: `Interface.appInstanceMoveView.operationIssueText2`.
         public static var operationFinishing: LocalizedMessage {
-            .init(key: "appInstanceMoveView.operationIssueText2", table: "Interface", fallback: "正在结束当前步骤；已提交的移动会保留恢复入口。")
+            .init(key: "appInstanceMoveView.operationIssueText2", table: "Interface", fallback: "正在取消；未完成的移动可稍后恢复。")
         }
         /// 刷新
         ///
@@ -237,6 +225,12 @@ extension Messages {
         public static var minecraftFolderDescription: LocalizedMessage {
             .init(key: "appInstanceMoveView.panelText1", table: "Interface", fallback: "选择 Minecraft 文件夹保存实例，也可以新建空文件夹。")
         }
+        /// 保留的原文件
+        ///
+        /// Resource: `Interface.appInstanceMoveView.preservedOriginalFiles`.
+        public static var preservedOriginalFiles: LocalizedMessage {
+            .init(key: "appInstanceMoveView.preservedOriginalFiles", table: "Interface", fallback: "保留的原文件")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appInstanceMoveView.directoryNameText1": .init("默认实例文件夹", []),
             "Interface:appInstanceMoveView.directoryNameText2": .init("无法访问的文件夹", []),
@@ -246,8 +240,8 @@ extension Messages {
             "Interface:appInstanceMoveView.recoveryText2": .init("移动尚未完成，原实例仍保留", []),
             "Interface:appInstanceMoveView.recoveryText3": .init("原位置", []),
             "Interface:appInstanceMoveView.recoveryText4": .init("目标位置", []),
-            "Interface:appInstanceMoveView.recoveryText5": .init("校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。", []),
-            "Interface:appInstanceMoveView.recoveryText6": .init("恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。", []),
+            "Interface:appInstanceMoveView.recoveryText5": .init("校验文件后清理原位置。也可选择“保留原文件并完成”。", []),
+            "Interface:appInstanceMoveView.recoveryText6": .init("撤回本次移动并保留未完成的副本，原实例仍可使用。", []),
             "Interface:appInstanceMoveView.recoveryText7": .init("查看工作区", []),
             "Interface:appInstanceMoveView.recoveryText8": .init("查看原文件", []),
             "Interface:appInstanceMoveView.recoveryText9": .init("查看目标", []),
@@ -255,19 +249,17 @@ extension Messages {
             "Interface:appInstanceMoveView.recoveryText11": .init("移动到", []),
             "Interface:appInstanceMoveView.recoveryText12": .init("选择目标文件夹", []),
             "Interface:appInstanceMoveView.recoveryText13": .init("添加目标文件夹…", []),
-            "Interface:appInstanceMoveView.recoveryText14": .init("实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。", []),
-            "Interface:appInstanceMoveView.recoveryText15": .init("实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。", []),
-            "Interface:appInstanceMoveView.recoveryText16": .init("存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。", []),
-            "Interface:appInstanceMoveView.recoveryText17": .init("当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。", []),
-            "Interface:appInstanceMoveView.recoveryText18": .init("移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。", []),
+            "Interface:appInstanceMoveView.recoveryText16": .init("目标文件校验通过后，原位置的实例文件会被删除。", []),
+            "Interface:appInstanceMoveView.recoveryText17": .init("共享目录中的游戏内容和备份会复制到目标，改为独立运行。原共享目录保留。", []),
+            "Interface:appInstanceMoveView.recoveryText18": .init("自定义运行目录中的游戏文件和备份保留在原位置。", []),
             "Interface:appInstanceMoveView.previewText1": .init("移动文件", []),
             "Interface:appInstanceMoveView.previewText3": .init("目标实例", []),
             "Interface:appInstanceMoveView.keptText1": .init("保留的运行目录", []),
-            "Interface:appInstanceMoveView.priorText1": .init("以前留下的独立目录内容也会保留在目标实例中。", []),
-            "Interface:appInstanceMoveView.priorText2": .init("旧内容", []),
-            "Interface:appInstanceMoveView.priorText3": .init("正在核对实例、运行历史与文件…", []),
+            "Interface:appInstanceMoveView.priorText1": .init("旧的版本配置和未使用的游戏目录内容会单独保存在此处。", []),
+            "Interface:appInstanceMoveView.priorText2": .init("保存位置", []),
+            "Interface:appInstanceMoveView.priorText3": .init("正在检查文件…", []),
             "Interface:appInstanceMoveView.operationIssueText1": .init("正在移动实例…", []),
-            "Interface:appInstanceMoveView.operationIssueText2": .init("正在结束当前步骤；已提交的移动会保留恢复入口。", []),
+            "Interface:appInstanceMoveView.operationIssueText2": .init("正在取消；未完成的移动可稍后恢复。", []),
             "Interface:appInstanceMoveView.operationIssueText3": .init("刷新", []),
             "Interface:appInstanceMoveView.operationIssueText4": .init("关闭", []),
             "Interface:appInstanceMoveView.recoveryText19": .init("完成移动", []),
@@ -277,6 +269,7 @@ extension Messages {
             "Interface:appInstanceMoveView.valueText1": .init("请先添加另一个实例文件夹。", []),
             "Interface:appInstanceMoveView.revealText1": .init("此位置暂时无法访问，请连接磁盘后重试：%1$@", [.text]),
             "Interface:appInstanceMoveView.panelText1": .init("选择 Minecraft 文件夹保存实例，也可以新建空文件夹。", []),
+            "Interface:appInstanceMoveView.preservedOriginalFiles": .init("保留的原文件", []),
         ]
     }
 }

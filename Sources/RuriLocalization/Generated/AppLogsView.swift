@@ -39,11 +39,11 @@ extension Messages {
         public static var noRunHistory: LocalizedMessage {
             .init(key: "appLogsView.sessionText2", table: "Interface", fallback: "暂无运行记录")
         }
-        /// 启动游戏后，这里会保留每次启动的过程和日志。
+        /// 启动游戏后可在此查看运行日志。
         ///
         /// Resource: `Interface.appLogsView.sessionText3`.
         public static var runHistoryDetails: LocalizedMessage {
-            .init(key: "appLogsView.sessionText3", table: "Interface", fallback: "启动游戏后，这里会保留每次启动的过程和日志。")
+            .init(key: "appLogsView.sessionText3", table: "Interface", fallback: "启动游戏后可在此查看运行日志。")
         }
         /// 选择记录
         ///
@@ -124,7 +124,7 @@ extension Messages {
             "Interface:appLogsView.bodyText1": .init("运行记录", []),
             "Interface:appLogsView.sessionText1": .init("运行中", []),
             "Interface:appLogsView.sessionText2": .init("暂无运行记录", []),
-            "Interface:appLogsView.sessionText3": .init("启动游戏后，这里会保留每次启动的过程和日志。", []),
+            "Interface:appLogsView.sessionText3": .init("启动游戏后可在此查看运行日志。", []),
             "Interface:appLogsView.sessionText4": .init("选择记录", []),
             "Interface:appLogsView.sessionText5": .init("查看内容", []),
             "Interface:appLogsView.sessionText6": .init("筛选日志", []),

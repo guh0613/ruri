@@ -9,11 +9,11 @@ extension Messages {
         public static var defaultLaunchSettings: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.bodyText1", table: "Interface", fallback: "默认启动设置")
         }
-        /// 供选择“跟随默认”的实例使用
+        /// 用于未单独设置的启动选项
         ///
         /// Resource: `Interface.appDefaultLaunchSettingsView.bodyText2`.
         public static var followsDefaultHelp: LocalizedMessage {
-            .init(key: "appDefaultLaunchSettingsView.bodyText2", table: "Interface", fallback: "供选择“跟随默认”的实例使用")
+            .init(key: "appDefaultLaunchSettingsView.bodyText2", table: "Interface", fallback: "用于未单独设置的启动选项")
         }
         /// 有未保存的更改
         ///
@@ -41,7 +41,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appDefaultLaunchSettingsView.bodyText1": .init("默认启动设置", []),
-            "Interface:appDefaultLaunchSettingsView.bodyText2": .init("供选择“跟随默认”的实例使用", []),
+            "Interface:appDefaultLaunchSettingsView.bodyText2": .init("用于未单独设置的启动选项", []),
             "Interface:appDefaultLaunchSettingsView.issueText1": .init("有未保存的更改", []),
             "Interface:appDefaultLaunchSettingsView.issueText2": .init("已运行的游戏保持当前设置", []),
             "Interface:appDefaultLaunchSettingsView.issueText3": .init("保存默认设置", []),

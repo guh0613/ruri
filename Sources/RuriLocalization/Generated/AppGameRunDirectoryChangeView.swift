@@ -33,11 +33,11 @@ extension Messages {
         public static var chooseFolder: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText5", table: "Interface", fallback: "选择文件夹…")
         }
-        /// 选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。
+        /// 选择保存模组、存档和游戏设置的文件夹。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.panelText1`.
         public static var directoryPurpose: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.panelText1", table: "Interface", fallback: "选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。")
+            .init(key: "appGameRunDirectoryChangeView.panelText1", table: "Interface", fallback: "选择保存模组、存档和游戏设置的文件夹。")
         }
         /// 正在准备所选目录…
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static var checkingDirectoryFiles: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.urlText2", table: "Interface", fallback: "正在检查目录与文件…")
         }
-        /// 复制已提交，等待清理记录
+        /// 已切换目录，等待清理
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText1`.
         public static var copySubmittedAwaitingCleanup: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText1", table: "Interface", fallback: "复制已提交，等待清理记录")
+            .init(key: "appGameRunDirectoryChangeView.recoveryText1", table: "Interface", fallback: "已切换目录，等待清理")
         }
         /// 上次复制尚未完成
         ///
@@ -63,17 +63,17 @@ extension Messages {
         public static var copyIncomplete: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText2", table: "Interface", fallback: "上次复制尚未完成")
         }
-        /// 目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。
+        /// 已切换到目标目录。完成清理后可继续使用，已复制的文件会保留。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText3`.
         public static var recoveryCleanupDetails: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText3", table: "Interface", fallback: "目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。")
+            .init(key: "appGameRunDirectoryChangeView.recoveryText3", table: "Interface", fallback: "已切换到目标目录。完成清理后可继续使用，已复制的文件会保留。")
         }
-        /// 原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。
+        /// 恢复原目录设置，并将本次复制的文件另存为副本。其他程序修改或替换的文件会保留。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText4`.
         public static var recoveryPreservationDetails: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText4", table: "Interface", fallback: "原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。")
+            .init(key: "appGameRunDirectoryChangeView.recoveryText4", table: "Interface", fallback: "恢复原目录设置，并将本次复制的文件另存为副本。其他程序修改或替换的文件会保留。")
         }
         /// 开始于 %1$@
         ///
@@ -130,35 +130,29 @@ extension Messages {
         public static var targetDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText3", table: "Interface", fallback: "目标目录")
         }
-        /// 先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。
+        /// 复制当前游戏内容和存档备份后切换，原目录保留。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.issueText5`.
         public static var copyBeforeSwitching: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.issueText5", table: "Interface", fallback: "先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。")
+            .init(key: "appGameRunDirectoryChangeView.issueText5", table: "Interface", fallback: "复制当前游戏内容和存档备份后切换，原目录保留。")
         }
-        /// 目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。
+        /// 目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.issueText6`.
         public static var emptyTargetDetails: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.issueText6", table: "Interface", fallback: "目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。")
+            .init(key: "appGameRunDirectoryChangeView.issueText6", table: "Interface", fallback: "目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。")
         }
-        /// 切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。
+        /// 使用目标目录已有的模组、存档和设置。原目录保留，可再次切回。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.issueText7`.
         public static var useExistingTargetDetails: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.issueText7", table: "Interface", fallback: "切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。")
+            .init(key: "appGameRunDirectoryChangeView.issueText7", table: "Interface", fallback: "使用目标目录已有的模组、存档和设置。原目录保留，可再次切回。")
         }
-        /// 文件统计包含该目录对应的内容来源记录和世界备份。
-        ///
-        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText8`.
-        public static var fileStatistics: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.issueText8", table: "Interface", fallback: "文件统计包含该目录对应的内容来源记录和世界备份。")
-        }
-        /// 游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。
+        /// 游戏本体、依赖和启动器设置不随运行目录复制。
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.issueText9`.
         public static var gameFilesStayInPlace: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.issueText9", table: "Interface", fallback: "游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。")
+            .init(key: "appGameRunDirectoryChangeView.issueText9", table: "Interface", fallback: "游戏本体、依赖和启动器设置不随运行目录复制。")
         }
         /// 暂时无法切换
         ///
@@ -250,13 +244,13 @@ extension Messages {
             "Interface:appGameRunDirectoryChangeView.bodyText3": .init("目标", []),
             "Interface:appGameRunDirectoryChangeView.bodyText4": .init("尚未选择文件夹", []),
             "Interface:appGameRunDirectoryChangeView.bodyText5": .init("选择文件夹…", []),
-            "Interface:appGameRunDirectoryChangeView.panelText1": .init("选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。", []),
+            "Interface:appGameRunDirectoryChangeView.panelText1": .init("选择保存模组、存档和游戏设置的文件夹。", []),
             "Interface:appGameRunDirectoryChangeView.urlText1": .init("正在准备所选目录…", []),
             "Interface:appGameRunDirectoryChangeView.urlText2": .init("正在检查目录与文件…", []),
-            "Interface:appGameRunDirectoryChangeView.recoveryText1": .init("复制已提交，等待清理记录", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText1": .init("已切换目录，等待清理", []),
             "Interface:appGameRunDirectoryChangeView.recoveryText2": .init("上次复制尚未完成", []),
-            "Interface:appGameRunDirectoryChangeView.recoveryText3": .init("目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。", []),
-            "Interface:appGameRunDirectoryChangeView.recoveryText4": .init("原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText3": .init("已切换到目标目录。完成清理后可继续使用，已复制的文件会保留。", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText4": .init("恢复原目录设置，并将本次复制的文件另存为副本。其他程序修改或替换的文件会保留。", []),
             "Interface:appGameRunDirectoryChangeView.recoveryText5": .init("开始于 %1$@", [.text]),
             "Interface:appGameRunDirectoryChangeView.recoveryText6": .init("原目录：%1$@\n目标目录：%2$@", [.text, .text]),
             "Interface:appGameRunDirectoryChangeView.recoveryText7": .init("在 Finder 中查看工作区", []),
@@ -266,11 +260,10 @@ extension Messages {
             "Interface:appGameRunDirectoryChangeView.issueText1": .init("目标已有文件或备份，不能用复制覆盖。", []),
             "Interface:appGameRunDirectoryChangeView.issueText2": .init("原目录", []),
             "Interface:appGameRunDirectoryChangeView.issueText3": .init("目标目录", []),
-            "Interface:appGameRunDirectoryChangeView.issueText5": .init("先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。", []),
-            "Interface:appGameRunDirectoryChangeView.issueText6": .init("目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。", []),
-            "Interface:appGameRunDirectoryChangeView.issueText7": .init("切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。", []),
-            "Interface:appGameRunDirectoryChangeView.issueText8": .init("文件统计包含该目录对应的内容来源记录和世界备份。", []),
-            "Interface:appGameRunDirectoryChangeView.issueText9": .init("游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。", []),
+            "Interface:appGameRunDirectoryChangeView.issueText5": .init("复制当前游戏内容和存档备份后切换，原目录保留。", []),
+            "Interface:appGameRunDirectoryChangeView.issueText6": .init("目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。", []),
+            "Interface:appGameRunDirectoryChangeView.issueText7": .init("使用目标目录已有的模组、存档和设置。原目录保留，可再次切回。", []),
+            "Interface:appGameRunDirectoryChangeView.issueText9": .init("游戏本体、依赖和启动器设置不随运行目录复制。", []),
             "Interface:appGameRunDirectoryChangeView.issueText10": .init("暂时无法切换", []),
             "Interface:appGameRunDirectoryChangeView.issueText11": .init("重新检查", []),
             "Interface:appGameRunDirectoryChangeView.issueText12": .init("刷新预览", []),

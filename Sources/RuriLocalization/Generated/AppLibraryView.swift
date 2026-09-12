@@ -27,11 +27,11 @@ extension Messages {
         public static var noMatchingInstances: LocalizedMessage {
             .init(key: "appLibraryView.issueText4", table: "Interface", fallback: "没有匹配的实例")
         }
-        /// 换个名称或版本号试试。
+        /// 使用其他名称或版本号搜索。
         ///
         /// Resource: `Interface.appLibraryView.issueText5`.
         public static var tryAnotherNameOrVersion: LocalizedMessage {
-            .init(key: "appLibraryView.issueText5", table: "Interface", fallback: "换个名称或版本号试试。")
+            .init(key: "appLibraryView.issueText5", table: "Interface", fallback: "使用其他名称或版本号搜索。")
         }
         /// 搜索实例或版本
         ///
@@ -141,11 +141,11 @@ extension Messages {
         public static func filteredInstanceCount(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appLibraryView.totalText2", table: "Interface", fallback: "%1$lld / %2$lld 个实例", arguments: [.integer(value0), .integer(value1)])
         }
-        /// 这个文件夹还没有实例
+        /// 此文件夹中暂无实例
         ///
         /// Resource: `Interface.appLibraryView.emptyFolderText1`.
         public static var folderHasNoInstances: LocalizedMessage {
-            .init(key: "appLibraryView.emptyFolderText1", table: "Interface", fallback: "这个文件夹还没有实例")
+            .init(key: "appLibraryView.emptyFolderText1", table: "Interface", fallback: "此文件夹中暂无实例")
         }
         /// 新建一个实例，或导入整合包。
         ///
@@ -206,7 +206,7 @@ extension Messages {
             "Interface:appLibraryView.issueText2": .init("重新检查", []),
             "Interface:appLibraryView.issueText3": .init("管理文件夹…", []),
             "Interface:appLibraryView.issueText4": .init("没有匹配的实例", []),
-            "Interface:appLibraryView.issueText5": .init("换个名称或版本号试试。", []),
+            "Interface:appLibraryView.issueText5": .init("使用其他名称或版本号搜索。", []),
             "Interface:appLibraryView.issueText6": .init("搜索实例或版本", []),
             "Interface:appLibraryView.issueText7": .init("布局", []),
             "Interface:appLibraryView.issueText8": .init("网格", []),
@@ -225,7 +225,7 @@ extension Messages {
             "Interface:appLibraryView.targetText3": .init("实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。", []),
             "Interface:appLibraryView.totalText1": .init("%1$lld 个实例", [.integer]),
             "Interface:appLibraryView.totalText2": .init("%1$lld / %2$lld 个实例", [.integer, .integer]),
-            "Interface:appLibraryView.emptyFolderText1": .init("这个文件夹还没有实例", []),
+            "Interface:appLibraryView.emptyFolderText1": .init("此文件夹中暂无实例", []),
             "Interface:appLibraryView.emptyFolderText2": .init("新建一个实例，或导入整合包。", []),
             "Interface:appLibraryView.emptyFolderText3": .init("导入整合包…", []),
             "Interface:appLibraryView.gridText1": .init("或从工具栏导入整合包", []),

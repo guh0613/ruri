@@ -33,36 +33,6 @@ extension Messages {
         public static var filesAndDirectories: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText5", table: "Interface", fallback: "文件与目录")
         }
-        /// 名称、外观与游戏组件。
-        ///
-        /// Resource: `Interface.appSettingsLayout.detailText1`.
-        public static var overviewDetails: LocalizedMessage {
-            .init(key: "appSettingsLayout.detailText1", table: "Interface", fallback: "名称、外观与游戏组件。")
-        }
-        /// 选择运行游戏的 Java，以及游戏可以使用的内存。
-        ///
-        /// Resource: `Interface.appSettingsLayout.detailText2`.
-        public static var javaAndMemoryDetails: LocalizedMessage {
-            .init(key: "appSettingsLayout.detailText2", table: "Interface", fallback: "选择运行游戏的 Java，以及游戏可以使用的内存。")
-        }
-        /// 调整游戏窗口和启动器在游戏运行时的行为。
-        ///
-        /// Resource: `Interface.appSettingsLayout.detailText3`.
-        public static var windowAndLaunchDetails: LocalizedMessage {
-            .init(key: "appSettingsLayout.detailText3", table: "Interface", fallback: "调整游戏窗口和启动器在游戏运行时的行为。")
-        }
-        /// 为模组或故障排查配置附加参数，通常无需修改。
-        ///
-        /// Resource: `Interface.appSettingsLayout.detailText4`.
-        public static var argumentsAndEnvironmentDetails: LocalizedMessage {
-            .init(key: "appSettingsLayout.detailText4", table: "Interface", fallback: "为模组或故障排查配置附加参数，通常无需修改。")
-        }
-        /// 查看游戏文件的位置，或复制、移动这个实例。
-        ///
-        /// Resource: `Interface.appSettingsLayout.detailText5`.
-        public static var filesAndDirectoriesDetails: LocalizedMessage {
-            .init(key: "appSettingsLayout.detailText5", table: "Interface", fallback: "查看游戏文件的位置，或复制、移动这个实例。")
-        }
         /// 设置分类
         ///
         /// Resource: `Interface.appSettingsLayout.bodyText1`.
@@ -75,11 +45,6 @@ extension Messages {
             "Interface:appSettingsLayout.titleText3": .init("窗口与启动", []),
             "Interface:appSettingsLayout.titleText4": .init("参数与环境", []),
             "Interface:appSettingsLayout.titleText5": .init("文件与目录", []),
-            "Interface:appSettingsLayout.detailText1": .init("名称、外观与游戏组件。", []),
-            "Interface:appSettingsLayout.detailText2": .init("选择运行游戏的 Java，以及游戏可以使用的内存。", []),
-            "Interface:appSettingsLayout.detailText3": .init("调整游戏窗口和启动器在游戏运行时的行为。", []),
-            "Interface:appSettingsLayout.detailText4": .init("为模组或故障排查配置附加参数，通常无需修改。", []),
-            "Interface:appSettingsLayout.detailText5": .init("查看游戏文件的位置，或复制、移动这个实例。", []),
             "Interface:appSettingsLayout.bodyText1": .init("设置分类", []),
         ]
     }

@@ -15,7 +15,7 @@ struct CustomRunDirectoryRelocationView: View {
     private var original: CustomRunDirectory? { model.state.instances.first(where: { $0.id == instanceID })?.customRunDirectory }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeading(title: Messages.AppCustomRunDirectoryRelocationView.recoverDirectory.localized, subtitle: Messages.AppCustomRunDirectoryRelocationView.relocationHelp.localized)
+            SectionHeading(title: Messages.AppCustomRunDirectoryRelocationView.recoverDirectory.localized)
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     Text(Messages.AppCustomRunDirectoryRelocationView.relocationInstructions.localized).font(.callout).foregroundStyle(.secondary)

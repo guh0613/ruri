@@ -27,11 +27,11 @@ extension Messages {
         public static var noMatchingDataPacks: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText2", table: "Interface", fallback: "没有找到匹配的数据包")
         }
-        /// 试试英文名称，或使用更短的关键词。
+        /// 使用英文名称或更短的关键词搜索。
         ///
         /// Resource: `Interface.appWorldDataPackSearchView.errorText3`.
         public static var searchHint: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText3", table: "Interface", fallback: "试试英文名称，或使用更短的关键词。")
+            .init(key: "appWorldDataPackSearchView.errorText3", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
         }
         /// %1$lld 个结果
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var requiredDependencies: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText2", table: "Interface", fallback: " · 必需依赖")
         }
-        /// 安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。
+        /// 安装后启用，下次进入世界时生效。同名文件不会被覆盖。
         ///
         /// Resource: `Interface.appWorldDataPackSearchView.planText3`.
         public static var installHelp: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText3", table: "Interface", fallback: "安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。")
+            .init(key: "appWorldDataPackSearchView.planText3", table: "Interface", fallback: "安装后启用，下次进入世界时生效。同名文件不会被覆盖。")
         }
         /// 显示 Beta / Alpha 版本
         ///
@@ -140,7 +140,7 @@ extension Messages {
             "Interface:appWorldDataPackSearchView.bodyText2": .init("搜索数据包名称", []),
             "Interface:appWorldDataPackSearchView.errorText1": .init("查找兼容数据包…", []),
             "Interface:appWorldDataPackSearchView.errorText2": .init("没有找到匹配的数据包", []),
-            "Interface:appWorldDataPackSearchView.errorText3": .init("试试英文名称，或使用更短的关键词。", []),
+            "Interface:appWorldDataPackSearchView.errorText3": .init("使用英文名称或更短的关键词搜索。", []),
             "Interface:appWorldDataPackSearchView.errorText4": .init("%1$lld 个结果", [.integer]),
             "Interface:appWorldDataPackSearchView.errorText5": .init("上一页", []),
             "Interface:appWorldDataPackSearchView.errorText6": .init("下一页", []),
@@ -149,7 +149,7 @@ extension Messages {
             "Interface:appWorldDataPackSearchView.bodyText5": .init("解析必需依赖…", []),
             "Interface:appWorldDataPackSearchView.planText1": .init("共 %1$lld 个数据包 · %2$@", [.integer, .text]),
             "Interface:appWorldDataPackSearchView.planText2": .init(" · 必需依赖", []),
-            "Interface:appWorldDataPackSearchView.planText3": .init("安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。", []),
+            "Interface:appWorldDataPackSearchView.planText3": .init("安装后启用，下次进入世界时生效。同名文件不会被覆盖。", []),
             "Interface:appWorldDataPackSearchView.planText4": .init("显示 Beta / Alpha 版本", []),
             "Interface:appWorldDataPackSearchView.planText5": .init("没有兼容版本。", []),
             "Interface:appWorldDataPackSearchView.planText6": .init("版本", []),

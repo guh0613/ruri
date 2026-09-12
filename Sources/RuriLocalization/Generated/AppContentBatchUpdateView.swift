@@ -27,11 +27,11 @@ extension Messages {
         public static var keepDisabled: LocalizedMessage {
             .init(key: "appContentBatchUpdateView.previousText1", table: "Interface", fallback: "更新后继续保持停用")
         }
-        /// 下载和校验完成后一起替换文件。停用状态保留，取消或失败时保留原文件。
+        /// 更新保留停用状态；取消或失败时保留原文件。
         ///
         /// Resource: `Interface.appContentBatchUpdateView.manualText1`.
         public static var replacementDetails: LocalizedMessage {
-            .init(key: "appContentBatchUpdateView.manualText1", table: "Interface", fallback: "下载和校验完成后一起替换文件。停用状态保留，取消或失败时保留原文件。")
+            .init(key: "appContentBatchUpdateView.manualText1", table: "Interface", fallback: "更新保留停用状态；取消或失败时保留原文件。")
         }
         /// 更新全部 %1$lld 项
         ///
@@ -62,7 +62,7 @@ extension Messages {
             "Interface:appContentBatchUpdateView.bodyText2": .init("共 %1$lld 个文件 · %2$@", [.integer, .text]),
             "Interface:appContentBatchUpdateView.bodyText3": .init("必需依赖", []),
             "Interface:appContentBatchUpdateView.previousText1": .init("更新后继续保持停用", []),
-            "Interface:appContentBatchUpdateView.manualText1": .init("下载和校验完成后一起替换文件。停用状态保留，取消或失败时保留原文件。", []),
+            "Interface:appContentBatchUpdateView.manualText1": .init("更新保留停用状态；取消或失败时保留原文件。", []),
             "Interface:appContentBatchUpdateView.manualText2": .init("更新全部 %1$lld 项", [.integer]),
             "Interface:appContentBatchUpdateView.manualText3": .init("批量更新 %1$lld 项内容", [.integer]),
             "Interface:appContentBatchUpdateView.manualText4": .init("已更新 %1$lld 项内容", [.integer]),

@@ -3,23 +3,23 @@ import Foundation
 
 extension Messages {
     public enum AppGameSessionRecoveryView {
-        /// 我已确认这个实例的游戏已退出
+        /// 已确认此实例的游戏已退出
         ///
         /// Resource: `Interface.appGameSessionRecoveryView.bodyText1`.
         public static var gameExitConfirmed: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText1", table: "Interface", fallback: "我已确认这个实例的游戏已退出")
+            .init(key: "appGameSessionRecoveryView.bodyText1", table: "Interface", fallback: "已确认此实例的游戏已退出")
         }
-        /// 恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。
+        /// 恢复仅更新运行记录，不会结束进程或删除日志。
         ///
         /// Resource: `Interface.appGameSessionRecoveryView.bodyText2`.
         public static var recoveryDetails: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText2", table: "Interface", fallback: "恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。")
+            .init(key: "appGameSessionRecoveryView.bodyText2", table: "Interface", fallback: "恢复仅更新运行记录，不会结束进程或删除日志。")
         }
-        /// 这个实例仍被某项操作占用，请等待该操作完成。
+        /// 此实例正被其他操作占用，请等待操作完成。
         ///
         /// Resource: `Interface.appGameSessionRecoveryView.bodyText3`.
         public static var instanceBusy: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText3", table: "Interface", fallback: "这个实例仍被某项操作占用，请等待该操作完成。")
+            .init(key: "appGameSessionRecoveryView.bodyText3", table: "Interface", fallback: "此实例正被其他操作占用，请等待操作完成。")
         }
         /// 刷新状态
         ///
@@ -40,9 +40,9 @@ extension Messages {
             .init(key: "appGameSessionRecoveryView.messageText3", table: "Interface", fallback: "收尾记录并恢复启动")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appGameSessionRecoveryView.bodyText1": .init("我已确认这个实例的游戏已退出", []),
-            "Interface:appGameSessionRecoveryView.bodyText2": .init("恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。", []),
-            "Interface:appGameSessionRecoveryView.bodyText3": .init("这个实例仍被某项操作占用，请等待该操作完成。", []),
+            "Interface:appGameSessionRecoveryView.bodyText1": .init("已确认此实例的游戏已退出", []),
+            "Interface:appGameSessionRecoveryView.bodyText2": .init("恢复仅更新运行记录，不会结束进程或删除日志。", []),
+            "Interface:appGameSessionRecoveryView.bodyText3": .init("此实例正被其他操作占用，请等待操作完成。", []),
             "Interface:appGameSessionRecoveryView.messageText1": .init("刷新状态", []),
             "Interface:appGameSessionRecoveryView.messageText2": .init("返回游戏", []),
             "Interface:appGameSessionRecoveryView.messageText3": .init("收尾记录并恢复启动", []),

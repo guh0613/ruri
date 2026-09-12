@@ -43,12 +43,8 @@ struct InstanceMoveView: View {
                             ForEach(choices, id: \.self) { id in Text(directoryName(id)).tag(Optional(id)) }
                         }.disabled(model.busy)
                         Button(Messages.AppInstanceMoveView.addTargetFolder.localized, systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
-                        Text(source.importedInstallation == nil && source.repositoryVersionID == nil
-                             ? Messages.AppInstanceMoveView.moveSettingsPreserved.localized
-                             : Messages.AppInstanceMoveView.moveContentPreserved.localized)
-                            .font(.callout).foregroundStyle(.secondary)
                         switch source.runDirectory ?? .isolated {
-                        case .isolated: Text(Messages.AppInstanceMoveView.moveWorldsPreserved.localized)
+                        case .isolated: Text(Messages.AppInstanceMoveView.sourceCleanupNotice.localized)
                         case .shared: Text(Messages.AppInstanceMoveView.moveSharedContent.localized)
                         case .custom: Text(Messages.AppInstanceMoveView.moveCustomDirectory.localized)
                         }
@@ -58,8 +54,12 @@ struct InstanceMoveView: View {
                             path(Messages.AppInstanceMoveView.moveTargetInstance.localized, preview.destination)
                             if let kept = preview.retainedGameDirectory { path(Messages.AppInstanceMoveView.keepRunDirectory.localized, kept) }
                             if let prior = preview.preservedPreviousData {
-                                Text(Messages.AppInstanceMoveView.previousDirectoryContent.localized).font(.caption).foregroundStyle(.secondary)
-                                path(Messages.AppInstanceMoveView.oldContent.localized, prior)
+                                DisclosureGroup(Messages.AppInstanceMoveView.preservedOriginalFiles.localized) {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(Messages.AppInstanceMoveView.previousDirectoryContent.localized)
+                                        path(Messages.AppInstanceMoveView.savedLocation.localized, prior)
+                                    }.font(.caption).foregroundStyle(.secondary).padding(.top, 6)
+                                }
                             }
                         }
                     }

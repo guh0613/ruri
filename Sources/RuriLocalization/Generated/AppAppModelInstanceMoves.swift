@@ -9,17 +9,17 @@ extension Messages {
         public static func moveInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.moveInstanceText1", table: "Interface", fallback: "移动 %1$@", arguments: [.text(value0)])
         }
-        /// 已移动“%1$@”，设置和运行历史已保留。
+        /// 已移动“%1$@”。
         ///
         /// Resource: `Interface.appAppModelInstanceMoves.resultText1`.
         public static func instanceMoved(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.resultText1", table: "Interface", fallback: "已移动“%1$@”，设置和运行历史已保留。", arguments: [.text(value0)])
+            .init(key: "appAppModelInstanceMoves.resultText1", table: "Interface", fallback: "已移动“%1$@”。", arguments: [.text(value0)])
         }
-        /// 实例已登记，但移动尚需恢复。
+        /// 实例已移至目标位置，还需完成清理。
         ///
         /// Resource: `Interface.appAppModelInstanceMoves.resultText2`.
         public static var moveNeedsRecovery: LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.resultText2", table: "Interface", fallback: "实例已登记，但移动尚需恢复。")
+            .init(key: "appAppModelInstanceMoves.resultText2", table: "Interface", fallback: "实例已移至目标位置，还需完成清理。")
         }
         /// 恢复 %1$@ 的移动
         ///
@@ -35,8 +35,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appAppModelInstanceMoves.moveInstanceText1": .init("移动 %1$@", [.text]),
-            "Interface:appAppModelInstanceMoves.resultText1": .init("已移动“%1$@”，设置和运行历史已保留。", [.text]),
-            "Interface:appAppModelInstanceMoves.resultText2": .init("实例已登记，但移动尚需恢复。", []),
+            "Interface:appAppModelInstanceMoves.resultText1": .init("已移动“%1$@”。", [.text]),
+            "Interface:appAppModelInstanceMoves.resultText2": .init("实例已移至目标位置，还需完成清理。", []),
             "Interface:appAppModelInstanceMoves.recoverInstanceMoveText1": .init("恢复 %1$@ 的移动", [.text]),
             "Interface:appAppModelInstanceMoves.resultText3": .init("实例移动已完成，原文件与工作记录已清理。", []),
         ]

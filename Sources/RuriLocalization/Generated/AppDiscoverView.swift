@@ -15,11 +15,11 @@ extension Messages {
         public static var connectCurseForge: LocalizedMessage {
             .init(key: "appDiscoverView.bodyText1", table: "Interface", fallback: "连接 CurseForge")
         }
-        /// 配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。
+        /// 请先在设置中配置 CurseForge API Key。
         ///
         /// Resource: `Interface.appDiscoverView.bodyText2`.
         public static var curseforgeSetupDetails: LocalizedMessage {
-            .init(key: "appDiscoverView.bodyText2", table: "Interface", fallback: "配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。")
+            .init(key: "appDiscoverView.bodyText2", table: "Interface", fallback: "请先在设置中配置 CurseForge API Key。")
         }
         /// 前往设置
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var noMatchingContent: LocalizedMessage {
             .init(key: "appDiscoverView.errorText2", table: "Interface", fallback: "没有找到匹配内容")
         }
-        /// 试试英文名称，或使用更短的关键词。
+        /// 使用英文名称或更短的关键词搜索。
         ///
         /// Resource: `Interface.appDiscoverView.errorText3`.
         public static var tryShorterSearch: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText3", table: "Interface", fallback: "试试英文名称，或使用更短的关键词。")
+            .init(key: "appDiscoverView.errorText3", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
         }
         /// 上一页
         ///
@@ -126,12 +126,12 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:appDiscoverView.pText1": .init("社区作者", []),
             "Interface:appDiscoverView.bodyText1": .init("连接 CurseForge", []),
-            "Interface:appDiscoverView.bodyText2": .init("配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。", []),
+            "Interface:appDiscoverView.bodyText2": .init("请先在设置中配置 CurseForge API Key。", []),
             "Interface:appDiscoverView.bodyText3": .init("前往设置", []),
             "Interface:appDiscoverView.bodyText4": .init("正在发现内容…", []),
             "Interface:appDiscoverView.errorText1": .init("重试", []),
             "Interface:appDiscoverView.errorText2": .init("没有找到匹配内容", []),
-            "Interface:appDiscoverView.errorText3": .init("试试英文名称，或使用更短的关键词。", []),
+            "Interface:appDiscoverView.errorText3": .init("使用英文名称或更短的关键词搜索。", []),
             "Interface:appDiscoverView.errorText4": .init("上一页", []),
             "Interface:appDiscoverView.errorText5": .init("下一页", []),
             "Interface:appDiscoverView.errorText6": .init("搜索模组、整合包、光影…", []),

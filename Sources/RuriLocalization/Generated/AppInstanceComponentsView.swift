@@ -57,17 +57,17 @@ extension Messages {
         public static var removeLoaderDetails: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText4", table: "Interface", fallback: "移除加载器后按原版启动，模组文件仍会保留。")
         }
-        /// 可升级、降级或更换加载器。现有模组需要与所选加载器兼容。
+        /// 现有模组需与所选加载器兼容。
         ///
         /// Resource: `Interface.appInstanceComponentsView.errorText5`.
         public static var changeLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText5", table: "Interface", fallback: "可升级、降级或更换加载器。现有模组需要与所选加载器兼容。")
+            .init(key: "appInstanceComponentsView.errorText5", table: "Interface", fallback: "现有模组需与所选加载器兼容。")
         }
-        /// 保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。
+        /// 启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。
         ///
         /// Resource: `Interface.appInstanceComponentsView.errorText6`.
         public static var applyLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。")
+            .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。")
         }
         /// 恢复上次配置
         ///
@@ -115,8 +115,8 @@ extension Messages {
             "Interface:appInstanceComponentsView.errorText2": .init("版本", []),
             "Interface:appInstanceComponentsView.errorText3": .init("（当前）", []),
             "Interface:appInstanceComponentsView.errorText4": .init("移除加载器后按原版启动，模组文件仍会保留。", []),
-            "Interface:appInstanceComponentsView.errorText5": .init("可升级、降级或更换加载器。现有模组需要与所选加载器兼容。", []),
-            "Interface:appInstanceComponentsView.errorText6": .init("保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。", []),
+            "Interface:appInstanceComponentsView.errorText5": .init("现有模组需与所选加载器兼容。", []),
+            "Interface:appInstanceComponentsView.errorText6": .init("启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。", []),
             "Interface:appInstanceComponentsView.backupText2": .init("恢复上次配置", []),
             "Interface:appInstanceComponentsView.backupText3": .init("关闭", []),
             "Interface:appInstanceComponentsView.backupText4": .init("移除加载器", []),
