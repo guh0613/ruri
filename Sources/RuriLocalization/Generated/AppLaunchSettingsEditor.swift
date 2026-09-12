@@ -237,6 +237,12 @@ extension Messages {
         public static var gameArgumentsQuotingHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText9", table: "Interface", fallback: "含空格的参数加引号；这里填写的窗口尺寸优先。")
         }
+        /// 窗口尺寸
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.windowSize`.
+        public static var windowSize: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.windowSize", table: "Interface", fallback: "窗口尺寸")
+        }
         /// 窗口宽度
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText10`.
@@ -433,6 +439,7 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.javaIssueText7": .init("例如：--width 1600 --height 900", []),
             "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText9": .init("含空格的参数加引号；这里填写的窗口尺寸优先。", []),
+            "Interface:appLaunchSettingsEditor.windowSize": .init("窗口尺寸", []),
             "Interface:appLaunchSettingsEditor.javaIssueText10": .init("窗口宽度", []),
             "Interface:appLaunchSettingsEditor.javaIssueText11": .init("窗口高度", []),
             "Interface:appLaunchSettingsEditor.javaIssueText12": .init("常用尺寸", []),

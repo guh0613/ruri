@@ -25,7 +25,9 @@ struct DefaultLaunchSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack {
-                Text(hasChanges ? Messages.AppDefaultLaunchSettingsView.unsavedChanges.localized : Messages.AppDefaultLaunchSettingsView.runningGameSettings.localized).font(.caption).foregroundStyle(.secondary)
+                if hasChanges {
+                    Text(Messages.AppDefaultLaunchSettingsView.unsavedChanges.localized).font(.caption).foregroundStyle(.secondary)
+                }
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(Messages.AppDefaultLaunchSettingsView.saveDefaultSettings.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)

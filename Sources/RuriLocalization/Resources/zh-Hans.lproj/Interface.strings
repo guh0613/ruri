@@ -2797,6 +2797,9 @@
 /* @symbol AppLaunchSettingsEditor.gameArgumentsQuotingHelp @args - */
 "appLaunchSettingsEditor.javaIssueText9" = "含空格的参数加引号；这里填写的窗口尺寸优先。";
 
+/* @symbol AppLaunchSettingsEditor.windowSize @args - */
+"appLaunchSettingsEditor.windowSize" = "窗口尺寸";
+
 /* @symbol AppLaunchSettingsEditor.windowWidth @args - */
 "appLaunchSettingsEditor.javaIssueText10" = "窗口宽度";
 

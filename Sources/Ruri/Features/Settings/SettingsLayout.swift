@@ -82,10 +82,21 @@ struct SettingsNumberField: View {
         HStack {
             Text(title)
             Spacer()
-            HStack(spacing: 6) {
-                TextField(title, value: $value, format: .number.grouping(.never))
-                    .labelsHidden().textFieldStyle(.roundedBorder).multilineTextAlignment(.trailing).frame(width: 88)
-                    .accessibilityLabel(title)
+            SettingsNumberInput(title: title, value: $value, unit: unit)
+        }.accessibilityElement(children: .contain)
+    }
+}
+
+struct SettingsNumberInput: View {
+    let title: String
+    @Binding var value: Int
+    var unit = "MB"
+    var body: some View {
+        HStack(spacing: 6) {
+            TextField(title, value: $value, format: .number.grouping(.never))
+                .labelsHidden().textFieldStyle(.roundedBorder).multilineTextAlignment(.trailing).frame(width: 88)
+                .accessibilityLabel(title)
+            if !unit.isEmpty {
                 Text(unit).foregroundStyle(.secondary).frame(minWidth: 22, alignment: .leading)
             }
         }.accessibilityElement(children: .contain)

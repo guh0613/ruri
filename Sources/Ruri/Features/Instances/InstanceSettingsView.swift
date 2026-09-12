@@ -45,7 +45,9 @@ struct InstanceSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack(spacing: 12) {
-                Text(hasChanges ? Messages.AppInstanceSettingsView.unsavedChanges.localized : Messages.AppInstanceSettingsView.applyNextLaunch.localized).font(.caption).foregroundStyle(.secondary)
+                if hasChanges {
+                    Text(Messages.AppInstanceSettingsView.unsavedChanges.localized).font(.caption).foregroundStyle(.secondary)
+                }
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(Messages.AppInstanceSettingsView.save.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)

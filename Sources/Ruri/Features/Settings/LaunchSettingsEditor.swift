@@ -82,11 +82,15 @@ struct LaunchSettingsEditor: View {
                              text: Binding(get: { effective.gameArguments }, set: { overrides.gameArguments = $0 }),
                              help: Messages.AppLaunchSettingsEditor.gameArgumentsHelp.localized)
         case .window:
-            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.windowWidth.localized, value: windowBinding(\.width), unit: "px")
-            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.windowHeight.localized, value: windowBinding(\.height), unit: "px")
-            HStack {
-                Text(Messages.AppLaunchSettingsEditor.commonWindowSize.localized); Spacer()
-                Menu(Messages.AppLaunchSettingsEditor.chooseWindowSize.localized) {
+            HStack(spacing: 12) {
+                Text(Messages.AppLaunchSettingsEditor.windowSize.localized)
+                Spacer(minLength: 8)
+                HStack(spacing: 8) {
+                    SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.windowWidth.localized, value: windowBinding(\.width), unit: "")
+                    Text("×").foregroundStyle(.secondary).accessibilityHidden(true)
+                    SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.windowHeight.localized, value: windowBinding(\.height), unit: "px")
+                }
+                Menu(Messages.AppLaunchSettingsEditor.commonWindowSize.localized) {
                     ForEach([GameWindowSize(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)], id: \.width) { size in
                         Button("\(size.width) × \(size.height)") { var value = effective.window; value.width = size.width; value.height = size.height; overrides.window = value }
                     }
@@ -125,10 +129,15 @@ struct MemorySettingsEditor: View {
     var body: some View {
         Picker(Messages.AppLaunchSettingsEditor.allocationMethod.localized, selection: $settings.mode) { Text(Messages.AppLaunchSettingsEditor.automaticMemory.localized).tag(MemorySettings.Mode.automatic); Text(Messages.AppLaunchSettingsEditor.manualMemory.localized).tag(MemorySettings.Mode.manual) }
         if settings.mode == .manual {
-            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.maximumMemoryLabel.localized, value: $settings.maximumMB)
-            HStack {
-                Text(Messages.AppLaunchSettingsEditor.commonMemorySize.localized); Spacer()
-                Menu(Messages.AppLaunchSettingsEditor.chooseMemorySize.localized) { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button(LocalizedFormat.bytes(Int64(value) * 1_048_576, memory: true)) { settings.maximumMB = value } } }.fixedSize()
+            HStack(spacing: 12) {
+                Text(Messages.AppLaunchSettingsEditor.maximumMemoryLabel.localized)
+                Spacer(minLength: 8)
+                SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.maximumMemoryLabel.localized, value: $settings.maximumMB)
+                Menu(Messages.AppLaunchSettingsEditor.commonMemorySize.localized) {
+                    ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in
+                        Button(LocalizedFormat.bytes(Int64(value) * 1_048_576, memory: true)) { settings.maximumMB = value }
+                    }
+                }.fixedSize()
             }
         }
         VStack(alignment: .leading, spacing: 6) {
@@ -152,11 +161,23 @@ struct MemorySettingsEditor: View {
             }
         }
         DisclosureGroup(Messages.AppLaunchSettingsEditor.advancedMemory.localized) {
-            Toggle(Messages.AppLaunchSettingsEditor.initialMemoryToggle.localized, isOn: Binding(get: { settings.initialMB != nil }, set: { settings.initialMB = $0 ? 512 : nil }))
-            if settings.initialMB != nil { SettingsNumberField(title: Messages.AppLaunchSettingsEditor.initialMemory.localized, value: Binding(get: { settings.initialMB ?? 512 }, set: { settings.initialMB = $0 })) }
-            Toggle(Messages.AppLaunchSettingsEditor.metaspaceToggle.localized, isOn: Binding(get: { settings.metaspaceMB != nil }, set: { settings.metaspaceMB = $0 ? 512 : nil }))
-            if settings.metaspaceMB != nil { SettingsNumberField(title: Messages.AppLaunchSettingsEditor.metaspaceLimit.localized, value: Binding(get: { settings.metaspaceMB ?? 512 }, set: { settings.metaspaceMB = $0 })) }
-            Text(Messages.AppLaunchSettingsEditor.memorySettingsHelp.localized).font(.caption).foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Toggle(Messages.AppLaunchSettingsEditor.initialMemoryToggle.localized, isOn: Binding(get: { settings.initialMB != nil }, set: { settings.initialMB = $0 ? 512 : nil }))
+                    if settings.initialMB != nil {
+                        SettingsNumberField(title: Messages.AppLaunchSettingsEditor.initialMemory.localized, value: Binding(get: { settings.initialMB ?? 512 }, set: { settings.initialMB = $0 }))
+                    }
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 10) {
+                    Toggle(Messages.AppLaunchSettingsEditor.metaspaceToggle.localized, isOn: Binding(get: { settings.metaspaceMB != nil }, set: { settings.metaspaceMB = $0 ? 512 : nil }))
+                    if settings.metaspaceMB != nil {
+                        SettingsNumberField(title: Messages.AppLaunchSettingsEditor.metaspaceLimit.localized, value: Binding(get: { settings.metaspaceMB ?? 512 }, set: { settings.metaspaceMB = $0 }))
+                    }
+                }
+                Text(Messages.AppLaunchSettingsEditor.memorySettingsHelp.localized).font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
+            }.multilineTextAlignment(.leading).padding(.top, 12).padding(.bottom, 6)
         }
     }
 }
