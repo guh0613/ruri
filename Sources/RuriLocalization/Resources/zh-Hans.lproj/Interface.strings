@@ -1138,8 +1138,8 @@
 /* @symbol AppGameRunDirectoryChangeView.recoverDirectoryCopy @args - */
 "appGameRunDirectoryChangeView.bodyText2" = "恢复目录复制";
 
-/* @symbol AppGameRunDirectoryChangeView.target @args - */
-"appGameRunDirectoryChangeView.bodyText3" = "目标";
+/* @symbol AppGameRunDirectoryChangeView.directoryType @args - */
+"appGameRunDirectoryChangeView.bodyText3" = "目录类型";
 
 /* @symbol AppGameRunDirectoryChangeView.noFolderSelected @args - */
 "appGameRunDirectoryChangeView.bodyText4" = "尚未选择文件夹";
@@ -1175,16 +1175,16 @@
 "appGameRunDirectoryChangeView.recoveryText6" = "原目录：%1$@\n目标目录：%2$@";
 
 /* @symbol AppGameRunDirectoryChangeView.viewWorkspaceInFinder @args - */
-"appGameRunDirectoryChangeView.recoveryText7" = "在 Finder 中查看工作区";
+"appGameRunDirectoryChangeView.recoveryText7" = "查看工作文件…";
 
 /* @symbol AppGameRunDirectoryChangeView.contentHandling @args - */
 "appGameRunDirectoryChangeView.previewText1" = "内容处理";
 
 /* @symbol AppGameRunDirectoryChangeView.useExistingContent @args - */
-"appGameRunDirectoryChangeView.previewText2" = "使用目标已有的内容";
+"appGameRunDirectoryChangeView.previewText2" = "使用目标目录的内容";
 
 /* @symbol AppGameRunDirectoryChangeView.copyCurrentContentToEmptyTarget @args - */
-"appGameRunDirectoryChangeView.previewText3" = "复制当前内容到空目标";
+"appGameRunDirectoryChangeView.previewText3" = "复制当前内容";
 
 /* @symbol AppGameRunDirectoryChangeView.targetContainsFiles @args - */
 "appGameRunDirectoryChangeView.issueText1" = "目标已有文件或备份，不能用复制覆盖。";
@@ -1222,8 +1222,8 @@
 /* @symbol AppGameRunDirectoryChangeView.close @args - */
 "appGameRunDirectoryChangeView.issueText14" = "关闭";
 
-/* @symbol AppGameRunDirectoryChangeView.cleanCompletedRecord @args - */
-"appGameRunDirectoryChangeView.recoveryText8" = "清理已完成记录";
+/* @symbol AppGameRunDirectoryChangeView.completeRecovery @args - */
+"appGameRunDirectoryChangeView.recoveryText8" = "完成清理";
 
 /* @symbol AppGameRunDirectoryChangeView.recoverAndKeepCopy @args - */
 "appGameRunDirectoryChangeView.recoveryText9" = "恢复并保留副本";
@@ -1231,8 +1231,8 @@
 /* @symbol AppGameRunDirectoryChangeView.copyAndSwitch @args - */
 "appGameRunDirectoryChangeView.recoveryText10" = "复制并切换";
 
-/* @symbol AppGameRunDirectoryChangeView.useExistingTargetContent @args - */
-"appGameRunDirectoryChangeView.recoveryText11" = "使用目标现有内容";
+/* @symbol AppGameRunDirectoryChangeView.switchDirectory @args - */
+"appGameRunDirectoryChangeView.recoveryText11" = "切换目录";
 
 /* @symbol AppGameRunDirectoryChangeView.cancellingAndKeepingWorkCopy @args - */
 "appGameRunDirectoryChangeView.previewText4" = "正在取消并保留工作副本…";
@@ -3464,3 +3464,18 @@
 "appCurseForgeSettingsSection.apiKeyStorageHelp" = "密钥保存在 macOS 钥匙串中，不会随实例导出。";
 /* @symbol AppInstanceMoveView.preservedOriginalFiles @args - */
 "appInstanceMoveView.preservedOriginalFiles" = "保留的原文件";
+
+/* @symbol AppGameRunDirectoryChangeView.isolatedOption @args - */
+"appGameRunDirectoryChangeView.isolatedOption" = "独立目录";
+
+/* @symbol AppGameRunDirectoryChangeView.sharedOption @args - */
+"appGameRunDirectoryChangeView.sharedOption" = "共享目录";
+
+/* @symbol AppGameRunDirectoryChangeView.customOption @args - */
+"appGameRunDirectoryChangeView.customOption" = "自定义文件夹";
+
+/* @symbol AppGameRunDirectoryChangeView.changeFolder @args - */
+"appGameRunDirectoryChangeView.changeFolder" = "更改…";
+
+/* @symbol AppGameRunDirectoryChangeView.fileDetails @args - */
+"appGameRunDirectoryChangeView.fileDetails" = "文件详情";

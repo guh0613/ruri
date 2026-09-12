@@ -15,11 +15,11 @@ extension Messages {
         public static var recoverDirectoryCopy: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText2", table: "Interface", fallback: "恢复目录复制")
         }
-        /// 目标
+        /// 目录类型
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText3`.
-        public static var target: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.bodyText3", table: "Interface", fallback: "目标")
+        public static var directoryType: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.bodyText3", table: "Interface", fallback: "目录类型")
         }
         /// 尚未选择文件夹
         ///
@@ -88,11 +88,11 @@ extension Messages {
         public static func sourceAndTargetDirectories(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText6", table: "Interface", fallback: "原目录：%1$@\n目标目录：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 在 Finder 中查看工作区
+        /// 查看工作文件…
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText7`.
         public static var viewWorkspaceInFinder: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText7", table: "Interface", fallback: "在 Finder 中查看工作区")
+            .init(key: "appGameRunDirectoryChangeView.recoveryText7", table: "Interface", fallback: "查看工作文件…")
         }
         /// 内容处理
         ///
@@ -100,17 +100,17 @@ extension Messages {
         public static var contentHandling: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText1", table: "Interface", fallback: "内容处理")
         }
-        /// 使用目标已有的内容
+        /// 使用目标目录的内容
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.previewText2`.
         public static var useExistingContent: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.previewText2", table: "Interface", fallback: "使用目标已有的内容")
+            .init(key: "appGameRunDirectoryChangeView.previewText2", table: "Interface", fallback: "使用目标目录的内容")
         }
-        /// 复制当前内容到空目标
+        /// 复制当前内容
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.previewText3`.
         public static var copyCurrentContentToEmptyTarget: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.previewText3", table: "Interface", fallback: "复制当前内容到空目标")
+            .init(key: "appGameRunDirectoryChangeView.previewText3", table: "Interface", fallback: "复制当前内容")
         }
         /// 目标已有文件或备份，不能用复制覆盖。
         ///
@@ -184,11 +184,11 @@ extension Messages {
         public static var close: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText14", table: "Interface", fallback: "关闭")
         }
-        /// 清理已完成记录
+        /// 完成清理
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText8`.
-        public static var cleanCompletedRecord: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText8", table: "Interface", fallback: "清理已完成记录")
+        public static var completeRecovery: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.recoveryText8", table: "Interface", fallback: "完成清理")
         }
         /// 恢复并保留副本
         ///
@@ -202,11 +202,11 @@ extension Messages {
         public static var copyAndSwitch: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText10", table: "Interface", fallback: "复制并切换")
         }
-        /// 使用目标现有内容
+        /// 切换目录
         ///
         /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText11`.
-        public static var useExistingTargetContent: LocalizedMessage {
-            .init(key: "appGameRunDirectoryChangeView.recoveryText11", table: "Interface", fallback: "使用目标现有内容")
+        public static var switchDirectory: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.recoveryText11", table: "Interface", fallback: "切换目录")
         }
         /// 正在取消并保留工作副本…
         ///
@@ -238,10 +238,40 @@ extension Messages {
         public static func sharedInstances(_ value0: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.sharedInstances", table: "Interface", fallback: "共用目标目录：%1$@", arguments: [.text(value0)])
         }
+        /// 独立目录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.isolatedOption`.
+        public static var isolatedOption: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.isolatedOption", table: "Interface", fallback: "独立目录")
+        }
+        /// 共享目录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.sharedOption`.
+        public static var sharedOption: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.sharedOption", table: "Interface", fallback: "共享目录")
+        }
+        /// 自定义文件夹
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.customOption`.
+        public static var customOption: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.customOption", table: "Interface", fallback: "自定义文件夹")
+        }
+        /// 更改…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.changeFolder`.
+        public static var changeFolder: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.changeFolder", table: "Interface", fallback: "更改…")
+        }
+        /// 文件详情
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.fileDetails`.
+        public static var fileDetails: LocalizedMessage {
+            .init(key: "appGameRunDirectoryChangeView.fileDetails", table: "Interface", fallback: "文件详情")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appGameRunDirectoryChangeView.bodyText1": .init("切换运行目录", []),
             "Interface:appGameRunDirectoryChangeView.bodyText2": .init("恢复目录复制", []),
-            "Interface:appGameRunDirectoryChangeView.bodyText3": .init("目标", []),
+            "Interface:appGameRunDirectoryChangeView.bodyText3": .init("目录类型", []),
             "Interface:appGameRunDirectoryChangeView.bodyText4": .init("尚未选择文件夹", []),
             "Interface:appGameRunDirectoryChangeView.bodyText5": .init("选择文件夹…", []),
             "Interface:appGameRunDirectoryChangeView.panelText1": .init("选择保存模组、存档和游戏设置的文件夹。", []),
@@ -253,10 +283,10 @@ extension Messages {
             "Interface:appGameRunDirectoryChangeView.recoveryText4": .init("恢复原目录设置，并将本次复制的文件另存为副本。其他程序修改或替换的文件会保留。", []),
             "Interface:appGameRunDirectoryChangeView.recoveryText5": .init("开始于 %1$@", [.text]),
             "Interface:appGameRunDirectoryChangeView.recoveryText6": .init("原目录：%1$@\n目标目录：%2$@", [.text, .text]),
-            "Interface:appGameRunDirectoryChangeView.recoveryText7": .init("在 Finder 中查看工作区", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText7": .init("查看工作文件…", []),
             "Interface:appGameRunDirectoryChangeView.previewText1": .init("内容处理", []),
-            "Interface:appGameRunDirectoryChangeView.previewText2": .init("使用目标已有的内容", []),
-            "Interface:appGameRunDirectoryChangeView.previewText3": .init("复制当前内容到空目标", []),
+            "Interface:appGameRunDirectoryChangeView.previewText2": .init("使用目标目录的内容", []),
+            "Interface:appGameRunDirectoryChangeView.previewText3": .init("复制当前内容", []),
             "Interface:appGameRunDirectoryChangeView.issueText1": .init("目标已有文件或备份，不能用复制覆盖。", []),
             "Interface:appGameRunDirectoryChangeView.issueText2": .init("原目录", []),
             "Interface:appGameRunDirectoryChangeView.issueText3": .init("目标目录", []),
@@ -269,15 +299,20 @@ extension Messages {
             "Interface:appGameRunDirectoryChangeView.issueText12": .init("刷新预览", []),
             "Interface:appGameRunDirectoryChangeView.issueText13": .init("取消操作", []),
             "Interface:appGameRunDirectoryChangeView.issueText14": .init("关闭", []),
-            "Interface:appGameRunDirectoryChangeView.recoveryText8": .init("清理已完成记录", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText8": .init("完成清理", []),
             "Interface:appGameRunDirectoryChangeView.recoveryText9": .init("恢复并保留副本", []),
             "Interface:appGameRunDirectoryChangeView.recoveryText10": .init("复制并切换", []),
-            "Interface:appGameRunDirectoryChangeView.recoveryText11": .init("使用目标现有内容", []),
+            "Interface:appGameRunDirectoryChangeView.recoveryText11": .init("切换目录", []),
             "Interface:appGameRunDirectoryChangeView.previewText4": .init("正在取消并保留工作副本…", []),
             "Interface:appGameRunDirectoryChangeView.previewText5": .init("正在处理目录…", []),
             "Interface:appGameRunDirectoryChangeView.locationText1": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
             "Interface:appGameRunDirectoryChangeView.locationText2": .init("在 Finder 中显示", []),
             "Interface:appGameRunDirectoryChangeView.sharedInstances": .init("共用目标目录：%1$@", [.text]),
+            "Interface:appGameRunDirectoryChangeView.isolatedOption": .init("独立目录", []),
+            "Interface:appGameRunDirectoryChangeView.sharedOption": .init("共享目录", []),
+            "Interface:appGameRunDirectoryChangeView.customOption": .init("自定义文件夹", []),
+            "Interface:appGameRunDirectoryChangeView.changeFolder": .init("更改…", []),
+            "Interface:appGameRunDirectoryChangeView.fileDetails": .init("文件详情", []),
         ]
     }
 }
