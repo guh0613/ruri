@@ -3,46 +3,23 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-enum PreferencesPane: String, CaseIterable, Identifiable {
-    case general, game, network
-    var id: String { rawValue }
-    var title: String {
-        switch self {
-        case .general: Messages.AppPreferencesView.general.localized
-        case .game: Messages.AppPreferencesView.globalGameSettings.localized
-        case .network: Messages.AppPreferencesView.networkAndServices.localized
-        }
-    }
-}
-
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
     @State private var curseForgeKey = ""
+    @State private var showLaunchDefaults = false
     @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
     var body: some View {
-        @Bindable var model = model
-        VStack(spacing: 0) {
-            Picker(Messages.AppSettingsLayout.settingsCategory.localized, selection: $model.preferencesPane) {
-                ForEach(PreferencesPane.allCases) { pane in Text(pane.title).tag(pane) }
-            }.pickerStyle(.segmented).labelsHidden().controlSize(.large)
-                .frame(maxWidth: .infinity).padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 8)
-            Group {
-                if model.preferencesPane == .game, let draft = model.defaultLaunchSettingsDraft {
-                    DefaultLaunchSettingsView(draft: draft)
-                } else if model.preferencesPane == .general {
-                    Form { general }.formStyle(.grouped).scrollContentBackground(.hidden)
-                } else if model.preferencesPane == .network {
-                    Form { network }.formStyle(.grouped).scrollContentBackground(.hidden)
-                }
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            if let draft = model.defaultLaunchSettingsDraft, draft.hasChanges {
-                launchSettingsActions(draft)
-            }
+        Form {
+            appearance
+            launchDefaults
+            newInstances
+            network
+            dataAndAbout
         }
+        .formStyle(.grouped).scrollContentBackground(.hidden)
         .frame(maxWidth: 740, maxHeight: .infinity)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .onAppear { synchronizeLaunchSettings() }
-        .onChange(of: model.state.settings.defaultLaunchSettings) { synchronizeLaunchSettings() }
+        .sheet(isPresented: $showLaunchDefaults) { DefaultLaunchSettingsView(settings: model.state.settings) }
         .onChange(of: model.state.settings.appearance) { model.save() }
         .onChange(of: model.state.settings.isolationPolicy) { model.save() }
         .onChange(of: model.state.settings.concurrentDownloads) { model.save() }
@@ -50,7 +27,7 @@ struct PreferencesView: View {
         .onChange(of: model.state.settings.microsoftClientID) { model.save() }
     }
 
-    @ViewBuilder private var general: some View {
+    @ViewBuilder private var appearance: some View {
         @Bindable var model = model
         Section {
             Picker(Messages.AppPreferencesView.theme.localized, selection: $model.state.settings.appearance) {
@@ -71,6 +48,26 @@ struct PreferencesView: View {
         } footer: {
             if LocalizationContext.supportedLanguages.count > 1 { Text(Messages.Common.languageRestart.localized) }
         }
+    }
+
+    private var launchDefaults: some View {
+        Section {
+            Button { showLaunchDefaults = true } label: {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "slider.horizontal.3").foregroundStyle(.tint)
+                        Text(Messages.AppPreferencesView.globalGameSettings.localized).fontWeight(.medium)
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+                    }
+                    Text(Messages.AppPreferencesView.globalGameSettingsDescription.localized)
+                        .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 6).contentShape(Rectangle())
+            }.buttonStyle(.plain)
+        }
+    }
+
+    @ViewBuilder private var newInstances: some View {
         Section {
             Picker(Messages.AppPreferencesView.newInstanceIsolation.localized, selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {
                 ForEach(GameIsolationPolicy.allCases) { Text($0.title).tag($0) }
@@ -80,6 +77,9 @@ struct PreferencesView: View {
         } footer: {
             Text(Messages.AppPreferencesView.newInstanceIsolationDetails.localized).fixedSize(horizontal: false, vertical: true)
         }
+    }
+
+    @ViewBuilder private var dataAndAbout: some View {
         Section(Messages.AppPreferencesView.data.localized) {
             HStack {
                 Text(Messages.AppPreferencesView.instanceFolders.localized)
@@ -150,34 +150,4 @@ struct PreferencesView: View {
         CurseForgeSettingsSection(key: $curseForgeKey)
     }
 
-    private func launchSettingsActions(_ draft: DefaultLaunchSettingsDraft) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Divider()
-            if let issue = draft.issue {
-                Label(issue, systemImage: "exclamationmark.circle.fill").font(.callout).foregroundStyle(.red)
-                    .padding(.horizontal, 20)
-            }
-            HStack(spacing: 12) {
-                Text(Messages.AppPreferencesView.unsavedGameSettings.localized).font(.caption).foregroundStyle(.secondary)
-                Spacer()
-                Button(Messages.AppPreferencesView.discardGameChanges.localized) { draft.reset(to: model.state.settings.defaultLaunchSettings) }
-                Button(Messages.AppDefaultLaunchSettingsView.saveDefaultSettings.localized) { saveLaunchSettings(draft) }
-                    .buttonStyle(.borderedProminent).keyboardShortcut("s").disabled(model.readOnly)
-            }.padding(.horizontal, 20).padding(.bottom, 14)
-        }
-    }
-    private func synchronizeLaunchSettings() {
-        if let draft = model.defaultLaunchSettingsDraft { draft.synchronize(with: model.state.settings.defaultLaunchSettings) }
-        else { model.defaultLaunchSettingsDraft = .init(values: model.state.settings.defaultLaunchSettings) }
-    }
-    private func saveLaunchSettings(_ draft: DefaultLaunchSettingsDraft) {
-        let values = draft.values
-        if let failure = SettingsValidation.issue(in: values) {
-            model.preferencesPane = .game
-            draft.issue = failure.message
-            return
-        }
-        if model.updateDefaultLaunchSettings(values, basedOn: draft.original) { draft.reset(to: model.state.settings.defaultLaunchSettings) }
-        else { draft.issue = model.error ?? Messages.AppDefaultLaunchSettingsView.saveDefaultFailure.localized }
-    }
 }

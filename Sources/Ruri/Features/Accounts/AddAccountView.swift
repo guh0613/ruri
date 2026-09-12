@@ -23,7 +23,7 @@ struct AddAccountView: View {
             } else if model.state.settings.effectiveMicrosoftClientID.isEmpty {
                 Label(Messages.AppAddAccountView.configureMicrosoft.localized, systemImage: "key.horizontal").font(.headline)
                 Text(Messages.AppAddAccountView.microsoftHelp.localized).font(.callout).foregroundStyle(.secondary)
-                Button(Messages.AppAddAccountView.openSettings.localized) { model.preferencesPane = .network; model.page = .settings; dismiss() }
+                Button(Messages.AppAddAccountView.openSettings.localized) { model.page = .settings; dismiss() }
             } else if let code {
                 Text(Messages.AppAddAccountView.enterMicrosoftCode.localized).foregroundStyle(.secondary)
                 HStack { Text(code.user_code).font(.system(size: 31, weight: .bold, design: .monospaced)).textSelection(.enabled); Spacer(); Button(Messages.AppAddAccountView.copyCode.localized) { NSPasteboard.general.clearContents(); NSPasteboard.general.setString(code.user_code, forType: .string) } }

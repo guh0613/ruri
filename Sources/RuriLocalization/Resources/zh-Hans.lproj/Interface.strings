@@ -3486,3 +3486,6 @@
 
 /* @symbol AppPreferencesView.globalGameSettings @args - */
 "appPreferencesView.globalGameSettings" = "全局游戏设置";
+
+/* @symbol AppPreferencesView.globalGameSettingsDescription @args - */
+"appPreferencesView.globalGameSettingsDescription" = "统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。";

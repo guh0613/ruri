@@ -237,6 +237,12 @@ extension Messages {
         public static var globalGameSettings: LocalizedMessage {
             .init(key: "appPreferencesView.globalGameSettings", table: "Interface", fallback: "全局游戏设置")
         }
+        /// 统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。
+        ///
+        /// Resource: `Interface.appPreferencesView.globalGameSettingsDescription`.
+        public static var globalGameSettingsDescription: LocalizedMessage {
+            .init(key: "appPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appPreferencesView.modelText1": .init("外观", []),
             "Interface:appPreferencesView.modelText2": .init("主题", []),
@@ -277,6 +283,7 @@ extension Messages {
             "Interface:appPreferencesView.unsavedGameSettings": .init("全局游戏设置有未保存的更改", []),
             "Interface:appPreferencesView.discardGameChanges": .init("还原更改", []),
             "Interface:appPreferencesView.globalGameSettings": .init("全局游戏设置", []),
+            "Interface:appPreferencesView.globalGameSettingsDescription": .init("统一设置 Java、内存、窗口和启动参数，作为所有实例的默认值。", []),
         ]
     }
 }

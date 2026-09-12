@@ -45,7 +45,7 @@ struct DiscoverView: View {
                         VStack(alignment: .leading, spacing: 14) {
                             Label(Messages.AppDiscoverView.connectCurseForge.localized, systemImage: "key").font(.headline)
                             Text(Messages.AppDiscoverView.curseforgeSetupDetails.localized).foregroundStyle(.secondary)
-                            Button(Messages.AppDiscoverView.goToSettings.localized) { model.preferencesPane = .network; model.page = .settings }
+                            Button(Messages.AppDiscoverView.goToSettings.localized) { model.page = .settings }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } else {
