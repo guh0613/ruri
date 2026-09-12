@@ -11,6 +11,8 @@ import RuriCore
     var paths: LauncherPaths { basePaths.configured(with: state) }
     var installer: GameInstaller { GameInstaller(paths: paths, downloader: downloader) }
     var page = Page.home
+    var preferencesPane = PreferencesPane.general
+    var defaultLaunchSettingsDraft: DefaultLaunchSettingsDraft?
     var catalog: VersionCatalog?
     var catalogLoading = false
     var catalogError: String?

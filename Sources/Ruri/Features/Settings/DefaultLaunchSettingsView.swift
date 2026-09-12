@@ -1,46 +1,56 @@
 import RuriLocalization
 import SwiftUI
-import AppKit
+import Observation
 import RuriCore
+
+/// Keep the draft while navigating between settings categories or main pages.
+@MainActor @Observable final class DefaultLaunchSettingsDraft {
+    private(set) var original: LaunchSettingsValues
+    var overrides: InstanceLaunchOverrides {
+        didSet { issue = nil }
+    }
+    var issue: String?
+    var values: LaunchSettingsValues { overrides.resolve(defaults: original) }
+    var hasChanges: Bool { values != original }
+
+    init(values: LaunchSettingsValues) {
+        original = values
+        overrides = .init(fixing: values)
+    }
+    func reset(to values: LaunchSettingsValues) {
+        original = values
+        overrides = .init(fixing: values)
+        issue = nil
+    }
+    func synchronize(with latest: LaunchSettingsValues) {
+        guard latest != original else { return }
+        var draft = values
+        func rebase<Value: Equatable>(_ key: WritableKeyPath<LaunchSettingsValues, Value>) {
+            if draft[keyPath: key] == original[keyPath: key] { draft[keyPath: key] = latest[keyPath: key] }
+        }
+        rebase(\.memory); rebase(\.java); rebase(\.jvmArguments); rebase(\.gameArguments)
+        rebase(\.window); rebase(\.presentation); rebase(\.environment); rebase(\.commands)
+        original = latest
+        overrides = .init(fixing: draft)
+    }
+}
 
 struct DefaultLaunchSettingsView: View {
     @Environment(AppModel.self) private var model
-    @Environment(\.dismiss) private var dismiss
-    @State private var overrides: InstanceLaunchOverrides
-    @State private var issue: String?
-    @State private var pane = InstanceSettingsPane.runtime
-    private let original: LaunchSettingsValues
-    init(settings: AppSettings) {
-        original = settings.defaultLaunchSettings
-        _overrides = State(initialValue: .init(fixing: settings.defaultLaunchSettings))
-    }
+    @Bindable var draft: DefaultLaunchSettingsDraft
+    let pane: InstanceSettingsPane
+
     var body: some View {
-        VStack(spacing: 0) {
-            SettingsLayout(title: Messages.AppDefaultLaunchSettingsView.defaultLaunchSettings.localized, subtitle: Messages.AppDefaultLaunchSettingsView.followsDefaultHelp.localized, panes: [.runtime, .launch, .advanced], selection: $pane) {
-                LaunchSettingsEditor(overrides: $overrides, defaults: original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
-            }
-            Divider()
-            if let issue {
-                Label(issue, systemImage: "exclamationmark.circle.fill").foregroundStyle(.red).font(.callout)
-                    .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
-            }
-            HStack {
-                if hasChanges {
-                    Text(Messages.AppDefaultLaunchSettingsView.unsavedChanges.localized).font(.caption).foregroundStyle(.secondary)
-                }
-                Spacer()
-                Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.AppDefaultLaunchSettingsView.saveDefaultSettings.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)
-            }.padding(.horizontal, 20).padding(.vertical, 14)
-        }.frame(width: 860, height: 670)
-        .interactiveDismissDisabled(hasChanges)
-        .onChange(of: overrides) { _, _ in issue = nil }
-    }
-    private var hasChanges: Bool { overrides.resolve(defaults: original) != original }
-    private func save() {
-        let values = overrides.resolve(defaults: original)
-        if let failure = SettingsValidation.issue(in: values) { pane = .containing(failure.key); issue = failure.message; return }
-        if model.updateDefaultLaunchSettings(values, basedOn: original) { dismiss() }
-        else { issue = model.error ?? Messages.AppDefaultLaunchSettingsView.saveDefaultFailure.localized }
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(Messages.AppPreferencesView.globalGameSettings.localized).font(.headline)
+                Text(Messages.AppPreferencesView.inheritedLaunchSettingsDetails.localized)
+                    .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            }.padding(.horizontal, 20).padding(.top, 16).padding(.bottom, 4)
+            Form {
+                LaunchSettingsEditor(overrides: $draft.overrides, defaults: draft.original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
+                    .disabled(model.readOnly)
+            }.formStyle(.grouped)
+        }
     }
 }
