@@ -1,9 +1,10 @@
+import RuriLocalization
 import Foundation
 
 public enum InstanceExportFormat: String, CaseIterable, Sendable, Identifiable {
     case ruri, complete, multimc, mcbbs, mrpack
     public var id: String { rawValue }
-    public var title: String { switch self { case .ruri: "Ruri 实例"; case .complete: "Ruri 完整副本"; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
+    public var title: String { switch self { case .ruri: Messages.CoreInstanceTransfer.titleText1.localized; case .complete: Messages.CoreInstanceTransfer.titleText2.localized; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
 }
 
 public struct PreparedInstanceImport: Identifiable, Sendable {
@@ -96,7 +97,7 @@ struct PortableInstance: Codable {
         if installation != nil { formatVersion = 2 }
     }
     func instance() throws -> GameInstance {
-        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message("此实例包需要更新版本的 Ruri，或缺少安装文件信息。") }
+        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.instanceText1) }
         try installation?.validate()
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
@@ -127,9 +128,9 @@ public actor InstanceTransfer {
         let workspace = paths.cache.appendingPathComponent("transfer-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         do {
-            progress(InstallProgress("正在识别实例"))
+            progress(InstallProgress(Messages.CoreInstanceTransfer.workspaceText1))
             let isDirectory = try source.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard isDirectory.isSymbolicLink != true else { throw RuriError.message("请选择实际实例目录或压缩包。") }
+            guard isDirectory.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.isDirectoryText1) }
             let unpacked: URL
             if isDirectory.isDirectory == true { unpacked = source }
             else {
@@ -149,7 +150,7 @@ public actor InstanceTransfer {
                 excluded = Set(excluded.filter { $0 == ".ruri" || ($0.hasPrefix("saves/") && $0.hasSuffix("/session.lock")) })
             }
             if FileManager.default.fileExists(atPath: description.game.path) {
-                try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress("正在复制实例内容", completed: done, total: total)) }
+                try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.excludedText1, completed: done, total: total)) }
             } else { try FileManager.default.createDirectory(at: snapshot, withIntermediateDirectories: true) }
             for overlay in description.overlays {
                 if FileManager.default.fileExists(atPath: overlay.path) { try FileTree.overlay(from: overlay, to: snapshot, excluding: excluded) }
@@ -160,8 +161,8 @@ public actor InstanceTransfer {
             for file in packFiles {
                 let item = try file.item(in: snapshot)
                 if FileManager.default.fileExists(atPath: item.destination.path) {
-                    guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包内附文件校验失败：\(file.path)") }
-                } else if file.url == nil { throw RuriError.message("整合包缺少文件且未提供下载源：\(file.path)") }
+                    guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.itemText1(String(describing: file.path))) }
+                } else if file.url == nil { throw RuriError.message(Messages.CoreInstanceTransfer.itemText2(String(describing: file.path))) }
             }
             let installation = try description.installation.map {
                 try PreparedMinecraftInstallation.capture($0, in: workspace, instance: description.instance, paths: paths)
@@ -217,12 +218,12 @@ public actor InstanceTransfer {
                         do { try await downloader.fetch(file.item(in: root, url: url)); return }
                         catch { if Task.isCancelled { throw CancellationError() }; failure = error }
                     }
-                    throw failure ?? RuriError.message("文件缺少可用下载源")
+                    throw failure ?? RuriError.message(Messages.CoreInstanceTransfer.failureText1)
                 }
             }
             while index < min(max(1, min(16, concurrency)), files.count) { add(files[index]); index += 1 }
             while try await group.next() != nil {
-                completed += 1; await progress(InstallProgress("补齐整合包文件", completed: completed, total: files.count))
+                completed += 1; await progress(InstallProgress(Messages.CoreInstanceTransfer.failureText2, completed: completed, total: files.count))
                 if index < files.count { add(files[index]); index += 1 }
             }
         }
@@ -238,7 +239,7 @@ public actor InstanceTransfer {
         var instance = try destinationInstance(prepared, name: name, importJVMArguments: importJVMArguments)
         for file in prepared.selectedPackFiles {
             let item = try file.item(in: prepared.game)
-            guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message("整合包文件缺失或已修改：\(file.path)") }
+            guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.itemText3(String(describing: file.path))) }
         }
         try Self.validatePackContent(content, references: prepared.curseForgeFiles)
         let transaction = try instance.repositoryVersionID == nil ? nil : RepositoryImportTransaction(instance: instance, paths: paths)
@@ -268,12 +269,12 @@ public actor InstanceTransfer {
             return try transaction?.publish(instance) ?? instance
         } catch {
             if let transaction {
-                let reason = Task.isCancelled || error is CancellationError ? "操作已取消。" : error.localizedDescription
+                let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceTransfer.reasonText1.localized : error.localizedDescription
                 do {
                     let kept = try transaction.preserve()
-                    throw RepositoryImportFailure(message: "整合包导入未完成，工作文件已保留，可重新导入。\n\(reason)", preservedFiles: kept)
+                    throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.keptText1(String(describing: reason)).localized, preservedFiles: kept)
                 } catch let failure as RepositoryImportFailure { throw failure }
-                catch { throw RepositoryImportFailure(message: "整合包导入需要恢复，请在实例库处理未完成的导入。\n\(reason)\n\(error.localizedDescription)", preservedFiles: transaction.workspace) }
+                catch { throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.failureText3(String(describing: reason), String(describing: error.localizedDescription)).localized, preservedFiles: transaction.workspace) }
             }
             try? FileManager.default.removeItem(at: location.instance(instance.id)); throw error
         }
@@ -282,19 +283,19 @@ public actor InstanceTransfer {
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
         let complete = format == .complete || (format == .ruri && (instance.repositoryVersionID != nil || instance.importedInstallation != nil))
-        guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。") }
+        guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.completeText1) }
         if instance.loader == .legacyfabric && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message("此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
+            throw RuriError.message(Messages.CoreInstanceTransfer.completeText2)
         }
         if instance.loader == .liteloader && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
+            throw RuriError.message(Messages.CoreInstanceTransfer.completeText3)
         }
         if instance.loader == .optifine && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message("此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。")
+            throw RuriError.message(Messages.CoreInstanceTransfer.completeText4)
         }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         if instance.launchCommands?.isEmpty == false, ![.ruri, .complete].contains(format) {
-            throw RuriError.message("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
+            throw RuriError.message(Messages.CoreInstanceTransfer.instanceText2)
         }
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
@@ -310,7 +311,7 @@ public actor InstanceTransfer {
         if complete { try await exportComplete(instance, to: destination, includeWorlds: includeWorlds, progress: progress); return }
         if format == .mrpack { try await exportMRPack(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .mcbbs { try exportMCBBS(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
-        if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。") }
+        if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message(Messages.CoreInstanceTransfer.locksText1) }
         var extra: [String: Data] = [:]
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         if format == .ruri {
@@ -331,9 +332,9 @@ public actor InstanceTransfer {
                        "OverrideJavaArgs=\(!instance.extraJVMArguments.isEmpty)", "JvmArgs=\(Self.iniEncode(instance.extraJVMArguments))"].joined(separator: "\n") + "\n"
             extra["instance.cfg"] = Data(cfg.utf8)
         }
-        progress(InstallProgress("正在导出实例"))
+        progress(InstallProgress(Messages.CoreInstanceTransfer.cfgText1))
         try SafeArchive.create(from: game, to: destination, prefix: format == .ruri ? "minecraft" : ".minecraft", additionalFiles: extra,
-                               excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress("正在导出实例", completed: done, total: total)) }
+                               excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.cfgText1, completed: done, total: total)) }
     }
 
     private static func findRoot(_ source: URL) throws -> URL {
@@ -343,12 +344,12 @@ public actor InstanceTransfer {
             let info = try $0.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             return info.isDirectory == true && info.isSymbolicLink != true && recognized($0)
         }
-        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。" : "目录包含多个实例，请选择其中一个实例目录。") }
+        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? Messages.CoreInstanceTransfer.infoText1 : Messages.CoreInstanceTransfer.infoText2) }
         return candidates[0]
     }
     static func read(_ url: URL) throws -> Data {
         let info = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 4 * 1024 * 1024 else { throw RuriError.message("实例清单不是有效文件：\(url.lastPathComponent)") }
+        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 4 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceTransfer.infoText3(String(describing: url.lastPathComponent))) }
         return try Data(contentsOf: url)
     }
     static func describe(_ root: URL) throws -> InstanceImportDescription {
@@ -373,15 +374,15 @@ public actor InstanceTransfer {
             format = "Prism / MultiMC"
             let pack = try JSONDecoder().decode(MultiMCPack.self, from: read(root.appendingPathComponent("mmc-pack.json")))
             guard pack.formatVersion == 1, Set(pack.components.map(\.uid)).count == pack.components.count,
-                  let game = pack.components.first(where: { $0.uid == "net.minecraft" })?.version else { throw RuriError.message("MultiMC 实例清单无效或缺少 Minecraft 版本。") }
+                  let game = pack.components.first(where: { $0.uid == "net.minecraft" })?.version else { throw RuriError.message(Messages.CoreInstanceTransfer.gameText1) }
             let supported = Set(loaderIDs.keys).union(["net.minecraft", "org.lwjgl", "org.lwjgl3", "net.fabricmc.intermediary", "org.quiltmc.hashed"])
             let unknown = Set(pack.components.map(\.uid)).subtracting(supported)
-            guard unknown.isEmpty else { throw RuriError.message("此实例包含尚未支持的组件：\(unknown.sorted().joined(separator: ", "))") }
+            guard unknown.isEmpty else { throw RuriError.message(Messages.CoreInstanceTransfer.unknownText1(String(describing: unknown.sorted().joined(separator: ", ")))) }
             let loaders = pack.components.filter { loaderIDs[$0.uid] != nil }
-            guard loaders.count <= 1 else { throw RuriError.message("实例同时声明了多个加载器，暂时无法迁移。") }
+            guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreInstanceTransfer.loadersText1) }
             for folder in ["patches", "jarmods"] {
                 let url = root.appendingPathComponent(folder)
-                if fm.fileExists(atPath: url.path), !(try FileTree.entries(in: url)).isEmpty { throw RuriError.message("实例包含自定义 \(folder)，需要先处理这些补丁后再迁移。") }
+                if fm.fileExists(atPath: url.path), !(try FileTree.entries(in: url)).isEmpty { throw RuriError.message(Messages.CoreInstanceTransfer.urlText1(String(describing: folder))) }
             }
             let cfgURL = root.appendingPathComponent("instance.cfg")
             let cfg = fm.fileExists(atPath: cfgURL.path) ? try iniDecode(String(decoding: read(cfgURL), as: UTF8.self)) : [:]
@@ -397,11 +398,11 @@ public actor InstanceTransfer {
             if !commands.isEmpty { instance.launchCommands = commands }
         }
         try validate(instance)
-        if instance.launchCommands?.isEmpty == false { warnings.append("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。") }
+        if instance.launchCommands?.isEmpty == false { warnings.append(Messages.CoreInstanceTransfer.commandsText1.localized) }
         let games = ["minecraft", ".minecraft"].map { root.appendingPathComponent($0) }.filter { fm.fileExists(atPath: $0.path) }
         guard games.count == 1, try games[0].resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isDirectory == true,
-              try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("实例需要唯一的 minecraft 或 .minecraft 游戏目录。") }
-        if !instance.extraJVMArguments.isEmpty { warnings.append("实例带有自定义 JVM 参数，确认内容后可选择保留。") }
+              try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.gamesText1) }
+        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreInstanceTransfer.gamesText2.localized) }
         let source = root.appendingPathComponent("ruri-source-mcbbs.packmeta")
         return InstanceImportDescription(instance: instance, game: games[0], format: format, warnings: warnings, records: records,
                                          sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil,
@@ -415,7 +416,7 @@ public actor InstanceTransfer {
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,
               (512...131072).contains(instance.memoryMB), (320...16384).contains(instance.width), (240...16384).contains(instance.height),
               instance.extraJVMArguments.count <= 32768, (instance.extraGameArguments?.count ?? 0) <= 32768, (instance.supportedJavaMajors ?? []).allSatisfy({ (6...100).contains($0) }),
-              instance.javaMajor == nil || (6...99).contains(instance.javaMajor!) else { throw RuriError.message("实例版本、内存或窗口设置无效。") }
+              instance.javaMajor == nil || (6...99).contains(instance.javaMajor!) else { throw RuriError.message(Messages.CoreInstanceTransfer.iconText1) }
         _ = try GameInstaller.applyingPackLibraries(instance.packLibraries ?? [], to: VersionManifest(id: "pack", libraries: []))
     }
     static func exclusions(_ game: URL, includeWorlds: Bool) throws -> Set<String> {
@@ -435,12 +436,12 @@ public actor InstanceTransfer {
     static func lockWorlds(_ game: URL) throws -> [Int32] {
         let saves = game.appendingPathComponent("saves")
         guard FileManager.default.fileExists(atPath: saves.path) else { return [] }
-        guard try saves.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message("存档目录不能是符号链接。") }
+        guard try saves.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.savesText1) }
         var locks: [Int32] = []
         do {
             for world in try FileManager.default.contentsOfDirectory(at: saves, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey]) {
                 let info = try world.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-                guard info.isSymbolicLink != true else { throw RuriError.message("存档包含符号链接。") }
+                guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.infoText4) }
                 if info.isDirectory == true, let lock = try WorldManager.readLock(world) { locks.append(lock) }
             }
             return locks

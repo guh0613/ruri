@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -17,17 +18,17 @@ struct CurseForgeFileRow: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title).font(.headline)
                     Text(file.fileName).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    Text(ByteCountFormatter.string(fromByteCount: file.fileLength, countStyle: .file)).font(.caption).foregroundStyle(.secondary)
+                    Text(LocalizedFormat.bytes(file.fileLength)).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 if manual {
                     if checking { ProgressView().controlSize(.small) }
-                    else if selectedURL != nil { Label("已校验", systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(Theme.accent) }
-                    else { TagPill(text: "手动下载") }
-                } else { Label("自动下载", systemImage: "arrow.down.circle").font(.caption).foregroundStyle(.secondary) }
+                    else if selectedURL != nil { Label(Messages.AppCurseForgeFilePicker.bodyText1.localized, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(Theme.accent) }
+                    else { TagPill(text: Messages.AppCurseForgeFilePicker.bodyText2.localized) }
+                } else { Label(Messages.AppCurseForgeFilePicker.bodyText3.localized, systemImage: "arrow.down.circle").font(.caption).foregroundStyle(.secondary) }
             }
             if manual {
-                HStack { Link("打开下载页面", destination: page); Spacer(); Button(selectedURL == nil ? "选择已下载文件…" : "重新选择…") { choose() }.disabled(checking) }.font(.callout)
+                HStack { Link(Messages.AppCurseForgeFilePicker.bodyText4.localized, destination: page); Spacer(); Button(selectedURL == nil ? Messages.AppCurseForgeFilePicker.bodyText5.localized : Messages.AppCurseForgeFilePicker.bodyText6.localized) { choose() }.disabled(checking) }.font(.callout)
             }
             if let error { Text(error).font(.caption).foregroundStyle(.orange) }
         }.padding(14).background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 10))
@@ -37,7 +38,7 @@ struct CurseForgeFileRow: View {
     }
     private func choose() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = false; panel.allowsMultipleSelection = false
-        panel.message = "选择 \(file.fileName)。Ruri 会核对版本、大小与校验值。"
+        panel.message = Messages.AppCurseForgeFilePicker.panelText1(String(describing: file.fileName)).localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         checking = true; error = nil
         Task {
@@ -56,7 +57,7 @@ struct CurseForgePlanFiles: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if files.contains(where: \.requiresManualDownload) {
-                Text("部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。").font(.callout).foregroundStyle(.secondary)
+                Text(Messages.AppCurseForgeFilePicker.bodyText7.localized).font(.callout).foregroundStyle(.secondary)
             }
             ForEach(files) { item in
                 CurseForgeFileRow(file: item.file, title: item.project.name, page: item.pageURL, manual: item.requiresManualDownload,

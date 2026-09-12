@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -47,16 +48,16 @@ public actor JavaInstaller {
             let reading = try JavaRuntimeLease.acquire(id: runtime.id, paths: paths, exclusive: false)
             defer { withExtendedLifetime(reading) {} }
             if let existing = try? JavaDiscovery.inspect(binary.path), existing.major == runtime.major, existing.architecture == runtime.architecture { return existing }
-            throw RuriError.message("此 Java 已损坏，请在 Java 页面点击“修复”：\(destination.lastPathComponent)")
+            throw RuriError.message(Messages.CoreJavaInstaller.existingText1(String(describing: destination.lastPathComponent)))
         }
         let lease = try JavaRuntimeLease.acquire(id: runtime.id, paths: paths, exclusive: true)
         defer { withExtendedLifetime(lease) {} }
         try JavaRuntimeLease.requireNoRunningProcess(in: destination)
         if repairing, try StateStore.load(paths).schemaVersion < 17 { try StateStore.update(paths) { _ in } }
         let replacing = FileManager.default.fileExists(atPath: destination.path)
-        guard repairing || !replacing else { throw RuriError.message("此 Java 已由另一个操作安装，请重新检测。") }
+        guard repairing || !replacing else { throw RuriError.message(Messages.CoreJavaInstaller.replacingText1) }
         let manifestURL = try LauncherPaths.safePath("java-\(runtime.id).json", within: paths.cache)
-        await progress(InstallProgress("读取 Java \(runtime.major) 文件清单"))
+        await progress(InstallProgress(Messages.CoreJavaInstaller.manifestURLText1(String(describing: runtime.major))))
         try await downloader.fetch(DownloadItem(runtime.manifest, to: manifestURL))
         let manifest = try JSONDecoder().decode(Manifest.self, from: Data(contentsOf: manifestURL))
         let staging = try JavaRuntimeStore.directory(runtime.id, paths: paths, partial: true)
@@ -68,41 +69,41 @@ public actor JavaInstaller {
             switch file.type {
             case "directory": try FileManager.default.createDirectory(at: target, withIntermediateDirectories: true)
             case "file":
-                guard let artifact = file.downloads?["raw"] else { throw RuriError.message("Java 文件清单缺少下载信息") }
+                guard let artifact = file.downloads?["raw"] else { throw RuriError.message(Messages.CoreJavaInstaller.artifactText1) }
                 downloads.append(DownloadItem(artifact, to: target))
                 if file.executable == true { executables.append(target) }
             case "link":
-                guard let link = file.target, !link.hasPrefix("/"), !link.contains("\\") else { throw RuriError.message("Java 清单包含不安全链接") }
+                guard let link = file.target, !link.hasPrefix("/"), !link.contains("\\") else { throw RuriError.message(Messages.CoreJavaInstaller.linkText1) }
                 let resolved = target.deletingLastPathComponent().appendingPathComponent(link).standardizedFileURL
-                guard resolved.path.hasPrefix(staging.standardizedFileURL.path + "/") else { throw RuriError.message("Java 链接超出运行时目录") }
+                guard resolved.path.hasPrefix(staging.standardizedFileURL.path + "/") else { throw RuriError.message(Messages.CoreJavaInstaller.resolvedText1) }
                 links.append((target, link))
-            default: throw RuriError.message("不支持的 Java 文件类型：\(file.type)")
+            default: throw RuriError.message(Messages.CoreJavaInstaller.resolvedText2(String(describing: file.type)))
             }
         }
-        try await downloader.download(downloads) { done, total in await progress(InstallProgress("下载 Java \(runtime.major)", completed: done, total: total)) }
+        try await downloader.download(downloads) { done, total in await progress(InstallProgress(Messages.CoreJavaInstaller.resolvedText3(String(describing: runtime.major)), completed: done, total: total)) }
         for file in executables { try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: file.path) }
         for (target, link) in links {
             if let existing = try? FileManager.default.destinationOfSymbolicLink(atPath: target.path) {
-                guard existing == link else { throw RuriError.message("Java 目录中存在不一致的链接") }
+                guard existing == link else { throw RuriError.message(Messages.CoreJavaInstaller.existingText2) }
             } else {
                 try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
                 try FileManager.default.createSymbolicLink(atPath: target.path, withDestinationPath: link)
             }
-            guard target.resolvingSymlinksInPath().path.hasPrefix(staging.resolvingSymlinksInPath().path + "/") else { throw RuriError.message("Java 链接超出运行时目录") }
+            guard target.resolvingSymlinksInPath().path.hasPrefix(staging.resolvingSymlinksInPath().path + "/") else { throw RuriError.message(Messages.CoreJavaInstaller.resolvedText1) }
         }
         try Task.checkCancellation()
         let checked = try JavaDiscovery.inspect(staging.appendingPathComponent("jre.bundle/Contents/Home/bin/java").path)
-        guard checked.major == runtime.major, checked.architecture == runtime.architecture else { throw RuriError.message("下载的 Java 版本或架构不符合要求") }
+        guard checked.major == runtime.major, checked.architecture == runtime.architecture else { throw RuriError.message(Messages.CoreJavaInstaller.checkedText1) }
         try JSONEncoder().encode(runtime).write(to: staging.appendingPathComponent(".ruri-runtime.json"), options: .atomic)
         if replacing {
             try JavaRuntimeLease.requireNoRunningProcess(in: destination)
-            guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message("无法替换 Java 目录，原运行时仍保留。") }
+            guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message(Messages.CoreJavaInstaller.checkedText2) }
             do {
                 let result = try JavaDiscovery.inspect(binary.path)
                 try? FileManager.default.removeItem(at: staging)
                 return result
             } catch {
-                guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message("修复后的 Java 无法运行，原副本保留在：\(staging.path)") }
+                guard renamex_np(staging.path, destination.path, UInt32(RENAME_SWAP)) == 0 else { throw RuriError.message(Messages.CoreJavaInstaller.resultText1(String(describing: staging.path))) }
                 throw error
             }
         }

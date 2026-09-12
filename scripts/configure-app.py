@@ -12,6 +12,9 @@ import uuid
 def configure(path: Path) -> None:
     with path.open("rb") as source:
         info = plistlib.load(source)
+    resources = Path(__file__).resolve().parent.parent / "Sources/RuriLocalization/Resources"
+    info["CFBundleDevelopmentRegion"] = "zh-Hans"
+    info["CFBundleLocalizations"] = sorted(p.stem for p in resources.glob("*.lproj"))
     version = os.environ.get("RURI_VERSION") or info["CFBundleShortVersionString"]
     number = r"(?:0|[1-9][0-9]*)"
     identifier = r"(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)"

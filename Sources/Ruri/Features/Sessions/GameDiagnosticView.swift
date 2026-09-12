@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -28,7 +29,7 @@ struct GameDiagnosticView: View {
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let diagnosis {
                 if collecting { collection(diagnosis) } else { analysis(diagnosis) }
-            } else { ProgressView("读取本次运行的证据…").frame(maxWidth: .infinity, maxHeight: .infinity) }
+            } else { ProgressView(Messages.AppGameDiagnosticView.diagnosisText1.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
         .task(id: key) {
             if collecting && bundle != nil { return }
@@ -51,7 +52,7 @@ struct GameDiagnosticView: View {
                     Text(diagnosis.title).font(.title3.bold())
                     Text(diagnosis.summary).font(.callout).fixedSize(horizontal: false, vertical: true)
                 }
-                DisclosureGroup("已记录的事实") {
+                DisclosureGroup(Messages.AppGameDiagnosticView.analysisText1.localized) {
                     ForEach(diagnosis.facts, id: \.self) { Text($0).font(.caption).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading) }
                 }
                 ForEach(diagnosis.findings) { finding in
@@ -59,16 +60,16 @@ struct GameDiagnosticView: View {
                         HStack(alignment: .firstTextBaseline) {
                             Text(finding.title).font(.headline)
                             Spacer(minLength: 6)
-                            Text(finding.confidence.rawValue).font(.caption).foregroundStyle(.secondary)
+                            Text(finding.confidence.title).font(.caption).foregroundStyle(.secondary)
                         }
                         Text(finding.explanation).font(.callout).fixedSize(horizontal: false, vertical: true)
                         ForEach(finding.evidence) { evidence in
                             let document = diagnosis.documents.first { $0.id == evidence.documentID }
-                            DisclosureGroup("\(document?.title ?? evidence.documentID) · 命中\(document?.isTail == true ? "末段" : "")第 \(evidence.line) 行") {
+                            DisclosureGroup(Messages.AppGameDiagnosticView.documentText2(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.AppGameDiagnosticView.documentText1.localized : ""), String(describing: evidence.line)).localized) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(evidence.excerpt).font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                    if let relative = document?.relativePath { Button("在 Finder 中显示这份证据") { reveal(relative) } }
+                                    if let relative = document?.relativePath { Button(Messages.AppGameDiagnosticView.relativeText1.localized) { reveal(relative) } }
                                 }.padding(10).background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 8))
                             }.font(.caption)
                         }
@@ -85,7 +86,7 @@ struct GameDiagnosticView: View {
                             }
                         }.controlSize(.small)
                         if finding.actions.contains(.repair) {
-                            Text("修复会联网校验并补全游戏与加载器安装文件。").font(.caption).foregroundStyle(.secondary)
+                            Text(Messages.AppGameDiagnosticView.relativeText2.localized).font(.caption).foregroundStyle(.secondary)
                         }
                     }.padding(14).background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12))
                 }
@@ -94,34 +95,34 @@ struct GameDiagnosticView: View {
                 }
                 if !diagnosis.limitations.isEmpty {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("证据范围").font(.headline)
+                        Text(Messages.AppGameDiagnosticView.activityText1.localized).font(.headline)
                         ForEach(diagnosis.limitations, id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
                     }
                 }
                 HStack {
-                    Button("查看运行文件") { action(.files) }
+                    Button(Messages.AppGameDiagnosticView.activityText2.localized) { action(.files) }
                     Spacer()
-                    Button("收集诊断报告…") { action(.collect) }
+                    Button(Messages.AppGameDiagnosticView.activityText3.localized) { action(.collect) }
                 }
             }.padding(.vertical, 4).padding(.trailing, 5)
         }
     }
     private func collection(_ diagnosis: GameDiagnosis) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("选择内容，检查预览，然后保存到本地。").font(.headline)
-            Text("已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。").font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            Text(Messages.AppGameDiagnosticView.collectionText1.localized).font(.headline)
+            Text(Messages.AppGameDiagnosticView.collectionText2.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             if let bundle {
                 HStack(alignment: .top, spacing: 12) {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(bundle.files) { file in
                                 HStack(alignment: .top, spacing: 7) {
-                                    Toggle("包含 \(file.title)", isOn: Binding(get: { selected.contains(file.id) }, set: { if $0 { selected.insert(file.id) } else { selected.remove(file.id) } }))
+                                    Toggle(Messages.AppGameDiagnosticView.bundleText1(String(describing: file.title)).localized, isOn: Binding(get: { selected.contains(file.id) }, set: { if $0 { selected.insert(file.id) } else { selected.remove(file.id) } }))
                                         .toggleStyle(.checkbox).labelsHidden()
                                     Button { previewID = file.id } label: {
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(file.title).font(.callout).multilineTextAlignment(.leading)
-                                            Text("\(ByteCountFormatter.string(fromByteCount: Int64(file.byteCount), countStyle: .file))\(file.changedByRedaction ? " · 已遮盖" : "")")
+                                            Text("\(LocalizedFormat.bytes(Int64(file.byteCount)))\(file.changedByRedaction ? Messages.AppGameDiagnosticView.bundleText2.localized : "")")
                                                 .font(.caption).foregroundStyle(.secondary)
                                         }.frame(maxWidth: .infinity, alignment: .leading)
                                     }.buttonStyle(.plain).foregroundStyle(previewID == file.id ? Color.accentColor : .primary)
@@ -131,11 +132,11 @@ struct GameDiagnosticView: View {
                     }.frame(width: 214)
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
-                            Text(previewFile?.path ?? "选择一项预览").font(.caption).lineLimit(1).truncationMode(.middle)
+                            Text(previewFile?.path ?? Messages.AppGameDiagnosticView.bundleText3.localized).font(.caption).lineLimit(1).truncationMode(.middle)
                             Spacer()
-                            Button { page -= 1 } label: { Image(systemName: "chevron.left") }.disabled(page == 0).help("上一页")
+                            Button { page -= 1 } label: { Image(systemName: "chevron.left") }.disabled(page == 0).help(Messages.AppGameDiagnosticView.bundleText4.localized)
                             Text("\(page + 1) / \(previewPages)").font(.caption).monospacedDigit()
-                            Button { page += 1 } label: { Image(systemName: "chevron.right") }.disabled(page + 1 >= previewPages).help("下一页")
+                            Button { page += 1 } label: { Image(systemName: "chevron.right") }.disabled(page + 1 >= previewPages).help(Messages.AppGameDiagnosticView.bundleText5.localized)
                         }.controlSize(.small)
                         ScrollView {
                             Text(String((previewFile?.text ?? "").dropFirst(page * 12000).prefix(12000)))
@@ -145,20 +146,20 @@ struct GameDiagnosticView: View {
                     }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 }.frame(maxHeight: .infinity)
                 HStack(alignment: .top) {
-                    TextField("额外隐藏的文字，每行一项", text: $privateText, axis: .vertical).lineLimit(2...3).textFieldStyle(.roundedBorder)
+                    TextField(Messages.AppGameDiagnosticView.bundleText6.localized, text: $privateText, axis: .vertical).lineLimit(2...3).textFieldStyle(.roundedBorder)
                         .onChange(of: privateText) { if privateText.count > 8192 { privateText = String(privateText.prefix(8192)) } }
-                    Button("更新预览") { Task { await prepareBundle(diagnosis, preserveSelection: true) } }.disabled(preparing || exporting)
+                    Button(Messages.AppGameDiagnosticView.bundleText7.localized) { Task { await prepareBundle(diagnosis, preserveSelection: true) } }.disabled(preparing || exporting)
                 }
-                if privateText != appliedPrivateText { Text("隐藏文字已修改，请更新预览后导出。").font(.caption).foregroundStyle(.orange) }
+                if privateText != appliedPrivateText { Text(Messages.AppGameDiagnosticView.bundleText8.localized).font(.caption).foregroundStyle(.orange) }
                 HStack {
                     if preparing || exporting { ProgressView().controlSize(.small) }
-                    else if let exported { Button("显示已导出的诊断包") { NSWorkspace.shared.activateFileViewerSelecting([exported]) } }
-                    else { Text("仅保存已勾选的预览内容；没有上传操作。").font(.caption).foregroundStyle(.secondary) }
+                    else if let exported { Button(Messages.AppGameDiagnosticView.exportedText1.localized) { NSWorkspace.shared.activateFileViewerSelecting([exported]) } }
+                    else { Text(Messages.AppGameDiagnosticView.exportedText2.localized).font(.caption).foregroundStyle(.secondary) }
                     Spacer()
-                    Button("导出诊断包…") { export(bundle) }.buttonStyle(.borderedProminent)
+                    Button(Messages.AppGameDiagnosticView.exportedText3.localized) { export(bundle) }.buttonStyle(.borderedProminent)
                         .disabled(selected.isEmpty || preparing || exporting || privateText != appliedPrivateText)
                 }
-            } else { ProgressView("准备分享预览…").frame(maxWidth: .infinity, maxHeight: .infinity) }
+            } else { ProgressView(Messages.AppGameDiagnosticView.exportedText4.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
     }
     private func prepareBundle(_ diagnosis: GameDiagnosis, preserveSelection: Bool = false) async {

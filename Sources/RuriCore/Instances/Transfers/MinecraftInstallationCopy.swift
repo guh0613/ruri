@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import CryptoKit
 
@@ -29,7 +30,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
         var documents: [MinecraftDirectoryDocument]
         if let version = instance.repositoryVersionID {
             let reader = MinecraftDirectoryReader(), catalog = try reader.scanNow(source.root)
-            guard let selected = catalog.versions.first(where: { $0.id == version }) else { throw RuriError.message("源版本已移除，请刷新后重试。") }
+            guard let selected = catalog.versions.first(where: { $0.id == version }) else { throw RuriError.message(Messages.CoreMinecraftInstallationCopy.selectedText1) }
             let resolution = try reader.resolveManifestNow(selected, in: catalog)
             manifest = try resolution.selectingLibraries().repositoryManifest(root: source.root)
             documents = resolution.sourceManifests
@@ -38,7 +39,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             manifest = try JSONDecoder().decode(VersionManifest.self, from: data)
             documents = [.init(url: file, data: data)]
         }
-        guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message("源版本缺少完整启动清单，请先修复。") }
+        guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreMinecraftInstallationCopy.fileText1) }
         let architecture = GameInstaller.architecture(for: manifest)
         var files: [String: Resource] = [:], inputs: [String: FileTree.Entry] = [:]
         var hashes: [String: (String, Int64)] = [:]
@@ -49,12 +50,12 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             try Task.checkCancellation()
             let before = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
             guard before.isRegularFile == true, before.isSymbolicLink != true, let size = before.fileSize else {
-                throw RuriError.message("所需安装文件缺失或不是普通文件：\(url.path)")
+                throw RuriError.message(Messages.CoreMinecraftInstallationCopy.sizeText1(String(describing: url.path)))
             }
             let hash = try InstanceTransfer.sha1(url)
             let after = try url.resourceValues(forKeys: [.fileSizeKey, .contentModificationDateKey])
             guard before.fileSize == after.fileSize, before.contentModificationDate == after.contentModificationDate else {
-                throw RuriError.message("读取期间安装文件改变，请刷新复制预览。")
+                throw RuriError.message(Messages.CoreMinecraftInstallationCopy.afterText1)
             }
             inputs[url.path] = .init(url: url, path: "installation-inputs/" + sha1(Data(url.path.utf8)), directory: false, size: Int64(size), modified: before.contentModificationDate ?? .distantPast)
             hashes[url.path] = (hash, Int64(size)); return (hash, Int64(size))
@@ -63,7 +64,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             _ = try LauncherPaths.safePath(path, within: targetRoot)
             let (hash, size) = try inspect(url)
             let file = Resource(source: url, path: path, sha1: hash, size: size)
-            if let previous = files[path], previous.sha1 != hash { throw RuriError.message("安装文件在同一路径有不同内容：\(path)") }
+            if let previous = files[path], previous.sha1 != hash { throw RuriError.message(Messages.CoreMinecraftInstallationCopy.previousText1(String(describing: path))) }
             files[path] = file
             return file
         }
@@ -111,7 +112,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: source.assets)
             let original = try RunDirectoryCopyGuard.read(indexFile, limit: 64 * 1024 * 1024)
             let decoded = try JSONDecoder().decode(AssetObjects.self, from: original)
-            guard decoded.objects.count <= 150_000 else { throw RuriError.message("资源索引超过复制限制。") }
+            guard decoded.objects.count <= 150_000 else { throw RuriError.message(Messages.CoreMinecraftInstallationCopy.decodedText1) }
             var objects: [String: AssetObjects.Object] = [:], changed = false
             for (key, object) in decoded.objects.sorted(by: { $0.key < $1.key }) {
                 _ = try MinecraftEndpoints.asset(hash: object.hash)
@@ -185,6 +186,6 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
     }
     static func sha1(_ data: Data) -> String { Insecure.SHA1.hash(data: data).map { String(format: "%02x", $0) }.joined() }
     private static func required(_ value: String?) throws -> String {
-        guard let value, !value.isEmpty else { throw RuriError.message("安装文件缺少复制路径。") }; return value
+        guard let value, !value.isEmpty else { throw RuriError.message(Messages.CoreMinecraftInstallationCopy.valueText1) }; return value
     }
 }

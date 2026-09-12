@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -23,7 +24,7 @@ extension AppModel {
         if pendingInstanceCopyIDs != result.3 { pendingInstanceCopyIDs = result.3 }
         if pendingInstanceMoveIDs != result.4 { pendingInstanceMoveIDs = result.4 }
         let failures = Set(result.1.keys)
-        if failures != failedSessionReadIDs, let message = result.1.values.first { notice = "部分运行记录暂时无法读取：\(message)" }
+        if failures != failedSessionReadIDs, let message = result.1.values.first { notice = Messages.AppAppModelSessions.messageText1(String(describing: message)).localized }
         failedSessionReadIDs = failures
         sessions.removeAll { !ids.contains($0.instanceID) }
         sessions.sort { $0.createdAt > $1.createdAt }

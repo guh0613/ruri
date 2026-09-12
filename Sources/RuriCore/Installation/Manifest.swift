@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct VersionCatalog: Codable, Sendable {
@@ -113,11 +114,11 @@ public struct Library: Codable, Equatable, Sendable {
     }
     public static func mavenPath(_ coordinate: String) throws -> String {
         let extParts = coordinate.split(separator: "@", omittingEmptySubsequences: false)
-        guard extParts.count <= 2 else { throw RuriError.message("无效 Maven 扩展名") }
+        guard extParts.count <= 2 else { throw RuriError.message(Messages.CoreManifest.extPartsText1) }
         let parts = extParts[0].split(separator: ":", omittingEmptySubsequences: false).map(String.init)
-        guard (3...4).contains(parts.count), parts.allSatisfy({ !$0.isEmpty && !$0.contains("/") && !$0.contains("\\") && $0 != ".." }) else { throw RuriError.message("无效 Maven 坐标：\(coordinate)") }
+        guard (3...4).contains(parts.count), parts.allSatisfy({ !$0.isEmpty && !$0.contains("/") && !$0.contains("\\") && $0 != ".." }) else { throw RuriError.message(Messages.CoreManifest.partsText1(String(describing: coordinate))) }
         let ext = extParts.count > 1 ? String(extParts[1]) : "jar"
-        guard ext.range(of: "^[A-Za-z0-9]+$", options: .regularExpression) != nil else { throw RuriError.message("无效 Maven 扩展名") }
+        guard ext.range(of: "^[A-Za-z0-9]+$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreManifest.extPartsText1) }
         return "\(parts[0].replacingOccurrences(of: ".", with: "/"))/\(parts[1])/\(parts[2])/\(parts[1])-\(parts[2])\(parts.count == 4 ? "-" + parts[3] : "").\(ext)"
     }
     public func nativeArtifact(architecture: String) throws -> Artifact? {

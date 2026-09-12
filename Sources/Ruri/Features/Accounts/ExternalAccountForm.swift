@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -30,35 +31,35 @@ struct ExternalAccountForm: View {
                     HStack {
                         Text(server.name).font(.headline)
                         Spacer()
-                        if existing == nil { Button("更换服务器") { self.server = nil; pending = nil; password = "" }.disabled(task != nil) }
+                        if existing == nil { Button(Messages.AppExternalAccountForm.serverText1.localized) { self.server = nil; pending = nil; password = "" }.disabled(task != nil) }
                     }
                     Text(server.url.absoluteString).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 }
                 if let pending {
-                    Text("选择本次添加的游戏角色").font(.callout)
-                    Picker("游戏角色", selection: $profileID) {
+                    Text(Messages.AppExternalAccountForm.pendingText1.localized).font(.callout)
+                    Picker(Messages.AppExternalAccountForm.pendingText2.localized, selection: $profileID) {
                         ForEach(pending.availableProfiles ?? []) { profile in Text(profile.name).tag(profile.id) }
                     }.disabled(task != nil)
-                    Button("添加所选角色") { selectProfile(pending, server: server) }
+                    Button(Messages.AppExternalAccountForm.pendingText3.localized) { selectProfile(pending, server: server) }
                         .buttonStyle(.borderedProminent).disabled(task != nil || profileID.isEmpty)
                 } else {
-                    LabeledContent("认证站账号") { TextField("邮箱或账号名", text: $username).textFieldStyle(.roundedBorder).disabled(existing != nil || task != nil) }
-                    LabeledContent("密码") { SecureField("认证站密码", text: $password).textFieldStyle(.roundedBorder).disabled(task != nil) }
-                    Text("使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。").font(.caption).foregroundStyle(.secondary)
-                    Button(existing == nil ? "登录" : "重新登录") { login(server) }
+                    LabeledContent(Messages.AppExternalAccountForm.pendingText4.localized) { TextField(Messages.AppExternalAccountForm.pendingText5.localized, text: $username).textFieldStyle(.roundedBorder).disabled(existing != nil || task != nil) }
+                    LabeledContent(Messages.AppExternalAccountForm.pendingText6.localized) { SecureField(Messages.AppExternalAccountForm.pendingText7.localized, text: $password).textFieldStyle(.roundedBorder).disabled(task != nil) }
+                    Text(Messages.AppExternalAccountForm.pendingText8.localized).font(.caption).foregroundStyle(.secondary)
+                    Button(existing == nil ? Messages.AppExternalAccountForm.pendingText9.localized : Messages.AppExternalAccountForm.pendingText10.localized) { login(server) }
                         .buttonStyle(.borderedProminent).disabled(task != nil || username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || password.isEmpty)
                 }
             } else {
-                LabeledContent("服务器地址") { TextField("https://…", text: $address).textFieldStyle(.roundedBorder) }
-                Text("填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。").font(.caption).foregroundStyle(.secondary)
+                LabeledContent(Messages.AppExternalAccountForm.pendingText11.localized) { TextField("https://…", text: $address).textFieldStyle(.roundedBorder) }
+                Text(Messages.AppExternalAccountForm.pendingText12.localized).font(.caption).foregroundStyle(.secondary)
                 if !knownServers.isEmpty {
-                    Menu("使用已有服务器") {
+                    Menu(Messages.AppExternalAccountForm.pendingText13.localized) {
                         ForEach(knownServers, id: \.url) { value in Button(value.name) { address = value.url.absoluteString; discover() } }
                     }.disabled(task != nil)
                 }
-                Button("识别服务器") { discover() }.buttonStyle(.borderedProminent).disabled(address.isEmpty || task != nil)
+                Button(Messages.AppExternalAccountForm.pendingText14.localized) { discover() }.buttonStyle(.borderedProminent).disabled(address.isEmpty || task != nil)
             }
-            if task != nil { ProgressView("正在连接认证服务器…").controlSize(.small) }
+            if task != nil { ProgressView(Messages.AppExternalAccountForm.pendingText15.localized).controlSize(.small) }
             if let error { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
         }.disabled(model.busy || model.readOnly).onDisappear { task?.cancel(); password = ""; pending = nil }
     }
@@ -84,7 +85,7 @@ struct ExternalAccountForm: View {
             var result = try await ExternalAuthentication().login(server: server, username: loginName, password: secret)
             try Task.checkCancellation()
             if let existing, result.selectedProfile == nil {
-                guard let profile = result.availableProfiles?.first(where: { $0.id.replacingOccurrences(of: "-", with: "").lowercased() == existing.uuid }) else { throw RuriError.message("原来的角色已不可用，请重新添加账号。") }
+                guard let profile = result.availableProfiles?.first(where: { $0.id.replacingOccurrences(of: "-", with: "").lowercased() == existing.uuid }) else { throw RuriError.message(Messages.AppExternalAccountForm.profileText1) }
                 result = try await ExternalAuthentication().select(profile, from: result, server: server)
             }
             if result.selectedProfile != nil { try finish(result, server: server, username: loginName) }
@@ -111,9 +112,9 @@ struct ExternalAccountReloginView: View {
     let account: Account
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            SectionHeading(title: "重新登录 \(account.username)", subtitle: "保留原来的游戏角色和账号选择。")
+            SectionHeading(title: Messages.AppExternalAccountForm.bodyText1(String(describing: account.username)).localized, subtitle: Messages.AppExternalAccountForm.bodyText2.localized)
             ExternalAccountForm(existing: account)
-            HStack { Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction) }
+            HStack { Spacer(); Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
         }.padding(30).frame(width: 500)
     }
 }

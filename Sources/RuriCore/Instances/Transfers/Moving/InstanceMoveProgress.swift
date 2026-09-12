@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct InstanceMoveProgress: Sendable {
@@ -7,12 +8,12 @@ public struct InstanceMoveProgress: Sendable {
     public var totalBytes: Int64 = 0
     public var progress: InstallProgress {
         switch phase {
-        case .verifying: .init("正在校验实例文件…")
-        case .copying: .init("正在复制实例文件…", completed: Int(bytesCopied), total: Int(totalBytes))
-        case .publishing: .init("正在写入目标文件夹…", completed: Int(bytesCopied), total: Int(totalBytes))
-        case .committed: .init("实例已移动，正在核对原文件…")
-        case .retiring: .init("正在整理原实例文件…")
-        case .deleting: .init("正在清理已核验的原文件…")
+        case .verifying: .init(Messages.CoreInstanceMoveProgress.progressText1)
+        case .copying: .init(Messages.CoreInstanceMoveProgress.progressText2, completed: Int(bytesCopied), total: Int(totalBytes))
+        case .publishing: .init(Messages.CoreInstanceMoveProgress.progressText3, completed: Int(bytesCopied), total: Int(totalBytes))
+        case .committed: .init(Messages.CoreInstanceMoveProgress.progressText4)
+        case .retiring: .init(Messages.CoreInstanceMoveProgress.progressText5)
+        case .deleting: .init(Messages.CoreInstanceMoveProgress.progressText6)
         }
     }
 }

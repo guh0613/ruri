@@ -1,10 +1,11 @@
+import RuriLocalization
 import Foundation
 
 public struct FileTransfer: Identifiable, Sendable {
     public enum State: String, Codable, Sendable {
         case receiving, retrying, completed, failed, cancelled
         public var isActive: Bool { self == .receiving || self == .retrying }
-        public var title: String { switch self { case .receiving: "下载中"; case .retrying: "正在重试"; case .completed: "已校验"; case .failed: "失败"; case .cancelled: "已取消" } }
+        public var title: String { switch self { case .receiving: Messages.CoreDownloadActivity.titleText1.localized; case .retrying: Messages.CoreDownloadActivity.titleText2.localized; case .completed: Messages.CoreDownloadActivity.titleText3.localized; case .failed: Messages.CoreDownloadActivity.titleText4.localized; case .cancelled: Messages.CoreDownloadActivity.titleText5.localized } }
     }
     public let id: String
     public let filename: String

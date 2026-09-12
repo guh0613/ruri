@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>coreGameRunDirectoryCopy.warningText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>目标目录中有 %1$#@count1@ 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。</string>
+	</dict>
+	<key>coreCurseForgePack.warningsText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>需要下载 %1$#@count1@ 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。</string>
+	</dict>
+	<key>coreMCBBSPack.authorText4</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>需要解析 %1$#@count1@ 个 CurseForge 文件。</string>
+	</dict>
+</dict>
+</plist>

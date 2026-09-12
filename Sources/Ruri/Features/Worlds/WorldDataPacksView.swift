@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -23,18 +24,18 @@ struct WorldDataPacksView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                SectionHeading(title: "数据包", subtitle: world.name)
+                SectionHeading(title: Messages.AppWorldDataPacksView.bodyText1.localized, subtitle: world.name)
                 Spacer()
-                Button("查找…", systemImage: "magnifyingglass") { searching = true }.disabled(!canModify)
-                Button("导入…", systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button("完成") { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
+                Button(Messages.AppWorldDataPacksView.bodyText2.localized, systemImage: "magnifyingglass") { searching = true }.disabled(!canModify)
+                Button(Messages.AppWorldDataPacksView.bodyText3.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
             }
-            Text("适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。").font(.callout).foregroundStyle(.secondary)
-            if model.isInstanceInUse(instance.id) { Label("请退出游戏后再修改数据包。", systemImage: "play.circle").foregroundStyle(.secondary) }
+            Text(Messages.AppWorldDataPacksView.bodyText4.localized).font(.callout).foregroundStyle(.secondary)
+            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldDataPacksView.bodyText5.localized, systemImage: "play.circle").foregroundStyle(.secondary) }
             if let error { Text(error).foregroundStyle(.orange).textSelection(.enabled) }
             if let status { Text(status).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else if packs.isEmpty { EmptyPanel(symbol: "shippingbox", title: "这个世界还没有本地数据包", detail: "导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。") }
+            else if packs.isEmpty { EmptyPanel(symbol: "shippingbox", title: Messages.AppWorldDataPacksView.statusText1.localized, detail: Messages.AppWorldDataPacksView.statusText2.localized) }
             else {
                 List(packs) { pack in
                     HStack(spacing: 12) {
@@ -42,27 +43,27 @@ struct WorldDataPacksView: View {
                         VStack(alignment: .leading, spacing: 5) {
                             Text(pack.id).font(.headline).lineLimit(1)
                             if !pack.description.isEmpty { Text(pack.description).font(.caption).foregroundStyle(.secondary).lineLimit(3) }
-                            if let format = pack.format { Text("声明格式：\(format)").font(.caption).foregroundStyle(.secondary) }
+                            if let format = pack.format { Text(Messages.AppWorldDataPacksView.formatText1(String(describing: format)).localized).font(.caption).foregroundStyle(.secondary) }
                             if let error = pack.error { Text(error).font(.caption).foregroundStyle(.orange).lineLimit(2) }
                         }
                         Spacer()
-                        Toggle("启用", isOn: Binding(get: { pack.enabled }, set: { value in
-                            mutate(value ? "启用数据包" : "停用数据包") { try await manager.setDataPackEnabled(value, name: pack.id, folder: world.folder) }
-                        })).toggleStyle(.switch).labelsHidden().help(pack.enabled ? "停用数据包" : "启用数据包").disabled(!canModify || pack.error != nil)
+                        Toggle(Messages.AppWorldDataPacksView.errorText1.localized, isOn: Binding(get: { pack.enabled }, set: { value in
+                            mutate(value ? Messages.AppWorldDataPacksView.errorText2.localized : Messages.AppWorldDataPacksView.errorText3.localized) { try await manager.setDataPackEnabled(value, name: pack.id, folder: world.folder) }
+                        })).toggleStyle(.switch).labelsHidden().help(pack.enabled ? Messages.AppWorldDataPacksView.errorText3.localized : Messages.AppWorldDataPacksView.errorText2.localized).disabled(!canModify || pack.error != nil)
                         Menu {
-                            Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([pack.url]) }
-                            Button("移到废纸篓…", role: .destructive) { removing = pack }.disabled(!canModify)
+                            Button(Messages.AppWorldDataPacksView.errorText4.localized) { NSWorkspace.shared.activateFileViewerSelecting([pack.url]) }
+                            Button(Messages.AppWorldDataPacksView.errorText5.localized, role: .destructive) { removing = pack }.disabled(!canModify)
                         } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
                     }.padding(.vertical, 7)
                 }.listStyle(.inset)
             }
             Divider()
             HStack {
-                Button("调整优先级…") { ordering = true }.disabled(!canModify)
-                Text("修改前会保留上一份世界配置备份。").font(.caption).foregroundStyle(.secondary)
-                if let backup { Button("显示配置备份") { NSWorkspace.shared.activateFileViewerSelecting([backup]) }.font(.caption) }
+                Button(Messages.AppWorldDataPacksView.errorText6.localized) { ordering = true }.disabled(!canModify)
+                Text(Messages.AppWorldDataPacksView.errorText7.localized).font(.caption).foregroundStyle(.secondary)
+                if let backup { Button(Messages.AppWorldDataPacksView.backupText1.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup]) }.font(.caption) }
                 Spacer()
-                Button("刷新", systemImage: "arrow.clockwise") { error = nil; Task { await reload() } }.disabled(loading || model.busy)
+                Button(Messages.AppWorldDataPacksView.backupText2.localized, systemImage: "arrow.clockwise") { error = nil; Task { await reload() } }.disabled(loading || model.busy)
             }
         }.padding(24).frame(width: 760, height: 570)
         .task { await reload() }
@@ -72,15 +73,15 @@ struct WorldDataPacksView: View {
         .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip], allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
-                mutate("导入数据包") {
+                mutate(Messages.AppWorldDataPacksView.urlsText1.localized) {
                     let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }; defer { scoped.forEach { $0.stopAccessingSecurityScopedResource() } }
                     try await manager.importDataPacks(from: urls, folder: world.folder)
                 }
             } catch { self.error = error.localizedDescription }
         }
-        .confirmationDialog("移除数据包？", isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
-            Button("移到废纸篓", role: .destructive) {
-                if let pack = removing { mutate("移除数据包") { _ = try await manager.removeDataPack(name: pack.id, folder: world.folder) } }
+        .confirmationDialog(Messages.AppWorldDataPacksView.scopedText1.localized, isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppWorldDataPacksView.scopedText2.localized, role: .destructive) {
+                if let pack = removing { mutate(Messages.AppWorldDataPacksView.packText1.localized) { _ = try await manager.removeDataPack(name: pack.id, folder: world.folder) } }
                 removing = nil
             }
         } message: { Text(removing?.id ?? "") }
@@ -97,7 +98,7 @@ struct WorldDataPacksView: View {
     private func mutate(_ title: String, action: @MainActor @Sendable @escaping () async throws -> Void) {
         guard canModify else { return }; error = nil; status = nil
         model.perform(title, presentErrors: false, instanceID: instance.id) { _ in
-            do { try await action(); status = "\(title)完成，下次进入世界时生效。"; await reload() }
+            do { try await action(); status = Messages.AppWorldDataPacksView.mutateText1(String(describing: title)).localized; await reload() }
             catch { self.error = error.localizedDescription; await reload(); throw error }
         }
     }

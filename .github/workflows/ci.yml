@@ -37,6 +37,8 @@ jobs:
         run: |
           xcodebuild -version
           xcrun swift --version
+      - name: Check localization resources
+        run: python3 scripts/localization.py --check
       - name: Build all products
         run: scripts/swift-build.sh --force-resolved-versions
       - name: Test

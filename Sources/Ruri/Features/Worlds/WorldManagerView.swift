@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -24,15 +25,15 @@ struct WorldManagerView: View {
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: "留住每一次冒险", subtitle: instance.name); Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction) }
+            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.bodyText1.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
             HStack {
-                Picker("内容", selection: $tab) { Text("存档 \(worlds.count)").tag("worlds"); Text("备份 \(backups.count)").tag("backups") }.pickerStyle(.segmented).frame(width: 270)
+                Picker(Messages.AppWorldManagerView.bodyText2.localized, selection: $tab) { Text(Messages.AppWorldManagerView.bodyText3(Int64(worlds.count)).localized).tag("worlds"); Text(Messages.AppWorldManagerView.bodyText4(Int64(backups.count)).localized).tag("backups") }.pickerStyle(.segmented).frame(width: 270)
                 Spacer()
-                Button("导入存档…", systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help("打开存档文件夹")
+                Button(Messages.AppWorldManagerView.bodyText5.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
+                Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help(Messages.AppWorldManagerView.bodyText6.localized)
             }
-            if model.isInstanceInUse(instance.id) { Label("请先结束游戏，再修改或备份存档。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
-            if !loading && !quickPlaySupported { Text("此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。").font(.caption).foregroundStyle(.secondary) }
+            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldManagerView.bodyText7.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if !loading && !quickPlaySupported { Text(Messages.AppWorldManagerView.bodyText8.localized).font(.caption).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let status { Text(status).font(.callout).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -40,10 +41,10 @@ struct WorldManagerView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         if tab == "worlds" {
-                            if worlds.isEmpty { EmptyPanel(symbol: "globe", title: "世界还在等你创造", detail: "游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。") }
+                            if worlds.isEmpty { EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.statusText1.localized, detail: Messages.AppWorldManagerView.statusText2.localized) }
                             ForEach(worlds) { world in worldRow(world) }
                         } else {
-                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: "给冒险留一份备份", detail: "在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。") }
+                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.statusText3.localized, detail: Messages.AppWorldManagerView.statusText4.localized) }
                             ForEach(backups) { backup in backupRow(backup) }
                         }
                     }
@@ -51,9 +52,9 @@ struct WorldManagerView: View {
             }
             Divider()
             HStack {
-                Text("备份保存在实例内，恢复为副本会保留原存档。").font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppWorldManagerView.statusText5.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button("取消任务") { model.operation?.cancel() } }
+                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppWorldManagerView.statusText6.localized) { model.operation?.cancel() } }
             }
         }.padding(24).frame(width: 820, height: 650)
         .task { await reload() }
@@ -64,20 +65,20 @@ struct WorldManagerView: View {
         .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip]) { result in
             do {
                 let url = try result.get()
-                mutate("导入存档") { id in
+                mutate(Messages.AppWorldManagerView.urlText1.localized) { id in
                     let access = url.startAccessingSecurityScopedResource(); defer { if access { url.stopAccessingSecurityScopedResource() } }
                     let folder = try await manager.importWorld(from: url, progress: progress(id))
-                    status = "已导入到 \(folder)"; tab = "worlds"
+                    status = Messages.AppWorldManagerView.folderText1(String(describing: folder)).localized; tab = "worlds"
                 }
             } catch { self.error = error.localizedDescription }
         }
-        .confirmationDialog("替换原存档？", isPresented: Binding(get: { restoreTarget != nil }, set: { if !$0 { restoreTarget = nil } }), titleVisibility: .visible) {
-            Button("自动备份并恢复", role: .destructive) { if let backup = restoreTarget { restore(backup, replace: true) }; restoreTarget = nil }
-        } message: { Text("将恢复到“\(restoreTarget?.metadata?.worldFolder ?? "")”。现有存档会先创建一份自动备份。") }
-        .confirmationDialog("移到废纸篓？", isPresented: Binding(get: { deletingWorld != nil || deletingBackup != nil }, set: { if !$0 { deletingWorld = nil; deletingBackup = nil } }), titleVisibility: .visible) {
-            Button("移到废纸篓", role: .destructive) {
-                if let world = deletingWorld { mutate("移除存档") { _ in try await manager.removeWorld(folder: world.folder) } }
-                if let backup = deletingBackup { mutate("移除备份") { _ in try await manager.removeBackup(backup) } }
+        .confirmationDialog(Messages.AppWorldManagerView.folderText2.localized, isPresented: Binding(get: { restoreTarget != nil }, set: { if !$0 { restoreTarget = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppWorldManagerView.folderText3.localized, role: .destructive) { if let backup = restoreTarget { restore(backup, replace: true) }; restoreTarget = nil }
+        } message: { Text(Messages.AppWorldManagerView.backupText1(String(describing: restoreTarget?.metadata?.worldFolder ?? "")).localized) }
+        .confirmationDialog(Messages.AppWorldManagerView.backupText2.localized, isPresented: Binding(get: { deletingWorld != nil || deletingBackup != nil }, set: { if !$0 { deletingWorld = nil; deletingBackup = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) {
+                if let world = deletingWorld { mutate(Messages.AppWorldManagerView.worldText1.localized) { _ in try await manager.removeWorld(folder: world.folder) } }
+                if let backup = deletingBackup { mutate(Messages.AppWorldManagerView.backupText4.localized) { _ in try await manager.removeBackup(backup) } }
                 deletingWorld = nil; deletingBackup = nil
             }
         } message: { Text(deletingWorld?.name ?? deletingBackup?.title ?? "") }
@@ -90,24 +91,24 @@ struct WorldManagerView: View {
             }.frame(width: 58, height: 58).background(Theme.accent.opacity(0.08), in: RoundedRectangle(cornerRadius: 12)).clipShape(RoundedRectangle(cornerRadius: 12))
             VStack(alignment: .leading, spacing: 6) {
                 Text(world.name).font(.headline).lineLimit(1)
-                HStack(spacing: 7) { if let mode = world.gameMode { TagPill(text: mode) }; if let version = world.version { Text(version) }; if let size = world.size { Text(ByteCountFormatter.string(fromByteCount: size, countStyle: .file)) } }.font(.caption).foregroundStyle(.secondary)
+                HStack(spacing: 7) { if let mode = world.gameMode { TagPill(text: mode) }; if let version = world.version { Text(version) }; if let size = world.size { Text(LocalizedFormat.bytes(size)) } }.font(.caption).foregroundStyle(.secondary)
                 Text(world.folder).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(1)
                 if let error = world.metadataError { Text(error).font(.caption).foregroundStyle(.orange) }
             }
             Spacer()
-            Button("进入存档", systemImage: "play.fill") { launchingWorld = world; dismiss() }
+            Button(Messages.AppWorldManagerView.errorText1.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }
                 .disabled(!canModify || !quickPlaySupported || world.metadataError != nil)
-                .help(quickPlaySupported ? "启动并进入这个单人世界" : "此版本不支持直接进入存档")
-            Button("备份", systemImage: "clock.arrow.circlepath") {
-                mutate("备份 \(world.name)") { id in
-                    _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = "\(world.name) 已备份"
+                .help(quickPlaySupported ? Messages.AppWorldManagerView.errorText2.localized : Messages.AppWorldManagerView.errorText3.localized)
+            Button(Messages.AppWorldManagerView.errorText4.localized, systemImage: "clock.arrow.circlepath") {
+                mutate(Messages.AppWorldManagerView.errorText5(String(describing: world.name)).localized) { id in
+                    _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = Messages.AppWorldManagerView.errorText6(String(describing: world.name)).localized
                 }
             }.disabled(!canModify)
             Menu {
-                Button("管理数据包…") { dataPackWorld = world }.disabled(world.metadataError != nil)
-                Button("导出 ZIP…") { export(world) }.disabled(!canModify)
-                Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
-                Divider(); Button("移到废纸篓", role: .destructive) { deletingWorld = world }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.errorText7.localized) { dataPackWorld = world }.disabled(world.metadataError != nil)
+                Button(Messages.AppWorldManagerView.errorText8.localized) { export(world) }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.errorText9.localized) { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
+                Divider(); Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) { deletingWorld = world }.disabled(!canModify)
             } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
         }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
     }
@@ -116,15 +117,15 @@ struct WorldManagerView: View {
             Image(systemName: "archivebox.fill").font(.system(size: 30)).foregroundStyle(Theme.accent).frame(width: 54)
             VStack(alignment: .leading, spacing: 6) {
                 Text(backup.title).font(.headline).lineLimit(1)
-                Text(backup.createdAt.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
-                HStack { Text(ByteCountFormatter.string(fromByteCount: backup.size, countStyle: .file)); Text(backup.metadata?.reason ?? "无法读取备份信息") }.font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
+                Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
+                HStack { Text(LocalizedFormat.bytes(backup.size)); Text(backup.metadata?.displayReason ?? Messages.AppWorldManagerView.backupRowText1.localized) }.font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
             }
             Spacer()
-            Button("恢复为副本") { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
+            Button(Messages.AppWorldManagerView.backupRowText2.localized) { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
             Menu {
-                Button("替换原存档…") { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
-                Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
-                Divider(); Button("移到废纸篓", role: .destructive) { deletingBackup = backup }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.backupRowText3.localized) { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
+                Button(Messages.AppWorldManagerView.errorText9.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
+                Divider(); Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) { deletingBackup = backup }.disabled(!canModify)
             } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
         }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
     }
@@ -140,7 +141,7 @@ struct WorldManagerView: View {
         loading = false
     }
     private func progress(_ id: UUID) -> @Sendable (Int, Int) -> Void {
-        { done, total in if done % 25 == 0 || done == total { Task { @MainActor in model.progress(id, InstallProgress("处理存档文件", completed: done, total: total)) } } }
+        { done, total in if done % 25 == 0 || done == total { Task { @MainActor in model.progress(id, InstallProgress(Messages.AppWorldManagerView.progressText1, completed: done, total: total)) } } }
     }
     private func mutate(_ title: String, action: @MainActor @Sendable @escaping (UUID) async throws -> Void) {
         guard canModify else { return }; error = nil; status = nil
@@ -150,12 +151,12 @@ struct WorldManagerView: View {
         }
     }
     private func restore(_ backup: WorldBackup, replace: Bool) {
-        mutate("恢复 \(backup.title)") { id in
-            let folder = try await manager.restore(backup, replaceExisting: replace, progress: progress(id)); status = "已恢复到 \(folder)"; tab = "worlds"
+        mutate(Messages.AppWorldManagerView.restoreText1(String(describing: backup.title)).localized) { id in
+            let folder = try await manager.restore(backup, replaceExisting: replace, progress: progress(id)); status = Messages.AppWorldManagerView.folderText4(String(describing: folder)).localized; tab = "worlds"
         }
     }
     private func export(_ world: WorldSnapshot) {
         let panel = NSSavePanel(); panel.allowedContentTypes = [.zip]; panel.nameFieldStringValue = world.folder + ".zip"
-        if panel.runModal() == .OK, let url = panel.url { mutate("导出 \(world.name)") { id in try await manager.exportWorld(folder: world.folder, to: url, progress: progress(id)); status = "已导出存档 ZIP" } }
+        if panel.runModal() == .OK, let url = panel.url { mutate(Messages.AppWorldManagerView.urlText2(String(describing: world.name)).localized) { id in try await manager.exportWorld(folder: world.folder, to: url, progress: progress(id)); status = Messages.AppWorldManagerView.urlText3.localized } }
     }
 }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct LaunchCommands: Codable, Equatable, Sendable {
@@ -10,7 +11,7 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
     public var isEmpty: Bool { [before, after, wrapper].allSatisfy { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty } }
     public func validate() throws {
         guard (1...3600).contains(timeoutSeconds), [before, after, wrapper].allSatisfy({ $0.utf8.count <= 32768 && !$0.contains("\0") }) else {
-            throw RuriError.message("启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。")
+            throw RuriError.message(Messages.CoreLaunchCommands.validateText1)
         }
         if enabled { _ = try ArgumentTokenizer.split(wrapper) }
     }
@@ -22,7 +23,7 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
             for match in pattern.matches(in: token, range: NSRange(token.startIndex..., in: token)).reversed() {
                 guard let keyRange = Range(match.range(at: 1), in: token), let range = Range(match.range, in: result) else { continue }
                 let key = String(token[keyRange])
-                guard let value = environment[key] else { throw RuriError.message("包装命令包含未支持的变量：\(key)") }
+                guard let value = environment[key] else { throw RuriError.message(Messages.CoreLaunchCommands.valueText1(String(describing: key))) }
                 result.replaceSubrange(range, with: value)
             }
             return result
@@ -36,7 +37,7 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
                 return folder.appendingPathComponent(program).standardizedFileURL
             }
         }
-        guard let executable = candidates.first(where: { FileManager.default.isExecutableFile(atPath: $0.path) }) else { throw RuriError.message("找不到包装命令的可执行文件：\(program)") }
+        guard let executable = candidates.first(where: { FileManager.default.isExecutableFile(atPath: $0.path) }) else { throw RuriError.message(Messages.CoreLaunchCommands.executableText1(String(describing: program))) }
         tokens[0] = executable.path
         return tokens
     }
@@ -45,7 +46,8 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
 public struct GameCommandResult: Codable, Equatable, Sendable {
     public enum Phase: String, Codable, Sendable {
         case before, after
-        public var title: String { self == .before ? "启动前命令" : "退出后命令" }
+        public var title: String { message.localized }
+        public var message: LocalizedMessage { self == .before ? Messages.CoreLaunchCommands.titleText1 : Messages.CoreLaunchCommands.titleText2 }
     }
     public let phase: Phase
     public let startedAt: Date
@@ -54,8 +56,18 @@ public struct GameCommandResult: Codable, Equatable, Sendable {
     public let cancelled: Bool
     public let timedOut: Bool
     public let error: String?
+    public var errorMessage: LocalizedMessage? = nil
     public var succeeded: Bool { status == 0 && !cancelled && !timedOut && error == nil }
-    public var summary: String {
-        phase.title + (timedOut ? "超时" : cancelled ? "已取消" : error != nil ? "失败：" + error! : status == 0 ? "已完成" : "失败，退出码 \(status.map(String.init) ?? "未知")")
+    public var summary: String { summaryMessage.localized }
+    public var summaryMessage: LocalizedMessage {
+        let result: LocalizedMessage
+        if timedOut { result = Messages.CoreLaunchCommands.commandTimedOut(phase.title) }
+        else if cancelled { result = Messages.CoreLaunchCommands.commandCancelled(phase.title) }
+        else if let error {
+            let failure = Messages.CoreLaunchCommands.commandFailed(phase.title, error)
+            result = errorMessage.map { failure.withTextArgument(1, message: $0) } ?? failure
+        } else if status == 0 { result = Messages.CoreLaunchCommands.commandCompleted(phase.title) }
+        else { result = Messages.CoreLaunchCommands.commandExitStatus(phase.title, status.map(String.init) ?? Messages.CoreLaunchCommands.summaryText5.localized) }
+        return result.withTextArgument(0, message: phase.message)
     }
 }

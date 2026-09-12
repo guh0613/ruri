@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -5,7 +6,7 @@ extension CLI {
     static func scanMinecraft(_ args: [String]) async throws {
         let flags = Array(args.dropFirst(2))
         guard (2...4).contains(args.count), Set(flags).count == flags.count, Set(flags).isSubset(of: ["--json", "--resolve"]) else {
-            throw RuriError.message("用法：ruri-cli scan-minecraft <Minecraft目录|版本目录|版本JSON> [--json] [--resolve]。只读取已有版本；--resolve 额外检查继承和补丁合并。")
+            throw RuriError.message(Messages.CLIMinecraftDirectory.flagsText1)
         }
         let reader = MinecraftDirectoryReader(), catalog = try await reader.scan(URL(fileURLWithPath: args[1]))
         var manifests: [String: MinecraftManifestOutput] = [:], issues: [String: String] = [:]
@@ -21,21 +22,21 @@ extension CLI {
             print(String(decoding: try encoder.encode(MinecraftDirectoryOutput(catalog, manifests: manifests, issues: issues)), as: UTF8.self))
             return
         }
-        print("\(catalog.directory.path)\n发现 \(catalog.versions.count) 个版本")
+        print(Messages.CLIMinecraftDirectory.encoderText1(String(describing: catalog.directory.path), Int64(catalog.versions.count)).localized)
         for version in catalog.versions {
             print("\n\(version.id) · \(version.subtitle)")
-            if let issue = version.issue { print("无法读取：\(issue)"); continue }
+            if let issue = version.issue { print(Messages.CLIMinecraftDirectory.issueText1(String(describing: issue)).localized); continue }
             if let manifest = manifests[version.id] {
-                print("启动入口：\(manifest.mainClass) · \(manifest.libraryDeclarations) 条依赖声明")
-                print("依赖选择：保留 \(manifest.selectedLibraryCount) 条，其中 \(manifest.localLibraries.count) 条使用本地文件；移除 \(manifest.discardedLibraries.count) 条重复或旧版本声明")
-                print("游戏 JAR：\(manifest.clientFile)")
+                print(Messages.CLIMinecraftDirectory.manifestText1(String(describing: manifest.mainClass), Int64(manifest.libraryDeclarations)).localized)
+                print(Messages.CLIMinecraftDirectory.manifestText2(Int64(manifest.selectedLibraryCount), Int64(manifest.localLibraries.count), Int64(manifest.discardedLibraries.count)).localized)
+                print(Messages.CLIMinecraftDirectory.manifestText3(String(describing: manifest.clientFile)).localized)
             }
-            if let issue = issues[version.id] { print("清单合并失败：\(issue)") }
+            if let issue = issues[version.id] { print(Messages.CLIMinecraftDirectory.issueText2(String(describing: issue)).localized) }
             for location in version.gameLocations {
-                print("\(location.title)\(location.id == version.suggestedLocationID ? "（原配置）" : "")：\(location.directory.path)")
-                print(location.available ? (location.contents.isEmpty ? "未发现常见游戏数据" : location.contents.joined(separator: "、")) : "位置不可用")
+                print("\(location.title)\(location.id == version.suggestedLocationID ? Messages.CLIMinecraftDirectory.issueText3.localized : "")：\(location.directory.path)")
+                print(location.available ? (location.contents.isEmpty ? Messages.CLIMinecraftDirectory.issueText4.localized : location.contents.joined(separator: "、")) : Messages.CLIMinecraftDirectory.issueText5.localized)
             }
-            for warning in version.warnings { print("提示：\(warning)") }
+            for warning in version.warnings { print(Messages.CLIMinecraftDirectory.issueText6(String(describing: warning)).localized) }
         }
     }
 }

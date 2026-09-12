@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -23,32 +24,32 @@ struct EnvironmentVariablesEditor: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if rows.isEmpty {
-                Text("没有自定义环境变量").font(.subheadline)
-                Text("仅在模组或工具要求时添加，通常无需填写。").font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppEnvironmentVariablesEditor.bodyText1.localized).font(.subheadline)
+                Text(Messages.AppEnvironmentVariablesEditor.bodyText2.localized).font(.caption).foregroundStyle(.secondary)
             } else {
                 HStack {
-                    Text("变量名称").frame(width: 145, alignment: .leading)
-                    Text("值").frame(maxWidth: .infinity, alignment: .leading)
-                    Text("操作").frame(width: 74, alignment: .leading)
+                    Text(Messages.AppEnvironmentVariablesEditor.bodyText3.localized).frame(width: 145, alignment: .leading)
+                    Text(Messages.AppEnvironmentVariablesEditor.bodyText4.localized).frame(maxWidth: .infinity, alignment: .leading)
+                    Text(Messages.AppEnvironmentVariablesEditor.bodyText5.localized).frame(width: 74, alignment: .leading)
                     Color.clear.frame(width: 22, height: 1)
                 }.font(.caption).foregroundStyle(.secondary)
                 ForEach($rows) { $row in
                     HStack(spacing: 8) {
-                        TextField("变量名称", text: $row.name, prompt: Text("名称")).labelsHidden().multilineTextAlignment(.leading).frame(width: 145).accessibilityLabel("变量名称")
-                        TextField("变量值", text: $row.value, prompt: Text(row.removes ? "移除继承值" : "输入值，可留空")).labelsHidden().multilineTextAlignment(.leading).disabled(row.removes).accessibilityLabel("变量值")
-                        Picker("操作", selection: $row.removes) { Text("设置").tag(false); Text("移除").tag(true) }.labelsHidden().frame(width: 74).accessibilityLabel("环境变量操作")
+                        TextField(Messages.AppEnvironmentVariablesEditor.bodyText3.localized, text: $row.name, prompt: Text(Messages.AppEnvironmentVariablesEditor.bodyText6.localized)).labelsHidden().multilineTextAlignment(.leading).frame(width: 145).accessibilityLabel(Messages.AppEnvironmentVariablesEditor.bodyText3.localized)
+                        TextField(Messages.AppEnvironmentVariablesEditor.bodyText7.localized, text: $row.value, prompt: Text(row.removes ? Messages.AppEnvironmentVariablesEditor.bodyText8.localized : Messages.AppEnvironmentVariablesEditor.bodyText9.localized)).labelsHidden().multilineTextAlignment(.leading).disabled(row.removes).accessibilityLabel(Messages.AppEnvironmentVariablesEditor.bodyText7.localized)
+                        Picker(Messages.AppEnvironmentVariablesEditor.bodyText5.localized, selection: $row.removes) { Text(Messages.AppEnvironmentVariablesEditor.bodyText10.localized).tag(false); Text(Messages.AppEnvironmentVariablesEditor.bodyText11.localized).tag(true) }.labelsHidden().frame(width: 74).accessibilityLabel(Messages.AppEnvironmentVariablesEditor.bodyText12.localized)
                         Button { rows.removeAll { $0.id == row.id } } label: { Image(systemName: "minus.circle") }
-                            .buttonStyle(.borderless).frame(width: 22).help("删除此项配置").accessibilityLabel("删除环境变量")
+                            .buttonStyle(.borderless).frame(width: 22).help(Messages.AppEnvironmentVariablesEditor.bodyText13.localized).accessibilityLabel(Messages.AppEnvironmentVariablesEditor.bodyText14.localized)
                     }.textFieldStyle(.roundedBorder).font(.system(.body, design: .monospaced))
                 }
             }
-            Button("添加变量", systemImage: "plus") { rows.append(Row(name: "", value: "", removes: false)) }
+            Button(Messages.AppEnvironmentVariablesEditor.bodyText15.localized, systemImage: "plus") { rows.append(Row(name: "", value: "", removes: false)) }
             if case .failure(let error) = Result(catching: { try LaunchEnvironment(text) }), !rows.contains(where: { $0.name.isEmpty }) {
                 Text(error.localizedDescription).font(.caption).foregroundStyle(.red)
             }
-            Text("值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。").font(.caption).foregroundStyle(.secondary)
-            DisclosureGroup("使用说明") {
-                Text("名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。").font(.caption).foregroundStyle(.secondary)
+            Text(Messages.AppEnvironmentVariablesEditor.errorText1.localized).font(.caption).foregroundStyle(.secondary)
+            DisclosureGroup(Messages.AppEnvironmentVariablesEditor.errorText2.localized) {
+                Text(Messages.AppEnvironmentVariablesEditor.errorText3.localized).font(.caption).foregroundStyle(.secondary)
             }
         }.padding(.vertical, 5)
         .onChange(of: rows) { _, _ in text = encoded }

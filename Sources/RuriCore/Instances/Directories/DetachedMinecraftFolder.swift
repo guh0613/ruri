@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Launcher preferences remain local when a Minecraft folder is unregistered.
@@ -14,7 +15,7 @@ public struct DetachedMinecraftFolder: Codable, Identifiable, Equatable, Sendabl
               instances.allSatisfy({ $0.directoryID == id && $0.frozenMemory == nil }),
               Set(instances.map(\.id)).count == instances.count,
               selectedInstanceID == nil || instances.contains(where: { $0.id == selectedInstanceID }) else {
-            throw RuriError.message("已移除的 Minecraft 文件夹记录无效。")
+            throw RuriError.message(Messages.CoreDetachedMinecraftFolder.validateText1)
         }
         var snapshot = PersistentState()
         snapshot.gameDirectories = [directory]; snapshot.instances = instances

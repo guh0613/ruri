@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Accept raw path components, not pre-escaped paths. A slash inside a value is
@@ -8,17 +9,17 @@ enum EndpointURL {
         for component in path {
             guard !component.isEmpty, component != ".", component != "..",
                   !component.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else {
-                throw RuriError.message("服务地址包含无效的路径参数。")
+                throw RuriError.message(Messages.CoreEndpointURL.resultText1)
             }
             result = result.appending(component: component, directoryHint: .notDirectory)
         }
         guard !query.isEmpty else { return result }
-        guard var parts = URLComponents(url: result, resolvingAgainstBaseURL: false) else { throw RuriError.message("无法构造服务地址。") }
+        guard var parts = URLComponents(url: result, resolvingAgainstBaseURL: false) else { throw RuriError.message(Messages.CoreEndpointURL.partsText1) }
         parts.queryItems = (parts.queryItems ?? []) + query
         // Form-style query decoders treat a literal + as a space. Preserve the
         // caller's plus signs without double-encoding existing percent escapes.
         parts.percentEncodedQuery = parts.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
-        guard let url = parts.url else { throw RuriError.message("无法编码服务查询参数。") }
+        guard let url = parts.url else { throw RuriError.message(Messages.CoreEndpointURL.urlText1) }
         return url
     }
 

@@ -48,7 +48,8 @@ import Darwin
             result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: status, cancelled: cancelled, timedOut: timedOut, error: nil)
         } catch {
             watcher?.cancel()
-            result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: false, timedOut: false, error: recorder.redacted(error.localizedDescription))
+            result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: false, timedOut: false, error: recorder.redacted(error.localizedDescription),
+                                       errorMessage: (error as? RuriError)?.localizedMessage?.recorded(redact: recorder.redacted))
         }
         try? recorder.commandFinished(result)
         return result

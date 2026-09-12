@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -30,35 +31,35 @@ struct InstanceCopyJournal: Codable, Sendable {
     static func load(paths: LauncherPaths, sourceID: UUID, at directory: URL? = nil) throws -> Self {
         let parent = try directory ?? root(paths: paths, sourceID: sourceID)
         let record: Self = try RunDirectoryCopyGuard.decode(parent.appendingPathComponent("transaction.json"), limit: 8_388_608)
-        guard record.original.id == sourceID else { throw RuriError.message("实例复制记录不属于所选实例。") }
+        guard record.original.id == sourceID else { throw RuriError.message(Messages.CoreInstanceCopyJournal.recordText1) }
         try record.validate(); return record
     }
     func validate() throws {
         guard (1...2).contains(version), copy.id != original.id, copy.runDirectory == .isolated, copy.customRunDirectory == nil,
               copy.lastInstanceCopyID == id, copy.frozenMemory == nil,
               copy.directoryID == (targetCollection?.id ?? GameDirectory.defaultID),
-              !copy.name.isEmpty, copy.name.count <= 256, !original.name.isEmpty, original.name.count <= 1024 else { throw RuriError.message("实例复制信息无效，请检查源实例和副本设置。") }
+              !copy.name.isEmpty, copy.name.count <= 256, !original.name.isEmpty, original.name.count <= 1024 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.validateText1) }
         _ = try ownerData()
         if version >= 2, stagedIdentity != nil || publishedIdentity != nil || phase == .publishing || phase == .committed {
-            guard verificationDigest != nil else { throw RuriError.message("实例副本缺少文件校验记录，工作副本已保留。") }
+            guard verificationDigest != nil else { throw RuriError.message(Messages.CoreInstanceCopyJournal.validateText2) }
         }
-        if let verificationDigest, !FileTreeManifest.validDigest(verificationDigest) { throw RuriError.message("实例副本的校验记录摘要无效。") }
+        if let verificationDigest, !FileTreeManifest.validDigest(verificationDigest) { throw RuriError.message(Messages.CoreInstanceCopyJournal.verificationDigestText1) }
         if let collection = targetCollection {
-            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), (collection.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("复制目标的文件夹记录无效。") }
+            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), (collection.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.collectionText1) }
         }
         for identity in [stagedIdentity, publishedIdentity].compactMap({ $0 }) {
-            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message("实例副本的文件身份记录无效。") }
+            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreInstanceCopyJournal.collectionText2) }
         }
     }
     func ownerData() throws -> Data {
         let data = try JSONEncoder().encode(owner)
-        guard data.count <= 8192 else { throw RuriError.message("源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。") }
+        guard data.count <= 8192 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.dataText1) }
         return data
     }
     func validateTarget(paths: LauncherPaths) throws {
         if let targetCollection {
             guard let registered = paths.directories.first(where: { $0.id == targetCollection.id }),
-                  registered.url.standardizedFileURL.path == targetCollection.url.standardizedFileURL.path else { throw RuriError.message("目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。") }
+                  registered.url.standardizedFileURL.path == targetCollection.url.standardizedFileURL.path else { throw RuriError.message(Messages.CoreInstanceCopyJournal.registeredText1) }
             try targetCollection.validateAvailability()
         }
         try paths.including(copy).validateInstanceLocation(copy.id)
@@ -74,7 +75,7 @@ struct InstanceCopyJournal: Codable, Sendable {
         try validate()
         let parent = try directory ?? Self.root(paths: paths, sourceID: original.id)
         let data = try JSONEncoder().encode(self)
-        guard data.count <= 8_388_608 else { throw RuriError.message("实例复制记录超过大小限制。") }
+        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.dataText2) }
         try data.write(to: parent.appendingPathComponent("transaction.json"), options: .atomic)
     }
 }
@@ -91,12 +92,12 @@ public enum InstanceCopyGuard {
         let marker = try LauncherPaths.safePath(markerName, within: paths.instance(instanceID))
         guard FileManager.default.fileExists(atPath: marker.path) else { return nil }
         let owner: InstanceCopyOwner = try RunDirectoryCopyGuard.decode(marker, limit: 8192)
-        guard owner.copyID == instanceID, owner.copyID != owner.sourceID, owner.sourceName.count <= 1024, owner.copyName.count <= 256 else { throw RuriError.message("实例复制占用信息无效。") }
+        guard owner.copyID == instanceID, owner.copyID != owner.sourceID, owner.sourceName.count <= 1024, owner.copyName.count <= 256 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.ownerText1) }
         return owner
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID?) throws {
         guard let owner = try owner(paths: paths, instanceID: instanceID) else { return }
-        guard owner.transactionID == id else { throw RuriError.message("“\(owner.sourceName)”有未完成的实例复制，请先在实例菜单中恢复复制。") }
+        guard owner.transactionID == id else { throw RuriError.message(Messages.CoreInstanceCopyJournal.ownerText2(String(describing: owner.sourceName))) }
     }
     static func mark(_ journal: InstanceCopyJournal, at directory: URL) throws {
         try journal.ownerData().write(to: directory.appendingPathComponent(markerName), options: .withoutOverwriting)
@@ -105,18 +106,18 @@ public enum InstanceCopyGuard {
         let file = try LauncherPaths.safePath(markerName, within: directory)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let marker: InstanceCopyOwner = try RunDirectoryCopyGuard.decode(file, limit: 8192)
-        guard marker.transactionID == journal.id, marker.sourceID == journal.original.id, marker.copyID == journal.copy.id else { throw RuriError.message("副本占用记录已经改变，未清除其他操作的记录。") }
+        guard marker.transactionID == journal.id, marker.sourceID == journal.original.id, marker.copyID == journal.copy.id else { throw RuriError.message(Messages.CoreInstanceCopyJournal.markerText1) }
         try FileManager.default.removeItem(at: file)
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
         let root = try LauncherPaths.safePath("instance-copy-transactions", within: paths.root)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let records = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
-        guard records.count <= 500 else { throw RuriError.message("待处理的实例复制过多，请先恢复后再调整文件夹。") }
+        guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.recordsText1) }
         for directory in records {
             guard let source = UUID(uuidString: directory.lastPathComponent) else { continue }
             let journal = try InstanceCopyJournal.load(paths: paths, sourceID: source)
-            guard journal.original.directoryID != id, journal.copy.directoryID != id else { throw RuriError.message("此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。") }
+            guard journal.original.directoryID != id, journal.copy.directoryID != id else { throw RuriError.message(Messages.CoreInstanceCopyJournal.journalText1) }
         }
     }
     public static func preservedWorkspaces(paths: LauncherPaths, sourceID: UUID) -> [URL] {

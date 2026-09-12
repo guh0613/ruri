@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct GameSession: Codable, Identifiable, Equatable, Sendable {
@@ -7,23 +8,24 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     }
     public enum Stage: String, Codable, Sendable {
         case preparing, installation, recovery, account, manifest, java, arguments, beforeCommand, starting, running, quitting, stopping, afterCommand, finished, monitorRecovery
-        public var title: String {
+        public var title: String { message.localized }
+        public var message: LocalizedMessage {
             switch self {
-            case .preparing: "准备启动"
-            case .installation: "安装游戏"
-            case .recovery: "检查实例"
-            case .account: "验证账号"
-            case .manifest: "读取版本"
-            case .java: "准备 Java"
-            case .arguments: "构建启动参数"
-            case .beforeCommand: "执行启动前命令"
-            case .afterCommand: "执行退出后命令"
-            case .starting: "创建游戏进程"
-            case .running: "游戏进程运行"
-            case .stopping: "请求结束游戏"
-            case .quitting: "等待游戏处理退出请求"
-            case .finished: "游戏已退出"
-            case .monitorRecovery: "恢复中断记录"
+            case .preparing: Messages.CoreGameSession.titleText1
+            case .installation: Messages.CoreGameSession.titleText2
+            case .recovery: Messages.CoreGameSession.titleText3
+            case .account: Messages.CoreGameSession.titleText4
+            case .manifest: Messages.CoreGameSession.titleText5
+            case .java: Messages.CoreGameSession.titleText6
+            case .arguments: Messages.CoreGameSession.titleText7
+            case .beforeCommand: Messages.CoreGameSession.titleText8
+            case .afterCommand: Messages.CoreGameSession.titleText9
+            case .starting: Messages.CoreGameSession.titleText10
+            case .running: Messages.CoreGameSession.titleText11
+            case .stopping: Messages.CoreGameSession.titleText12
+            case .quitting: Messages.CoreGameSession.titleText13
+            case .finished: Messages.CoreGameSession.titleText14
+            case .monitorRecovery: Messages.CoreGameSession.titleText15
             }
         }
     }
@@ -32,6 +34,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         public let date: Date
         public let stage: Stage
         public let message: String
+        public var localizedMessage: LocalizedMessage? = nil
+        public var displayMessage: String { localizedMessage?.localized ?? message }
     }
     public struct Evidence: Codable, Identifiable, Equatable, Sendable {
         public let relativePath: String
@@ -64,6 +68,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var commandIdentity: ProcessIdentity?
     public var commandResults: [GameCommandResult]?
     public var failure: String?
+    public var failureMessage: LocalizedMessage? = nil
+    public var displayFailure: String? { failureMessage?.localized ?? failure }
     public var exit: GameExit?
     public var interruption: GameSessionInterruption?
     public var nativeQuitSupported: Bool?
@@ -71,16 +77,16 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
-        if stage == .afterCommand && !state.isFinished { return "游戏已退出 · 正在执行退出后命令" }
-        if let command = commandResults?.last, command.phase == .after, !command.succeeded, state.isFinished { return (exit?.summary ?? "游戏已退出") + " · " + command.summary }
+        if stage == .afterCommand && !state.isFinished { return Messages.CoreGameSession.titleText16.localized }
+        if let command = commandResults?.last, command.phase == .after, !command.succeeded, state.isFinished { return (exit?.summary ?? Messages.CoreGameSession.titleText14.localized) + " · " + command.summary }
         if let exit { return exit.summary }
         switch state {
-        case .preparing: return "\(stage.title) · 尚无完成记录"
-        case .running: return "游戏已启动 · 尚无退出记录"
-        case .cancelled: return "启动已取消"
-        case .failed: return "\(stage.title)失败"
-        case .interrupted: return "监控记录已收尾 · 退出结果未知"
-        default: return "运行已结束"
+        case .preparing: return Messages.CoreGameSession.exitText1(String(describing: stage.title)).localized
+        case .running: return Messages.CoreGameSession.exitText2.localized
+        case .cancelled: return Messages.CoreGameSession.exitText3.localized
+        case .failed: return Messages.CoreGameSession.exitText4(String(describing: stage.title)).localized
+        case .interrupted: return Messages.CoreGameSession.exitText5.localized
+        default: return Messages.CoreGameSession.exitText6.localized
         }
     }
 }
@@ -115,17 +121,17 @@ public enum GameSessionStore {
         let directory = try directory(paths: paths, instanceID: instanceID, sessionID: sessionID)
         let url = try LauncherPaths.safePath("session.json", within: directory)
         let attributes = try url.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1_048_576 else { throw RuriError.message("运行记录不是有效文件或超过大小限制。") }
+        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1_048_576 else { throw RuriError.message(Messages.CoreGameSession.attributesText1) }
         let record = try JSONDecoder().decode(GameSession.self, from: Data(contentsOf: url))
         guard record.schema == 1, record.id == sessionID, record.instanceID == instanceID,
               record.events.count <= 512, record.evidence.count <= 100, record.instanceName.count <= 1024,
-              (record.failure?.count ?? 0) <= 32768 else { throw RuriError.message("运行记录格式无效。") }
+              (record.failure?.count ?? 0) <= 32768 else { throw RuriError.message(Messages.CoreGameSession.recordText1) }
         for evidence in record.evidence {
-            guard evidence.relativePath.hasPrefix("reports/"), evidence.name.count <= 1024 else { throw RuriError.message("运行报告路径无效。") }
+            guard evidence.relativePath.hasPrefix("reports/"), evidence.name.count <= 1024 else { throw RuriError.message(Messages.CoreGameSession.recordText2) }
             _ = try LauncherPaths.safePath(evidence.relativePath, within: directory)
         }
         if let interruption = record.interruption {
-            guard interruption.explanation.count <= 8192, record.state == .interrupted, record.exit == nil else { throw RuriError.message("中断恢复记录无效。") }
+            guard interruption.explanation.count <= 8192, record.state == .interrupted, record.exit == nil else { throw RuriError.message(Messages.CoreGameSession.interruptionText1) }
         }
         return record
     }
@@ -142,33 +148,33 @@ public enum GameSessionStore {
     }
     public static func logTail(paths: LauncherPaths, session: GameSession, byteLimit: Int = 2_097_152) throws -> String {
         let url = try logURL(paths: paths, session: session)
-        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message("日志不是普通文件。") }
+        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message(Messages.CoreGameSession.urlText1) }
         let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }
         let length = try handle.seekToEnd(), limit = UInt64(max(0, min(byteLimit, 8_388_608)))
         try handle.seek(toOffset: length > limit ? length - limit : 0)
         let data = try handle.read(upToCount: Int(limit)) ?? Data()
         let text = String(decoding: data, as: UTF8.self)
-        return length > limit ? "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n" + String(text.drop(while: { $0 != "\n" }).dropFirst()) : text
+        return length > limit ? Messages.CoreGameSession.textText1.localized + String(text.drop(while: { $0 != "\n" }).dropFirst()) : text
     }
     public static func exportLog(paths: LauncherPaths, session: GameSession, to destination: URL) throws {
         let source = try logURL(paths: paths, session: session)
         let instanceRoot = paths.instance(session.instanceID).resolvingSymlinksInPath().path + "/sessions/"
-        guard destination.isFileURL, !destination.resolvingSymlinksInPath().path.hasPrefix(instanceRoot) else { throw RuriError.message("请选择运行记录目录以外的导出位置。") }
-        guard try source.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message("日志不是普通文件。") }
+        guard destination.isFileURL, !destination.resolvingSymlinksInPath().path.hasPrefix(instanceRoot) else { throw RuriError.message(Messages.CoreGameSession.instanceRootText1) }
+        guard try source.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message(Messages.CoreGameSession.urlText1) }
         let input = try FileHandle(forReadingFrom: source); defer { try? input.close() }
         let length = try input.seekToEnd(); try input.seek(toOffset: 0)
         let temporary = destination.deletingLastPathComponent().appendingPathComponent(".ruri-log-\(UUID().uuidString)")
-        guard FileManager.default.createFile(atPath: temporary.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message("无法创建导出文件。") }
+        guard FileManager.default.createFile(atPath: temporary.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message(Messages.CoreGameSession.temporaryText1) }
         defer { try? FileManager.default.removeItem(at: temporary) }
         let output = try FileHandle(forWritingTo: temporary); defer { try? output.close() }
         var copied: UInt64 = 0
         while copied < length {
             let data = try input.read(upToCount: Int(min(65_536, length - copied))) ?? Data()
-            guard !data.isEmpty else { throw RuriError.message("导出期间日志发生变化，请重试。") }
+            guard !data.isEmpty else { throw RuriError.message(Messages.CoreGameSession.dataText1) }
             try output.write(contentsOf: data); copied += UInt64(data.count)
         }
         try output.synchronize(); try output.close()
-        guard rename(temporary.path, destination.path) == 0 else { throw RuriError.message("无法保存导出日志。") }
+        guard rename(temporary.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreGameSession.dataText2) }
     }
 }
 
@@ -185,7 +191,7 @@ public enum GameSessionReviewStore {
         let file = try LauncherPaths.safePath("reviewed", within: directory)
         guard FileManager.default.fileExists(atPath: file.path) else { return false }
         let attributes = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1024 else { throw RuriError.message("运行记录已读标记无效。") }
+        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1024 else { throw RuriError.message(Messages.CoreGameSession.attributesText2) }
         let text = String(decoding: try Data(contentsOf: file), as: UTF8.self)
         let date = Double(text).map { Date(timeIntervalSince1970: $0) } ?? ISO8601DateFormatter().date(from: text)
         return date.map { $0 >= record.updatedAt } ?? false
@@ -217,7 +223,7 @@ public enum GameSessionReviewStore {
         directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: id)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
         let logURL = directory.appendingPathComponent("launcher.log")
-        guard FileManager.default.createFile(atPath: logURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message("无法创建运行日志。") }
+        guard FileManager.default.createFile(atPath: logURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message(Messages.CoreGameSession.logURLText1) }
         log = try FileHandle(forWritingTo: logURL)
         try transition(.preparing)
         try lease?.reserve(paths: paths, session: record)
@@ -227,32 +233,35 @@ public enum GameSessionReviewStore {
         lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: sessionID)
         record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
         guard !record.state.isFinished, record.processID == nil, record.monitorIdentity == monitor,
-              monitor.pid == ProcessInfo.processInfo.processIdentifier, monitor.isAlive else { throw RuriError.message("监控组件不能接管这个运行记录。") }
+              monitor.pid == ProcessInfo.processInfo.processIdentifier, monitor.isAlive else { throw RuriError.message(Messages.CoreGameSession.logURLText2) }
         directory = try GameSessionStore.directory(paths: paths, instanceID: instanceID, sessionID: sessionID)
         log = try FileHandle(forWritingTo: GameSessionStore.logURL(paths: paths, session: record)); try log?.seekToEnd()
         record.ownerPID = monitor.pid; record.updatedAt = Date(); try save()
     }
     public func handoff(to monitor: ProcessIdentity) throws {
-        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message("这个运行记录不能交给监控组件。") }
+        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.handoffText1) }
         record.monitorIdentity = monitor; record.updatedAt = Date(); try save(); try close()
     }
     public func addSecrets(_ values: [String]) { redactor.addSecrets(values) }
     public func redacted(_ text: String) -> String { redactor.redact(text) }
     public func append(_ text: String) throws {
-        guard let log else { throw RuriError.message("运行日志已关闭。") }
+        guard let log else { throw RuriError.message(Messages.CoreGameSession.logText1) }
         try log.write(contentsOf: Data((redactor.redact(text) + "\n").utf8))
     }
     public func transition(_ stage: GameSession.Stage, message: String? = nil) throws {
-        guard !record.state.isFinished else { throw RuriError.message("运行会话已经结束。") }
+        try transition(stage, message: message.map(LocalizedMessage.verbatim) ?? stage.message)
+    }
+    public func transition(_ stage: GameSession.Stage, message: LocalizedMessage) throws {
+        guard !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.transitionText1) }
         record.stage = stage; record.updatedAt = Date()
-        let message = redactor.redact(String((message ?? stage.title).prefix(8192)))
-        record.events.append(.init(id: UUID(), date: record.updatedAt, stage: stage, message: message))
-        try append("[Ruri] \(record.updatedAt.ISO8601Format()) \(message)")
+        let descriptor = message.recorded(redact: redactor.redact)
+        record.events.append(.init(id: UUID(), date: record.updatedAt, stage: stage, message: descriptor.fallback, localizedMessage: descriptor))
+        try append("[Ruri] \(record.updatedAt.ISO8601Format()) \(descriptor.fallback)")
         try save()
     }
     public func setJava(_ label: String) throws { record.java = label; try save() }
     public func setMemory(_ memory: LaunchMemory) throws {
-        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message("游戏已启动，不能改写本轮内存设置。") }
+        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.setMemoryText1) }
         record.memory = memory; record.memoryMB = memory.maximumMB; try save()
     }
     public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
@@ -261,7 +270,7 @@ public enum GameSessionReviewStore {
         let attempt = GameNormalQuitAttempt(requestID: request.id, requestedAt: request.requestedAt, processedAt: Date(), accepted: accepted)
         record.normalQuitAttempt = attempt; record.updatedAt = attempt.processedAt
         if accepted { record.stage = .quitting }
-        if record.events.count < 512 { record.events.append(.init(id: UUID(), date: attempt.processedAt, stage: record.stage, message: attempt.explanation)) }
+        if record.events.count < 512 { record.events.append(.init(id: UUID(), date: attempt.processedAt, stage: record.stage, message: attempt.explanation, localizedMessage: attempt.explanationMessage.recorded(redact: redactor.redact))) }
         try save(); try append("[Ruri] \(attempt.explanation)")
     }
     public func started(processID: Int32) throws {
@@ -280,27 +289,28 @@ public enum GameSessionReviewStore {
         try exit.save(paths: paths, instanceID: record.instanceID)
     }
     public func finish(exit: GameExit) throws {
-        guard !record.state.isFinished else { throw RuriError.message("运行会话已经结束。") }
+        guard !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.transitionText1) }
         defer { try? close() }
         record.exit = exit; record.updatedAt = Date()
         record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
         record.stage = .finished
-        record.events.append(.init(id: UUID(), date: record.updatedAt, stage: .finished, message: exit.summary))
+        record.events.append(.init(id: UUID(), date: record.updatedAt, stage: .finished, message: exit.summary, localizedMessage: exit.summaryMessage.recorded(redact: redactor.redact)))
         try save()
         try append(exit.logDescription); try append("[Ruri] \(exit.explanation)")
         do { try GamePlaytimeStore.record(record, paths: paths) }
-        catch { try append("[Ruri] 未能保存游玩时长：\(error.localizedDescription)") }
+        catch { try append(Messages.CoreGameSession.finishText1(String(describing: error.localizedDescription)).localized) }
         do { try captureReports(exit: exit) }
-        catch { try append("[Ruri] 未能保存报告副本：\(error.localizedDescription)") }
+        catch { try append(Messages.CoreGameSession.finishText2(String(describing: error.localizedDescription)).localized) }
         try save(); try close()
     }
     public func fail(_ error: any Error, cancelled: Bool) throws {
-        guard !record.state.isFinished else { throw RuriError.message("运行会话已经结束。") }
+        guard !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.transitionText1) }
         defer { try? close() }
         record.failure = cancelled ? nil : redactor.redact(String(error.localizedDescription.prefix(32768)))
+        record.failureMessage = cancelled ? nil : (error as? RuriError)?.localizedMessage?.recorded(limit: 32768, redact: redactor.redact)
         record.state = cancelled ? .cancelled : .failed; record.updatedAt = Date()
         try save()
-        if log != nil { try append("[Ruri] \(cancelled ? "启动已取消" : record.failure ?? "启动失败")") }
+        if log != nil { try append("[Ruri] \(cancelled ? Messages.CoreGameSession.exitText3.localized : record.failure ?? Messages.CoreGameSession.failText1.localized)") }
         try close()
     }
     public func close() throws {
@@ -329,9 +339,9 @@ public enum GameSessionReviewStore {
                 let content = redactor.redact(String(decoding: data.prefix(8_388_608), as: UTF8.self))
                 let relative = "reports/\(index)-\(url.lastPathComponent)"
                 let destination = try LauncherPaths.safePath(relative, within: directory)
-                try (content + (truncated ? "\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n" : "")).write(to: destination, atomically: true, encoding: .utf8)
+                try (content + (truncated ? Messages.CoreGameSession.destinationText1.localized : "")).write(to: destination, atomically: true, encoding: .utf8)
                 record.evidence.append(.init(relativePath: relative, name: url.lastPathComponent, truncated: truncated))
-            } catch { try append("[Ruri] 未能保存报告副本 \(url.lastPathComponent)：\(error.localizedDescription)") }
+            } catch { try append(Messages.CoreGameSession.destinationText2(String(describing: url.lastPathComponent), String(describing: error.localizedDescription)).localized) }
         }
     }
 }

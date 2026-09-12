@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -30,12 +31,12 @@ public actor InstanceMover {
     public func preview(instanceID: UUID, directoryID: UUID) async throws -> InstanceMovePreview {
         try Task.checkCancellation()
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let source = state.instances.first(where: { $0.id == instanceID }) else { throw RuriError.message("找不到要移动的实例，请刷新后重试。") }
+        guard let source = state.instances.first(where: { $0.id == instanceID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText1) }
         if source.repositoryVersionID != nil || current.isMinecraftDirectory(directoryID) {
             return try await repositoryPreview(source: source, directoryID: directoryID, paths: current)
         }
-        guard current.directoryID(for: instanceID) != directoryID else { throw RuriError.message("此实例已经位于所选文件夹中。") }
-        guard directoryID == GameDirectory.defaultID || current.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message("找不到目标实例文件夹。") }
+        guard current.directoryID(for: instanceID) != directoryID else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText2) }
+        guard directoryID == GameDirectory.defaultID || current.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText3) }
         let id = UUID()
         var moved = source; moved.directoryID = directoryID; moved.lastInstanceMoveID = id
         if source.runDirectory == .shared {
@@ -48,9 +49,9 @@ public actor InstanceMover {
         defer { withExtendedLifetime(access) {} }
         let identity = try RunDirectoryCopyJournal.Identity.read(current.instance(instanceID))
         let snapshot = try InstanceMoveSnapshot.capture(instance: source, paths: current, transactionID: id)
-        guard identity.matches(current.instance(instanceID)) else { throw RuriError.message("源实例文件夹在预览期间被替换，请重新预览。") }
+        guard identity.matches(current.instance(instanceID)) else { throw RuriError.message(Messages.CoreInstanceMovePreview.snapshotText1) }
         // A download or another settings window can finish while files are hashed.
-        guard try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) == source else { throw RuriError.message("实例设置在预览期间改变，请重新预览。") }
+        guard try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) == source else { throw RuriError.message(Messages.CoreInstanceMovePreview.snapshotText2) }
         func collection(_ id: UUID) -> GameDirectory? {
             var value = current.directories.first { $0.id == id }; value?.bookmark = nil; return value
         }
@@ -63,12 +64,12 @@ public actor InstanceMover {
     /// Call under the source's operation locks immediately before activating a
     /// move. A preview is a file snapshot, not permission to move later changes.
     func validate(_ preview: InstanceMovePreview, state: PersistentState) throws {
-        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message("实例设置在预览后改变，请重新预览。") }
+        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreInstanceMovePreview.validateText1) }
         let current = paths.configured(with: state), target = current.including(preview.moved)
         try current.validateInstanceLocation(preview.source.id); try target.validateInstanceLocation(preview.moved.id)
         guard current.instance(preview.source.id).standardizedFileURL == preview.sourceDirectory.standardizedFileURL,
               target.instance(preview.moved.id).standardizedFileURL == preview.destination.standardizedFileURL,
-              preview.sourceIdentity.matches(preview.sourceDirectory) else { throw RuriError.message("实例文件夹的位置或身份在预览后改变，请重新预览。") }
+              preview.sourceIdentity.matches(preview.sourceDirectory) else { throw RuriError.message(Messages.CoreInstanceMovePreview.currentText1) }
         try Self.requireAbsent(preview.destination)
         try preview.snapshot.requireUnchanged(instance: preview.source, paths: current, transactionID: preview.id)
     }
@@ -77,8 +78,8 @@ public actor InstanceMover {
         // fileExists does not see dangling symlinks; those must not be replaced.
         var info = stat()
         if lstat(url.path, &info) == 0 {
-            throw RuriError.message("目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。")
+            throw RuriError.message(Messages.CoreInstanceMovePreview.infoText1)
         }
-        guard errno == ENOENT else { throw RuriError.message("无法确认目标位置是否为空，请检查磁盘与访问权限。") }
+        guard errno == ENOENT else { throw RuriError.message(Messages.CoreInstanceMovePreview.infoText2) }
     }
 }

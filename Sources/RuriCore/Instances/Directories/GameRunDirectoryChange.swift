@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -42,7 +43,7 @@ struct RunDirectorySnapshot: Equatable, Sendable {
             let url = try LauncherPaths.safePath(name, within: metadataRoot)
             guard fm.fileExists(atPath: url.path) else { continue }
             let values = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
-            guard values.isSymbolicLink != true, values.isRegularFile == true || values.isDirectory == true else { throw RuriError.message("游戏内容记录或备份包含不支持的文件：\(name)") }
+            guard values.isSymbolicLink != true, values.isRegularFile == true || values.isDirectory == true else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.valuesText1(String(describing: name))) }
             metadata.append(.init(url: url, path: name, directory: values.isDirectory == true, size: Int64(values.fileSize ?? 0), modified: values.contentModificationDate ?? .distantPast))
             if values.isDirectory == true {
                 metadata += try FileTree.entries(in: url).map { .init(url: $0.url, path: name + "/" + $0.path, directory: $0.directory, size: $0.size, modified: $0.modified) }
@@ -72,7 +73,7 @@ final class RunDirectoryChangeAccess {
         sourceLease = try GameRunLease.acquire(paths: paths, instanceID: instance.id, directoryChangeID: directoryChangeID)
         targetLease = target != .isolated ? try SharedGameDirectoryLease.acquire(paths: targetPaths, instanceID: instance.id, ignoringSession: nil, directoryChangeID: directoryChangeID) : nil
         guard try !GameSessionStore.list(paths: paths, instanceID: instance.id).contains(where: { !$0.state.isFinished }) else {
-            throw RuriError.message("此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。")
+            throw RuriError.message(Messages.CoreGameRunDirectoryChange.changedText1)
         }
     }
     func lockFiles() throws {
@@ -84,7 +85,7 @@ final class RunDirectoryChangeAccess {
                 operations.append(lock)
             }
             for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) {
-                throw RuriError.message("此目录还有未完成的内容或存档操作，请先恢复这些操作。")
+                throw RuriError.message(Messages.CoreGameRunDirectoryChange.lockText1)
             }
             worldLocks += try InstanceTransfer.lockWorlds(paths.game(instance.id))
         }
@@ -132,40 +133,40 @@ public actor GameRunDirectoryChange {
     }
 
     func find(_ id: UUID, in state: PersistentState) throws -> GameInstance {
-        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("这个实例已被移除，请刷新后重试。") }
+        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.instanceText1) }
         return instance
     }
     func validateChange(_ instance: GameInstance, to target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil, paths: LauncherPaths) throws {
         try paths.validateBinding(instance)
-        guard instance.name.count <= 1024 else { throw RuriError.message("实例名称过长，请先缩短名称再调整目录。") }
+        guard instance.name.count <= 1024 else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.validateChangeText1) }
         if target == .custom {
-            guard let customDirectory else { throw RuriError.message("请先选择自定义运行目录。") }
+            guard let customDirectory else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.customDirectoryText1) }
             try paths.checkCustomRunDirectory(customDirectory)
             try customDirectory.validateAvailability()
         }
         if (instance.runDirectory ?? .isolated) == target {
-            guard target == .custom, let customDirectory, instance.customRunDirectory?.isSameLocation(as: customDirectory) == false else { throw RuriError.message("实例已经使用这个运行目录。") }
+            guard target == .custom, let customDirectory, instance.customRunDirectory?.isSameLocation(as: customDirectory) == false else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.customDirectoryText2) }
         }
         var changed = instance; changed.runDirectory = target
         if target == .custom { changed.customRunDirectory = customDirectory }
         guard !MinecraftGameDataFiles.sameLocation(paths.game(instance.id), paths.including(changed).game(instance.id)) else {
-            throw RuriError.message("所选目录就是当前游戏目录，无需切换。")
+            throw RuriError.message(Messages.CoreGameRunDirectoryChange.changedText2)
         }
         if target != .isolated, try ModpackRegistry.load(paths: paths, instanceID: instance.id) != nil || FileManager.default.fileExists(atPath: paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta").path) {
-            throw RuriError.message("整合包保持独立运行目录，以保留包的配置与更新记录。")
+            throw RuriError.message(Messages.CoreGameRunDirectoryChange.changedText3)
         }
     }
     func validatePreviewBinding(_ preview: GameRunDirectoryChangePreview, instance: GameInstance, paths: LauncherPaths) throws {
         try validateChange(instance, to: preview.targetMode, customDirectory: preview.targetCustomDirectory, paths: paths)
         if preview.sourceMode == .custom {
-            guard let current = instance.customRunDirectory, let original = preview.instance.customRunDirectory, current.isSameLocation(as: original) else { throw RuriError.message("自定义目录身份已经变化，请重新预览。") }
+            guard let current = instance.customRunDirectory, let original = preview.instance.customRunDirectory, current.isSameLocation(as: original) else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.originalText1) }
         }
         var target = instance; target.runDirectory = preview.targetMode
         if preview.targetMode == .custom { target.customRunDirectory = preview.targetCustomDirectory }
         guard instance.directoryID == preview.instance.directoryID, instance.runDirectory == preview.instance.runDirectory,
               instance.repositoryVersionID == preview.instance.repositoryVersionID,
               instance.gameVersion == preview.instance.gameVersion, instance.loader == preview.instance.loader, instance.loaderVersion == preview.instance.loaderVersion,
-              paths.game(instance.id) == preview.source, paths.including(target).game(instance.id) == preview.target else { throw RuriError.message("实例或目录位置已经变化，请重新预览。") }
+              paths.game(instance.id) == preview.source, paths.including(target).game(instance.id) == preview.target else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.targetText1) }
     }
     func acquire(instance: GameInstance, paths: LauncherPaths, target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil) async throws -> RunDirectoryChangeAccess {
         let access = try RunDirectoryChangeAccess(instance: instance, paths: paths, target: target, customDirectory: customDirectory)
@@ -179,14 +180,14 @@ public actor GameRunDirectoryChange {
     func validateSnapshots(_ preview: GameRunDirectoryChangePreview, access: RunDirectoryChangeAccess) throws {
         guard try RunDirectorySnapshot.read(paths: access.sourcePaths, instanceID: preview.instanceID) == preview.sourceSnapshot,
               try RunDirectorySnapshot.read(paths: access.targetPaths, instanceID: preview.instanceID) == preview.targetSnapshot else {
-            throw RuriError.message("预览后游戏文件或备份发生了变化，请刷新预览后再切换。")
+            throw RuriError.message(Messages.CoreGameRunDirectoryChange.validateSnapshotsText1)
         }
     }
     func commit(_ preview: GameRunDirectoryChangePreview) throws -> PersistentState {
         try StateStore.update(paths) { state in
             let instance = try find(preview.instanceID, in: state)
             try validatePreviewBinding(preview, instance: instance, paths: paths.configured(with: state))
-            guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { throw RuriError.message("实例已被移除。") }
+            guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { throw RuriError.message(Messages.CoreGameRunDirectoryChange.indexText1) }
             state.instances[index].runDirectory = preview.targetMode
             if preview.targetMode == .custom { state.instances[index].customRunDirectory = preview.targetCustomDirectory }
             state.instances[index].lastRunDirectoryChangeID = nil

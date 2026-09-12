@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Reads an existing repository without creating launcher metadata or changing
@@ -13,7 +14,7 @@ public actor MinecraftDirectoryReader {
         let importing = try RepositoryImportStore.reservedVersionNames(in: root).union(RepositoryMoveReservation.names(in: root))
         let versions = root.appendingPathComponent("versions")
         let children = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
-        guard children.count <= 2_000 else { throw RuriError.message("此目录的版本数量超过读取限制。") }
+        guard children.count <= 2_000 else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.childrenText1) }
         var reader = MinecraftDirectoryScan(root: root)
         var result: [MinecraftDirectoryVersion] = []
         for directory in children {
@@ -26,7 +27,7 @@ public actor MinecraftDirectoryReader {
             guard info.isDirectory == true || info.isSymbolicLink == true else { continue }
             let id = directory.lastPathComponent
             do {
-                guard info.isSymbolicLink != true else { throw RuriError.message("版本目录是符号链接，请选择实际的游戏目录。") }
+                guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.idText1) }
                 let parsed = try reader.version(id)
                 let locations = try reader.locations(version: id, directory: directory)
                 result.append(.init(id: id, directory: directory, gameVersion: parsed.gameVersion, components: parsed.components,
@@ -42,9 +43,9 @@ public actor MinecraftDirectoryReader {
         let currentChildren = FileManager.default.fileExists(atPath: versions.path) ? try FileTree.children(in: versions) : []
         guard identity.matches(root), currentChildren.map(\.lastPathComponent) == children.map(\.lastPathComponent),
               try RepositoryImportStore.reservedVersionNames(in: root).union(RepositoryMoveReservation.names(in: root)) == importing else {
-            throw RuriError.message("读取期间游戏目录发生变化，请重新扫描。")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.currentChildrenText1)
         }
-        guard allowEmpty || !result.isEmpty else { throw RuriError.message("此目录的 versions 文件夹里没有找到版本。") }
+        guard allowEmpty || !result.isEmpty else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.currentChildrenText2) }
         return .init(id: UUID(), directory: root, selectedVersionID: selected, versions: result, identity: identity)
     }
 
@@ -52,26 +53,26 @@ public actor MinecraftDirectoryReader {
 
     nonisolated func validateNow(_ version: MinecraftDirectoryVersion, in catalog: MinecraftDirectoryCatalog) throws {
         guard catalog.identity.matches(catalog.directory), catalog.versions.contains(where: { $0.id == version.id && $0.directory == version.directory }), version.issue == nil else {
-            throw RuriError.message("游戏目录或所选版本已不可用，请重新扫描。")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.validateNowText1)
         }
         var reader = MinecraftDirectoryScan(root: catalog.directory)
         for document in version.documents {
             try Task.checkCancellation()
             let actual = reader.exists(document.url) ? try reader.read(document.url) : nil
             guard actual == document.data else {
-                throw RuriError.message("版本或原启动器设置在预览后改变，请重新扫描。")
+                throw RuriError.message(Messages.CoreMinecraftDirectoryReader.actualText1)
             }
         }
         let current = try reader.version(version.id)
         guard current.gameVersion == version.gameVersion, current.components == version.components, catalog.identity.matches(catalog.directory) else {
-            throw RuriError.message("游戏版本或组件在预览后改变，请重新扫描。")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.currentText1)
         }
     }
 
     private static func repository(for selection: URL, allowEmpty: Bool) throws -> (URL, String?) {
         let url = selection.standardizedFileURL
         let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey])
-        guard info.isSymbolicLink != true else { throw RuriError.message("请选择实际的 Minecraft 目录。") }
+        guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.infoText1) }
         let directory = info.isDirectory == true ? url : url.deletingLastPathComponent()
         let root: URL, selected: String?
         if isDirectory(directory.appendingPathComponent("versions")) { root = directory; selected = nil }
@@ -79,11 +80,11 @@ public actor MinecraftDirectoryReader {
         else if directory.deletingLastPathComponent().lastPathComponent == "versions" {
             root = directory.deletingLastPathComponent().deletingLastPathComponent(); selected = directory.lastPathComponent
         } else if allowEmpty && info.isDirectory == true { root = directory; selected = nil
-        } else { throw RuriError.message("没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。") }
+        } else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.rootText1) }
         if info.isDirectory != true {
-            guard let selected, info.isRegularFile == true, url.lastPathComponent == selected + ".json" else { throw RuriError.message("请选择版本文件夹或同名 JSON 清单。") }
+            guard let selected, info.isRegularFile == true, url.lastPathComponent == selected + ".json" else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.selectedText1) }
         }
-        guard isDirectory(root), isDirectory(root.appendingPathComponent("versions")) || (allowEmpty && !FileManager.default.fileExists(atPath: root.appendingPathComponent("versions").path)) else { throw RuriError.message("Minecraft 目录不存在或是符号链接。") }
+        guard isDirectory(root), isDirectory(root.appendingPathComponent("versions")) || (allowEmpty && !FileManager.default.fileExists(atPath: root.appendingPathComponent("versions").path)) else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.selectedText2) }
         return (root.resolvingSymlinksInPath(), selected)
     }
     private static func isDirectory(_ url: URL) -> Bool {
@@ -103,10 +104,10 @@ struct MinecraftDirectoryScan {
         let data: Data
         if let existing = cache[url] { data = existing }
         else {
-            guard totalBytes < 64 * 1024 * 1024 else { throw RuriError.message("版本清单和设置的总大小超过读取限制。") }
+            guard totalBytes < 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.existingText1) }
             data = try readFile(url, limit: min(4 * 1024 * 1024, 64 * 1024 * 1024 - totalBytes))
             totalBytes += data.count
-            guard totalBytes <= 64 * 1024 * 1024 else { throw RuriError.message("版本清单和设置的总大小超过读取限制。") }
+            guard totalBytes <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.existingText1) }
             cache[url] = data
         }
         if !documents.contains(where: { $0.url == url }) { documents.append(.init(url: url, data: data)) }
@@ -115,26 +116,26 @@ struct MinecraftDirectoryScan {
     private func readFile(_ url: URL, limit: Int) throws -> Data {
         let prefix = root.path + "/"
         guard url.path.hasPrefix(prefix), try path(String(url.path.dropFirst(prefix.count))).path == url.path else {
-            throw RuriError.message("版本清单或设置包含符号链接，请使用实际文件：\(url.lastPathComponent)")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.prefixText1(String(describing: url.lastPathComponent)))
         }
         let fd = open(url.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message("无法读取版本清单或设置：\(url.lastPathComponent)") }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.fdText1(String(describing: url.lastPathComponent))) }
         let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true); defer { try? handle.close() }
         var before = stat()
         guard fstat(fd, &before) == 0, before.st_mode & S_IFMT == S_IFREG, before.st_size >= 0, before.st_size <= limit else {
-            throw RuriError.message("版本清单或设置不是普通文件，或超过读取限制：\(url.lastPathComponent)")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.beforeText1(String(describing: url.lastPathComponent)))
         }
         let data = try handle.read(upToCount: limit + 1) ?? Data()
         var after = stat(), location = stat()
         guard data.count == before.st_size, fstat(fd, &after) == 0, lstat(url.path, &location) == 0,
               [after, location].allSatisfy({ $0.st_dev == before.st_dev && $0.st_ino == before.st_ino && $0.st_size == before.st_size &&
                   $0.st_ctimespec.tv_sec == before.st_ctimespec.tv_sec && $0.st_ctimespec.tv_nsec == before.st_ctimespec.tv_nsec }) else {
-            throw RuriError.message("版本清单或设置在读取期间改变，请重新扫描。")
+            throw RuriError.message(Messages.CoreMinecraftDirectoryReader.afterText1)
         }
         return data
     }
     mutating func object(_ url: URL) throws -> [String: Any] {
-        guard let value = try JSONSerialization.jsonObject(with: read(url)) as? [String: Any] else { throw RuriError.message("清单或设置不是有效的 JSON 对象：\(url.lastPathComponent)") }
+        guard let value = try JSONSerialization.jsonObject(with: read(url)) as? [String: Any] else { throw RuriError.message(Messages.CoreMinecraftDirectoryReader.valueText1(String(describing: url.lastPathComponent))) }
         return value
     }
     mutating func optionalObject(_ url: URL) throws -> [String: Any]? {

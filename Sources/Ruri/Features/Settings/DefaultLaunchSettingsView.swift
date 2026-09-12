@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -15,7 +16,7 @@ struct DefaultLaunchSettingsView: View {
     }
     var body: some View {
         VStack(spacing: 0) {
-            SettingsLayout(title: "默认启动设置", subtitle: "供选择“跟随默认”的实例使用", panes: [.runtime, .launch, .advanced], selection: $pane) {
+            SettingsLayout(title: Messages.AppDefaultLaunchSettingsView.bodyText1.localized, subtitle: Messages.AppDefaultLaunchSettingsView.bodyText2.localized, panes: [.runtime, .launch, .advanced], selection: $pane) {
                 LaunchSettingsEditor(overrides: $overrides, defaults: original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
             }
             Divider()
@@ -24,10 +25,10 @@ struct DefaultLaunchSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack {
-                Text(hasChanges ? "有未保存的更改" : "已运行的游戏保持当前设置").font(.caption).foregroundStyle(.secondary)
+                Text(hasChanges ? Messages.AppDefaultLaunchSettingsView.issueText1.localized : Messages.AppDefaultLaunchSettingsView.issueText2.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button("保存默认设置", action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)
+                Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppDefaultLaunchSettingsView.issueText3.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)
             }.padding(.horizontal, 20).padding(.vertical, 14)
         }.frame(width: 860, height: 670)
         .interactiveDismissDisabled(hasChanges)
@@ -38,6 +39,6 @@ struct DefaultLaunchSettingsView: View {
         let values = overrides.resolve(defaults: original)
         if let failure = SettingsValidation.issue(in: values) { pane = .containing(failure.key); issue = failure.message; return }
         if model.updateDefaultLaunchSettings(values, basedOn: original) { dismiss() }
-        else { issue = model.error ?? "无法保存默认设置。" }
+        else { issue = model.error ?? Messages.AppDefaultLaunchSettingsView.failureText1.localized }
     }
 }

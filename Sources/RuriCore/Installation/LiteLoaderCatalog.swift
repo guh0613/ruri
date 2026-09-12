@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 enum LiteLoaderCatalog {
@@ -33,7 +34,7 @@ enum LiteLoaderCatalog {
             let path = try Library.mavenPath(coordinate)
             let md5: String?
             if !snapshot, let value = build.md5 {
-                guard value.range(of: "^[a-fA-F0-9]{1,32}$", options: .regularExpression) != nil else { throw RuriError.message("LiteLoader 文件校验信息无效。") }
+                guard value.range(of: "^[a-fA-F0-9]{1,32}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.valueText1) }
                 md5 = String(repeating: "0", count: 32 - value.count) + value.lowercased()
             } else { md5 = nil }
             var libraries = try build.libraries.map { library in
@@ -43,7 +44,7 @@ enum LiteLoaderCatalog {
             }
             libraries.append(Library(name: coordinate, downloads: .init(artifact: Artifact(path: path, url: url, sha1: sha1, md5: md5)), rules: nil, natives: nil, extract: nil))
             let arguments = ["--tweakClass", build.tweakClass]
-            guard build.tweakClass == "com.mumfrey.liteloader.launch.LiteLoaderTweaker" else { throw RuriError.message("LiteLoader 清单的启动入口无法识别。") }
+            guard build.tweakClass == "com.mumfrey.liteloader.launch.LiteLoaderTweaker" else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.argumentsText1) }
             var profile = VersionManifest(id: game + "-LiteLoader-" + version, mainClass: "net.minecraft.launchwrapper.Launch", libraries: libraries)
             // Older Minecraft versions read minecraftArguments instead of arguments.game.
             if let legacy = base.minecraftArguments {
@@ -68,12 +69,12 @@ enum LiteLoaderCatalog {
 
     static func profile(game: String, version: String, base: VersionManifest, client: HTTPClient = .shared) async throws -> (VersionManifest, String) {
         let releases = try await releases(game: game, client: client)
-        guard let release = releases.first(where: { $0.version == version || $0.aliases.contains(version) }) else { throw RuriError.message("找不到 Minecraft \(game) 对应的 LiteLoader \(version)。") }
+        guard let release = releases.first(where: { $0.version == version || $0.aliases.contains(version) }) else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.releaseText1(String(describing: game), String(describing: version))) }
         var sha1: String?
         if release.snapshot {
             let checksum = try await client.data(from: URL(string: release.url.absoluteString + ".sha1")!)
             let value = String(decoding: checksum, as: UTF8.self).split(whereSeparator: \.isWhitespace).first.map(String.init) ?? ""
-            guard value.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message("LiteLoader 快照缺少有效的 SHA-1 校验信息。") }
+            guard value.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.valueText2) }
             sha1 = value.lowercased()
         }
         return (try release.profile(game: game, base: base, sha1: sha1), release.version)
@@ -93,7 +94,7 @@ enum LiteLoaderCatalog {
         parser.delegate = reader; parser.shouldResolveExternalEntities = false
         guard parser.parse(), let timestamp = reader.values["timestamp"], let number = reader.values["buildNumber"],
               timestamp.range(of: "^[0-9]{8}\\.[0-9]{6}$", options: .regularExpression) != nil,
-              number.range(of: "^[0-9]+$", options: .regularExpression) != nil else { throw RuriError.message("LiteLoader 快照版本信息无效。") }
+              number.range(of: "^[0-9]+$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.numberText1) }
         let revision = timestamp + "-" + number
         let url = try EndpointURL.build(base: snapshotsURL, path: [game + "-SNAPSHOT", "liteloader-" + game + "-" + revision + "-release.jar"])
         return Release(version: game + "-" + revision, aliases: [game + "-SNAPSHOT", revision], url: url, build: build, snapshot: true)
@@ -101,7 +102,7 @@ enum LiteLoaderCatalog {
 
     private static func secureURL(_ url: URL) throws -> URL {
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false), ["https", "http"].contains(components.scheme),
-              components.host != nil, components.user == nil, components.password == nil else { throw RuriError.message("LiteLoader 依赖下载地址无效。") }
+              components.host != nil, components.user == nil, components.password == nil else { throw RuriError.message(Messages.CoreLiteLoaderCatalog.componentsText1) }
         components.scheme = "https"
         return components.url!
     }

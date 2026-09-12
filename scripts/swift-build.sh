@@ -5,6 +5,7 @@
 # DEVELOPER_DIR selects Xcode; RURI_BUILD_DIR optionally selects the build folder.
 set -euo pipefail
 cd "${0:A:h:h}"
+python3 scripts/localization.py --check >&2
 if [[ -z "${DEVELOPER_DIR:-}" && -d /Applications/Xcode-beta.app/Contents/Developer ]]; then
   export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer
 fi

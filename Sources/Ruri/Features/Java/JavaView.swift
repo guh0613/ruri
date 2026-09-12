@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -13,32 +14,32 @@ struct JavaView: View {
     var body: some View {
         Form {
             Section {
-                if model.scanningJava { ProgressView("正在检测本机 Java…").controlSize(.small) }
+                if model.scanningJava { ProgressView(Messages.AppJavaView.bodyText1.localized).controlSize(.small) }
                 if model.javaEntries.isEmpty && !model.scanningJava {
-                    Label("没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。", systemImage: "cup.and.saucer").foregroundStyle(.secondary).padding(.vertical, 4)
+                    Label(Messages.AppJavaView.bodyText2.localized, systemImage: "cup.and.saucer").foregroundStyle(.secondary).padding(.vertical, 4)
                 }
                 ForEach(model.javaEntries) { entry in runtimeRow(entry) }
             } header: {
-                Text("本机 Java")
+                Text(Messages.AppJavaView.bodyText3.localized)
             }
             Section {
-                if loadingRemote { ProgressView("获取 Mojang 运行时列表…").controlSize(.small) }
+                if loadingRemote { ProgressView(Messages.AppJavaView.bodyText4.localized).controlSize(.small) }
                 if let javaError { Text(javaError).font(.caption).foregroundStyle(.orange) }
                 ForEach(available) { runtime in remoteRow(runtime) }
             } header: {
-                Text("官方游戏运行时")
+                Text(Messages.AppJavaView.javaErrorText1.localized)
             } footer: {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。")
-                    HStack(spacing: 14) { Link("Azul Zulu 下载", destination: AppLinks.azulJavaDownloads); Link("Eclipse Temurin 下载", destination: AppLinks.temurinJavaDownloads) }
+                    Text(Messages.AppJavaView.javaErrorText2.localized)
+                    HStack(spacing: 14) { Link(Messages.AppJavaView.javaErrorText3.localized, destination: AppLinks.azulJavaDownloads); Link(Messages.AppJavaView.javaErrorText4.localized, destination: AppLinks.temurinJavaDownloads) }
                 }
             }
         }
         .formStyle(.grouped)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button { Task { await model.scanJava() } } label: { Label("重新检测", systemImage: "arrow.clockwise") }.help("重新检测本机 Java").disabled(model.scanningJava || model.busy)
-                Button { model.chooseJava() } label: { Label("添加本机 Java…", systemImage: "plus") }.help("添加本机已安装的 Java…").disabled(model.busy)
+                Button { Task { await model.scanJava() } } label: { Label(Messages.AppJavaView.javaErrorText5.localized, systemImage: "arrow.clockwise") }.help(Messages.AppJavaView.javaErrorText6.localized).disabled(model.scanningJava || model.busy)
+                Button { model.chooseJava() } label: { Label(Messages.AppJavaView.javaErrorText7.localized, systemImage: "plus") }.help(Messages.AppJavaView.javaErrorText8.localized).disabled(model.busy)
             }
         }
         .sheet(item: $removal) { JavaRemovalView(request: $0) }
@@ -57,23 +58,23 @@ struct JavaView: View {
                 .frame(width: 40, height: 40).background(Theme.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
-                    Text(runtime?.label ?? remote?.label ?? "不可用的 Java").font(.headline)
+                    Text(runtime?.label ?? remote?.label ?? Messages.AppJavaView.runtimeText1.localized).font(.headline)
                     TagPill(text: entry.source)
-                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) { TagPill(text: "默认") }
+                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) { TagPill(text: Messages.AppJavaView.selectedText1.localized) }
                 }
                 if let issue = entry.issue { Text(issue).font(.caption).foregroundStyle(.orange) }
                 else if let runtime { Text(runtime.version).font(.caption).foregroundStyle(.secondary) }
                 Text(entry.path).font(.system(size: 10, design: .monospaced)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).textSelection(.enabled).help(entry.path)
             }
             Spacer()
-            if let remote { Button("修复") { model.installJava(remote, repairing: true) }.disabled(model.busy) }
+            if let remote { Button(Messages.AppJavaView.remoteText1.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
             Menu {
-                if entry.runtime != nil { Button("设为默认 Java", systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
-                Button("重新选择路径…", systemImage: "folder") { model.chooseJava(replacing: entry.path) }
-                Button("在 Finder 中显示", systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
-                if entry.manual { Button("从手动列表移除", systemImage: "minus.circle") { model.forgetJava(entry.path) } }
+                if entry.runtime != nil { Button(Messages.AppJavaView.remoteText2.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
+                Button(Messages.AppJavaView.remoteText3.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
+                Button(Messages.AppJavaView.remoteText4.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
+                if entry.manual { Button(Messages.AppJavaView.remoteText5.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
                 if let id = entry.managedID {
-                    Divider(); Button("移到废纸篓…", systemImage: "trash", role: .destructive) { requestRemoval(id) }
+                    Divider(); Button(Messages.AppJavaView.idText1.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
                 }
             } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().disabled(model.busy)
         }
@@ -86,9 +87,9 @@ struct JavaView: View {
         return HStack {
             Text(runtime.label)
             Spacer()
-            if resumable { Button("清理未完成文件") { requestRemoval(runtime.id, partial: true) }.disabled(model.busy) }
-            if installed { Text("已安装").font(.callout).foregroundStyle(.secondary) }
-            else { Button(broken ? "修复" : resumable ? "继续安装" : "安装") { model.installJava(runtime, repairing: broken) }.disabled(model.busy) }
+            if resumable { Button(Messages.AppJavaView.brokenText1.localized) { requestRemoval(runtime.id, partial: true) }.disabled(model.busy) }
+            if installed { Text(Messages.AppJavaView.brokenText2.localized).font(.callout).foregroundStyle(.secondary) }
+            else { Button(broken ? Messages.AppJavaView.remoteText1.localized : resumable ? Messages.AppJavaView.brokenText3.localized : Messages.AppJavaView.brokenText4.localized) { model.installJava(runtime, repairing: broken) }.disabled(model.busy) }
         }
         .padding(.vertical, 2)
     }
@@ -108,17 +109,17 @@ private struct JavaRemovalView: View {
     @State private var resetReferences = false
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text(request.partial ? "清理未完成的 Java 下载" : "移除 Ruri 下载的 Java").font(.title2.bold())
+            Text(request.partial ? Messages.AppJavaView.bodyText5.localized : Messages.AppJavaView.bodyText6.localized).font(.title2.bold())
             Text(request.title).font(.callout).textSelection(.enabled)
             if !request.references.isEmpty {
-                Text("以下设置仍在使用这一路径：").font(.callout)
+                Text(Messages.AppJavaView.bodyText7.localized).font(.callout)
                 ScrollView { VStack(alignment: .leading) { ForEach(Array(request.references.enumerated()), id: \.offset) { _, name in Text(name) } }.frame(maxWidth: .infinity, alignment: .leading) }.frame(maxHeight: 140)
-                Toggle("将这些设置改为自动选择 Java", isOn: $resetReferences)
+                Toggle(Messages.AppJavaView.bodyText8.localized, isOn: $resetReferences)
             }
-            Text("文件会移到废纸篓；正在被游戏或安装器使用时无法移除。").font(.caption).foregroundStyle(.secondary)
+            Text(Messages.AppJavaView.bodyText9.localized).font(.caption).foregroundStyle(.secondary)
             HStack {
-                Spacer(); Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button("移到废纸篓", role: .destructive) { model.removeJava(request.id, resetReferences: resetReferences, partial: request.partial); dismiss() }
+                Spacer(); Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppJavaView.bodyText10.localized, role: .destructive) { model.removeJava(request.id, resetReferences: resetReferences, partial: request.partial); dismiss() }
                     .disabled(!request.references.isEmpty && !resetReferences)
             }
         }.padding(24).frame(width: 480)

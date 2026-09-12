@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import AppKit
 
@@ -13,9 +14,10 @@ public struct GameNormalQuitAttempt: Codable, Equatable, Sendable {
     public let requestedAt: Date
     public let processedAt: Date
     public let accepted: Bool
-    public var explanation: String {
-        accepted ? "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。"
-                 : "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。"
+    public var explanation: String { explanationMessage.localized }
+    public var explanationMessage: LocalizedMessage {
+        accepted ? Messages.CoreGameNormalQuit.explanationText1
+                 : Messages.CoreGameNormalQuit.explanationText2
     }
 }
 
@@ -35,8 +37,8 @@ extension GameMonitorClient {
         let current = try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id)
         guard !current.state.isFinished, current.monitorIdentity == record.monitorIdentity,
               current.gameIdentity == record.gameIdentity, current.monitorIdentity?.isAlive == true,
-              current.gameIdentity?.isAlive == true else { throw RuriError.message("游戏或监控状态已经变化，暂时无法请求正常退出。") }
-        guard current.nativeQuitSupported == true else { throw RuriError.message("本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。") }
+              current.gameIdentity?.isAlive == true else { throw RuriError.message(Messages.CoreGameNormalQuit.currentText1) }
+        guard current.nativeQuitSupported == true else { throw RuriError.message(Messages.CoreGameNormalQuit.currentText2) }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: current.instanceID, sessionID: current.id)
         let request = GameNormalQuitRequest(version: 1, id: UUID(), sessionID: current.id, requestedAt: Date())
         let file = try LauncherPaths.safePath("quit-request.json", within: directory)

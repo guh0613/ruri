@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import RuriLocalization
 @testable import RuriCore
 
 struct GameSessionTests {
@@ -31,7 +32,8 @@ struct GameSessionTests {
         try failed.fail(RuriError.message("Refresh failed: private-refresh-value"), cancelled: false)
         let oldLog = try GameSessionStore.logTail(paths: paths, session: failed.record)
         #expect(!oldLog.contains("private-refresh-value") && oldLog.contains("<redacted>"))
-        #expect(failed.record.stage == .account && failed.record.title == "验证账号失败")
+        #expect(failed.record.stage == .account && failed.record.state == .failed)
+        #expect(failed.record.events.last?.localizedMessage?.key == GameSession.Stage.account.message.key)
         let next = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try next.transition(.java); try next.setJava("Java 21")
         try next.started(processID: 123)
@@ -44,6 +46,23 @@ struct GameSessionTests {
         #expect(try !GameSessionStore.logTail(paths: paths, session: next.record).contains("Refresh failed"))
         let persisted = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: next.record.id)
         #expect(persisted.exit == exit && persisted.java == "Java 21" && persisted.state == .succeeded)
+    }
+    @Test @MainActor func localizedFailuresKeepLegacyTextAndRedactStoredArguments() throws {
+        let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        recorder.addSecrets(["private-localization-secret"])
+        let message = Messages.CoreNetwork.streamText1("private-localization-secret")
+        try recorder.fail(RuriError.message(message), cancelled: false)
+        let data = try Data(contentsOf: recorder.directory.appendingPathComponent("session.json"))
+        #expect(!String(decoding: data, as: UTF8.self).contains("private-localization-secret"))
+        let stored = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
+        #expect(stored.failureMessage?.key == message.key)
+        #expect(stored.displayFailure == stored.failure && stored.failure?.contains("<redacted>") == true)
+        var legacy = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        legacy.removeValue(forKey: "failureMessage")
+        legacy["events"] = []
+        let old = try JSONDecoder().decode(GameSession.self, from: JSONSerialization.data(withJSONObject: legacy))
+        #expect(old.failureMessage == nil && old.displayFailure == stored.failure)
     }
     @Test @MainActor func evidenceCopiesSurviveNextGameLogAndSkipOldReports() throws {
         let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }

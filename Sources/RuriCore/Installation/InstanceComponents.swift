@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct ComponentBackup: Codable, Sendable {
@@ -18,13 +19,13 @@ public actor InstanceComponents {
     }
 
     public nonisolated static func unavailableReason(_ instance: GameInstance) -> String? {
-        guard instance.installed else { return "请先完成此实例的安装。" }
+        guard instance.installed else { return Messages.CoreInstanceComponents.unavailableReasonText1.localized }
         if let issue = instance.repositoryIssue { return issue }
         let supported = Set(LoaderKind.allCases.map(\.title))
         let additional = (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter { !supported.contains($0.name) }
-        if !additional.isEmpty { return "此实例还有 " + additional.map(\.name).joined(separator: "、") + "，暂不支持保留这些组件的更换操作。" }
+        if !additional.isEmpty { return Messages.CoreInstanceComponents.unsupportedComponents(LocalizedFormat.list(additional.map(\.name))).localized }
         if (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter({ supported.contains($0.name) }).count > 1 {
-            return "此实例同时使用多个加载器，暂不支持保留组合的更换操作。"
+            return Messages.CoreInstanceComponents.additionalText3.localized
         }
         return nil
     }
@@ -52,8 +53,8 @@ public actor InstanceComponents {
         let original = try find(requested.id, state: state)
         _ = try original.applyingInstallation(requested, requested: requested)
         if let reason = Self.unavailableReason(original) { throw RuriError.message(reason) }
-        guard loader == .vanilla || version?.isEmpty == false else { throw RuriError.message("请选择加载器版本。") }
-        guard loader != original.loader || (loader != .vanilla && version != original.loaderVersion) else { throw RuriError.message("当前已经使用这个加载器版本。") }
+        guard loader == .vanilla || version?.isEmpty == false else { throw RuriError.message(Messages.CoreInstanceComponents.reasonText1) }
+        guard loader != original.loader || (loader != .vanilla && version != original.loaderVersion) else { throw RuriError.message(Messages.CoreInstanceComponents.reasonText2) }
         let lease = try GameRunLease.acquire(paths: current, instanceID: original.id)
         defer { withExtendedLifetime(lease) {} }
         try current.validateBinding(original)
@@ -63,7 +64,7 @@ public actor InstanceComponents {
         let resources = try current.resources(for: original)
         let clientID = active.jar ?? original.gameVersion
         let client = try current.clientJar(clientID, instance: original)
-        guard FileManager.default.fileExists(atPath: client.path) else { throw RuriError.message("游戏客户端缺失，请先修复此实例。") }
+        guard FileManager.default.fileExists(atPath: client.path) else { throw RuriError.message(Messages.CoreInstanceComponents.clientText1) }
         let work = try LauncherPaths.safePath("component-work/" + UUID().uuidString, within: current.instance(original.id))
         let staging = LauncherPaths(root: work)
         try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)
@@ -95,7 +96,7 @@ public actor InstanceComponents {
                             stagedClient.path: client.path, stagedClient.deletingLastPathComponent().path: client.deletingLastPathComponent().path]
         func rewrite(_ value: String) throws -> String {
             let result = MinecraftInstallationCopy.rewrite(value, replacements: replacements)
-            guard !result.contains(work.path) else { throw RuriError.message("加载器生成了不能迁移的临时路径，原配置已保留。") }
+            guard !result.contains(work.path) else { throw RuriError.message(Messages.CoreInstanceComponents.resultText1) }
             return result
         }
         func argument(_ value: LaunchArgument) throws -> LaunchArgument {
@@ -115,7 +116,7 @@ public actor InstanceComponents {
             replacement.importedInstallation = .init(sourceVersionID: imported.sourceVersionID, components: components)
         }
         try Task.checkCancellation()
-        await progress(InstallProgress("正在应用加载器设置"))
+        await progress(InstallProgress(Messages.CoreInstanceComponents.importedText1))
         let backup = ComponentBackup(createdAt: Date(), instance: original, manifest: previous, resourceRoot: resources.root)
         return try publish(replacement, requested: original, manifest: encoded, previous: previous, documents: documents, backup: backup, paths: current)
     }
@@ -128,7 +129,7 @@ public actor InstanceComponents {
         defer { withExtendedLifetime(lease) {} }
         guard let backup = try backup(for: original.id), backup.instance.id == original.id,
               backup.instance.gameVersion == original.gameVersion,
-              backup.resourceRoot == (try current.resources(for: original)).root else { throw RuriError.message("没有适用于当前位置的加载器备份。") }
+              backup.resourceRoot == (try current.resources(for: original)).root else { throw RuriError.message(Messages.CoreInstanceComponents.backupText1) }
         let documents = try sourceDocuments(original, paths: current)
         let previous = try RunDirectoryCopyGuard.read(current.manifest(original.id), limit: 32 * 1024 * 1024)
         let reverse = ComponentBackup(createdAt: Date(), instance: original, manifest: previous, resourceRoot: backup.resourceRoot)
@@ -148,12 +149,12 @@ public actor InstanceComponents {
                 let original = try find(requested.id, state: latest)
                 var updated = try original.applyingInstallation(requested, requested: requested)
                 try current.validateBinding(original)
-                guard original.importedInstallation == requested.importedInstallation else { throw RuriError.message("实例组件在操作期间改变，请重新打开组件管理。") }
+                guard original.importedInstallation == requested.importedInstallation else { throw RuriError.message(Messages.CoreInstanceComponents.updatedText1) }
                 for document in documents {
                     let actual = FileManager.default.fileExists(atPath: document.url.path) ? try RunDirectoryCopyGuard.read(document.url, limit: 32 * 1024 * 1024) : nil
-                    guard actual == document.data else { throw RuriError.message("原版本文件在准备期间改变，请重新尝试。") }
+                    guard actual == document.data else { throw RuriError.message(Messages.CoreInstanceComponents.actualText1) }
                 }
-                guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == previous else { throw RuriError.message("启动清单已改变，请重新尝试。") }
+                guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == previous else { throw RuriError.message(Messages.CoreInstanceComponents.actualText2) }
                 updated.loader = replacement.loader; updated.loaderVersion = replacement.loaderVersion
                 updated.repositoryComponents = replacement.repositoryComponents; updated.importedInstallation = replacement.importedInstallation
                 updated.packLibraries = replacement.packLibraries
@@ -164,7 +165,7 @@ public actor InstanceComponents {
         } catch {
             if published {
                 do { try previous.write(to: file, options: .atomic) }
-                catch { throw RuriError.message("加载器设置未完成保存，请在组件管理中恢复上次配置。") }
+                catch { throw RuriError.message(Messages.CoreInstanceComponents.actualText3) }
             }
             throw error
         }
@@ -173,14 +174,14 @@ public actor InstanceComponents {
     private func sourceDocuments(_ instance: GameInstance, paths: LauncherPaths) throws -> [MinecraftDirectoryDocument] {
         guard let versionID = instance.repositoryVersionID else { return [] }
         let catalog = try MinecraftDirectoryReader().scanNow(paths.directoryRoot(paths.directoryID(for: instance.id)))
-        guard let version = catalog.versions.first(where: { $0.id == versionID }), version.issue == nil else { throw RuriError.message("当前版本的启动清单不可用，请先修复。") }
+        guard let version = catalog.versions.first(where: { $0.id == versionID }), version.issue == nil else { throw RuriError.message(Messages.CoreInstanceComponents.versionText1) }
         if let dependent = catalog.versions.first(where: { $0.id != versionID && $0.documents.contains(where: { $0.url == paths.manifest(instance.id) }) }) {
-            throw RuriError.message("“\(dependent.id)”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。")
+            throw RuriError.message(Messages.CoreInstanceComponents.dependentText1(String(describing: dependent.id)))
         }
         return version.documents
     }
     private func find(_ id: UUID, state: PersistentState) throws -> GameInstance {
-        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("实例已从列表移除。") }
+        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceComponents.instanceText1) }
         return instance
     }
     private func backupFile(_ id: UUID, paths: LauncherPaths) throws -> URL { try LauncherPaths.safePath("previous-components.json", within: paths.instance(id)) }

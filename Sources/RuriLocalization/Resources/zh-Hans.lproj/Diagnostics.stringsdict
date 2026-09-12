@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>coreGameDiagnosis.kindText2</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>本次有 %1$#@count1@ 份报告，仅分析前 12 份；其余仍可在运行目录查看。</string>
+	</dict>
+	<key>coreGameDiagnosis.summaryText8</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>找到 %1$#@count1@ 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。</string>
+	</dict>
+</dict>
+</plist>

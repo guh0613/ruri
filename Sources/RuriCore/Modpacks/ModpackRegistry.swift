@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct ModpackOrigin: Codable, Equatable, Sendable {
@@ -43,24 +44,24 @@ public enum ModpackRegistry {
     }
     static func read(_ file: URL, game: URL) throws -> InstalledModpack {
         let info = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 64 * 1024 * 1024 else { throw RuriError.message("整合包版本记录无效") }
+        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreModpackRegistry.infoText1) }
         let record = try JSONDecoder().decode(InstalledModpack.self, from: Data(contentsOf: file))
         try validate(record, game: game); return record
     }
     static func validate(_ record: InstalledModpack, game: URL) throws {
         guard record.schemaVersion == 1, ["Modrinth", "CurseForge", "MCBBS", "HMCL"].contains(record.format), record.files.count <= 150_000,
-              Set(record.files.map { $0.path.lowercased() }).count == record.files.count else { throw RuriError.message("整合包版本记录不受支持或包含重复文件") }
+              Set(record.files.map { $0.path.lowercased() }).count == record.files.count else { throw RuriError.message(Messages.CoreModpackRegistry.validateText1) }
         try InstanceTransfer.validate(record.settings)
         for file in record.files {
             _ = try LauncherPaths.safePath(file.path, within: game)
-            guard file.sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil, file.size >= 0 else { throw RuriError.message("整合包初始文件校验信息无效") }
+            guard file.sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil, file.size >= 0 else { throw RuriError.message(Messages.CoreModpackRegistry.validateText2) }
         }
         if let origin = record.origin {
             for id in [origin.projectID, origin.versionID].compactMap({ $0 }) {
-                guard id.range(of: "^[A-Za-z0-9_-]{1,128}$", options: .regularExpression) != nil else { throw RuriError.message("整合包来源标识无效") }
+                guard id.range(of: "^[A-Za-z0-9_-]{1,128}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreModpackRegistry.originText1) }
             }
             if let url = origin.fileAPI {
-                guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else { throw RuriError.message("整合包更新地址无效") }
+                guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else { throw RuriError.message(Messages.CoreModpackRegistry.urlText1) }
             }
         }
     }

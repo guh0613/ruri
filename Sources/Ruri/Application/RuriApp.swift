@@ -1,10 +1,15 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
 
 @main struct RuriApp: App {
-    @State private var model = AppModel()
+    @State private var model: AppModel
     @NSApplicationDelegateAdaptor(RuriLifecycle.self) private var lifecycle
+    init() {
+        if let status = LocalizationCommandLine.resourceCheck() { exit(status) }
+        _model = State(initialValue: AppModel())
+    }
     var body: some Scene {
         Window("Ruri", id: "main") {
             MainWindowContent(model: model, lifecycle: lifecycle)
@@ -12,27 +17,27 @@ import RuriCore
         .defaultSize(width: 1140, height: 780)
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button("显示主窗口") { model.openMainWindow?() }.keyboardShortcut("0")
+                Button(Messages.AppRuriApp.bodyText1.localized) { model.openMainWindow?() }.keyboardShortcut("0")
                 Divider()
-                Button("新建游戏实例") { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
-                Button("导入实例或整合包…") { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
-                Button("添加游戏文件夹…") { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
+                Button(Messages.AppRuriApp.bodyText2.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
+                Button(Messages.AppRuriApp.bodyText3.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
+                Button(Messages.AppRuriApp.bodyText4.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
             }
             CommandGroup(replacing: .appSettings) {
-                Button("设置…") { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
+                Button(Messages.AppRuriApp.bodyText5.localized) { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
             }
-            CommandMenu("游戏") {
-                Button("启动选中实例") { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.isInstanceInUse(model.selected?.id))
+            CommandMenu(Messages.AppRuriApp.bodyText6.localized) {
+                Button(Messages.AppRuriApp.bodyText7.localized) { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.isInstanceInUse(model.selected?.id))
                 ForEach(model.activeSessions.values.sorted { $0.createdAt < $1.createdAt }) { record in
-                    Button("返回 \(record.instanceName)") { model.returnToGame(record.instanceID) }
+                    Button(Messages.AppRuriApp.instanceText1(String(describing: record.instanceName)).localized) { model.returnToGame(record.instanceID) }
                     if record.nativeQuitSupported == true {
-                        Button("请求退出 \(record.instanceName)") { model.requestGameQuit(record.instanceID) }.disabled(record.state.isFinished || record.gameIdentity?.isAlive != true || record.monitorIdentity?.isAlive != true)
+                        Button(Messages.AppRuriApp.instanceText2(String(describing: record.instanceName)).localized) { model.requestGameQuit(record.instanceID) }.disabled(record.state.isFinished || record.gameIdentity?.isAlive != true || record.monitorIdentity?.isAlive != true)
                     }
-                    Button("终止 \(record.instanceName) 的进程…") { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
+                    Button(Messages.AppRuriApp.instanceText3(String(describing: record.instanceName)).localized) { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
                 }
-                Button("运行记录与日志") { model.showSession() }.keyboardShortcut("l")
+                Button(Messages.AppRuriApp.instanceText4.localized) { model.showSession() }.keyboardShortcut("l")
                 Divider()
-                Button("在 Finder 中显示实例") { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
+                Button(Messages.AppRuriApp.instanceText5.localized) { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
             }
         }
     }
@@ -44,6 +49,8 @@ private struct MainWindowContent: View {
     let lifecycle: RuriLifecycle
     var body: some View {
         RootView().environment(model)
+            .environment(\.locale, LocalizationContext.current.formatLocale)
+            .environment(\.layoutDirection, Locale.Language(identifier: LocalizationContext.current.language).characterDirection == .rightToLeft ? .rightToLeft : .leftToRight)
             .onAppear {
                 lifecycle.model = model
                 let action = openWindow
@@ -82,10 +89,10 @@ private struct MainWindowContent: View {
     }
     func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
         let menu = NSMenu()
-        let show = NSMenuItem(title: "显示 Ruri", action: #selector(showMain(_:)), keyEquivalent: "")
+        let show = NSMenuItem(title: Messages.AppRuriApp.showText1.localized, action: #selector(showMain(_:)), keyEquivalent: "")
         show.target = self; menu.addItem(show)
         for record in model?.activeSessions.values.sorted(by: { $0.createdAt < $1.createdAt }) ?? [] where record.gameIdentity?.isAlive == true {
-            let item = NSMenuItem(title: "返回 \(record.instanceName)", action: #selector(returnGame(_:)), keyEquivalent: "")
+            let item = NSMenuItem(title: Messages.AppRuriApp.instanceText1(String(describing: record.instanceName)).localized, action: #selector(returnGame(_:)), keyEquivalent: "")
             item.target = self; item.representedObject = record.instanceID.uuidString; menu.addItem(item)
         }
         return menu

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -20,7 +21,7 @@ final class InstanceMoveAccess {
             try lock.acquire(directory: paths.gameDataState(instance.id), name: name); result.operations.append(lock)
         }
         for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) {
-            throw RuriError.message("实例还有未完成的文件操作，请先恢复后再移动。")
+            throw RuriError.message(Messages.CoreInstanceMoveAccess.lockText1)
         }
         result.worlds = try InstanceTransfer.lockWorlds(paths.game(instance.id))
         try requireFinishedSessions(paths: paths, instanceID: instance.id)
@@ -31,18 +32,18 @@ final class InstanceMoveAccess {
         let root = try LauncherPaths.safePath("sessions", within: paths.instance(instanceID))
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let entries = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard entries.count <= 100_000 else { throw RuriError.message("运行记录数量过多，请先整理后再移动。") }
+        guard entries.count <= 100_000 else { throw RuriError.message(Messages.CoreInstanceMoveAccess.entriesText1) }
         for url in entries where url.lastPathComponent != ".DS_Store" {
             try Task.checkCancellation()
             let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard info.isDirectory == true, info.isSymbolicLink != true, let id = UUID(uuidString: url.lastPathComponent) else {
-                throw RuriError.message("运行记录目录包含无法确认的项目，请先检查后再移动：\(url.lastPathComponent)")
+                throw RuriError.message(Messages.CoreInstanceMoveAccess.idText1(String(describing: url.lastPathComponent)))
             }
             let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: id)
             guard record.state.isFinished,
                   record.monitorIdentity.map({ $0.liveness == .exited }) ?? true,
                   record.gameIdentity.map({ $0.liveness == .exited }) ?? true else {
-                throw RuriError.message("实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。")
+                throw RuriError.message(Messages.CoreInstanceMoveAccess.recordText1)
             }
         }
     }

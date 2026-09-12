@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -35,78 +36,78 @@ struct InstanceContentView: View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(spacing: 14) {
                 InstanceIcon(loader: instance.loader, png: instance.iconPNG)
-                SectionHeading(title: "管理游戏内容", subtitle: instance.name + " · " + instance.subtitle)
-                Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
+                SectionHeading(title: Messages.AppInstanceContentView.bodyText1.localized, subtitle: instance.name + " · " + instance.subtitle)
+                Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
             HStack {
-                Picker("内容", selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270).disabled(model.busy)
+                Picker(Messages.AppInstanceContentView.bodyText2.localized, selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270).disabled(model.busy)
                 Spacer()
-                Button("检查更新", systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
+                Button(Messages.AppInstanceContentView.bodyText3.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
                 if !updates.isEmpty || !curseUpdates.isEmpty {
-                    Menu("批量更新…") {
-                        Button("更新所选内容…") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
-                        Button("更新当前结果…") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
+                    Menu(Messages.AppInstanceContentView.bodyText4.localized) {
+                        Button(Messages.AppInstanceContentView.bodyText5.localized) { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
+                        Button(Messages.AppInstanceContentView.bodyText6.localized) { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
                     }.disabled(!canModify || updateTask != nil)
                 }
-                Button("导入…", systemImage: "plus") { showImporter = true }.disabled(!canModify)
-                Button { model.reveal(instance, folder: kind.folder) } label: { Image(systemName: "folder") }.help("在 Finder 中打开内容文件夹")
+                Button(Messages.AppInstanceContentView.bodyText7.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
+                Button { model.reveal(instance, folder: kind.folder) } label: { Image(systemName: "folder") }.help(Messages.AppInstanceContentView.bodyText8.localized)
             }
             HStack {
-                TextField("搜索已安装内容", text: $search).textFieldStyle(.roundedBorder)
-                Picker("状态", selection: $statusFilter) { ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) } }.labelsHidden().frame(width: 110)
-                Text("\(files.filter(\.enabled).count) / \(files.count) 已启用").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                TextField(Messages.AppInstanceContentView.bodyText9.localized, text: $search).textFieldStyle(.roundedBorder)
+                Picker(Messages.AppInstanceContentView.bodyText10.localized, selection: $statusFilter) { ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) } }.labelsHidden().frame(width: 110)
+                Text(Messages.AppInstanceContentView.bodyText11(String(describing: files.filter(\.enabled).count), Int64(files.count)).localized).font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
             HStack {
-                Button("全选当前结果") { selection = Set(filtered.map(\.id)) }.disabled(filtered.isEmpty || loading)
-                if selectedFiles.isEmpty { Text("按住 ⌘ 多选，⇧ 连续选择").font(.caption).foregroundStyle(.secondary) }
+                Button(Messages.AppInstanceContentView.bodyText12.localized) { selection = Set(filtered.map(\.id)) }.disabled(filtered.isEmpty || loading)
+                if selectedFiles.isEmpty { Text(Messages.AppInstanceContentView.bodyText13.localized).font(.caption).foregroundStyle(.secondary) }
                 else {
-                    Button("取消选择") { selection.removeAll() }
-                    Text("已选 \(selectedFiles.count) 项").font(.caption).foregroundStyle(.secondary)
+                    Button(Messages.AppInstanceContentView.bodyText14.localized) { selection.removeAll() }
+                    Text(Messages.AppInstanceContentView.bodyText15(Int64(selectedFiles.count)).localized).font(.caption).foregroundStyle(.secondary)
                     Spacer()
-                    Button("启用所选") { setSelectedEnabled(true) }.disabled(!canModify || selectedFiles.allSatisfy(\.enabled))
-                    Button("停用所选") { setSelectedEnabled(false) }.disabled(!canModify || selectedFiles.allSatisfy { !$0.enabled })
-                    Button("移除所选…", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }.disabled(!canModify)
+                    Button(Messages.AppInstanceContentView.bodyText16.localized) { setSelectedEnabled(true) }.disabled(!canModify || selectedFiles.allSatisfy(\.enabled))
+                    Button(Messages.AppInstanceContentView.bodyText17.localized) { setSelectedEnabled(false) }.disabled(!canModify || selectedFiles.allSatisfy { !$0.enabled })
+                    Button(Messages.AppInstanceContentView.bodyText18.localized, role: .destructive) { bulkRemoval = .init(files: selectedFiles) }.disabled(!canModify)
                 }
             }
-            if model.isInstanceInUse(instance.id) { Label("游戏运行期间，内容修改暂不可用。", systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if model.isInstanceInUse(instance.id) { Label(Messages.AppInstanceContentView.bodyText19.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
-            if updateTask != nil { ProgressView("正在检查兼容的正式版本…").controlSize(.small) }
-            if updatesChecked && updates.isEmpty && curseUpdates.isEmpty { Label("已是最新兼容正式版", systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
+            if updateTask != nil { ProgressView(Messages.AppInstanceContentView.errorText1.localized).controlSize(.small) }
+            if updatesChecked && updates.isEmpty && curseUpdates.isEmpty { Label(Messages.AppInstanceContentView.errorText2.localized, systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
             else if filtered.isEmpty {
-                EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? "还没有安装\(kind.title)" : "没有匹配内容", detail: "从本地导入文件，或到“发现内容”安装兼容版本。").frame(maxHeight: .infinity)
+                EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? Messages.AppInstanceContentView.errorText3(String(describing: kind.title)).localized : Messages.AppInstanceContentView.errorText4.localized, detail: Messages.AppInstanceContentView.errorText5.localized).frame(maxHeight: .infinity)
             } else {
                 List(selection: $selection) {
                         ForEach(filtered) { file in
                             HStack(alignment: .center, spacing: 14) {
-                                Toggle("启用 \(file.title)", isOn: Binding(get: { file.enabled }, set: { enabled in
-                                    mutate("\(enabled ? "启用" : "停用") \(file.title)") { try await manager.setEnabled(enabled, file: file) }
+                                Toggle(Messages.AppInstanceContentView.errorText6(String(describing: file.title)).localized, isOn: Binding(get: { file.enabled }, set: { enabled in
+                                    mutate("\(enabled ? Messages.AppInstanceContentView.errorText7.localized : Messages.AppInstanceContentView.errorText8.localized) \(file.title)") { try await manager.setEnabled(enabled, file: file) }
                                 })).labelsHidden().toggleStyle(.switch).controlSize(.small).disabled(!canModify)
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack { Text(file.title).font(.system(size: 13, weight: .semibold)).lineLimit(1); if let provider = file.managed?.provider { TagPill(text: provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : provider) } }
-                                    HStack(spacing: 8) { if let version = file.version { Text(version).lineLimit(1) }; Text(ByteCountFormatter.string(fromByteCount: file.size, countStyle: .file)) }.font(.caption).foregroundStyle(.secondary)
+                                    HStack(spacing: 8) { if let version = file.version { Text(version).lineLimit(1) }; Text(LocalizedFormat.bytes(file.size)) }.font(.caption).foregroundStyle(.secondary)
                                     Text(file.filename).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(1).help(file.filename)
                                 }
                                 Spacer(minLength: 4)
                                 if let record = file.managed, let update = updates[record.id] {
-                                    Button("更新", systemImage: "arrow.down.circle") { apply(update) }.disabled(!canModify).help("更新至 \(update.available.version_number)")
+                                    Button(Messages.AppInstanceContentView.updateText1.localized, systemImage: "arrow.down.circle") { apply(update) }.disabled(!canModify).help(Messages.AppInstanceContentView.updateText2(String(describing: update.available.version_number)).localized)
                                 }
                                 if let record = file.managed, let update = curseUpdates[record.id] {
-                                    Button("更新", systemImage: "arrow.down.circle") { prepare(update) }.disabled(!canModify).help("更新至 \(update.available.displayName)")
+                                    Button(Messages.AppInstanceContentView.updateText1.localized, systemImage: "arrow.down.circle") { prepare(update) }.disabled(!canModify).help(Messages.AppInstanceContentView.updateText2(String(describing: update.available.displayName)).localized)
                                 }
                                 Menu {
                                     if let record = file.managed, ["modrinth", "curseforge"].contains(record.provider) {
-                                        Button("更换版本…", systemImage: "arrow.triangle.swap") {
+                                        Button(Messages.AppInstanceContentView.recordText1.localized, systemImage: "arrow.triangle.swap") {
                                             updateTask?.cancel(); updatesChecked = false; updates = [:]; curseUpdates = [:]
                                             versionTarget = file
                                         }.disabled(!canModify)
                                     }
-                                    Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
+                                    Button(Messages.AppInstanceContentView.recordText2.localized) { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
                                     if let page = file.managed?.modrinthPageURL {
-                                        Link("在 Modrinth 查看", destination: page)
+                                        Link(Messages.AppInstanceContentView.pageText1.localized, destination: page)
                                     }
                                     Divider()
-                                    Button("移到废纸篓", role: .destructive) { deleteTarget = file }.disabled(!canModify)
+                                    Button(Messages.AppInstanceContentView.pageText2.localized, role: .destructive) { deleteTarget = file }.disabled(!canModify)
                                 } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
                             }.padding(.vertical, 8).tag(file.id)
                         }
@@ -114,10 +115,10 @@ struct InstanceContentView: View {
             }
             Divider()
             HStack {
-                Text("停用会保留文件；更新前自动备份，失败可恢复。").font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppInstanceContentView.pageText3.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button("取消任务") { model.operation?.cancel() } }
-                else { Button("发现更多内容", systemImage: "safari") { model.page = .discover; dismiss() } }
+                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppInstanceContentView.pageText4.localized) { model.operation?.cancel() } }
+                else { Button(Messages.AppInstanceContentView.pageText5.localized, systemImage: "safari") { model.page = .discover; dismiss() } }
             }
         }.padding(24).frame(width: 800, height: 650)
         .task(id: kind) { selection.removeAll(); updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
@@ -131,9 +132,9 @@ struct InstanceContentView: View {
         }
         .sheet(item: $bulkRemoval) { selected in
             ContentRemovalView(files: selected.files, instanceID: instance.id) {
-                mutate("移除 \(selected.files.count) 项内容") {
+                mutate(Messages.AppInstanceContentView.recordText3(Int64(selected.files.count)).localized) {
                     model.noticeFileURL = try await manager.remove(selected.files)
-                    model.notice = "已将 \(selected.files.count) 项内容移到废纸篓"
+                    model.notice = Messages.AppInstanceContentView.recordText4(Int64(selected.files.count)).localized
                 }
             }
         }
@@ -141,15 +142,15 @@ struct InstanceContentView: View {
         .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data }, allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
-                mutate("导入 \(urls.count) 个\(kind.title)") {
+                mutate(Messages.AppInstanceContentView.urlsText1(Int64(urls.count), String(describing: kind.title)).localized) {
                     let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }
                     defer { for url in scoped { url.stopAccessingSecurityScopedResource() } }
                     try await manager.importFiles(urls, kind: kind)
                 }
             } catch { self.error = error.localizedDescription }
         }
-        .confirmationDialog("将此内容移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
-            Button("移到废纸篓", role: .destructive) { if let file = deleteTarget { mutate("移除 \(file.title)") { try await manager.remove(file) } }; deleteTarget = nil }
+        .confirmationDialog(Messages.AppInstanceContentView.scopedText1.localized, isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppInstanceContentView.pageText2.localized, role: .destructive) { if let file = deleteTarget { mutate(Messages.AppInstanceContentView.fileText1(String(describing: file.title)).localized) { try await manager.remove(file) } }; deleteTarget = nil }
         } message: { Text(deleteTarget?.filename ?? "") }
     }
     private func reload() async {
@@ -173,7 +174,7 @@ struct InstanceContentView: View {
     private func pruneSelection() { selection.formIntersection(Set(filtered.map(\.id))) }
     private func setSelectedEnabled(_ enabled: Bool) {
         let selected = selectedFiles
-        mutate("\(enabled ? "启用" : "停用") \(selected.count) 项内容") { try await manager.setEnabled(enabled, files: selected) }
+        mutate(Messages.AppInstanceContentView.selectedText1(String(describing: enabled ? Messages.AppInstanceContentView.errorText7.localized : Messages.AppInstanceContentView.errorText8.localized), Int64(selected.count)).localized) { try await manager.setEnabled(enabled, files: selected) }
     }
     private func checkUpdates() {
         error = nil; updatesChecked = false
@@ -199,7 +200,7 @@ struct InstanceContentView: View {
     }
     private func prepare(_ update: CurseForgeUpdate) {
         error = nil
-        model.perform("解析 \(update.installed.title) 更新", presentErrors: false) { _ in
+        model.perform(Messages.AppInstanceContentView.prepareText1(String(describing: update.installed.title)), presentErrors: false) { _ in
             do {
                 let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).plan(file: update.available, instance: instance, paths: model.paths)
                 try Task.checkCancellation(); cursePlan = result
@@ -214,7 +215,7 @@ struct InstanceContentView: View {
         let selected = updates.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
         let curseSelected = curseUpdates.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
         error = nil
-        model.perform("准备批量更新", presentErrors: false) { _ in
+        model.perform(Messages.AppInstanceContentView.curseSelectedText1, presentErrors: false) { _ in
             do {
                 let updater = ContentBatchUpdater(curseforge: CurseForgeService(apiKey: curseSelected.isEmpty ? "" : try CurseForgeKeyStore.load()))
                 let result = try await updater.prepare(modrinth: selected, curseforge: curseSelected, instance: instance, paths: model.paths)
@@ -224,7 +225,7 @@ struct InstanceContentView: View {
     }
     private func apply(_ update: ContentUpdate) {
         error = nil
-        model.perform("更新 \(update.installed.title)", presentErrors: false, instanceID: instance.id) { id in
+        model.perform(Messages.AppInstanceContentView.applyText1(String(describing: update.installed.title)), presentErrors: false, instanceID: instance.id) { id in
             do {
                 try await ModrinthService().install(version: update.available, type: update.installed.kind.rawValue, instance: instance, paths: model.paths, downloader: model.installer.downloader) { p in await model.progress(id, p) }
                 updates.removeValue(forKey: update.id); await reload()

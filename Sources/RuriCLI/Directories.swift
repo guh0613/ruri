@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -7,34 +8,34 @@ extension CLI {
         switch args.first ?? "list" {
         case "list":
             guard args.count <= 1 else { throw usage }
-            print("\(state.selectedDirectoryID == nil || state.selectedDirectoryID == GameDirectory.defaultID ? "*" : " ") \(GameDirectory.defaultID) 默认实例文件夹\n  \(paths.root.path)")
+            print(Messages.CLIDirectories.stateText1(String(describing: state.selectedDirectoryID == nil || state.selectedDirectoryID == GameDirectory.defaultID ? "*" : " "), String(describing: GameDirectory.defaultID), String(describing: paths.root.path)).localized)
             for directory in state.gameDirectories ?? [] {
                 let count = state.instances.filter { $0.directoryID == directory.id }.count
-                let availability = (try? directory.validateAvailability()) != nil ? "可用" : "无法访问"
-                print("\(state.selectedDirectoryID == directory.id ? "*" : " ") \(directory.id) \(directory.name) [\(count) 个实例 · \(availability)]\n  \(directory.url.path)")
+                let availability = (try? directory.validateAvailability()) != nil ? Messages.CLIDirectories.availabilityText1.localized : Messages.CLIDirectories.availabilityText2.localized
+                print(Messages.CLIDirectories.availabilityText3(String(describing: state.selectedDirectoryID == directory.id ? "*" : " "), String(describing: directory.id), String(describing: directory.name), Int64(count), String(describing: availability), String(describing: directory.url.path)).localized)
             }
             for folder in state.detachedMinecraftFolders ?? [] {
-                print("  \(folder.id) \(folder.directory.name) [已从列表移除 · 保留 \(folder.instances.count) 个实例设置]\n  \(folder.directory.url.path)")
+                print(Messages.CLIDirectories.availabilityText4(String(describing: folder.id), String(describing: folder.directory.name), Int64(folder.instances.count), String(describing: folder.directory.url.path)).localized)
             }
             return
         case "add":
             guard args.count == 3 else { throw usage }
             let result = try MinecraftFolderStore.add(name: args[2], url: URL(fileURLWithPath: args[1]), paths: paths)
-            print("Added \(result.selectedDirectoryID!.uuidString)"); return
+            print(Messages.CLIDirectories.resultText1(String(describing: result.selectedDirectoryID!.uuidString)).localized); return
         case "refresh":
             guard args.count == 1 else { throw usage }
             _ = try MinecraftFolderStore.refresh(state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths)
         case "imports":
             guard args.count == 1 else { throw usage }
             for item in try RepositoryImportStore.pending(directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths) {
-                print("\(item.id) \(item.name) · \(item.canFinish ? "可完成导入" : "未完成安装")\n  \(item.workspace.path)")
+                print("\(item.id) \(item.name) · \(item.canFinish ? Messages.CLIDirectories.resultText2.localized : Messages.CLIDirectories.resultText3.localized)\n  \(item.workspace.path)")
             }
             return
         case "recover-import":
             guard args.count == 3, let id = UUID(uuidString: args[1]), ["--finish", "--keep-files"].contains(args[2]) else { throw usage }
             if let kept = try RepositoryImportStore.recover(id, directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, finish: args[2] == "--finish", paths: paths) {
-                print("导入已取消，工作文件保留在：\(kept.path)")
-            } else { print("导入已完成") }
+                print(Messages.CLIDirectories.keptText1(String(describing: kept.path)).localized)
+            } else { print(Messages.CLIDirectories.keptText2.localized) }
             return
         case "restore":
             guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]),
@@ -52,7 +53,7 @@ extension CLI {
             else { try GameDirectoryStore.remove(id, paths: paths) }
         default: throw usage
         }
-        print("Updated directory settings")
+        print(Messages.CLIDirectories.idText1.localized)
     }
-    private static var usage: RuriError { .message("用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder] | imports | recover-import <uuid> <--finish|--keep-files>]") }
+    private static var usage: RuriError { .message(Messages.CLIDirectories.usageText1.localized) }
 }

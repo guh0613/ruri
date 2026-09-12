@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -10,10 +11,10 @@ public struct RunDirectoryCopyProgress: Sendable {
     public let totalBytes: Int64
     public var progress: InstallProgress {
         switch phase {
-        case .verifying: .init("正在校验文件内容…", completed: completed, total: total)
-        case .copying: .init("正在复制游戏文件（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: completed, total: total)
-        case .publishing: .init("正在写入目标（\(ByteCountFormatter.string(fromByteCount: bytesCopied, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file))）", completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
-        case .committed: .init("目录已更新，正在清理复制记录", completed: 1, total: 1)
+        case .verifying: .init(Messages.CoreGameRunDirectoryCopy.progressText1, completed: completed, total: total)
+        case .copying: .init(Messages.CoreGameRunDirectoryCopy.progressText2(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: completed, total: total)
+        case .publishing: .init(Messages.CoreGameRunDirectoryCopy.progressText3(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
+        case .committed: .init(Messages.CoreGameRunDirectoryCopy.progressText4, completed: 1, total: 1)
         }
     }
 }
@@ -34,13 +35,13 @@ public struct RunDirectoryCopyFailure: LocalizedError, Sendable {
     public let message: String
     public let preservedCopy: URL?
     public let cancelled: Bool
-    public var errorDescription: String? { message + (preservedCopy.map { "\n工作副本保留在：\($0.path)" } ?? "") }
+    public var errorDescription: String? { message + (preservedCopy.map { Messages.CoreGameRunDirectoryCopy.errorDescriptionText1(String(describing: $0.path)).localized } ?? "") }
 }
 
 extension GameRunDirectoryChange {
     public func copyToEmpty(_ preview: GameRunDirectoryChangePreview, progress: @Sendable (RunDirectoryCopyProgress) -> Void = { _ in }) async throws -> RunDirectoryCopyResult {
         if let issue = preview.copyIssue { throw RuriError.message(issue) }
-        guard preview.canCopyToTarget else { throw RuriError.message("目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。") }
+        guard preview.canCopyToTarget else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.issueText1) }
         let initial = try StateStore.load(paths)
         let current = paths.configured(with: initial)
         let instance = try find(preview.instanceID, in: initial)
@@ -87,7 +88,7 @@ extension GameRunDirectoryChange {
                     journal.items.append(.init(area: area, name: url.lastPathComponent, identity: try .read(url)))
                 }
             }
-            guard journal.items.count <= 4096 else { throw RuriError.message("游戏目录的顶层项目过多，无法记录安全的发布过程。") }
+            guard journal.items.count <= 4096 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.incomingText1) }
             journal.phase = .publishing; try journal.save(paths: current)
             var sizes: [String: Int64] = [:]
             for (area, entries) in [(RunDirectoryCopyJournal.Area.game, preview.sourceSnapshot.game), (.metadata, preview.sourceSnapshot.metadata)] {
@@ -110,7 +111,7 @@ extension GameRunDirectoryChange {
                     publishedBytes += amount
                     progress(.init(phase: .publishing, completed: index, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
                 }
-                guard (journal.items[index].publishedIdentity ?? item.identity).matches(destination) else { throw RuriError.message("复制项目在发布时身份改变，已保留工作区。") }
+                guard (journal.items[index].publishedIdentity ?? item.identity).matches(destination) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.completedBytesText1) }
                 publishedBytes = completedBytes + (sizes[item.area.rawValue + "/" + item.name] ?? 0)
                 progress(.init(phase: .publishing, completed: index + 1, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
             }
@@ -130,25 +131,25 @@ extension GameRunDirectoryChange {
         } catch {
             if !activated {
                 try? FileManager.default.removeItem(at: preparing)
-                throw RunDirectoryCopyFailure(message: "运行目录复制尚未开始：\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled)
+                throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.remainderText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled)
             }
             if committed == nil {
                 do {
                     let saved = try StateStore.load(paths)
                     if saved.instances.first(where: { $0.id == instance.id })?.lastRunDirectoryChangeID == journal.id { committed = saved }
                 } catch {
-                    throw RunDirectoryCopyFailure(message: "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled)
+                    throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.savedText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled)
                 }
             }
             if let committed {
-                return .init(state: committed, preservedCopy: nil, warning: "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：\(error.localizedDescription)")
+                return .init(state: committed, preservedCopy: nil, warning: Messages.CoreGameRunDirectoryCopy.committedText1(String(describing: error.localizedDescription)).localized)
             }
-            let reason = Task.isCancelled || error is CancellationError ? "运行目录复制已取消，原目录和设置未改动。" : "运行目录复制未完成：\(error.localizedDescription)"
+            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreGameRunDirectoryCopy.reasonText1.localized : Messages.CoreGameRunDirectoryCopy.reasonText2(String(describing: error.localizedDescription)).localized
             do {
                 let preserved = try abandon(journal, access: access)
                 throw RunDirectoryCopyFailure(message: reason + (preserved.warning.map { "\n" + $0 } ?? ""), preservedCopy: preserved.workspace, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as RunDirectoryCopyFailure { throw failure }
-            catch { throw RunDirectoryCopyFailure(message: reason + "\n自动恢复尚未完成，请在实例设置中恢复复制。\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled) }
+            catch { throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.recoveryFailure(reason, error.localizedDescription).localized, preservedCopy: nil, cancelled: Task.isCancelled) }
         }
     }
 
@@ -171,7 +172,7 @@ extension GameRunDirectoryChange {
         let state = try StateStore.load(paths)
         let current = paths.configured(with: state)
         let journal = try RunDirectoryCopyJournal.load(paths: current, instanceID: instanceID)
-        guard journal.id == transactionID else { throw RuriError.message("待恢复的复制记录已经变化，请刷新后重试。") }
+        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.journalText1) }
         let instance = try find(instanceID, in: state)
         try validateJournalBinding(journal, current: instance)
         let originalPaths = current.including(journal.original)
@@ -179,7 +180,7 @@ extension GameRunDirectoryChange {
         defer { withExtendedLifetime(access) {} }
         try access.lockFiles()
         let latest = try RunDirectoryCopyJournal.load(paths: current, instanceID: instanceID)
-        guard latest.id == journal.id else { throw RuriError.message("复制记录已经变化。") }
+        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.latestText1) }
         let freshState = try StateStore.load(paths), fresh = try find(instanceID, in: freshState)
         try validateJournalBinding(latest, current: fresh)
         if fresh.lastRunDirectoryChangeID == journal.id {
@@ -194,23 +195,23 @@ extension GameRunDirectoryChange {
               current.repositoryVersionID == journal.original.repositoryVersionID,
               current.gameVersion == journal.original.gameVersion, current.loader == journal.original.loader, current.loaderVersion == journal.original.loaderVersion,
               current.lastRunDirectoryChangeID == journal.id || current.runDirectory == journal.original.runDirectory else {
-            throw RuriError.message("实例设置在复制中断后改变，工作区已保留，请先核对原实例。")
+            throw RuriError.message(Messages.CoreGameRunDirectoryCopy.validateJournalBindingText1)
         }
         if current.lastRunDirectoryChangeID != journal.id, journal.original.runDirectory == .custom {
-            guard let expected = journal.original.customRunDirectory, current.customRunDirectory?.isSameLocation(as: expected) == true else { throw RuriError.message("自定义源目录在复制中断后改变，请先核对原位置。") }
+            guard let expected = journal.original.customRunDirectory, current.customRunDirectory?.isSameLocation(as: expected) == true else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.expectedText1) }
         }
     }
     private func removeEmptyTree(_ url: URL) throws {
         guard FileManager.default.fileExists(atPath: url.path) else { return }
         let entries = try FileTree.entries(in: url)
-        guard entries.allSatisfy(\.directory) else { throw RuriError.message("目标目录在发布前出现新文件，未覆盖这些内容。") }
+        guard entries.allSatisfy(\.directory) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText1) }
         for entry in entries.sorted(by: { $0.path.count > $1.path.count }) {
-            guard rmdir(entry.url.path) == 0 else { throw RuriError.message("目标空目录发生变化，未删除新增文件。") }
+            guard rmdir(entry.url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText2) }
         }
-        guard rmdir(url.path) == 0 else { throw RuriError.message("目标目录并非空目录，未替换。") }
+        guard rmdir(url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText3) }
     }
     private func cleanupWarning(_ remainder: URL?) -> String? {
-        remainder == nil ? nil : "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。"
+        remainder == nil ? nil : Messages.CoreGameRunDirectoryCopy.cleanupWarningText1.localized
     }
     private func cleanup(_ journal: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> URL? {
         try access.sourcePaths.validateInstanceLocation(journal.original.id)
@@ -246,7 +247,7 @@ extension GameRunDirectoryChange {
             guard (item.publishedIdentity ?? item.identity).matches(destination) else {
                 var info = stat()
                 if lstat(destination.path, &info) == 0 { retained.append(item.name) }
-                else if errno != ENOENT { throw RuriError.message("无法检查目标项目，复制记录已保留：\(item.name)") }
+                else if errno != ENOENT { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.infoText1(String(describing: item.name))) }
                 continue
             }
             if item.publishedIdentity != nil {
@@ -268,7 +269,7 @@ extension GameRunDirectoryChange {
         try FileManager.default.createDirectory(at: recovery.deletingLastPathComponent(), withIntermediateDirectories: true)
         try RunDirectoryCopyGuard.clear(journal, paths: access.targetPaths)
         try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: recovery)
-        let warning = retained.isEmpty ? nil : "目标目录中有 \(retained.count) 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：\(retained.prefix(5).joined(separator: "、"))。"
+        let warning = retained.isEmpty ? nil : Messages.CoreGameRunDirectoryCopy.warningText1(Int64(retained.count), String(describing: retained.prefix(5).joined(separator: "、"))).localized
         if journal.stagingOnTarget == true {
             let workspace = try journal.workspace(paths: access.sourcePaths)
             if FileManager.default.fileExists(atPath: workspace.path) { return (workspace, warning) }

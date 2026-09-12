@@ -1,8 +1,9 @@
+import RuriLocalization
 import Foundation
 
 public struct ModpackFileChange: Identifiable, Sendable {
     public enum Action: String, Sendable { case add, replace, remove, keep
-        public var title: String { switch self { case .add: "新增"; case .replace: "替换"; case .remove: "移除"; case .keep: "保留本地" } }
+        public var title: String { switch self { case .add: Messages.CoreModpackUpdatePlan.titleText1.localized; case .replace: Messages.CoreModpackUpdatePlan.titleText2.localized; case .remove: Messages.CoreModpackUpdatePlan.titleText3.localized; case .keep: Messages.CoreModpackUpdatePlan.titleText4.localized } }
     }
     public let id: String
     public let previousPath: String?
@@ -30,10 +31,10 @@ public struct PreparedModpackUpdate: Identifiable, Sendable {
 
 enum ModpackUpdatePlanner {
     static func digest(_ file: URL) throws -> String? {
-        if (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) != nil { throw RuriError.message("更新不修改符号链接：\(file.lastPathComponent)") }
+        if (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) != nil { throw RuriError.message(Messages.CoreModpackUpdatePlan.digestText1(String(describing: file.lastPathComponent))) }
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let info = try file.resourceValues(forKeys: [.isRegularFileKey])
-        guard info.isRegularFile == true else { throw RuriError.message("待更新文件的位置已有文件夹：\(file.lastPathComponent)") }
+        guard info.isRegularFile == true else { throw RuriError.message(Messages.CoreModpackUpdatePlan.infoText1(String(describing: file.lastPathComponent))) }
         return try InstanceTransfer.sha1(file)
     }
     static func protected(_ path: String) -> Bool {
@@ -59,7 +60,7 @@ enum ModpackUpdatePlanner {
             let disabled = file.path + ".disabled"
             if ["mods/", "resourcepacks/", "shaderpacks/"].contains(where: file.path.hasPrefix), try digest(LauncherPaths.safePath(disabled, within: game)) != nil { return disabled }
             let found = try Set(file.identities.flatMap { aliases[$0] ?? [] }).filter { try digest(LauncherPaths.safePath($0, within: game)) != nil }
-            guard found.count <= 1 else { throw RuriError.message("此整合包文件对应多个本地版本，请先处理重复内容：\(file.path)") }
+            guard found.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.foundText1(String(describing: file.path))) }
             return found.first
         }
         func change(previous: InstalledModpack.File?, incoming: InstalledModpack.File?) throws -> ModpackFileChange? {
@@ -80,14 +81,14 @@ enum ModpackUpdatePlanner {
             if let previous, let incoming, previous.sha1 == incoming.sha1, previous.path == incoming.path { return nil }
             if previous != nil, source == nil {
                 action = incoming?.force == true ? .replace : .keep
-                explanation = incoming?.force == true ? "此文件已在本地移除，整合包要求重新添加" : "此文件已在本地移除"; conflict = incoming != nil
+                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.incomingText1.localized : Messages.CoreModpackUpdatePlan.incomingText2.localized; conflict = incoming != nil
             } else if incoming == nil {
                 action = edited ? .keep : .remove; conflict = edited
-                explanation = edited ? "新版不再包含此文件，但本地内容已修改" : nil
+                explanation = edited ? Messages.CoreModpackUpdatePlan.incomingText3.localized : nil
             } else if previous == nil && collision == incoming?.sha1 { return nil }
             else if edited && previous != nil || (collision != nil && target != source) {
                 action = incoming?.force == true ? .replace : .keep; conflict = true
-                explanation = incoming?.force == true ? "整合包要求替换；本地文件已有修改" : "本地文件已有修改或与个人文件同名"
+                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.incomingText4.localized : Messages.CoreModpackUpdatePlan.incomingText5.localized
             } else { action = previous == nil ? .add : .replace }
             return .init(id: id, previousPath: source, targetPath: target, action: action, conflict: conflict, explanation: explanation, incoming: incoming, observed: observed)
         }
@@ -95,11 +96,11 @@ enum ModpackUpdatePlanner {
             var previous = oldByPath[file.path]
             if previous == nil && !file.identities.isEmpty {
                 let matches = old.files.filter { !consumed.contains($0.path) && !Set($0.identities).isDisjoint(with: file.identities) }
-                guard matches.count <= 1 else { throw RuriError.message("整合包包含重复项目，无法确定要替换的文件：\(file.path)") }
+                guard matches.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.matchesText1(String(describing: file.path))) }
                 previous = matches.first
             }
             if let previous {
-                guard consumed.insert(previous.path).inserted else { throw RuriError.message("新版整合包为同一项目提供了多个文件：\(file.path)") }
+                guard consumed.insert(previous.path).inserted else { throw RuriError.message(Messages.CoreModpackUpdatePlan.previousText1(String(describing: file.path))) }
             }
             if let item = try change(previous: previous, incoming: file) { result.append(item) }
         }

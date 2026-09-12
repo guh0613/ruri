@@ -1,11 +1,12 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
 extension InstanceMover {
     func moveRepository(_ preview: InstanceMovePreview, progress: @Sendable (InstanceMoveProgress) -> Void) async throws -> InstanceMoveResult {
-        guard let snapshot = preview.repository else { throw RuriError.message("移动预览缺少安装文件。") }
+        guard let snapshot = preview.repository else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.snapshotText1) }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message("实例设置在预览后改变，请重新预览。") }
+        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.stateText1) }
         let access = try await InstanceMoveAccess.acquire(instance: preview.source, paths: current)
         defer { withExtendedLifetime(access) {} }
         try requireIndependentVersion(preview.source, paths: current)
@@ -25,20 +26,20 @@ extension InstanceMover {
         try record.validateLocations(paths: current)
         for part in destinationParts(record) { try Self.requireAbsent(record.destination(part, paths: current)) }
         try StateStore.update(paths) { latest in
-            guard latest.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message("实例设置已改变，请重新预览。") }
+            guard latest.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText1) }
         }
         try record.save(paths: current, at: preparing)
         try RunDirectoryFileCopy.moveWithoutReplacing(preparing, to: root)
         do {
             let workspace = try record.workspace(paths: current)
             try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message("移动工作区已存在，未覆盖已有文件。") }
+            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.workspaceText1) }
             record.workspaceIdentity = try .read(workspace); try record.save(paths: current)
             try record.reserveVersions()
             let location = record
             @Sendable func validate() throws {
                 try location.validateLocations(paths: current)
-                guard location.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message("移动工作区身份改变。") }
+                guard location.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.validateText1) }
             }
             var copied: Int64 = 0, lastUpdate = Date.distantPast
             progress(.init(phase: .copying, totalBytes: preview.bytes))
@@ -84,7 +85,7 @@ extension InstanceMover {
             try verifyRepositoryDestination(record, paths: current)
             try access.lease.clearFinishedReservation(paths: current, instanceID: preview.source.id)
             let saved = try StateStore.update(paths) { latest in
-                guard let index = latest.instances.firstIndex(where: { $0.id == preview.source.id }), latest.instances[index] == preview.source else { throw RuriError.message("实例设置在移动期间改变。") }
+                guard let index = latest.instances.firstIndex(where: { $0.id == preview.source.id }), latest.instances[index] == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.indexText1) }
                 try record.validateLocations(paths: current)
                 latest.instances[index] = record.moved; latest.selectedDirectoryID = record.moved.directoryID; latest.selectedInstanceID = record.moved.id
             }
@@ -93,13 +94,13 @@ extension InstanceMover {
             return try finishRepository(record, state: saved, preservingSource: false, progress: progress)
         } catch {
             let saved = try StateStore.load(paths)
-            if try record.isCommitted(saved) { return .init(state: saved, preservedFiles: [root], warning: "实例已移动，原文件与工作记录尚需处理，请恢复实例移动。\(error.localizedDescription)") }
+            if try record.isCommitted(saved) { return .init(state: saved, preservedFiles: [root], warning: Messages.CoreRepositoryInstanceMover.savedText1(String(describing: error.localizedDescription)).localized) }
             let reason = error.localizedDescription
             do {
                 let kept = try abandonRepository(record, paths: current)
-                throw InstanceMoveFailure(message: Task.isCancelled || error is CancellationError ? "移动已取消，原实例保留，工作副本已另存。" : "移动未完成，原实例保留。\(reason)", preservedFiles: kept, cancelled: Task.isCancelled || error is CancellationError)
+                throw InstanceMoveFailure(message: Task.isCancelled || error is CancellationError ? Messages.CoreRepositoryInstanceMover.keptText1.localized : Messages.CoreRepositoryInstanceMover.keptText2(String(describing: reason)).localized, preservedFiles: kept, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as InstanceMoveFailure { throw failure }
-            catch { throw InstanceMoveFailure(message: "移动需要恢复，原实例保留。\(reason)\n\(error.localizedDescription)", preservedFiles: [root], cancelled: Task.isCancelled) }
+            catch { throw InstanceMoveFailure(message: Messages.CoreRepositoryInstanceMover.failureText1(String(describing: reason), String(describing: error.localizedDescription)).localized, preservedFiles: [root], cancelled: Task.isCancelled) }
         }
     }
 
@@ -112,10 +113,10 @@ extension InstanceMover {
     }
     func recoverRepository(_ instanceID: UUID, transactionID: UUID, state: PersistentState, preservingSource: Bool, progress: @Sendable (InstanceMoveProgress) -> Void) throws -> InstanceMoveResult {
         let record = try RepositoryMoveJournal.load(paths: paths, instanceID: instanceID)
-        guard record.id == transactionID else { throw RuriError.message("待恢复的移动已经改变。") }
+        guard record.id == transactionID else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText2) }
         try record.validateLocations(paths: paths)
         if try record.isCommitted(state) { return try finishRepository(record, state: state, preservingSource: preservingSource, progress: progress) }
-        return .init(state: state, preservedFiles: try abandonRepository(record, paths: paths), warning: "未完成的移动已恢复，原实例及工作副本保留。")
+        return .init(state: state, preservedFiles: try abandonRepository(record, paths: paths), warning: Messages.CoreRepositoryInstanceMover.recordText3.localized)
     }
     private func destinationParts(_ record: RepositoryMoveJournal) -> [RepositoryMoveJournal.Part] { record.moved.repositoryVersionID == nil ? [.metadata] : [.metadata, .version] }
     private func rebindRepositoryMovePack(_ metadata: URL, moved: GameInstance, game: URL) throws {
@@ -127,11 +128,11 @@ extension InstanceMover {
         try FileExtendedAttributes.rewrite(JSONEncoder().encode(pack), at: file)
     }
     private func verifyRepositoryDestination(_ record: RepositoryMoveJournal, paths: LauncherPaths, contents: Bool = true) throws {
-        guard record.publications.map(\.part) == destinationParts(record) else { throw RuriError.message("移动目标尚未完整发布。") }
+        guard record.publications.map(\.part) == destinationParts(record) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.verifyRepositoryDestinationText1) }
         let root = try InstanceMoveJournal.root(paths: paths, instanceID: record.original.id)
         for publication in record.publications {
             let target = try record.destination(publication.part, paths: paths)
-            guard (publication.published ?? publication.staged).matches(target) else { throw RuriError.message("移动目标的身份改变，原文件已保留。") }
+            guard (publication.published ?? publication.staged).matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText1) }
             if contents { try FileTreeManifest.load(from: root.appendingPathComponent("target-" + publication.part.rawValue + ".json"), expectedDigest: publication.digest).requireMatch(in: target) }
         }
         if contents, let directory = record.targetCollection, record.moved.repositoryVersionID != nil {
@@ -141,7 +142,7 @@ extension InstanceMover {
     private func finishRepository(_ input: RepositoryMoveJournal, state: PersistentState, preservingSource: Bool, progress: @Sendable (InstanceMoveProgress) -> Void) throws -> InstanceMoveResult {
         var record = input
         try record.validateLocations(paths: paths)
-        guard try record.isCommitted(state) else { throw RuriError.message("移动尚未提交，不能清理原文件。") }
+        guard try record.isCommitted(state) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText4) }
         progress(.init(phase: .verifying))
         try verifyRepositoryDestination(record, paths: paths, contents: !preservingSource)
         let root = try InstanceMoveJournal.root(paths: paths, instanceID: record.original.id), retired = try record.retirement(paths: paths)
@@ -155,25 +156,25 @@ extension InstanceMover {
             if record.retirementIdentity == nil {
                 for source in record.sources {
                     let location = try record.source(source.part, paths: paths)
-                    guard source.identity.matches(location) else { throw RuriError.message("原文件夹身份改变，请检查或选择保留原文件完成移动。") }
+                    guard source.identity.matches(location) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText1) }
                     try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest).requireMatch(in: location)
                 }
                 try FileManager.default.createDirectory(at: retired.deletingLastPathComponent(), withIntermediateDirectories: true)
-                guard mkdir(retired.path, S_IRWXU) == 0 else { throw RuriError.message("无法创建原文件清理目录。") }
+                guard mkdir(retired.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText2) }
                 record.retirementIdentity = try .read(retired); record.phase = .retiring; try record.save(paths: paths)
             }
-            guard record.retirementIdentity?.matches(retired) == true || (record.phase == .deleting && !FileManager.default.fileExists(atPath: retired.path)) else { throw RuriError.message("原文件清理目录身份改变。") }
+            guard record.retirementIdentity?.matches(retired) == true || (record.phase == .deleting && !FileManager.default.fileExists(atPath: retired.path)) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText3) }
             if record.phase != .deleting {
                 progress(.init(phase: .retiring))
                 for source in record.sources {
                     let location = try record.source(source.part, paths: paths), target = retired.appendingPathComponent(source.part.rawValue)
                     let receipt = try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest)
                     if FileManager.default.fileExists(atPath: location.path) {
-                        guard source.identity.matches(location), !FileManager.default.fileExists(atPath: target.path) else { throw RuriError.message("原位置出现其他文件，未继续清理。") }
+                        guard source.identity.matches(location), !FileManager.default.fileExists(atPath: target.path) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText1) }
                         try receipt.requireMatch(in: location)
-                        guard rename(location.path, target.path) == 0 else { throw RuriError.message("无法整理原实例文件，请恢复移动。") }
+                        guard rename(location.path, target.path) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText2) }
                     }
-                    guard source.identity.matches(target) else { throw RuriError.message("无法确认原文件的清理位置。") }
+                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText3) }
                     try receipt.requireMatch(in: target)
                 }
                 try verifyRepositoryDestination(record, paths: paths)
@@ -183,7 +184,7 @@ extension InstanceMover {
             for source in record.sources {
                 let target = retired.appendingPathComponent(source.part.rawValue)
                 if FileManager.default.fileExists(atPath: target.path) {
-                    guard source.identity.matches(target) else { throw RuriError.message("剩余原文件的身份改变。") }
+                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText2) }
                     try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest).requireRemainingMatch(in: target)
                     try FileManager.default.removeItem(at: target)
                 }
@@ -195,18 +196,18 @@ extension InstanceMover {
         if record.workspaceIdentity?.matches(workspace) == true { do { try FileManager.default.removeItem(at: workspace) } catch { kept.append(workspace) } }
         let recordLocation = try retireRepositoryRecord(record)
         if kept.isEmpty { try? FileManager.default.removeItem(at: recordLocation) }
-        return .init(state: state, preservedFiles: kept, warning: kept.isEmpty ? nil : "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。")
+        return .init(state: state, preservedFiles: kept, warning: kept.isEmpty ? nil : Messages.CoreRepositoryInstanceMover.recordLocationText1.localized)
     }
     private func abandonRepository(_ input: RepositoryMoveJournal, paths: LauncherPaths) throws -> [URL] {
         var record = input; try record.validateLocations(paths: paths)
-        guard record.retirementIdentity == nil else { throw RuriError.message("移动包含原文件清理记录，需要先核对提交状态。") }
+        guard record.retirementIdentity == nil else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText5) }
         record.phase = .recovering; try record.save(paths: paths)
         let workspace = try record.workspace(paths: paths)
         var kept: [URL] = []
         for publication in record.publications {
             let target = try record.destination(publication.part, paths: paths)
             if (publication.published ?? publication.staged).matches(target) {
-                guard record.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message("工作区身份改变，目标文件原地保留。") }
+                guard record.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText3) }
                 try RunDirectoryFileCopy.returnToWorkspace(target, workspace: workspace)
             } else if FileManager.default.fileExists(atPath: target.path) { kept.append(target) }
         }

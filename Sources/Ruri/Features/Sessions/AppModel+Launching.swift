@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -8,7 +9,7 @@ extension AppModel {
         // have just committed a directory change while this window was idle.
         save()
         guard !readOnly, let stored = state.instances.first(where: { $0.id == requested.id }) else { return }
-        guard !isInstanceInUse(stored.id) else { notice = "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。"; return }
+        guard !isInstanceInUse(stored.id) else { notice = Messages.AppAppModelLaunching.storedText1.localized; return }
         guard var account = activeAccount else { showAccount = true; return }
         do {
             let defaults = state.settings
@@ -23,7 +24,7 @@ extension AppModel {
             let presentation = stored.resolvedLaunchSettings(defaults: defaults).presentation
             launchPresentations[recorder.record.id] = presentation
             if presentation.showLogs { showLogs = true }
-            perform("启动 \(stored.name)", presentErrors: false) { [self] id in
+            perform(Messages.AppAppModelLaunching.presentationText1(String(describing: stored.name)), presentErrors: false) { [self] id in
                 do {
                     var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability)
                     try Task.checkCancellation()
@@ -37,7 +38,7 @@ extension AppModel {
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()
                     try await WorldManager(paths: paths, instanceID: instance.id).recover()
                     try advanceSession(.account)
-                    progress(id, InstallProgress("正在检查账号和 Java"))
+                    progress(id, InstallProgress(Messages.AppAppModelLaunching.installedText1))
                     var token = "0"
                     var externalAuth: ExternalAuthLaunch?
                     if account.kind == .microsoft {
@@ -55,8 +56,8 @@ extension AppModel {
                         (account, credentials) = try await ExternalAuthentication().refresh(account: account, credentials: credentials)
                         recorder.addSecrets([credentials.accessToken, credentials.clientToken])
                         try addExternal(account, credentials: credentials, requireExisting: true, activate: false)
-                        guard let server = account.externalLogin?.server else { throw RuriError.message("请重新添加外置认证账号。") }
-                        progress(id, InstallProgress("正在准备外置认证组件"))
+                        guard let server = account.externalLogin?.server else { throw RuriError.message(Messages.AppAppModelLaunching.serverText1) }
+                        progress(id, InstallProgress(Messages.AppAppModelLaunching.serverText2))
                         async let metadata = ExternalAuthentication().metadata(for: server)
                         async let jar = AuthlibInjector().prepare(paths: paths)
                         externalAuth = try await ExternalAuthLaunch(jar: jar, metadata: metadata, userProperties: credentials.user?.propertiesJSON ?? "{}")
@@ -71,9 +72,9 @@ extension AppModel {
                     let java: JavaRuntime
                     if instance.javaPath == nil, !runtimes.contains(where: { $0.major == requiredJava && $0.architecture == architecture }) {
                         let service = JavaInstaller(paths: paths)
-                        progress(id, InstallProgress("正在准备所需的 Java \(requiredJava)"))
+                        progress(id, InstallProgress(Messages.AppAppModelLaunching.serviceText1(String(describing: requiredJava))))
                         guard let runtime = try await service.available().first(where: { $0.major == requiredJava && $0.architecture == architecture }) else {
-                            throw RuriError.message("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
+                            throw RuriError.message(Messages.AppAppModelLaunching.runtimeText1)
                         }
                         java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
                         await scanJava()
@@ -90,7 +91,7 @@ extension AppModel {
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth)
                     recorder.addSecrets(plan.environmentRedactions)
-                    if let world { appendLog("[Ruri] 进入存档：" + world.name) }
+                    if let world { appendLog(Messages.AppAppModelLaunching.worldLaunch(world.name).localized) }
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
                     try advanceSession(.starting)
@@ -105,7 +106,7 @@ extension AppModel {
                     publishSession(recorder.record)
                     if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }
                     sessionRecorder = nil
-                    if !Task.isCancelled { showLogs = true; notice = recorder.record.title + "，可在运行记录中查看详情。" }
+                    if !Task.isCancelled { showLogs = true; notice = Messages.AppAppModelLaunching.launchFailureNotice(recorder.record.title).localized }
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             }
@@ -119,7 +120,7 @@ extension AppModel {
     private func showRecordingError(_ error: any Error) {
         guard !recordingErrorShown else { return }
         recordingErrorShown = true
-        let message = "运行记录未能完整写入：\(sessionRecorder?.redacted(error.localizedDescription) ?? error.localizedDescription)"
+        let message = Messages.AppAppModelLaunching.messageText1(String(describing: sessionRecorder?.redacted(error.localizedDescription) ?? error.localizedDescription)).localized
         notice = message; appendDisplayedLog("[Ruri] \(message)")
     }
     private func appendDisplayedLog(_ line: String) {

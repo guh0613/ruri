@@ -1,0 +1,532 @@
+[
+  {
+    "file": "Sources/Ruri/Features/Accounts/AccountAppearanceView.swift",
+    "literal": "\"\\(image.width) × \\(image.height) PNG\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Accounts/ExternalAccountForm.swift",
+    "literal": "\"https://…\"",
+    "reason": "Literal URL scheme input hint."
+  },
+  {
+    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
+    "literal": "\"CurseForge · \\(project.authors?.map(\\.name).joined(separator: \", \") ?? Messages.AppCurseForgeInstallView.bodyText1.localized)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
+    "literal": "\" · Beta\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
+    "literal": "\" · Alpha\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Instances/AppModel+Installation.swift",
+    "literal": "\"Minecraft \\(version)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Instances/InstanceComponentsView.swift",
+    "literal": "\" · Minecraft \"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Instances/Transfers/ModpackUpdateView.swift",
+    "literal": "\"Minecraft \\(plan.instance.gameVersion) → \\(plan.incoming.settings.gameVersion) · \\(plan.incoming.settings.loader.title) \\(plan.incoming.settings.loaderVersion ?? \"\")\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
+    "literal": "\"[Ruri] \\(java.label)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
+    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
+    "literal": "\"[Ruri] \\(failure)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
+    "literal": "\"[Ruri] \\(stage.title)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
+    "literal": "\"[Ruri] \\(message)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/LogsView.swift",
+    "literal": "\"Minecraft \\(record.gameVersion) · \\(record.loader) \\(record.loaderVersion ?? \"\")\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/CurseForgeSettingsSection.swift",
+    "literal": "\"API Key\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/LaunchCommandsEditor.swift",
+    "literal": "#\"printf '%s\\n' \"$RURI_GAME_DIRECTORY\"\"#",
+    "reason": "Literal shell/JVM/game command example, not prose."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
+    "literal": "\"Java \\(major)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
+    "literal": "\"-Dfile.encoding=UTF-8\"",
+    "reason": "Literal shell/JVM/game command example, not prose."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
+    "literal": "\"--width 1600 --height 900\"",
+    "reason": "Literal shell/JVM/game command example, not prose."
+  },
+  {
+    "file": "Sources/Ruri/Features/Worlds/SchematicManagerView.swift",
+    "literal": "\"schematics\"",
+    "reason": "On-disk Minecraft directory name."
+  },
+  {
+    "file": "Sources/Ruri/Features/Worlds/WorldDataPackSearchView.swift",
+    "literal": "\" · Minecraft \"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Worlds/WorldDataPackSearchView.swift",
+    "literal": "\" · Modrinth\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCLI/CLI.swift",
+    "literal": "\"\\(p.phase.rawValue) \\(p.completed)/\\(p.total) · \\(p.bytesCopied)/\\(p.totalBytes) bytes\\n\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCLI/CLI.swift",
+    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCLI/InstanceMoves.swift",
+    "literal": "\"\\(value.phase.rawValue) · \\(value.bytesCopied)/\\(value.totalBytes) bytes\\n\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCLI/SchematicCommands.swift",
+    "literal": "\"  \\(item.size) bytes\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/AccountAppearance.swift",
+    "literal": "\"--\\(boundary)\\r\\nContent-Disposition: form-data; name=\\\"\\(field)\\\"\\r\\n\\r\\n\\(value)\\r\\n\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/AccountAppearance.swift",
+    "literal": "\"--\\(boundary)\\r\\nContent-Disposition: form-data; name=\\\"file\\\"; filename=\\\"\\(kind.rawValue).png\\\"\\r\\nContent-Type: image/png\\r\\n\\r\\n\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/AccountAppearance.swift",
+    "literal": "\"multipart/form-data; boundary=\\(boundary)\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/AccountAppearance.swift",
+    "literal": "\"Bearer \"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/Authentication.swift",
+    "literal": "\"XBL3.0 x=\\(uhs);\\(xsts.Token)\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/Authentication.swift",
+    "literal": "\"Bearer \\(minecraft.access_token)\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/AuthenticationEndpoints.swift",
+    "literal": "\"XboxLive.signin offline_access\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/ExternalAuthentication.swift",
+    "literal": "\"-----BEGIN PUBLIC KEY-----\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/ExternalAuthentication.swift",
+    "literal": "\"application/json; charset=utf-8\"",
+    "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"Minecraft \\(session.gameVersion) · \\(session.loader) \\(session.loaderVersion ?? \"\")\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"A detailed walkthrough of the error\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"Exception in thread \"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"错误:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"unrecognized vm option\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"unrecognized option:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"invalid maximum heap size\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"improperly specified vm option\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"could not find or load main class\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"incompatible mods found!\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"incompatible mod set!\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"missing or unsupported mandatory dependencies:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"missing mandatory dependencies:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"loading errors encountered:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"found duplicate mods:\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"found a duplicate mod\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"duplicate versions for mod id\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"could not execute entrypoint stage\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"loaderexceptionmodcrash: caught exception from\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"failed to create mod instance.\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"there is insufficient memory for the java runtime environment to continue\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"could not reserve enough space for\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"incompatible architecture (have\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"bad cpu type in executable\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"glfw may only be used on the main thread\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"nswindow should only be instantiated on the main thread\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"nswindow drag regions should only be invalidated on the main thread\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"glfw error before init: [0x10008]cocoa: failed to find service port for display\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"failed loading config file\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"mixin apply for mod\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"mixin apply failed\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"mixin prepare failed\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"critical injection failure\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"a fatal error has been detected by the java runtime environment\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosis.swift",
+    "literal": "\"manually triggered debug crash\"",
+    "reason": "Exact game/JVM log recognition pattern; translation would change diagnostics."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"<主目录>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"<已隐藏>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"$1<凭据>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"<凭据>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"/Users/<用户>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"$1<玩家>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "#\"(?i)((?:Setting user|Username)\\s*:\\s*)[^\\r\\n]+\"#",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"<邮箱>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"$1<服务地址>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "#\"(?i)((?:Connecting to|Connecting to server|连接到)\\s+)[^\\s,]+\"#",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"$1<服务器>\"",
+    "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameLog.swift",
+    "literal": "\"<log4j:Event \"",
+    "reason": "Log4j XML recognition prefix."
+  },
+  {
+    "file": "Sources/RuriCore/Infrastructure/Files/FileAppleDouble.swift",
+    "literal": "\"Mac OS X        \"",
+    "reason": "Exact bytes in the AppleDouble file format."
+  },
+  {
+    "file": "Sources/RuriCore/Infrastructure/Files/FileAppleDouble.swift",
+    "literal": "\"This resource fork intentionally left blank   \"",
+    "reason": "Exact bytes in the AppleDouble file format."
+  },
+  {
+    "file": "Sources/RuriCore/Infrastructure/Networking/Network.swift",
+    "literal": "\"Ruri/0.1 (macOS Minecraft launcher)\"",
+    "reason": "HTTP User-Agent protocol value."
+  },
+  {
+    "file": "Sources/RuriCore/Installation/LoaderKind.swift",
+    "literal": "\"Legacy Fabric\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Installation/Manifest.swift",
+    "literal": "\"Invalid artifact URL\"",
+    "reason": "Developer-facing DecodingError debugDescription, not a localized explanation."
+  },
+  {
+    "file": "Sources/RuriCore/Instances/Discovery/MinecraftVersionMetadata.swift",
+    "literal": "\"Legacy Fabric\"",
+    "reason": "Loader identity or version recognition syntax used by import/launch logic."
+  },
+  {
+    "file": "Sources/RuriCore/Instances/Discovery/MinecraftVersionMetadata.swift",
+    "literal": "#\"^(?:[0-9]+(?:\\.[0-9]+)*(?:(?:-pre|-rc)[0-9]+| Pre-Release [0-9]+| Release Candidate [0-9]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$\"#",
+    "reason": "Loader identity or version recognition syntax used by import/launch logic."
+  },
+  {
+    "file": "Sources/RuriCore/Instances/GameInstance.swift",
+    "literal": "\"Minecraft \\(gameVersion)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Instances/Transfers/InstanceTransfer.swift",
+    "literal": "\"Prism / MultiMC\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Instances/Transfers/InstanceTransfer.swift",
+    "literal": "\"MCBBS / HMCL\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Java/JavaInstaller.swift",
+    "literal": "\"Java \\(major) · \\(architecture == \"aarch64\" ? \"Apple Silicon\" : \"Intel\") · \\(version)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Java/JavaInstaller.swift",
+    "literal": "\"Apple Silicon\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Java/JavaRuntime.swift",
+    "literal": "\"Java \\(major) · \\(architecture == \"aarch64\" ? \"Apple Silicon\" : \"Intel\") · \\(vendor)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Java/JavaRuntime.swift",
+    "literal": "\"Apple Silicon\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Java/JavaRuntime.swift",
+    "literal": "\"（Intel / Rosetta）\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "literal": "\" · Metaspace ≤ \\(Self.size($0))\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCore/Modpacks/HMCLPack.swift",
+    "literal": "#\"^(?:[0-9]+(?:\\.[0-9]+)*(?:[-_][A-Za-z0-9. -]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$\"#",
+    "reason": "Loader identity or version recognition syntax used by import/launch logic."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "literal": "\"[Ruri] \\(record.failure ?? Messages.CoreGameMonitor.handleText1.localized)\\n\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \\(record.updatedAt.ISO8601Format()) \\(descriptor.fallback)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \\(attempt.explanation)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \\(exit.explanation)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.exitText3.localized : record.failure ?? Messages.CoreGameSession.failText1.localized)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionRecovery.swift",
+    "literal": "\"\\n[Ruri] \\(date.ISO8601Format()) \\(text)\\n\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  }
+]

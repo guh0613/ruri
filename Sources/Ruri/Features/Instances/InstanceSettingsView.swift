@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -27,13 +28,13 @@ struct InstanceSettingsView: View {
     }
     var body: some View {
         VStack(spacing: 0) {
-            SettingsLayout(title: "实例设置", subtitle: instance.name, selection: $pane) {
+            SettingsLayout(title: Messages.AppInstanceSettingsView.bodyText1.localized, subtitle: instance.name, selection: $pane) {
                 switch pane {
                 case .overview: overview
                 case .files: files
                 default:
                     if pane == .runtime, let versions = instance.supportedJavaMajors, !versions.isEmpty {
-                        Section { LabeledContent("整合包支持的 Java", value: versions.map(String.init).joined(separator: "、")) }
+                        Section { LabeledContent(Messages.AppInstanceSettingsView.versionsText1.localized, value: LocalizedFormat.list(versions.map(String.init))) }
                     }
                     LaunchSettingsEditor(overrides: $launchOverrides, defaults: model.state.settings.defaultLaunchSettings, runtimes: model.runtimes, keys: pane.launchKeys)
                 }
@@ -44,12 +45,12 @@ struct InstanceSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack(spacing: 12) {
-                Menu("恢复默认") { Button("恢复所有启动设置") { launchOverrides = .init(); settingsIssue = nil } }
-                    .fixedSize().help("恢复启动设置的继承关系，保留名称和图标。")
-                Text(hasChanges ? "有未保存的更改" : "设置用于下一次启动").font(.caption).foregroundStyle(.secondary)
+                Menu(Messages.AppInstanceSettingsView.settingsIssueText1.localized) { Button(Messages.AppInstanceSettingsView.settingsIssueText2.localized) { launchOverrides = .init(); settingsIssue = nil } }
+                    .fixedSize().help(Messages.AppInstanceSettingsView.settingsIssueText3.localized)
+                Text(hasChanges ? Messages.AppInstanceSettingsView.settingsIssueText4.localized : Messages.AppInstanceSettingsView.settingsIssueText5.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button("保存", action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
+                Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppInstanceSettingsView.settingsIssueText6.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
                     .disabled(!hasChanges || loadingIcon || model.readOnly)
             }.padding(.horizontal, 20).padding(.vertical, 14)
         }.frame(width: 860, height: 670)
@@ -72,88 +73,88 @@ struct InstanceSettingsView: View {
         }
     }
     @ViewBuilder private var overview: some View {
-        Section("实例信息") {
-            LabeledContent("名称") {
-                TextField("实例名称", text: $instance.name, prompt: Text("输入实例名称"))
-                    .labelsHidden().textFieldStyle(.roundedBorder).frame(minWidth: 220).accessibilityLabel("实例名称")
+        Section(Messages.AppInstanceSettingsView.overviewText1.localized) {
+            LabeledContent(Messages.AppInstanceSettingsView.overviewText2.localized) {
+                TextField(Messages.AppInstanceSettingsView.overviewText3.localized, text: $instance.name, prompt: Text(Messages.AppInstanceSettingsView.overviewText4.localized))
+                    .labelsHidden().textFieldStyle(.roundedBorder).frame(minWidth: 220).accessibilityLabel(Messages.AppInstanceSettingsView.overviewText3.localized)
             }
-            Toggle("收藏此实例", isOn: $instance.favorite)
+            Toggle(Messages.AppInstanceSettingsView.overviewText5.localized, isOn: $instance.favorite)
             HStack(spacing: 14) {
                 InstanceIcon(loader: locationInstance.loader, size: 48, png: instance.iconPNG)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("实例图标")
-                    Text("选择图片后会自动裁剪为正方形。").font(.caption).foregroundStyle(.secondary)
+                    Text(Messages.AppInstanceSettingsView.overviewText6.localized)
+                    Text(Messages.AppInstanceSettingsView.overviewText7.localized).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 if loadingIcon { ProgressView().controlSize(.small) }
-                Menu("更改图标") {
-                    Button("选择图片…", action: chooseIcon)
-                    if instance.iconPNG != nil { Button("恢复默认图标") { instance.iconPNG = nil } }
+                Menu(Messages.AppInstanceSettingsView.overviewText8.localized) {
+                    Button(Messages.AppInstanceSettingsView.overviewText9.localized, action: chooseIcon)
+                    if instance.iconPNG != nil { Button(Messages.AppInstanceSettingsView.overviewText10.localized) { instance.iconPNG = nil } }
                 }.fixedSize().disabled(loadingIcon)
             }.padding(.vertical, 5)
         }
-        Section("游戏组件") {
+        Section(Messages.AppInstanceSettingsView.overviewText11.localized) {
             LabeledContent("Minecraft", value: locationInstance.gameVersion)
-            SettingsActionRow(title: "加载器", detail: locationInstance.subtitle, button: "管理…") { managingComponents = true }
+            SettingsActionRow(title: Messages.AppInstanceSettingsView.overviewText12.localized, detail: locationInstance.subtitle, button: Messages.AppInstanceSettingsView.overviewText13.localized) { managingComponents = true }
                 .disabled(model.busy || model.isInstanceInUse(instance.id) || !locationInstance.installed)
-            SettingsActionRow(title: "整合包更新", detail: "检查版本、安装更新或恢复上次配置。", button: "查看…") { updatingModpack = true }
+            SettingsActionRow(title: Messages.AppInstanceSettingsView.overviewText14.localized, detail: Messages.AppInstanceSettingsView.overviewText15.localized, button: Messages.AppInstanceSettingsView.overviewText16.localized) { updatingModpack = true }
                 .disabled(model.busy || (!ModpackUpdateStore.hasPending(paths: model.paths, instanceID: instance.id) && model.isInstanceInUse(instance.id)))
         }
     }
     @ViewBuilder private var files: some View {
-        Section("运行目录") {
-            LabeledContent("保存方式", value: (locationInstance.runDirectory ?? .isolated).title)
+        Section(Messages.AppInstanceSettingsView.filesText1.localized) {
+            LabeledContent(Messages.AppInstanceSettingsView.filesText2.localized, value: (locationInstance.runDirectory ?? .isolated).title)
             VStack(alignment: .leading, spacing: 6) {
                 Text((locationInstance.runDirectory ?? .isolated).explanation).font(.caption).foregroundStyle(.secondary)
                 Text(model.paths.game(instance.id).path).font(.system(.callout, design: .monospaced)).textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
             }
             if let error = model.customDirectoryErrors[instance.id] { Label(error, systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.orange) }
-            LabeledContent("位置与隔离") {
-                Button(directoryCopyPending ? "恢复目录复制…" : "切换运行目录…") { changingDirectory = true }
+            LabeledContent(Messages.AppInstanceSettingsView.errorText1.localized) {
+                Button(directoryCopyPending ? Messages.AppInstanceSettingsView.errorText2.localized : Messages.AppInstanceSettingsView.errorText3.localized) { changingDirectory = true }
                     .disabled(model.busy || (!directoryCopyPending && model.isInstanceInUse(instance.id)))
             }
             if locationInstance.customRunDirectory != nil {
-                Button(locationInstance.runDirectory == .custom ? "重新定位原游戏目录…" : "重新定位记住的自定义目录…") { relocatingDirectory = true }.disabled(model.busy)
+                Button(locationInstance.runDirectory == .custom ? Messages.AppInstanceSettingsView.errorText4.localized : Messages.AppInstanceSettingsView.errorText5.localized) { relocatingDirectory = true }.disabled(model.busy)
             }
             HStack {
-                Button("打开文件夹", systemImage: "folder") { model.reveal(locationInstance) }
+                Button(Messages.AppInstanceSettingsView.errorText6.localized, systemImage: "folder") { model.reveal(locationInstance) }
                 Spacer()
-                Button("模组") { model.reveal(locationInstance, folder: "mods") }
-                Button("存档") { model.reveal(locationInstance, folder: "saves") }
+                Button(Messages.AppInstanceSettingsView.errorText7.localized) { model.reveal(locationInstance, folder: "mods") }
+                Button(Messages.AppInstanceSettingsView.errorText8.localized) { model.reveal(locationInstance, folder: "saves") }
             }
         }
         Section {
             if model.pendingInstanceCopyIDs.contains(instance.id) || InstanceCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) {
-                SettingsActionRow(title: "未完成的实例复制", detail: "继续处理上次复制保留的文件。", button: "恢复…") { copyingInstance = true }.disabled(model.busy)
+                SettingsActionRow(title: Messages.AppInstanceSettingsView.errorText9.localized, detail: Messages.AppInstanceSettingsView.errorText10.localized, button: Messages.AppInstanceSettingsView.errorText11.localized) { copyingInstance = true }.disabled(model.busy)
             } else {
-                SettingsActionRow(title: "复制实例", detail: "保留原实例，创建一份独立副本。", button: "复制…") { copyingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                SettingsActionRow(title: Messages.AppInstanceSettingsView.errorText12.localized, detail: Messages.AppInstanceSettingsView.errorText13.localized, button: Messages.AppInstanceSettingsView.errorText14.localized) { copyingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
             }
             if model.pendingInstanceMoveIDs.contains(instance.id) || InstanceMoveGuard.hasPending(paths: model.paths, instanceID: instance.id) {
-                SettingsActionRow(title: "未完成的实例移动", detail: "继续处理上次移动保留的文件。", button: "恢复…") { movingInstance = true }.disabled(model.busy)
+                SettingsActionRow(title: Messages.AppInstanceSettingsView.errorText15.localized, detail: Messages.AppInstanceSettingsView.errorText16.localized, button: Messages.AppInstanceSettingsView.errorText11.localized) { movingInstance = true }.disabled(model.busy)
             } else {
-                SettingsActionRow(title: "移动实例", detail: "将实例转移到其他游戏文件夹。", button: "移动…") { movingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
+                SettingsActionRow(title: Messages.AppInstanceSettingsView.errorText17.localized, detail: Messages.AppInstanceSettingsView.errorText18.localized, button: Messages.AppInstanceSettingsView.errorText19.localized) { movingInstance = true }.disabled(model.busy || model.isInstanceInUse(instance.id))
             }
-        } header: { Text("复制与移动") } footer: { Text("文件操作会在对应页面确认后执行，无需点击这里的“保存”。") }
+        } header: { Text(Messages.AppInstanceSettingsView.errorText20.localized) } footer: { Text(Messages.AppInstanceSettingsView.errorText21.localized) }
         if !preservedWorkspaces.isEmpty {
-            Section("保留的工作文件") {
+            Section(Messages.AppInstanceSettingsView.errorText22.localized) {
                 ForEach(Array(preservedWorkspaces.enumerated()), id: \.offset) { index, url in
-                    LabeledContent("副本 \(index + 1)") { Button("在 Finder 中查看") { NSWorkspace.shared.open(url) } }
+                    LabeledContent(Messages.AppInstanceSettingsView.errorText23(String(describing: index + 1)).localized) { Button(Messages.AppInstanceSettingsView.errorText24.localized) { NSWorkspace.shared.open(url) } }
                 }
             }
         }
     }
     private func save() {
-        guard !instance.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { pane = .overview; settingsIssue = "请填写实例名称。"; return }
+        guard !instance.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { pane = .overview; settingsIssue = Messages.AppInstanceSettingsView.saveText1.localized; return }
         let effective = launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings)
         if let issue = SettingsValidation.issue(in: effective) { pane = .containing(issue.key); settingsIssue = issue.message; return }
         instance.launchOverrides = launchOverrides
         if model.updateSettings(instance, basedOn: original) { dismiss() }
-        else { settingsIssue = model.error ?? "此实例已不在当前文件夹中，请关闭设置后刷新。" }
+        else { settingsIssue = model.error ?? Messages.AppInstanceSettingsView.issueText1.localized }
     }
 
     private func chooseIcon() {
         let panel = NSOpenPanel(); panel.allowedContentTypes = [.image]
-        panel.canChooseDirectories = false; panel.allowsMultipleSelection = false; panel.prompt = "选择图标"
+        panel.canChooseDirectories = false; panel.allowsMultipleSelection = false; panel.prompt = Messages.AppInstanceSettingsView.panelText1.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         loadingIcon = true
         Task {

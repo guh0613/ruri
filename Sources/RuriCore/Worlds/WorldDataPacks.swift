@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import ZIPFoundation
 import Darwin
@@ -28,13 +29,13 @@ private struct WorldPackSelection {
     init(world: URL) throws {
         file = world.appendingPathComponent("level.dat")
         do { original = try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) }
-        catch { throw RuriError.message("无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。") }
+        catch { throw RuriError.message(Messages.CoreWorldDataPacks.disabledText1) }
         var reader = try NBTReader(data: original)
-        guard case .compound(let root)? = try reader.read()["Data"] else { throw RuriError.message("存档缺少 Data 标签") }
-        if let packs = root["DataPacks"], case .compound = packs {} else if root["DataPacks"] != nil { throw RuriError.message("存档数据包配置无效") }
+        guard case .compound(let root)? = try reader.read()["Data"] else { throw RuriError.message(Messages.CoreWorldDataPacks.rootText1) }
+        if let packs = root["DataPacks"], case .compound = packs {} else if root["DataPacks"] != nil { throw RuriError.message(Messages.CoreWorldDataPacks.packsText1) }
         func strings(_ value: NBTValue?, fallback: [String]) throws -> [String] {
             guard let value else { return fallback }
-            guard case .list(let items) = value, items.count <= 4096, items.allSatisfy({ $0.string != nil }) else { throw RuriError.message("存档数据包列表无效") }
+            guard case .list(let items) = value, items.count <= 4096, items.allSatisfy({ $0.string != nil }) else { throw RuriError.message(Messages.CoreWorldDataPacks.itemsText1) }
             return items.compactMap(\.string)
         }
         enabled = try strings(root["DataPacks"]?["Enabled"], fallback: ["vanilla"])
@@ -49,7 +50,7 @@ private struct WorldPackSelection {
     }
     func save(backup: URL) throws {
         let updated = try NBTReader.updatingDataPacks(original, enabled: enabled, disabled: disabled)
-        guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == original else { throw RuriError.message("存档信息已改变，请刷新后重试。") }
+        guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == original else { throw RuriError.message(Messages.CoreWorldDataPacks.updatedText1) }
         try FileManager.default.createDirectory(at: backup.deletingLastPathComponent(), withIntermediateDirectories: true)
         try original.write(to: backup, options: .atomic)
         try updated.write(to: file, options: .atomic)
@@ -94,10 +95,10 @@ extension WorldManager {
     public func setDataPackPriority(_ keys: [String], folder: String, expecting previous: WorldDataPackPriority) throws {
         try withDataPacks(folder) { directory, selection in
             let current = try Self.priority(directory: directory, selection: selection)
-            guard current == previous else { throw RuriError.message("数据包列表已改变，请刷新后重新调整顺序。") }
-            guard keys.count == current.keys.count, Set(keys) == Set(current.keys) else { throw RuriError.message("调整优先级不能添加、移除或重复数据包。") }
+            guard current == previous else { throw RuriError.message(Messages.CoreWorldDataPacks.currentText1) }
+            guard keys.count == current.keys.count, Set(keys) == Set(current.keys) else { throw RuriError.message(Messages.CoreWorldDataPacks.currentText2) }
             guard keys.filter({ !current.localKeys.contains($0) }) == current.keys.filter({ !current.localKeys.contains($0) }) else {
-                throw RuriError.message("内置、模组与缺失数据包的相对顺序必须保留。")
+                throw RuriError.message(Messages.CoreWorldDataPacks.currentText3)
             }
             selection.enabled = keys.reversed()
             guard selection.enabled != previous.storedKeys else { return }
@@ -109,13 +110,13 @@ extension WorldManager {
             let pack = try Self.packURL(name, directory: directory)
             _ = try Self.packMetadata(pack)
             let isDirectory = try pack.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
-            if !isDirectory, Self.exists(Self.alternateZIP(pack)) { throw RuriError.message("启用与停用文件同时存在，请先移除其中一份：\(name)") }
+            if !isDirectory, Self.exists(Self.alternateZIP(pack)) { throw RuriError.message(Messages.CoreWorldDataPacks.isDirectoryText1(String(describing: name))) }
             // Accept HMCL's disabled ZIPs and renamed folder metadata too.
             let source = isDirectory ? pack.appendingPathComponent("pack.mcmeta.disabled") : pack
             let destination = isDirectory ? pack.appendingPathComponent("pack.mcmeta") : pack.deletingPathExtension()
             let needsRename = enabled && (isDirectory ? !FileManager.default.fileExists(atPath: destination.path) : pack.pathExtension == "disabled")
             if needsRename {
-                guard !Self.exists(destination) else { throw RuriError.message("启用后的文件名已存在：\(destination.lastPathComponent)") }
+                guard !Self.exists(destination) else { throw RuriError.message(Messages.CoreWorldDataPacks.needsRenameText1(String(describing: destination.lastPathComponent))) }
                 try FileManager.default.moveItem(at: source, to: destination)
             }
             do {
@@ -131,17 +132,17 @@ extension WorldManager {
         try importDataPacks(from: [source], folder: folder)
     }
     public func importDataPacks(from sources: [URL], folder: String) throws {
-        guard !sources.isEmpty, sources.count <= 200 else { throw RuriError.message("请选择 1–200 个数据包。") }
+        guard !sources.isEmpty, sources.count <= 200 else { throw RuriError.message(Messages.CoreWorldDataPacks.importDataPacksText1) }
         try withDataPacks(folder) { directory, selection in
             var targets: [URL] = [], names = Set<String>()
             for source in sources {
                 _ = try Self.packMetadata(source)
                 let isDirectory = try source.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
-                guard isDirectory || source.pathExtension.lowercased() == "zip" else { throw RuriError.message("请选择 ZIP 格式的数据包。") }
-                guard source.pathExtension != "disabled", !isDirectory || Self.exists(source.appendingPathComponent("pack.mcmeta")) else { throw RuriError.message("请先启用数据包再导入。") }
+                guard isDirectory || source.pathExtension.lowercased() == "zip" else { throw RuriError.message(Messages.CoreWorldDataPacks.isDirectoryText2) }
+                guard source.pathExtension != "disabled", !isDirectory || Self.exists(source.appendingPathComponent("pack.mcmeta")) else { throw RuriError.message(Messages.CoreWorldDataPacks.isDirectoryText3) }
                 let target = try Self.packURL(source.lastPathComponent, directory: directory)
                 guard names.insert(target.lastPathComponent.lowercased()).inserted, !Self.exists(target), !Self.exists(target.appendingPathExtension("disabled")) else {
-                    throw RuriError.message("同名数据包已存在：\(source.lastPathComponent)。请先移除旧文件或更改导入文件名。")
+                    throw RuriError.message(Messages.CoreWorldDataPacks.targetText1(String(describing: source.lastPathComponent)))
                 }
                 targets.append(target)
             }
@@ -172,7 +173,7 @@ extension WorldManager {
     @discardableResult public func removeDataPack(name: String, folder: String) throws -> URL? {
         try withDataPacks(folder) { directory, selection in
             let target = try Self.packURL(name, directory: directory)
-            guard Self.exists(target) else { throw RuriError.message("数据包已不存在，请刷新列表。") }
+            guard Self.exists(target) else { throw RuriError.message(Messages.CoreWorldDataPacks.targetText2) }
             let isDirectory = try target.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true
             if isDirectory || !Self.exists(Self.alternateZIP(target)) { selection.select(Self.packKey(target), enabled: nil) }
             try selection.save(backup: dataPackBackup(folder: folder))
@@ -189,15 +190,15 @@ extension WorldManager {
         let world = try worldURL(folder)
         let fd = try Self.readLock(world); defer { if let fd { close(fd) } }
         let directory = world.appendingPathComponent("datapacks")
-        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: directory.path)) == nil else { throw RuriError.message("数据包目录不能是符号链接。") }
+        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: directory.path)) == nil else { throw RuriError.message(Messages.CoreWorldDataPacks.directoryText1) }
         var selection = try WorldPackSelection(world: world)
         return try operation(directory, &selection)
     }
     private static func exists(_ url: URL) -> Bool { FileManager.default.fileExists(atPath: url.path) || (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) != nil }
     private static func packURL(_ name: String, directory: URL) throws -> URL {
-        guard !name.isEmpty, !name.hasPrefix("."), !name.contains("/"), !name.contains("\\"), !name.contains("\0") else { throw RuriError.message("无效的数据包文件名") }
+        guard !name.isEmpty, !name.hasPrefix("."), !name.contains("/"), !name.contains("\\"), !name.contains("\0") else { throw RuriError.message(Messages.CoreWorldDataPacks.packURLText1) }
         let url = directory.appendingPathComponent(name)
-        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) == nil else { throw RuriError.message("不修改符号链接数据包。") }
+        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) == nil else { throw RuriError.message(Messages.CoreWorldDataPacks.urlText1) }
         return try LauncherPaths.safePath(name, within: directory)
     }
     private static func packKey(_ url: URL) -> String {
@@ -207,25 +208,25 @@ extension WorldManager {
     private static func alternateZIP(_ url: URL) -> URL { url.pathExtension == "disabled" ? url.deletingPathExtension() : url.appendingPathExtension("disabled") }
     private static func packMetadata(_ url: URL) throws -> (String, String?) {
         let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard info.isSymbolicLink != true else { throw RuriError.message("请选择实际数据包文件。") }
+        guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreWorldDataPacks.infoText1) }
         let data: Data
         if info.isDirectory == true {
             let metadata = url.appendingPathComponent("pack.mcmeta")
             do { data = try RunDirectoryCopyGuard.read(Self.exists(metadata) ? metadata : url.appendingPathComponent("pack.mcmeta.disabled"), limit: 1024 * 1024) }
-            catch { throw RuriError.message("无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。") }
+            catch { throw RuriError.message(Messages.CoreWorldDataPacks.metadataText1) }
         } else {
-            guard info.isRegularFile == true, (info.fileSize ?? Int.max) <= 512 * 1024 * 1024 else { throw RuriError.message("数据包文件无效或大于 512 MB") }
+            guard info.isRegularFile == true, (info.fileSize ?? Int.max) <= 512 * 1024 * 1024 else { throw RuriError.message(Messages.CoreWorldDataPacks.metadataText2) }
             let archive = try Archive(url: url, accessMode: .read)
-            guard let entry = archive["pack.mcmeta"], entry.type == .file, entry.uncompressedSize <= 1024 * 1024 else { throw RuriError.message("数据包根目录缺少 pack.mcmeta") }
+            guard let entry = archive["pack.mcmeta"], entry.type == .file, entry.uncompressedSize <= 1024 * 1024 else { throw RuriError.message(Messages.CoreWorldDataPacks.entryText1) }
             var contents = Data()
             let checksum = try archive.extract(entry) { chunk in
-                guard chunk.count <= 1024 * 1024 - contents.count else { throw RuriError.message("数据包说明过大") }
+                guard chunk.count <= 1024 * 1024 - contents.count else { throw RuriError.message(Messages.CoreWorldDataPacks.checksumText1) }
                 contents += chunk
             }
-            guard checksum == entry.checksum else { throw RuriError.message("数据包说明校验失败") }
+            guard checksum == entry.checksum else { throw RuriError.message(Messages.CoreWorldDataPacks.checksumText2) }
             data = contents
         }
-        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any], let pack = root["pack"] as? [String: Any], pack["description"] != nil else { throw RuriError.message("数据包说明缺少 pack 或 description") }
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any], let pack = root["pack"] as? [String: Any], pack["description"] != nil else { throw RuriError.message(Messages.CoreWorldDataPacks.packText1) }
         func description(_ value: Any) -> String {
             if let text = value as? String { return text }
             if let list = value as? [Any] { return list.map(description).joined() }

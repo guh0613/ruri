@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import AppKit
 import RuriCore
@@ -8,23 +9,23 @@ extension AppModel {
         return activeSessions[id] != nil || pendingDirectoryCopyIDs.contains(id) || GameRunLease.isHeld(paths: paths, instanceID: id)
     }
     func runningLabel(_ id: UUID) -> String? {
-        if pendingInstanceMoveIDs.contains(id) || InstanceMoveGuard.hasPending(paths: paths, instanceID: id) { return "实例移动待恢复" }
-        if pendingInstanceCopyIDs.contains(id) || InstanceCopyGuard.hasPending(paths: paths, instanceID: id) { return "实例复制待恢复" }
-        if pendingDirectoryCopyIDs.contains(id) || RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { return "目录复制待恢复" }
+        if pendingInstanceMoveIDs.contains(id) || InstanceMoveGuard.hasPending(paths: paths, instanceID: id) { return Messages.AppAppModelGameMonitoring.runningLabelText1.localized }
+        if pendingInstanceCopyIDs.contains(id) || InstanceCopyGuard.hasPending(paths: paths, instanceID: id) { return Messages.AppAppModelGameMonitoring.runningLabelText2.localized }
+        if pendingDirectoryCopyIDs.contains(id) || RunDirectoryCopyGuard.hasPending(paths: paths, instanceID: id) { return Messages.AppAppModelGameMonitoring.runningLabelText3.localized }
         guard let record = activeSessions[id] else {
-            if customDirectoryErrors[id] != nil { return "游戏目录无法访问" }
-            return directoryErrors[paths.directoryID(for: id)] == nil ? nil : "文件夹无法访问"
+            if customDirectoryErrors[id] != nil { return Messages.AppAppModelGameMonitoring.recordText1.localized }
+            return directoryErrors[paths.directoryID(for: id)] == nil ? nil : Messages.AppAppModelGameMonitoring.recordText2.localized
         }
         switch GameMonitorClient.activity(record) {
-        case .orphaned: return "监控已断开"
-        case .uncertain: return "状态待确认"
+        case .orphaned: return Messages.AppAppModelGameMonitoring.recordText3.localized
+        case .uncertain: return Messages.AppAppModelGameMonitoring.recordText4.localized
         case .inactive: return nil
         case .monitoring:
-            if record.state.isFinished { return "正在保存记录" }
-            if record.stage == .quitting { return "等待游戏退出" }
+            if record.state.isFinished { return Messages.AppAppModelGameMonitoring.recordText5.localized }
+            if record.stage == .quitting { return Messages.AppAppModelGameMonitoring.recordText6.localized }
             if record.stage == .beforeCommand || record.stage == .afterCommand { return record.stage.title }
-            if record.stage == .stopping { return "正在终止进程" }
-            return record.gameIdentity == nil ? "正在启动" : "运行中"
+            if record.stage == .stopping { return Messages.AppAppModelGameMonitoring.recordText7.localized }
+            return record.gameIdentity == nil ? Messages.AppAppModelGameMonitoring.recordText8.localized : Messages.AppAppModelGameMonitoring.recordText9.localized
         }
     }
     func returnToGame(_ id: UUID) {
@@ -34,13 +35,13 @@ extension AppModel {
             showSession(record.id); return
         }
         if application.activate(options: [.activateAllWindows]) { try? GameMonitorClient.recordEvent(.gameActivationRequested, paths: paths, session: record) }
-        else { notice = "暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。" }
+        else { notice = Messages.AppAppModelGameMonitoring.applicationText1.localized }
     }
     func requestGameQuit(_ instanceID: UUID) {
         guard let record = activeSessions[instanceID] else { return }
         do {
             try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
-            notice = "已提交正常退出请求，等待游戏处理。"; noticeSessionID = record.id
+            notice = Messages.AppAppModelGameMonitoring.recordText10.localized; noticeSessionID = record.id
         } catch { notice = error.localizedDescription; noticeSessionID = record.id }
     }
     func confirmGameTermination(_ instanceID: UUID) {
@@ -51,11 +52,11 @@ extension AppModel {
             return
         }
         let alert = NSAlert()
-        alert.messageText = "终止“\(record.instanceName)”的游戏进程？"
-        alert.informativeText = "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。"
+        alert.messageText = Messages.AppAppModelGameMonitoring.alertText1(String(describing: record.instanceName)).localized
+        alert.informativeText = Messages.AppAppModelGameMonitoring.alertText2.localized
         alert.alertStyle = .warning
-        alert.addButton(withTitle: "取消")
-        alert.addButton(withTitle: "终止进程")
+        alert.addButton(withTitle: Messages.Common.cancel.localized)
+        alert.addButton(withTitle: Messages.AppAppModelGameMonitoring.alertText3.localized)
         guard alert.runModal() == .alertSecondButtonReturn else { return }
         do { try GameMonitorClient.requestStop(paths: paths, record: record) }
         catch { notice = error.localizedDescription; noticeSessionID = record.id }
@@ -78,7 +79,7 @@ extension AppModel {
         do {
             try GameSessionReviewStore.mark(record, paths: paths)
             NSApp.dockTile.badgeLabel = sessions.contains(where: needsReview) ? "!" : nil
-        } catch { notice = "无法保存运行记录的已读状态：\(error.localizedDescription)" }
+        } catch { notice = Messages.AppAppModelGameMonitoring.acknowledgeSessionText1(String(describing: error.localizedDescription)).localized }
     }
     private func reviewed(_ record: GameSession) -> Bool {
         (try? GameSessionReviewStore.contains(record, paths: paths)) ?? false
@@ -135,7 +136,7 @@ extension AppModel {
                 handledExits.insert(record.id)
                 NSApp.dockTile.badgeLabel = "!"
                 if !presentedAttention {
-                    let summary = activity == .orphaned ? "游戏或启动命令仍在运行，监控已中断" : activity == .uncertain ? "监控已中断，运行状态待确认" : record.title
+                    let summary = activity == .orphaned ? Messages.AppAppModelGameMonitoring.summaryText1.localized : activity == .uncertain ? Messages.AppAppModelGameMonitoring.summaryText2.localized : record.title
                     notice = "\(record.instanceName)：\(summary)"
                     noticeSessionID = record.id
                     if NSApp.isActive && NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {
@@ -186,7 +187,7 @@ extension AppModel {
             var changed = try await cursor.refresh(final: final)
             if final { while try await cursor.refresh(final: true) { changed = true } }
             if changed || liveLogs[record.id] == nil { liveLogs[record.id] = await cursor.lines }
-        } catch { notice = "无法读取 \(record.instanceName) 的运行日志：\(error.localizedDescription)"; noticeSessionID = record.id }
+        } catch { notice = Messages.AppAppModelGameMonitoring.changedText1(String(describing: record.instanceName), String(describing: error.localizedDescription)).localized; noticeSessionID = record.id }
     }
     private func restorePlaytime() {
         var changed = false

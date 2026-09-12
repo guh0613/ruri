@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -34,23 +35,23 @@ public actor InstanceCopier {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         let original = try instance(instanceID, in: state)
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("副本名称需为 1–256 个字符。") }
+        guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreInstanceCopier.nameText1) }
         var copy = original; copy.id = UUID(); copy.name = name; copy.createdAt = Date(); copy.lastPlayed = nil; copy.playTime = 0; copy.favorite = false
         copy.directoryID = directoryID; copy.runDirectory = .isolated; copy.customRunDirectory = nil; copy.lastRunDirectoryChangeID = nil; copy.lastInstanceMoveID = nil; copy.frozenMemory = nil
         let id = UUID(); copy.lastInstanceCopyID = id
         var collection = current.directories.first(where: { $0.id == directoryID }); collection?.bookmark = nil
-        guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message("找不到目标实例文件夹。") }
+        guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message(Messages.CoreInstanceCopier.collectionText1) }
         if current.isMinecraftDirectory(directoryID) {
             return try await repositoryPreview(original: original, copy: copy, id: id, collection: collection!, paths: current, options: options)
         }
-        guard original.repositoryVersionID == nil else { throw RuriError.message("此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。") }
+        guard original.repositoryVersionID == nil else { throw RuriError.message(Messages.CoreInstanceCopier.collectionText2) }
         let journal = InstanceCopyJournal(id: id, original: original, copy: copy, targetCollection: collection, createdAt: Date(), phase: .copying)
         try journal.validate()
         try journal.validateTarget(paths: current)
         let access = try await acquire(original, paths: current); defer { withExtendedLifetime(access) {} }
         let snapshot = try entries(original, paths: current, options: options)
         let manifest = try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(current.instance(original.id)))
-        guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message("源文件在预览期间改变，请重新预览。") }
+        guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText1) }
         return .init(id: id, source: original, copy: copy, sourceGame: current.game(original.id), destination: try journal.destination(paths: current), options: options, targetCollection: collection, entries: snapshot, manifest: manifest)
     }
 
@@ -78,7 +79,7 @@ public actor InstanceCopier {
             try journal.save(paths: current, at: preparing)
             try RunDirectoryFileCopy.moveWithoutReplacing(preparing, to: root); activated = true
             try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message("复制工作区已经存在或无法创建。") }
+            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.targetLocationText1) }
             var bytes: Int64 = 0, completed = 0
             var lastProgress = Date.distantPast
             func validateLocations() throws { try current.validateInstanceLocation(source.id); try targetLocation.validateTarget(paths: current) }
@@ -110,7 +111,7 @@ public actor InstanceCopier {
                 publishedBytes += amount
                 progress(.init(phase: .publishing, completed: 0, total: 1, bytesCopied: publishedBytes, totalBytes: publicationBytes))
             }
-            guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else { throw RuriError.message("发布副本的文件身份改变，工作区已保留。") }
+            guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else { throw RuriError.message(Messages.CoreInstanceCopier.publishedBytesText1) }
             progress(.init(phase: .publishing, completed: 1, total: 1, bytesCopied: publicationBytes, totalBytes: publicationBytes))
             try Task.checkCancellation()
             progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: publicationBytes))
@@ -124,20 +125,20 @@ public actor InstanceCopier {
             progress(.init(phase: .committed, completed: 1, total: 1, bytesCopied: preview.bytes, totalBytes: preview.bytes))
             journal.phase = .committed; try journal.save(paths: current)
             let remainder = try cleanup(journal, paths: current)
-            return .init(state: committed!, preservedCopy: remainder, warning: remainder.map { _ in "实例已复制，部分临时文件保留，可在 Finder 中查看。" })
+            return .init(state: committed!, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.remainderText1.localized })
         } catch {
             if !activated { try? FileManager.default.removeItem(at: preparing); throw error }
             if committed == nil {
                 do { let latest = try StateStore.load(paths); if latest.instances.first(where: { $0.id == journal.copy.id })?.lastInstanceCopyID == journal.id { committed = latest } }
-                catch { throw RunDirectoryCopyFailure(message: "无法确认实例复制是否已提交，请通过恢复入口检查。\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled) }
+                catch { throw RunDirectoryCopyFailure(message: Messages.CoreInstanceCopier.latestText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled) }
             }
-            if let committed { return .init(state: committed, preservedCopy: nil, warning: "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。\(error.localizedDescription)") }
-            let reason = Task.isCancelled || error is CancellationError ? "实例复制已取消，原实例及其文件保留。" : "实例复制未完成：\(error.localizedDescription)"
+            if let committed { return .init(state: committed, preservedCopy: nil, warning: Messages.CoreInstanceCopier.committedText1(String(describing: error.localizedDescription)).localized) }
+            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceCopier.reasonText1.localized : Messages.CoreInstanceCopier.reasonText2(String(describing: error.localizedDescription)).localized
             do {
                 let result = try abandon(journal, paths: current)
                 throw RunDirectoryCopyFailure(message: reason + (result.warning.map { "\n" + $0 } ?? ""), preservedCopy: result.workspace, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as RunDirectoryCopyFailure { throw failure }
-            catch { throw RunDirectoryCopyFailure(message: reason + "\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。\(error.localizedDescription)", preservedCopy: nil, cancelled: Task.isCancelled) }
+            catch { throw RunDirectoryCopyFailure(message: Messages.CoreInstanceCopier.recoveryFailure(reason, error.localizedDescription).localized, preservedCopy: nil, cancelled: Task.isCancelled) }
         }
     }
 
@@ -159,32 +160,32 @@ public actor InstanceCopier {
         if let pending = try repositoryPending(instanceID: sourceID, state: state), pending.recovery.copySource?.transactionID == transactionID {
             let kept = try RepositoryImportStore.recover(pending.recovery.id, directoryID: pending.directory.id,
                                                         finish: pending.recovery.registered, paths: paths)
-            return .init(state: try StateStore.load(paths), preservedCopy: kept, warning: kept.map { _ in "复制尚未完成，工作文件已保留，可以重新复制。" })
+            return .init(state: try StateStore.load(paths), preservedCopy: kept, warning: kept.map { _ in Messages.CoreInstanceCopier.keptText1.localized })
         }
         let journal = try InstanceCopyJournal.load(paths: current, sourceID: sourceID)
-        guard journal.id == transactionID else { throw RuriError.message("待恢复的实例复制已改变，请刷新后重试。") }
+        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreInstanceCopier.journalText1) }
         var source = try instance(sourceID, in: state); source.runDirectory = .isolated
         let lease = try GameRunLease.acquire(paths: current.including(source), instanceID: sourceID, directoryChangeID: journal.id)
         defer { withExtendedLifetime(lease) {} }
         let latest = try InstanceCopyJournal.load(paths: current, sourceID: sourceID)
-        guard latest.id == journal.id else { throw RuriError.message("实例复制记录已改变。") }
+        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreInstanceCopier.latestText2) }
         let saved = try StateStore.load(paths), configured = paths.configured(with: saved)
         try latest.validateTarget(paths: configured)
         if let copy = saved.instances.first(where: { $0.id == latest.copy.id }) {
-            guard copy.lastInstanceCopyID == latest.id, copy.directoryID == latest.copy.directoryID, copy.runDirectory == .isolated else { throw RuriError.message("副本登记与复制记录不一致，请先核对实例，文件已保留。") }
+            guard copy.lastInstanceCopyID == latest.id, copy.directoryID == latest.copy.directoryID, copy.runDirectory == .isolated else { throw RuriError.message(Messages.CoreInstanceCopier.copyText1) }
             let remainder = try cleanup(latest, paths: configured)
-            return .init(state: saved, preservedCopy: remainder, warning: remainder.map { _ in "复制已完成，部分临时文件未删除，可在 Finder 中查看。" })
+            return .init(state: saved, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.remainderText2.localized })
         }
         let result = try abandon(latest, paths: configured)
         return .init(state: saved, preservedCopy: result.workspace, warning: result.warning)
     }
 
     private func instance(_ id: UUID, in state: PersistentState) throws -> GameInstance {
-        guard let value = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("源实例已被移除，请刷新后重试。") }; return value
+        guard let value = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceCopier.valueText1) }; return value
     }
     private func validate(_ preview: InstanceCopyPreview, state: PersistentState) throws {
         let original = try instance(preview.source.id, in: state)
-        guard !state.instances.contains(where: { $0.id == preview.copy.id }), original == preview.source else { throw RuriError.message("源实例设置或副本登记在预览后改变，请刷新后重试。") }
+        guard !state.instances.contains(where: { $0.id == preview.copy.id }), original == preview.source else { throw RuriError.message(Messages.CoreInstanceCopier.originalText1) }
         let journal = InstanceCopyJournal(id: preview.id, original: original, copy: preview.copy, targetCollection: preview.targetCollection, createdAt: Date(), phase: .copying)
         try journal.validateTarget(paths: paths.configured(with: state))
     }
@@ -192,7 +193,7 @@ public actor InstanceCopier {
         let snapshot = try entries(preview.source, paths: paths, options: preview.options)
         guard snapshot == preview.entries,
               try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(paths.instance(preview.source.id))) == preview.manifest,
-              try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message("源文件内容在预览后改变，请重新预览再复制。") }
+              try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.snapshotText1) }
     }
     func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
         let access = try InstanceCopyAccess(instance: instance, paths: paths)
@@ -216,22 +217,22 @@ public actor InstanceCopier {
             let root = ["content.json", "world-backups"].contains(name) ? paths.gameDataState(source.id) : paths.instance(source.id)
             let file = try LauncherPaths.safePath(name, within: root)
             guard FileManager.default.fileExists(atPath: file.path) else {
-                if name == "version.json" && source.installed { throw RuriError.message("已安装实例缺少版本清单，请先修复再复制。") }
-                if name == "installation" && source.installed { throw RuriError.message("本地游戏安装文件夹缺失，请恢复文件后再复制。") }
+                if name == "version.json" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.fileText1) }
+                if name == "installation" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.fileText2) }
                 continue
             }
             let values = try file.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
-            guard values.isSymbolicLink != true, values.isDirectory == true || values.isRegularFile == true else { throw RuriError.message("实例元数据包含不支持的文件：\(name)") }
-            if name == "installation" && values.isDirectory != true { throw RuriError.message("本地游戏安装位置不是文件夹，请检查实例文件。") }
+            guard values.isSymbolicLink != true, values.isDirectory == true || values.isRegularFile == true else { throw RuriError.message(Messages.CoreInstanceCopier.valuesText1(String(describing: name))) }
+            if name == "installation" && values.isDirectory != true { throw RuriError.message(Messages.CoreInstanceCopier.valuesText2) }
             if name == "version.json" && source.installed {
-                guard values.isRegularFile == true, (values.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message("实例版本清单无效。") }
+                guard values.isRegularFile == true, (values.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceCopier.valuesText3) }
                 let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: file))
-                guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message("实例的启动清单尚未准备好，请先修复。") }
+                guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText2) }
             }
             result.append(.init(url: file, path: name, directory: values.isDirectory == true, size: Int64(values.fileSize ?? 0), modified: values.contentModificationDate ?? .distantPast))
             if values.isDirectory == true { result += try FileTree.entries(in: file).map { .init(url: $0.url, path: name + "/" + $0.path, directory: $0.directory, size: $0.size, modified: $0.modified) } }
         }
-        guard result.count <= 150_000, result.filter({ !$0.directory }).reduce(Int64(0), { $0 + $1.size }) <= 128 * 1024 * 1024 * 1024 else { throw RuriError.message("实例文件数量或大小超过当前复制限制。") }
+        guard result.count <= 150_000, result.filter({ !$0.directory }).reduce(Int64(0), { $0 + $1.size }) <= 128 * 1024 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText3) }
         return result
     }
     private func rebindModpack(_ root: URL, copy: GameInstance) throws {
@@ -252,7 +253,7 @@ public actor InstanceCopier {
         try journal.validateTarget(paths: paths)
         let destination = try journal.destination(paths: paths)
         guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else {
-            throw RuriError.message("已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。")
+            throw RuriError.message(Messages.CoreInstanceCopier.destinationText1)
         }
         if let digest = journal.verificationDigest {
             let record = try InstanceCopyJournal.root(paths: paths, sourceID: journal.original.id).appendingPathComponent("verification.json")
@@ -274,8 +275,8 @@ public actor InstanceCopier {
         for name in locks {
             var info = stat()
             if lstat(directory.appendingPathComponent(name).path, &info) == 0 {
-                guard info.st_mode & S_IFMT == S_IFREG, info.st_size == 0 else { throw RuriError.message("副本的操作锁包含意外内容，工作副本已保留。") }
-            } else if errno != ENOENT { throw RuriError.message("无法核对副本的操作锁，工作副本已保留。") }
+                guard info.st_mode & S_IFMT == S_IFREG, info.st_size == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.infoText1) }
+            } else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.infoText2) }
         }
         try manifest.requireMatch(in: directory, excluding: locks.union([InstanceCopyGuard.markerName]), ignoringTransientFiles: true)
     }
@@ -288,8 +289,8 @@ public actor InstanceCopier {
             try RunDirectoryFileCopy.returnToWorkspace(destination, workspace: workspace)
         } else {
             var info = stat()
-            if lstat(destination.path, &info) == 0 { warning = "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：\(destination.path)" }
-            else if errno != ENOENT { throw RuriError.message("无法确认目标文件夹状态，复制记录已保留。") }
+            if lstat(destination.path, &info) == 0 { warning = Messages.CoreInstanceCopier.infoText3(String(describing: destination.path)).localized }
+            else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.infoText4) }
         }
         let record = try retire(journal, paths: paths)
         return (FileManager.default.fileExists(atPath: workspace.path) ? workspace : record, warning)
@@ -307,7 +308,7 @@ final class InstanceCopyAccess {
         for name in [".content-operation.lock", ".world-operation.lock"] {
             let lock = GameDataOperationLock(); try lock.acquire(directory: paths.gameDataState(instance.id), name: name); locks.append(lock)
         }
-        for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) { throw RuriError.message("实例还有未完成的文件操作，请先恢复后再复制。") }
+        for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) { throw RuriError.message(Messages.CoreInstanceCopier.lockText1) }
         worlds = try InstanceTransfer.lockWorlds(paths.game(instance.id))
     }
     deinit { worlds.forEach { close($0) } }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -6,11 +7,11 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .overview: "概览"
-        case .runtime: "Java 与内存"
-        case .launch: "窗口与启动"
-        case .advanced: "参数与环境"
-        case .files: "文件与目录"
+        case .overview: Messages.AppSettingsLayout.titleText1.localized
+        case .runtime: Messages.AppSettingsLayout.titleText2.localized
+        case .launch: Messages.AppSettingsLayout.titleText3.localized
+        case .advanced: Messages.AppSettingsLayout.titleText4.localized
+        case .files: Messages.AppSettingsLayout.titleText5.localized
         }
     }
     var symbol: String {
@@ -24,11 +25,11 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     }
     var detail: String {
         switch self {
-        case .overview: "名称、外观与游戏组件。"
-        case .runtime: "选择运行游戏的 Java，以及游戏可以使用的内存。"
-        case .launch: "调整游戏窗口和启动器在游戏运行时的行为。"
-        case .advanced: "为模组或故障排查配置附加参数，通常无需修改。"
-        case .files: "查看游戏文件的位置，或复制、移动这个实例。"
+        case .overview: Messages.AppSettingsLayout.detailText1.localized
+        case .runtime: Messages.AppSettingsLayout.detailText2.localized
+        case .launch: Messages.AppSettingsLayout.detailText3.localized
+        case .advanced: Messages.AppSettingsLayout.detailText4.localized
+        case .files: Messages.AppSettingsLayout.detailText5.localized
         }
     }
     var launchKeys: [LaunchSettingKey] {
@@ -58,8 +59,8 @@ struct SettingsLayout<Content: View>: View {
                     Text(subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(2)
                 }.padding(.horizontal, 18).padding(.top, 22).padding(.bottom, 8)
                 List(panes, selection: $selection) { pane in
-                    Label(pane.title, systemImage: pane.symbol).padding(.vertical, 6).tag(pane)
-                }.listStyle(.sidebar).scrollContentBackground(.hidden).accessibilityLabel("设置分类")
+                    Label(pane.title, systemImage: pane.symbol).lineLimit(2).fixedSize(horizontal: false, vertical: true).padding(.vertical, 6).tag(pane)
+                }.listStyle(.sidebar).scrollContentBackground(.hidden).accessibilityLabel(Messages.AppSettingsLayout.bodyText1.localized)
             }.frame(width: 180).background(.thinMaterial)
             Divider()
             VStack(alignment: .leading, spacing: 0) {

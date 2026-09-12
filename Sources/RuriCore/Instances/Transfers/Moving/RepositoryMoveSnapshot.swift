@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 struct RepositoryMoveSnapshot: Sendable {
@@ -64,9 +65,9 @@ struct RepositoryMoveSnapshot: Sendable {
 
 extension InstanceMover {
     func repositoryPreview(source: GameInstance, directoryID: UUID, paths: LauncherPaths) async throws -> InstanceMovePreview {
-        guard source.installed else { throw RuriError.message("请先安装实例，再移动到 Minecraft 文件夹。") }
-        guard paths.directoryID(for: source.id) != directoryID else { throw RuriError.message("实例已位于所选文件夹中。") }
-        guard directoryID == GameDirectory.defaultID || paths.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message("找不到目标文件夹。") }
+        guard source.installed else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText1) }
+        guard paths.directoryID(for: source.id) != directoryID else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText2) }
+        guard directoryID == GameDirectory.defaultID || paths.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText3) }
         let access = try await InstanceMoveAccess.acquire(instance: source, paths: paths)
         defer { withExtendedLifetime(access) {} }
         try requireIndependentVersion(source, paths: paths)
@@ -90,7 +91,7 @@ extension InstanceMover {
         let targetRoot = target.directoryRoot(directoryID).standardizedFileURL.resolvingSymlinksInPath().path
         for sourceRoot in [paths.instance(source.id), paths.game(source.id)] {
             let root = sourceRoot.standardizedFileURL.resolvingSymlinksInPath().path
-            guard !targetRoot.hasPrefix(root + "/"), targetRoot != root else { throw RuriError.message("目标文件夹不能位于源实例或运行目录里面。") }
+            guard !targetRoot.hasPrefix(root + "/"), targetRoot != root else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.rootText1) }
         }
         let installation = try MinecraftInstallationCopy.read(instance: source, copy: moved, paths: paths, portable: true)
         func rewrite(_ value: String) throws -> String {
@@ -111,12 +112,12 @@ extension InstanceMover {
     }
 
     func requireRepositoryUnchanged(_ preview: InstanceMovePreview, paths: LauncherPaths) throws {
-        guard let repository = preview.repository, preview.sourceIdentity.matches(paths.instance(preview.source.id)) else { throw RuriError.message("源实例目录身份改变，请重新预览。") }
-        if let identity = repository.sourceVersionIdentity, !identity.matches(paths.versionDirectory(preview.source.id)) { throw RuriError.message("源版本文件夹已被替换，请重新预览。") }
+        guard let repository = preview.repository, preview.sourceIdentity.matches(paths.instance(preview.source.id)) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryText1) }
+        if let identity = repository.sourceVersionIdentity, !identity.matches(paths.versionDirectory(preview.source.id)) { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.identityText1) }
         let (snapshot, current) = try RepositoryMoveSnapshot.capture(source: preview.source, moved: preview.moved, paths: paths, id: preview.id, installation: repository.installation)
         guard snapshot.original == preview.snapshot.original, snapshot.destination == preview.snapshot.destination, snapshot.entries == preview.snapshot.entries,
               current.sourceVersion == repository.sourceVersion, current.installationReceipt == repository.installationReceipt else {
-            throw RuriError.message("源文件在预览后改变，请刷新移动预览。")
+            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.identityText2)
         }
     }
 
@@ -126,7 +127,7 @@ extension InstanceMover {
         func inside(_ url: URL) -> Bool { let path = url.standardizedFileURL.resolvingSymlinksInPath().path; return path == versionRoot || path.hasPrefix(versionRoot + "/") }
         let state = try StateStore.load(paths)
         for other in state.instances where other.id != source.id && inside(paths.game(other.id)) {
-            throw RuriError.message("“\(other.name)”仍将此版本目录用作运行目录，请先调整它的运行目录。")
+            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.stateText1(String(describing: other.name)))
         }
         let reader = MinecraftDirectoryReader(), root = paths.directoryRoot(paths.directoryID(for: source.id))
         let catalog = try reader.scanNow(root, allowEmpty: true)
@@ -139,11 +140,11 @@ extension InstanceMover {
                         if let file = try? resources.libraryFile(artifact, fallback: Library.mavenPath(library.name)), inside(file) { dependent = true }
                     }
                 }
-                if dependent { throw RuriError.message("“\(other.id)”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。") }
+                if dependent { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.fileText1(String(describing: other.id))) }
             } else if let data = try? RunDirectoryCopyGuard.read(other.directory.appendingPathComponent(other.id + ".json"), limit: 8_388_608),
                       let raw = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                       [try? MinecraftDirectoryScan.identifier(raw["inheritsFrom"]), try? MinecraftDirectoryScan.identifier(raw["jar"])].contains(version) {
-                throw RuriError.message("“\(other.id)”仍引用此版本，请先处理该版本。")
+                throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.rawText1(String(describing: other.id)))
             }
         }
     }

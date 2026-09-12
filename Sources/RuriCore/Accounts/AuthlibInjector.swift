@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import CryptoKit
 
@@ -10,7 +11,7 @@ public struct ExternalAuthLaunch: Sendable {
     }
     func arguments(for account: Account) throws -> [String] {
         guard account.kind == .external, account.externalLogin?.server.url == metadata.server.url,
-              FileManager.default.fileExists(atPath: jar.path) else { throw RuriError.message("外置认证组件尚未准备好。") }
+              FileManager.default.fileExists(atPath: jar.path) else { throw RuriError.message(Messages.CoreAuthlibInjector.argumentsText1) }
         return ["-javaagent:\(jar.path)=\(metadata.server.url.absoluteString)",
                 "-Dauthlibinjector.yggdrasil.prefetched=" + metadata.data.base64EncodedString()]
     }
@@ -26,7 +27,7 @@ public struct AuthlibInjector: Sendable {
         func validate() throws {
             guard build_number > 0, download_url.scheme == "https", download_url.user == nil, download_url.password == nil,
                   checksums.sha256.range(of: "^[0-9a-fA-F]{64}$", options: .regularExpression) != nil else {
-                throw RuriError.message("authlib-injector 下载信息无效。")
+                throw RuriError.message(Messages.CoreAuthlibInjector.validateText1)
             }
         }
         func file(in directory: URL) -> URL { directory.appendingPathComponent(checksums.sha256.lowercased() + ".jar") }
@@ -61,7 +62,7 @@ public struct AuthlibInjector: Sendable {
             return target
         }
         let data = try await http.data(from: artifact.download_url)
-        guard data.count <= 8_388_608, artifact.matches(data) else { throw RuriError.message("authlib-injector 文件校验失败，请重试。") }
+        guard data.count <= 8_388_608, artifact.matches(data) else { throw RuriError.message(Messages.CoreAuthlibInjector.dataText1) }
         try Task.checkCancellation()
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         try data.write(to: target, options: .atomic)

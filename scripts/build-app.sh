@@ -27,6 +27,7 @@ xcrun swift scripts/make-icon.swift build/AppIcon.iconset
 iconutil -c icns build/AppIcon.iconset -o "$app/Contents/Resources/AppIcon.icns"
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app"
 codesign --verify --deep --strict "$app"
+python3 scripts/check-localization-bundle.py "$app"
 destination="$(pwd)/build/Ruri.app"
 if [[ -e "$destination" ]]; then
   mv "$destination" "$stage_dir/previous.app"

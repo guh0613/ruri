@@ -1,22 +1,23 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
 extension AppModel {
     func addOffline(_ username: String) throws {
         let account = try Account(username: username)
-        guard !state.accounts.contains(where: { $0.kind == .offline && $0.uuid == account.uuid }) else { throw RuriError.message("这个离线账号已存在。") }
+        guard !state.accounts.contains(where: { $0.kind == .offline && $0.uuid == account.uuid }) else { throw RuriError.message(Messages.AppAppModelAccounts.accountText1) }
         state.accounts.append(account); state.activeAccountID = account.id; save()
     }
     func addMicrosoft(_ account: Account, credentials: AccountCredentials, activate: Bool = true, requireExisting: Bool = false) throws {
-        guard !readOnly else { throw RuriError.message("当前窗口已暂停写入，请重新打开 Ruri。") }
-        guard !requireExisting || state.accounts.contains(where: { $0.id == account.id && $0.uuid == account.uuid }) else { throw RuriError.message("此账号已被移除或发生变化。") }
+        guard !readOnly else { throw RuriError.message(Messages.AppAppModelAccounts.addMicrosoftText1) }
+        guard !requireExisting || state.accounts.contains(where: { $0.id == account.id && $0.uuid == account.uuid }) else { throw RuriError.message(Messages.AppAppModelAccounts.addMicrosoftText2) }
         var account = account
         if let existing = state.accounts.first(where: { $0.kind == .microsoft && $0.uuid == account.uuid }) { account.id = existing.id }
         try CredentialStore.save(credentials, for: account.id)
         state.accounts.removeAll { $0.id == account.id }; state.accounts.append(account)
         if activate { state.activeAccountID = account.id }
         save()
-        if readOnly { throw RuriError.message("账号信息未能保存，请重新打开 Ruri。") }
+        if readOnly { throw RuriError.message(Messages.AppAppModelAccounts.existingText1) }
     }
     func removeAccount(_ account: Account) {
         guard !readOnly else { return }
@@ -29,8 +30,8 @@ extension AppModel {
         } catch { self.error = error.localizedDescription }
     }
     func addExternal(_ input: Account, credentials: ExternalAccountCredentials, requireExisting: Bool = false, activate: Bool = true) throws {
-        guard !readOnly else { throw RuriError.message("当前窗口已暂停写入，请重新打开 Ruri。") }
-        guard !requireExisting || state.accounts.contains(where: { $0.id == input.id }) else { throw RuriError.message("此账号已被移除。") }
+        guard !readOnly else { throw RuriError.message(Messages.AppAppModelAccounts.addMicrosoftText1) }
+        guard !requireExisting || state.accounts.contains(where: { $0.id == input.id }) else { throw RuriError.message(Messages.AppAppModelAccounts.addExternalText1) }
         var account = input
         let existing = state.accounts.first { $0.kind == .external && $0.uuid == input.uuid && $0.externalLogin?.server.url == input.externalLogin?.server.url && $0.externalLogin?.username == input.externalLogin?.username }
         if let existing { account.id = existing.id }
@@ -46,7 +47,7 @@ extension AppModel {
         let (updated, refreshed) = try await ExternalAuthentication().refresh(account: account, credentials: credentials, force: true)
         try Task.checkCancellation()
         try addExternal(updated, credentials: refreshed, requireExisting: true, activate: false)
-        notice = "已刷新 \(updated.username) 的登录状态。"
+        notice = Messages.AppAppModelAccounts.credentialsText1(String(describing: updated.username)).localized
     }
     func logoutExternal(_ account: Account) async throws {
         guard let server = account.externalLogin?.server else { return }
@@ -57,10 +58,10 @@ extension AppModel {
     func appearanceClient(for requested: Account) async throws -> AccountAppearanceClient {
         guard !readOnly, var account = state.accounts.first(where: { $0.id == requested.id }),
               account.uuid == requested.uuid, account.kind == requested.kind, account.externalLogin == requested.externalLogin else {
-            throw RuriError.message("账号已变化，请重新打开外观管理。")
+            throw RuriError.message(Messages.AppAppModelAccounts.accountText2)
         }
         switch account.kind {
-        case .offline: throw RuriError.message("离线账号没有在线外观资料。")
+        case .offline: throw RuriError.message(Messages.AppAppModelAccounts.accountText3)
         case .microsoft:
             var credentials = try CredentialStore.load(for: account.id)
             if credentials.expiresAt < Date().addingTimeInterval(120) {

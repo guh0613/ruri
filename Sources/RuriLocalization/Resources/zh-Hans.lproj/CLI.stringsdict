@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>cLICLI.previewText1</key>
+	<dict>
+		<key>count5</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>count8</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@：%2$@ → %3$@
+原目录：%4$@
+%5$#@count5@ 个文件，%6$@ 字节
+目标目录：%7$@
+%8$#@count8@ 个文件，%9$@ 字节</string>
+	</dict>
+	<key>cLICLI.previewText7</key>
+	<dict>
+		<key>count5</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@ → %2$@
+源游戏目录：%3$@
+副本位置：%4$@
+%5$#@count5@ 个文件，%6$@ 字节
+副本使用独立运行目录；原实例保留。</string>
+	</dict>
+	<key>cLIContentCommands.selectedText5</key>
+	<dict>
+		<key>count2</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@：%2$#@count2@ 项%3$@</string>
+	</dict>
+	<key>cLIContentCommands.planText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>count2</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>更新 %1$#@count1@ 项内容，含依赖共 %2$#@count2@ 个文件</string>
+	</dict>
+	<key>cLIDataPackCommands.resultsText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>共 %1$#@count1@ 个结果，显示前 20 个</string>
+	</dict>
+	<key>cLIDataPackCommands.planText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@count1@ 个文件，%2$@ 字节</string>
+	</dict>
+	<key>cLIDirectories.availabilityText3</key>
+	<dict>
+		<key>count4</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@ %2$@ %3$@ [%4$#@count4@ 个实例 · %5$@]
+  %6$@</string>
+	</dict>
+	<key>cLIDirectories.availabilityText4</key>
+	<dict>
+		<key>count3</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>  %1$@ %2$@ [已从列表移除 · 保留 %3$#@count3@ 个实例设置]
+  %4$@</string>
+	</dict>
+	<key>cLIInstanceMoves.previewText1</key>
+	<dict>
+		<key>count5</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@ · %2$@
+原位置：%3$@
+目标位置：%4$@
+%5$#@count5@ 个文件，%6$@ 字节
+实例身份、设置和运行历史保留。</string>
+	</dict>
+	<key>cLIMinecraftDirectory.encoderText1</key>
+	<dict>
+		<key>count2</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$@
+发现 %2$#@count2@ 个版本</string>
+	</dict>
+	<key>cLIMinecraftDirectory.manifestText1</key>
+	<dict>
+		<key>count2</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>启动入口：%1$@ · %2$#@count2@ 条依赖声明</string>
+	</dict>
+	<key>cLIMinecraftDirectory.manifestText2</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>count2</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>count3</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>依赖选择：保留 %1$#@count1@ 条，其中 %2$#@count2@ 条使用本地文件；移除 %3$#@count3@ 条重复或旧版本声明</string>
+	</dict>
+	<key>cLIModpackCommands.resultText1</key>
+	<dict>
+		<key>count1</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld</string>
+		</dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>已回退，保留 %1$#@count1@ 项后续修改</string>
+	</dict>
+</dict>
+</plist>

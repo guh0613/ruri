@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -28,16 +29,16 @@ public final class InstanceLocationLease: @unchecked Sendable {
         try ModpackUpdateStore.requireAvailable(paths: paths, instanceID: instanceID)
         if paths.repositoryImportID != instanceID, paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
            FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
-            throw RuriError.message("此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
+            throw RuriError.message(Messages.CoreInstanceLocationLease.requireCurrentDirectoryText1)
         }
         let state = try StateStore.load(paths)
         guard !(state.detachedMinecraftFolders ?? []).contains(where: { folder in folder.instances.contains(where: { $0.id == instanceID }) }) else {
-            throw RuriError.message("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")
+            throw RuriError.message(Messages.CoreInstanceLocationLease.stateText1)
         }
         // New installations and import snapshots may not be registered yet.
         guard let instance = state.instances.first(where: { $0.id == instanceID }) else { return }
         guard (instance.directoryID ?? GameDirectory.defaultID) == paths.directoryID(for: instanceID) else {
-            throw RuriError.message("此实例已移动到另一个文件夹，请刷新后重试。")
+            throw RuriError.message(Messages.CoreInstanceLocationLease.instanceText1)
         }
     }
 
@@ -46,17 +47,17 @@ public final class InstanceLocationLease: @unchecked Sendable {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let file = try LauncherPaths.safePath(instanceID.uuidString + ".lock", within: directory)
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message("无法锁定实例位置。") }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.fdText1) }
         let result = InstanceLocationLease(fd)
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message("实例位置锁不是普通文件。") }
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreInstanceLocationLease.infoText1) }
         try lock(fd, exclusive: exclusive)
         return result
     }
 
     private static func lock(_ fd: Int32, exclusive: Bool) throws {
         var lock = flock(); lock.l_type = Int16(exclusive ? F_WRLCK : F_RDLCK); lock.l_whence = Int16(SEEK_SET)
-        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else { throw RuriError.message("实例正在移动或仍有文件操作，请稍后重试。") }
+        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.lockText1) }
     }
 }
 

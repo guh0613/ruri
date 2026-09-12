@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct LauncherPaths: Codable, Sendable {
@@ -56,7 +57,7 @@ public struct LauncherPaths: Codable, Sendable {
     }
     public static func safePath(_ path: String, within root: URL) throws -> URL {
         guard !path.isEmpty, !path.hasPrefix("/"), !path.contains("\\"), !path.contains("\0"),
-              !path.split(separator: "/").contains("..") else { throw RuriError.message("不安全的文件路径：\(path)") }
+              !path.split(separator: "/").contains("..") else { throw RuriError.message(Messages.CoreLauncherPaths.safePathText1(String(describing: path))) }
         let baseURL = root.standardizedFileURL.resolvingSymlinksInPath()
         let base = baseURL.path + "/"
         var resolved = baseURL
@@ -67,7 +68,7 @@ public struct LauncherPaths: Codable, Sendable {
             if (try? FileManager.default.destinationOfSymbolicLink(atPath: resolved.path)) != nil {
                 resolved = resolved.resolvingSymlinksInPath()
             }
-            guard resolved.path.hasPrefix(base) else { throw RuriError.message("文件路径超出实例目录：\(path)") }
+            guard resolved.path.hasPrefix(base) else { throw RuriError.message(Messages.CoreLauncherPaths.resolvedText1(String(describing: path))) }
         }
         return resolved
     }

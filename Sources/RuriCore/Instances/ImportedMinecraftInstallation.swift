@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Imported launch manifests may refer to modified client jars or local Maven
@@ -18,7 +19,7 @@ public struct ImportedMinecraftInstallation: Codable, Equatable, Sendable {
         guard version == 1, validLabel(sourceVersionID, limit: 255),
               components.count <= 64, Set(components.map(\.id)).count == components.count,
               components.allSatisfy({ validLabel($0.name, limit: 128) && validLabel($0.version, limit: 128) }) else {
-            throw RuriError.message("本地游戏安装记录无效，请检查实例元数据。")
+            throw RuriError.message(Messages.CoreImportedMinecraftInstallation.validLabelText1)
         }
     }
 }

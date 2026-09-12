@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -5,7 +6,10 @@ import RuriCore
 struct LogsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
-    private enum Mode: String, CaseIterable { case analysis = "诊断与处理", logs = "运行日志", share = "收集报告" }
+    private enum Mode: String, CaseIterable {
+        case analysis, logs, share
+        var title: String { switch self { case .analysis: Messages.AppLogsView.titleText1.localized; case .logs: Messages.AppLogsView.titleText2.localized; case .share: Messages.AppLogsView.titleText3.localized } }
+    }
     private enum Destination: String, Identifiable { case settings, mods; var id: String { rawValue } }
     @State private var mode = Mode.logs
     @State private var destination: Destination?
@@ -23,20 +27,20 @@ struct LogsView: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                Text("运行记录").font(.title2.bold()); Spacer()
-                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? "运行中") }
-                Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
+                Text(Messages.AppLogsView.bodyText1.localized).font(.title2.bold()); Spacer()
+                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? Messages.AppLogsView.sessionText1.localized) }
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
             if model.sessions.isEmpty {
-                ContentUnavailableView("暂无运行记录", systemImage: "text.document", description: Text("启动游戏后，这里会保留每次启动的过程和日志。"))
+                ContentUnavailableView(Messages.AppLogsView.sessionText2.localized, systemImage: "text.document", description: Text(Messages.AppLogsView.sessionText3.localized))
             } else {
-                Picker("选择记录", selection: $selectedID) {
+                Picker(Messages.AppLogsView.sessionText4.localized, selection: $selectedID) {
                     ForEach(model.sessions) { record in
-                        Text("\(record.createdAt.formatted(date: .abbreviated, time: .standard)) · \(record.instanceName)").tag(Optional(record.id))
+                        Text("\(LocalizedFormat.date(record.createdAt, date: .abbreviated, time: .standard)) · \(record.instanceName)").tag(Optional(record.id))
                     }
                 }
-                Picker("查看内容", selection: $mode) {
-                    ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                Picker(Messages.AppLogsView.sessionText5.localized, selection: $mode) {
+                    ForEach(Mode.allCases, id: \.self) { Text($0.title).tag($0) }
                 }.pickerStyle(.segmented)
                 if let session, !session.state.isFinished, session.monitorIdentity != nil || !model.busy {
                     GameSessionRecoveryView(session: session).id(session.id)
@@ -46,9 +50,9 @@ struct LogsView: View {
                 } else {
                     if let session { summary(session) }
                     HStack {
-                        TextField("筛选日志", text: $filter).textFieldStyle(.roundedBorder)
-                        Toggle("自动滚动", isOn: $follow).toggleStyle(.checkbox)
-                        Button("导出完整日志…") { export() }.disabled(session == nil)
+                        TextField(Messages.AppLogsView.sessionText6.localized, text: $filter).textFieldStyle(.roundedBorder)
+                        Toggle(Messages.AppLogsView.sessionText7.localized, isOn: $follow).toggleStyle(.checkbox)
+                        Button(Messages.AppLogsView.sessionText8.localized) { export() }.disabled(session == nil)
                     }
                     if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
                     ScrollViewReader { proxy in
@@ -69,7 +73,7 @@ struct LogsView: View {
                         GameQuitControls(session: session)
                     }
                     HStack {
-                        Text("预览最近 5,000 行；每次运行的完整日志独立保留。").font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppLogsView.sessionText9.localized).font(.caption).foregroundStyle(.secondary)
                         Spacer()
                     }
                 }
@@ -100,33 +104,33 @@ struct LogsView: View {
     }
     @ViewBuilder private func summary(_ record: GameSession) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(isRunning ? "最后记录阶段：\(record.stage.title)" : record.title).font(.headline)
+            Text(isRunning ? Messages.AppLogsView.summaryText1(String(describing: record.stage.title)).localized : record.title).font(.headline)
             if let exit = record.exit {
                 Text(exit.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             } else if let interruption = record.interruption {
-                Text(interruption.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            } else if let failure = record.failure {
+                Text(interruption.displayExplanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            } else if let failure = record.displayFailure {
                 Text(failure).font(.callout).foregroundStyle(.orange).lineLimit(3).textSelection(.enabled)
             }
             ForEach(Array((record.commandResults ?? []).enumerated()), id: \.offset) { _, result in
                 Text(result.summary).font(.caption).foregroundStyle(result.succeeded ? Color.secondary : .orange).textSelection(.enabled)
             }
-            DisclosureGroup("阶段、环境与报告") {
+            DisclosureGroup(Messages.AppLogsView.failureText1.localized) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 7) {
                         Text("Minecraft \(record.gameVersion) · \(record.loader) \(record.loaderVersion ?? "")").font(.caption)
-                        Text(record.memory?.summary ?? "记录的内存上限：\(record.memoryMB) MB").font(.caption).textSelection(.enabled)
-                        Text("\(record.operatingSystem) · \(record.java ?? "尚未选择 Java")").font(.caption).foregroundStyle(.secondary)
+                        Text(record.memory?.summary ?? Messages.AppLogsView.failureText2(String(describing: record.memoryMB)).localized).font(.caption).textSelection(.enabled)
+                        Text("\(record.operatingSystem) · \(record.java ?? Messages.AppLogsView.failureText3.localized)").font(.caption).foregroundStyle(.secondary)
                         ForEach(record.events) { event in
                             HStack(alignment: .top) {
-                                Text(event.date.formatted(date: .omitted, time: .standard)).monospacedDigit().foregroundStyle(.secondary)
-                                Text(event.message).textSelection(.enabled)
+                                Text(LocalizedFormat.date(event.date, date: .omitted, time: .standard)).monospacedDigit().foregroundStyle(.secondary)
+                                Text(event.displayMessage).textSelection(.enabled)
                             }.font(.caption)
                         }
                         ForEach(record.evidence) { evidence in
-                            Button(evidence.name + (evidence.truncated ? "（截断副本）" : "")) { reveal(record, relativePath: evidence.relativePath) }
+                            Button(evidence.name + (evidence.truncated ? Messages.AppLogsView.failureText4.localized : "")) { reveal(record, relativePath: evidence.relativePath) }
                         }
-                        Button("在 Finder 中显示本次运行记录") { reveal(record) }
+                        Button(Messages.AppLogsView.failureText5.localized) { reveal(record) }
                     }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 6)
                 }.frame(maxHeight: 125)
             }.font(.caption)

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -31,16 +32,16 @@ public struct MemorySettings: Codable, Equatable, Sendable {
     }
     public func resolve(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
         guard (512...131_072).contains(maximumMB), initialMB == nil || (16...131_072).contains(initialMB!),
-              metaspaceMB == nil || (16...131_072).contains(metaspaceMB!) else { throw RuriError.message("内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。") }
+              metaspaceMB == nil || (16...131_072).contains(metaspaceMB!) else { throw RuriError.message(Messages.CoreMemorySettings.resolveText1) }
         let maximum: Int
         if mode == .automatic {
-            guard availability.physicalMB >= 512 else { throw RuriError.message("无法读取物理内存，请使用手动内存设置。") }
+            guard availability.physicalMB >= 512 else { throw RuriError.message(Messages.CoreMemorySettings.maximumText1) }
             var candidate = min(8192, availability.physicalMB / 4)
             if let available = availability.availableMB { candidate = min(candidate, max(0, available) / 2) }
             maximum = max(512, candidate / 256 * 256)
         } else { maximum = maximumMB }
         let initial = initialMB ?? min(512, maximum)
-        guard initial <= maximum else { throw RuriError.message("初始堆 \(initial) MB 大于本次最大堆 \(maximum) MB。请降低初始值或调整内存模式。") }
+        guard initial <= maximum else { throw RuriError.message(Messages.CoreMemorySettings.initialText1(String(describing: initial), String(describing: maximum))) }
         return .init(maximumBytes: Int64(maximum) * 1_048_576, minimumBytes: Int64(initial) * 1_048_576, initialBytes: Int64(initial) * 1_048_576,
                      metaspaceBytes: metaspaceMB.map { Int64($0) * 1_048_576 }, maximumSource: mode == .automatic ? .automatic : .settings,
                      initialSource: .settings, metaspaceSource: .settings, availability: mode == .automatic ? availability : nil)
@@ -50,7 +51,7 @@ public struct MemorySettings: Codable, Equatable, Sendable {
 public struct LaunchMemory: Codable, Equatable, Sendable {
     public enum Source: String, Codable, Sendable {
         case automatic, settings, jvmArguments
-        public var title: String { switch self { case .automatic: "自动估算"; case .settings: "内存设置"; case .jvmArguments: "JVM 参数覆盖" } }
+        public var title: String { switch self { case .automatic: Messages.CoreMemorySettings.titleText1.localized; case .settings: Messages.CoreMemorySettings.titleText2.localized; case .jvmArguments: Messages.CoreMemorySettings.titleText3.localized } }
     }
     public var maximumBytes: Int64
     public var minimumBytes: Int64
@@ -61,7 +62,7 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     public var metaspaceSource: Source
     public var availability: MemoryAvailability?
     public var maximumMB: Int { Int((maximumBytes + 1_048_575) / 1_048_576) }
-    public var summary: String { "堆上限 \(Self.size(maximumBytes)) · 初始 \(initialBytes == 0 ? "由 JVM 自动决定" : Self.size(initialBytes)) · \(maximumSource.title)" + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
+    public var summary: String { Messages.CoreMemorySettings.summaryText2(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.summaryText1.localized : Self.size(initialBytes)), String(describing: maximumSource.title)).localized + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
     public var arguments: [String] {
         func size(_ value: Int64) -> String { value % 1_048_576 == 0 ? "\(value / 1_048_576)M" : String(value) }
         var values = ["-Xms\(size(minimumBytes))", "-Xmx\(size(maximumBytes))"]
@@ -71,7 +72,7 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     }
     public static func size(_ bytes: Int64) -> String {
         if bytes % 1_048_576 == 0 { return "\(bytes / 1_048_576) MB" }
-        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: .memory)
+        return LocalizedFormat.bytes(bytes, memory: true)
     }
 }
 
@@ -96,7 +97,7 @@ public enum JVMHeapArguments {
         // allocation. Preserve that choice without pretending to know its size.
         guard result.maximumBytes > 1_048_576, result.minimumBytes <= result.maximumBytes,
               result.initialBytes == 0 || (result.minimumBytes <= result.initialBytes && result.initialBytes <= result.maximumBytes) else {
-            throw RuriError.message("JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。")
+            throw RuriError.message(Messages.CoreMemorySettings.valueText1)
         }
         return result
     }
@@ -105,9 +106,9 @@ public enum JVMHeapArguments {
         if let last = digits.last, let unit = ["k": Int64(1024), "m": Int64(1_048_576), "g": Int64(1_073_741_824)][String(last).lowercased()] {
             multiplier = unit; digits.removeLast()
         }
-        guard !digits.isEmpty, digits.utf8.allSatisfy({ (48...57).contains($0) }), let number = Int64(digits) else { throw RuriError.message("无效的 JVM 内存大小：\(text)。请使用字节数或 K/M/G 单位。") }
+        guard !digits.isEmpty, digits.utf8.allSatisfy({ (48...57).contains($0) }), let number = Int64(digits) else { throw RuriError.message(Messages.CoreMemorySettings.numberText1(String(describing: text))) }
         let (value, overflow) = number.multipliedReportingOverflow(by: multiplier)
-        guard !overflow, value >= 0, value <= Int64.max - 1_048_575 else { throw RuriError.message("JVM 内存大小超出可表示范围。") }
+        guard !overflow, value >= 0, value <= Int64.max - 1_048_575 else { throw RuriError.message(Messages.CoreMemorySettings.numberText2) }
         return value
     }
 }

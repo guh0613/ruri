@@ -1,9 +1,10 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
 extension CLI {
     static func manageLaunchSettings(_ args: [String], paths: LauncherPaths) throws {
-        let usage = "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。"
+        let usage = Messages.CLILaunchSettingsCommands.usageText1.localized
         guard let scope = args.first, scope == "defaults" || UUID(uuidString: scope) != nil else { throw RuriError.message(usage) }
         let id = UUID(uuidString: scope)
         if args.count > 1 {
@@ -14,7 +15,7 @@ extension CLI {
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
                 let index = id.flatMap { id in state.instances.firstIndex { $0.id == id } }
-                if id != nil && index == nil { throw RuriError.message("实例不存在。") }
+                if id != nil && index == nil { throw RuriError.message(Messages.CLILaunchSettingsCommands.indexText1) }
                 let defaults = state.settings.defaultLaunchSettings
                 var overrides = index.map { state.instances[$0].effectiveLaunchOverrides } ?? .init(fixing: defaults)
                 if args[1] == "inherit" {
@@ -56,7 +57,7 @@ extension CLI {
                         case "commandTimeout":
                             guard let seconds = Int(value) else { throw RuriError.message(usage) }; commands.timeoutSeconds = seconds
                         default:
-                            guard let enabled = Bool(value) else { throw RuriError.message("commands 应为 true 或 false。") }; commands.enabled = enabled
+                            guard let enabled = Bool(value) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.enabledText1) }; commands.enabled = enabled
                         }
                         overrides.commands = commands
                     case .environment:
@@ -64,7 +65,7 @@ extension CLI {
                             let file = URL(fileURLWithPath: value)
                             let handle = try FileHandle(forReadingFrom: file); defer { try? handle.close() }
                             let data = try handle.read(upToCount: 65537) ?? Data()
-                            guard data.count <= 65536, let content = String(data: data, encoding: .utf8) else { throw RuriError.message("环境变量文件应为不超过 64 KB 的 UTF-8 文本。") }
+                            guard data.count <= 65536, let content = String(data: data, encoding: .utf8) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.contentText1) }
                             overrides.environment = content
                         } else { overrides.environment = value }
                     }
@@ -77,7 +78,7 @@ extension CLI {
         let state = try StateStore.load(paths)
         let overrides: InstanceLaunchOverrides
         if let id {
-            guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("实例不存在。") }
+            guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.indexText1) }
             overrides = instance.effectiveLaunchOverrides
         } else { overrides = .init(fixing: state.settings.defaultLaunchSettings) }
         let values = overrides.resolve(defaults: state.settings.defaultLaunchSettings)

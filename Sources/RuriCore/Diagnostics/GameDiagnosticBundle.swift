@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import ZIPFoundation
 
@@ -17,60 +18,60 @@ public struct GameDiagnosticBundle: Sendable {
     public let files: [File]
 
     public static func preview(session: GameSession, diagnosis: GameDiagnosis, additionalPrivateText: [String] = [], homeDirectory: String = NSHomeDirectory()) throws -> Self {
-        guard session.id == diagnosis.sessionID else { throw RuriError.message("诊断与运行记录不匹配，请重新分析。") }
+        guard session.id == diagnosis.sessionID else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.previewText1) }
         let redactor = GameShareRedactor(additionalPrivateText: additionalPrivateText, homeDirectory: homeDirectory)
         var files: [File] = []
         func append(id: String, path: String, title: String, text: String) {
             let redacted = redactor.redact(text)
             files.append(.init(id: id, path: path, title: title, text: redacted, changedByRedaction: redacted != text))
         }
-        var summary = "Ruri 本地诊断报告\n分析器版本：1\n运行时间：\(session.createdAt.ISO8601Format())\n\n\(diagnosis.title)\n\(diagnosis.summary)\n\n"
+        var summary = Messages.CoreGameDiagnosticBundle.summaryText1(String(describing: session.createdAt.ISO8601Format()), String(describing: diagnosis.title), String(describing: diagnosis.summary)).localized
         for finding in diagnosis.findings {
-            summary += "\n\(finding.title)（\(finding.confidence.rawValue)）\n\(finding.explanation)\n"
+            summary += "\n\(finding.title)（\(finding.confidence.title)）\n\(finding.explanation)\n"
             for (index, step) in finding.steps.enumerated() { summary += "\(index + 1). \(step)\n" }
             // Excerpts are intentionally separate selectable files. Deselecting
             // a log must also remove its quoted contents from the package.
         }
-        summary += "\n读取范围与缺失信息\n" + (diagnosis.limitations.isEmpty ? "未发现读取截断或读取错误。" : diagnosis.limitations.joined(separator: "\n"))
-        append(id: "summary", path: "diagnosis.txt", title: "诊断结论与处理步骤", text: summary + "\n")
-        var environment = """
-        Minecraft: \(session.gameVersion)
-        Loader: \(session.loader) \(session.loaderVersion ?? "")
-        Java: \(session.java ?? "未记录")
-        Memory: \(session.memory?.summary ?? "堆上限 \(session.memoryMB) MB")
-        System: \(session.operatingSystem)
-        Host architecture: \(session.hostArchitecture)
-        Account type: \(session.accountMode)
-        Started: \(session.createdAt.ISO8601Format())
-        Last recorded stage: \(session.stage.title)
-        State: \(session.state.rawValue)
-        Exit kind: \(session.exit?.reason.rawValue ?? "未记录")
-        Exit status: \(session.exit.map { String($0.status) } ?? "未记录")
-        Stop requested through Ruri: \(session.exit.map { $0.stopRequested ? "yes" : "no" } ?? "未记录")
-        Normal quit request sent: \(session.exit?.normalQuitRequested == true ? "yes" : session.normalQuitAttempt?.accepted == true ? "yes (exit not recorded)" : "未记录")
-        """
+        summary += Messages.CoreGameDiagnosticBundle.summaryText2.localized + (diagnosis.limitations.isEmpty ? Messages.CoreGameDiagnosticBundle.summaryText3.localized : diagnosis.limitations.joined(separator: "\n"))
+        append(id: "summary", path: "diagnosis.txt", title: Messages.CoreGameDiagnosticBundle.summaryText4.localized, text: summary + "\n")
+        var environment = Messages.CoreGameDiagnosticBundle.environment(
+            session.gameVersion,
+            session.loader,
+            session.loaderVersion ?? "",
+            session.java ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
+            session.memory?.summary ?? Messages.CoreGameDiagnosticBundle.environmentText2(String(session.memoryMB)).localized,
+            session.operatingSystem,
+            session.hostArchitecture,
+            session.accountMode,
+            session.createdAt.ISO8601Format(),
+            session.stage.title,
+            session.state.rawValue,
+            session.exit?.reason.rawValue ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
+            session.exit.map { String($0.status) } ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
+            session.exit.map { $0.stopRequested ? Messages.CoreGameDiagnosticBundle.yes.localized : Messages.CoreGameDiagnosticBundle.no.localized } ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
+            session.exit?.normalQuitRequested == true ? Messages.CoreGameDiagnosticBundle.yes.localized : session.normalQuitAttempt?.accepted == true ? Messages.CoreGameDiagnosticBundle.exitPending.localized : Messages.CoreGameDiagnosticBundle.environmentText1.localized).localized
         if let interruption = session.interruption {
-            environment += "\nRecovery observed at (not exit time): \(interruption.observedAt.ISO8601Format())\nRecovery basis: \(interruption.resolution.rawValue)\n\(interruption.explanation)"
+            environment += Messages.CoreGameDiagnosticBundle.recoveryEnvironment(interruption.observedAt.ISO8601Format(), interruption.resolution.rawValue, interruption.displayExplanation).localized
         }
-        append(id: "environment", path: "environment.txt", title: "游戏、Java 与系统环境", text: environment + "\n")
+        append(id: "environment", path: "environment.txt", title: Messages.CoreGameDiagnosticBundle.interruptionText1.localized, text: environment + "\n")
         for (index, document) in diagnosis.documents.enumerated() {
             try Task.checkCancellation()
             let stem = document.kind == .output ? "output" : document.kind == .preparation ? "preparation" : document.kind == .jvmReport ? "jvm-report" : "minecraft-report"
             let path = "evidence/\(String(format: "%02d", index + 1))-\(stem)\(document.isTail ? "-tail" : "").txt"
-            let heading = "来源：\(document.title)\n范围：\(document.truncated ? "片段，可能缺少上下文" : "已读取的完整文件")\n行号：\(document.isTail ? "末段内从 1 开始，不是原文件行号" : "正文从原文件第 1 行开始")\n\n"
-            append(id: document.id, path: path, title: document.title + (document.truncated ? " · 片段" : ""), text: heading + document.text)
+            let heading = Messages.CoreGameDiagnosticBundle.headingText5(String(describing: document.title), String(describing: document.truncated ? Messages.CoreGameDiagnosticBundle.headingText1.localized : Messages.CoreGameDiagnosticBundle.headingText2.localized), String(describing: document.isTail ? Messages.CoreGameDiagnosticBundle.headingText3.localized : Messages.CoreGameDiagnosticBundle.headingText4.localized)).localized
+            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.headingText6.localized : ""), text: heading + document.text)
         }
         return .init(sessionID: session.id, createdAt: Date(), files: files)
     }
 
     public func export(selectedIDs: Set<String>, to destination: URL, paths: LauncherPaths) throws {
         let selected = files.filter { selectedIDs.contains($0.id) }
-        guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message("请选择有效的报告内容。") }
-        guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message("请选择 ZIP 文件保存位置。") }
+        guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.selectedText1) }
+        guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.selectedText2) }
         let target = destination.resolvingSymlinksInPath().standardizedFileURL.path
         for url in [paths.root] + paths.directories.map(\.url) {
             let root = url.resolvingSymlinksInPath().standardizedFileURL.path
-            guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message("请将诊断包保存在 Ruri 数据目录和实例文件夹之外。") }
+            guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.rootText1) }
         }
         let staging = destination.deletingLastPathComponent().appendingPathComponent(".ruri-diagnostic-\(UUID().uuidString).zip")
         defer { try? FileManager.default.removeItem(at: staging) }
@@ -87,7 +88,7 @@ public struct GameDiagnosticBundle: Sendable {
             }
         }
         try Task.checkCancellation()
-        guard rename(staging.path, destination.path) == 0 else { throw RuriError.message("无法保存诊断包。") }
+        guard rename(staging.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.dataText1) }
     }
 }
 

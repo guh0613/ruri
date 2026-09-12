@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -50,7 +51,7 @@ struct RepositoryMoveJournal: Codable, Sendable {
               record.sources.allSatisfy({ FileTreeManifest.validDigest($0.digest) }),
               Set(record.publications.map(\.part)).count == record.publications.count,
               record.publications.allSatisfy({ FileTreeManifest.validDigest($0.digest) }), record.resources.count <= 150_000 else {
-            throw RuriError.message("Minecraft 实例移动记录无效，文件已保留。")
+            throw RuriError.message(Messages.CoreRepositoryMoveJournal.recordText1)
         }
         for name in [record.original.repositoryVersionID, record.moved.repositoryVersionID].compactMap({ $0 }) { try MinecraftDirectoryScan.checkIdentifier(name) }
         try InstanceTransfer.validate(record.moved)
@@ -67,7 +68,7 @@ struct RepositoryMoveJournal: Codable, Sendable {
         switch part {
         case .metadata: relative = (collection?.isMinecraft == true ? ".ruri/instances/" : "instances/") + instance.id.uuidString
         case .version:
-            guard let name = instance.repositoryVersionID else { throw RuriError.message("移动记录缺少版本位置。") }
+            guard let name = instance.repositoryVersionID else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.nameText1) }
             relative = "versions/" + name
         }
         return try LauncherPaths.safePath(relative, within: collection?.url ?? paths.root)
@@ -82,19 +83,19 @@ struct RepositoryMoveJournal: Codable, Sendable {
                                    within: sourceCollection?.url ?? paths.root)
     }
     func isCommitted(_ state: PersistentState) throws -> Bool {
-        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message("移动中的实例已被移除，请先核对文件。") }
+        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.instanceText1) }
         if instance.lastInstanceMoveID != id {
-            guard instance.directoryID == original.directoryID else { throw RuriError.message("实例位置与移动记录不一致。") }; return false
+            guard instance.directoryID == original.directoryID else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.instanceText2) }; return false
         }
         guard instance.directoryID == moved.directoryID, instance.repositoryVersionID == moved.repositoryVersionID,
-              instance.runDirectory == moved.runDirectory, instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message("移动凭据与实例位置不一致。") }
+              instance.runDirectory == moved.runDirectory, instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.instanceText3) }
         return true
     }
     func validateLocations(paths: LauncherPaths) throws {
         let state = try StateStore.load(paths)
         for directory in [sourceCollection, targetCollection].compactMap({ $0 }) {
             guard state.gameDirectories?.contains(where: { $0.id == directory.id && $0.url.standardizedFileURL == directory.url.standardizedFileURL && $0.isMinecraft == directory.isMinecraft }) == true else {
-                throw RuriError.message("移动涉及的文件夹位置已改变，请恢复原位置后重试。")
+                throw RuriError.message(Messages.CoreRepositoryMoveJournal.stateText1)
             }
             try directory.validateAvailability()
         }
@@ -116,7 +117,7 @@ struct RepositoryMoveJournal: Codable, Sendable {
             let file = folder.appendingPathComponent("reservation.json")
             guard FileManager.default.fileExists(atPath: file.path) else { continue }
             let current: RepositoryMoveReservation = try RunDirectoryCopyGuard.decode(file, limit: 8192)
-            guard current == .init(id: id, instanceID: original.id, version: version) else { throw RuriError.message("移动占用记录已改变，未清理。") }
+            guard current == .init(id: id, instanceID: original.id, version: version) else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.currentText1) }
             try FileManager.default.removeItem(at: file)
             _ = rmdir(folder.path)
         }
@@ -135,7 +136,7 @@ struct RepositoryMoveReservation: Codable, Equatable {
             let file = try LauncherPaths.safePath("reservation.json", within: folder)
             guard FileManager.default.fileExists(atPath: file.path) else { continue }
             let record: Self = try RunDirectoryCopyGuard.decode(file, limit: 8192)
-            guard record.id.uuidString == folder.lastPathComponent else { throw RuriError.message("实例移动占用记录无效。") }
+            guard record.id.uuidString == folder.lastPathComponent else { throw RuriError.message(Messages.CoreRepositoryMoveJournal.recordText2) }
             try MinecraftDirectoryScan.checkIdentifier(record.version)
             names.insert(MinecraftGameDataFiles.key(record.version))
         }

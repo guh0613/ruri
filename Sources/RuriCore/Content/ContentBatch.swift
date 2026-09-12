@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 extension ContentManager {
@@ -14,7 +15,7 @@ extension ContentManager {
         try checkDependencies(original: records, future: future, changedIDs: ids)
         let moves = try selected.map { file -> (String, String) in
             let source = relativePath(file), target = file.kind.folder + "/" + file.filename + (enabled ? "" : ".disabled")
-            guard !FileManager.default.fileExists(atPath: try contentURL(target).path) else { throw RuriError.message("目标文件已存在，整批操作尚未执行：\(target)") }
+            guard !FileManager.default.fileExists(atPath: try contentURL(target).path) else { throw RuriError.message(Messages.CoreContentBatch.sourceText1(String(describing: target))) }
             return (source, target)
         }
         let affected = Array(Set(moves.flatMap { [$0.0, $0.1] })).sorted()
@@ -40,7 +41,7 @@ extension ContentManager {
                 if affected.count == 1 {
                     try fm.trashItem(at: contentURL(affected[0]), resultingItemURL: &trashed)
                 } else {
-                    let bundle = transactionURL.appendingPathComponent("Ruri 已移除的内容 " + String(UUID().uuidString.prefix(8)))
+                    let bundle = transactionURL.appendingPathComponent(Messages.CoreContentBatch.removalFolder(String(UUID().uuidString.prefix(8))).localized)
                     for path in affected {
                         let destination = try LauncherPaths.safePath(path, within: bundle)
                         try fm.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -61,13 +62,13 @@ extension ContentManager {
 
     private func relativePath(_ file: LocalContentFile) -> String { file.kind.folder + "/" + file.filename + (file.enabled ? "" : ".disabled") }
     private func validateSelection(_ files: [LocalContentFile], records: [ManagedContent]) throws -> [LocalContentFile] {
-        guard Set(files.map(\.id)).count == files.count else { throw RuriError.message("选择中包含重复文件。") }
+        guard Set(files.map(\.id)).count == files.count else { throw RuriError.message(Messages.CoreContentBatch.validateSelectionText1) }
         for file in files {
             let path = relativePath(file), expected = try contentURL(path)
             let info = try expected.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
             guard expected.standardizedFileURL.resolvingSymlinksInPath() == file.url.standardizedFileURL.resolvingSymlinksInPath(), info.isRegularFile == true, Int64(info.fileSize ?? -1) == file.size,
                   records.first(where: { $0.relativePath == path }) == file.managed else {
-                throw RuriError.message("内容列表已改变，请刷新后重新选择：\(file.filename)")
+                throw RuriError.message(Messages.CoreContentBatch.infoText1(String(describing: file.filename)))
             }
         }
         return files
@@ -86,7 +87,7 @@ extension ContentManager {
                 let dependency = key(record, project: project)
                 return !available.contains(dependency) && (changedIDs.contains(record.id) || changed.contains(dependency))
             }
-            guard missing.isEmpty else { throw RuriError.message("“\(record.title)”需要 \(missing.joined(separator: "、"))。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。") }
+            guard missing.isEmpty else { throw RuriError.message(Messages.CoreContentBatch.dependencyText1(String(describing: record.title), String(describing: missing.joined(separator: "、")))) }
         }
     }
 
@@ -100,7 +101,7 @@ extension ContentManager {
                 let source = try contentURL(path)
                 if fm.fileExists(atPath: source.path) {
                     let attributes = try fm.attributesOfItem(atPath: source.path)
-                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message("内容目录中存在不支持的文件类型：\(path)") }
+                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentBatch.attributesText1(String(describing: path))) }
                     let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
                     try fm.createDirectory(at: backup.deletingLastPathComponent(), withIntermediateDirectories: true)
                     try fm.copyItem(at: source, to: backup); originals.append(path)
@@ -113,7 +114,7 @@ extension ContentManager {
             try action()
             try Data().write(to: transactionURL.appendingPathComponent("committed"), options: .atomic)
         } catch {
-            do { try recover() } catch { throw RuriError.message("内容操作恢复失败，备份保留在 \(transactionURL.path)。\(error.localizedDescription)") }
+            do { try recover() } catch { throw RuriError.message(Messages.CoreContentBatch.journalText1(String(describing: transactionURL.path), String(describing: error.localizedDescription))) }
             throw error
         }
         try? fm.removeItem(at: transactionURL)

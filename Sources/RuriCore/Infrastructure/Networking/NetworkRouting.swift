@@ -1,9 +1,10 @@
+import RuriLocalization
 import Foundation
 
 public enum DownloadSource: String, Codable, CaseIterable, Identifiable, Sendable {
     case automatic, official, bmclapi
     public var id: String { rawValue }
-    public var title: String { switch self { case .automatic: "自动切换"; case .official: "官方源"; case .bmclapi: "BMCLAPI 优先" } }
+    public var title: String { switch self { case .automatic: Messages.CoreNetworkRouting.titleText1.localized; case .official: Messages.CoreNetworkRouting.titleText2.localized; case .bmclapi: Messages.CoreNetworkRouting.titleText3.localized } }
     public func candidates(for url: URL) -> [URL] {
         guard self != .official, let mirror = Self.mirror(url) else { return [url] }
         return self == .bmclapi ? [mirror, url] : [url, mirror]

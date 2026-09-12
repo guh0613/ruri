@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -26,18 +27,18 @@ struct GameSessionRecoveryView: View {
                     Text(status.title).font(.headline)
                     Text(status.explanation).font(.callout).fixedSize(horizontal: false, vertical: true)
                     if status == .confirmationRequired {
-                        Toggle("我已确认这个实例的游戏已退出", isOn: $confirmedEnded).toggleStyle(.checkbox)
-                        Text("恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。").font(.caption).foregroundStyle(.secondary)
+                        Toggle(Messages.AppGameSessionRecoveryView.bodyText1.localized, isOn: $confirmedEnded).toggleStyle(.checkbox)
+                        Text(Messages.AppGameSessionRecoveryView.bodyText2.localized).font(.caption).foregroundStyle(.secondary)
                     }
-                    if instanceLocked { Text("这个实例仍被某项操作占用，请等待该操作完成。").font(.caption).foregroundStyle(.secondary) }
+                    if instanceLocked { Text(Messages.AppGameSessionRecoveryView.bodyText3.localized).font(.caption).foregroundStyle(.secondary) }
                     if let message = error ?? refreshError { Text(message).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                     HStack {
-                        Button("刷新状态") { Task { await refresh() } }.disabled(working)
-                        if status == .gameRunning { Button("返回游戏") { model.returnToGame(session.instanceID) } }
+                        Button(Messages.AppGameSessionRecoveryView.messageText1.localized) { Task { await refresh() } }.disabled(working)
+                        if status == .gameRunning { Button(Messages.AppGameSessionRecoveryView.messageText2.localized) { model.returnToGame(session.instanceID) } }
                         Spacer()
                         if working { ProgressView().controlSize(.small) }
                         if status == .processEnded || status == .confirmationRequired {
-                            Button("收尾记录并恢复启动") { recover() }.buttonStyle(.borderedProminent)
+                            Button(Messages.AppGameSessionRecoveryView.messageText3.localized) { recover() }.buttonStyle(.borderedProminent)
                                 .disabled(working || model.busy || instanceLocked || (status == .confirmationRequired && !confirmedEnded))
                         }
                     }

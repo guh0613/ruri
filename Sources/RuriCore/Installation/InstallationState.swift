@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 extension GameInstance {
@@ -13,11 +14,11 @@ extension GameInstance {
               (result.directoryID ?? GameDirectory.defaultID) == (directoryID ?? GameDirectory.defaultID),
               (runDirectory ?? .isolated) == (requested.runDirectory ?? .isolated),
               (result.runDirectory ?? .isolated) == (runDirectory ?? .isolated) else {
-            throw RuriError.message("实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。")
+            throw RuriError.message(Messages.CoreInstallationState.applyingInstallationText1)
         }
         if runDirectory == .custom {
             guard let current = customRunDirectory, let original = requested.customRunDirectory, let installed = result.customRunDirectory,
-                  current.isSameLocation(as: original), current.isSameLocation(as: installed) else { throw RuriError.message("自定义运行目录在安装期间改变，未覆盖最新设置。") }
+                  current.isSameLocation(as: original), current.isSameLocation(as: installed) else { throw RuriError.message(Messages.CoreInstallationState.installedText1) }
         }
         var current = self
         current.installed = result.installed; current.loaderVersion = result.loaderVersion; current.directoryID = result.directoryID

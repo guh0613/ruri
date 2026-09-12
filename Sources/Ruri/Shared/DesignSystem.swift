@@ -93,7 +93,7 @@ struct StatTile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label).font(.caption).foregroundStyle(.secondary)
-            Text(value).font(.callout.weight(.medium)).lineLimit(1)
+            Text(value).font(.callout.weight(.medium)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
         }.frame(maxWidth: .infinity, alignment: .leading)
     }
 }

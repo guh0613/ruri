@@ -1,0 +1,21 @@
+/* @symbol Common.cancel @args - */
+"common.cancel" = "取消";
+/* @symbol Common.done @args - */
+"common.done" = "完成";
+/* @symbol Common.language @args - */
+"common.language" = "语言";
+/* @symbol Common.followSystem @args - */
+"common.followSystem" = "跟随系统";
+/* @symbol Common.languageRestart @args - */
+"common.languageRestart" = "重新打开 Ruri 后生效。";
+
+/* @symbol Common.fileCount @args integer */
+"common.fileCount" = "%1$lld 个文件";
+
+/* @symbol Common.filesAndSize @args integer,text */
+"common.filesAndSize" = "%1$lld 个文件 · %2$@";
+
+/* @symbol Common.localizationCheck @args - */
+"common.localizationCheck" = "本地化资源读取成功";
+/* @symbol Common.invalidLanguageOption @args - */
+"common.invalidLanguageOption" = "--language 后需要填写语言代码。";

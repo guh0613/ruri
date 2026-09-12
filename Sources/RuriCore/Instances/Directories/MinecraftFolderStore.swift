@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Registers a repository in place. Discovery reads version descriptions only;
@@ -16,13 +17,13 @@ public enum MinecraftFolderStore {
         return try StateStore.update(paths) { state in
             if let id {
                 guard let retained = state.detachedMinecraftFolders?.first(where: { $0.id == id }) else {
-                    throw RuriError.message("文件夹列表已改变，请刷新后重试。")
+                    throw RuriError.message(Messages.CoreMinecraftFolderStore.retainedText1)
                 }
                 var candidate = retained.directory; candidate.url = catalog.directory
                 try candidate.validateAvailability()
             }
             if let existing = state.gameDirectories?.first(where: { $0.url.standardizedFileURL.resolvingSymlinksInPath() == catalog.directory }) {
-                guard existing.isMinecraft else { throw RuriError.message("此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。") }
+                guard existing.isMinecraft else { throw RuriError.message(Messages.CoreMinecraftFolderStore.existingText1) }
                 try existing.validateAvailability()
                 state.selectedDirectoryID = existing.id
                 try synchronize(catalog, directory: existing, state: &state, paths: paths)
@@ -33,10 +34,10 @@ public enum MinecraftFolderStore {
             let markerFile = directory.url.appendingPathComponent(GameDirectory.markerName)
             if FileManager.default.fileExists(atPath: markerFile.path) {
                 let info = try markerFile.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message("无法识别此文件夹的 Ruri 标记。") }
+                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message(Messages.CoreMinecraftFolderStore.infoText1) }
                 let marker = try JSONDecoder().decode(GameDirectory.Marker.self, from: Data(contentsOf: markerFile))
                 guard marker.schema == 1, marker.layout == .minecraft, marker.id != GameDirectory.defaultID,
-                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message("此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。") }
+                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message(Messages.CoreMinecraftFolderStore.markerText1) }
                 directory = GameDirectory(id: marker.id, name: directory.name, url: directory.url, bookmark: nil, createdAt: directory.createdAt, layout: .minecraft)
             } else {
                 try JSONEncoder().encode(GameDirectory.Marker(schema: 1, id: directory.id, layout: .minecraft)).write(to: markerFile, options: .withoutOverwriting)
@@ -47,7 +48,7 @@ public enum MinecraftFolderStore {
                 let located = original.resolvingBookmark()
                 if located.url.standardizedFileURL.resolvingSymlinksInPath().path != directory.url.path,
                    (try? located.validateAvailability()) != nil {
-                    throw RuriError.message("原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
+                    throw RuriError.message(Messages.CoreMinecraftFolderStore.locatedText1)
                 }
                 directory = GameDirectory(id: original.id, name: id == nil ? directory.name : original.name, url: directory.url, bookmark: nil, createdAt: original.createdAt, layout: .minecraft)
                 state.instances.append(contentsOf: detached.instances)
@@ -67,7 +68,7 @@ public enum MinecraftFolderStore {
         try directory.validateAvailability()
         let catalog = try MinecraftDirectoryReader().scanNow(directory.url, allowEmpty: true)
         return try StateStore.update(paths) { state in
-            guard state.gameDirectories?.first(where: { $0.id == id }) == directory else { throw RuriError.message("文件夹位置已改变，请重新刷新。") }
+            guard state.gameDirectories?.first(where: { $0.id == id }) == directory else { throw RuriError.message(Messages.CoreMinecraftFolderStore.catalogText1) }
             try synchronize(catalog, directory: directory, state: &state, paths: paths)
         }
     }
@@ -98,7 +99,7 @@ public enum MinecraftFolderStore {
                     item.runDirectory = .custom
                     // Failure stays visible instead of silently opening another set of saves.
                     do { item.customRunDirectory = try CustomRunDirectory.register(at: target, paths: paths.configured(with: state)) }
-                    catch { throw RuriError.message("无法接入“\(version.id)”的自定义游戏目录：\(error.localizedDescription)") }
+                    catch { throw RuriError.message(Messages.CoreMinecraftFolderStore.targetText1(String(describing: version.id), String(describing: error.localizedDescription))) }
                 }
             }
             if let index { state.instances[index] = item } else { state.instances.append(item) }
@@ -109,8 +110,8 @@ public enum MinecraftFolderStore {
                !reserved.contains(MinecraftGameDataFiles.key(version)), !InstanceMoveGuard.hasPending(paths: paths, instanceID: state.instances[index].id) {
                 let current = paths.configured(with: state)
                 state.instances[index].repositoryIssue = FileManager.default.fileExists(atPath: current.repositoryImportWorkspace(state.instances[index].id).path)
-                    ? "导入或复制尚需完成，请处理实例库中的工作文件。"
-                    : "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
+                    ? Messages.CoreMinecraftFolderStore.currentText1.localized
+                    : Messages.CoreMinecraftFolderStore.currentText2.localized
             }
         }
         if state.selectedDirectoryID == directory.id, !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
@@ -122,7 +123,7 @@ public enum MinecraftFolderStore {
     /// assets and game data remain in place, including other profiles’ base jars.
     @discardableResult public static func trashVersion(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
-            guard let instance = state.instances.first(where: { $0.id == id }), let versionID = instance.repositoryVersionID else { throw RuriError.message("找不到本地版本。") }
+            guard let instance = state.instances.first(where: { $0.id == id }), let versionID = instance.repositoryVersionID else { throw RuriError.message(Messages.CoreMinecraftFolderStore.versionIDText1) }
             let current = paths.configured(with: state)
             let lease = try GameRunLease.acquire(paths: current, instanceID: id)
             defer { withExtendedLifetime(lease) {} }
@@ -131,10 +132,10 @@ public enum MinecraftFolderStore {
                 let root = current.directoryRoot(current.directoryID(for: id)), reader = MinecraftDirectoryReader()
                 let catalog = try reader.scanNow(root, allowEmpty: true)
                 for other in catalog.versions where other.id != versionID {
-                    guard other.issue == nil else { throw RuriError.message("请先处理“\(other.id)”的无效清单，才能确认它是否依赖此版本。") }
+                    guard other.issue == nil else { throw RuriError.message(Messages.CoreMinecraftFolderStore.catalogText2(String(describing: other.id))) }
                     let resolved = try reader.resolveManifestNow(other, in: catalog)
                     if resolved.manifest.jar == versionID || resolved.sourceManifests.contains(where: { $0.url == current.manifest(id) }) {
-                        throw RuriError.message("“\(other.id)”依赖此版本，请先处理依赖它的版本。")
+                        throw RuriError.message(Messages.CoreMinecraftFolderStore.resolvedText1(String(describing: other.id)))
                     }
                 }
                 try FileManager.default.trashItem(at: folder, resultingItemURL: nil)
@@ -161,7 +162,7 @@ public enum MinecraftFolderStore {
         let state = try StateStore.load(paths)
         guard !FileManager.default.fileExists(atPath: file.path), !state.instances.contains(where: {
             ($0.directoryID ?? GameDirectory.defaultID) == (input.directoryID ?? paths.newInstanceDirectoryID) && $0.repositoryVersionID?.localizedCaseInsensitiveCompare(name) == .orderedSame
-        }) else { throw RuriError.message("此文件夹已有名为“\(name)”的版本，请为新实例选择其他名称。") }
+        }) else { throw RuriError.message(Messages.CoreMinecraftFolderStore.stateText1(String(describing: name))) }
         item.repositoryVersionID = name
         return item
     }

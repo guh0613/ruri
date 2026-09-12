@@ -1,0 +1,3044 @@
+/* @symbol AppAppModel.remoteText1 @args - */
+"appAppModel.remoteText1" = "数据索引在外部被移除或替换，已暂停写入。请检查数据目录。";
+
+/* @symbol AppAppModelAccounts.accountText1 @args - */
+"appAppModelAccounts.accountText1" = "这个离线账号已存在。";
+
+/* @symbol AppAppModelAccounts.addMicrosoftText1 @args - */
+"appAppModelAccounts.addMicrosoftText1" = "当前窗口已暂停写入，请重新打开 Ruri。";
+
+/* @symbol AppAppModelAccounts.addMicrosoftText2 @args - */
+"appAppModelAccounts.addMicrosoftText2" = "此账号已被移除或发生变化。";
+
+/* @symbol AppAppModelAccounts.existingText1 @args - */
+"appAppModelAccounts.existingText1" = "账号信息未能保存，请重新打开 Ruri。";
+
+/* @symbol AppAppModelAccounts.addExternalText1 @args - */
+"appAppModelAccounts.addExternalText1" = "此账号已被移除。";
+
+/* @symbol AppAppModelAccounts.accountText2 @args - */
+"appAppModelAccounts.accountText2" = "账号已变化，请重新打开外观管理。";
+
+/* @symbol AppAppModelAccounts.accountText3 @args - */
+"appAppModelAccounts.accountText3" = "离线账号没有在线外观资料。";
+
+/* @symbol AppExternalAccountForm.profileText1 @args - */
+"appExternalAccountForm.profileText1" = "原来的角色已不可用，请重新添加账号。";
+
+/* @symbol AppAppModelContent.fileText1 @args - */
+"appAppModelContent.fileText1" = "该版本没有整合包文件";
+
+/* @symbol AppAppModelContent.instanceText1 @args - */
+"appAppModelContent.instanceText1" = "请选择游戏实例";
+
+/* @symbol AppContentVersionView.pageText1 @args - */
+"appContentVersionView.pageText1" = "此内容没有可查询的版本来源。";
+
+/* @symbol AppAppModelCurseForge.urlText1 @args - */
+"appAppModelCurseForge.urlText1" = "此整合包需要先从 CurseForge 页面下载。";
+
+/* @symbol AppAppModelCurseForge.urlText2 @args - */
+"appAppModelCurseForge.urlText2" = "整合包校验失败";
+
+/* @symbol AppAppModelInstallation.recordInstallationText1 @args - */
+"appAppModelInstallation.recordInstallationText1" = "设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。";
+
+/* @symbol AppAppModelInstallation.indexText1 @args - */
+"appAppModelInstallation.indexText1" = "实例已被移除，未重新登记。";
+
+/* @symbol AppAppModelLaunching.serverText1 @args - */
+"appAppModelLaunching.serverText1" = "请重新添加外置认证账号。";
+
+/* @symbol AppAppModelLaunching.runtimeText1 @args - */
+"appAppModelLaunching.runtimeText1" = "Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。";
+
+/* @symbol CLICLI.parsedText1 @args - */
+"cLICLI.parsedText1" = "RURI_DOWNLOAD_SOURCE 应为 automatic、official 或 bmclapi";
+
+/* @symbol CLICLI.parsedText2 @args - */
+"cLICLI.parsedText2" = "用法：ruri-cli isolation-policy [always|modded|never]";
+
+/* @symbol CLICLI.policyText1 @args - */
+"cLICLI.policyText1" = "隔离规则为 always、modded 或 never。";
+
+/* @symbol CLICLI.currentStateText1 @args - */
+"cLICLI.currentStateText1" = "这个实例已被移除，请刷新后重试。";
+
+/* @symbol CLICLI.idText1 @args - */
+"cLICLI.idText1" = "用法：ruri-cli recover-directory <instance-uuid> [--apply]。默认只查看待恢复操作。";
+
+/* @symbol CLICLI.idText2 @args - */
+"cLICLI.idText2" = "用法：ruri-cli relocate-directory <实例UUID> <原游戏目录的新路径> [--apply]。默认预览；只更新同一目录的引用，不移动或合并游戏文件。";
+
+/* @symbol CLICLI.idText3 @args - */
+"cLICLI.idText3" = "用法：ruri-cli recover-instance-copy <实例UUID> [--apply]。默认查看，--apply 恢复或清理复制。";
+
+/* @symbol CLICLI.majorText1 @args - */
+"cLICLI.majorText1" = "用法：ruri-cli install-java <major> [aarch64|x86_64]";
+
+/* @symbol CLICLI.runtimeText1 @args - */
+"cLICLI.runtimeText1" = "Mojang 没有提供所需运行时";
+
+/* @symbol CLICLI.sizeText1 @args - */
+"cLICLI.sizeText1" = "用法：ruri-cli fetch <https-url> <output> <sha1> <bytes>";
+
+/* @symbol CLICLI.catalogText2 @args - */
+"cLICLI.catalogText2" = "用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader|optifine] [loader-version]";
+
+/* @symbol CLICLI.loaderText1 @args - */
+"cLICLI.loaderText1" = "不支持的加载器名称";
+
+/* @symbol CLICLI.instanceText1 @args - */
+"cLICLI.instanceText1" = "用法：ruri-cli export-instance <instance-uuid> <output.zip> [ruri|complete|multimc|mcbbs|mrpack]";
+
+/* @symbol CLICLI.formatText1 @args - */
+"cLICLI.formatText1" = "导出格式为 ruri、complete、multimc、mcbbs 或 mrpack";
+
+/* @symbol CLICLI.formatText3 @args - */
+"cLICLI.formatText3" = "用法：ruri-cli import-instance <folder-or-zip> [name]";
+
+/* @symbol CLICLI.instanceText2 @args - */
+"cLICLI.instanceText2" = "用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]";
+
+/* @symbol CLICLI.instanceText3 @args - */
+"cLICLI.instanceText3" = "用法：ruri-cli repair <instance-uuid>";
+
+/* @symbol CLICLI.stateText1 @args - */
+"cLICLI.stateText1" = "用法：ruri-cli plan [实例UUID]";
+
+/* @symbol CLICLI.storedText1 @args - */
+"cLICLI.storedText1" = "没有找到指定实例";
+
+/* @symbol CLICLI.instanceText4 @args - */
+"cLICLI.instanceText4" = "用法：ruri-cli install-content <project> <instance-uuid> [version-id]";
+
+/* @symbol CLICLI.versionText1 @args - */
+"cLICLI.versionText1" = "找不到兼容内容版本";
+
+/* @symbol CLICLI.indexText1 @args - */
+"cLICLI.indexText1" = "--world 后需要存档文件夹名。";
+
+/* @symbol CLICLI.indexText2 @args - */
+"cLICLI.indexText2" = "用法：ruri-cli launch [instance-uuid] [--world 存档文件夹名] [--detach]";
+
+/* @symbol CLICLI.requestedIDText1 @args - */
+"cLICLI.requestedIDText1" = "无效的实例 UUID";
+
+/* @symbol CLICLI.accountText1 @args - */
+"cLICLI.accountText1" = "请先安装实例并添加账号";
+
+/* @symbol CLICLI.accountText2 @args - */
+"cLICLI.accountText2" = "命令行启动当前仅支持离线账号；Microsoft 或外置认证账号请在应用中启动。";
+
+/* @symbol CLICLI.resultText5 @args - */
+"cLICLI.resultText5" = "监控没有留下游戏退出结果。请查看运行记录并恢复中断状态。";
+
+/* @symbol CLICLI.statusText2 @args - */
+"cLICLI.statusText2" = "监控已断开，请检查运行记录；游戏可能仍在运行。";
+
+/* @symbol CLICLI.idText4 @args - */
+"cLICLI.idText4" = "用法：ruri-cli quit <instance-uuid>";
+
+/* @symbol CLICLI.recordText1 @args - */
+"cLICLI.recordText1" = "没有可连接的游戏监控进程。";
+
+/* @symbol CLICLI.idText5 @args - */
+"cLICLI.idText5" = "用法：ruri-cli stop <instance-uuid>";
+
+/* @symbol CLICLI.sessionIDText1 @args - */
+"cLICLI.sessionIDText1" = "用法：ruri-cli recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]";
+
+/* @symbol CLICLI.sessionIDText2 @args - */
+"cLICLI.sessionIDText2" = "用法：ruri-cli diagnose <instance-uuid> <session-uuid>";
+
+/* @symbol CLIContentCommands.idText1 @args - */
+"cLIContentCommands.idText1" = "请指定已有实例的 UUID。";
+
+/* @symbol CLIContentCommands.selectedText1 @args - */
+"cLIContentCommands.selectedText1" = "内容类型为 mod、resourcepack 或 shader。";
+
+/* @symbol CLIContentCommands.selectedText2 @args - */
+"cLIContentCommands.selectedText2" = "用法：content <instance-uuid> [mod|resourcepack|shader]";
+
+/* @symbol CLIContentCommands.selectedText3 @args - */
+"cLIContentCommands.selectedText3" = "用法：content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]";
+
+/* @symbol CLIContentCommands.namesText1 @args - */
+"cLIContentCommands.namesText1" = "请选择具体文件名，或仅使用 --all。";
+
+/* @symbol CLIContentCommands.selectedText4 @args - */
+"cLIContentCommands.selectedText4" = "部分文件不在当前列表中。请用 content 命令查看准确文件名，停用文件包含 .disabled 后缀。";
+
+/* @symbol CLIContentCommands.updateContentText1 @args - */
+"cLIContentCommands.updateContentText1" = "用法：update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]";
+
+/* @symbol CLIContentCommands.fileIDText1 @args - */
+"cLIContentCommands.fileIDText1" = "--manual 后需要 CurseForge 文件 ID 和本地路径。";
+
+/* @symbol CLIContentCommands.fileIDText2 @args text */
+"cLIContentCommands.fileIDText2" = "无法识别的选项：%1$@";
+
+/* @symbol CLIContentCommands.fileIDText3 @args - */
+"cLIContentCommands.fileIDText3" = "应用更新时请选择具体文件名，或使用 --all。";
+
+/* @symbol CLIContentCommands.instanceText1 @args - */
+"cLIContentCommands.instanceText1" = "实例已移除。";
+
+/* @symbol CLIContentCommands.chosenText1 @args - */
+"cLIContentCommands.chosenText1" = "部分文件不在当前内容列表中。";
+
+/* @symbol CLIDataPackCommands.selectedText1 @args - */
+"cLIDataPackCommands.selectedText1" = "没有对应的兼容数据包版本。测试版本请显式指定版本 ID。";
+
+/* @symbol CLIInstanceMoves.retiredText2 @args - */
+"cLIInstanceMoves.retiredText2" = "移动尚未提交，恢复默认保留原实例，无需 --keep-source。";
+
+/* @symbol CLIJavaCommands.issueText1 @args - */
+"cLIJavaCommands.issueText1" = "用法：add-java <Java 路径或 JDK 文件夹>";
+
+/* @symbol CLIJavaCommands.issueText3 @args - */
+"cLIJavaCommands.issueText3" = "用法：forget-java <手动添加的 java 可执行文件路径>";
+
+/* @symbol CLIJavaCommands.issueText5 @args - */
+"cLIJavaCommands.issueText5" = "用法：default-java <Java 路径或 automatic>";
+
+/* @symbol CLIJavaCommands.fileText2 @args - */
+"cLIJavaCommands.fileText2" = "用法：repair-java <运行时 ID，使用 java 命令查看>";
+
+/* @symbol CLIJavaCommands.availableText1 @args - */
+"cLIJavaCommands.availableText1" = "找不到此运行时的原始下载清单，请重新安装所需 Java 版本。";
+
+/* @symbol CLIJavaCommands.resultText2 @args - */
+"cLIJavaCommands.resultText2" = "用法：remove-java <运行时 ID> [--apply] [--reset-references] [--partial]";
+
+/* @symbol CLILaunchSettingsCommands.indexText1 @args - */
+"cLILaunchSettingsCommands.indexText1" = "实例不存在。";
+
+/* @symbol CLILaunchSettingsCommands.enabledText1 @args - */
+"cLILaunchSettingsCommands.enabledText1" = "commands 应为 true 或 false。";
+
+/* @symbol CLILaunchSettingsCommands.contentText1 @args - */
+"cLILaunchSettingsCommands.contentText1" = "环境变量文件应为不超过 64 KB 的 UTF-8 文本。";
+
+/* @symbol CLIMinecraftDirectory.flagsText1 @args - */
+"cLIMinecraftDirectory.flagsText1" = "用法：ruri-cli scan-minecraft <Minecraft目录|版本目录|版本JSON> [--json] [--resolve]。只读取已有版本；--resolve 额外检查继承和补丁合并。";
+
+/* @symbol CLIModpackCommands.instanceText1 @args - */
+"cLIModpackCommands.instanceText1" = "用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]；rollback-pack/recover-pack-update <instance-uuid> [--apply]";
+
+/* @symbol CLIModpackCommands.serviceText1 @args - */
+"cLIModpackCommands.serviceText1" = "仅支持 --apply 参数。";
+
+/* @symbol CLIModpackCommands.resultText2 @args - */
+"cLIModpackCommands.resultText2" = "用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]";
+
+/* @symbol CLISchematicCommands.entryText1 @args - */
+"cLISchematicCommands.entryText1" = "找不到对应原理图，请先用 list 查看文件列表。";
+
+/* @symbol CoreAccount.kindLabelText5 @args - */
+"coreAccount.kindLabelText5" = "玩家名需为 3–16 位英文字母、数字或下划线。";
+
+/* @symbol CoreAccountAppearance.loadText1 @args - */
+"coreAccountAppearance.loadText1" = "离线账号没有在线皮肤资料。";
+
+/* @symbol CoreAccountAppearance.dataText1 @args - */
+"coreAccountAppearance.dataText1" = "认证站返回的外观信息无效。";
+
+/* @symbol CoreAccountAppearance.uploadText1 @args text */
+"coreAccountAppearance.uploadText1" = "此账号不支持直接上传%1$@，请到认证站管理。";
+
+/* @symbol CoreAccountAppearance.resetText1 @args text */
+"coreAccountAppearance.resetText1" = "此认证站不支持直接修改%1$@，请到认证站管理。";
+
+/* @symbol CoreAccountAppearance.selectCapeText1 @args - */
+"coreAccountAppearance.selectCapeText1" = "请选择此 Microsoft 账号拥有的披风。";
+
+/* @symbol CoreAccountAppearance.urlText1 @args - */
+"coreAccountAppearance.urlText1" = "外观图片地址无效。";
+
+/* @symbol CoreAccountAppearance.responseText1 @args - */
+"coreAccountAppearance.responseText1" = "无法下载外观图片，请重试。";
+
+/* @symbol CoreAccountAppearance.validateText1 @args - */
+"coreAccountAppearance.validateText1" = "账号已变化，请重新打开外观管理。";
+
+/* @symbol CoreAccountAppearance.normalizedText1 @args - */
+"coreAccountAppearance.normalizedText1" = "外观资料与当前角色不匹配，请重新登录。";
+
+/* @symbol CoreAccountAppearance.serverText1 @args - */
+"coreAccountAppearance.serverText1" = "账号缺少认证服务器，请重新登录。";
+
+/* @symbol CoreAccountAppearance.statusText1 @args - */
+"coreAccountAppearance.statusText1" = "外观服务响应无效。";
+
+/* @symbol CoreAccountAppearance.statusText2 @args - */
+"coreAccountAppearance.statusText2" = "登录已失效，请重新登录账号后再试。";
+
+/* @symbol CoreAccountAppearance.statusText3 @args - */
+"coreAccountAppearance.statusText3" = "服务器未允许此账号执行这项外观操作。";
+
+/* @symbol CoreAccountAppearance.statusText4 @args - */
+"coreAccountAppearance.statusText4" = "操作过于频繁，请稍后再试。";
+
+/* @symbol CoreAccountAppearance.statusText5 @args text */
+"coreAccountAppearance.statusText5" = "外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。";
+
+/* @symbol CoreAccountAppearance.statusText6 @args - */
+"coreAccountAppearance.statusText6" = "外观资料过大，无法读取。";
+
+/* @symbol CoreAuthentication.beginText1 @args - */
+"coreAuthentication.beginText1" = "请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。";
+
+/* @symbol CoreAuthentication.beginText2 @args text */
+"coreAuthentication.beginText2" = "Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。";
+
+/* @symbol CoreAuthentication.refreshText3 @args - */
+"coreAuthentication.refreshText3" = "设备登录代码已过期，请重新登录。";
+
+/* @symbol CoreAuthentication.accessText1 @args - */
+"coreAuthentication.accessText1" = "Microsoft 登录已失效，请重新添加账号。";
+
+/* @symbol CoreAuthentication.explanationText7 @args text,text */
+"coreAuthentication.explanationText7" = "%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。";
+
+/* @symbol CoreAuthentication.uhsText1 @args - */
+"coreAuthentication.uhsText1" = "Xbox 账号身份校验失败。";
+
+/* @symbol CoreAuthentication.entitlementsText1 @args - */
+"coreAuthentication.entitlementsText1" = "此 Microsoft 账号未拥有 Minecraft Java 版。";
+
+/* @symbol CoreAuthlibInjector.argumentsText1 @args - */
+"coreAuthlibInjector.argumentsText1" = "外置认证组件尚未准备好。";
+
+/* @symbol CoreAuthlibInjector.validateText1 @args - */
+"coreAuthlibInjector.validateText1" = "authlib-injector 下载信息无效。";
+
+/* @symbol CoreAuthlibInjector.dataText1 @args - */
+"coreAuthlibInjector.dataText1" = "authlib-injector 文件校验失败，请重试。";
+
+/* @symbol CoreExternalAuthentication.hostText1 @args - */
+"coreExternalAuthentication.hostText1" = "请输入不含账号、查询参数或片段的 HTTPS 认证服务器地址。";
+
+/* @symbol CoreExternalAuthentication.urlText1 @args - */
+"coreExternalAuthentication.urlText1" = "认证服务器地址无效。";
+
+/* @symbol CoreExternalAuthentication.validateText1 @args - */
+"coreExternalAuthentication.validateText1" = "认证服务器返回了无效的角色信息。";
+
+/* @symbol CoreExternalAuthentication.profileText1 @args - */
+"coreExternalAuthentication.profileText1" = "请先选择一个游戏角色。";
+
+/* @symbol CoreExternalAuthentication.existingText1 @args - */
+"coreExternalAuthentication.existingText1" = "原来的角色已不可用，请重新添加账号并选择角色。";
+
+/* @symbol CoreExternalAuthentication.urlText2 @args - */
+"coreExternalAuthentication.urlText2" = "认证服务器地址已变更，请重新添加账号。";
+
+/* @symbol CoreExternalAuthentication.loginText1 @args - */
+"coreExternalAuthentication.loginText1" = "请填写认证站账号和密码。";
+
+/* @symbol CoreExternalAuthentication.resultText1 @args - */
+"coreExternalAuthentication.resultText1" = "这个账号还没有游戏角色，请先到认证站创建角色。";
+
+/* @symbol CoreExternalAuthentication.selectText1 @args - */
+"coreExternalAuthentication.selectText1" = "请重新登录并选择可用角色。";
+
+/* @symbol CoreExternalAuthentication.resultText2 @args - */
+"coreExternalAuthentication.resultText2" = "认证服务器未返回所选角色，请重新登录。";
+
+/* @symbol CoreExternalAuthentication.loginText2 @args - */
+"coreExternalAuthentication.loginText2" = "账号缺少认证服务器信息，请重新添加。";
+
+/* @symbol CoreExternalAuthentication.tokensText1 @args - */
+"coreExternalAuthentication.tokensText1" = "认证服务器返回了无效的令牌校验结果。";
+
+/* @symbol CoreExternalAuthentication.valueText1 @args - */
+"coreExternalAuthentication.valueText1" = "认证服务器返回了无效的登录凭据。";
+
+/* @symbol CoreExternalAuthentication.valueText2 @args - */
+"coreExternalAuthentication.valueText2" = "此地址没有提供外置认证信息，请检查认证站给出的 API 地址。";
+
+/* @symbol CoreExternalAuthentication.valueText3 @args - */
+"coreExternalAuthentication.valueText3" = "此地址没有提供有效的外置认证元数据。";
+
+/* @symbol CoreExternalAuthentication.requireSuccessText1 @args - */
+"coreExternalAuthentication.requireSuccessText1" = "认证失败：账号密码不正确，或登录已失效，请重新登录。";
+
+/* @symbol CoreExternalAuthentication.requireSuccessText2 @args text */
+"coreExternalAuthentication.requireSuccessText2" = "认证服务器返回 HTTP %1$@，请稍后重试。";
+
+/* @symbol CoreExternalAuthentication.responseText1 @args - */
+"coreExternalAuthentication.responseText1" = "认证服务器返回的数据无效或过大。";
+
+/* @symbol CorePlayerTextureImage.validText3 @args - */
+"corePlayerTextureImage.validText3" = "旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。";
+
+/* @symbol CorePlayerTextureImage.validText4 @args - */
+"corePlayerTextureImage.validText4" = "披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。";
+
+/* @symbol CoreContentBatch.sourceText1 @args text */
+"coreContentBatch.sourceText1" = "目标文件已存在，整批操作尚未执行：%1$@";
+
+/* @symbol CoreContentBatch.validateSelectionText1 @args - */
+"coreContentBatch.validateSelectionText1" = "选择中包含重复文件。";
+
+/* @symbol CoreContentBatch.infoText1 @args text */
+"coreContentBatch.infoText1" = "内容列表已改变，请刷新后重新选择：%1$@";
+
+/* @symbol CoreContentBatch.dependencyText1 @args text,text */
+"coreContentBatch.dependencyText1" = "“%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。";
+
+/* @symbol CoreContentBatch.attributesText1 @args text */
+"coreContentBatch.attributesText1" = "内容目录中存在不支持的文件类型：%1$@";
+
+/* @symbol CoreContentBatch.journalText1 @args text,text */
+"coreContentBatch.journalText1" = "内容操作恢复失败，备份保留在 %1$@。%2$@";
+
+/* @symbol CoreContentBatchUpdater.selectedText1 @args - */
+"coreContentBatchUpdater.selectedText1" = "请选择可更新的内容，同一项目只能选择一个版本。";
+
+/* @symbol CoreContentBatchUpdater.managerText1 @args text */
+"coreContentBatchUpdater.managerText1" = "%1$@ 已发生变化，请重新检查更新。";
+
+/* @symbol CoreContentBatchUpdater.managerText2 @args - */
+"coreContentBatchUpdater.managerText2" = "更新版本与已安装项目不匹配。";
+
+/* @symbol CoreContentBatchUpdater.currentText1 @args - */
+"coreContentBatchUpdater.currentText1" = "实例的游戏版本或加载器已改变，请重新检查更新。";
+
+/* @symbol CoreContentManager.piecesText1 @args text */
+"coreContentManager.piecesText1" = "无效的内容路径：%1$@";
+
+/* @symbol CoreContentManager.targetText1 @args text */
+"coreContentManager.targetText1" = "内容管理不修改符号链接：%1$@";
+
+/* @symbol CoreContentManager.backupText1 @args text,text */
+"coreContentManager.backupText1" = "内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。";
+
+/* @symbol CoreContentManager.presentText1 @args text */
+"coreContentManager.presentText1" = "%1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。";
+
+/* @symbol CoreContentManager.installsText1 @args - */
+"coreContentManager.installsText1" = "安装计划包含同一项目的多个版本";
+
+/* @symbol CoreContentManager.recordText1 @args text */
+"coreContentManager.recordText1" = "无效内容文件名：%1$@";
+
+/* @symbol CoreContentManager.checkText1 @args text */
+"coreContentManager.checkText1" = "待安装文件校验失败：%1$@";
+
+/* @symbol CoreContentManager.newPathsText1 @args - */
+"coreContentManager.newPathsText1" = "多个内容项目使用了相同的文件名";
+
+/* @symbol CoreContentManager.urlText1 @args text */
+"coreContentManager.urlText1" = "%1$@ 的必需依赖尚未启用。请先启用依赖，再安装或更新。";
+
+/* @symbol CoreContentManager.checkText2 @args text */
+"coreContentManager.checkText2" = "%1$@ 已在外部修改。请先备份或移走该文件，再更新。";
+
+/* @symbol CoreContentManager.targetText2 @args text */
+"coreContentManager.targetText2" = "目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。";
+
+/* @symbol CoreContentManager.importedIDsText2 @args text */
+"coreContentManager.importedIDsText2" = "请选择 %1$@ 文件";
+
+/* @symbol CoreContentManager.idText1 @args text */
+"coreContentManager.idText1" = "所选文件或实例中已存在模组 %1$@，请先处理重复文件。";
+
+/* @symbol CoreCurseForge.keyText3 @args - */
+"coreCurseForge.keyText3" = "请输入有效的 CurseForge API Key";
+
+/* @symbol CoreCurseForge.addedText1 @args text */
+"coreCurseForge.addedText1" = "保存 API Key 失败（钥匙串状态 %1$@）";
+
+/* @symbol CoreCurseForge.statusText1 @args text */
+"coreCurseForge.statusText1" = "移除 API Key 失败（钥匙串状态 %1$@）";
+
+/* @symbol CoreCurseForge.validateDownloadMetadataText1 @args text */
+"coreCurseForge.validateDownloadMetadataText1" = "%1$@ 不可用或缺少有效的文件校验信息。";
+
+/* @symbol CoreCurseForge.validateDownloadMetadataText2 @args - */
+"coreCurseForge.validateDownloadMetadataText2" = "CurseForge 返回了无效文件名";
+
+/* @symbol CoreCurseForge.infoText1 @args text */
+"coreCurseForge.infoText1" = "所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。";
+
+/* @symbol CoreCurseForge.temporaryText1 @args - */
+"coreCurseForge.temporaryText1" = "复制期间文件发生变化，请重新选择。";
+
+/* @symbol CoreCurseForge.temporaryText2 @args - */
+"coreCurseForge.temporaryText2" = "无法缓存已下载文件";
+
+/* @symbol CoreCurseForge.requestText1 @args - */
+"coreCurseForge.requestText1" = "请先在设置中配置 Ruri 的 CurseForge API Key。";
+
+/* @symbol CoreCurseForge.categoryText1 @args - */
+"coreCurseForge.categoryText1" = "不支持的 CurseForge 内容类型";
+
+/* @symbol CoreCurseForge.projectText1 @args - */
+"coreCurseForge.projectText1" = "无效的 CurseForge 项目标识";
+
+/* @symbol CoreCurseForge.resultText1 @args - */
+"coreCurseForge.resultText1" = "CurseForge 项目与请求不一致";
+
+/* @symbol CoreCurseForge.fileText1 @args - */
+"coreCurseForge.fileText1" = "无效的 CurseForge 文件标识";
+
+/* @symbol CoreCurseForge.resultText2 @args - */
+"coreCurseForge.resultText2" = "CurseForge 文件与请求不一致";
+
+/* @symbol CoreCurseForge.resultText3 @args - */
+"coreCurseForge.resultText3" = "CurseForge 返回的版本列表与项目不一致";
+
+/* @symbol CoreCurseForge.resolveText1 @args - */
+"coreCurseForge.resolveText1" = "整合包文件标识或数量无效";
+
+/* @symbol CoreCurseForge.kindText1 @args text,text */
+"coreCurseForge.kindText1" = "找不到整合包文件：项目 %1$@，文件 %2$@";
+
+/* @symbol CoreCurseForge.priorText1 @args - */
+"coreCurseForge.priorText1" = "依赖要求同一项目的不同版本";
+
+/* @symbol CoreCurseForge.priorText2 @args - */
+"coreCurseForge.priorText2" = "必需依赖数量超过限制";
+
+/* @symbol CoreCurseForge.kindText2 @args text */
+"coreCurseForge.kindText2" = "%1$@ 与此游戏版本或加载器不兼容";
+
+/* @symbol CoreCurseForge.matchText1 @args text */
+"coreCurseForge.matchText1" = "找不到兼容的必需依赖：%1$@";
+
+/* @symbol CoreCurseForge.matchText2 @args text,text */
+"coreCurseForge.matchText2" = "%1$@ 与项目 %2$@ 不兼容";
+
+/* @symbol CoreCurseForge.idsText1 @args - */
+"coreCurseForge.idsText1" = "必需依赖之间存在不兼容关系";
+
+/* @symbol CoreCurseForge.fileText2 @args text */
+"coreCurseForge.fileText2" = "%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。";
+
+/* @symbol CoreCurseForge.checkText1 @args text */
+"coreCurseForge.checkText1" = "所选文件与 %1$@ 的校验信息不符";
+
+/* @symbol CoreCurseForge.checkText2 @args text */
+"coreCurseForge.checkText2" = "文件校验失败：%1$@";
+
+/* @symbol CoreModrinth.kindText1 @args - */
+"coreModrinth.kindText1" = "不支持的内容类型";
+
+/* @symbol CoreModrinth.preparedText1 @args - */
+"coreModrinth.preparedText1" = "此文件不是 Modrinth 整合包";
+
+/* @symbol CoreModrinthContentPlan.planText1 @args - */
+"coreModrinthContentPlan.planText1" = "模组需要已安装加载器的实例，请先创建相应实例。";
+
+/* @symbol CoreModrinthContentPlan.otherText1 @args text */
+"coreModrinthContentPlan.otherText1" = "依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。";
+
+/* @symbol CoreModrinthContentPlan.otherText2 @args - */
+"coreModrinthContentPlan.otherText2" = "模组依赖数量超出限制";
+
+/* @symbol CoreModrinthContentPlan.otherText3 @args text,text */
+"coreModrinthContentPlan.otherText3" = "%1$@ 不支持 Minecraft %2$@";
+
+/* @symbol CoreModrinthContentPlan.otherText4 @args text */
+"coreModrinthContentPlan.otherText4" = "%1$@ 不支持此实例的加载器";
+
+/* @symbol CoreModrinthContentPlan.matchText1 @args text */
+"coreModrinthContentPlan.matchText1" = "找不到兼容的必需依赖：%1$@";
+
+/* @symbol CoreModrinthContentPlan.matchText2 @args - */
+"coreModrinthContentPlan.matchText2" = "必需依赖缺少下载标识";
+
+/* @symbol CoreModrinthContentPlan.matchText3 @args text */
+"coreModrinthContentPlan.matchText3" = "%1$@ 与本次选择的其他内容不兼容。";
+
+/* @symbol CoreModrinthContentPlan.fileText1 @args text */
+"coreModrinthContentPlan.fileText1" = "%1$@ 没有可下载的文件";
+
+/* @symbol CoreModrinthContentPlan.fileText2 @args text */
+"coreModrinthContentPlan.fileText2" = "%1$@ 缺少校验信息";
+
+/* @symbol CoreArchive.countText1 @args - */
+"coreArchive.countText1" = "压缩包超出校验大小限制";
+
+/* @symbol CoreArchive.crcText1 @args text,text */
+"coreArchive.crcText1" = "文件 CRC 校验失败：%1$@/%2$@";
+
+/* @symbol CoreArchive.countText2 @args - */
+"coreArchive.countText2" = "压缩包文件数量超出限制";
+
+/* @symbol CoreArchive.targetText1 @args text */
+"coreArchive.targetText1" = "压缩包不允许符号链接：%1$@";
+
+/* @symbol CoreArchive.sizeText1 @args - */
+"coreArchive.sizeText1" = "压缩包解压大小超出限制";
+
+/* @symbol CoreArchive.tempText1 @args text */
+"coreArchive.tempText1" = "无法解压文件：%1$@";
+
+/* @symbol CoreArchive.checksumText1 @args text */
+"coreArchive.checksumText1" = "压缩包文件校验失败：%1$@";
+
+/* @symbol CoreArchive.checksumText2 @args text */
+"coreArchive.checksumText2" = "无法保存解压文件：%1$@";
+
+/* @symbol CoreFileAppleDouble.afterText1 @args - */
+"coreFileAppleDouble.afterText1" = "文件附加信息在枚举期间改变，请重试。";
+
+/* @symbol CoreFileExtendedAttributes.namesText1 @args - */
+"coreFileExtendedAttributes.namesText1" = "文件附加信息数量超过限制。";
+
+/* @symbol CoreFileExtendedAttributes.sizeText1 @args text,text */
+"coreFileExtendedAttributes.sizeText1" = "文件附加信息无法读取或超过大小限制：%1$@ · %2$@";
+
+/* @symbol CoreFileExtendedAttributes.sizeText2 @args - */
+"coreFileExtendedAttributes.sizeText2" = "单个文件的附加信息超过大小限制。";
+
+/* @symbol CoreFileExtendedAttributes.countText1 @args - */
+"coreFileExtendedAttributes.countText1" = "文件附加信息在校验期间改变，请重试。";
+
+/* @symbol CoreFileExtendedAttributes.validateText1 @args - */
+"coreFileExtendedAttributes.validateText1" = "文件附加信息的校验记录无效。";
+
+/* @symbol CoreFileExtendedAttributes.copyText1 @args - */
+"coreFileExtendedAttributes.copyText1" = "无法保留文件附加信息，原文件已保留。";
+
+/* @symbol CoreFileExtendedAttributes.beforeText1 @args - */
+"coreFileExtendedAttributes.beforeText1" = "实例元数据的附加信息在更新期间改变。";
+
+/* @symbol CoreFileExtendedAttributes.beforeText2 @args - */
+"coreFileExtendedAttributes.beforeText2" = "无法更新实例元数据。";
+
+/* @symbol CoreFileExtendedAttributes.sizeText3 @args - */
+"coreFileExtendedAttributes.sizeText3" = "无法读取文件附加信息列表。";
+
+/* @symbol CoreFileExtendedAttributes.bufferText1 @args - */
+"coreFileExtendedAttributes.bufferText1" = "文件附加信息列表在读取期间改变。";
+
+/* @symbol CoreFileExtendedAttributes.nameText1 @args - */
+"coreFileExtendedAttributes.nameText1" = "文件附加信息名称无效。";
+
+/* @symbol CoreFileTree.entriesText1 @args - */
+"coreFileTree.entriesText1" = "请选择实际目录，而不是符号链接。";
+
+/* @symbol CoreFileTree.infoText1 @args text */
+"coreFileTree.infoText1" = "目录包含符号链接，无法完整复制：%1$@";
+
+/* @symbol CoreFileTree.infoText2 @args text */
+"coreFileTree.infoText2" = "不支持的文件类型：%1$@";
+
+/* @symbol CoreFileTree.infoText3 @args - */
+"coreFileTree.infoText3" = "目录文件数量超过限制";
+
+/* @symbol CoreFileTree.destinationPathText1 @args - */
+"coreFileTree.destinationPathText1" = "目标目录不能位于源目录内";
+
+/* @symbol CoreFileTree.targetText1 @args - */
+"coreFileTree.targetText1" = "源目录在复制期间发生了变化，请退出游戏后重试。";
+
+/* @symbol CoreFileTree.directoryText1 @args - */
+"coreFileTree.directoryText1" = "覆盖文件在复制期间发生了变化";
+
+/* @symbol CoreFileTree.rootText1 @args - */
+"coreFileTree.rootText1" = "压缩包不能保存在源目录内";
+
+/* @symbol CoreFileTree.checkText1 @args text */
+"coreFileTree.checkText1" = "无效压缩包路径：%1$@";
+
+/* @symbol CoreFileTree.directoryText2 @args text */
+"coreFileTree.directoryText2" = "压缩包条目重名：%1$@";
+
+/* @symbol CoreFileTree.dataText1 @args text */
+"coreFileTree.dataText1" = "备份期间源文件发生变化：%1$@";
+
+/* @symbol CoreFileTree.currentText1 @args - */
+"coreFileTree.currentText1" = "源目录在备份期间发生了变化，请退出游戏后重试。";
+
+/* @symbol CoreFileTree.currentText2 @args text */
+"coreFileTree.currentText2" = "无法保存压缩包：%1$@";
+
+/* @symbol CoreFileTreeDirectory.fdText1 @args text */
+"coreFileTreeDirectory.fdText1" = "无法读取目录：%1$@";
+
+/* @symbol CoreFileTreeDirectory.streamText1 @args text */
+"coreFileTreeDirectory.streamText1" = "无法枚举目录：%1$@";
+
+/* @symbol CoreFileTreeDirectory.entryText1 @args - */
+"coreFileTreeDirectory.entryText1" = "读取目录时发生错误。";
+
+/* @symbol CoreFileTreeDirectory.nameText1 @args - */
+"coreFileTreeDirectory.nameText1" = "目录包含无法表示的文件名，原文件已保留。";
+
+/* @symbol CoreFileTreeDirectory.nameText2 @args - */
+"coreFileTreeDirectory.nameText2" = "目录文件数量超过限制。";
+
+/* @symbol CoreFileTreeManifest.resultText1 @args - */
+"coreFileTreeManifest.resultText1" = "校验期间目录内容改变，请重试。";
+
+/* @symbol CoreFileTreeManifest.captureText1 @args - */
+"coreFileTreeManifest.captureText1" = "待校验文件数量超过限制。";
+
+/* @symbol CoreFileTreeManifest.resultText2 @args text */
+"coreFileTreeManifest.resultText2" = "待校验的文件路径重复：%1$@";
+
+/* @symbol CoreFileTreeManifest.resultText3 @args - */
+"coreFileTreeManifest.resultText3" = "待校验文件大小超过限制。";
+
+/* @symbol CoreFileTreeManifest.attributesText1 @args - */
+"coreFileTreeManifest.attributesText1" = "校验期间文件附加信息改变，请重试。";
+
+/* @symbol CoreFileTreeManifest.entryText1 @args text */
+"coreFileTreeManifest.entryText1" = "文件与目录路径冲突：%1$@";
+
+/* @symbol CoreFileTreeManifest.requireMatchText1 @args - */
+"coreFileTreeManifest.requireMatchText1" = "文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。";
+
+/* @symbol CoreFileTreeManifest.remainingText1 @args - */
+"coreFileTreeManifest.remainingText1" = "原文件清理期间出现新增或改变的内容，剩余文件已保留。";
+
+/* @symbol CoreFileTreeManifest.dataText1 @args - */
+"coreFileTreeManifest.dataText1" = "文件校验记录超过大小限制。";
+
+/* @symbol CoreFileTreeManifest.loadText1 @args - */
+"coreFileTreeManifest.loadText1" = "文件校验记录摘要无效。";
+
+/* @symbol CoreFileTreeManifest.dataText2 @args - */
+"coreFileTreeManifest.dataText2" = "文件校验记录已经改变，未清理原文件或工作副本。";
+
+/* @symbol CoreFileTreeManifest.validateText1 @args - */
+"coreFileTreeManifest.validateText1" = "文件校验记录版本或数量无效。";
+
+/* @symbol CoreFileTreeManifest.rootAttributesText1 @args - */
+"coreFileTreeManifest.rootAttributesText1" = "文件校验记录版本无效。";
+
+/* @symbol CoreFileTreeManifest.attributesText2 @args - */
+"coreFileTreeManifest.attributesText2" = "文件校验记录缺少附加信息。";
+
+/* @symbol CoreFileTreeManifest.attributesText3 @args - */
+"coreFileTreeManifest.attributesText3" = "文件校验记录包含重复路径或无效大小。";
+
+/* @symbol CoreFileTreeManifest.attributesText4 @args - */
+"coreFileTreeManifest.attributesText4" = "目录校验记录无效。";
+
+/* @symbol CoreFileTreeManifest.attributesText5 @args - */
+"coreFileTreeManifest.attributesText5" = "文件校验摘要无效。";
+
+/* @symbol CoreFileTreeManifest.attributesText6 @args - */
+"coreFileTreeManifest.attributesText6" = "文件校验记录缺少父目录或路径冲突。";
+
+/* @symbol CoreFileTreeManifest.attributesText7 @args - */
+"coreFileTreeManifest.attributesText7" = "文件校验记录顺序无效。";
+
+/* @symbol CoreFileTreeManifest.validatePathText1 @args - */
+"coreFileTreeManifest.validatePathText1" = "文件校验记录包含无效路径。";
+
+/* @symbol CoreFileTreeManifest.fdText1 @args text */
+"coreFileTreeManifest.fdText1" = "无法校验文件：%1$@";
+
+/* @symbol CoreFileTreeManifest.beforeText1 @args - */
+"coreFileTreeManifest.beforeText1" = "待校验文件类型或大小改变。";
+
+/* @symbol CoreFileTreeManifest.dataText3 @args - */
+"coreFileTreeManifest.dataText3" = "校验期间文件长度改变。";
+
+/* @symbol CoreFileTreeManifest.afterText1 @args - */
+"coreFileTreeManifest.afterText1" = "校验期间文件被修改或替换。";
+
+/* @symbol CoreGameDataOperationLock.fdText1 @args - */
+"coreGameDataOperationLock.fdText1" = "无法锁定游戏文件操作。";
+
+/* @symbol CoreGameDataOperationLock.infoText1 @args - */
+"coreGameDataOperationLock.infoText1" = "另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。";
+
+/* @symbol CoreGameResourcePaths.pathText1 @args - */
+"coreGameResourcePaths.pathText1" = "依赖库缺少文件路径。";
+
+/* @symbol CoreLauncherPaths.safePathText1 @args text */
+"coreLauncherPaths.safePathText1" = "不安全的文件路径：%1$@";
+
+/* @symbol CoreLauncherPaths.resolvedText1 @args text */
+"coreLauncherPaths.resolvedText1" = "文件路径超出实例目录：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.inputFDText1 @args text */
+"coreRunDirectoryFileCopy.inputFDText1" = "无法读取待复制文件：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.infoText1 @args - */
+"coreRunDirectoryFileCopy.infoText1" = "复制源不是普通文件。";
+
+/* @symbol CoreRunDirectoryFileCopy.outputFDText1 @args text */
+"coreRunDirectoryFileCopy.outputFDText1" = "无法创建复制副本：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.outputText1 @args - */
+"coreRunDirectoryFileCopy.outputText1" = "无法为发布副本分配空间。";
+
+/* @symbol CoreRunDirectoryFileCopy.bytesText1 @args - */
+"coreRunDirectoryFileCopy.bytesText1" = "复制期间源文件长度改变。";
+
+/* @symbol CoreRunDirectoryFileCopy.moveWithoutReplacingText1 @args text */
+"coreRunDirectoryFileCopy.moveWithoutReplacingText1" = "无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.publishText1 @args text */
+"coreRunDirectoryFileCopy.publishText1" = "无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.checkText1 @args - */
+"coreRunDirectoryFileCopy.checkText1" = "发布目标的文件身份已改变，未继续写入。";
+
+/* @symbol CoreRunDirectoryFileCopy.checkText2 @args text */
+"coreRunDirectoryFileCopy.checkText2" = "无法创建发布目录，已有内容未覆盖：%1$@";
+
+/* @symbol CoreRunDirectoryFileCopy.uniqueText1 @args - */
+"coreRunDirectoryFileCopy.uniqueText1" = "无法创建用于保留发布副本的目录。";
+
+/* @symbol CoreRunDirectoryFileCopy.uniqueText2 @args - */
+"coreRunDirectoryFileCopy.uniqueText2" = "无法收回发布的副本，文件和复制记录已保留。";
+
+/* @symbol CoreDownloadFileLock.directoryText1 @args - */
+"coreDownloadFileLock.directoryText1" = "下载缓存目录不能是符号链接";
+
+/* @symbol CoreDownloadFileLock.fdText1 @args text */
+"coreDownloadFileLock.fdText1" = "无法锁定下载文件：%1$@";
+
+/* @symbol CoreDownloadFileLock.lockText1 @args text */
+"coreDownloadFileLock.lockText1" = "无法取得下载文件锁：%1$@";
+
+/* @symbol CoreEndpointURL.resultText1 @args - */
+"coreEndpointURL.resultText1" = "服务地址包含无效的路径参数。";
+
+/* @symbol CoreEndpointURL.partsText1 @args - */
+"coreEndpointURL.partsText1" = "无法构造服务地址。";
+
+/* @symbol CoreEndpointURL.urlText1 @args - */
+"coreEndpointURL.urlText1" = "无法编码服务查询参数。";
+
+/* @symbol CoreNetwork.lastErrorText1 @args - */
+"coreNetwork.lastErrorText1" = "请求缺少地址";
+
+/* @symbol CoreNetwork.statusText2 @args text,text */
+"coreNetwork.statusText2" = "%1$@ 返回 HTTP %2$@。请检查网络后重试。";
+
+/* @symbol CoreNetwork.urlText1 @args text */
+"coreNetwork.urlText1" = "安装器生成的文件缺失或损坏：%1$@。请修复此实例。";
+
+/* @symbol CoreNetwork.urlText3 @args text */
+"coreNetwork.urlText3" = "下载仅接受 HTTPS：%1$@";
+
+/* @symbol CoreNetwork.existingText1 @args text */
+"coreNetwork.existingText1" = "多个下载要求写入同一文件：%1$@";
+
+/* @symbol CoreNetwork.urlText4 @args - */
+"coreNetwork.urlText4" = "无法保存已校验的下载文件";
+
+/* @symbol CoreNetwork.streamText2 @args text */
+"coreNetwork.streamText2" = "无法保存下载：%1$@";
+
+/* @symbol CoreStateStore.resultText1 @args - */
+"coreStateStore.resultText1" = "此数据由更新版本的 Ruri 创建，请升级启动器。";
+
+/* @symbol CoreStateStore.validateText1 @args - */
+"coreStateStore.validateText1" = "启动快照不能覆盖实例设置，请保存原实例的覆盖项。";
+
+/* @symbol CoreStateStore.validateText2 @args - */
+"coreStateStore.validateText2" = "数据包含重复实例或账号，已暂停写入。";
+
+/* @symbol CoreStateStore.instancesText1 @args - */
+"coreStateStore.instancesText1" = "文件夹登记与保留记录包含重复身份，已暂停写入。";
+
+/* @symbol CoreStateStore.fdText1 @args - */
+"coreStateStore.fdText1" = "无法锁定 Ruri 设置文件。";
+
+/* @symbol CoreStateStore.infoText1 @args - */
+"coreStateStore.infoText1" = "另一个 Ruri 正在保存数据，请稍后重试。";
+
+/* @symbol CoreForgeInstaller.delegateText1 @args - */
+"coreForgeInstaller.delegateText1" = "无法读取加载器版本列表";
+
+/* @symbol CoreForgeInstaller.versionText1 @args - */
+"coreForgeInstaller.versionText1" = "请选择加载器版本";
+
+/* @symbol CoreForgeInstaller.checksumText1 @args - */
+"coreForgeInstaller.checksumText1" = "加载器安装包没有有效的 SHA-1 校验值";
+
+/* @symbol CoreForgeInstaller.profileText1 @args - */
+"coreForgeInstaller.profileText1" = "安装程序对应的 Minecraft 版本不匹配";
+
+/* @symbol CoreForgeInstaller.jsonText1 @args - */
+"coreForgeInstaller.jsonText1" = "加载器安装包缺少版本清单";
+
+/* @symbol CoreForgeInstaller.childText1 @args - */
+"coreForgeInstaller.childText1" = "加载器清单的父版本不匹配";
+
+/* @symbol CoreForgeInstaller.clientText1 @args - */
+"coreForgeInstaller.clientText1" = "缺少原版客户端信息";
+
+/* @symbol CoreForgeInstaller.crcText1 @args text */
+"coreForgeInstaller.crcText1" = "安装器内嵌文件校验失败：%1$@";
+
+/* @symbol CoreForgeInstaller.runtimeText1 @args text */
+"coreForgeInstaller.runtimeText1" = "安装加载器需要 Java %1$@";
+
+/* @symbol CoreForgeInstaller.tailText1 @args text,text,text,text */
+"coreForgeInstaller.tailText1" = "%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@";
+
+/* @symbol CoreForgeInstaller.installedText1 @args - */
+"coreForgeInstaller.installedText1" = "安装器生成的版本清单不一致";
+
+/* @symbol CoreForgeInstaller.sourceText1 @args text */
+"coreForgeInstaller.sourceText1" = "加载器生成文件校验失败：%1$@";
+
+/* @symbol CoreForgeInstaller.valuesText1 @args - */
+"coreForgeInstaller.valuesText1" = "安装器生成了不支持的符号链接";
+
+/* @symbol CoreForgeInstaller.entryText1 @args text */
+"coreForgeInstaller.entryText1" = "安装包缺少有效的 %1$@";
+
+/* @symbol CoreForgeInstaller.crcText3 @args - */
+"coreForgeInstaller.crcText3" = "安装包清单校验失败";
+
+/* @symbol CoreForgeInstaller.entryText2 @args - */
+"coreForgeInstaller.entryText2" = "旧版 Forge 安装包缺少内嵌客户端";
+
+/* @symbol CoreForgeInstaller.crcText4 @args - */
+"coreForgeInstaller.crcText4" = "旧版 Forge 文件校验失败";
+
+/* @symbol CoreForgeInstaller.copyAtomicallyText1 @args text */
+"coreForgeInstaller.copyAtomicallyText1" = "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@";
+
+/* @symbol CoreForgeInstaller.idText1 @args text */
+"coreForgeInstaller.idText1" = "已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。";
+
+/* @symbol CoreForgeInstaller.stagingText1 @args text */
+"coreForgeInstaller.stagingText1" = "无法保存加载器文件：%1$@";
+
+/* @symbol CoreInstallationState.applyingInstallationText1 @args - */
+"coreInstallationState.applyingInstallationText1" = "实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。";
+
+/* @symbol CoreInstallationState.installedText1 @args - */
+"coreInstallationState.installedText1" = "自定义运行目录在安装期间改变，未覆盖最新设置。";
+
+/* @symbol CoreInstaller.installText1 @args - */
+"coreInstaller.installText1" = "此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。";
+
+/* @symbol CoreInstaller.installText2 @args - */
+"coreInstaller.installText2" = "此版本已存在，请使用修复功能。";
+
+/* @symbol CoreInstaller.versionText1 @args text */
+"coreInstaller.versionText1" = "找不到 Minecraft %1$@";
+
+/* @symbol CoreInstaller.loaderVersionText1 @args text */
+"coreInstaller.loaderVersionText1" = "此版本没有可用的 %1$@ 加载器。";
+
+/* @symbol CoreInstaller.applyingPackLibrariesText1 @args - */
+"coreInstaller.applyingPackLibrariesText1" = "整合包依赖库数量超过限制";
+
+/* @symbol CoreInstaller.applyingPackLibrariesText2 @args - */
+"coreInstaller.applyingPackLibrariesText2" = "整合包依赖不能指定已有游戏文件的位置。";
+
+/* @symbol CoreInstaller.urlText1 @args - */
+"coreInstaller.urlText1" = "整合包依赖库的下载地址无效";
+
+/* @symbol CoreInstaller.versionText2 @args - */
+"coreInstaller.versionText2" = "此版本已从游戏文件夹移除，请刷新实例列表。";
+
+/* @symbol CoreInstaller.fileText1 @args - */
+"coreInstaller.fileText1" = "游戏资源索引缺失，请先修复实例。";
+
+/* @symbol CoreInstaller.rootText1 @args - */
+"coreInstaller.rootText1" = "资源索引包含无效哈希";
+
+/* @symbol CoreInstaller.sourceText1 @args text */
+"coreInstaller.sourceText1" = "缓存资源缺失或已损坏，请先修复实例：%1$@";
+
+/* @symbol CoreInstaller.archText1 @args - */
+"coreInstaller.archText1" = "此版本的兼容规则不支持当前 macOS 环境。";
+
+/* @symbol CoreInstaller.pathText1 @args - */
+"coreInstaller.pathText1" = "生成依赖缺少路径";
+
+/* @symbol CoreInstaller.nativePathText1 @args - */
+"coreInstaller.nativePathText1" = "原生库缺少文件路径";
+
+/* @symbol CoreInstaller.workspaceText1 @args text */
+"coreInstaller.workspaceText1" = "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@";
+
+/* @symbol CoreInstaller.workspaceText2 @args text */
+"coreInstaller.workspaceText2" = "已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。";
+
+/* @symbol CoreInstallerProcess.runText1 @args - */
+"coreInstallerProcess.runText1" = "安装程序已经在运行";
+
+/* @symbol CoreInstanceComponents.reasonText1 @args - */
+"coreInstanceComponents.reasonText1" = "请选择加载器版本。";
+
+/* @symbol CoreInstanceComponents.reasonText2 @args - */
+"coreInstanceComponents.reasonText2" = "当前已经使用这个加载器版本。";
+
+/* @symbol CoreInstanceComponents.clientText1 @args - */
+"coreInstanceComponents.clientText1" = "游戏客户端缺失，请先修复此实例。";
+
+/* @symbol CoreInstanceComponents.resultText1 @args - */
+"coreInstanceComponents.resultText1" = "加载器生成了不能迁移的临时路径，原配置已保留。";
+
+/* @symbol CoreInstanceComponents.backupText1 @args - */
+"coreInstanceComponents.backupText1" = "没有适用于当前位置的加载器备份。";
+
+/* @symbol CoreInstanceComponents.updatedText1 @args - */
+"coreInstanceComponents.updatedText1" = "实例组件在操作期间改变，请重新打开组件管理。";
+
+/* @symbol CoreInstanceComponents.actualText1 @args - */
+"coreInstanceComponents.actualText1" = "原版本文件在准备期间改变，请重新尝试。";
+
+/* @symbol CoreInstanceComponents.actualText2 @args - */
+"coreInstanceComponents.actualText2" = "启动清单已改变，请重新尝试。";
+
+/* @symbol CoreInstanceComponents.actualText3 @args - */
+"coreInstanceComponents.actualText3" = "加载器设置未完成保存，请在组件管理中恢复上次配置。";
+
+/* @symbol CoreInstanceComponents.versionText1 @args - */
+"coreInstanceComponents.versionText1" = "当前版本的启动清单不可用，请先修复。";
+
+/* @symbol CoreInstanceComponents.dependentText1 @args text */
+"coreInstanceComponents.dependentText1" = "“%1$@”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。";
+
+/* @symbol CoreInstanceComponents.instanceText1 @args - */
+"coreInstanceComponents.instanceText1" = "实例已从列表移除。";
+
+/* @symbol CoreLiteLoaderCatalog.valueText1 @args - */
+"coreLiteLoaderCatalog.valueText1" = "LiteLoader 文件校验信息无效。";
+
+/* @symbol CoreLiteLoaderCatalog.argumentsText1 @args - */
+"coreLiteLoaderCatalog.argumentsText1" = "LiteLoader 清单的启动入口无法识别。";
+
+/* @symbol CoreLiteLoaderCatalog.releaseText1 @args text,text */
+"coreLiteLoaderCatalog.releaseText1" = "找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。";
+
+/* @symbol CoreLiteLoaderCatalog.valueText2 @args - */
+"coreLiteLoaderCatalog.valueText2" = "LiteLoader 快照缺少有效的 SHA-1 校验信息。";
+
+/* @symbol CoreLiteLoaderCatalog.numberText1 @args - */
+"coreLiteLoaderCatalog.numberText1" = "LiteLoader 快照版本信息无效。";
+
+/* @symbol CoreLiteLoaderCatalog.componentsText1 @args - */
+"coreLiteLoaderCatalog.componentsText1" = "LiteLoader 依赖下载地址无效。";
+
+/* @symbol CoreLoaderEndpoints.profileServiceText1 @args - */
+"coreLoaderEndpoints.profileServiceText1" = "此加载器不提供 Fabric/Quilt 启动清单。";
+
+/* @symbol CoreLoaderEndpoints.installerText1 @args - */
+"coreLoaderEndpoints.installerText1" = "此加载器不使用 Forge 安装包。";
+
+/* @symbol CoreManifest.extPartsText1 @args - */
+"coreManifest.extPartsText1" = "无效 Maven 扩展名";
+
+/* @symbol CoreManifest.partsText1 @args text */
+"coreManifest.partsText1" = "无效 Maven 坐标：%1$@";
+
+/* @symbol CoreMinecraftEndpoints.assetText1 @args - */
+"coreMinecraftEndpoints.assetText1" = "资源索引包含无效哈希";
+
+/* @symbol CoreOptiFineInstaller.installText1 @args - */
+"coreOptiFineInstaller.installText1" = "这个 Minecraft 版本暂不支持 OptiFine 独立安装。";
+
+/* @symbol CoreOptiFineInstaller.releaseText1 @args - */
+"coreOptiFineInstaller.releaseText1" = "找不到对应的 OptiFine 版本。";
+
+/* @symbol CoreOptiFineInstaller.versionText1 @args - */
+"coreOptiFineInstaller.versionText1" = "OptiFine 安装来源缺失，请重新安装此组件。";
+
+/* @symbol CoreOptiFineInstaller.gameText1 @args - */
+"coreOptiFineInstaller.gameText1" = "OptiFine 安装包与选择的游戏或组件版本不匹配。";
+
+/* @symbol CoreOptiFineInstaller.clientText1 @args - */
+"coreOptiFineInstaller.clientText1" = "OptiFine 需要原版 Minecraft 客户端。";
+
+/* @symbol CoreOptiFineInstaller.runtimeText1 @args text */
+"coreOptiFineInstaller.runtimeText1" = "生成 OptiFine 需要 Java %1$@，请先添加运行时。";
+
+/* @symbol CoreOptiFineInstaller.statusText1 @args text,text */
+"coreOptiFineInstaller.statusText1" = "OptiFine 补丁生成失败（%1$@），请查看安装日志：%2$@";
+
+/* @symbol CoreOptiFineInstaller.wrapperVersionText1 @args - */
+"coreOptiFineInstaller.wrapperVersionText1" = "OptiFine LaunchWrapper 版本无效。";
+
+/* @symbol CoreOptiFineInstaller.originalText1 @args - */
+"coreOptiFineInstaller.originalText1" = "重新生成的 OptiFine 与原安装不一致，未替换游戏文件。";
+
+/* @symbol CoreOptiFineInstaller.nameText1 @args - */
+"coreOptiFineInstaller.nameText1" = "所下载的文件不是受支持的 OptiFine 安装包。";
+
+/* @symbol CoreOptiFineInstaller.releaseText2 @args - */
+"coreOptiFineInstaller.releaseText2" = "OptiFine 安装包缺少版本字段。";
+
+/* @symbol CoreOptiFineInstaller.dataText1 @args - */
+"coreOptiFineInstaller.dataText1" = "OptiFine 补丁文件大小无效。";
+
+/* @symbol CoreOptiFineInstaller.numberText1 @args - */
+"coreOptiFineInstaller.numberText1" = "OptiFine ZIP 文件结构无效。";
+
+/* @symbol CoreOptiFineInstaller.endText1 @args - */
+"coreOptiFineInstaller.endText1" = "OptiFine ZIP 目录无效。";
+
+/* @symbol CoreOptiFineInstaller.countText1 @args - */
+"coreOptiFineInstaller.countText1" = "OptiFine ZIP 目录超出限制。";
+
+/* @symbol CoreOptiFineInstaller.offsetText1 @args - */
+"coreOptiFineInstaller.offsetText1" = "OptiFine ZIP 条目无效。";
+
+/* @symbol CoreOptiFineInstaller.localText1 @args - */
+"coreOptiFineInstaller.localText1" = "OptiFine ZIP 文件头无效。";
+
+/* @symbol CoreOptiFineInstaller.lengthText1 @args - */
+"coreOptiFineInstaller.lengthText1" = "OptiFine ZIP 条目超出范围。";
+
+/* @symbol CoreOptiFineInstaller.timeText1 @args - */
+"coreOptiFineInstaller.timeText1" = "OptiFine ZIP 条目数量不一致。";
+
+/* @symbol CoreOptiFineInstaller.entryText1 @args text */
+"coreOptiFineInstaller.entryText1" = "OptiFine 安装包缺少有效的 %1$@。";
+
+/* @symbol CoreOptiFineInstaller.crcText1 @args - */
+"coreOptiFineInstaller.crcText1" = "OptiFine 文件校验失败。";
+
+/* @symbol CoreOptiFineInstaller.publishText1 @args text */
+"coreOptiFineInstaller.publishText1" = "OptiFine 需要替换已有依赖，请先检查：%1$@";
+
+/* @symbol CoreOptiFineInstaller.stagingText1 @args - */
+"coreOptiFineInstaller.stagingText1" = "无法保存 OptiFine 依赖。";
+
+/* @symbol CoreRepositoryPreparation.prefixText1 @args - */
+"coreRepositoryPreparation.prefixText1" = "本地依赖库位于游戏文件夹之外。";
+
+/* @symbol CoreRepositoryPreparation.fileText1 @args text */
+"coreRepositoryPreparation.fileText1" = "原生依赖库缺失，请修复此版本：%1$@";
+
+/* @symbol CoreCustomRunDirectory.candidateText1 @args - */
+"coreCustomRunDirectory.candidateText1" = "请选择已存在的游戏文件夹。";
+
+/* @symbol CoreCustomRunDirectory.validateConfigurationText1 @args - */
+"coreCustomRunDirectory.validateConfigurationText1" = "自定义运行目录登记信息无效。";
+
+/* @symbol CoreCustomRunDirectory.valuesText1 @args - */
+"coreCustomRunDirectory.valuesText1" = "路径已失联或不再是原文件夹。";
+
+/* @symbol CoreCustomRunDirectory.recordText1 @args - */
+"coreCustomRunDirectory.recordText1" = "目录身份与选取时不一致。";
+
+/* @symbol CoreCustomRunDirectory.recordText2 @args text,text */
+"coreCustomRunDirectory.recordText2" = "无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@";
+
+/* @symbol CoreCustomRunDirectory.fdText1 @args - */
+"coreCustomRunDirectory.fdText1" = "无法读取自定义目录身份标记。";
+
+/* @symbol CoreCustomRunDirectory.infoText1 @args - */
+"coreCustomRunDirectory.infoText1" = "自定义目录身份标记无效。";
+
+/* @symbol CoreCustomRunDirectory.dataText1 @args - */
+"coreCustomRunDirectory.dataText1" = "自定义目录标记过大。";
+
+/* @symbol CoreCustomRunDirectory.markerText1 @args - */
+"coreCustomRunDirectory.markerText1" = "自定义目录标记版本无效。";
+
+/* @symbol CoreCustomRunDirectory.overlapsText1 @args - */
+"coreCustomRunDirectory.overlapsText1" = "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。";
+
+/* @symbol CoreCustomRunDirectory.existingText1 @args - */
+"coreCustomRunDirectory.existingText1" = "同一路径的目录身份已经改变，请重新检查原目录。";
+
+/* @symbol CoreCustomRunDirectory.existingText2 @args - */
+"coreCustomRunDirectory.existingText2" = "此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。";
+
+/* @symbol CoreCustomRunDirectory.existingText3 @args - */
+"coreCustomRunDirectory.existingText3" = "自定义运行目录之间不能相互嵌套。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.originalText1 @args - */
+"coreCustomRunDirectoryRelocation.originalText1" = "此实例没有保存过自定义运行目录。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.validateOriginalText1 @args - */
+"coreCustomRunDirectoryRelocation.validateOriginalText1" = "原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.affectedText1 @args - */
+"coreCustomRunDirectoryRelocation.affectedText1" = "使用此目录的实例或其目录策略已经改变，请重新预览。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.affectedText2 @args - */
+"coreCustomRunDirectoryRelocation.affectedText2" = "所选文件夹在预览后被替换或移动，请重新选取原目录。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.representativeText1 @args - */
+"coreCustomRunDirectoryRelocation.representativeText1" = "没有实例引用此目录。";
+
+/* @symbol CoreCustomRunDirectoryRelocation.lockText1 @args - */
+"coreCustomRunDirectoryRelocation.lockText1" = "此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。";
+
+/* @symbol CoreDetachedMinecraftFolder.validateText1 @args - */
+"coreDetachedMinecraftFolder.validateText1" = "已移除的 Minecraft 文件夹记录无效。";
+
+/* @symbol CoreGameDirectory.valuesText1 @args - */
+"coreGameDirectory.valuesText1" = "此文件夹已有数据，请通过实例导入入口处理。";
+
+/* @symbol CoreGameDirectory.markerText1 @args - */
+"coreGameDirectory.markerText1" = "此实例文件夹已经登记，不能重复添加其副本。";
+
+/* @symbol CoreGameDirectory.instancesText1 @args - */
+"coreGameDirectory.instancesText1" = "此文件夹仍有实例文件，请通过导入入口预览后导入。";
+
+/* @symbol CoreGameDirectory.existingText1 @args - */
+"coreGameDirectory.existingText1" = "请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。";
+
+/* @symbol CoreGameDirectory.validateAvailabilityText1 @args - */
+"coreGameDirectory.validateAvailabilityText1" = "路径不是文件夹";
+
+/* @symbol CoreGameDirectory.valuesText2 @args - */
+"coreGameDirectory.valuesText2" = "目录标记无效";
+
+/* @symbol CoreGameDirectory.recordText1 @args - */
+"coreGameDirectory.recordText1" = "目录身份与登记信息不一致";
+
+/* @symbol CoreGameDirectory.recordText2 @args text,text,text */
+"coreGameDirectory.recordText2" = "无法访问实例文件夹“%1$@”：%2$@\n请连接磁盘、检查访问权限或重新定位原文件夹。\n%3$@";
+
+/* @symbol CoreGameDirectory.nameText1 @args - */
+"coreGameDirectory.nameText1" = "文件夹名称需为 1–100 个字符。";
+
+/* @symbol CoreGameDirectory.idsText1 @args - */
+"coreGameDirectory.idsText1" = "实例文件夹登记信息无效，已暂停操作以保护原数据。";
+
+/* @symbol CoreGameDirectory.idsText2 @args - */
+"coreGameDirectory.idsText2" = "实例文件夹位置无效。";
+
+/* @symbol CoreGameDirectory.idsText3 @args - */
+"coreGameDirectory.idsText3" = "本地版本缺少所属 Minecraft 文件夹。";
+
+/* @symbol CoreGameDirectory.idsText4 @args - */
+"coreGameDirectory.idsText4" = "Minecraft 文件夹中的实例缺少版本目录名称。";
+
+/* @symbol CoreGameDirectory.customText1 @args - */
+"coreGameDirectory.customText1" = "实例缺少自定义运行目录信息。";
+
+/* @symbol CoreGameDirectory.customText2 @args - */
+"coreGameDirectory.customText2" = "自定义目录与实例策略不一致。";
+
+/* @symbol CoreGameDirectory.customText3 @args - */
+"coreGameDirectory.customText3" = "同一自定义路径保存了不同的目录身份。";
+
+/* @symbol CoreGameDirectory.checkNewDirectoryText1 @args - */
+"coreGameDirectory.checkNewDirectoryText1" = "请选择已存在的本地文件夹。";
+
+/* @symbol CoreGameDirectory.existingText2 @args - */
+"coreGameDirectory.existingText2" = "实例文件夹不能与已登记文件夹或公共数据目录重叠。";
+
+/* @symbol CoreGameDirectory.directoryText1 @args - */
+"coreGameDirectory.directoryText1" = "找不到实例所属文件夹，请恢复目录登记后重试。";
+
+/* @symbol CoreGameDirectory.versionText1 @args - */
+"coreGameDirectory.versionText1" = "实例缺少版本文件夹。";
+
+/* @symbol CoreGameDirectory.customText4 @args - */
+"coreGameDirectory.customText4" = "请先选择自定义运行目录。";
+
+/* @symbol CoreGameDirectoryStore.resultText1 @args - */
+"coreGameDirectoryStore.resultText1" = "此实例文件夹已从列表移除。";
+
+/* @symbol CoreGameDirectoryStore.indexText1 @args - */
+"coreGameDirectoryStore.indexText1" = "找不到实例文件夹。";
+
+/* @symbol CoreGameDirectoryStore.candidateText1 @args - */
+"coreGameDirectoryStore.candidateText1" = "原实例文件夹仍可访问，请先完成移动，或通过导入处理另一份副本。";
+
+/* @symbol CoreGameDirectoryStore.selectedText1 @args - */
+"coreGameDirectoryStore.selectedText1" = "文件夹仍有实例，暂时不能从列表移除。";
+
+/* @symbol CoreGameDirectoryStore.instancesText1 @args - */
+"coreGameDirectoryStore.instancesText1" = "文件夹中仍有尚未添加到列表或正在安装的实例，请先处理这些实例，再从列表移除此文件夹。";
+
+/* @symbol CoreGameRunDirectory.validateBindingText1 @args - */
+"coreGameRunDirectory.validateBindingText1" = "实例设置与本次操作的目录不一致，请刷新后重试。";
+
+/* @symbol CoreGameRunDirectory.actualText1 @args - */
+"coreGameRunDirectory.actualText1" = "自定义运行目录与本次操作的路径不一致，请刷新后重试。";
+
+/* @symbol CoreGameRunDirectoryChange.valuesText1 @args text */
+"coreGameRunDirectoryChange.valuesText1" = "游戏内容记录或备份包含不支持的文件：%1$@";
+
+/* @symbol CoreGameRunDirectoryChange.changedText1 @args - */
+"coreGameRunDirectoryChange.changedText1" = "此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。";
+
+/* @symbol CoreGameRunDirectoryChange.lockText1 @args - */
+"coreGameRunDirectoryChange.lockText1" = "此目录还有未完成的内容或存档操作，请先恢复这些操作。";
+
+/* @symbol CoreGameRunDirectoryChange.instanceText1 @args - */
+"coreGameRunDirectoryChange.instanceText1" = "这个实例已被移除，请刷新后重试。";
+
+/* @symbol CoreGameRunDirectoryChange.validateChangeText1 @args - */
+"coreGameRunDirectoryChange.validateChangeText1" = "实例名称过长，请先缩短名称再调整目录。";
+
+/* @symbol CoreGameRunDirectoryChange.customDirectoryText1 @args - */
+"coreGameRunDirectoryChange.customDirectoryText1" = "请先选择自定义运行目录。";
+
+/* @symbol CoreGameRunDirectoryChange.customDirectoryText2 @args - */
+"coreGameRunDirectoryChange.customDirectoryText2" = "实例已经使用这个运行目录。";
+
+/* @symbol CoreGameRunDirectoryChange.changedText2 @args - */
+"coreGameRunDirectoryChange.changedText2" = "所选目录就是当前游戏目录，无需切换。";
+
+/* @symbol CoreGameRunDirectoryChange.changedText3 @args - */
+"coreGameRunDirectoryChange.changedText3" = "整合包保持独立运行目录，以保留包的配置与更新记录。";
+
+/* @symbol CoreGameRunDirectoryChange.originalText1 @args - */
+"coreGameRunDirectoryChange.originalText1" = "自定义目录身份已经变化，请重新预览。";
+
+/* @symbol CoreGameRunDirectoryChange.targetText1 @args - */
+"coreGameRunDirectoryChange.targetText1" = "实例或目录位置已经变化，请重新预览。";
+
+/* @symbol CoreGameRunDirectoryChange.validateSnapshotsText1 @args - */
+"coreGameRunDirectoryChange.validateSnapshotsText1" = "预览后游戏文件或备份发生了变化，请刷新预览后再切换。";
+
+/* @symbol CoreGameRunDirectoryChange.indexText1 @args - */
+"coreGameRunDirectoryChange.indexText1" = "实例已被移除。";
+
+/* @symbol CoreGameRunDirectoryCopy.issueText1 @args - */
+"coreGameRunDirectoryCopy.issueText1" = "目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。";
+
+/* @symbol CoreGameRunDirectoryCopy.incomingText1 @args - */
+"coreGameRunDirectoryCopy.incomingText1" = "游戏目录的顶层项目过多，无法记录安全的发布过程。";
+
+/* @symbol CoreGameRunDirectoryCopy.completedBytesText1 @args - */
+"coreGameRunDirectoryCopy.completedBytesText1" = "复制项目在发布时身份改变，已保留工作区。";
+
+/* @symbol CoreGameRunDirectoryCopy.journalText1 @args - */
+"coreGameRunDirectoryCopy.journalText1" = "待恢复的复制记录已经变化，请刷新后重试。";
+
+/* @symbol CoreGameRunDirectoryCopy.latestText1 @args - */
+"coreGameRunDirectoryCopy.latestText1" = "复制记录已经变化。";
+
+/* @symbol CoreGameRunDirectoryCopy.validateJournalBindingText1 @args - */
+"coreGameRunDirectoryCopy.validateJournalBindingText1" = "实例设置在复制中断后改变，工作区已保留，请先核对原实例。";
+
+/* @symbol CoreGameRunDirectoryCopy.expectedText1 @args - */
+"coreGameRunDirectoryCopy.expectedText1" = "自定义源目录在复制中断后改变，请先核对原位置。";
+
+/* @symbol CoreGameRunDirectoryCopy.entriesText1 @args - */
+"coreGameRunDirectoryCopy.entriesText1" = "目标目录在发布前出现新文件，未覆盖这些内容。";
+
+/* @symbol CoreGameRunDirectoryCopy.entriesText2 @args - */
+"coreGameRunDirectoryCopy.entriesText2" = "目标空目录发生变化，未删除新增文件。";
+
+/* @symbol CoreGameRunDirectoryCopy.entriesText3 @args - */
+"coreGameRunDirectoryCopy.entriesText3" = "目标目录并非空目录，未替换。";
+
+/* @symbol CoreGameRunDirectoryCopy.infoText1 @args text */
+"coreGameRunDirectoryCopy.infoText1" = "无法检查目标项目，复制记录已保留：%1$@";
+
+/* @symbol CoreInstanceLocationLease.requireCurrentDirectoryText1 @args - */
+"coreInstanceLocationLease.requireCurrentDirectoryText1" = "此实例的导入或复制尚未完成，请先在实例库处理工作文件。";
+
+/* @symbol CoreInstanceLocationLease.stateText1 @args - */
+"coreInstanceLocationLease.stateText1" = "此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。";
+
+/* @symbol CoreInstanceLocationLease.instanceText1 @args - */
+"coreInstanceLocationLease.instanceText1" = "此实例已移动到另一个文件夹，请刷新后重试。";
+
+/* @symbol CoreInstanceLocationLease.fdText1 @args - */
+"coreInstanceLocationLease.fdText1" = "无法锁定实例位置。";
+
+/* @symbol CoreInstanceLocationLease.infoText1 @args - */
+"coreInstanceLocationLease.infoText1" = "实例位置锁不是普通文件。";
+
+/* @symbol CoreInstanceLocationLease.lockText1 @args - */
+"coreInstanceLocationLease.lockText1" = "实例正在移动或仍有文件操作，请稍后重试。";
+
+/* @symbol CoreMinecraftFolderStore.retainedText1 @args - */
+"coreMinecraftFolderStore.retainedText1" = "文件夹列表已改变，请刷新后重试。";
+
+/* @symbol CoreMinecraftFolderStore.existingText1 @args - */
+"coreMinecraftFolderStore.existingText1" = "此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。";
+
+/* @symbol CoreMinecraftFolderStore.infoText1 @args - */
+"coreMinecraftFolderStore.infoText1" = "无法识别此文件夹的 Ruri 标记。";
+
+/* @symbol CoreMinecraftFolderStore.markerText1 @args - */
+"coreMinecraftFolderStore.markerText1" = "此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。";
+
+/* @symbol CoreMinecraftFolderStore.locatedText1 @args - */
+"coreMinecraftFolderStore.locatedText1" = "原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。";
+
+/* @symbol CoreMinecraftFolderStore.catalogText1 @args - */
+"coreMinecraftFolderStore.catalogText1" = "文件夹位置已改变，请重新刷新。";
+
+/* @symbol CoreMinecraftFolderStore.targetText1 @args text,text */
+"coreMinecraftFolderStore.targetText1" = "无法接入“%1$@”的自定义游戏目录：%2$@";
+
+/* @symbol CoreMinecraftFolderStore.versionIDText1 @args - */
+"coreMinecraftFolderStore.versionIDText1" = "找不到本地版本。";
+
+/* @symbol CoreMinecraftFolderStore.catalogText2 @args text */
+"coreMinecraftFolderStore.catalogText2" = "请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。";
+
+/* @symbol CoreMinecraftFolderStore.resolvedText1 @args text */
+"coreMinecraftFolderStore.resolvedText1" = "“%1$@”依赖此版本，请先处理依赖它的版本。";
+
+/* @symbol CoreMinecraftFolderStore.stateText1 @args text */
+"coreMinecraftFolderStore.stateText1" = "此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。";
+
+/* @symbol CoreRunDirectoryCopyJournal.valueText1 @args text */
+"coreRunDirectoryCopyJournal.valueText1" = "无法确认复制项目的文件身份：%1$@";
+
+/* @symbol CoreRunDirectoryCopyJournal.targetText1 @args - */
+"coreRunDirectoryCopyJournal.targetText1" = "运行目录复制记录无效，工作副本已保留。";
+
+/* @symbol CoreRunDirectoryCopyJournal.customText1 @args - */
+"coreRunDirectoryCopyJournal.customText1" = "复制记录缺少自定义目标目录。";
+
+/* @symbol CoreRunDirectoryCopyJournal.customText2 @args - */
+"coreRunDirectoryCopyJournal.customText2" = "复制工作区位置无效。";
+
+/* @symbol CoreRunDirectoryCopyJournal.keysText1 @args - */
+"coreRunDirectoryCopyJournal.keysText1" = "运行目录复制项目记录无效。";
+
+/* @symbol CoreRunDirectoryCopyJournal.publishedText1 @args - */
+"coreRunDirectoryCopyJournal.publishedText1" = "发布副本的文件身份记录无效。";
+
+/* @symbol CoreRunDirectoryCopyJournal.publishedText2 @args - */
+"coreRunDirectoryCopyJournal.publishedText2" = "运行目录复制记录包含目标安装文件，未移动这些文件。";
+
+/* @symbol CoreRunDirectoryCopyJournal.publishedText3 @args - */
+"coreRunDirectoryCopyJournal.publishedText3" = "运行目录复制记录包含无效的备份路径。";
+
+/* @symbol CoreRunDirectoryCopyJournal.publishedText4 @args - */
+"coreRunDirectoryCopyJournal.publishedText4" = "运行目录复制记录包含保留路径。";
+
+/* @symbol CoreRunDirectoryCopyJournal.firstText1 @args - */
+"coreRunDirectoryCopyJournal.firstText1" = "运行目录复制记录包含目标安装目录。";
+
+/* @symbol CoreRunDirectoryCopyJournal.dataText1 @args - */
+"coreRunDirectoryCopyJournal.dataText1" = "运行目录复制记录超过大小限制。";
+
+/* @symbol CoreRunDirectoryCopyJournal.idText1 @args - */
+"coreRunDirectoryCopyJournal.idText1" = "此实例有未完成的运行目录复制，请在实例设置中恢复后继续。";
+
+/* @symbol CoreRunDirectoryCopyJournal.markerText1 @args text */
+"coreRunDirectoryCopyJournal.markerText1" = "“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。";
+
+/* @symbol CoreRunDirectoryCopyJournal.markerText2 @args - */
+"coreRunDirectoryCopyJournal.markerText2" = "共享目录的复制占用记录无效。";
+
+/* @symbol CoreRunDirectoryCopyJournal.markerText3 @args - */
+"coreRunDirectoryCopyJournal.markerText3" = "共享目录的占用记录已经改变，未清除其他操作的记录。";
+
+/* @symbol CoreRunDirectoryCopyJournal.fdText1 @args text */
+"coreRunDirectoryCopyJournal.fdText1" = "无法读取运行目录复制记录，请检查 %1$@。";
+
+/* @symbol CoreRunDirectoryCopyJournal.infoText1 @args - */
+"coreRunDirectoryCopyJournal.infoText1" = "运行目录复制记录不是有效文件或超过大小限制。";
+
+/* @symbol CoreSharedGameDirectoryLease.fdText1 @args - */
+"coreSharedGameDirectoryLease.fdText1" = "无法锁定共享运行目录。";
+
+/* @symbol CoreSharedGameDirectoryLease.infoText1 @args - */
+"coreSharedGameDirectoryLease.infoText1" = "此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。";
+
+/* @symbol CoreSharedGameDirectoryLease.valuesText1 @args - */
+"coreSharedGameDirectoryLease.valuesText1" = "共享目录运行记录无效。";
+
+/* @symbol CoreSharedGameDirectoryLease.sessionText1 @args - */
+"coreSharedGameDirectoryLease.sessionText1" = "共享目录的上次运行尚未确认结束，无法移动其历史。";
+
+/* @symbol CoreSharedGameDirectoryLease.valuesText2 @args - */
+"coreSharedGameDirectoryLease.valuesText2" = "共享目录的运行记录无效，请检查运行历史。";
+
+/* @symbol CoreSharedGameDirectoryLease.reservationText1 @args - */
+"coreSharedGameDirectoryLease.reservationText1" = "共享运行目录与上次运行记录不一致，请检查原实例。";
+
+/* @symbol CoreSharedGameDirectoryLease.reservationText2 @args - */
+"coreSharedGameDirectoryLease.reservationText2" = "自定义运行目录的占用记录版本无效。";
+
+/* @symbol CoreSharedGameDirectoryLease.recordText1 @args text */
+"coreSharedGameDirectoryLease.recordText1" = "“%1$@”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。";
+
+/* @symbol CoreMinecraftDirectoryReader.childrenText1 @args - */
+"coreMinecraftDirectoryReader.childrenText1" = "此目录的版本数量超过读取限制。";
+
+/* @symbol CoreMinecraftDirectoryReader.idText1 @args - */
+"coreMinecraftDirectoryReader.idText1" = "版本目录是符号链接，请选择实际的游戏目录。";
+
+/* @symbol CoreMinecraftDirectoryReader.currentChildrenText1 @args - */
+"coreMinecraftDirectoryReader.currentChildrenText1" = "读取期间游戏目录发生变化，请重新扫描。";
+
+/* @symbol CoreMinecraftDirectoryReader.currentChildrenText2 @args - */
+"coreMinecraftDirectoryReader.currentChildrenText2" = "此目录的 versions 文件夹里没有找到版本。";
+
+/* @symbol CoreMinecraftDirectoryReader.validateNowText1 @args - */
+"coreMinecraftDirectoryReader.validateNowText1" = "游戏目录或所选版本已不可用，请重新扫描。";
+
+/* @symbol CoreMinecraftDirectoryReader.actualText1 @args - */
+"coreMinecraftDirectoryReader.actualText1" = "版本或原启动器设置在预览后改变，请重新扫描。";
+
+/* @symbol CoreMinecraftDirectoryReader.currentText1 @args - */
+"coreMinecraftDirectoryReader.currentText1" = "游戏版本或组件在预览后改变，请重新扫描。";
+
+/* @symbol CoreMinecraftDirectoryReader.infoText1 @args - */
+"coreMinecraftDirectoryReader.infoText1" = "请选择实际的 Minecraft 目录。";
+
+/* @symbol CoreMinecraftDirectoryReader.rootText1 @args - */
+"coreMinecraftDirectoryReader.rootText1" = "没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。";
+
+/* @symbol CoreMinecraftDirectoryReader.selectedText1 @args - */
+"coreMinecraftDirectoryReader.selectedText1" = "请选择版本文件夹或同名 JSON 清单。";
+
+/* @symbol CoreMinecraftDirectoryReader.selectedText2 @args - */
+"coreMinecraftDirectoryReader.selectedText2" = "Minecraft 目录不存在或是符号链接。";
+
+/* @symbol CoreMinecraftDirectoryReader.existingText1 @args - */
+"coreMinecraftDirectoryReader.existingText1" = "版本清单和设置的总大小超过读取限制。";
+
+/* @symbol CoreMinecraftDirectoryReader.prefixText1 @args text */
+"coreMinecraftDirectoryReader.prefixText1" = "版本清单或设置包含符号链接，请使用实际文件：%1$@";
+
+/* @symbol CoreMinecraftDirectoryReader.fdText1 @args text */
+"coreMinecraftDirectoryReader.fdText1" = "无法读取版本清单或设置：%1$@";
+
+/* @symbol CoreMinecraftDirectoryReader.beforeText1 @args text */
+"coreMinecraftDirectoryReader.beforeText1" = "版本清单或设置不是普通文件，或超过读取限制：%1$@";
+
+/* @symbol CoreMinecraftDirectoryReader.afterText1 @args - */
+"coreMinecraftDirectoryReader.afterText1" = "版本清单或设置在读取期间改变，请重新扫描。";
+
+/* @symbol CoreMinecraftDirectoryReader.valueText1 @args text */
+"coreMinecraftDirectoryReader.valueText1" = "清单或设置不是有效的 JSON 对象：%1$@";
+
+/* @symbol CoreMinecraftGameLocations.profilesText1 @args - */
+"coreMinecraftGameLocations.profilesText1" = "官方启动器配置数量超过读取限制。";
+
+/* @symbol CoreMinecraftLibrarySelection.selectText1 @args - */
+"coreMinecraftLibrarySelection.selectText1" = "依赖库声明数量超过限制。";
+
+/* @symbol CoreMinecraftLibrarySelection.versionText1 @args - */
+"coreMinecraftLibrarySelection.versionText1" = "依赖库名称或版本号过长。";
+
+/* @symbol CoreMinecraftManifestGraph.resolveManifestText1 @args - */
+"coreMinecraftManifestGraph.resolveManifestText1" = "版本继承存在循环或层级过深。";
+
+/* @symbol CoreMinecraftManifestGraph.numberText1 @args - */
+"coreMinecraftManifestGraph.numberText1" = "版本清单的 root 标记无效。";
+
+/* @symbol CoreMinecraftManifestGraph.listText1 @args - */
+"coreMinecraftManifestGraph.listText1" = "版本补丁清单格式无效。";
+
+/* @symbol CoreMinecraftManifestGraph.listText2 @args - */
+"coreMinecraftManifestGraph.listText2" = "版本组件数量超过读取限制。";
+
+/* @symbol CoreMinecraftManifestGraph.mapText1 @args - */
+"coreMinecraftManifestGraph.mapText1" = "版本文件下载信息格式无效。";
+
+/* @symbol CoreMinecraftManifestGraph.canonicalText1 @args text */
+"coreMinecraftManifestGraph.canonicalText1" = "版本文件下载信息包含重复类型：%1$@";
+
+/* @symbol CoreMinecraftManifestGraph.childLibrariesText1 @args - */
+"coreMinecraftManifestGraph.childLibrariesText1" = "合并后的依赖库数量超过限制。";
+
+/* @symbol CoreMinecraftManifestGraph.valuesText2 @args - */
+"coreMinecraftManifestGraph.valuesText2" = "合并后的启动参数数量超过限制。";
+
+/* @symbol CoreMinecraftManifestGraph.numberText2 @args - */
+"coreMinecraftManifestGraph.numberText2" = "清单的最低启动器版本无效。";
+
+/* @symbol CoreMinecraftManifestGraph.objectText1 @args - */
+"coreMinecraftManifestGraph.objectText1" = "启动参数不是有效对象。";
+
+/* @symbol CoreMinecraftManifestGraph.arrayText1 @args text */
+"coreMinecraftManifestGraph.arrayText1" = "%1$@清单格式或数量无效。";
+
+/* @symbol CoreMinecraftManifestGraph.numberText3 @args - */
+"coreMinecraftManifestGraph.numberText3" = "版本补丁优先级无效。";
+
+/* @symbol CoreMinecraftManifestResolution.mainText1 @args - */
+"coreMinecraftManifestResolution.mainText1" = "合并后的版本清单没有游戏主类，请检查原安装。";
+
+/* @symbol CoreMinecraftManifestResolution.jarIDText1 @args - */
+"coreMinecraftManifestResolution.jarIDText1" = "合并后的版本清单缺少游戏 JAR 引用。";
+
+/* @symbol CoreMinecraftManifestResolution.rawLibrariesText1 @args - */
+"coreMinecraftManifestResolution.rawLibrariesText1" = "依赖库清单包含无效声明。";
+
+/* @symbol CoreMinecraftManifestResolution.hintText1 @args text */
+"coreMinecraftManifestResolution.hintText1" = "依赖库的位置提示无效：%1$@";
+
+/* @symbol CoreMinecraftManifestResolution.valueText1 @args text */
+"coreMinecraftManifestResolution.valueText1" = "本地依赖库的文件名无效：%1$@";
+
+/* @symbol CoreMinecraftVersionMetadata.rawLibrariesText1 @args - */
+"coreMinecraftVersionMetadata.rawLibrariesText1" = "依赖库清单格式无效。";
+
+/* @symbol CoreMinecraftVersionMetadata.idText1 @args - */
+"coreMinecraftVersionMetadata.idText1" = "版本引用格式无效。";
+
+/* @symbol CoreMinecraftVersionMetadata.checkIdentifierText1 @args - */
+"coreMinecraftVersionMetadata.checkIdentifierText1" = "版本名称或继承路径无效。";
+
+/* @symbol CoreMinecraftVersionMetadata.infoText1 @args - */
+"coreMinecraftVersionMetadata.infoText1" = "游戏 JAR 不是普通文件。";
+
+/* @symbol CoreMinecraftVersionMetadata.entryText1 @args - */
+"coreMinecraftVersionMetadata.entryText1" = "JAR 的版本信息过大或格式无效。";
+
+/* @symbol CoreMinecraftVersionMetadata.crcText1 @args - */
+"coreMinecraftVersionMetadata.crcText1" = "JAR 的版本信息超过限制。";
+
+/* @symbol CoreMinecraftVersionMetadata.crcText2 @args - */
+"coreMinecraftVersionMetadata.crcText2" = "JAR 的版本信息校验失败。";
+
+/* @symbol CoreGameInstance.selectedText1 @args text,text */
+"coreGameInstance.selectedText1" = "指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。";
+
+/* @symbol CoreGameInstance.selectedText2 @args text */
+"coreGameInstance.selectedText2" = "指定的 Java %1$@ 不在此整合包支持的版本中。";
+
+/* @symbol CoreGameInstance.selectedText3 @args text */
+"coreGameInstance.selectedText3" = "整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。";
+
+/* @symbol CoreImportedMinecraftInstallation.validLabelText1 @args - */
+"coreImportedMinecraftInstallation.validLabelText1" = "本地游戏安装记录无效，请检查实例元数据。";
+
+/* @symbol CoreInstanceIconImage.sizeText1 @args - */
+"coreInstanceIconImage.sizeText1" = "请选择不超过 20 MB 的图片文件。";
+
+/* @symbol CoreInstanceIconImage.imageText1 @args - */
+"coreInstanceIconImage.imageText1" = "无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。";
+
+/* @symbol CoreInstanceIconImage.destinationText1 @args - */
+"coreInstanceIconImage.destinationText1" = "无法保存实例图标。";
+
+/* @symbol CoreInstanceIconImage.heightText1 @args - */
+"coreInstanceIconImage.heightText1" = "实例图标无效，请重新选择图片。";
+
+/* @symbol CoreCompleteInstancePack.actualText1 @args - */
+"coreCompleteInstancePack.actualText1" = "完整副本的安装文件在预览后改变，请重新选择压缩包。";
+
+/* @symbol CoreCompleteInstancePack.filesText1 @args - */
+"coreCompleteInstancePack.filesText1" = "原始版本清单超过导出限制。";
+
+/* @symbol CoreCompleteInstancePack.exportCompleteText1 @args - */
+"coreCompleteInstancePack.exportCompleteText1" = "请先安装实例，再导出包含游戏文件的完整副本。";
+
+/* @symbol CoreCompleteInstancePack.protectedText1 @args - */
+"coreCompleteInstancePack.protectedText1" = "请将完整副本保存在源实例和游戏资源文件夹之外。";
+
+/* @symbol CoreCompleteInstancePack.resourceRootText1 @args - */
+"coreCompleteInstancePack.resourceRootText1" = "导出期间安装文件改变，请重新导出。";
+
+/* @symbol CoreInstanceCopier.nameText1 @args - */
+"coreInstanceCopier.nameText1" = "副本名称需为 1–256 个字符。";
+
+/* @symbol CoreInstanceCopier.collectionText1 @args - */
+"coreInstanceCopier.collectionText1" = "找不到目标实例文件夹。";
+
+/* @symbol CoreInstanceCopier.collectionText2 @args - */
+"coreInstanceCopier.collectionText2" = "此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。";
+
+/* @symbol CoreInstanceCopier.manifestText1 @args - */
+"coreInstanceCopier.manifestText1" = "源文件在预览期间改变，请重新预览。";
+
+/* @symbol CoreInstanceCopier.targetLocationText1 @args - */
+"coreInstanceCopier.targetLocationText1" = "复制工作区已经存在或无法创建。";
+
+/* @symbol CoreInstanceCopier.publishedBytesText1 @args - */
+"coreInstanceCopier.publishedBytesText1" = "发布副本的文件身份改变，工作区已保留。";
+
+/* @symbol CoreInstanceCopier.journalText1 @args - */
+"coreInstanceCopier.journalText1" = "待恢复的实例复制已改变，请刷新后重试。";
+
+/* @symbol CoreInstanceCopier.latestText2 @args - */
+"coreInstanceCopier.latestText2" = "实例复制记录已改变。";
+
+/* @symbol CoreInstanceCopier.copyText1 @args - */
+"coreInstanceCopier.copyText1" = "副本登记与复制记录不一致，请先核对实例，文件已保留。";
+
+/* @symbol CoreInstanceCopier.valueText1 @args - */
+"coreInstanceCopier.valueText1" = "源实例已被移除，请刷新后重试。";
+
+/* @symbol CoreInstanceCopier.originalText1 @args - */
+"coreInstanceCopier.originalText1" = "源实例设置或副本登记在预览后改变，请刷新后重试。";
+
+/* @symbol CoreInstanceCopier.snapshotText1 @args - */
+"coreInstanceCopier.snapshotText1" = "源文件内容在预览后改变，请重新预览再复制。";
+
+/* @symbol CoreInstanceCopier.fileText1 @args - */
+"coreInstanceCopier.fileText1" = "已安装实例缺少版本清单，请先修复再复制。";
+
+/* @symbol CoreInstanceCopier.fileText2 @args - */
+"coreInstanceCopier.fileText2" = "本地游戏安装文件夹缺失，请恢复文件后再复制。";
+
+/* @symbol CoreInstanceCopier.valuesText1 @args text */
+"coreInstanceCopier.valuesText1" = "实例元数据包含不支持的文件：%1$@";
+
+/* @symbol CoreInstanceCopier.valuesText2 @args - */
+"coreInstanceCopier.valuesText2" = "本地游戏安装位置不是文件夹，请检查实例文件。";
+
+/* @symbol CoreInstanceCopier.valuesText3 @args - */
+"coreInstanceCopier.valuesText3" = "实例版本清单无效。";
+
+/* @symbol CoreInstanceCopier.manifestText2 @args - */
+"coreInstanceCopier.manifestText2" = "实例的启动清单尚未准备好，请先修复。";
+
+/* @symbol CoreInstanceCopier.manifestText3 @args - */
+"coreInstanceCopier.manifestText3" = "实例文件数量或大小超过当前复制限制。";
+
+/* @symbol CoreInstanceCopier.destinationText1 @args - */
+"coreInstanceCopier.destinationText1" = "已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。";
+
+/* @symbol CoreInstanceCopier.infoText1 @args - */
+"coreInstanceCopier.infoText1" = "副本的操作锁包含意外内容，工作副本已保留。";
+
+/* @symbol CoreInstanceCopier.infoText2 @args - */
+"coreInstanceCopier.infoText2" = "无法核对副本的操作锁，工作副本已保留。";
+
+/* @symbol CoreInstanceCopier.infoText4 @args - */
+"coreInstanceCopier.infoText4" = "无法确认目标文件夹状态，复制记录已保留。";
+
+/* @symbol CoreInstanceCopier.lockText1 @args - */
+"coreInstanceCopier.lockText1" = "实例还有未完成的文件操作，请先恢复后再复制。";
+
+/* @symbol CoreInstanceCopyJournal.recordText1 @args - */
+"coreInstanceCopyJournal.recordText1" = "实例复制记录不属于所选实例。";
+
+/* @symbol CoreInstanceCopyJournal.validateText1 @args - */
+"coreInstanceCopyJournal.validateText1" = "实例复制信息无效，请检查源实例和副本设置。";
+
+/* @symbol CoreInstanceCopyJournal.validateText2 @args - */
+"coreInstanceCopyJournal.validateText2" = "实例副本缺少文件校验记录，工作副本已保留。";
+
+/* @symbol CoreInstanceCopyJournal.verificationDigestText1 @args - */
+"coreInstanceCopyJournal.verificationDigestText1" = "实例副本的校验记录摘要无效。";
+
+/* @symbol CoreInstanceCopyJournal.collectionText1 @args - */
+"coreInstanceCopyJournal.collectionText1" = "复制目标的文件夹记录无效。";
+
+/* @symbol CoreInstanceCopyJournal.collectionText2 @args - */
+"coreInstanceCopyJournal.collectionText2" = "实例副本的文件身份记录无效。";
+
+/* @symbol CoreInstanceCopyJournal.dataText1 @args - */
+"coreInstanceCopyJournal.dataText1" = "源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。";
+
+/* @symbol CoreInstanceCopyJournal.registeredText1 @args - */
+"coreInstanceCopyJournal.registeredText1" = "目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。";
+
+/* @symbol CoreInstanceCopyJournal.dataText2 @args - */
+"coreInstanceCopyJournal.dataText2" = "实例复制记录超过大小限制。";
+
+/* @symbol CoreInstanceCopyJournal.ownerText1 @args - */
+"coreInstanceCopyJournal.ownerText1" = "实例复制占用信息无效。";
+
+/* @symbol CoreInstanceCopyJournal.ownerText2 @args text */
+"coreInstanceCopyJournal.ownerText2" = "“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。";
+
+/* @symbol CoreInstanceCopyJournal.markerText1 @args - */
+"coreInstanceCopyJournal.markerText1" = "副本占用记录已经改变，未清除其他操作的记录。";
+
+/* @symbol CoreInstanceCopyJournal.recordsText1 @args - */
+"coreInstanceCopyJournal.recordsText1" = "待处理的实例复制过多，请先恢复后再调整文件夹。";
+
+/* @symbol CoreInstanceCopyJournal.journalText1 @args - */
+"coreInstanceCopyJournal.journalText1" = "此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。";
+
+/* @symbol CoreInstanceTransfer.instanceText1 @args - */
+"coreInstanceTransfer.instanceText1" = "此实例包需要更新版本的 Ruri，或缺少安装文件信息。";
+
+/* @symbol CoreInstanceTransfer.isDirectoryText1 @args - */
+"coreInstanceTransfer.isDirectoryText1" = "请选择实际实例目录或压缩包。";
+
+/* @symbol CoreInstanceTransfer.itemText1 @args text */
+"coreInstanceTransfer.itemText1" = "整合包内附文件校验失败：%1$@";
+
+/* @symbol CoreInstanceTransfer.itemText2 @args text */
+"coreInstanceTransfer.itemText2" = "整合包缺少文件且未提供下载源：%1$@";
+
+/* @symbol CoreInstanceTransfer.failureText1 @args - */
+"coreInstanceTransfer.failureText1" = "文件缺少可用下载源";
+
+/* @symbol CoreInstanceTransfer.itemText3 @args text */
+"coreInstanceTransfer.itemText3" = "整合包文件缺失或已修改：%1$@";
+
+/* @symbol CoreInstanceTransfer.completeText1 @args - */
+"coreInstanceTransfer.completeText1" = "此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。";
+
+/* @symbol CoreInstanceTransfer.completeText2 @args - */
+"coreInstanceTransfer.completeText2" = "此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。";
+
+/* @symbol CoreInstanceTransfer.completeText3 @args - */
+"coreInstanceTransfer.completeText3" = "此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。";
+
+/* @symbol CoreInstanceTransfer.completeText4 @args - */
+"coreInstanceTransfer.completeText4" = "此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。";
+
+/* @symbol CoreInstanceTransfer.instanceText2 @args - */
+"coreInstanceTransfer.instanceText2" = "此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。";
+
+/* @symbol CoreInstanceTransfer.locksText1 @args - */
+"coreInstanceTransfer.locksText1" = "此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。";
+
+/* @symbol CoreInstanceTransfer.infoText3 @args text */
+"coreInstanceTransfer.infoText3" = "实例清单不是有效文件：%1$@";
+
+/* @symbol CoreInstanceTransfer.gameText1 @args - */
+"coreInstanceTransfer.gameText1" = "MultiMC 实例清单无效或缺少 Minecraft 版本。";
+
+/* @symbol CoreInstanceTransfer.unknownText1 @args text */
+"coreInstanceTransfer.unknownText1" = "此实例包含尚未支持的组件：%1$@";
+
+/* @symbol CoreInstanceTransfer.loadersText1 @args - */
+"coreInstanceTransfer.loadersText1" = "实例同时声明了多个加载器，暂时无法迁移。";
+
+/* @symbol CoreInstanceTransfer.urlText1 @args text */
+"coreInstanceTransfer.urlText1" = "实例包含自定义 %1$@，需要先处理这些补丁后再迁移。";
+
+/* @symbol CoreInstanceTransfer.gamesText1 @args - */
+"coreInstanceTransfer.gamesText1" = "实例需要唯一的 minecraft 或 .minecraft 游戏目录。";
+
+/* @symbol CoreInstanceTransfer.iconText1 @args - */
+"coreInstanceTransfer.iconText1" = "实例版本、内存或窗口设置无效。";
+
+/* @symbol CoreInstanceTransfer.savesText1 @args - */
+"coreInstanceTransfer.savesText1" = "存档目录不能是符号链接。";
+
+/* @symbol CoreInstanceTransfer.infoText4 @args - */
+"coreInstanceTransfer.infoText4" = "存档包含符号链接。";
+
+/* @symbol CoreMinecraftInstallationCopy.selectedText1 @args - */
+"coreMinecraftInstallationCopy.selectedText1" = "源版本已移除，请刷新后重试。";
+
+/* @symbol CoreMinecraftInstallationCopy.fileText1 @args - */
+"coreMinecraftInstallationCopy.fileText1" = "源版本缺少完整启动清单，请先修复。";
+
+/* @symbol CoreMinecraftInstallationCopy.sizeText1 @args text */
+"coreMinecraftInstallationCopy.sizeText1" = "所需安装文件缺失或不是普通文件：%1$@";
+
+/* @symbol CoreMinecraftInstallationCopy.afterText1 @args - */
+"coreMinecraftInstallationCopy.afterText1" = "读取期间安装文件改变，请刷新复制预览。";
+
+/* @symbol CoreMinecraftInstallationCopy.previousText1 @args text */
+"coreMinecraftInstallationCopy.previousText1" = "安装文件在同一路径有不同内容：%1$@";
+
+/* @symbol CoreMinecraftInstallationCopy.decodedText1 @args - */
+"coreMinecraftInstallationCopy.decodedText1" = "资源索引超过复制限制。";
+
+/* @symbol CoreMinecraftInstallationCopy.valueText1 @args - */
+"coreMinecraftInstallationCopy.valueText1" = "安装文件缺少复制路径。";
+
+/* @symbol CoreMinecraftInstallationFiles.requireResourceText1 @args text */
+"coreMinecraftInstallationFiles.requireResourceText1" = "安装文件内容不一致，未覆盖现有文件：%1$@";
+
+/* @symbol CoreInstanceMoveAccess.lockText1 @args - */
+"coreInstanceMoveAccess.lockText1" = "实例还有未完成的文件操作，请先恢复后再移动。";
+
+/* @symbol CoreInstanceMoveAccess.entriesText1 @args - */
+"coreInstanceMoveAccess.entriesText1" = "运行记录数量过多，请先整理后再移动。";
+
+/* @symbol CoreInstanceMoveAccess.idText1 @args text */
+"coreInstanceMoveAccess.idText1" = "运行记录目录包含无法确认的项目，请先检查后再移动：%1$@";
+
+/* @symbol CoreInstanceMoveAccess.recordText1 @args - */
+"coreInstanceMoveAccess.recordText1" = "实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。";
+
+/* @symbol CoreInstanceMoveJournal.resultText1 @args - */
+"coreInstanceMoveJournal.resultText1" = "移动记录不属于所选实例。";
+
+/* @symbol CoreInstanceMoveJournal.expectedText1 @args - */
+"coreInstanceMoveJournal.expectedText1" = "实例移动记录无效，原文件和工作副本已保留。";
+
+/* @symbol CoreInstanceMoveJournal.expectedText2 @args - */
+"coreInstanceMoveJournal.expectedText2" = "移动记录缺少目标校验信息。";
+
+/* @symbol CoreInstanceMoveJournal.destinationDigestText1 @args - */
+"coreInstanceMoveJournal.destinationDigestText1" = "移动目标的校验摘要无效。";
+
+/* @symbol CoreInstanceMoveJournal.destinationDigestText2 @args - */
+"coreInstanceMoveJournal.destinationDigestText2" = "移动记录缺少来源退役信息。";
+
+/* @symbol CoreInstanceMoveJournal.destinationDigestText3 @args - */
+"coreInstanceMoveJournal.destinationDigestText3" = "移动记录中的实例文件夹无效。";
+
+/* @symbol CoreInstanceMoveJournal.destinationDigestText4 @args - */
+"coreInstanceMoveJournal.destinationDigestText4" = "移动记录中的文件身份无效。";
+
+/* @symbol CoreInstanceMoveJournal.validateLocationsText1 @args - */
+"coreInstanceMoveJournal.validateLocationsText1" = "移动涉及的实例文件夹位置已改变，请恢复原位置后继续。";
+
+/* @symbol CoreInstanceMoveJournal.instanceText1 @args - */
+"coreInstanceMoveJournal.instanceText1" = "移动中的实例已被移除，文件已保留。";
+
+/* @symbol CoreInstanceMoveJournal.instanceText2 @args - */
+"coreInstanceMoveJournal.instanceText2" = "实例位置与移动记录不一致，文件已保留。";
+
+/* @symbol CoreInstanceMoveJournal.instanceText3 @args - */
+"coreInstanceMoveJournal.instanceText3" = "实例的移动凭据与目录绑定不一致。";
+
+/* @symbol CoreInstanceMoveJournal.dataText1 @args - */
+"coreInstanceMoveJournal.dataText1" = "实例移动记录过大。";
+
+/* @symbol CoreInstanceMoveJournal.requireAvailableText1 @args - */
+"coreInstanceMoveJournal.requireAvailableText1" = "此实例有未完成的移动，请先恢复实例移动。";
+
+/* @symbol CoreInstanceMoveJournal.recordsText1 @args - */
+"coreInstanceMoveJournal.recordsText1" = "待处理的实例移动过多，请先恢复。";
+
+/* @symbol CoreInstanceMoveJournal.journalText1 @args - */
+"coreInstanceMoveJournal.journalText1" = "此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。";
+
+/* @symbol CoreInstanceMovePreview.sourceText1 @args - */
+"coreInstanceMovePreview.sourceText1" = "找不到要移动的实例，请刷新后重试。";
+
+/* @symbol CoreInstanceMovePreview.sourceText2 @args - */
+"coreInstanceMovePreview.sourceText2" = "此实例已经位于所选文件夹中。";
+
+/* @symbol CoreInstanceMovePreview.sourceText3 @args - */
+"coreInstanceMovePreview.sourceText3" = "找不到目标实例文件夹。";
+
+/* @symbol CoreInstanceMovePreview.snapshotText1 @args - */
+"coreInstanceMovePreview.snapshotText1" = "源实例文件夹在预览期间被替换，请重新预览。";
+
+/* @symbol CoreInstanceMovePreview.snapshotText2 @args - */
+"coreInstanceMovePreview.snapshotText2" = "实例设置在预览期间改变，请重新预览。";
+
+/* @symbol CoreInstanceMovePreview.validateText1 @args - */
+"coreInstanceMovePreview.validateText1" = "实例设置在预览后改变，请重新预览。";
+
+/* @symbol CoreInstanceMovePreview.currentText1 @args - */
+"coreInstanceMovePreview.currentText1" = "实例文件夹的位置或身份在预览后改变，请重新预览。";
+
+/* @symbol CoreInstanceMovePreview.infoText1 @args - */
+"coreInstanceMovePreview.infoText1" = "目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。";
+
+/* @symbol CoreInstanceMovePreview.infoText2 @args - */
+"coreInstanceMovePreview.infoText2" = "无法确认目标位置是否为空，请检查磁盘与访问权限。";
+
+/* @symbol CoreInstanceMoveSnapshot.priorText1 @args - */
+"coreInstanceMoveSnapshot.priorText1" = "保留旧目录的位置已经存在，请重新预览。";
+
+/* @symbol CoreInstanceMoveSnapshot.destinationText1 @args - */
+"coreInstanceMoveSnapshot.destinationText1" = "实例文件在预览期间改变，请重新预览。";
+
+/* @symbol CoreInstanceMoveSnapshot.destinationText2 @args - */
+"coreInstanceMoveSnapshot.destinationText2" = "共享目录在预览期间改变，请重新预览。";
+
+/* @symbol CoreInstanceMoveSnapshot.currentText1 @args - */
+"coreInstanceMoveSnapshot.currentText1" = "实例文件内容在预览后改变，请重新预览再移动。";
+
+/* @symbol CoreInstanceMover.stateText1 @args - */
+"coreInstanceMover.stateText1" = "实例设置在预览后改变，请重新预览。";
+
+/* @symbol CoreInstanceMover.workspaceText1 @args - */
+"coreInstanceMover.workspaceText1" = "无法创建移动工作区，已有文件未覆盖。";
+
+/* @symbol CoreInstanceMover.checkLocationsText1 @args - */
+"coreInstanceMover.checkLocationsText1" = "移动来源或工作区身份改变，文件已保留。";
+
+/* @symbol CoreInstanceMover.indexText1 @args - */
+"coreInstanceMover.indexText1" = "移动中的实例已被移除。";
+
+/* @symbol CoreInstanceMover.recordText1 @args - */
+"coreInstanceMover.recordText1" = "待恢复的移动已经改变，请刷新后重试。";
+
+/* @symbol CoreInstanceMover.destinationText1 @args - */
+"coreInstanceMover.destinationText1" = "移动目标的身份改变，原文件已保留。";
+
+/* @symbol CoreInstanceMover.digestText1 @args - */
+"coreInstanceMover.digestText1" = "移动尚未提交，不能清理原文件。";
+
+/* @symbol CoreInstanceMover.parentText1 @args - */
+"coreInstanceMover.parentText1" = "此移动记录未校验文件附加信息，无法自动清理原文件。请选择保留原文件并完成移动。";
+
+/* @symbol CoreInstanceMover.parentText2 @args - */
+"coreInstanceMover.parentText2" = "原实例文件夹的身份改变，已保留，请检查后选择保留原文件完成移动。";
+
+/* @symbol CoreInstanceMover.parentText3 @args - */
+"coreInstanceMover.parentText3" = "无法准备原文件清理目录。";
+
+/* @symbol CoreInstanceMover.retiredText1 @args - */
+"coreInstanceMover.retiredText1" = "原文件清理目录的身份改变，文件已保留。";
+
+/* @symbol CoreInstanceMover.retiredText2 @args - */
+"coreInstanceMover.retiredText2" = "原位置出现其他文件，已保留，请检查后继续。";
+
+/* @symbol CoreInstanceMover.retiredText3 @args - */
+"coreInstanceMover.retiredText3" = "无法整理原实例文件，移动记录已保留。";
+
+/* @symbol CoreInstanceMover.retiredText4 @args - */
+"coreInstanceMover.retiredText4" = "无法确认原实例文件的退役位置。";
+
+/* @symbol CoreInstanceMover.retiredText5 @args - */
+"coreInstanceMover.retiredText5" = "剩余原文件的目录身份改变，未继续清理。";
+
+/* @symbol CoreInstanceMover.recordText3 @args - */
+"coreInstanceMover.recordText3" = "移动记录包含原文件清理信息，但找不到提交凭据，请先检查实例状态。";
+
+/* @symbol CoreInstanceMover.preservedText3 @args - */
+"coreInstanceMover.preservedText3" = "工作区身份改变，目标文件已原地保留。";
+
+/* @symbol CoreRepositoryInstanceMover.snapshotText1 @args - */
+"coreRepositoryInstanceMover.snapshotText1" = "移动预览缺少安装文件。";
+
+/* @symbol CoreRepositoryInstanceMover.stateText1 @args - */
+"coreRepositoryInstanceMover.stateText1" = "实例设置在预览后改变，请重新预览。";
+
+/* @symbol CoreRepositoryInstanceMover.recordText1 @args - */
+"coreRepositoryInstanceMover.recordText1" = "实例设置已改变，请重新预览。";
+
+/* @symbol CoreRepositoryInstanceMover.workspaceText1 @args - */
+"coreRepositoryInstanceMover.workspaceText1" = "移动工作区已存在，未覆盖已有文件。";
+
+/* @symbol CoreRepositoryInstanceMover.validateText1 @args - */
+"coreRepositoryInstanceMover.validateText1" = "移动工作区身份改变。";
+
+/* @symbol CoreRepositoryInstanceMover.indexText1 @args - */
+"coreRepositoryInstanceMover.indexText1" = "实例设置在移动期间改变。";
+
+/* @symbol CoreRepositoryInstanceMover.recordText2 @args - */
+"coreRepositoryInstanceMover.recordText2" = "待恢复的移动已经改变。";
+
+/* @symbol CoreRepositoryInstanceMover.verifyRepositoryDestinationText1 @args - */
+"coreRepositoryInstanceMover.verifyRepositoryDestinationText1" = "移动目标尚未完整发布。";
+
+/* @symbol CoreRepositoryInstanceMover.targetText1 @args - */
+"coreRepositoryInstanceMover.targetText1" = "移动目标的身份改变，原文件已保留。";
+
+/* @symbol CoreRepositoryInstanceMover.recordText4 @args - */
+"coreRepositoryInstanceMover.recordText4" = "移动尚未提交，不能清理原文件。";
+
+/* @symbol CoreRepositoryInstanceMover.locationText1 @args - */
+"coreRepositoryInstanceMover.locationText1" = "原文件夹身份改变，请检查或选择保留原文件完成移动。";
+
+/* @symbol CoreRepositoryInstanceMover.locationText2 @args - */
+"coreRepositoryInstanceMover.locationText2" = "无法创建原文件清理目录。";
+
+/* @symbol CoreRepositoryInstanceMover.locationText3 @args - */
+"coreRepositoryInstanceMover.locationText3" = "原文件清理目录身份改变。";
+
+/* @symbol CoreRepositoryInstanceMover.receiptText1 @args - */
+"coreRepositoryInstanceMover.receiptText1" = "原位置出现其他文件，未继续清理。";
+
+/* @symbol CoreRepositoryInstanceMover.receiptText2 @args - */
+"coreRepositoryInstanceMover.receiptText2" = "无法整理原实例文件，请恢复移动。";
+
+/* @symbol CoreRepositoryInstanceMover.receiptText3 @args - */
+"coreRepositoryInstanceMover.receiptText3" = "无法确认原文件的清理位置。";
+
+/* @symbol CoreRepositoryInstanceMover.targetText2 @args - */
+"coreRepositoryInstanceMover.targetText2" = "剩余原文件的身份改变。";
+
+/* @symbol CoreRepositoryInstanceMover.recordText5 @args - */
+"coreRepositoryInstanceMover.recordText5" = "移动包含原文件清理记录，需要先核对提交状态。";
+
+/* @symbol CoreRepositoryInstanceMover.targetText3 @args - */
+"coreRepositoryInstanceMover.targetText3" = "工作区身份改变，目标文件原地保留。";
+
+/* @symbol CoreRepositoryMoveJournal.recordText1 @args - */
+"coreRepositoryMoveJournal.recordText1" = "Minecraft 实例移动记录无效，文件已保留。";
+
+/* @symbol CoreRepositoryMoveJournal.nameText1 @args - */
+"coreRepositoryMoveJournal.nameText1" = "移动记录缺少版本位置。";
+
+/* @symbol CoreRepositoryMoveJournal.instanceText1 @args - */
+"coreRepositoryMoveJournal.instanceText1" = "移动中的实例已被移除，请先核对文件。";
+
+/* @symbol CoreRepositoryMoveJournal.instanceText2 @args - */
+"coreRepositoryMoveJournal.instanceText2" = "实例位置与移动记录不一致。";
+
+/* @symbol CoreRepositoryMoveJournal.instanceText3 @args - */
+"coreRepositoryMoveJournal.instanceText3" = "移动凭据与实例位置不一致。";
+
+/* @symbol CoreRepositoryMoveJournal.stateText1 @args - */
+"coreRepositoryMoveJournal.stateText1" = "移动涉及的文件夹位置已改变，请恢复原位置后重试。";
+
+/* @symbol CoreRepositoryMoveJournal.currentText1 @args - */
+"coreRepositoryMoveJournal.currentText1" = "移动占用记录已改变，未清理。";
+
+/* @symbol CoreRepositoryMoveJournal.recordText2 @args - */
+"coreRepositoryMoveJournal.recordText2" = "实例移动占用记录无效。";
+
+/* @symbol CoreRepositoryMoveSnapshot.repositoryPreviewText1 @args - */
+"coreRepositoryMoveSnapshot.repositoryPreviewText1" = "请先安装实例，再移动到 Minecraft 文件夹。";
+
+/* @symbol CoreRepositoryMoveSnapshot.repositoryPreviewText2 @args - */
+"coreRepositoryMoveSnapshot.repositoryPreviewText2" = "实例已位于所选文件夹中。";
+
+/* @symbol CoreRepositoryMoveSnapshot.repositoryPreviewText3 @args - */
+"coreRepositoryMoveSnapshot.repositoryPreviewText3" = "找不到目标文件夹。";
+
+/* @symbol CoreRepositoryMoveSnapshot.rootText1 @args - */
+"coreRepositoryMoveSnapshot.rootText1" = "目标文件夹不能位于源实例或运行目录里面。";
+
+/* @symbol CoreRepositoryMoveSnapshot.repositoryText1 @args - */
+"coreRepositoryMoveSnapshot.repositoryText1" = "源实例目录身份改变，请重新预览。";
+
+/* @symbol CoreRepositoryMoveSnapshot.identityText1 @args - */
+"coreRepositoryMoveSnapshot.identityText1" = "源版本文件夹已被替换，请重新预览。";
+
+/* @symbol CoreRepositoryMoveSnapshot.identityText2 @args - */
+"coreRepositoryMoveSnapshot.identityText2" = "源文件在预览后改变，请刷新移动预览。";
+
+/* @symbol CoreRepositoryMoveSnapshot.stateText1 @args text */
+"coreRepositoryMoveSnapshot.stateText1" = "“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。";
+
+/* @symbol CoreRepositoryMoveSnapshot.fileText1 @args text */
+"coreRepositoryMoveSnapshot.fileText1" = "“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。";
+
+/* @symbol CoreRepositoryMoveSnapshot.rawText1 @args text */
+"coreRepositoryMoveSnapshot.rawText1" = "“%1$@”仍引用此版本，请先处理该版本。";
+
+/* @symbol CoreRepositoryImport.directoryText1 @args - */
+"coreRepositoryImport.directoryText1" = "请选择 Minecraft 文件夹。";
+
+/* @symbol CoreRepositoryImport.directoryText2 @args - */
+"coreRepositoryImport.directoryText2" = "无法创建实例工作目录。";
+
+/* @symbol CoreRepositoryImport.currentText1 @args - */
+"coreRepositoryImport.currentText1" = "导入记录已改变，请刷新后重试。";
+
+/* @symbol CoreRepositoryImport.publishFilesText1 @args - */
+"coreRepositoryImport.publishFilesText1" = "整合包安装结果与目标实例不一致。";
+
+/* @symbol CoreRepositoryImport.existingText1 @args - */
+"coreRepositoryImport.existingText1" = "实例位置已经改变，请检查导入记录。";
+
+/* @symbol CoreRepositoryImport.existingText2 @args - */
+"coreRepositoryImport.existingText2" = "另一个实例已使用此版本名称，导入文件已保留。";
+
+/* @symbol CoreRepositoryImport.instanceText1 @args - */
+"coreRepositoryImport.instanceText1" = "此实例已经创建，请完成操作以清理工作记录。";
+
+/* @symbol CoreRepositoryImport.identityText1 @args text */
+"coreRepositoryImport.identityText1" = "导入目标已被替换，工作文件保留，请先检查：%1$@";
+
+/* @symbol CoreRepositoryImport.keptText1 @args - */
+"coreRepositoryImport.keptText1" = "无法保存导入工作文件。";
+
+/* @symbol CoreRepositoryImport.destinationText1 @args - */
+"coreRepositoryImport.destinationText1" = "无法收回导入工作文件，请连接原磁盘后重试。";
+
+/* @symbol CoreRepositoryImport.manifestMatchesText1 @args - */
+"coreRepositoryImport.manifestMatchesText1" = "实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。";
+
+/* @symbol CoreRepositoryImport.idText1 @args - */
+"coreRepositoryImport.idText1" = "导入标记已改变，未清理工作文件。";
+
+/* @symbol CoreRepositoryImport.actualText1 @args - */
+"coreRepositoryImport.actualText1" = "目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。";
+
+/* @symbol CoreRepositoryImport.versionText1 @args text */
+"coreRepositoryImport.versionText1" = "整合包导入记录无效：%1$@";
+
+/* @symbol CoreRepositoryImport.ownerText1 @args - */
+"coreRepositoryImport.ownerText1" = "实例复制记录无效。";
+
+/* @symbol CoreRepositoryImport.nameText1 @args text */
+"coreRepositoryImport.nameText1" = "此游戏文件夹含有无效的导入记录，请先检查：%1$@";
+
+/* @symbol CoreRepositoryImport.recoveryText1 @args - */
+"coreRepositoryImport.recoveryText1" = "没有找到未完成的导入或复制。";
+
+/* @symbol CoreRepositoryImport.journalText1 @args - */
+"coreRepositoryImport.journalText1" = "此名称仍有未完成的导入或复制，请先处理工作文件。";
+
+/* @symbol CoreRepositoryImport.requireDirectoryAvailableText1 @args - */
+"coreRepositoryImport.requireDirectoryAvailableText1" = "此文件夹仍有未完成的导入或复制，请先完成或取消操作。";
+
+/* @symbol CoreRepositoryImport.rootText1 @args - */
+"coreRepositoryImport.rootText1" = "此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。";
+
+/* @symbol CoreRepositoryInstanceCopy.repositoryPreviewText1 @args - */
+"coreRepositoryInstanceCopy.repositoryPreviewText1" = "请先安装源实例，再将完整副本保存到 Minecraft 文件夹。";
+
+/* @symbol CoreRepositoryInstanceCopy.manifestText1 @args - */
+"coreRepositoryInstanceCopy.manifestText1" = "源文件在预览期间改变，请重新预览。";
+
+/* @symbol CoreRepositoryInstanceCopy.installationText1 @args - */
+"coreRepositoryInstanceCopy.installationText1" = "复制预览缺少安装文件。";
+
+/* @symbol CoreRepositoryInstanceCopy.actualText1 @args - */
+"coreRepositoryInstanceCopy.actualText1" = "源实例设置或目标文件夹在预览后改变，请重新预览。";
+
+/* @symbol CoreRepositoryInstanceCopy.entriesText1 @args - */
+"coreRepositoryInstanceCopy.entriesText1" = "源实例文件在预览后改变，请刷新复制预览。";
+
+/* @symbol CoreRepositoryInstanceCopy.sourcePathText1 @args - */
+"coreRepositoryInstanceCopy.sourcePathText1" = "目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。";
+
+/* @symbol CoreRepositoryInstanceCopy.conflictText1 @args text */
+"coreRepositoryInstanceCopy.conflictText1" = "游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。";
+
+/* @symbol CoreRepositoryInstanceCopy.infoText1 @args text */
+"coreRepositoryInstanceCopy.infoText1" = "实例元数据包含不支持的文件：%1$@";
+
+/* @symbol CoreJavaInstaller.existingText1 @args text */
+"coreJavaInstaller.existingText1" = "此 Java 已损坏，请在 Java 页面点击“修复”：%1$@";
+
+/* @symbol CoreJavaInstaller.replacingText1 @args - */
+"coreJavaInstaller.replacingText1" = "此 Java 已由另一个操作安装，请重新检测。";
+
+/* @symbol CoreJavaInstaller.artifactText1 @args - */
+"coreJavaInstaller.artifactText1" = "Java 文件清单缺少下载信息";
+
+/* @symbol CoreJavaInstaller.linkText1 @args - */
+"coreJavaInstaller.linkText1" = "Java 清单包含不安全链接";
+
+/* @symbol CoreJavaInstaller.resolvedText1 @args - */
+"coreJavaInstaller.resolvedText1" = "Java 链接超出运行时目录";
+
+/* @symbol CoreJavaInstaller.resolvedText2 @args text */
+"coreJavaInstaller.resolvedText2" = "不支持的 Java 文件类型：%1$@";
+
+/* @symbol CoreJavaInstaller.existingText2 @args - */
+"coreJavaInstaller.existingText2" = "Java 目录中存在不一致的链接";
+
+/* @symbol CoreJavaInstaller.checkedText1 @args - */
+"coreJavaInstaller.checkedText1" = "下载的 Java 版本或架构不符合要求";
+
+/* @symbol CoreJavaInstaller.checkedText2 @args - */
+"coreJavaInstaller.checkedText2" = "无法替换 Java 目录，原运行时仍保留。";
+
+/* @symbol CoreJavaInstaller.resultText1 @args text */
+"coreJavaInstaller.resultText1" = "修复后的 Java 无法运行，原副本保留在：%1$@";
+
+/* @symbol CoreJavaRuntime.environmentText1 @args - */
+"coreJavaRuntime.environmentText1" = "Java 检测超时，请检查所选程序是否为可用的 Java。";
+
+/* @symbol CoreJavaRuntime.executableText1 @args - */
+"coreJavaRuntime.executableText1" = "请选择 java 可执行文件、JDK 包或 Java Home 文件夹。";
+
+/* @symbol CoreJavaRuntime.inspectText1 @args text */
+"coreJavaRuntime.inspectText1" = "Java 不可执行：%1$@";
+
+/* @symbol CoreJavaRuntime.inspectText2 @args text */
+"coreJavaRuntime.inspectText2" = "无法运行 Java：%1$@";
+
+/* @symbol CoreJavaRuntime.archText1 @args - */
+"coreJavaRuntime.archText1" = "无法识别 Java 版本";
+
+/* @symbol CoreJavaRuntime.majorText1 @args text */
+"coreJavaRuntime.majorText1" = "无法识别 Java 主版本：%1$@";
+
+/* @symbol CoreJavaRuntime.selectedText1 @args - */
+"coreJavaRuntime.selectedText1" = "指定的 Java 不可用，请在实例设置中重新选择。";
+
+/* @symbol CoreJavaRuntime.selectedText2 @args text,text */
+"coreJavaRuntime.selectedText2" = "此游戏需要 Java %1$@，当前指定 Java %2$@。";
+
+/* @symbol CoreJavaRuntime.architectureText1 @args text */
+"coreJavaRuntime.architectureText1" = "Java 架构与游戏原生库不匹配，需要 %1$@。";
+
+/* @symbol CoreJavaRuntime.orderText1 @args text,text */
+"coreJavaRuntime.orderText1" = "需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。";
+
+/* @symbol CoreJavaRuntimeLease.acquireText1 @args - */
+"coreJavaRuntimeLease.acquireText1" = "Java 运行时名称无效。";
+
+/* @symbol CoreJavaRuntimeLease.fdText1 @args - */
+"coreJavaRuntimeLease.fdText1" = "无法锁定 Java 运行时。";
+
+/* @symbol CoreJavaRuntimeLease.infoText1 @args - */
+"coreJavaRuntimeLease.infoText1" = "Java 运行时锁文件无效。";
+
+/* @symbol CoreJavaRuntimeLease.valueText1 @args - */
+"coreJavaRuntimeLease.valueText1" = "此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。";
+
+/* @symbol CoreJavaRuntimeLease.executableText1 @args text */
+"coreJavaRuntimeLease.executableText1" = "此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。";
+
+/* @symbol CoreJavaRuntimeStore.validateText1 @args - */
+"coreJavaRuntimeStore.validateText1" = "手动添加的 Java 路径记录无效。";
+
+/* @symbol CoreJavaRuntimeStore.directoryText1 @args - */
+"coreJavaRuntimeStore.directoryText1" = "Java 运行时名称无效。";
+
+/* @symbol CoreJavaRuntimeStore.rawText1 @args - */
+"coreJavaRuntimeStore.rawText1" = "不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。";
+
+/* @symbol CoreJavaRuntimeStore.rootText1 @args - */
+"coreJavaRuntimeStore.rootText1" = "此运行时目录已不存在，请重新检测。";
+
+/* @symbol CoreJavaRuntimeStore.referencesText1 @args text */
+"coreJavaRuntimeStore.referencesText1" = "以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。";
+
+/* @symbol CoreJavaRuntimeStore.trashedText1 @args - */
+"coreJavaRuntimeStore.trashedText1" = "Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。";
+
+/* @symbol CoreLaunch.qText1 @args - */
+"coreLaunch.qText1" = "启动参数中的引号或反斜杠未闭合。";
+
+/* @symbol CoreLaunch.buildText1 @args - */
+"coreLaunch.buildText1" = "请先完成外置认证并准备认证组件。";
+
+/* @symbol CoreLaunch.buildText2 @args - */
+"coreLaunch.buildText2" = "整合包尚未完成导入，请先完成导入后再启动。";
+
+/* @symbol CoreLaunch.mainClassText1 @args - */
+"coreLaunch.mainClassText1" = "启动清单没有主类";
+
+/* @symbol CoreLaunch.mainClassText2 @args - */
+"coreLaunch.mainClassText2" = "启动清单尚未合并父版本";
+
+/* @symbol CoreLaunch.mainClassText3 @args - */
+"coreLaunch.mainClassText3" = "内存或窗口大小设置无效";
+
+/* @symbol CoreLaunch.architectureText1 @args - */
+"coreLaunch.architectureText1" = "此版本的兼容规则不支持当前 macOS 环境。";
+
+/* @symbol CoreLaunch.architectureText2 @args text */
+"coreLaunch.architectureText2" = "Java 与游戏原生库的架构不匹配。需要 %1$@。";
+
+/* @symbol CoreLaunch.architectureText3 @args - */
+"coreLaunch.architectureText3" = "所选 Java 不符合游戏或整合包的版本要求。";
+
+/* @symbol CoreLaunch.architectureText4 @args - */
+"coreLaunch.architectureText4" = "所选运行时不是实例指定的 Java 主版本。";
+
+/* @symbol CoreLaunch.seenText1 @args - */
+"coreLaunch.seenText1" = "加载器生成文件缺失，请先修复实例。";
+
+/* @symbol CoreLaunch.seenText2 @args text */
+"coreLaunch.seenText2" = "游戏文件缺失：%1$@。请先修复实例。";
+
+/* @symbol CoreLaunch.resultText1 @args text */
+"coreLaunch.resultText1" = "启动清单包含未支持的变量：%1$@";
+
+/* @symbol CoreLaunch.extrasText1 @args - */
+"coreLaunch.extrasText1" = "附加 JVM 参数不能覆盖游戏主类或 classpath。";
+
+/* @symbol CoreLaunch.reservedText1 @args - */
+"coreLaunch.reservedText1" = "附加游戏参数不能覆盖账号身份、令牌或游戏目录。";
+
+/* @symbol CoreLaunch.startText1 @args - */
+"coreLaunch.startText1" = "游戏已在运行或正在结束";
+
+/* @symbol CoreLaunchCommands.validateText1 @args - */
+"coreLaunchCommands.validateText1" = "启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。";
+
+/* @symbol CoreLaunchCommands.valueText1 @args text */
+"coreLaunchCommands.valueText1" = "包装命令包含未支持的变量：%1$@";
+
+/* @symbol CoreLaunchCommands.executableText1 @args text */
+"coreLaunchCommands.executableText1" = "找不到包装命令的可执行文件：%1$@";
+
+/* @symbol CoreLaunchEnvironment.javaKeysText1 @args - */
+"coreLaunchEnvironment.javaKeysText1" = "环境变量包含空字符或超过 64 KB。";
+
+/* @symbol CoreLaunchEnvironment.nameText1 @args text */
+"coreLaunchEnvironment.nameText1" = "第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。";
+
+/* @symbol CoreLaunchEnvironment.nameText2 @args text */
+"coreLaunchEnvironment.nameText2" = "%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。";
+
+/* @symbol CoreLaunchEnvironment.nameText3 @args text */
+"coreLaunchEnvironment.nameText3" = "环境变量重复：%1$@";
+
+/* @symbol CoreLaunchEnvironment.nameText4 @args - */
+"coreLaunchEnvironment.nameText4" = "自定义环境变量不能超过 256 项。";
+
+/* @symbol CoreLaunchSettings.baseMemoryText1 @args - */
+"coreLaunchSettings.baseMemoryText1" = "窗口宽度应为 320–16384，高度应为 240–16384。";
+
+/* @symbol CoreLaunchSettings.baseMemoryText2 @args - */
+"coreLaunchSettings.baseMemoryText2" = "附加启动参数过长。";
+
+/* @symbol CoreLaunchSettings.pathText1 @args - */
+"coreLaunchSettings.pathText1" = "请选择 Java 可执行文件的完整路径。";
+
+/* @symbol CoreLaunchSettings.majorText1 @args - */
+"coreLaunchSettings.majorText1" = "Java 主版本应为 6–99。";
+
+/* @symbol CoreMemorySettings.resolveText1 @args - */
+"coreMemorySettings.resolveText1" = "内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。";
+
+/* @symbol CoreMemorySettings.maximumText1 @args - */
+"coreMemorySettings.maximumText1" = "无法读取物理内存，请使用手动内存设置。";
+
+/* @symbol CoreMemorySettings.initialText1 @args text,text */
+"coreMemorySettings.initialText1" = "初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。";
+
+/* @symbol CoreMemorySettings.valueText1 @args - */
+"coreMemorySettings.valueText1" = "JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。";
+
+/* @symbol CoreMemorySettings.numberText1 @args text */
+"coreMemorySettings.numberText1" = "无效的 JVM 内存大小：%1$@。请使用字节数或 K/M/G 单位。";
+
+/* @symbol CoreMemorySettings.numberText2 @args - */
+"coreMemorySettings.numberText2" = "JVM 内存大小超出可表示范围。";
+
+/* @symbol CoreCurseForgePack.manifestText1 @args - */
+"coreCurseForgePack.manifestText1" = "不支持的 CurseForge 整合包格式";
+
+/* @symbol CoreCurseForgePack.manifestText2 @args - */
+"coreCurseForgePack.manifestText2" = "此整合包包含多个加载器，暂时无法安装。";
+
+/* @symbol CoreCurseForgePack.kindText1 @args text */
+"coreCurseForgePack.kindText1" = "尚未支持的整合包加载器：%1$@";
+
+/* @symbol CoreCurseForgePack.instanceText1 @args - */
+"coreCurseForgePack.instanceText1" = "整合包包含重复项目或无效文件标识";
+
+/* @symbol CoreCurseForgePack.infoText1 @args - */
+"coreCurseForgePack.infoText1" = "整合包 overrides 必须是实际目录";
+
+/* @symbol CoreCurseForgePack.actualText1 @args - */
+"coreCurseForgePack.actualText1" = "请先解析并下载整合包清单中的 CurseForge 文件。";
+
+/* @symbol CoreCurseForgePack.recordText1 @args text */
+"coreCurseForgePack.recordText1" = "整合包文件校验失败：%1$@";
+
+/* @symbol CoreHMCLPack.indexText1 @args - */
+"coreHMCLPack.indexText1" = "HMCL 清单补丁数量超过限制";
+
+/* @symbol CoreHMCLPack.versionText1 @args - */
+"coreHMCLPack.versionText1" = "无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。";
+
+/* @symbol CoreHMCLPack.unsupportedText1 @args text */
+"coreHMCLPack.unsupportedText1" = "HMCL 整合包包含尚未支持的组件：%1$@";
+
+/* @symbol CoreHMCLPack.partsText1 @args - */
+"coreHMCLPack.partsText1" = "HMCL 清单包含无效依赖坐标";
+
+/* @symbol CoreHMCLPack.partsText2 @args text,text */
+"coreHMCLPack.partsText2" = "HMCL 整合包需要尚未接入的组件：%1$@:%2$@";
+
+/* @symbol CoreHMCLPack.valueText1 @args - */
+"coreHMCLPack.valueText1" = "检测到 NeoForge，但无法确定其版本。";
+
+/* @symbol CoreHMCLPack.valueText2 @args - */
+"coreHMCLPack.valueText2" = "HMCL 整合包同时声明多个加载器，暂时无法迁移。";
+
+/* @symbol CoreHMCLPack.loaderText1 @args - */
+"coreHMCLPack.loaderText1" = "HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。";
+
+/* @symbol CoreHMCLPack.loaderText2 @args - */
+"coreHMCLPack.loaderText2" = "HMCL 整合包需要未识别的 LaunchWrapper 组件。";
+
+/* @symbol CoreHMCLPack.mainText1 @args text */
+"coreHMCLPack.mainText1" = "HMCL 整合包使用未识别的游戏启动方式：%1$@";
+
+/* @symbol CoreMCBBSPack.gameVersionText1 @args - */
+"coreMCBBSPack.gameVersionText1" = "MCBBS 整合包清单无效或缺少游戏版本";
+
+/* @symbol CoreMCBBSPack.unknownText1 @args text */
+"coreMCBBSPack.unknownText1" = "MCBBS 整合包包含尚未接入的组件：%1$@";
+
+/* @symbol CoreMCBBSPack.loadersText1 @args - */
+"coreMCBBSPack.loadersText1" = "MCBBS 整合包同时声明多个加载器，暂时无法安装。";
+
+/* @symbol CoreMCBBSPack.minimumText1 @args - */
+"coreMCBBSPack.minimumText1" = "整合包内存要求无效";
+
+/* @symbol CoreMCBBSPack.infoText1 @args - */
+"coreMCBBSPack.infoText1" = "MCBBS overrides 必须是实际目录";
+
+/* @symbol CoreMCBBSPack.infoText2 @args - */
+"coreMCBBSPack.infoText2" = "整合包文件数量超过限制";
+
+/* @symbol CoreMCBBSPack.hashText1 @args - */
+"coreMCBBSPack.hashText1" = "MCBBS 文件缺少路径或有效的 SHA-1";
+
+/* @symbol CoreMCBBSPack.hashText2 @args text */
+"coreMCBBSPack.hashText2" = "MCBBS 文件路径无效：%1$@";
+
+/* @symbol CoreMCBBSPack.baseText1 @args - */
+"coreMCBBSPack.baseText1" = "MCBBS fileApi 下载源无效";
+
+/* @symbol CoreMCBBSPack.idText1 @args - */
+"coreMCBBSPack.idText1" = "MCBBS CurseForge 文件标识无效";
+
+/* @symbol CoreMCBBSPack.idText2 @args text */
+"coreMCBBSPack.idText2" = "不支持的 MCBBS 文件类型：%1$@";
+
+/* @symbol CoreMCBBSPack.idText3 @args - */
+"coreMCBBSPack.idText3" = "MCBBS 清单存在重复路径或项目";
+
+/* @symbol CoreMCBBSPack.exportMCBBSText1 @args - */
+"coreMCBBSPack.exportMCBBSText1" = "整合包版本、作者或描述无效";
+
+/* @symbol CoreMCBBSPack.versionText1 @args - */
+"coreMCBBSPack.versionText1" = "请完成加载器安装后再导出整合包";
+
+/* @symbol CoreMRPack.versionsFromHashesText1 @args - */
+"coreMRPack.versionsFromHashesText1" = "无效文件哈希请求";
+
+/* @symbol CoreMRPack.lengthText1 @args - */
+"coreMRPack.lengthText1" = "无效文件哈希";
+
+/* @symbol CoreMRPack.versionsText1 @args - */
+"coreMRPack.versionsText1" = "Modrinth 返回的文件与查询哈希不一致";
+
+/* @symbol CoreMRPack.gameVersionText1 @args - */
+"coreMRPack.gameVersionText1" = "不支持的 Modrinth 整合包清单";
+
+/* @symbol CoreMRPack.unknownText1 @args text */
+"coreMRPack.unknownText1" = "整合包需要尚未接入的组件：%1$@";
+
+/* @symbol CoreMRPack.loadersText1 @args - */
+"coreMRPack.loadersText1" = "整合包同时声明多个加载器";
+
+/* @symbol CoreMRPack.gameText1 @args - */
+"coreMRPack.gameText1" = "整合包文件数量超过限制";
+
+/* @symbol CoreMRPack.pathsText1 @args text */
+"coreMRPack.pathsText1" = "mrpack 路径无效或重复：%1$@";
+
+/* @symbol CoreMRPack.sha512Text1 @args text */
+"coreMRPack.sha512Text1" = "mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@";
+
+/* @symbol CoreMRPack.sha512Text2 @args text */
+"coreMRPack.sha512Text2" = "mrpack 文件环境声明无效：%1$@";
+
+/* @symbol CoreMRPack.firstText1 @args text */
+"coreMRPack.firstText1" = "mrpack 文件没有有效的 HTTPS 下载地址：%1$@";
+
+/* @symbol CoreMRPack.exportMRPackText1 @args - */
+"coreMRPack.exportMRPackText1" = "mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。";
+
+/* @symbol CoreMRPack.exportMRPackText2 @args - */
+"coreMRPack.exportMRPackText2" = "整合包版本或描述无效";
+
+/* @symbol CoreMRPack.versionText1 @args - */
+"coreMRPack.versionText1" = "请先完成加载器安装";
+
+/* @symbol CoreModpackRegistry.infoText1 @args - */
+"coreModpackRegistry.infoText1" = "整合包版本记录无效";
+
+/* @symbol CoreModpackRegistry.validateText1 @args - */
+"coreModpackRegistry.validateText1" = "整合包版本记录不受支持或包含重复文件";
+
+/* @symbol CoreModpackRegistry.validateText2 @args - */
+"coreModpackRegistry.validateText2" = "整合包初始文件校验信息无效";
+
+/* @symbol CoreModpackRegistry.originText1 @args - */
+"coreModpackRegistry.originText1" = "整合包来源标识无效";
+
+/* @symbol CoreModpackRegistry.urlText1 @args - */
+"coreModpackRegistry.urlText1" = "整合包更新地址无效";
+
+/* @symbol CoreModpackReleases.projectIDText1 @args - */
+"coreModpackReleases.projectIDText1" = "整合包来源标识无效。";
+
+/* @symbol CoreModpackReleases.serviceText1 @args - */
+"coreModpackReleases.serviceText1" = "来源项目不是整合包。";
+
+/* @symbol CoreModpackReleases.prepareText1 @args - */
+"coreModpackReleases.prepareText1" = "整合包版本缺少校验信息。";
+
+/* @symbol CoreModpackReleases.itemText1 @args - */
+"coreModpackReleases.itemText1" = "请先从 CurseForge 下载此整合包，再选择已下载的文件。";
+
+/* @symbol CoreModpackReleases.itemText3 @args - */
+"coreModpackReleases.itemText3" = "所选文件与整合包版本不符。";
+
+/* @symbol CoreModpackUpdatePlan.digestText1 @args text */
+"coreModpackUpdatePlan.digestText1" = "更新不修改符号链接：%1$@";
+
+/* @symbol CoreModpackUpdatePlan.infoText1 @args text */
+"coreModpackUpdatePlan.infoText1" = "待更新文件的位置已有文件夹：%1$@";
+
+/* @symbol CoreModpackUpdatePlan.foundText1 @args text */
+"coreModpackUpdatePlan.foundText1" = "此整合包文件对应多个本地版本，请先处理重复内容：%1$@";
+
+/* @symbol CoreModpackUpdatePlan.matchesText1 @args text */
+"coreModpackUpdatePlan.matchesText1" = "整合包包含重复项目，无法确定要替换的文件：%1$@";
+
+/* @symbol CoreModpackUpdatePlan.previousText1 @args text */
+"coreModpackUpdatePlan.previousText1" = "新版整合包为同一项目提供了多个文件：%1$@";
+
+/* @symbol CoreModpackUpdateStore.requireAvailableText1 @args - */
+"coreModpackUpdateStore.requireAvailableText1" = "整合包更新尚需恢复，请在实例设置的整合包管理中完成恢复。";
+
+/* @symbol CoreModpackUpdateStore.stateText1 @args text */
+"coreModpackUpdateStore.stateText1" = "“%1$@”与此实例共用运行目录，请先在它的整合包管理中恢复未完成的更新。";
+
+/* @symbol CoreModpackUpdateStore.temporaryText1 @args text */
+"coreModpackUpdateStore.temporaryText1" = "无法保存更新文件：%1$@";
+
+/* @symbol CoreModpackUpdateStore.directoryText1 @args - */
+"coreModpackUpdateStore.directoryText1" = "请先恢复上次未完成的更新。";
+
+/* @symbol CoreModpackUpdateStore.destinationsText1 @args - */
+"coreModpackUpdateStore.destinationsText1" = "更新计划包含重复目标文件。";
+
+/* @symbol CoreModpackUpdateStore.indexText1 @args - */
+"coreModpackUpdateStore.indexText1" = "实例设置在提交前改变，请重新打开更新预览。";
+
+/* @symbol CoreModpackUpdateStore.indexText2 @args text */
+"coreModpackUpdateStore.indexText2" = "更新需要恢复，原文件备份已保留。请在整合包管理中点击恢复。\n%1$@";
+
+/* @symbol CoreModpackUpdateStore.instanceText1 @args - */
+"coreModpackUpdateStore.instanceText1" = "更新对应的实例已不存在，请保留更新备份。";
+
+/* @symbol CoreModpackUpdateStore.instanceText2 @args - */
+"coreModpackUpdateStore.instanceText2" = "更新恢复备份不完整，尚未覆盖现有文件。";
+
+/* @symbol CoreModpackUpdateStore.directoryText2 @args - */
+"coreModpackUpdateStore.directoryText2" = "游戏组件在更新后已改变，请先恢复组件配置后再回退整合包。";
+
+/* @symbol CoreModpackUpdateStore.preservedText1 @args - */
+"coreModpackUpdateStore.preservedText1" = "启动配置在更新后已修改，未覆盖这些修改。";
+
+/* @symbol CoreModpackUpdateStore.sourceText1 @args - */
+"coreModpackUpdateStore.sourceText1" = "上次更新的备份文件已损坏。";
+
+/* @symbol CoreModpackUpdater.instanceText1 @args - */
+"coreModpackUpdater.instanceText1" = "实例已从列表移除。";
+
+/* @symbol CoreModpackUpdater.packText1 @args - */
+"coreModpackUpdater.packText1" = "此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。";
+
+/* @symbol CoreModpackUpdater.packText2 @args - */
+"coreModpackUpdater.packText2" = "请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。";
+
+/* @symbol CoreModpackUpdater.incomingText1 @args - */
+"coreModpackUpdater.incomingText1" = "所选文件属于另一个整合包项目。";
+
+/* @symbol CoreModpackUpdater.incomingText2 @args - */
+"coreModpackUpdater.incomingText2" = "新版整合包没有有效的文件清单。";
+
+/* @symbol CoreModpackUpdater.resultText1 @args - */
+"coreModpackUpdater.resultText1" = "新版安装包含无法迁移的临时路径，原实例已保留。";
+
+/* @symbol CoreModpackUpdater.latestText1 @args - */
+"coreModpackUpdater.latestText1" = "实例已移除。";
+
+/* @symbol CoreModpackUpdater.sourceText1 @args text */
+"coreModpackUpdater.sourceText1" = "更新文件在预览后改变：%1$@";
+
+/* @symbol CoreModpackUpdater.validateText1 @args - */
+"coreModpackUpdater.validateText1" = "整合包版本或启动配置在预览后改变，请重新准备更新。";
+
+/* @symbol CoreModpackUpdater.validateText2 @args text */
+"coreModpackUpdater.validateText2" = "预览后文件又有修改，请重新生成差异：%1$@";
+
+/* @symbol CoreModpackUpdater.resolutionText1 @args text */
+"coreModpackUpdater.resolutionText1" = "“%1$@”依赖此版本，请先创建独立副本再更新整合包。";
+
+/* @symbol CoreGameMonitor.fdText1 @args - */
+"coreGameMonitor.fdText1" = "无法记录启动器事件。";
+
+/* @symbol CoreGameMonitor.attributesText1 @args - */
+"coreGameMonitor.attributesText1" = "启动器事件记录不是普通文件。";
+
+/* @symbol CoreGameMonitor.dataText1 @args - */
+"coreGameMonitor.dataText1" = "无法保存启动器事件。";
+
+/* @symbol CoreGameMonitor.executableText1 @args - */
+"coreGameMonitor.executableText1" = "无法定位游戏监控组件。";
+
+/* @symbol CoreGameMonitor.helperText1 @args - */
+"coreGameMonitor.helperText1" = "缺少游戏监控组件，请重新构建或安装 Ruri。";
+
+/* @symbol CoreGameMonitor.identityText1 @args - */
+"coreGameMonitor.identityText1" = "无法确认游戏监控组件的身份。";
+
+/* @symbol CoreGameMonitor.dataText2 @args - */
+"coreGameMonitor.dataText2" = "游戏启动信息超过监控组件限制。";
+
+/* @symbol CoreGameMonitor.requestStopText1 @args - */
+"coreGameMonitor.requestStopText1" = "游戏监控已断开或游戏已结束，无法发送结束请求。";
+
+/* @symbol CoreGameMonitor.currentText1 @args - */
+"coreGameMonitor.currentText1" = "运行会话已经发生变化，请刷新后重试。";
+
+/* @symbol CoreGameMonitor.recordText1 @args - */
+"coreGameMonitor.recordText1" = "游戏仍在运行，但监控组件已经中断。请在游戏中正常退出。";
+
+/* @symbol CoreGameMonitor.recordText2 @args - */
+"coreGameMonitor.recordText2" = "监控组件在启动时中断，无法确认游戏状态，请检查运行记录。";
+
+/* @symbol CoreGameMonitor.chunkText1 @args - */
+"coreGameMonitor.chunkText1" = "启动信息超过大小限制。";
+
+/* @symbol CoreGameMonitor.decodedText1 @args - */
+"coreGameMonitor.decodedText1" = "游戏监控请求无效。";
+
+/* @symbol CoreGameMonitor.pathsText1 @args - */
+"coreGameMonitor.pathsText1" = "游戏目录与运行会话不一致。";
+
+/* @symbol CoreGameMonitor.pathsText2 @args - */
+"coreGameMonitor.pathsText2" = "游戏监控缺少实例文件夹信息。";
+
+/* @symbol CoreGameMonitor.pathsText3 @args - */
+"coreGameMonitor.pathsText3" = "共享运行目录需要新版监控协议。";
+
+/* @symbol CoreGameMonitor.pathsText4 @args - */
+"coreGameMonitor.pathsText4" = "游戏监控缺少运行目录策略。";
+
+/* @symbol CoreGameMonitor.pathsText5 @args - */
+"coreGameMonitor.pathsText5" = "自定义运行目录需要新版监控协议。";
+
+/* @symbol CoreGameNormalQuit.currentText1 @args - */
+"coreGameNormalQuit.currentText1" = "游戏或监控状态已经变化，暂时无法请求正常退出。";
+
+/* @symbol CoreGameNormalQuit.currentText2 @args - */
+"coreGameNormalQuit.currentText2" = "本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。";
+
+/* @symbol CoreGamePlaytime.attributesText1 @args - */
+"coreGamePlaytime.attributesText1" = "游玩时长记录无效。";
+
+/* @symbol CoreGamePlaytime.urlText1 @args - */
+"coreGamePlaytime.urlText1" = "日志不是普通文件。";
+
+/* @symbol CoreGameRunLease.fdText1 @args - */
+"coreGameRunLease.fdText1" = "无法取得实例运行锁。";
+
+/* @symbol CoreGameRunLease.lockText1 @args - */
+"coreGameRunLease.lockText1" = "这个实例正在运行或准备启动，请先结束当前游戏。";
+
+/* @symbol CoreGameRunLease.recordsText1 @args - */
+"coreGameRunLease.recordsText1" = "这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。";
+
+/* @symbol CoreGameSession.attributesText1 @args - */
+"coreGameSession.attributesText1" = "运行记录不是有效文件或超过大小限制。";
+
+/* @symbol CoreGameSession.recordText1 @args - */
+"coreGameSession.recordText1" = "运行记录格式无效。";
+
+/* @symbol CoreGameSession.recordText2 @args - */
+"coreGameSession.recordText2" = "运行报告路径无效。";
+
+/* @symbol CoreGameSession.interruptionText1 @args - */
+"coreGameSession.interruptionText1" = "中断恢复记录无效。";
+
+/* @symbol CoreGameSession.urlText1 @args - */
+"coreGameSession.urlText1" = "日志不是普通文件。";
+
+/* @symbol CoreGameSession.instanceRootText1 @args - */
+"coreGameSession.instanceRootText1" = "请选择运行记录目录以外的导出位置。";
+
+/* @symbol CoreGameSession.temporaryText1 @args - */
+"coreGameSession.temporaryText1" = "无法创建导出文件。";
+
+/* @symbol CoreGameSession.dataText1 @args - */
+"coreGameSession.dataText1" = "导出期间日志发生变化，请重试。";
+
+/* @symbol CoreGameSession.dataText2 @args - */
+"coreGameSession.dataText2" = "无法保存导出日志。";
+
+/* @symbol CoreGameSession.attributesText2 @args - */
+"coreGameSession.attributesText2" = "运行记录已读标记无效。";
+
+/* @symbol CoreGameSession.logURLText1 @args - */
+"coreGameSession.logURLText1" = "无法创建运行日志。";
+
+/* @symbol CoreGameSession.logURLText2 @args - */
+"coreGameSession.logURLText2" = "监控组件不能接管这个运行记录。";
+
+/* @symbol CoreGameSession.handoffText1 @args - */
+"coreGameSession.handoffText1" = "这个运行记录不能交给监控组件。";
+
+/* @symbol CoreGameSession.logText1 @args - */
+"coreGameSession.logText1" = "运行日志已关闭。";
+
+/* @symbol CoreGameSession.transitionText1 @args - */
+"coreGameSession.transitionText1" = "运行会话已经结束。";
+
+/* @symbol CoreGameSession.setMemoryText1 @args - */
+"coreGameSession.setMemoryText1" = "游戏已启动，不能改写本轮内存设置。";
+
+/* @symbol CoreGameSessionRecovery.recordText1 @args - */
+"coreGameSessionRecovery.recordText1" = "运行记录已经变化，请刷新状态后重试。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText1 @args - */
+"coreGameSessionRecovery.resolutionText1" = "这次运行已经完成，不需要恢复。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText2 @args - */
+"coreGameSessionRecovery.resolutionText2" = "监控仍在运行，不能收尾它正在写入的记录。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText3 @args - */
+"coreGameSessionRecovery.resolutionText3" = "无法确认监控已退出，请稍后刷新状态。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText4 @args - */
+"coreGameSessionRecovery.resolutionText4" = "游戏进程仍然存在，请先在游戏中退出。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText5 @args - */
+"coreGameSessionRecovery.resolutionText5" = "启动命令仍然存在，请先结束该命令。";
+
+/* @symbol CoreGameSessionRecovery.resolutionText6 @args - */
+"coreGameSessionRecovery.resolutionText6" = "尚未确认游戏已退出，无法恢复实例启动。";
+
+/* @symbol CoreGameSessionRecovery.fdText1 @args - */
+"coreGameSessionRecovery.fdText1" = "无法追加恢复日志。";
+
+/* @symbol CoreGameSessionRecovery.attributesText1 @args - */
+"coreGameSessionRecovery.attributesText1" = "运行日志不是普通文件。";
+
+/* @symbol CoreGameSessionRecovery.dataText1 @args - */
+"coreGameSessionRecovery.dataText1" = "无法保存恢复日志。";
+
+/* @symbol CoreNBT.compressText1 @args - */
+"coreNBT.compressText1" = "NBT 文件过大";
+
+/* @symbol CoreNBT.streamText1 @args - */
+"coreNBT.streamText1" = "无法初始化 gzip 压缩";
+
+/* @symbol CoreNBT.statusText1 @args - */
+"coreNBT.statusText1" = "无法压缩 NBT";
+
+/* @symbol CoreNBT.decompressText1 @args - */
+"coreNBT.decompressText1" = "压缩 NBT 文件过大";
+
+/* @symbol CoreNBT.streamText2 @args - */
+"coreNBT.streamText2" = "无法初始化 gzip 解压";
+
+/* @symbol CoreNBT.writtenText1 @args - */
+"coreNBT.writtenText1" = "NBT 解压大小超出限制";
+
+/* @symbol CoreNBT.writtenText2 @args - */
+"coreNBT.writtenText2" = "gzip 文件包含多余数据";
+
+/* @symbol CoreNBT.writtenText3 @args - */
+"coreNBT.writtenText3" = "gzip 文件损坏或校验失败";
+
+/* @symbol CoreNBT.readText1 @args - */
+"coreNBT.readText1" = "NBT 根节点不是复合标签";
+
+/* @symbol CoreNBT.valueText1 @args - */
+"coreNBT.valueText1" = "NBT 根节点后有多余数据";
+
+/* @symbol CoreNBT.replacementsText1 @args - */
+"coreNBT.replacementsText1" = "NBT 文件结构或大小无效";
+
+/* @symbol CoreNBT.rewriteCompoundText1 @args - */
+"coreNBT.rewriteCompoundText1" = "NBT 结构超出限制";
+
+/* @symbol CoreNBT.nameText1 @args - */
+"coreNBT.nameText1" = "NBT 包含重复标签";
+
+/* @symbol CoreNBT.nameText2 @args - */
+"coreNBT.nameText2" = "存档数据包配置不是复合标签";
+
+/* @symbol CoreNBT.nameText3 @args - */
+"coreNBT.nameText3" = "存档缺少 Data 标签";
+
+/* @symbol CoreNBT.stringListText1 @args - */
+"coreNBT.stringListText1" = "数据包数量超出限制";
+
+/* @symbol CoreNBT.bytesText1 @args - */
+"coreNBT.bytesText1" = "NBT 字符串过长";
+
+/* @symbol CoreNBT.widthText1 @args - */
+"coreNBT.widthText1" = "NBT 数组越界";
+
+/* @symbol CoreNBT.countText1 @args - */
+"coreNBT.countText1" = "NBT 列表无效";
+
+/* @symbol CoreNBT.keyText1 @args text */
+"coreNBT.keyText1" = "未知 NBT 标签：%1$@";
+
+/* @symbol CoreNBT.byteText1 @args - */
+"coreNBT.byteText1" = "NBT 文件被截断";
+
+/* @symbol CoreNBT.unsignedText1 @args - */
+"coreNBT.unsignedText1" = "NBT 数值越界";
+
+/* @symbol CoreNBT.valueText2 @args - */
+"coreNBT.valueText2" = "NBT 数组长度为负";
+
+/* @symbol CoreNBT.lengthText1 @args - */
+"coreNBT.lengthText1" = "NBT 字符串越界";
+
+/* @symbol CoreNBT.aText1 @args - */
+"coreNBT.aText1" = "NBT 字符编码无效";
+
+/* @symbol CoreSchematicManager.parentText1 @args - */
+"coreSchematicManager.parentText1" = "同名文件或文件夹已存在。";
+
+/* @symbol CoreSchematicManager.importFilesText1 @args - */
+"coreSchematicManager.importFilesText1" = "请选择 1–200 个原理图文件。";
+
+/* @symbol CoreSchematicManager.infoText1 @args - */
+"coreSchematicManager.infoText1" = "请选择 litematic、schem、schematic 或 nbt 原理图文件。";
+
+/* @symbol CoreSchematicManager.targetText1 @args text */
+"coreSchematicManager.targetText1" = "同名原理图已存在：%1$@。请先改名或移走旧文件。";
+
+/* @symbol CoreSchematicManager.sourceText1 @args - */
+"coreSchematicManager.sourceText1" = "请选择单个原理图文件导出。";
+
+/* @symbol CoreSchematicManager.sourceText2 @args - */
+"coreSchematicManager.sourceText2" = "导出位置与原文件相同。";
+
+/* @symbol CoreSchematicManager.stagingText1 @args - */
+"coreSchematicManager.stagingText1" = "无法保存导出的原理图。";
+
+/* @symbol CoreSchematicManager.fileText1 @args - */
+"coreSchematicManager.fileText1" = "文件夹没有原理图信息。";
+
+/* @symbol CoreSchematicManager.fileText2 @args - */
+"coreSchematicManager.fileText2" = "原理图文件已改变，请刷新列表。";
+
+/* @symbol CoreSchematicManager.validateNameText1 @args - */
+"coreSchematicManager.validateNameText1" = "请输入有效的文件或文件夹名称。";
+
+/* @symbol CoreSchematicManager.currentText1 @args - */
+"coreSchematicManager.currentText1" = "原理图管理不修改符号链接目录。";
+
+/* @symbol CoreSchematicManager.currentText2 @args - */
+"coreSchematicManager.currentText2" = "原理图管理不修改符号链接。";
+
+/* @symbol CoreWorldDataPackDownloads.itemText1 @args - */
+"coreWorldDataPackDownloads.itemText1" = "数据包依赖数量超过限制。";
+
+/* @symbol CoreWorldDataPackDownloads.itemText2 @args text,text */
+"coreWorldDataPackDownloads.itemText2" = "%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。";
+
+/* @symbol CoreWorldDataPackDownloads.itemText3 @args - */
+"coreWorldDataPackDownloads.itemText3" = "必需依赖要求同一数据包的不同版本，请选择其他版本。";
+
+/* @symbol CoreWorldDataPackDownloads.matchText1 @args text */
+"coreWorldDataPackDownloads.matchText1" = "找不到兼容的数据包依赖：%1$@。";
+
+/* @symbol CoreWorldDataPackDownloads.matchText2 @args - */
+"coreWorldDataPackDownloads.matchText2" = "数据包的必需依赖缺少项目或版本标识。";
+
+/* @symbol CoreWorldDataPackDownloads.matchText3 @args text */
+"coreWorldDataPackDownloads.matchText3" = "%1$@ 与必需依赖不兼容，无法一起安装。";
+
+/* @symbol CoreWorldDataPackDownloads.fileText1 @args text */
+"coreWorldDataPackDownloads.fileText1" = "%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。";
+
+/* @symbol CoreWorldDataPackDownloads.fileText2 @args - */
+"coreWorldDataPackDownloads.fileText2" = "多个数据包使用相同的文件名，无法一起安装。";
+
+/* @symbol CoreWorldDataPackDownloads.currentText1 @args - */
+"coreWorldDataPackDownloads.currentText1" = "实例的游戏版本已改变，请重新选择数据包。";
+
+/* @symbol CoreWorldDataPacks.disabledText1 @args - */
+"coreWorldDataPacks.disabledText1" = "无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。";
+
+/* @symbol CoreWorldDataPacks.rootText1 @args - */
+"coreWorldDataPacks.rootText1" = "存档缺少 Data 标签";
+
+/* @symbol CoreWorldDataPacks.packsText1 @args - */
+"coreWorldDataPacks.packsText1" = "存档数据包配置无效";
+
+/* @symbol CoreWorldDataPacks.itemsText1 @args - */
+"coreWorldDataPacks.itemsText1" = "存档数据包列表无效";
+
+/* @symbol CoreWorldDataPacks.updatedText1 @args - */
+"coreWorldDataPacks.updatedText1" = "存档信息已改变，请刷新后重试。";
+
+/* @symbol CoreWorldDataPacks.currentText1 @args - */
+"coreWorldDataPacks.currentText1" = "数据包列表已改变，请刷新后重新调整顺序。";
+
+/* @symbol CoreWorldDataPacks.currentText2 @args - */
+"coreWorldDataPacks.currentText2" = "调整优先级不能添加、移除或重复数据包。";
+
+/* @symbol CoreWorldDataPacks.currentText3 @args - */
+"coreWorldDataPacks.currentText3" = "内置、模组与缺失数据包的相对顺序必须保留。";
+
+/* @symbol CoreWorldDataPacks.isDirectoryText1 @args text */
+"coreWorldDataPacks.isDirectoryText1" = "启用与停用文件同时存在，请先移除其中一份：%1$@";
+
+/* @symbol CoreWorldDataPacks.needsRenameText1 @args text */
+"coreWorldDataPacks.needsRenameText1" = "启用后的文件名已存在：%1$@";
+
+/* @symbol CoreWorldDataPacks.importDataPacksText1 @args - */
+"coreWorldDataPacks.importDataPacksText1" = "请选择 1–200 个数据包。";
+
+/* @symbol CoreWorldDataPacks.isDirectoryText2 @args - */
+"coreWorldDataPacks.isDirectoryText2" = "请选择 ZIP 格式的数据包。";
+
+/* @symbol CoreWorldDataPacks.isDirectoryText3 @args - */
+"coreWorldDataPacks.isDirectoryText3" = "请先启用数据包再导入。";
+
+/* @symbol CoreWorldDataPacks.targetText1 @args text */
+"coreWorldDataPacks.targetText1" = "同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。";
+
+/* @symbol CoreWorldDataPacks.targetText2 @args - */
+"coreWorldDataPacks.targetText2" = "数据包已不存在，请刷新列表。";
+
+/* @symbol CoreWorldDataPacks.directoryText1 @args - */
+"coreWorldDataPacks.directoryText1" = "数据包目录不能是符号链接。";
+
+/* @symbol CoreWorldDataPacks.packURLText1 @args - */
+"coreWorldDataPacks.packURLText1" = "无效的数据包文件名";
+
+/* @symbol CoreWorldDataPacks.urlText1 @args - */
+"coreWorldDataPacks.urlText1" = "不修改符号链接数据包。";
+
+/* @symbol CoreWorldDataPacks.infoText1 @args - */
+"coreWorldDataPacks.infoText1" = "请选择实际数据包文件。";
+
+/* @symbol CoreWorldDataPacks.metadataText1 @args - */
+"coreWorldDataPacks.metadataText1" = "无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。";
+
+/* @symbol CoreWorldDataPacks.metadataText2 @args - */
+"coreWorldDataPacks.metadataText2" = "数据包文件无效或大于 512 MB";
+
+/* @symbol CoreWorldDataPacks.entryText1 @args - */
+"coreWorldDataPacks.entryText1" = "数据包根目录缺少 pack.mcmeta";
+
+/* @symbol CoreWorldDataPacks.checksumText1 @args - */
+"coreWorldDataPacks.checksumText1" = "数据包说明过大";
+
+/* @symbol CoreWorldDataPacks.checksumText2 @args - */
+"coreWorldDataPacks.checksumText2" = "数据包说明校验失败";
+
+/* @symbol CoreWorldDataPacks.packText1 @args - */
+"coreWorldDataPacks.packText1" = "数据包说明缺少 pack 或 description";
+
+/* @symbol CoreWorldManager.worldURLText1 @args - */
+"coreWorldManager.worldURLText1" = "无效的存档目录名";
+
+/* @symbol CoreWorldManager.targetText1 @args - */
+"coreWorldManager.targetText1" = "存档管理不修改符号链接目录";
+
+/* @symbol CoreWorldManager.worldText1 @args - */
+"coreWorldManager.worldText1" = "找不到存档的 level.dat";
+
+/* @symbol CoreWorldManager.sourceText1 @args - */
+"coreWorldManager.sourceText1" = "备份缺少存档数据";
+
+/* @symbol CoreWorldManager.journalText1 @args text,text */
+"coreWorldManager.journalText1" = "存档恢复需要检查，文件保留在 %1$@。%2$@";
+
+/* @symbol CoreWorldManager.hasTargetText1 @args - */
+"coreWorldManager.hasTargetText1" = "恢复目录与现有存档发生冲突，已保留两份数据";
+
+/* @symbol CoreWorldManager.hasTargetText2 @args - */
+"coreWorldManager.hasTargetText2" = "恢复前的存档目录缺失，请使用自动备份恢复";
+
+/* @symbol CoreWorldManager.candidateText1 @args - */
+"coreWorldManager.candidateText1" = "请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件";
+
+/* @symbol CoreWorldManager.worldText2 @args - */
+"coreWorldManager.worldText2" = "存档不存在";
+
+/* @symbol CoreWorldManager.fileText1 @args - */
+"coreWorldManager.fileText1" = "备份不属于当前实例";
+
+/* @symbol CoreWorldManager.nameText1 @args - */
+"coreWorldManager.nameText1" = "无法生成唯一存档目录";
+
+/* @symbol CoreWorldManager.entryText1 @args - */
+"coreWorldManager.entryText1" = "不是有效的 Ruri 存档备份";
+
+/* @symbol CoreWorldManager.checksumText1 @args - */
+"coreWorldManager.checksumText1" = "备份元数据校验失败";
+
+/* @symbol CoreWorldManager.resultText1 @args - */
+"coreWorldManager.resultText1" = "备份版本不受支持";
+
+/* @symbol CoreWorldManager.fileText2 @args - */
+"coreWorldManager.fileText2" = "NBT 文件过大";
+
+/* @symbol CoreWorldManager.fdText1 @args - */
+"coreWorldManager.fdText1" = "无法读取存档锁文件";
+
+/* @symbol CoreWorldManager.lockText2 @args - */
+"coreWorldManager.lockText2" = "存档正在被游戏使用，请退出该世界后重试。";
+
+/* @symbol CoreWorldQuickPlay.requireSupportText1 @args - */
+"coreWorldQuickPlay.requireSupportText1" = "此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。";
+
+/* @symbol CoreWorldQuickPlay.selectionText1 @args - */
+"coreWorldQuickPlay.selectionText1" = "无效的存档目录名。";
+
+/* @symbol CoreWorldQuickPlay.infoText1 @args - */
+"coreWorldQuickPlay.infoText1" = "存档已移除或不是有效的文件夹，请刷新存档列表。";
+
+/* @symbol CoreWorldQuickPlay.dataText1 @args - */
+"coreWorldQuickPlay.dataText1" = "存档信息不完整，请先在游戏中检查此世界。";
+
+/* @symbol CoreWorldQuickPlay.currentText1 @args - */
+"coreWorldQuickPlay.currentText1" = "实例运行目录在选择存档后改变，请重新选择世界。";

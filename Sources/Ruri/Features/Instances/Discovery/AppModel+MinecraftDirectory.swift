@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -8,7 +9,7 @@ extension AppModel {
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform("恢复游戏文件夹") { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.baseText1) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) {
                 try MinecraftFolderStore.restore(folder.id, from: url, paths: base)
             }.value
@@ -21,13 +22,13 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
-        panel.allowsMultipleSelection = false; panel.prompt = "添加文件夹"
-        panel.message = "选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。"
+        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppAppModelMinecraftDirectory.panelText1.localized
+        panel.message = Messages.AppAppModelMinecraftDirectory.panelText2.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform("添加游戏文件夹") { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.baseText2) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) {
                 try MinecraftFolderStore.add(name: url.lastPathComponent, url: url, paths: base)
             }.value

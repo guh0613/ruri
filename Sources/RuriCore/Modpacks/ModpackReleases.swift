@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct ModpackRelease: Identifiable, Sendable {
@@ -38,9 +39,9 @@ public actor ModpackReleaseService {
             }
             return .init(items: items, nextOffset: nil)
         case .curseforge:
-            guard let projectID = Int(projectID) else { throw RuriError.message("整合包来源标识无效。") }
+            guard let projectID = Int(projectID) else { throw RuriError.message(Messages.CoreModpackReleases.projectIDText1) }
             let service = CurseForgeService(apiKey: curseForgeKey), project = try await service.project(projectID)
-            guard project.contentType == "modpack" else { throw RuriError.message("来源项目不是整合包。") }
+            guard project.contentType == "modpack" else { throw RuriError.message(Messages.CoreModpackReleases.serviceText1) }
             let page = try await service.files(project: projectID, offset: offset)
             let items = page.data.filter { $0.isAvailable != false }.map { file in
                 ModpackRelease(id: String(file.id), title: file.displayName, gameVersions: file.gameVersions, publishedAt: file.fileDate,
@@ -55,15 +56,15 @@ public actor ModpackReleaseService {
     }
     public func prepare(_ release: ModpackRelease, manualFile: URL? = nil, paths: LauncherPaths, downloader: DownloadManager,
                         progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> PreparedInstanceImport {
-        guard release.sha1 != nil || release.sha512 != nil || release.md5 != nil else { throw RuriError.message("整合包版本缺少校验信息。") }
+        guard release.sha1 != nil || release.sha512 != nil || release.md5 != nil else { throw RuriError.message(Messages.CoreModpackReleases.prepareText1) }
         let archive = try manualFile ?? LauncherPaths.safePath("pack-updates/\(release.origin.provider.rawValue)/\(release.id)/\(release.filename)", within: paths.cache)
         let item = DownloadItem(url: release.url, destination: archive, sha1: release.sha1, sha512: release.sha512, md5: release.md5, size: release.size)
         if manualFile == nil {
-            guard !release.requiresManualDownload, release.url != nil else { throw RuriError.message("请先从 CurseForge 下载此整合包，再选择已下载的文件。") }
-            await progress(InstallProgress("正在下载整合包版本"))
+            guard !release.requiresManualDownload, release.url != nil else { throw RuriError.message(Messages.CoreModpackReleases.itemText1) }
+            await progress(InstallProgress(Messages.CoreModpackReleases.itemText2))
             try await downloader.fetch(item)
         }
-        guard DownloadManager.valid(archive, item: item) else { throw RuriError.message("所选文件与整合包版本不符。") }
+        guard DownloadManager.valid(archive, item: item) else { throw RuriError.message(Messages.CoreModpackReleases.itemText3) }
         return try await InstanceTransfer(paths: paths).prepare(archive, origin: release.origin)
     }
 }

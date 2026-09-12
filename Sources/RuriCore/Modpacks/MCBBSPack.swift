@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import CryptoKit
 
@@ -45,15 +46,15 @@ extension InstanceTransfer {
         let manifest = try JSONDecoder().decode(MCBBSManifest.self, from: source)
         guard manifest.manifestType == "minecraftModpack", [1, 2].contains(manifest.manifestVersion),
               Set(manifest.addons.map(\.id)).count == manifest.addons.count,
-              let gameVersion = manifest.addons.first(where: { $0.id == "game" })?.version else { throw RuriError.message("MCBBS 整合包清单无效或缺少游戏版本") }
+              let gameVersion = manifest.addons.first(where: { $0.id == "game" })?.version else { throw RuriError.message(Messages.CoreMCBBSPack.gameVersionText1) }
         let supported = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader", "optifine"])
         let unknown = manifest.addons.filter { !supported.contains($0.id) }
-        guard unknown.isEmpty else { throw RuriError.message("MCBBS 整合包包含尚未接入的组件：\(unknown.map(\.id).joined(separator: "、"))") }
+        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMCBBSPack.unknownText1(String(describing: unknown.map(\.id).joined(separator: "、")))) }
         let loaders = manifest.addons.filter { $0.id != "game" }
-        guard loaders.count <= 1 else { throw RuriError.message("MCBBS 整合包同时声明多个加载器，暂时无法安装。") }
+        guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreMCBBSPack.loadersText1) }
         var instance = GameInstance(name: manifest.name, gameVersion: gameVersion, loader: loaders.first.flatMap { LoaderKind(rawValue: $0.id) } ?? .vanilla, loaderVersion: loaders.first?.version)
         if let minimum = manifest.launchInfo?.minMemory {
-            guard (0...131_072).contains(minimum) else { throw RuriError.message("整合包内存要求无效") }
+            guard (0...131_072).contains(minimum) else { throw RuriError.message(Messages.CoreMCBBSPack.minimumText1) }
             instance.memoryMB = max(instance.memoryMB, minimum)
         }
         instance.supportedJavaMajors = manifest.launchInfo?.supportJava
@@ -68,45 +69,45 @@ extension InstanceTransfer {
         let game = try LauncherPaths.safePath("overrides", within: root)
         if FileManager.default.fileExists(atPath: game.path) {
             let info = try game.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message("MCBBS overrides 必须是实际目录") }
+            guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreMCBBSPack.infoText1) }
         }
-        guard manifest.files.count <= 100_000 else { throw RuriError.message("整合包文件数量超过限制") }
+        guard manifest.files.count <= 100_000 else { throw RuriError.message(Messages.CoreMCBBSPack.infoText2) }
         var files: [PackFile] = []; var curse: [CurseForgeReference] = []
         for file in manifest.files {
             switch file.type {
             case "addon":
-                guard let path = file.path, let hash = file.hash, hash.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message("MCBBS 文件缺少路径或有效的 SHA-1") }
+                guard let path = file.path, let hash = file.hash, hash.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreMCBBSPack.hashText1) }
                 _ = try LauncherPaths.safePath(path, within: game)
-                guard !path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == "." }) else { throw RuriError.message("MCBBS 文件路径无效：\(path)") }
+                guard !path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == "." }) else { throw RuriError.message(Messages.CoreMCBBSPack.hashText2(String(describing: path))) }
                 var url: URL?
                 if let value = manifest.fileApi, !value.isEmpty {
-                    guard let base = URL(string: value), ["http", "https"].contains(base.scheme), base.host != nil, base.user == nil, base.password == nil, base.query == nil, base.fragment == nil else { throw RuriError.message("MCBBS fileApi 下载源无效") }
+                    guard let base = URL(string: value), ["http", "https"].contains(base.scheme), base.host != nil, base.user == nil, base.password == nil, base.query == nil, base.fragment == nil else { throw RuriError.message(Messages.CoreMCBBSPack.baseText1) }
                     url = try EndpointURL.build(base: base, path: ["overrides"] + path.split(separator: "/").map(String.init))
                 }
                 files.append(PackFile(path: path, sha1: hash.lowercased(), url: url, force: file.force ?? false))
             case "curse":
-                guard let project = file.projectID, let id = file.fileID, project > 0, id > 0 else { throw RuriError.message("MCBBS CurseForge 文件标识无效") }
+                guard let project = file.projectID, let id = file.fileID, project > 0, id > 0 else { throw RuriError.message(Messages.CoreMCBBSPack.idText1) }
                 // force controls online replacement, not whether a file is optional.
                 curse.append(CurseForgeReference(projectID: project, fileID: id, required: true))
-            default: throw RuriError.message("不支持的 MCBBS 文件类型：\(file.type)")
+            default: throw RuriError.message(Messages.CoreMCBBSPack.idText2(String(describing: file.type)))
             }
         }
-        guard Set(files.map { $0.path.lowercased() }).count == files.count, Set(curse.map(\.projectID)).count == curse.count else { throw RuriError.message("MCBBS 清单存在重复路径或项目") }
+        guard Set(files.map { $0.path.lowercased() }).count == files.count, Set(curse.map(\.projectID)).count == curse.count else { throw RuriError.message(Messages.CoreMCBBSPack.idText3) }
         var warnings: [String] = []
-        if let author = manifest.author, !author.isEmpty { warnings.append("整合包作者：\(author)") }
-        if !instance.extraJVMArguments.isEmpty { warnings.append("此整合包提供了 JVM 参数，可在下方查看并选择保留。") }
-        if manifest.fileApi?.isEmpty == false { warnings.append("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。") }
-        if !curse.isEmpty { warnings.append("需要解析 \(curse.count) 个 CurseForge 文件。") }
+        if let author = manifest.author, !author.isEmpty { warnings.append(Messages.CoreMCBBSPack.authorText1(String(describing: author)).localized) }
+        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreMCBBSPack.authorText2.localized) }
+        if manifest.fileApi?.isEmpty == false { warnings.append(Messages.CoreMCBBSPack.authorText3.localized) }
+        if !curse.isEmpty { warnings.append(Messages.CoreMCBBSPack.authorText4(Int64(curse.count)).localized) }
         let origin = manifest.fileApi.flatMap { $0.isEmpty ? nil : URL(string: $0) }.map { ModpackOrigin(provider: .mcbbs, fileAPI: $0) }
         return InstanceImportDescription(instance: instance, game: game, format: "MCBBS", warnings: warnings, curseForgeFiles: curse, packFiles: files, sourceMetadata: source, modpack: ModpackDescriptor(version: manifest.version ?? "", origin: origin, forcedProjects: Set(manifest.files.filter { $0.type == "curse" && $0.force == true }.compactMap { $0.projectID.map(String.init) })))
     }
 
     func exportMCBBS(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails, progress: @Sendable (InstallProgress) -> Void) throws {
-        guard !details.version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, details.version.count <= 128, details.author.count <= 256, details.description.count <= 32_768 else { throw RuriError.message("整合包版本、作者或描述无效") }
+        guard !details.version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, details.version.count <= 128, details.author.count <= 256, details.description.count <= 32_768 else { throw RuriError.message(Messages.CoreMCBBSPack.exportMCBBSText1) }
         let workspace = paths.cache.appendingPathComponent("export-mcbbs-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: workspace) }
         let snapshot = workspace.appendingPathComponent("overrides")
-        try FileTree.copy(from: game, to: snapshot, excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress("正在准备整合包", completed: done, total: total)) }
+        try FileTree.copy(from: game, to: snapshot, excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress(Messages.CoreMCBBSPack.snapshotText1, completed: done, total: total)) }
         let entries = try FileTree.entries(in: snapshot)
         var files: [MCBBSManifest.File] = []
         for entry in entries where !entry.directory {
@@ -115,7 +116,7 @@ extension InstanceTransfer {
         }
         var addons = [MCBBSManifest.Addon(id: "game", version: instance.gameVersion)]
         if instance.loader != .vanilla {
-            guard let version = instance.loaderVersion else { throw RuriError.message("请完成加载器安装后再导出整合包") }
+            guard let version = instance.loaderVersion else { throw RuriError.message(Messages.CoreMCBBSPack.versionText1) }
             addons.append(.init(id: instance.loader.rawValue, version: version))
         }
         var gameArguments = try ArgumentTokenizer.split(instance.extraGameArguments ?? "")
@@ -131,7 +132,7 @@ extension InstanceTransfer {
         let compatible: [String: Any] = ["manifestType": "minecraftModpack", "manifestVersion": 1, "name": instance.name, "version": details.version, "author": details.author, "overrides": "overrides",
                                         "minecraft": ["version": instance.gameVersion, "modLoaders": loaders], "files": []]
         let extras = ["mcbbs.packmeta": try encoder.encode(manifest), "manifest.json": try JSONSerialization.data(withJSONObject: compatible, options: [.prettyPrinted, .sortedKeys])]
-        try SafeArchive.create(from: snapshot, to: destination, prefix: "overrides", additionalFiles: extras) { done, total in progress(InstallProgress("正在导出 MCBBS 整合包", completed: done, total: total)) }
+        try SafeArchive.create(from: snapshot, to: destination, prefix: "overrides", additionalFiles: extras) { done, total in progress(InstallProgress(Messages.CoreMCBBSPack.extrasText1, completed: done, total: total)) }
     }
     static func sha1(_ url: URL) throws -> String {
         let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }

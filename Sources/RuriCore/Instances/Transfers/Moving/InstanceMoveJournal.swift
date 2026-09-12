@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 struct InstanceMoveJournal: Codable, Sendable {
@@ -28,7 +29,7 @@ struct InstanceMoveJournal: Codable, Sendable {
     static func load(paths: LauncherPaths, instanceID: UUID, at parent: URL? = nil) throws -> Self {
         let root = try parent ?? Self.root(paths: paths, instanceID: instanceID)
         let result: Self = try RunDirectoryCopyGuard.decode(root.appendingPathComponent("transaction.json"), limit: 8_388_608)
-        guard result.original.id == instanceID else { throw RuriError.message("移动记录不属于所选实例。") }
+        guard result.original.id == instanceID else { throw RuriError.message(Messages.CoreInstanceMoveJournal.resultText1) }
         try result.validate(); return result
     }
     func validate() throws {
@@ -38,24 +39,24 @@ struct InstanceMoveJournal: Codable, Sendable {
               (original.directoryID ?? GameDirectory.defaultID) == (sourceCollection?.id ?? GameDirectory.defaultID),
               (original.directoryID ?? GameDirectory.defaultID) != moved.directoryID,
               !original.name.isEmpty, original.name.count <= 1024, FileTreeManifest.validDigest(sourceDigest) else {
-            throw RuriError.message("实例移动记录无效，原文件和工作副本已保留。")
+            throw RuriError.message(Messages.CoreInstanceMoveJournal.expectedText1)
         }
         if stagedIdentity != nil || publishedIdentity != nil || [.publishing, .committed, .retiring, .deleting].contains(phase) {
-            guard destinationDigest != nil, workspaceIdentity != nil else { throw RuriError.message("移动记录缺少目标校验信息。") }
+            guard destinationDigest != nil, workspaceIdentity != nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.expectedText2) }
         }
-        if let destinationDigest, !FileTreeManifest.validDigest(destinationDigest) { throw RuriError.message("移动目标的校验摘要无效。") }
-        if [.retiring, .deleting].contains(phase), retirement == nil { throw RuriError.message("移动记录缺少来源退役信息。") }
+        if let destinationDigest, !FileTreeManifest.validDigest(destinationDigest) { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText1) }
+        if [.retiring, .deleting].contains(phase), retirement == nil { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText2) }
         for collection in [sourceCollection, targetCollection].compactMap({ $0 }) {
-            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), collection.bookmark == nil else { throw RuriError.message("移动记录中的实例文件夹无效。") }
+            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), collection.bookmark == nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText3) }
         }
         for identity in [sourceIdentity, workspaceIdentity, stagedIdentity, publishedIdentity, retirement?.identity].compactMap({ $0 }) {
-            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message("移动记录中的文件身份无效。") }
+            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText4) }
         }
     }
     func validateLocations(paths: LauncherPaths) throws {
         for collection in [sourceCollection, targetCollection].compactMap({ $0 }) {
             guard paths.directories.contains(where: { $0.id == collection.id && $0.url.standardizedFileURL == collection.url.standardizedFileURL }) else {
-                throw RuriError.message("移动涉及的实例文件夹位置已改变，请恢复原位置后继续。")
+                throw RuriError.message(Messages.CoreInstanceMoveJournal.validateLocationsText1)
             }
             try collection.validateAvailability()
         }
@@ -77,19 +78,19 @@ struct InstanceMoveJournal: Codable, Sendable {
     }
     func retiredSource(paths: LauncherPaths) throws -> URL? { try retirementParent(paths: paths)?.appendingPathComponent("instance") }
     func isCommitted(in state: PersistentState) throws -> Bool {
-        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message("移动中的实例已被移除，文件已保留。") }
+        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText1) }
         if instance.lastInstanceMoveID != id {
-            guard (instance.directoryID ?? GameDirectory.defaultID) == (original.directoryID ?? GameDirectory.defaultID) else { throw RuriError.message("实例位置与移动记录不一致，文件已保留。") }
+            guard (instance.directoryID ?? GameDirectory.defaultID) == (original.directoryID ?? GameDirectory.defaultID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText2) }
             return false
         }
         guard instance.directoryID == moved.directoryID, instance.runDirectory == moved.runDirectory,
-              instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message("实例的移动凭据与目录绑定不一致。") }
+              instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText3) }
         return true
     }
     func save(paths: LauncherPaths, at directory: URL? = nil) throws {
         try validate()
         let data = try JSONEncoder().encode(self)
-        guard data.count <= 8_388_608 else { throw RuriError.message("实例移动记录过大。") }
+        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.dataText1) }
         let root = try directory ?? Self.root(paths: paths, instanceID: original.id)
         try data.write(to: root.appendingPathComponent("transaction.json"), options: .atomic)
     }
@@ -116,25 +117,25 @@ public enum InstanceMoveGuard {
         return FileManager.default.fileExists(atPath: root.path)
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID) throws {
-        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message("此实例有未完成的移动，请先恢复实例移动。") }
+        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.requireAvailableText1) }
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
         let root = try LauncherPaths.safePath("instance-move-transactions", within: paths.root)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let records = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
-        guard records.count <= 500 else { throw RuriError.message("待处理的实例移动过多，请先恢复。") }
+        guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.recordsText1) }
         for record in records {
             guard let instanceID = UUID(uuidString: record.lastPathComponent) else { continue }
             if RepositoryMoveJournal.exists(paths: paths, instanceID: instanceID) {
                 let journal = try RepositoryMoveJournal.load(paths: paths, instanceID: instanceID)
                 guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
-                    throw RuriError.message("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")
+                    throw RuriError.message(Messages.CoreInstanceMoveJournal.journalText1)
                 }
                 continue
             }
             let journal = try InstanceMoveJournal.load(paths: paths, instanceID: instanceID)
             guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
-                throw RuriError.message("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")
+                throw RuriError.message(Messages.CoreInstanceMoveJournal.journalText1)
             }
         }
     }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -18,28 +19,28 @@ public enum WorldQuickPlay {
         return false
     }
     public static func requireSupport(instance: GameInstance, manifest: VersionManifest) throws {
-        guard supports(instance: instance, manifest: manifest) else { throw RuriError.message("此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。") }
+        guard supports(instance: instance, manifest: manifest) else { throw RuriError.message(Messages.CoreWorldQuickPlay.requireSupportText1) }
     }
     public static func selection(folder: String, instanceID: UUID, paths: LauncherPaths) throws -> WorldSnapshot {
         guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\"),
-              !folder.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message("无效的存档目录名。") }
+              !folder.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreWorldQuickPlay.selectionText1) }
         try paths.validateInstanceLocation(instanceID)
         let saves = paths.game(instanceID).appendingPathComponent("saves")
         let world = try LauncherPaths.safePath(folder, within: saves)
         let info = try world.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message("存档已移除或不是有效的文件夹，请刷新存档列表。") }
+        guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreWorldQuickPlay.infoText1) }
         let file = world.appendingPathComponent(FileManager.default.fileExists(atPath: world.appendingPathComponent("level.dat").path) ? "level.dat" : "level.dat_old")
         var reader = try NBTReader(data: RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024))
-        guard let data = try reader.read()["Data"], case .compound = data else { throw RuriError.message("存档信息不完整，请先在游戏中检查此世界。") }
+        guard let data = try reader.read()["Data"], case .compound = data else { throw RuriError.message(Messages.CoreWorldQuickPlay.dataText1) }
         let lock = try WorldManager.readLock(world); defer { if let lock { close(lock) } }
         return .init(folder: folder, url: world, name: data["LevelName"]?.string ?? folder, version: data["Version"]?["Name"]?.string,
-                     gameMode: nil, lastPlayed: nil, size: nil, icon: nil, metadataError: nil)
+                     gameType: nil, hardcore: false, lastPlayed: nil, size: nil, icon: nil, metadataError: nil)
     }
     static func validate(_ world: WorldSnapshot, instance: GameInstance, manifest: VersionManifest, paths: LauncherPaths) throws {
         try requireSupport(instance: instance, manifest: manifest)
         let current = try selection(folder: world.folder, instanceID: instance.id, paths: paths)
         guard current.url.standardizedFileURL.resolvingSymlinksInPath() == world.url.standardizedFileURL.resolvingSymlinksInPath() else {
-            throw RuriError.message("实例运行目录在选择存档后改变，请重新选择世界。")
+            throw RuriError.message(Messages.CoreWorldQuickPlay.currentText1)
         }
     }
     static func applying(_ world: WorldSnapshot, to arguments: [String], instance: GameInstance, paths: LauncherPaths) -> [String] {

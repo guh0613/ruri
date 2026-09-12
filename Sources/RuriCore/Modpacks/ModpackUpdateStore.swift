@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -47,11 +48,11 @@ public enum ModpackUpdateStore {
         FileManager.default.fileExists(atPath: previous(instanceID, paths: paths).appendingPathComponent("journal.json").path)
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID) throws {
-        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message("整合包更新尚需恢复，请在实例设置的整合包管理中完成恢复。") }
+        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreModpackUpdateStore.requireAvailableText1) }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         for other in state.instances where other.id != instanceID && hasPending(paths: current, instanceID: other.id) {
             if MinecraftGameDataFiles.sameLocation(paths.game(instanceID), current.game(other.id)) {
-                throw RuriError.message("“\(other.name)”与此实例共用运行目录，请先在它的整合包管理中恢复未完成的更新。")
+                throw RuriError.message(Messages.CoreModpackUpdateStore.stateText1(String(describing: other.name)))
             }
         }
     }
@@ -64,7 +65,7 @@ public enum ModpackUpdateStore {
             let temporary = target.deletingLastPathComponent().appendingPathComponent(".ruri-update-" + UUID().uuidString)
             defer { try? FileManager.default.removeItem(at: temporary) }
             try FileManager.default.copyItem(at: source, to: temporary)
-            guard rename(temporary.path, target.path) == 0 else { throw RuriError.message("无法保存更新文件：\(target.lastPathComponent)") }
+            guard rename(temporary.path, target.path) == 0 else { throw RuriError.message(Messages.CoreModpackUpdateStore.temporaryText1(String(describing: target.lastPathComponent))) }
         } else if FileManager.default.fileExists(atPath: target.path) { try FileManager.default.removeItem(at: target) }
     }
     static func applyFields(_ update: GameInstance, to latest: inout GameInstance) {
@@ -94,7 +95,7 @@ public enum ModpackUpdateStore {
     }
     static func commit(id: UUID, original: GameInstance, updated: GameInstance, replacements: [ModpackReplacement], paths: LauncherPaths) throws -> PersistentState {
         let directory = pending(original.id, paths: paths)
-        guard !hasPending(paths: paths, instanceID: original.id) else { throw RuriError.message("请先恢复上次未完成的更新。") }
+        guard !hasPending(paths: paths, instanceID: original.id) else { throw RuriError.message(Messages.CoreModpackUpdateStore.directoryText1) }
         // Older launchers must stop reading this state before any pack file can
         // change, including when this is the first update after upgrading Ruri.
         if try StateStore.load(paths).schemaVersion < 16 { try StateStore.update(paths) { _ in } }
@@ -102,7 +103,7 @@ public enum ModpackUpdateStore {
         try FileManager.default.createDirectory(at: directory.appendingPathComponent("files"), withIntermediateDirectories: true)
         var files: [ModpackUpdateJournal.File] = []
         let destinations = try replacements.map { try $0.target.url(instance: original, paths: paths).standardizedFileURL.resolvingSymlinksInPath().path.lowercased() }
-        guard Set(destinations).count == replacements.count else { throw RuriError.message("更新计划包含重复目标文件。") }
+        guard Set(destinations).count == replacements.count else { throw RuriError.message(Messages.CoreModpackUpdateStore.destinationsText1) }
         do {
             for (index, item) in replacements.enumerated() {
                 try Task.checkCancellation()
@@ -116,7 +117,7 @@ public enum ModpackUpdateStore {
             try JSONEncoder().encode(journal).write(to: directory.appendingPathComponent("journal.json"), options: .atomic)
             let saved = try StateStore.update(paths) { state in
                 guard let index = state.instances.firstIndex(where: { $0.id == original.id }), state.instances[index] == original else {
-                    throw RuriError.message("实例设置在提交前改变，请重新打开更新预览。")
+                    throw RuriError.message(Messages.CoreModpackUpdateStore.indexText1)
                 }
                 for item in replacements { try replace(item.target.url(instance: original, paths: paths), from: item.source) }
                 applyFields(updated, to: &state.instances[index])
@@ -126,7 +127,7 @@ public enum ModpackUpdateStore {
         } catch {
             if hasPending(paths: paths, instanceID: original.id) {
                 do { _ = try recoverFiles(original.id, paths: paths) }
-                catch { throw RuriError.message("更新需要恢复，原文件备份已保留。请在整合包管理中点击恢复。\n\(error.localizedDescription)") }
+                catch { throw RuriError.message(Messages.CoreModpackUpdateStore.indexText2(String(describing: error.localizedDescription))) }
             } else { try? FileManager.default.removeItem(at: directory) }
             throw error
         }
@@ -139,10 +140,10 @@ public enum ModpackUpdateStore {
     private static func recoverFiles(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         let directory = pending(id, paths: paths), journal = try read(directory)
         let state = try StateStore.load(paths)
-        guard journal.original.id == id, let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("更新对应的实例已不存在，请保留更新备份。") }
+        guard journal.original.id == id, let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreModpackUpdateStore.instanceText1) }
         if instance.lastModpackUpdateID == journal.id { try finish(journal, directory: directory, paths: paths); return state }
         for (index, file) in journal.files.enumerated() where file.before != nil {
-            guard try ModpackUpdatePlanner.digest(directory.appendingPathComponent("files/\(index)")) == file.before else { throw RuriError.message("更新恢复备份不完整，尚未覆盖现有文件。") }
+            guard try ModpackUpdatePlanner.digest(directory.appendingPathComponent("files/\(index)")) == file.before else { throw RuriError.message(Messages.CoreModpackUpdateStore.instanceText2) }
         }
         for (index, file) in journal.files.enumerated() {
             try replace(file.target.url(instance: journal.original, paths: paths), from: file.before == nil ? nil : directory.appendingPathComponent("files/\(index)"))
@@ -161,19 +162,19 @@ public enum ModpackUpdateStore {
         let directory = previous(instance.id, paths: paths), old = try read(directory)
         guard old.original.id == instance.id, instance.lastModpackUpdateID == old.id,
               old.updated.gameVersion == instance.gameVersion, old.updated.loader == instance.loader, old.updated.loaderVersion == instance.loaderVersion else {
-            throw RuriError.message("游戏组件在更新后已改变，请先恢复组件配置后再回退整合包。")
+            throw RuriError.message(Messages.CoreModpackUpdateStore.directoryText2)
         }
         var preserved = Set<String>()
         for file in old.files {
             if try ModpackUpdatePlanner.digest(file.target.url(instance: instance, paths: paths)) != file.after {
-                guard file.target.scope == .game || file.target.scope == .content else { throw RuriError.message("启动配置在更新后已修改，未覆盖这些修改。") }
+                guard file.target.scope == .game || file.target.scope == .content else { throw RuriError.message(Messages.CoreModpackUpdateStore.preservedText1) }
                 if file.target.scope == .game { preserved.insert(file.group) }
             }
         }
         var replacements: [ModpackReplacement] = []
         for (index, file) in old.files.enumerated() where !preserved.contains(file.group) {
             let source = file.before == nil ? nil : directory.appendingPathComponent("files/\(index)")
-            if let source, try ModpackUpdatePlanner.digest(source) != file.before { throw RuriError.message("上次更新的备份文件已损坏。") }
+            if let source, try ModpackUpdatePlanner.digest(source) != file.before { throw RuriError.message(Messages.CoreModpackUpdateStore.sourceText1) }
             if file.target.scope == .content { continue }
             replacements.append(.init(target: file.target, group: file.group, source: source))
         }

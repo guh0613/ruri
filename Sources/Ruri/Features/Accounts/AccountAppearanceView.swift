@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -20,7 +21,7 @@ struct AccountAppearanceView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            SectionHeading(title: "皮肤与披风", subtitle: "\(appearance?.playerName ?? account.username) · \(account.kindLabel)")
+            SectionHeading(title: Messages.AppAccountAppearanceView.bodyText1.localized, subtitle: "\(appearance?.playerName ?? account.username) · \(account.kindLabel)")
             if let login = account.externalLogin { Text(login.server.url.absoluteString).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
@@ -28,75 +29,75 @@ struct AccountAppearanceView: View {
                         uploadEditor(draft)
                     } else if let appearance, let client {
                         HStack(alignment: .top, spacing: 18) {
-                            GroupBox("当前皮肤") {
+                            GroupBox(Messages.AppAccountAppearanceView.clientText1.localized) {
                                 VStack(spacing: 12) {
                                     AccountTexturePreview(texture: appearance.skin, kind: .skin, client: client)
                                     if let skin = appearance.skin { Text(skin.model.title).font(.caption).foregroundStyle(.secondary) }
                                     if appearance.uploadable.contains(.skin) {
-                                        Button("选择皮肤 PNG…") { choose(.skin) }
-                                        Button("恢复默认皮肤") { change("已恢复默认皮肤") { try await $0.reset(.skin, expecting: appearance) } }
-                                    } else { Text("此认证站未开放皮肤上传，请在认证站管理。").font(.caption).foregroundStyle(.secondary) }
+                                        Button(Messages.AppAccountAppearanceView.skinText1.localized) { choose(.skin) }
+                                        Button(Messages.AppAccountAppearanceView.skinText2.localized) { change(Messages.AppAccountAppearanceView.skinText3.localized) { try await $0.reset(.skin, expecting: appearance) } }
+                                    } else { Text(Messages.AppAccountAppearanceView.skinText4.localized).font(.caption).foregroundStyle(.secondary) }
                                 }.frame(maxWidth: .infinity).padding(10)
                             }
-                            GroupBox("披风") {
+                            GroupBox(Messages.AppAccountAppearanceView.skinText5.localized) {
                                 VStack(spacing: 12) {
                                     if account.kind == .microsoft {
-                                        Picker("已拥有的披风", selection: $capeID) {
-                                            Text("不显示披风").tag("")
+                                        Picker(Messages.AppAccountAppearanceView.skinText6.localized, selection: $capeID) {
+                                            Text(Messages.AppAccountAppearanceView.skinText7.localized).tag("")
                                             ForEach(appearance.capes) { cape in Text(cape.name).tag(cape.id) }
                                         }
                                     }
                                     AccountTexturePreview(texture: account.kind == .microsoft ? appearance.capes.first { $0.id == capeID } : appearance.activeCape, kind: .cape, client: client)
                                     if account.kind == .microsoft {
                                         if capeID != (appearance.activeCape?.id ?? "") {
-                                            Button(capeID.isEmpty ? "隐藏披风" : "使用这件披风") {
+                                            Button(capeID.isEmpty ? Messages.AppAccountAppearanceView.skinText8.localized : Messages.AppAccountAppearanceView.skinText9.localized) {
                                                 let selected = capeID
-                                                change(selected.isEmpty ? "已隐藏披风" : "已更换披风") {
+                                                change(selected.isEmpty ? Messages.AppAccountAppearanceView.selectedText1.localized : Messages.AppAccountAppearanceView.selectedText2.localized) {
                                                     if selected.isEmpty { try await $0.reset(.cape, expecting: appearance) }
                                                     else { try await $0.selectCape(selected, expecting: appearance) }
                                                 }
                                             }
-                                        } else { Text(capeID.isEmpty ? "当前未使用披风" : "当前正在使用").font(.caption).foregroundStyle(.secondary) }
-                                        if appearance.capes.isEmpty { Text("这个账号尚未拥有披风。").font(.caption).foregroundStyle(.secondary) }
+                                        } else { Text(capeID.isEmpty ? Messages.AppAccountAppearanceView.selectedText3.localized : Messages.AppAccountAppearanceView.selectedText4.localized).font(.caption).foregroundStyle(.secondary) }
+                                        if appearance.capes.isEmpty { Text(Messages.AppAccountAppearanceView.selectedText5.localized).font(.caption).foregroundStyle(.secondary) }
                                     } else if appearance.uploadable.contains(.cape) {
-                                        Button("选择披风 PNG…") { choose(.cape) }
-                                        Button("移除当前披风") { change("已移除披风") { try await $0.reset(.cape, expecting: appearance) } }.disabled(appearance.activeCape == nil)
-                                    } else { Text("此认证站未开放披风上传，请在认证站管理。").font(.caption).foregroundStyle(.secondary) }
+                                        Button(Messages.AppAccountAppearanceView.selectedText6.localized) { choose(.cape) }
+                                        Button(Messages.AppAccountAppearanceView.selectedText7.localized) { change(Messages.AppAccountAppearanceView.selectedText8.localized) { try await $0.reset(.cape, expecting: appearance) } }.disabled(appearance.activeCape == nil)
+                                    } else { Text(Messages.AppAccountAppearanceView.selectedText9.localized).font(.caption).foregroundStyle(.secondary) }
                                 }.frame(maxWidth: .infinity).padding(10)
                             }
                         }.id(previewRevision).disabled(task != nil)
-                        Text("更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。").font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppAccountAppearanceView.selectedText10.localized).font(.caption).foregroundStyle(.secondary)
                     }
                     if let message { Text(message).font(.callout).foregroundStyle(.secondary) }
                     if let error { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
                 }.frame(maxWidth: .infinity, alignment: .leading)
             }
             HStack {
-                if task != nil { ProgressView("正在处理…").controlSize(.small) }
+                if task != nil { ProgressView(Messages.AppAccountAppearanceView.errorText1.localized).controlSize(.small) }
                 Spacer()
-                Button("刷新") { load() }.disabled(task != nil || draft != nil)
-                Button("完成") { dismiss() }.keyboardShortcut(.cancelAction).disabled(task != nil)
+                Button(Messages.AppAccountAppearanceView.errorText2.localized) { load() }.disabled(task != nil || draft != nil)
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(task != nil)
             }
         }.padding(26).frame(width: 680, height: 570).onAppear { load() }.onDisappear { task?.cancel() }
     }
 
     private func uploadEditor(_ image: PlayerTextureImage) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("准备上传\(draftKind.title)").font(.headline)
+            Text(Messages.AppAccountAppearanceView.uploadEditorText1(String(describing: draftKind.title)).localized).font(.headline)
             TexturePixels(image: image).frame(maxWidth: .infinity)
             Text("\(image.width) × \(image.height) PNG").font(.caption).foregroundStyle(.secondary)
             if draftKind == .skin {
-                Picker("皮肤模型", selection: $skinModel) { ForEach(PlayerSkinModel.allCases, id: \.self) { Text($0.title).tag($0) } }
+                Picker(Messages.AppAccountAppearanceView.uploadEditorText2.localized, selection: $skinModel) { ForEach(PlayerSkinModel.allCases, id: \.self) { Text($0.title).tag($0) } }
                     .disabled(image.isLegacySkin)
             }
             HStack {
-                Button("重新选择…") { choose(draftKind) }
-                Button("取消") { draft = nil; error = nil }
+                Button(Messages.AppAccountAppearanceView.uploadEditorText3.localized) { choose(draftKind) }
+                Button(Messages.Common.cancel.localized) { draft = nil; error = nil }
                 Spacer()
-                Button("上传到此账号") {
+                Button(Messages.AppAccountAppearanceView.uploadEditorText4.localized) {
                     guard let appearance else { return }
                     let kind = draftKind, selectedModel = skinModel
-                    change("已上传\(kind.title)") { try await $0.upload(image, kind: kind, model: selectedModel, expecting: appearance) }
+                    change(Messages.AppAccountAppearanceView.kindText1(String(describing: kind.title)).localized) { try await $0.upload(image, kind: kind, model: selectedModel, expecting: appearance) }
                 }.buttonStyle(.borderedProminent)
             }
         }.disabled(task != nil)
@@ -136,7 +137,7 @@ struct AccountAppearanceView: View {
                 do {
                     let loaded = try await client.load()
                     appearance = loaded; capeID = loaded.activeCape?.id ?? ""; previewRevision = UUID()
-                } catch { self.error = "更改已提交，但刷新外观失败：" + error.localizedDescription }
+                } catch { self.error = Messages.AppAccountAppearanceView.refreshAppearanceError(error.localizedDescription).localized }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
         }
     }
@@ -148,7 +149,7 @@ private struct TexturePixels: View {
         if let native = NSImage(data: image.png) {
             Image(nsImage: native).resizable().interpolation(.none).scaledToFit().frame(height: 180)
                 .padding(8).background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
-                .accessibilityLabel("展开的 PNG 纹理")
+                .accessibilityLabel(Messages.AppAccountAppearanceView.nativeText1.localized)
         }
     }
 }
@@ -163,18 +164,18 @@ private struct AccountTexturePreview: View {
         VStack(spacing: 8) {
             if let image {
                 TexturePixels(image: image)
-                Text("纹理预览").font(.caption2).foregroundStyle(.secondary)
-                Button("保存 PNG…") { save(image) }
+                Text(Messages.AppAccountAppearanceView.imageText1.localized).font(.caption2).foregroundStyle(.secondary)
+                Button(Messages.AppAccountAppearanceView.imageText2.localized) { save(image) }
                 if let error { Text(error).font(.caption).foregroundStyle(.red) }
             }
             else if let error { Text(error).font(.caption).foregroundStyle(.secondary).frame(height: 180) }
             else if texture != nil { ProgressView().frame(height: 180) }
-            else { Label(kind == .skin ? "使用默认皮肤" : "没有披风", systemImage: "person.crop.square").foregroundStyle(.secondary).frame(height: 180) }
+            else { Label(kind == .skin ? Messages.AppAccountAppearanceView.errorText3.localized : Messages.AppAccountAppearanceView.errorText4.localized, systemImage: "person.crop.square").foregroundStyle(.secondary).frame(height: 180) }
         }.task(id: texture?.url) {
             image = nil; error = nil
             guard let texture else { return }
             do { let value = try await client.image(for: texture); try Task.checkCancellation(); image = value }
-            catch { if !Task.isCancelled { self.error = "预览未能加载：" + error.localizedDescription } }
+            catch { if !Task.isCancelled { self.error = Messages.AppAccountAppearanceView.appearanceError(error.localizedDescription).localized } }
         }
     }
     private func save(_ image: PlayerTextureImage) {

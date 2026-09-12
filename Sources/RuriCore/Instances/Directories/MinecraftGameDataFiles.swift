@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Installation resources and launcher configuration do not follow a game's
@@ -35,12 +36,12 @@ enum MinecraftGameDataFiles {
             ((sameLocation(sourceRoot, repository) && sameLocation(targetRoot, version)) ||
              (sameLocation(sourceRoot, version) && sameLocation(targetRoot, repository)))
         if !repositoryPair && (from == to || from.hasPrefix(to + "/") || to.hasPrefix(from + "/")) {
-            return "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。"
+            return Messages.CoreMinecraftGameDataFiles.repositoryPairText1.localized
         }
         let reserved = Set(reservedNames(paths: targetPaths, instanceID: instanceID).map(key))
         let collisions = Set(source.game.compactMap { $0.path.split(separator: "/").first.map(String.init) }).filter { reserved.contains(key($0)) }
         if !collisions.isEmpty {
-            return "当前游戏内容包含目标位置保留的文件或目录：\(collisions.sorted().joined(separator: "、"))。请选择其他目标，以保留这些内容和原有安装文件。"
+            return Messages.CoreMinecraftGameDataFiles.collisionsText1(String(describing: collisions.sorted().joined(separator: "、"))).localized
         }
         return nil
     }

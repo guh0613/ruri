@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -10,8 +11,8 @@ struct LaunchButton: View {
     var compact = false
     private var session: GameSession? { model.activeSessions[instance.id] }
     private var title: String {
-        if session != nil { return session?.gameIdentity?.isAlive == true ? "返回游戏" : "查看运行记录" }
-        return instance.installed ? "启动游戏" : "继续安装"
+        if session != nil { return session?.gameIdentity?.isAlive == true ? Messages.AppLaunchButton.titleText1.localized : Messages.AppLaunchButton.titleText2.localized }
+        return instance.installed ? Messages.AppLaunchButton.titleText3.localized : Messages.AppLaunchButton.titleText4.localized
     }
     private var disabled: Bool { session == nil && (model.busy || model.isInstanceInUse(instance.id)) }
     private func activate() { if session != nil { model.returnToGame(instance.id) } else { model.launch(instance) } }

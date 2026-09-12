@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -17,12 +18,12 @@ struct LaunchSettingsEditor: View {
                 if showsInheritance && overrides.inherits(key) {
                     HStack(alignment: .center, spacing: 16) {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("跟随默认设置").font(.caption).foregroundStyle(.secondary)
+                            Text(Messages.AppLaunchSettingsEditor.bodyText1.localized).font(.caption).foregroundStyle(.secondary)
                             Text(summary(key)).lineLimit(3).textSelection(.enabled)
                         }
                         Spacer(minLength: 8)
-                        Button("自定义") { overrides.setInheritance(false, for: key, defaults: defaults) }
-                            .accessibilityLabel("自定义\(key.title)")
+                        Button(Messages.AppLaunchSettingsEditor.bodyText2.localized) { overrides.setInheritance(false, for: key, defaults: defaults) }
+                            .accessibilityLabel(Messages.AppLaunchSettingsEditor.bodyText3(String(describing: key.title)).localized)
                     }.padding(.vertical, 3)
                 } else { fields(key) }
             } header: {
@@ -30,9 +31,9 @@ struct LaunchSettingsEditor: View {
                     Text(key.title)
                     Spacer()
                     if showsInheritance && !overrides.inherits(key) {
-                        Button("恢复默认") { overrides.setInheritance(true, for: key, defaults: defaults) }
+                        Button(Messages.AppLaunchSettingsEditor.bodyText4.localized) { overrides.setInheritance(true, for: key, defaults: defaults) }
                             .buttonStyle(.plain).foregroundStyle(.tint).font(.caption)
-                            .accessibilityLabel("\(key.title)恢复默认")
+                            .accessibilityLabel(Messages.AppLaunchSettingsEditor.bodyText5(String(describing: key.title)).localized)
                     }
                 }
             }
@@ -41,19 +42,19 @@ struct LaunchSettingsEditor: View {
     private func summary(_ key: LaunchSettingKey) -> String {
         switch key {
         case .java:
-            if let major = effective.java.major { return "自动选择 Java \(major)" }
+            if let major = effective.java.major { return Messages.AppLaunchSettingsEditor.majorText1(String(describing: major)).localized }
             if let path = effective.java.path { return runtimes.first { $0.path == path }?.label ?? path }
-            return "自动选择游戏所需的 Java"
+            return Messages.AppLaunchSettingsEditor.pathText1.localized
         case .memory:
-            return (effective.memory.mode == .automatic ? "自动分配" : "最大 \(effective.memory.maximumMB) MB") + (effective.memory.initialMB.map { " · 初始 \($0) MB" } ?? "")
-        case .window: return "\(effective.window.width) × \(effective.window.height)" + (effective.window.fullscreen ? " · 全屏启动" : " · 使用游戏保存的显示模式")
-        case .presentation: return effective.presentation.showLogs ? "启动时打开日志" : effective.presentation.hideLauncher ? "游戏运行时隐藏 Ruri" : "保持 Ruri 可见"
-        case .jvmArguments: return effective.jvmArguments.isEmpty ? "无附加 JVM 参数" : effective.jvmArguments
-        case .gameArguments: return effective.gameArguments.isEmpty ? "无附加游戏参数" : effective.gameArguments
-        case .commands: return effective.commands.enabled && !effective.commands.isEmpty ? "已启用自定义启动命令" : "不运行自定义启动命令"
+            return (effective.memory.mode == .automatic ? Messages.AppLaunchSettingsEditor.pathText2.localized : Messages.AppLaunchSettingsEditor.pathText3(String(describing: effective.memory.maximumMB)).localized) + (effective.memory.initialMB.map { Messages.AppLaunchSettingsEditor.pathText4(String(describing: $0)).localized } ?? "")
+        case .window: return "\(effective.window.width) × \(effective.window.height)" + (effective.window.fullscreen ? Messages.AppLaunchSettingsEditor.pathText5.localized : Messages.AppLaunchSettingsEditor.pathText6.localized)
+        case .presentation: return effective.presentation.showLogs ? Messages.AppLaunchSettingsEditor.pathText7.localized : effective.presentation.hideLauncher ? Messages.AppLaunchSettingsEditor.pathText8.localized : Messages.AppLaunchSettingsEditor.pathText9.localized
+        case .jvmArguments: return effective.jvmArguments.isEmpty ? Messages.AppLaunchSettingsEditor.pathText10.localized : effective.jvmArguments
+        case .gameArguments: return effective.gameArguments.isEmpty ? Messages.AppLaunchSettingsEditor.pathText11.localized : effective.gameArguments
+        case .commands: return effective.commands.enabled && !effective.commands.isEmpty ? Messages.AppLaunchSettingsEditor.pathText12.localized : Messages.AppLaunchSettingsEditor.pathText13.localized
         case .environment:
-            guard let environment = try? LaunchEnvironment(effective.environment) else { return "默认环境配置需要修正" }
-            return environment.entries.isEmpty ? "无自定义环境变量" : "\(environment.entries.count) 项自定义环境变量"
+            guard let environment = try? LaunchEnvironment(effective.environment) else { return Messages.AppLaunchSettingsEditor.environmentText1.localized }
+            return environment.entries.isEmpty ? Messages.AppLaunchSettingsEditor.environmentText2.localized : Messages.AppLaunchSettingsEditor.environmentText3(Int64(environment.entries.count)).localized
         }
     }
     @ViewBuilder private func fields(_ key: LaunchSettingKey) -> some View {
@@ -61,56 +62,56 @@ struct LaunchSettingsEditor: View {
         case .memory:
             MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments)
         case .java:
-            Picker("运行时", selection: Binding(get: { effective.java }, set: { overrides.java = $0; javaIssue = nil })) {
-                Text("自动选择兼容版本").tag(JavaSelection.automatic)
-                Section("按主版本选择") {
+            Picker(Messages.AppLaunchSettingsEditor.fieldsText1.localized, selection: Binding(get: { effective.java }, set: { overrides.java = $0; javaIssue = nil })) {
+                Text(Messages.AppLaunchSettingsEditor.fieldsText2.localized).tag(JavaSelection.automatic)
+                Section(Messages.AppLaunchSettingsEditor.fieldsText3.localized) {
                     ForEach(Array(Set([8, 11, 16, 17, 21, 25] + runtimes.map(\.major) + [effective.java.major].compactMap { $0 })).sorted(), id: \.self) { major in
                         Text("Java \(major)").tag(JavaSelection.major(major))
                     }
                 }
-                Section("已安装的运行时") {
+                Section(Messages.AppLaunchSettingsEditor.fieldsText4.localized) {
                     ForEach(runtimes) { Text($0.label + " · " + $0.version).tag(JavaSelection.path($0.path)) }
-                    if let path = effective.java.path, !runtimes.contains(where: { $0.path == path }) { Text("自选：" + path).tag(JavaSelection.path(path)) }
+                    if let path = effective.java.path, !runtimes.contains(where: { $0.path == path }) { Text(Messages.AppLaunchSettingsEditor.unavailableJavaPath(path).localized).tag(JavaSelection.path(path)) }
                 }
             }
             if let major = effective.java.major {
-                SettingsNumberField(title: "Java 主版本", value: Binding(get: { effective.java.major ?? major }, set: { overrides.java = .major($0) }), unit: "")
-                Text("缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。").font(.caption).foregroundStyle(.secondary)
+                SettingsNumberField(title: Messages.AppLaunchSettingsEditor.majorText2.localized, value: Binding(get: { effective.java.major ?? major }, set: { overrides.java = .major($0) }), unit: "")
+                Text(Messages.AppLaunchSettingsEditor.majorText3.localized).font(.caption).foregroundStyle(.secondary)
             }
-            LabeledContent("本地 Java") { Button("选择文件或 JDK…", action: chooseJava) }
+            LabeledContent(Messages.AppLaunchSettingsEditor.majorText4.localized) { Button(Messages.AppLaunchSettingsEditor.majorText5.localized, action: chooseJava) }
             if let path = effective.java.path { Text(path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled).lineLimit(2).truncationMode(.middle) }
             if let javaIssue { Text(javaIssue).font(.caption).foregroundStyle(.red) }
         case .jvmArguments:
-            SettingsTextArea(title: "附加 JVM 参数", prompt: "在这里输入 JVM 参数", text: Binding(get: { effective.jvmArguments }, set: { overrides.jvmArguments = $0 }))
-            Text("用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。").font(.caption).foregroundStyle(.secondary)
-            DisclosureGroup("填写示例") {
+            SettingsTextArea(title: Messages.AppLaunchSettingsEditor.javaIssueText1.localized, prompt: Messages.AppLaunchSettingsEditor.javaIssueText2.localized, text: Binding(get: { effective.jvmArguments }, set: { overrides.jvmArguments = $0 }))
+            Text(Messages.AppLaunchSettingsEditor.javaIssueText3.localized).font(.caption).foregroundStyle(.secondary)
+            DisclosureGroup(Messages.AppLaunchSettingsEditor.javaIssueText4.localized) {
                 Text("-Dfile.encoding=UTF-8").font(.system(.callout, design: .monospaced)).textSelection(.enabled)
-                Text("多个参数用空格分隔，含空格的值加引号。").font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppLaunchSettingsEditor.javaIssueText5.localized).font(.caption).foregroundStyle(.secondary)
             }
         case .gameArguments:
-            SettingsTextArea(title: "附加游戏参数", prompt: "在这里输入游戏参数", text: Binding(get: { effective.gameArguments }, set: { overrides.gameArguments = $0 }))
-            Text("传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。").font(.caption).foregroundStyle(.secondary)
-            DisclosureGroup("填写示例") {
+            SettingsTextArea(title: Messages.AppLaunchSettingsEditor.javaIssueText6.localized, prompt: Messages.AppLaunchSettingsEditor.javaIssueText7.localized, text: Binding(get: { effective.gameArguments }, set: { overrides.gameArguments = $0 }))
+            Text(Messages.AppLaunchSettingsEditor.javaIssueText8.localized).font(.caption).foregroundStyle(.secondary)
+            DisclosureGroup(Messages.AppLaunchSettingsEditor.javaIssueText4.localized) {
                 Text("--width 1600 --height 900").font(.system(.callout, design: .monospaced)).textSelection(.enabled)
-                Text("含空格的参数加引号；这里填写的窗口尺寸优先。").font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppLaunchSettingsEditor.javaIssueText9.localized).font(.caption).foregroundStyle(.secondary)
             }
         case .window:
-            SettingsNumberField(title: "窗口宽度", value: windowBinding(\.width), unit: "px")
-            SettingsNumberField(title: "窗口高度", value: windowBinding(\.height), unit: "px")
+            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.javaIssueText10.localized, value: windowBinding(\.width), unit: "px")
+            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.javaIssueText11.localized, value: windowBinding(\.height), unit: "px")
             HStack {
-                Text("常用尺寸"); Spacer()
-                Menu("选择尺寸") {
+                Text(Messages.AppLaunchSettingsEditor.javaIssueText12.localized); Spacer()
+                Menu(Messages.AppLaunchSettingsEditor.javaIssueText13.localized) {
                     ForEach([GameWindowSize(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)], id: \.width) { size in
                         Button("\(size.width) × \(size.height)") { var value = effective.window; value.width = size.width; value.height = size.height; overrides.window = value }
                     }
             }.fixedSize()
             }
-            Toggle("全屏启动", isOn: windowBinding(\.fullscreen))
-            Text("关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。").font(.caption).foregroundStyle(.secondary)
+            Toggle(Messages.AppLaunchSettingsEditor.valueText1.localized, isOn: windowBinding(\.fullscreen))
+            Text(Messages.AppLaunchSettingsEditor.valueText2.localized).font(.caption).foregroundStyle(.secondary)
         case .presentation:
-            Toggle("启动时打开游戏日志", isOn: presentationBinding(\.showLogs))
-            Toggle("游戏运行时隐藏 Ruri", isOn: presentationBinding(\.hideLauncher)).disabled(effective.presentation.showLogs)
-            Text(effective.presentation.showLogs ? "打开日志时，Ruri 保持可见。" : "隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。").font(.caption).foregroundStyle(.secondary)
+            Toggle(Messages.AppLaunchSettingsEditor.valueText3.localized, isOn: presentationBinding(\.showLogs))
+            Toggle(Messages.AppLaunchSettingsEditor.pathText8.localized, isOn: presentationBinding(\.hideLauncher)).disabled(effective.presentation.showLogs)
+            Text(effective.presentation.showLogs ? Messages.AppLaunchSettingsEditor.valueText4.localized : Messages.AppLaunchSettingsEditor.valueText5.localized).font(.caption).foregroundStyle(.secondary)
         case .environment:
             EnvironmentVariablesEditor(text: Binding(get: { effective.environment }, set: { overrides.environment = $0 }))
         case .commands:
@@ -119,7 +120,7 @@ struct LaunchSettingsEditor: View {
     }
     private func chooseJava() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = true; panel.allowsMultipleSelection = false
-        panel.message = "选择 java 文件、JDK 包或 Java Home 文件夹。"
+        panel.message = Messages.AppLaunchSettingsEditor.panelText1.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         do { overrides.java = .path(try JavaDiscovery.executable(in: url).path); javaIssue = nil }
         catch { javaIssue = error.localizedDescription }
@@ -138,34 +139,34 @@ struct MemorySettingsEditor: View {
     @State private var availability = MemoryAvailability.current()
     private var preview: Result<LaunchMemory, Error> { Result { try JVMHeapArguments.resolve(base: settings.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments)) } }
     var body: some View {
-        Picker("分配方式", selection: $settings.mode) { Text("自动分配").tag(MemorySettings.Mode.automatic); Text("手动设置").tag(MemorySettings.Mode.manual) }
+        Picker(Messages.AppLaunchSettingsEditor.bodyText6.localized, selection: $settings.mode) { Text(Messages.AppLaunchSettingsEditor.pathText2.localized).tag(MemorySettings.Mode.automatic); Text(Messages.AppLaunchSettingsEditor.bodyText7.localized).tag(MemorySettings.Mode.manual) }
         if settings.mode == .manual {
-            SettingsNumberField(title: "最大内存", value: $settings.maximumMB)
+            SettingsNumberField(title: Messages.AppLaunchSettingsEditor.bodyText8.localized, value: $settings.maximumMB)
             HStack {
-                Text("常用大小"); Spacer()
-                Menu("选择内存") { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button("\(value / 1024) GB") { settings.maximumMB = value } } }.fixedSize()
+                Text(Messages.AppLaunchSettingsEditor.bodyText9.localized); Spacer()
+                Menu(Messages.AppLaunchSettingsEditor.bodyText10.localized) { ForEach([2048, 4096, 6144, 8192, 12288, 16384], id: \.self) { value in Button(LocalizedFormat.bytes(Int64(value) * 1_048_576, memory: true)) { settings.maximumMB = value } } }.fixedSize()
             }
         } else {
             HStack {
-                Text("根据当前可用内存估算，为 macOS 保留余量。").font(.caption).foregroundStyle(.secondary)
-                Spacer(); Button("重新估算") { availability = .current() }.controlSize(.small)
+                Text(Messages.AppLaunchSettingsEditor.bodyText11.localized).font(.caption).foregroundStyle(.secondary)
+                Spacer(); Button(Messages.AppLaunchSettingsEditor.bodyText12.localized) { availability = .current() }.controlSize(.small)
             }
         }
         switch preview {
         case .success(let memory):
             Text(memory.summary).font(.callout).textSelection(.enabled)
             if memory.maximumSource == .jvmArguments || memory.initialSource == .jvmArguments || memory.metaspaceSource == .jvmArguments {
-                Text("部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。").font(.caption).foregroundStyle(.orange)
+                Text(Messages.AppLaunchSettingsEditor.memoryText1.localized).font(.caption).foregroundStyle(.orange)
             }
         case .failure(let error): Text(error.localizedDescription).font(.callout).foregroundStyle(.red)
         }
-        DisclosureGroup("高级内存选项") {
-            Toggle("指定初始内存", isOn: Binding(get: { settings.initialMB != nil }, set: { settings.initialMB = $0 ? 512 : nil }))
-            if settings.initialMB != nil { SettingsNumberField(title: "初始内存", value: Binding(get: { settings.initialMB ?? 512 }, set: { settings.initialMB = $0 })) }
-            Toggle("限制类元数据内存", isOn: Binding(get: { settings.metaspaceMB != nil }, set: { settings.metaspaceMB = $0 ? 512 : nil }))
-            if settings.metaspaceMB != nil { SettingsNumberField(title: "Metaspace 上限", value: Binding(get: { settings.metaspaceMB ?? 512 }, set: { settings.metaspaceMB = $0 })) }
-            Text("初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。").font(.caption).foregroundStyle(.secondary)
+        DisclosureGroup(Messages.AppLaunchSettingsEditor.errorText1.localized) {
+            Toggle(Messages.AppLaunchSettingsEditor.errorText2.localized, isOn: Binding(get: { settings.initialMB != nil }, set: { settings.initialMB = $0 ? 512 : nil }))
+            if settings.initialMB != nil { SettingsNumberField(title: Messages.AppLaunchSettingsEditor.errorText3.localized, value: Binding(get: { settings.initialMB ?? 512 }, set: { settings.initialMB = $0 })) }
+            Toggle(Messages.AppLaunchSettingsEditor.errorText4.localized, isOn: Binding(get: { settings.metaspaceMB != nil }, set: { settings.metaspaceMB = $0 ? 512 : nil }))
+            if settings.metaspaceMB != nil { SettingsNumberField(title: Messages.AppLaunchSettingsEditor.errorText5.localized, value: Binding(get: { settings.metaspaceMB ?? 512 }, set: { settings.metaspaceMB = $0 })) }
+            Text(Messages.AppLaunchSettingsEditor.errorText6.localized).font(.caption).foregroundStyle(.secondary)
         }
-        Text("1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。").font(.caption).foregroundStyle(.secondary)
+        Text(Messages.AppLaunchSettingsEditor.errorText7.localized).font(.caption).foregroundStyle(.secondary)
     }
 }

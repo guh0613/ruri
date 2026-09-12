@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -6,7 +7,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...currentSchemaVersion).contains(result.schemaVersion) else { throw RuriError.message("此数据由更新版本的 Ruri 创建，请升级启动器。") }
+        guard (1...currentSchemaVersion).contains(result.schemaVersion) else { throw RuriError.message(Messages.CoreStateStore.resultText1) }
         try validate(result, paths: paths)
         return result
     }
@@ -19,7 +20,7 @@ public enum StateStore {
         let result: PersistentState
         if current.revision == state.revision { result = state }
         else {
-            guard let baseline, baseline.revision == state.revision else { throw conflict("数据已由另一个 Ruri 更新") }
+            guard let baseline, baseline.revision == state.revision else { throw conflict(Messages.CoreStateStore.baselineText1.localized) }
             result = try merge(base: baseline, local: state, remote: current)
         }
         return try write(result, paths: paths)
@@ -35,8 +36,8 @@ public enum StateStore {
     }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
         try JavaRuntimeStore.validate(state.settings.javaLocations ?? [])
-        guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message("启动快照不能覆盖实例设置，请保存原实例的覆盖项。") }
-        guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message("数据包含重复实例或账号，已暂停写入。") }
+        guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message(Messages.CoreStateStore.validateText1) }
+        guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message(Messages.CoreStateStore.validateText2) }
         for instance in state.instances {
             try instance.importedInstallation?.validate()
             if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
@@ -46,7 +47,7 @@ public enum StateStore {
         let directories = (state.gameDirectories ?? []).map(\.id) + detached.map(\.id)
         let instances = state.instances.map(\.id) + detached.flatMap { $0.instances.map(\.id) }
         guard Set(directories).count == directories.count, Set(instances).count == instances.count else {
-            throw RuriError.message("文件夹登记与保留记录包含重复身份，已暂停写入。")
+            throw RuriError.message(Messages.CoreStateStore.instancesText1)
         }
         for folder in detached { try folder.validate(paths: paths) }
     }
@@ -67,32 +68,38 @@ public enum StateStore {
         try paths.prepare()
         let file = try LauncherPaths.safePath(".ruri-state.lock", within: paths.root)
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message("无法锁定 Ruri 设置文件。") }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreStateStore.fdText1) }
         var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
         guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw RuriError.message("另一个 Ruri 正在保存数据，请稍后重试。")
+            close(fd); throw RuriError.message(Messages.CoreStateStore.infoText1)
         }
         return fd
     }
     private static func conflict(_ field: String) -> RuriError {
         let parts = field.split(separator: ".").map(String.init)
-        let labels = ["instances": "同一实例", "accounts": "同一账号", "gameDirectories": "同一实例文件夹", "detachedMinecraftFolders": "保留的文件夹记录", "settings": "启动器设置",
-                      "name": "名称", "favorite": "收藏状态", "memoryMB": "内存", "defaultMemoryMB": "默认内存", "javaPath": "Java 选择",
-                      "width": "窗口宽度", "height": "窗口高度", "appearance": "外观", "downloadSource": "下载源",
-                      "extraJVMArguments": "JVM 参数", "extraGameArguments": "游戏参数", "directoryID": "所属文件夹",
-                      "memory": "内存策略", "defaultMemorySettings": "默认内存策略"]
+        let labels = ["instances": Messages.CoreStateStore.labelsText1.localized, "accounts": Messages.CoreStateStore.labelsText2.localized, "gameDirectories": Messages.CoreStateStore.labelsText3.localized, "detachedMinecraftFolders": Messages.CoreStateStore.labelsText4.localized, "settings": Messages.CoreStateStore.labelsText5.localized,
+                      "name": Messages.CoreStateStore.labelsText6.localized, "favorite": Messages.CoreStateStore.labelsText7.localized, "memoryMB": Messages.CoreStateStore.labelsText8.localized, "defaultMemoryMB": Messages.CoreStateStore.labelsText9.localized, "javaPath": Messages.CoreStateStore.labelsText10.localized,
+                      "width": Messages.CoreStateStore.labelsText11.localized, "height": Messages.CoreStateStore.labelsText12.localized, "appearance": Messages.CoreStateStore.labelsText13.localized, "downloadSource": Messages.CoreStateStore.labelsText14.localized,
+                      "extraJVMArguments": Messages.CoreStateStore.labelsText15.localized, "extraGameArguments": Messages.CoreStateStore.labelsText16.localized, "directoryID": Messages.CoreStateStore.labelsText17.localized,
+                      "memory": Messages.CoreStateStore.labelsText18.localized, "defaultMemorySettings": Messages.CoreStateStore.labelsText19.localized]
         let description: String
         if let first = parts.first, let subject = labels[first] {
-            description = subject + (parts.count > 1 ? "的修改" : "") + "与另一窗口冲突" + (parts.last.flatMap { labels[$0] }.map { "（\($0)）" } ?? "")
-        } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = "当前实例、文件夹或账号的选择已在另一窗口改变" }
+            if parts.count > 1, let field = parts.last.flatMap({ labels[$0] }) {
+                description = Messages.CoreStateStore.fieldConflict(subject, field).localized
+            } else if parts.count > 1 {
+                description = Messages.CoreStateStore.subjectChangeConflict(subject).localized
+            } else {
+                description = Messages.CoreStateStore.subjectConflict(subject).localized
+            }
+        } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = Messages.CoreStateStore.subjectText3.localized }
         else { description = field }
-        return .message("保存冲突：\(description)。原文件已保留，请重新载入后再修改。")
+        return .message(Messages.CoreStateStore.subjectText4(String(describing: description)).localized)
     }
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {
         func object(_ state: PersistentState) throws -> [String: Any] {
             var normalized = state; normalizeMemory(&normalized)
-            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict("数据格式无效") }
+            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict(Messages.CoreStateStore.resultText2.localized) }
             result.removeValue(forKey: "revision"); result.removeValue(forKey: "schemaVersion")
             return result
         }

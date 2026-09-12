@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -23,19 +24,19 @@ struct SchematicManagerView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                SectionHeading(title: "原理图", subtitle: instance.name)
+                SectionHeading(title: Messages.AppSchematicManagerView.bodyText1.localized, subtitle: instance.name)
                 Spacer()
-                Button("新建文件夹", systemImage: "folder.badge.plus") { folderName = ""; creatingFolder = true }.disabled(!canModify)
-                Button("导入…", systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button("完成") { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
+                Button(Messages.AppSchematicManagerView.bodyText2.localized, systemImage: "folder.badge.plus") { folderName = ""; creatingFolder = true }.disabled(!canModify)
+                Button(Messages.AppSchematicManagerView.bodyText3.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
             }
-            Text("文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。").font(.callout).foregroundStyle(.secondary)
+            Text(Messages.AppSchematicManagerView.bodyText4.localized).font(.callout).foregroundStyle(.secondary)
             HStack {
-                Button { directory = directory.split(separator: "/").dropLast().joined(separator: "/"); search = "" } label: { Image(systemName: "chevron.left") }.disabled(directory.isEmpty || model.busy).help("返回上一级")
+                Button { directory = directory.split(separator: "/").dropLast().joined(separator: "/"); search = "" } label: { Image(systemName: "chevron.left") }.disabled(directory.isEmpty || model.busy).help(Messages.AppSchematicManagerView.bodyText5.localized)
                 Button("schematics") { directory = ""; search = "" }.disabled(directory.isEmpty || model.busy)
                 if !directory.isEmpty { Text("/ " + directory).lineLimit(1).truncationMode(.middle).foregroundStyle(.secondary) }
                 Spacer()
-                TextField("搜索当前文件夹", text: $search).textFieldStyle(.roundedBorder).frame(width: 200)
+                TextField(Messages.AppSchematicManagerView.bodyText6.localized, text: $search).textFieldStyle(.roundedBorder).frame(width: 200)
             }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -48,24 +49,24 @@ struct SchematicManagerView: View {
                         } label: {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(entry.name).font(.headline).lineLimit(1)
-                                if !entry.isDirectory { Text(entry.url.pathExtension.uppercased() + " · " + ByteCountFormatter.string(fromByteCount: entry.size, countStyle: .file)).font(.caption).foregroundStyle(.secondary) }
+                                if !entry.isDirectory { Text(entry.url.pathExtension.uppercased() + " · " + LocalizedFormat.bytes(entry.size)).font(.caption).foregroundStyle(.secondary) }
                             }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
                         }.buttonStyle(.plain).disabled(model.busy)
                         Menu {
-                            if !entry.isDirectory { Button("查看信息") { inspecting = entry }; Button("导出…") { export(entry) }.disabled(!canModify) }
-                            Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([entry.url]) }
+                            if !entry.isDirectory { Button(Messages.AppSchematicManagerView.errorText1.localized) { inspecting = entry }; Button(Messages.AppSchematicManagerView.errorText2.localized) { export(entry) }.disabled(!canModify) }
+                            Button(Messages.AppSchematicManagerView.errorText3.localized) { NSWorkspace.shared.activateFileViewerSelecting([entry.url]) }
                             Divider()
-                            Button("移到废纸篓…", role: .destructive) { removing = entry }.disabled(!canModify)
+                            Button(Messages.AppSchematicManagerView.errorText4.localized, role: .destructive) { removing = entry }.disabled(!canModify)
                         } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
                     }.padding(.vertical, 7)
                 }.listStyle(.bordered)
-                .overlay { if entries.isEmpty { Text("将原理图拖到这里，或点击“导入”。").foregroundStyle(.secondary).allowsHitTesting(false) } }
+                .overlay { if entries.isEmpty { Text(Messages.AppSchematicManagerView.errorText5.localized).foregroundStyle(.secondary).allowsHitTesting(false) } }
                 .dropDestination(for: URL.self) { urls, _ in guard canModify else { return false }; importFiles(urls); return true }
             }
             HStack {
-                Button("刷新", systemImage: "arrow.clockwise") { Task { await reload() } }.disabled(loading || model.busy)
+                Button(Messages.AppSchematicManagerView.errorText6.localized, systemImage: "arrow.clockwise") { Task { await reload() } }.disabled(loading || model.busy)
                 Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button("取消任务") { model.operation?.cancel() } }
+                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppSchematicManagerView.errorText7.localized) { model.operation?.cancel() } }
             }
         }.padding(24).frame(width: 780, height: 600).interactiveDismissDisabled(model.busy)
         .task(id: directory) { await reload() }
@@ -73,20 +74,20 @@ struct SchematicManagerView: View {
             do { importFiles(try result.get()) } catch { self.error = error.localizedDescription }
         }
         .sheet(item: $inspecting) { entry in SchematicInfoView(entry: entry, manager: manager) }
-        .alert("新建文件夹", isPresented: $creatingFolder) {
-            TextField("文件夹名称", text: $folderName)
-            Button("创建") { mutate("新建原理图文件夹") { try await manager.createFolder(folderName, directory: directory) } }
-            Button("取消", role: .cancel) {}
+        .alert(Messages.AppSchematicManagerView.bodyText2.localized, isPresented: $creatingFolder) {
+            TextField(Messages.AppSchematicManagerView.errorText8.localized, text: $folderName)
+            Button(Messages.AppSchematicManagerView.errorText9.localized) { mutate(Messages.AppSchematicManagerView.errorText10.localized) { try await manager.createFolder(folderName, directory: directory) } }
+            Button(Messages.Common.cancel.localized, role: .cancel) {}
         }
-        .confirmationDialog("移到废纸篓？", isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
-            Button("移到废纸篓", role: .destructive) {
-                if let entry = removing { mutate("移除原理图") { _ = try await manager.remove(entry) } }
+        .confirmationDialog(Messages.AppSchematicManagerView.errorText11.localized, isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppSchematicManagerView.errorText12.localized, role: .destructive) {
+                if let entry = removing { mutate(Messages.AppSchematicManagerView.entryText1.localized) { _ = try await manager.remove(entry) } }
                 removing = nil
             }
-        } message: { Text((removing?.name ?? "") + (removing?.isDirectory == true ? " 及其中的全部文件" : "")) }
+        } message: { Text((removing?.name ?? "") + (removing?.isDirectory == true ? Messages.AppSchematicManagerView.entryText2.localized : "")) }
     }
     private func importFiles(_ urls: [URL]) {
-        mutate("导入原理图") {
+        mutate(Messages.AppSchematicManagerView.importFilesText1.localized) {
             let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }; defer { scoped.forEach { $0.stopAccessingSecurityScopedResource() } }
             try await manager.importFiles(urls, directory: directory)
         }
@@ -95,7 +96,7 @@ struct SchematicManagerView: View {
         let panel = NSSavePanel(); panel.nameFieldStringValue = entry.name
         panel.allowedContentTypes = [UTType(filenameExtension: entry.url.pathExtension) ?? .data]
         guard panel.runModal() == .OK, let destination = panel.url else { return }
-        mutate("导出原理图") { try await manager.export(entry, to: destination); model.notice = "原理图已导出"; model.noticeFileURL = destination }
+        mutate(Messages.AppSchematicManagerView.destinationText1.localized) { try await manager.export(entry, to: destination); model.notice = Messages.AppSchematicManagerView.destinationText2.localized; model.noticeFileURL = destination }
     }
     private func reload() async {
         loading = true; error = nil
@@ -125,20 +126,20 @@ private struct SchematicInfoView: View {
                 if let data = info.previewARGB, let preview = image(data) { Image(nsImage: preview).resizable().interpolation(.none).scaledToFit().frame(maxWidth: .infinity, maxHeight: 160) }
                 if let description = info.description, !description.isEmpty { Text(description).font(.callout).textSelection(.enabled) }
                 Grid(alignment: .leading, horizontalSpacing: 24, verticalSpacing: 10) {
-                    if let author = info.author, !author.isEmpty { row("作者", author) }
-                    if !info.dimensions.isEmpty { row("尺寸", info.dimensions.map(String.init).joined(separator: " × ")) }
-                    if let blocks = info.blocks { row("方块数", blocks.formatted()) }
-                    if let volume = info.volume { row("总体积", volume.formatted()) }
-                    if let regions = info.regions { row("区域数", regions.formatted()) }
-                    if let version = info.formatVersion { row("格式版本", String(version)) }
-                    if let version = info.gameDataVersion { row("游戏数据版本", String(version)) }
-                    if let date = info.createdAt { row("创建时间", date.formatted(date: .abbreviated, time: .shortened)) }
-                    if let date = info.modifiedAt { row("修改时间", date.formatted(date: .abbreviated, time: .shortened)) }
-                    row("文件大小", ByteCountFormatter.string(fromByteCount: entry.size, countStyle: .file))
+                    if let author = info.author, !author.isEmpty { row(Messages.AppSchematicManagerView.authorText1.localized, author) }
+                    if !info.dimensions.isEmpty { row(Messages.AppSchematicManagerView.authorText2.localized, info.dimensions.map(String.init).joined(separator: " × ")) }
+                    if let blocks = info.blocks { row(Messages.AppSchematicManagerView.blocksText1.localized, LocalizedFormat.number(blocks)) }
+                    if let volume = info.volume { row(Messages.AppSchematicManagerView.volumeText1.localized, LocalizedFormat.number(volume)) }
+                    if let regions = info.regions { row(Messages.AppSchematicManagerView.regionsText1.localized, LocalizedFormat.number(regions)) }
+                    if let version = info.formatVersion { row(Messages.AppSchematicManagerView.versionText1.localized, String(version)) }
+                    if let version = info.gameDataVersion { row(Messages.AppSchematicManagerView.versionText2.localized, String(version)) }
+                    if let date = info.createdAt { row(Messages.AppSchematicManagerView.dateText1.localized, LocalizedFormat.date(date, date: .abbreviated, time: .shortened)) }
+                    if let date = info.modifiedAt { row(Messages.AppSchematicManagerView.dateText2.localized, LocalizedFormat.date(date, date: .abbreviated, time: .shortened)) }
+                    row(Messages.AppSchematicManagerView.dateText3.localized, LocalizedFormat.bytes(entry.size))
                 }
-            } else if let error { Text("无法预览信息：" + error).font(.callout).foregroundStyle(.orange) }
-            else { ProgressView("读取原理图信息…") }
-            HStack { Spacer(); Button("完成") { dismiss() }.keyboardShortcut(.cancelAction) }
+            } else if let error { Text(Messages.AppSchematicManagerView.previewError(error).localized).font(.callout).foregroundStyle(.orange) }
+            else { ProgressView(Messages.AppSchematicManagerView.errorText14.localized) }
+            HStack { Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
         }.padding(24).frame(width: 580)
         .task { do { info = try await manager.info(entry) } catch { self.error = error.localizedDescription } }
     }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct GameExit: Codable, Equatable, Sendable {
@@ -18,28 +19,29 @@ public struct GameExit: Codable, Equatable, Sendable {
     }
     public var requiresAttention: Bool { !succeeded && !stoppedByLauncher }
     public var shellStatus: Int32 { reason == .signal ? 128 + status : status }
-    public var summary: String {
-        if stoppedByLauncher { return "游戏已按要求结束" }
-        if succeeded { return "游戏已正常退出" }
-        if reason == .signal { return "游戏进程因 \(signalName) 退出" }
-        return "游戏异常退出（退出码 \(status)）"
+    public var summary: String { summaryMessage.localized }
+    public var summaryMessage: LocalizedMessage {
+        if stoppedByLauncher { return Messages.CoreGameExit.summaryText1 }
+        if succeeded { return Messages.CoreGameExit.summaryText2 }
+        if reason == .signal { return Messages.CoreGameExit.summaryText3(String(describing: signalName)) }
+        return Messages.CoreGameExit.summaryText4(String(describing: status))
     }
     public var explanation: String {
-        if stoppedByLauncher { return "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。" }
-        if succeeded { return normalQuitRequested == true ? "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。" : "游戏进程返回成功状态。" }
+        if stoppedByLauncher { return Messages.CoreGameExit.explanationText1.localized }
+        if succeeded { return normalQuitRequested == true ? Messages.CoreGameExit.explanationText2.localized : Messages.CoreGameExit.explanationText3.localized }
         if reason == .signal && [9, 15].contains(status) {
-            return "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。"
+            return Messages.CoreGameExit.explanationText4.localized
         }
         if reason == .exit && status == 143 {
-            return "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。"
+            return Messages.CoreGameExit.explanationText5.localized
         }
-        return "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。"
+        return Messages.CoreGameExit.explanationText6.localized
     }
     public var logDescription: String {
-        "[Ruri] \(summary)；PID \(processID)；\(reason == .signal ? "信号" : "退出码") \(status)；Ruri 结束请求：\(stopRequested ? "是" : "否")；正常退出请求：\(normalQuitRequested == true ? "是" : "否")；开始 \(startedAt.ISO8601Format())；结束 \(endedAt.ISO8601Format())"
+        Messages.CoreGameExit.logDescriptionText5(String(describing: summary), String(describing: processID), String(describing: reason == .signal ? Messages.CoreGameExit.logDescriptionText1.localized : Messages.CoreGameExit.logDescriptionText2.localized), String(describing: status), String(describing: stopRequested ? Messages.CoreGameExit.logDescriptionText3.localized : Messages.CoreGameExit.logDescriptionText4.localized), String(describing: normalQuitRequested == true ? Messages.CoreGameExit.logDescriptionText3.localized : Messages.CoreGameExit.logDescriptionText4.localized), String(describing: startedAt.ISO8601Format()), String(describing: endedAt.ISO8601Format())).localized
     }
     private var signalName: String {
-        [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? "信号 \(status)"
+        [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? Messages.CoreGameExit.signalNameText1(String(describing: status)).localized
     }
     public func save(paths: LauncherPaths, instanceID: UUID) throws {
         let url = try LauncherPaths.safePath("last-exit.json", within: paths.instance(instanceID))
@@ -49,7 +51,10 @@ public struct GameExit: Codable, Equatable, Sendable {
 }
 
 public struct GameCrashReport: Identifiable, Sendable {
-    public enum Kind: String, Sendable { case minecraft = "Minecraft", jvm = "Java 虚拟机" }
+    public enum Kind: String, Sendable {
+        case minecraft = "Minecraft", jvm
+        public var title: String { switch self { case .minecraft: "Minecraft"; case .jvm: Messages.CoreGameExit.titleText1.localized } }
+    }
     public let url: URL
     public let kind: Kind
     public var id: String { url.path }

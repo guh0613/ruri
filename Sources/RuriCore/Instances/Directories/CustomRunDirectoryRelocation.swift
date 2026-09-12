@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -50,7 +51,7 @@ public actor CustomRunDirectoryRelocation {
 
     public func preview(instanceID: UUID, target: URL) throws -> CustomRunDirectoryRelocationPreview {
         let state = try StateStore.load(paths)
-        guard let original = state.instances.first(where: { $0.id == instanceID })?.customRunDirectory else { throw RuriError.message("此实例没有保存过自定义运行目录。") }
+        guard let original = state.instances.first(where: { $0.id == instanceID })?.customRunDirectory else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.originalText1) }
         let replacement = try original.relocated(to: target, paths: paths.configured(with: state))
         try validateOriginal(original, replacement: replacement)
         let affected = affectedInstances(state, original: original)
@@ -89,17 +90,17 @@ public actor CustomRunDirectoryRelocation {
     }
     private func validateOriginal(_ original: CustomRunDirectory, replacement: CustomRunDirectory) throws {
         if !original.isSameLocation(as: replacement), (try? original.validateAvailability()) != nil {
-            throw RuriError.message("原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。")
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.validateOriginalText1)
         }
     }
     private func validate(_ preview: CustomRunDirectoryRelocationPreview, state: PersistentState) throws {
         let affected = affectedInstances(state, original: preview.original)
         guard affected.contains(where: { $0.id == preview.instanceID }), affected.map(CustomRunDirectoryBinding.init) == preview.bindings else {
-            throw RuriError.message("使用此目录的实例或其目录策略已经改变，请重新预览。")
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.affectedText1)
         }
         try validateOriginal(preview.original, replacement: preview.replacement)
         try preview.replacement.validateAvailability()
-        guard preview.identity.matches(preview.replacement.url) else { throw RuriError.message("所选文件夹在预览后被替换或移动，请重新选取原目录。") }
+        guard preview.identity.matches(preview.replacement.url) else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.affectedText2) }
         try paths.configured(with: replacing(preview.original, with: preview.replacement, in: state)).validateDirectoryConfiguration()
     }
 }
@@ -118,7 +119,7 @@ private final class CustomRunDirectoryRelocationAccess {
             var metadataOnly = instance; metadataOnly.runDirectory = .isolated
             instanceLeases.append(try GameRunLease.acquire(paths: current.including(metadataOnly), instanceID: instance.id))
         }
-        guard var representative = affected.first else { throw RuriError.message("没有实例引用此目录。") }
+        guard var representative = affected.first else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.representativeText1) }
         representative.runDirectory = .custom; representative.customRunDirectory = replacement
         let checked = relocated.including(representative)
         rootLease = try SharedGameDirectoryLease.acquire(paths: checked, instanceID: representative.id, ignoringSession: nil)
@@ -126,7 +127,7 @@ private final class CustomRunDirectoryRelocationAccess {
             let lock = GameDataOperationLock(); try lock.acquire(directory: checked.gameDataState(representative.id), name: name); operations.append(lock)
         }
         for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: checked.gameDataState(representative.id).appendingPathComponent(name).path) {
-            throw RuriError.message("此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。")
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.lockText1)
         }
         worlds = try InstanceTransfer.lockWorlds(replacement.url)
         try replacement.validateAvailability()

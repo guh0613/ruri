@@ -1,11 +1,12 @@
+import RuriLocalization
 import Foundation
 import CryptoKit
 
 extension ModrinthService {
     public func versionsFromHashes(_ hashes: [String], algorithm: String = "sha512") async throws -> [String: ModrinthVersion] {
-        guard ["sha1", "sha512"].contains(algorithm), hashes.count <= 100_000 else { throw RuriError.message("无效文件哈希请求") }
+        guard ["sha1", "sha512"].contains(algorithm), hashes.count <= 100_000 else { throw RuriError.message(Messages.CoreMRPack.versionsFromHashesText1) }
         let length = algorithm == "sha1" ? 40 : 128
-        guard hashes.allSatisfy({ $0.range(of: "^[a-fA-F0-9]{\(length)}$", options: .regularExpression) != nil }) else { throw RuriError.message("无效文件哈希") }
+        guard hashes.allSatisfy({ $0.range(of: "^[a-fA-F0-9]{\(length)}$", options: .regularExpression) != nil }) else { throw RuriError.message(Messages.CoreMRPack.lengthText1) }
         let unique = Array(Set(hashes.map { $0.lowercased() })).sorted(); var result: [String: ModrinthVersion] = [:]
         for start in stride(from: 0, to: unique.count, by: 100) {
             try Task.checkCancellation()
@@ -15,7 +16,7 @@ extension ModrinthService {
             request.httpBody = try JSONSerialization.data(withJSONObject: ["hashes": batch, "algorithm": algorithm])
             let versions = try JSONDecoder().decode([String: ModrinthVersion].self, from: await client.data(for: request))
             for (key, value) in versions where batch.contains(key.lowercased()) {
-                guard value.files.contains(where: { $0.hashes[algorithm]?.lowercased() == key.lowercased() }) else { throw RuriError.message("Modrinth 返回的文件与查询哈希不一致") }
+                guard value.files.contains(where: { $0.hashes[algorithm]?.lowercased() == key.lowercased() }) else { throw RuriError.message(Messages.CoreMRPack.versionsText1) }
                 result[key.lowercased()] = value
             }
         }
@@ -27,29 +28,29 @@ extension InstanceTransfer {
     static let mrpackLoaders: [String: LoaderKind] = ["fabric-loader": .fabric, "quilt-loader": .quilt, "forge": .forge, "neoforge": .neoforge]
     static func describeMRPack(_ root: URL) throws -> InstanceImportDescription {
         let index = try JSONDecoder().decode(ModpackIndex.self, from: read(root.appendingPathComponent("modrinth.index.json")))
-        guard index.formatVersion == 1, index.game == "minecraft", let gameVersion = index.dependencies["minecraft"], !index.versionId.isEmpty else { throw RuriError.message("不支持的 Modrinth 整合包清单") }
+        guard index.formatVersion == 1, index.game == "minecraft", let gameVersion = index.dependencies["minecraft"], !index.versionId.isEmpty else { throw RuriError.message(Messages.CoreMRPack.gameVersionText1) }
         let unknown = Set(index.dependencies.keys).subtracting(Set(mrpackLoaders.keys).union(["minecraft"]))
-        guard unknown.isEmpty else { throw RuriError.message("整合包需要尚未接入的组件：\(unknown.sorted().joined(separator: "、"))") }
+        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMRPack.unknownText1(String(describing: unknown.sorted().joined(separator: "、")))) }
         let loaders = index.dependencies.keys.filter { mrpackLoaders[$0] != nil }
-        guard loaders.count <= 1 else { throw RuriError.message("整合包同时声明多个加载器") }
+        guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreMRPack.loadersText1) }
         let instance = GameInstance(name: index.name, gameVersion: gameVersion, loader: loaders.first.flatMap { mrpackLoaders[$0] } ?? .vanilla, loaderVersion: loaders.first.flatMap { index.dependencies[$0] })
         try validate(instance)
         let game = root.appendingPathComponent("overrides")
-        guard index.files.count <= 100_000 else { throw RuriError.message("整合包文件数量超过限制") }
+        guard index.files.count <= 100_000 else { throw RuriError.message(Messages.CoreMRPack.gameText1) }
         var files: [PackFile] = []
         var paths = Set<String>()
         for file in index.files {
             _ = try LauncherPaths.safePath(file.path, within: game)
-            guard !file.path.contains(":"), !file.path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == "." }), paths.insert(file.path.lowercased()).inserted else { throw RuriError.message("mrpack 路径无效或重复：\(file.path)") }
+            guard !file.path.contains(":"), !file.path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == "." }), paths.insert(file.path.lowercased()).inserted else { throw RuriError.message(Messages.CoreMRPack.pathsText1(String(describing: file.path))) }
             guard let sha1 = file.hashes["sha1"], sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil,
-                  let sha512 = file.hashes["sha512"], sha512.range(of: "^[a-fA-F0-9]{128}$", options: .regularExpression) != nil, file.fileSize >= 0 else { throw RuriError.message("mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：\(file.path)") }
-            guard (file.env ?? [:]).values.allSatisfy({ ["required", "optional", "unsupported"].contains($0) }) else { throw RuriError.message("mrpack 文件环境声明无效：\(file.path)") }
+                  let sha512 = file.hashes["sha512"], sha512.range(of: "^[a-fA-F0-9]{128}$", options: .regularExpression) != nil, file.fileSize >= 0 else { throw RuriError.message(Messages.CoreMRPack.sha512Text1(String(describing: file.path))) }
+            guard (file.env ?? [:]).values.allSatisfy({ ["required", "optional", "unsupported"].contains($0) }) else { throw RuriError.message(Messages.CoreMRPack.sha512Text2(String(describing: file.path))) }
             if file.env?["client"] == "unsupported" { continue }
             let urls = file.downloads.filter { $0.scheme == "https" && $0.host != nil && $0.user == nil && $0.password == nil }
-            guard let first = urls.first else { throw RuriError.message("mrpack 文件没有有效的 HTTPS 下载地址：\(file.path)") }
+            guard let first = urls.first else { throw RuriError.message(Messages.CoreMRPack.firstText1(String(describing: file.path))) }
             files.append(PackFile(path: file.path, sha1: sha1, url: first, sha512: sha512, size: file.fileSize, fallbackURLs: Array(urls.dropFirst()), optional: file.env?["client"] == "optional"))
         }
-        var warnings = ["整合包版本：\(index.versionId)"]
+        var warnings = [Messages.CoreMRPack.warningsText1(String(describing: index.versionId)).localized]
         if let summary = index.summary, !summary.isEmpty { warnings.append(summary) }
         var identities: [String: String] = [:]
         for file in files {
@@ -63,12 +64,12 @@ extension InstanceTransfer {
 
     func exportMRPack(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails,
                       service: ModrinthService = ModrinthService(), progress: @Sendable (InstallProgress) -> Void) async throws {
-        guard instance.extraJVMArguments.isEmpty, instance.extraGameArguments?.isEmpty != false, instance.packLibraries?.isEmpty != false, instance.supportedJavaMajors?.isEmpty != false else { throw RuriError.message("mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。") }
-        guard !details.version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, details.version.count <= 128, details.description.count <= 32_768 else { throw RuriError.message("整合包版本或描述无效") }
+        guard instance.extraJVMArguments.isEmpty, instance.extraGameArguments?.isEmpty != false, instance.packLibraries?.isEmpty != false, instance.supportedJavaMajors?.isEmpty != false else { throw RuriError.message(Messages.CoreMRPack.exportMRPackText1) }
+        guard !details.version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, details.version.count <= 128, details.description.count <= 32_768 else { throw RuriError.message(Messages.CoreMRPack.exportMRPackText2) }
         let workspace = paths.cache.appendingPathComponent("export-mrpack-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: workspace) }
         let snapshot = workspace.appendingPathComponent("client-overrides")
-        try FileTree.copy(from: game, to: snapshot, excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress("正在准备整合包", completed: done, total: total)) }
+        try FileTree.copy(from: game, to: snapshot, excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress(Messages.CoreMRPack.snapshotText1, completed: done, total: total)) }
         let entries = try FileTree.entries(in: snapshot)
         var hashes: [String: (String, String)] = [:]
         if details.referenceDownloads {
@@ -78,9 +79,9 @@ extension InstanceTransfer {
         }
         var versions: [String: ModrinthVersion] = [:]
         if !hashes.isEmpty {
-            progress(InstallProgress("正在识别 Modrinth 文件来源", total: hashes.count))
+            progress(InstallProgress(Messages.CoreMRPack.versionsText2, total: hashes.count))
             do { versions = try await service.versionsFromHashes(hashes.values.map { $0.1 }) }
-            catch { if Task.isCancelled { throw CancellationError() }; progress(InstallProgress("来源查询失败，文件将内附到整合包")) }
+            catch { if Task.isCancelled { throw CancellationError() }; progress(InstallProgress(Messages.CoreMRPack.versionsText3)) }
         }
         var files: [ModpackIndex.File] = []; var referenced = Set<String>()
         let hosts = Set(["cdn.modrinth.com", "github.com", "raw.githubusercontent.com", "gitlab.com"])
@@ -92,12 +93,12 @@ extension InstanceTransfer {
         }
         var dependencies = ["minecraft": instance.gameVersion]
         if instance.loader != .vanilla {
-            guard let key = Self.mrpackLoaders.first(where: { $0.value == instance.loader })?.key, let version = instance.loaderVersion else { throw RuriError.message("请先完成加载器安装") }
+            guard let key = Self.mrpackLoaders.first(where: { $0.value == instance.loader })?.key, let version = instance.loaderVersion else { throw RuriError.message(Messages.CoreMRPack.versionText1) }
             dependencies[key] = version
         }
         let index = ModpackIndex(formatVersion: 1, game: "minecraft", name: instance.name, versionId: details.version, summary: details.description, dependencies: dependencies, files: files)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try SafeArchive.create(from: snapshot, to: destination, prefix: "client-overrides", additionalFiles: ["modrinth.index.json": encoder.encode(index)], excluding: referenced) { done, total in progress(InstallProgress("正在导出 mrpack", completed: done, total: total)) }
+        try SafeArchive.create(from: snapshot, to: destination, prefix: "client-overrides", additionalFiles: ["modrinth.index.json": encoder.encode(index)], excluding: referenced) { done, total in progress(InstallProgress(Messages.CoreMRPack.encoderText1, completed: done, total: total)) }
     }
     static func packHashes(_ url: URL) throws -> (String, String) {
         let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -21,45 +22,45 @@ extension AppModel {
     }
     func install(_ instance: GameInstance) {
         guard !busy, !readOnly else { return }
-        perform("安装 \(instance.name)", instanceID: instance.id) { [self] id in
+        perform(Messages.AppAppModelInstallation.installText1(String(describing: instance.name)), instanceID: instance.id) { [self] id in
             let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
                 await self?.progress(id, progress)
             }
-            try recordInstallation(result, requested: instance); notice = "\(result.name) 已准备就绪"
+            try recordInstallation(result, requested: instance); notice = Messages.AppAppModelInstallation.resultText1(String(describing: result.name)).localized
         }
     }
     func recordInstallation(_ result: GameInstance, requested: GameInstance) throws {
         save()
-        guard !readOnly else { throw RuriError.message("设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。") }
+        guard !readOnly else { throw RuriError.message(Messages.AppAppModelInstallation.recordInstallationText1) }
         let saved = try StateStore.update(basePaths) { latest in
-            guard let index = latest.instances.firstIndex(where: { $0.id == result.id }) else { throw RuriError.message("实例已被移除，未重新登记。") }
+            guard let index = latest.instances.firstIndex(where: { $0.id == result.id }) else { throw RuriError.message(Messages.AppAppModelInstallation.indexText1) }
             latest.instances[index] = try latest.instances[index].applyingInstallation(result, requested: requested)
         }
         acceptState(saved)
     }
     func repair(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id) else { return }
-        perform("修复 \(instance.name)", instanceID: instance.id) { [self] id in
+        perform(Messages.AppAppModelInstallation.repairText1(String(describing: instance.name)), instanceID: instance.id) { [self] id in
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
     func changeComponents(_ instance: GameInstance, loader: LoaderKind, version: String?) {
         guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
         save()
-        perform("更换 \(instance.name) 的加载器") { [self] id in
+        perform(Messages.AppAppModelInstallation.changeComponentsText1(String(describing: instance.name))) { [self] id in
             let service = await InstanceComponents(paths: paths, downloader: installer.downloader)
             let saved = try await service.change(instance, to: loader, version: version, concurrency: state.settings.concurrentDownloads) { [weak self] p in
                 await self?.progress(id, p)
             }
-            acceptState(saved); notice = "\(instance.name) 已切换为 \(loader.title)，下次启动生效"
+            acceptState(saved); notice = Messages.AppAppModelInstallation.savedText1(String(describing: instance.name), String(describing: loader.title)).localized
         }
     }
     func restoreComponents(_ instance: GameInstance) {
         guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
         save()
-        perform("恢复 \(instance.name) 的加载器配置") { [self] _ in
+        perform(Messages.AppAppModelInstallation.restoreComponentsText1(String(describing: instance.name))) { [self] _ in
             let saved = try await InstanceComponents(paths: paths).restore(instance)
-            acceptState(saved); notice = "已恢复上次的加载器配置"
+            acceptState(saved); notice = Messages.AppAppModelInstallation.savedText2.localized
         }
     }
 }

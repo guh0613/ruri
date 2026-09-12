@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public enum JavaSelection: Codable, Hashable, Sendable {
@@ -31,7 +32,7 @@ public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
     case memory, java, jvmArguments, gameArguments, window, presentation, environment, commands
     public var id: String { rawValue }
     public var title: String {
-        switch self { case .memory: "内存"; case .java: "Java 运行时"; case .jvmArguments: "附加 JVM 参数"; case .gameArguments: "附加游戏参数"; case .window: "游戏窗口"; case .presentation: "启动器与日志"; case .environment: "游戏环境变量"; case .commands: "启动命令" }
+        switch self { case .memory: Messages.CoreLaunchSettings.titleText1.localized; case .java: Messages.CoreLaunchSettings.titleText2.localized; case .jvmArguments: Messages.CoreLaunchSettings.titleText3.localized; case .gameArguments: Messages.CoreLaunchSettings.titleText4.localized; case .window: Messages.CoreLaunchSettings.titleText5.localized; case .presentation: Messages.CoreLaunchSettings.titleText6.localized; case .environment: Messages.CoreLaunchSettings.titleText7.localized; case .commands: Messages.CoreLaunchSettings.titleText8.localized }
     }
 }
 
@@ -55,12 +56,12 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     }
     public func validate(availability: MemoryAvailability = .current()) throws {
         let baseMemory = try memory.resolve(availability: availability)
-        guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message("窗口宽度应为 320–16384，高度应为 240–16384。") }
-        guard jvmArguments.count <= 32768, gameArguments.count <= 32768 else { throw RuriError.message("附加启动参数过长。") }
+        guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message(Messages.CoreLaunchSettings.baseMemoryText1) }
+        guard jvmArguments.count <= 32768, gameArguments.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.baseMemoryText2) }
         if let path = java.path {
-            guard path.hasPrefix("/"), !path.contains("\0"), path.count <= 32768 else { throw RuriError.message("请选择 Java 可执行文件的完整路径。") }
+            guard path.hasPrefix("/"), !path.contains("\0"), path.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.pathText1) }
         }
-        if let major = java.major, !(6...99).contains(major) { throw RuriError.message("Java 主版本应为 6–99。") }
+        if let major = java.major, !(6...99).contains(major) { throw RuriError.message(Messages.CoreLaunchSettings.majorText1) }
         _ = try LaunchEnvironment(environment)
         try commands.validate()
         _ = try JVMHeapArguments.resolve(base: baseMemory, arguments: ArgumentTokenizer.split(jvmArguments))

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 struct PreparedMinecraftInstallation: Sendable {
@@ -19,7 +20,7 @@ struct PreparedMinecraftInstallation: Sendable {
         let actual = try MinecraftInstallationCopy.read(instance: instance, copy: Self.portableCopy(instance), paths: paths, portable: true, installationRoot: root)
         guard actual.manifest == plan.manifest, actual.client == plan.client, actual.resources == plan.resources,
               actual.inputs == plan.inputs, actual.generatedResources == plan.generatedResources, actual.sourceManifests == plan.sourceManifests else {
-            throw RuriError.message("完整副本的安装文件在预览后改变，请重新选择压缩包。")
+            throw RuriError.message(Messages.CoreCompleteInstancePack.actualText1)
         }
     }
 }
@@ -41,7 +42,7 @@ extension MinecraftInstallationCopy {
         var completed = 1
         for resource in resources {
             try await MinecraftInstallationFiles.copyResource(resource, root: resourceRoot, validate: validate, progress: { _ in })
-            completed += 1; progress(.init("正在复制安装文件", completed: completed, total: fileCount))
+            completed += 1; progress(.init(Messages.CoreCompleteInstancePack.completedText1, completed: completed, total: fileCount))
         }
         for (path, data) in generatedResources {
             let temporary = metadata.appendingPathComponent("resource-" + UUID().uuidString)
@@ -49,7 +50,7 @@ extension MinecraftInstallationCopy {
             defer { try? FileManager.default.removeItem(at: temporary) }
             let resource = Resource(source: temporary, path: path, sha1: Self.sha1(data), size: Int64(data.count))
             try await MinecraftInstallationFiles.copyResource(resource, root: resourceRoot, validate: validate, progress: { _ in })
-            completed += 1; progress(.init("正在复制安装文件", completed: completed, total: fileCount))
+            completed += 1; progress(.init(Messages.CoreCompleteInstancePack.completedText1, completed: completed, total: fileCount))
         }
         try FileManager.default.createDirectory(at: manifestFile.deletingLastPathComponent(), withIntermediateDirectories: true)
         try validate()
@@ -65,25 +66,25 @@ extension MinecraftInstallationCopy {
         let root = try LauncherPaths.safePath("source-manifests", within: metadata)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let files = try FileTree.entries(in: root).filter { !$0.directory }
-        guard files.count <= 1024, files.reduce(Int64(0), { $0 + $1.size }) <= 32 * 1024 * 1024 else { throw RuriError.message("原始版本清单超过导出限制。") }
+        guard files.count <= 1024, files.reduce(Int64(0), { $0 + $1.size }) <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreCompleteInstancePack.filesText1) }
         for file in files { try saveOriginal(RunDirectoryCopyGuard.read(file.url, limit: 8_388_608), in: destination) }
     }
 }
 
 extension InstanceTransfer {
     func exportComplete(_ instance: GameInstance, to destination: URL, includeWorlds: Bool, progress: @Sendable (InstallProgress) -> Void) async throws {
-        guard instance.installed else { throw RuriError.message("请先安装实例，再导出包含游戏文件的完整副本。") }
+        guard instance.installed else { throw RuriError.message(Messages.CoreCompleteInstancePack.exportCompleteText1) }
         let sourceGame = paths.game(instance.id)
         let destinationPath = destination.standardizedFileURL.resolvingSymlinksInPath().path
         let protected = [sourceGame, paths.instance(instance.id), try paths.resources(for: instance).root]
         guard !protected.contains(where: { destinationPath == $0.standardizedFileURL.resolvingSymlinksInPath().path || destinationPath.hasPrefix($0.standardizedFileURL.resolvingSymlinksInPath().path + "/") }) else {
-            throw RuriError.message("请将完整副本保存在源实例和游戏资源文件夹之外。")
+            throw RuriError.message(Messages.CoreCompleteInstancePack.protectedText1)
         }
         try paths.prepare()
         let workspace = paths.cache.appendingPathComponent("complete-export-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: false)
         defer { try? FileManager.default.removeItem(at: workspace) }
-        progress(.init("正在读取完整安装"))
+        progress(.init(Messages.CoreCompleteInstancePack.workspaceText1))
         let copy = PreparedMinecraftInstallation.portableCopy(instance)
         let plan = try MinecraftInstallationCopy.read(instance: instance, copy: copy, paths: paths, portable: true)
         var settings = instance; settings.packLibraries = nil
@@ -113,7 +114,7 @@ extension InstanceTransfer {
         try await plan.write(resourceRoot: resourceRoot, clientFile: resourceRoot.appendingPathComponent("versions/game/game.jar"),
                              manifestFile: resourceRoot.appendingPathComponent("version.json"), metadata: resourceRoot, progress: progress)
         try MinecraftInstallationCopy.retainOriginals(from: paths.instance(instance.id), to: resourceRoot)
-        guard try MinecraftInstallationCopy.read(instance: instance, copy: copy, paths: paths, portable: true) == plan else { throw RuriError.message("导出期间安装文件改变，请重新导出。") }
+        guard try MinecraftInstallationCopy.read(instance: instance, copy: copy, paths: paths, portable: true) == plan else { throw RuriError.message(Messages.CoreCompleteInstancePack.resourceRootText1) }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
         try encoder.encode(PortableInstance(settings, installation: installation)).write(to: workspace.appendingPathComponent("ruri-instance.json"))
         try encoder.encode(await ContentManager(paths: paths, instanceID: instance.id).records()).write(to: workspace.appendingPathComponent("ruri-content.json"))
@@ -122,7 +123,7 @@ extension InstanceTransfer {
         }
         let source = paths.instance(instance.id).appendingPathComponent("source-mcbbs.packmeta")
         if FileManager.default.fileExists(atPath: source.path) { try Self.read(source).write(to: workspace.appendingPathComponent("ruri-source-mcbbs.packmeta")) }
-        progress(.init("正在压缩完整副本"))
-        try SafeArchive.create(from: workspace, to: destination) { done, total in progress(.init("正在压缩完整副本", completed: done, total: total)) }
+        progress(.init(Messages.CoreCompleteInstancePack.sourceText1))
+        try SafeArchive.create(from: workspace, to: destination) { done, total in progress(.init(Messages.CoreCompleteInstancePack.sourceText1, completed: done, total: total)) }
     }
 }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -21,49 +22,49 @@ struct InstanceComponentsView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            SectionHeading(title: "管理加载器", subtitle: instance.name + " · Minecraft " + instance.gameVersion)
-            LabeledContent("当前", value: instance.loader.title + (instance.loaderVersion.map { " " + $0 } ?? ""))
+            SectionHeading(title: Messages.AppInstanceComponentsView.bodyText1.localized, subtitle: instance.name + " · Minecraft " + instance.gameVersion)
+            LabeledContent(Messages.AppInstanceComponentsView.bodyText2.localized, value: instance.loader.title + (instance.loaderVersion.map { " " + $0 } ?? ""))
             if let reason { Label(reason, systemImage: "info.circle").foregroundStyle(.secondary) }
             else {
-                Picker("加载器", selection: $loader) {
+                Picker(Messages.AppInstanceComponentsView.reasonText1.localized, selection: $loader) {
                     ForEach(LoaderKind.allCases) { Text($0.title).tag($0) }
                 }.pickerStyle(.menu)
                 if loader != .vanilla {
-                    if loader == .optifine { Text("OptiFine 版本与安装包由 BMCLAPI 提供。").font(.caption).foregroundStyle(.secondary) }
-                    if loading { ProgressView("正在查找兼容版本…").controlSize(.small) }
+                    if loader == .optifine { Text(Messages.AppInstanceComponentsView.reasonText2.localized).font(.caption).foregroundStyle(.secondary) }
+                    if loading { ProgressView(Messages.AppInstanceComponentsView.reasonText3.localized).controlSize(.small) }
                     else if let error {
                         Text(error).font(.callout).foregroundStyle(.orange)
-                        Button("重试") { retry += 1 }
+                        Button(Messages.AppInstanceComponentsView.errorText1.localized) { retry += 1 }
                     } else {
-                        Picker("版本", selection: $version) {
+                        Picker(Messages.AppInstanceComponentsView.errorText2.localized, selection: $version) {
                             ForEach(versions, id: \.self) { value in
-                                Text(value + (loader == instance.loader && value == instance.loaderVersion ? "（当前）" : "")).tag(value)
+                                Text(value + (loader == instance.loader && value == instance.loaderVersion ? Messages.AppInstanceComponentsView.errorText3.localized : "")).tag(value)
                             }
                         }
                     }
                 }
-                Text(loader == .vanilla ? "移除加载器后按原版启动，模组文件仍会保留。" : "可升级、降级或更换加载器。现有模组需要与所选加载器兼容。")
+                Text(loader == .vanilla ? Messages.AppInstanceComponentsView.errorText4.localized : Messages.AppInstanceComponentsView.errorText5.localized)
                     .font(.callout).foregroundStyle(.secondary)
-                Text("保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。")
+                Text(Messages.AppInstanceComponentsView.errorText6.localized)
                     .font(.caption).foregroundStyle(.secondary)
             }
             if let backup {
                 Divider()
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("上次配置：" + backup.title).font(.callout)
-                        Text(backup.createdAt.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppInstanceComponentsView.previousComponents(backup.title).localized).font(.callout)
+                        Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
-                    Button("恢复上次配置") { model.restoreComponents(instance); dismiss() }
+                    Button(Messages.AppInstanceComponentsView.backupText2.localized) { model.restoreComponents(instance); dismiss() }
                         .disabled(model.busy || model.isInstanceInUse(instance.id))
                 }
             }
             HStack {
                 Spacer()
-                Button("关闭") { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppInstanceComponentsView.backupText3.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 if reason == nil {
-                    Button(loader == .vanilla ? "移除加载器" : "应用加载器") {
+                    Button(loader == .vanilla ? Messages.AppInstanceComponentsView.backupText4.localized : Messages.AppInstanceComponentsView.backupText5.localized) {
                         model.changeComponents(instance, loader: loader, version: loader == .vanilla ? nil : version); dismiss()
                     }.buttonStyle(.borderedProminent)
                         .disabled(!changed || model.busy || model.isInstanceInUse(instance.id) || (loader != .vanilla && (loading || error != nil || version.isEmpty)))
@@ -86,7 +87,7 @@ struct InstanceComponentsView: View {
                     version = current
                 } else { version = result.first ?? "" }
                 versions = result
-                if result.isEmpty { error = "此 Minecraft 版本没有兼容的加载器版本。" }
+                if result.isEmpty { error = Messages.AppInstanceComponentsView.currentText1.localized }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
             if !Task.isCancelled { loading = false }
         }

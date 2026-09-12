@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct GameResourcePaths: Sendable {
@@ -32,7 +33,7 @@ extension LauncherPaths {
 extension GameResourcePaths {
     func libraryFile(_ artifact: Artifact, fallback: String? = nil) throws -> URL {
         if let relative = artifact.repositoryPath { return try LauncherPaths.safePath(relative, within: root) }
-        guard let path = artifact.path ?? fallback else { throw RuriError.message("依赖库缺少文件路径。") }
+        guard let path = artifact.path ?? fallback else { throw RuriError.message(Messages.CoreGameResourcePaths.pathText1) }
         return try LauncherPaths.safePath(path, within: libraries)
     }
 }

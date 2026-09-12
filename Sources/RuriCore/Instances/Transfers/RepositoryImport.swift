@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 import CryptoKit
@@ -50,7 +51,7 @@ final class RepositoryImportTransaction {
         staging = paths.stagingRepositoryImport(instance)
         workspace = staging.repositoryImportWorkspace(instance.id)
         guard let directory = paths.directories.first(where: { $0.id == instance.directoryID }), directory.isMinecraft else {
-            throw RuriError.message("请选择 Minecraft 文件夹。")
+            throw RuriError.message(Messages.CoreRepositoryImport.directoryText1)
         }
         journal = .init(instance: instance, directory: directory, copySource: copySource)
         try Self.validateDirectory(directory, paths: paths)
@@ -59,7 +60,7 @@ final class RepositoryImportTransaction {
         // Older launchers must stop before a journal they cannot recover appears.
         try StateStore.update(paths) { _ in try Self.validateDirectory(directory, paths: paths) }
         try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-        guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message("无法创建实例工作目录。") }
+        guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryImport.directoryText2) }
         do {
             try operation.acquire(directory: workspace, name: ".operation.lock")
             try save()
@@ -74,7 +75,7 @@ final class RepositoryImportTransaction {
         try Self.lockName(journal.instance.repositoryVersionID ?? "", directory: journal.directory, lock: nameLock)
         try operation.acquire(directory: workspace, name: ".operation.lock")
         let current = try Self.read(workspace, directory: journal.directory)
-        guard current == journal else { throw RuriError.message("导入记录已改变，请刷新后重试。") }
+        guard current == journal else { throw RuriError.message(Messages.CoreRepositoryImport.currentText1) }
     }
 
     func publish(_ instance: GameInstance) throws -> GameInstance {
@@ -86,7 +87,7 @@ final class RepositoryImportTransaction {
     func publishFiles(_ instance: GameInstance) throws {
         guard instance.id == journal.instance.id, instance.directoryID == journal.directory.id,
               instance.repositoryVersionID == journal.instance.repositoryVersionID, instance.runDirectory == .isolated, instance.installed else {
-            throw RuriError.message("整合包安装结果与目标实例不一致。")
+            throw RuriError.message(Messages.CoreRepositoryImport.publishFilesText1)
         }
         try Self.validateDirectory(journal.directory, paths: paths)
         journal.instance = instance
@@ -118,12 +119,12 @@ final class RepositoryImportTransaction {
             try Self.validateDirectory(journal.directory, paths: paths)
             if let existing = state.instances.first(where: { $0.id == instance.id }) {
                 guard existing.directoryID == instance.directoryID, existing.repositoryVersionID == instance.repositoryVersionID else {
-                    throw RuriError.message("实例位置已经改变，请检查导入记录。")
+                    throw RuriError.message(Messages.CoreRepositoryImport.existingText1)
                 }
             } else {
                 guard !state.instances.contains(where: {
                     $0.directoryID == instance.directoryID && $0.repositoryVersionID?.localizedCaseInsensitiveCompare(instance.repositoryVersionID ?? "") == .orderedSame
-                }) else { throw RuriError.message("另一个实例已使用此版本名称，导入文件已保留。") }
+                }) else { throw RuriError.message(Messages.CoreRepositoryImport.existingText2) }
                 state.instances.append(instance)
             }
             state.selectedDirectoryID = instance.directoryID; state.selectedInstanceID = instance.id
@@ -142,7 +143,7 @@ final class RepositoryImportTransaction {
         try Self.validateDirectory(journal.directory, paths: paths)
         let instance = journal.instance
         guard !(try StateStore.load(paths)).instances.contains(where: { $0.id == instance.id }) else {
-            throw RuriError.message("此实例已经创建，请完成操作以清理工作记录。")
+            throw RuriError.message(Messages.CoreRepositoryImport.instanceText1)
         }
         for (folder, source, original, published) in [
             (paths.versionDirectory(instance.id), staging.versionDirectory(instance.id), journal.stagedVersion, journal.publishedVersion),
@@ -151,7 +152,7 @@ final class RepositoryImportTransaction {
             let identity = published ?? original
             guard let identity, FileManager.default.fileExists(atPath: folder.path) else { continue }
             if published == nil, original?.matches(source) == true, !identity.matches(folder) { continue }
-            guard identity.matches(folder) else { throw RuriError.message("导入目标已被替换，工作文件保留，请先检查：\(folder.path)") }
+            guard identity.matches(folder) else { throw RuriError.message(Messages.CoreRepositoryImport.identityText1(String(describing: folder.path))) }
             try RunDirectoryFileCopy.returnToWorkspace(folder, workspace: workspace)
         }
         return try retireWorkspace(category: "import-recovery")
@@ -161,9 +162,9 @@ final class RepositoryImportTransaction {
         let parent = try LauncherPaths.safePath(".ruri/\(category)", within: journal.directory.url)
         try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
         let kept = parent.appendingPathComponent(UUID().uuidString)
-        guard mkdir(kept.path, S_IRWXU) == 0 else { throw RuriError.message("无法保存导入工作文件。") }
+        guard mkdir(kept.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryImport.keptText1) }
         let destination = kept.appendingPathComponent("files")
-        guard rename(workspace.path, destination.path) == 0 else { throw RuriError.message("无法收回导入工作文件，请连接原磁盘后重试。") }
+        guard rename(workspace.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreRepositoryImport.destinationText1) }
         return destination
     }
 
@@ -176,7 +177,7 @@ final class RepositoryImportTransaction {
               journal.versionIdentity?.matches(paths.versionDirectory(journal.instance.id)) == true,
               journal.metadataIdentity?.matches(paths.instance(journal.instance.id)) == true,
               manifestMatches else {
-            throw RuriError.message("实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。")
+            throw RuriError.message(Messages.CoreRepositoryImport.manifestMatchesText1)
         }
         try Self.validateDirectory(journal.directory, paths: paths)
     }
@@ -184,7 +185,7 @@ final class RepositoryImportTransaction {
         let marker = try LauncherPaths.safePath(Self.markerName, within: folder)
         guard FileManager.default.fileExists(atPath: marker.path) else { return }
         let id: UUID = try RunDirectoryCopyGuard.decode(marker, limit: 1024)
-        guard id == journal.instance.id else { throw RuriError.message("导入标记已改变，未清理工作文件。") }
+        guard id == journal.instance.id else { throw RuriError.message(Messages.CoreRepositoryImport.idText1) }
         try FileManager.default.removeItem(at: marker)
     }
     private func save() throws { try JSONEncoder().encode(journal).write(to: workspace.appendingPathComponent("transaction.json"), options: .atomic) }
@@ -200,7 +201,7 @@ final class RepositoryImportTransaction {
         let current = try StateStore.load(paths)
         guard let actual = current.gameDirectories?.first(where: { $0.id == directory.id }),
               actual.url.standardizedFileURL.path == directory.url.standardizedFileURL.path, actual.isMinecraft else {
-            throw RuriError.message("目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。")
+            throw RuriError.message(Messages.CoreRepositoryImport.actualText1)
         }
         try directory.validateAvailability()
     }
@@ -210,13 +211,13 @@ final class RepositoryImportTransaction {
               record.directory.id == directory.id, record.directory.isMinecraft,
               record.directory.url.standardizedFileURL.path == directory.url.standardizedFileURL.path,
               record.instance.directoryID == directory.id, let version = record.instance.repositoryVersionID,
-              record.instance.runDirectory == .isolated, record.instance.importedInstallation == nil else { throw RuriError.message("整合包导入记录无效：\(workspace.path)") }
+              record.instance.runDirectory == .isolated, record.instance.importedInstallation == nil else { throw RuriError.message(Messages.CoreRepositoryImport.versionText1(String(describing: workspace.path))) }
         try MinecraftDirectoryScan.checkIdentifier(version)
         try InstanceTransfer.validate(record.instance)
         if let owner = record.copySource {
             guard owner.copyID == record.instance.id, owner.transactionID == record.instance.lastInstanceCopyID,
                   owner.sourceID != owner.copyID, owner.sourceName.count <= 1024, owner.copyName == record.instance.name else {
-                throw RuriError.message("实例复制记录无效。")
+                throw RuriError.message(Messages.CoreRepositoryImport.ownerText1)
             }
         }
         return record
@@ -242,7 +243,7 @@ public enum RepositoryImportStore {
             guard journal.schema == 1, journal.instance.id.uuidString == workspace.lastPathComponent,
                   journal.directory.url.standardizedFileURL.path == repository.standardizedFileURL.path,
                   journal.instance.directoryID == journal.directory.id,
-                  let name = journal.instance.repositoryVersionID else { throw RuriError.message("此游戏文件夹含有无效的导入记录，请先检查：\(workspace.path)") }
+                  let name = journal.instance.repositoryVersionID else { throw RuriError.message(Messages.CoreRepositoryImport.nameText1(String(describing: workspace.path))) }
             try MinecraftDirectoryScan.checkIdentifier(name)
             names.insert(name.precomposedStringWithCanonicalMapping.lowercased())
         }
@@ -264,19 +265,19 @@ public enum RepositoryImportStore {
     @discardableResult public static func recover(_ id: UUID, directoryID: UUID, finish: Bool, paths: LauncherPaths) throws -> URL? {
         let state = try StateStore.load(paths)
         guard let directory = state.gameDirectories?.first(where: { $0.id == directoryID }),
-              let recovery = try pending(directoryID: directoryID, paths: paths).first(where: { $0.id == id }) else { throw RuriError.message("没有找到未完成的导入或复制。") }
+              let recovery = try pending(directoryID: directoryID, paths: paths).first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreRepositoryImport.recoveryText1) }
         return try RepositoryImportTransaction.recover(recovery, directory: directory, paths: paths, finish: finish)
     }
     static func requireNameAvailable(_ name: String, directory: GameDirectory, paths: LauncherPaths) throws {
         for pending in try pending(directoryID: directory.id, paths: paths) {
             let journal = try RepositoryImportTransaction.read(pending.workspace, directory: directory)
             guard journal.instance.repositoryVersionID?.localizedCaseInsensitiveCompare(name) != .orderedSame else {
-                throw RuriError.message("此名称仍有未完成的导入或复制，请先处理工作文件。")
+                throw RuriError.message(Messages.CoreRepositoryImport.journalText1)
             }
         }
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
-        guard try pending(directoryID: id, paths: paths).isEmpty else { throw RuriError.message("此文件夹仍有未完成的导入或复制，请先完成或取消操作。") }
+        guard try pending(directoryID: id, paths: paths).isEmpty else { throw RuriError.message(Messages.CoreRepositoryImport.requireDirectoryAvailableText1) }
     }
     static func requireDirectoryAvailable(_ directory: GameDirectory) throws {
         guard directory.isMinecraft else { return }
@@ -284,7 +285,7 @@ public enum RepositoryImportStore {
         let root = try LauncherPaths.safePath(".ruri/imports", within: directory.url)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         guard try !FileTree.children(in: root).contains(where: { UUID(uuidString: $0.lastPathComponent) != nil }) else {
-            throw RuriError.message("此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。")
+            throw RuriError.message(Messages.CoreRepositoryImport.rootText1)
         }
     }
 }

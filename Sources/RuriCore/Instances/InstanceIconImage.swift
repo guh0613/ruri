@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import ImageIO
 import UniformTypeIdentifiers
@@ -11,7 +12,7 @@ public enum InstanceIconImage {
     public static func load(_ file: URL) throws -> Data {
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
         guard values.isRegularFile == true, let size = values.fileSize, size > 0, size <= 20 * 1024 * 1024 else {
-            throw RuriError.message("请选择不超过 20 MB 的图片文件。")
+            throw RuriError.message(Messages.CoreInstanceIconImage.sizeText1)
         }
         let data = try Data(contentsOf: file, options: .mappedIfSafe)
         guard data.count <= 20 * 1024 * 1024,
@@ -21,14 +22,14 @@ public enum InstanceIconImage {
                 kCGImageSourceCreateThumbnailWithTransform: true,
                 kCGImageSourceThumbnailMaxPixelSize: maximumDimension,
                 kCGImageSourceShouldCacheImmediately: true
-              ] as CFDictionary) else { throw RuriError.message("无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。") }
+              ] as CFDictionary) else { throw RuriError.message(Messages.CoreInstanceIconImage.imageText1) }
         try Task.checkCancellation()
         let output = NSMutableData()
         guard let destination = CGImageDestinationCreateWithData(output, UTType.png.identifier as CFString, 1, nil) else {
-            throw RuriError.message("无法保存实例图标。")
+            throw RuriError.message(Messages.CoreInstanceIconImage.destinationText1)
         }
         CGImageDestinationAddImage(destination, image, nil)
-        guard CGImageDestinationFinalize(destination) else { throw RuriError.message("无法保存实例图标。") }
+        guard CGImageDestinationFinalize(destination) else { throw RuriError.message(Messages.CoreInstanceIconImage.destinationText1) }
         let result = output as Data
         try validate(result)
         return result
@@ -43,7 +44,7 @@ public enum InstanceIconImage {
               let width = properties[kCGImagePropertyPixelWidth] as? Int,
               let height = properties[kCGImagePropertyPixelHeight] as? Int,
               (1...maximumDimension).contains(width), (1...maximumDimension).contains(height) else {
-            throw RuriError.message("实例图标无效，请重新选择图片。")
+            throw RuriError.message(Messages.CoreInstanceIconImage.heightText1)
         }
     }
 }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
@@ -6,16 +7,16 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         if state != persistedState { save() }
         guard !readOnly else { return }
-        perform("移动 \(preview.source.name)", presentErrors: false) { [self] activity in
+        perform(Messages.AppAppModelInstanceMoves.moveInstanceText1(String(describing: preview.source.name)), presentErrors: false) { [self] activity in
             do {
                 let result = try await InstanceMover(paths: basePaths).move(preview) { [weak self] value in
                     Task { @MainActor in self?.progress(activity, value.progress) }
                 }
                 acceptState(try StateStore.load(basePaths)); page = .library
-                notice = result.warning ?? "已移动“\(preview.moved.name)”，设置和运行历史已保留。"
+                notice = result.warning ?? Messages.AppAppModelInstanceMoves.resultText1(String(describing: preview.moved.name)).localized
                 noticeFileURL = result.preservedFiles.first
                 if InstanceMoveGuard.hasPending(paths: basePaths, instanceID: preview.moved.id) {
-                    throw InstanceMoveFailure(message: result.warning ?? "实例已登记，但移动尚需恢复。", preservedFiles: result.preservedFiles, cancelled: Task.isCancelled)
+                    throw InstanceMoveFailure(message: result.warning ?? Messages.AppAppModelInstanceMoves.resultText2.localized, preservedFiles: result.preservedFiles, cancelled: Task.isCancelled)
                 }
                 completed()
             } catch {
@@ -28,13 +29,13 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         if state != persistedState { save() }
         guard !readOnly else { return }
-        perform("恢复 \(pending.instance.name) 的移动", presentErrors: false) { [self] activity in
+        perform(Messages.AppAppModelInstanceMoves.recoverInstanceMoveText1(String(describing: pending.instance.name)), presentErrors: false) { [self] activity in
             do {
                 let result = try await InstanceMover(paths: basePaths).recover(instanceID: pending.instance.id, transactionID: pending.id, preservingSource: preservingSource) { [weak self] value in
                     Task { @MainActor in self?.progress(activity, value.progress) }
                 }
                 acceptState(try StateStore.load(basePaths)); page = .library
-                notice = result.warning ?? "实例移动已完成，原文件与工作记录已清理。"
+                notice = result.warning ?? Messages.AppAppModelInstanceMoves.resultText3.localized
                 noticeFileURL = result.preservedFiles.first; completed()
             } catch {
                 failed(error.localizedDescription); throw error

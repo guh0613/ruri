@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -21,9 +22,9 @@ struct LibraryView: View {
             VStack(alignment: .leading, spacing: 20) {
                 if let issue = model.directoryErrors[model.selectedDirectoryID] {
                     VStack(alignment: .leading, spacing: 8) {
-                        Label("实例文件夹无法访问", systemImage: "externaldrive.badge.exclamationmark").font(.headline)
+                        Label(Messages.AppLibraryView.issueText1.localized, systemImage: "externaldrive.badge.exclamationmark").font(.headline)
                         Text(issue).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                        HStack { Button("重新检查") { Task { await model.refreshDirectoryAvailability() } }; Button("管理文件夹…") { model.showDirectories = true } }
+                        HStack { Button(Messages.AppLibraryView.issueText2.localized) { Task { await model.refreshDirectoryAvailability() } }; Button(Messages.AppLibraryView.issueText3.localized) { model.showDirectories = true } }
                     }.padding().frame(maxWidth: .infinity, alignment: .leading).background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
                 }
                 if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
@@ -32,7 +33,7 @@ struct LibraryView: View {
                 if model.directoryInstances.isEmpty {
                     emptyFolder
                 } else if filtered.isEmpty {
-                    EmptyPanel(symbol: "magnifyingglass", title: "没有匹配的实例", detail: "换个名称或版本号试试。")
+                    EmptyPanel(symbol: "magnifyingglass", title: Messages.AppLibraryView.issueText4.localized, detail: Messages.AppLibraryView.issueText5.localized)
                 } else if layout == .grid {
                     grid
                 } else {
@@ -41,41 +42,41 @@ struct LibraryView: View {
             }.padding(28)
         }
         .navigationSubtitle("\(model.selectedDirectoryName) · \(countLabel)")
-        .searchable(text: $search, placement: .toolbar, prompt: "搜索实例或版本")
+        .searchable(text: $search, placement: .toolbar, prompt: Messages.AppLibraryView.issueText6.localized)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 DirectoryMenu()
-                Picker("布局", selection: $layout) {
-                    Label("网格", systemImage: "square.grid.2x2").tag(Layout.grid)
-                    Label("列表", systemImage: "list.bullet").tag(Layout.list)
-                }.pickerStyle(.segmented).help("网格或列表")
+                Picker(Messages.AppLibraryView.issueText7.localized, selection: $layout) {
+                    Label(Messages.AppLibraryView.issueText8.localized, systemImage: "square.grid.2x2").tag(Layout.grid)
+                    Label(Messages.AppLibraryView.issueText9.localized, systemImage: "list.bullet").tag(Layout.list)
+                }.pickerStyle(.segmented).help(Messages.AppLibraryView.issueText10.localized)
                 Menu {
-                    Button("导入实例或整合包…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }
-                    Button("添加游戏文件夹…", systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-                } label: { Label("导入", systemImage: "square.and.arrow.down") }.help("导入实例、整合包或游戏文件夹").disabled(model.busy)
-                Button { model.showCreate = true } label: { Label("新建实例", systemImage: "plus") }.help("新建实例 ⌘N").disabled(model.busy)
+                    Button(Messages.AppLibraryView.issueText11.localized, systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }
+                    Button(Messages.AppLibraryView.issueText12.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+                } label: { Label(Messages.AppLibraryView.issueText13.localized, systemImage: "square.and.arrow.down") }.help(Messages.AppLibraryView.issueText14.localized).disabled(model.busy)
+                Button { model.showCreate = true } label: { Label(Messages.AppLibraryView.issueText15.localized, systemImage: "plus") }.help(Messages.AppLibraryView.issueText16.localized).disabled(model.busy)
             }
         }
-        .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
-            Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
-        } message: { Text(deleteTarget?.repositoryVersionID != nil ? "此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。" : (deleteTarget?.runDirectory ?? .isolated) != .isolated ? "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。" : "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。") }
+        .confirmationDialog(Messages.AppLibraryView.issueText17.localized, isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppLibraryView.issueText18.localized, role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
+        } message: { Text(deleteTarget?.repositoryVersionID != nil ? Messages.AppLibraryView.targetText1.localized : (deleteTarget?.runDirectory ?? .isolated) != .isolated ? Messages.AppLibraryView.targetText2.localized : Messages.AppLibraryView.targetText3.localized) }
         .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability(); await model.refreshMinecraftFolder() }
     }
 
     private var countLabel: String {
         let total = model.directoryInstances.count
-        guard !search.isEmpty else { return "\(total) 个实例" }
-        return "\(filtered.count) / \(total) 个实例"
+        guard !search.isEmpty else { return Messages.AppLibraryView.totalText1(Int64(total)).localized }
+        return Messages.AppLibraryView.totalText2(Int64(filtered.count), Int64(total)).localized
     }
 
     private var emptyFolder: some View {
         ContentUnavailableView {
-            Label("这个文件夹还没有实例", systemImage: "square.grid.2x2")
+            Label(Messages.AppLibraryView.emptyFolderText1.localized, systemImage: "square.grid.2x2")
         } description: {
-            Text("新建一个实例，或导入整合包。")
+            Text(Messages.AppLibraryView.emptyFolderText2.localized)
         } actions: {
-            Button("新建实例") { model.showCreate = true }.buttonStyle(.borderedProminent)
-            Button("导入整合包…") { model.chooseInstanceImport() }
+            Button(Messages.AppLibraryView.issueText15.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
+            Button(Messages.AppLibraryView.emptyFolderText3.localized) { model.chooseInstanceImport() }
         }
         .disabled(model.busy)
         .frame(maxWidth: .infinity, minHeight: 360)
@@ -87,7 +88,7 @@ struct LibraryView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280, maximum: 400), spacing: 16)], spacing: 16) {
             ForEach(filtered) { instance in card(instance) }
             if search.isEmpty {
-                DashedTile(symbol: "plus", title: "新建实例", detail: "或从工具栏导入整合包") { model.showCreate = true }
+                DashedTile(symbol: "plus", title: Messages.AppLibraryView.issueText15.localized, detail: Messages.AppLibraryView.gridText1.localized) { model.showCreate = true }
                     .frame(minHeight: 150).disabled(model.busy)
             }
         }
@@ -167,15 +168,15 @@ struct LibraryView: View {
     private func iconButton(_ instance: GameInstance, size: CGFloat) -> some View {
         Button { model.editingInstance = instance } label: {
             InstanceIcon(loader: instance.loader, size: size, png: instance.iconPNG)
-        }.buttonStyle(.plain).help("更换图标或编辑实例设置").accessibilityLabel("编辑 \(instance.name) 的图标和设置")
+        }.buttonStyle(.plain).help(Messages.AppLibraryView.iconButtonText1.localized).accessibilityLabel(Messages.AppLibraryView.iconButtonText2(String(describing: instance.name)).localized)
     }
 
     @ViewBuilder private func contextActions(_ instance: GameInstance) -> some View {
-        Button("在主页中显示", systemImage: "house") { model.select(instance) }
-        Button("实例设置", systemImage: "slider.horizontal.3") { model.editingInstance = instance }
-        Button("管理模组与资源包", systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
-        Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
+        Button(Messages.AppLibraryView.contextActionsText1.localized, systemImage: "house") { model.select(instance) }
+        Button(Messages.AppLibraryView.contextActionsText2.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
+        Button(Messages.AppLibraryView.contextActionsText3.localized, systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
+        Button(Messages.AppLibraryView.contextActionsText4.localized, systemImage: "folder") { model.reveal(instance) }
         Divider()
-        Button("移到废纸篓", systemImage: "trash", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
+        Button(Messages.AppLibraryView.issueText18.localized, systemImage: "trash", role: .destructive) { deleteTarget = instance }.disabled(model.busy || model.isInstanceInUse(instance.id))
     }
 }

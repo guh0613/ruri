@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public actor GameInstaller {
@@ -34,25 +35,25 @@ public actor GameInstaller {
         return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
-        guard input.importedInstallation == nil else { throw RuriError.message("此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。") }
-        if input.repositoryVersionID != nil && (input.installed || FileManager.default.fileExists(atPath: paths.manifest(input.id).path)) { throw RuriError.message("此版本已存在，请使用修复功能。") }
+        guard input.importedInstallation == nil else { throw RuriError.message(Messages.CoreInstaller.installText1) }
+        if input.repositoryVersionID != nil && (input.installed || FileManager.default.fileExists(atPath: paths.manifest(input.id).path)) { throw RuriError.message(Messages.CoreInstaller.installText2) }
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: input.id)
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(input)
         try paths.prepare()
         try paths.prepareInstance(input.id)
-        await progress(InstallProgress("正在获取版本清单"))
+        await progress(InstallProgress(Messages.CoreInstaller.locationText1))
         let catalog = try await catalog()
-        guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message("找不到 Minecraft \(input.gameVersion)") }
+        guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message(Messages.CoreInstaller.versionText1(String(describing: input.gameVersion))) }
         let baseFile = try LauncherPaths.safePath("\(version.id)/\(version.id).json", within: paths.versions)
         try await downloader.fetch(DownloadItem(url: version.url, destination: baseFile, sha1: version.sha1))
         var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
         var instance = input
         instance.directoryID = paths.directoryID(for: instance.id)
         if instance.loader != .vanilla {
-            await progress(InstallProgress("正在安装 \(instance.loader.title)"))
+            await progress(InstallProgress(Messages.CoreInstaller.instanceText1(String(describing: instance.loader.title))))
             if instance.loaderVersion == nil { instance.loaderVersion = try await loaderVersions(instance.loader, game: instance.gameVersion).first }
-            guard let loaderVersion = instance.loaderVersion else { throw RuriError.message("此版本没有可用的 \(instance.loader.title) 加载器。") }
+            guard let loaderVersion = instance.loaderVersion else { throw RuriError.message(Messages.CoreInstaller.loaderVersionText1(String(describing: instance.loader.title))) }
             let child: VersionManifest
             if instance.loader.usesInstaller {
                 child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
@@ -78,16 +79,16 @@ public actor GameInstaller {
         try FileManager.default.createDirectory(at: paths.manifest(instance.id).deletingLastPathComponent(), withIntermediateDirectories: true)
         try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: instance.repositoryVersionID == nil ? .atomic : .withoutOverwriting)
         instance.installed = true
-        await progress(InstallProgress("安装完成", completed: 1, total: 1))
+        await progress(InstallProgress(Messages.CoreInstaller.encoderText1, completed: 1, total: 1))
         return instance
     }
     static func applyingPackLibraries(_ libraries: [Library], to manifest: VersionManifest) throws -> VersionManifest {
-        guard libraries.count <= 1000 else { throw RuriError.message("整合包依赖库数量超过限制") }
+        guard libraries.count <= 1000 else { throw RuriError.message(Messages.CoreInstaller.applyingPackLibrariesText1) }
         for library in libraries {
             _ = try Library.mavenPath(library.name)
             for artifact in [try library.artifact()].compactMap({ $0 }) + Array(library.downloads?.classifiers?.values ?? [:].values) {
-                guard artifact.repositoryPath == nil else { throw RuriError.message("整合包依赖不能指定已有游戏文件的位置。") }
-                if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message("整合包依赖库的下载地址无效") } }
+                guard artifact.repositoryPath == nil else { throw RuriError.message(Messages.CoreInstaller.applyingPackLibrariesText2) }
+                if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message(Messages.CoreInstaller.urlText1) } }
             }
         }
         var result = manifest
@@ -111,7 +112,7 @@ public actor GameInstaller {
         if let versionID = instance.repositoryVersionID {
             let reader = MinecraftDirectoryReader()
             let catalog = try reader.scanNow(paths.directoryRoot(paths.directoryID(for: instance.id)))
-            guard let version = catalog.versions.first(where: { $0.id == versionID }) else { throw RuriError.message("此版本已从游戏文件夹移除，请刷新实例列表。") }
+            guard let version = catalog.versions.first(where: { $0.id == versionID }) else { throw RuriError.message(Messages.CoreInstaller.versionText2) }
             if let issue = version.issue { throw RuriError.message(issue) }
             return try reader.resolveManifestNow(version, in: catalog).selectingLibraries().repositoryManifest(root: catalog.directory)
         }
@@ -129,7 +130,7 @@ public actor GameInstaller {
         try prepareRepositoryNatives(instance, manifest: manifest)
         guard let index = manifest.assetIndex else { return }
         let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.resources(for: instance).assets)
-        guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message("游戏资源索引缺失，请先修复实例。") }
+        guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message(Messages.CoreInstaller.fileText1) }
         let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: file))
         try mapLegacyAssets(assets, indexID: index.id, instance: instance)
     }
@@ -140,11 +141,11 @@ public actor GameInstaller {
         let root = assets.map_to_resources == true ? paths.game(instance.id).appendingPathComponent("resources") : try LauncherPaths.safePath("virtual/\(indexID)", within: resourcePaths.assets)
         for (name, object) in assets.objects {
             try Task.checkCancellation()
-            guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message("资源索引包含无效哈希") }
+            guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreInstaller.rootText1) }
             let target = try LauncherPaths.safePath(name, within: root)
             guard !FileManager.default.fileExists(atPath: target.path) else { continue }
             let source = try LauncherPaths.safePath("objects/\(object.hash.prefix(2))/\(object.hash)", within: resourcePaths.assets)
-            guard DownloadManager.valid(source, item: DownloadItem(url: nil, destination: source, sha1: object.hash, size: object.size)) else { throw RuriError.message("缓存资源缺失或已损坏，请先修复实例：\(name)") }
+            guard DownloadManager.valid(source, item: DownloadItem(url: nil, destination: source, sha1: object.hash, size: object.size)) else { throw RuriError.message(Messages.CoreInstaller.sourceText1(String(describing: name))) }
             try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
             try FileManager.default.copyItem(at: source, to: target)
         }
@@ -165,14 +166,14 @@ public actor GameInstaller {
         let resources = try paths.resources(for: instance)
         let arch = Self.architecture(for: manifest)
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
-            throw RuriError.message("此版本的兼容规则不支持当前 macOS 环境。")
+            throw RuriError.message(Messages.CoreInstaller.archText1)
         }
         let client = manifest.downloads?["client"] ?? Artifact(url: nil)
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try paths.clientJar(jarID, instance: instance)
         var files = [DownloadItem(client, to: clientFile)]
         for artifact in manifest.generatedLibraries ?? [] {
-            guard let path = artifact.path else { throw RuriError.message("生成依赖缺少路径") }
+            guard let path = artifact.path else { throw RuriError.message(Messages.CoreInstaller.pathText1) }
             files.append(DownloadItem(artifact, to: try resources.libraryFile(artifact, fallback: path)))
         }
         var nativeFiles: [(URL, [String])] = []
@@ -182,7 +183,7 @@ public actor GameInstaller {
                 files.append(DownloadItem(artifact, to: target))
             }
             if let artifact = try library.nativeArtifact(architecture: arch) {
-                guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message("原生库缺少文件路径") }
+                guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message(Messages.CoreInstaller.nativePathText1) }
                 let target = try resources.libraryFile(artifact, fallback: nativePath)
                 files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
             }
@@ -191,9 +192,9 @@ public actor GameInstaller {
             let target = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: resources.assets)
             files.append(DownloadItem(url: logging.file.url, destination: target, sha1: logging.file.sha1, size: logging.file.size))
         }
-        await progress(InstallProgress("正在下载游戏与依赖库", total: files.count))
+        await progress(InstallProgress(Messages.CoreInstaller.targetText1, total: files.count))
         try protectRepositoryResources(files)
-        try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏与依赖库", completed: done, total: total)) }
+        try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.targetText1, completed: done, total: total)) }
         if let index = manifest.assetIndex {
             let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
             try protectRepositoryResources([DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size)])
@@ -205,10 +206,10 @@ public actor GameInstaller {
                 return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: resources.assets), sha1: object.hash, size: object.size)
             }
             try protectRepositoryResources(objects)
-            try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress("正在下载游戏资源", completed: done, total: total)) }
+            try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.subpathText1, completed: done, total: total)) }
             try mapLegacyAssets(assets, indexID: index.id, instance: instance)
         }
-        await progress(InstallProgress("正在准备 macOS 原生库"))
+        await progress(InstallProgress(Messages.CoreInstaller.subpathText2))
         try paths.validateInstanceLocation(instance.id)
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         try FileManager.default.createDirectory(at: natives, withIntermediateDirectories: true)
@@ -220,7 +221,7 @@ public actor GameInstaller {
             let workspace = paths.root.standardizedFileURL.resolvingSymlinksInPath().path + "/"
             for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) &&
                 FileManager.default.fileExists(atPath: item.destination.path) && !DownloadManager.valid(item.destination, item: item) {
-                throw RuriError.message("新组件需要替换正在使用的依赖文件，原安装已保留：\(item.destination.lastPathComponent)")
+                throw RuriError.message(Messages.CoreInstaller.workspaceText1(String(describing: item.destination.lastPathComponent)))
             }
             return
         }
@@ -228,7 +229,7 @@ public actor GameInstaller {
         let workspace = paths.repositoryImportWorkspace(id).standardizedFileURL.resolvingSymlinksInPath().path + "/"
         for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) {
             if FileManager.default.fileExists(atPath: item.destination.path), !DownloadManager.valid(item.destination, item: item) {
-                throw RuriError.message("已有游戏文件与整合包所需文件不同，未覆盖：\(item.destination.path)\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。")
+                throw RuriError.message(Messages.CoreInstaller.workspaceText2(String(describing: item.destination.path)))
             }
         }
     }

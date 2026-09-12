@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 enum LoaderEndpoints {
@@ -14,7 +15,7 @@ enum LoaderEndpoints {
         case .fabric: fabric
         case .quilt: quilt
         case .legacyfabric: legacyFabric
-        default: throw RuriError.message("此加载器不提供 Fabric/Quilt 启动清单。")
+        default: throw RuriError.message(Messages.CoreLoaderEndpoints.profileServiceText1)
         }
     }
     static func versions(loader: LoaderKind, game: String) throws -> URL {
@@ -33,7 +34,7 @@ enum LoaderEndpoints {
         repository(loader: loader, game: game).appending(component: "maven-metadata.xml")
     }
     static func installer(loader: LoaderKind, game: String, version: String) throws -> URL {
-        guard loader.usesInstaller else { throw RuriError.message("此加载器不使用 Forge 安装包。") }
+        guard loader.usesInstaller else { throw RuriError.message(Messages.CoreLoaderEndpoints.installerText1) }
         let legacyName = loader == .forge || game == "1.20.1"
         let coordinate = legacyName ? "\(game)-\(version)" : version
         let artifact = legacyName ? "forge" : "neoforge"

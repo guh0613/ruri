@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -5,7 +6,7 @@ import RuriCore
 /// both describe an instance the same way.
 extension AppModel {
     func statusLabel(_ instance: GameInstance) -> String {
-        runningLabel(instance.id) ?? (instance.repositoryIssue != nil ? "需要检查" : instance.installed ? "就绪" : "待安装")
+        runningLabel(instance.id) ?? (instance.repositoryIssue != nil ? Messages.AppInstancePresentation.statusLabelText1.localized : instance.installed ? Messages.AppInstancePresentation.statusLabelText2.localized : Messages.AppInstancePresentation.statusLabelText3.localized)
     }
     func statusIsNominal(_ instance: GameInstance) -> Bool {
         runningLabel(instance.id) == nil && instance.repositoryIssue == nil && instance.installed
@@ -19,16 +20,16 @@ extension AppModel {
         return .green
     }
     func memoryLabel(_ instance: GameInstance) -> String {
-        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview() else { return "内存设置待检查" }
-        return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? " · 自动" : memory.maximumSource == .jvmArguments ? " · 参数" : "")
+        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview() else { return Messages.AppInstancePresentation.memoryText1.localized }
+        return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? Messages.AppInstancePresentation.memoryText2.localized : memory.maximumSource == .jvmArguments ? Messages.AppInstancePresentation.memoryText3.localized : "")
     }
 }
 
 extension GameInstance {
-    var lastPlayedLabel: String { lastPlayed.map { "上次游玩 " + $0.formatted(.relative(presentation: .named)) } ?? "尚未游玩" }
+    var lastPlayedLabel: String { lastPlayed.map { Messages.AppInstancePresentation.lastPlayed(LocalizedFormat.relative($0)).localized } ?? Messages.AppInstancePresentation.lastPlayedLabelText2.localized }
     var playTimeLabel: String {
-        guard playTime >= 60 else { return playTime > 0 ? "不到 1 分钟" : "尚未游玩" }
-        return Duration.seconds(playTime).formatted(.units(allowed: [.hours, .minutes], width: .abbreviated, maximumUnitCount: 2))
+        guard playTime >= 60 else { return playTime > 0 ? Messages.AppInstancePresentation.playTimeLabelText1.localized : Messages.AppInstancePresentation.lastPlayedLabelText2.localized }
+        return LocalizedFormat.duration(playTime)
     }
-    var loaderLabel: String { loader == .vanilla ? "原版" : loader.title + (loaderVersion.map { " " + $0 } ?? "") }
+    var loaderLabel: String { loader == .vanilla ? Messages.AppInstancePresentation.loaderLabelText1.localized : loader.title + (loaderVersion.map { " " + $0 } ?? "") }
 }

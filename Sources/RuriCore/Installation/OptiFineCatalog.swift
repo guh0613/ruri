@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 enum OptiFineCatalog {
@@ -79,5 +80,5 @@ enum OptiFineClassMetadata {
         }
         return result
     }
-    private static func invalid() -> RuriError { .message("OptiFine 安装包的版本信息无效。") }
+    private static func invalid() -> RuriError { .message(Messages.CoreOptiFineCatalog.invalidText1.localized) }
 }

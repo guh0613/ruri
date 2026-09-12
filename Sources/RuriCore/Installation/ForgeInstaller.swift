@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import ZIPFoundation
 import CryptoKit
@@ -7,7 +8,7 @@ public enum ForgeCatalog {
         let data = try await HTTPClient.shared.data(from: LoaderEndpoints.mavenMetadata(loader: loader, game: game))
         let parser = XMLParser(data: data); let delegate = MavenVersionsParser(); parser.delegate = delegate
         parser.shouldResolveExternalEntities = false
-        guard parser.parse() else { throw RuriError.message("无法读取加载器版本列表") }
+        guard parser.parse() else { throw RuriError.message(Messages.CoreForgeInstaller.delegateText1) }
         let candidates: [String]
         if loader == .forge || game == "1.20.1" {
             candidates = delegate.versions.filter { $0.hasPrefix(game + "-") }.map { String($0.dropFirst(game.count + 1)) }
@@ -61,26 +62,26 @@ public actor ForgeInstaller {
     }
     public func install(instance: GameInstance, base: VersionManifest, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> VersionManifest {
         let resources = try paths.resources(for: instance)
-        guard let version = instance.loaderVersion else { throw RuriError.message("请选择加载器版本") }
+        guard let version = instance.loaderVersion else { throw RuriError.message(Messages.CoreForgeInstaller.versionText1) }
         let url = try ForgeCatalog.installerURL(loader: instance.loader, game: instance.gameVersion, version: version)
         let checksumData = try await HTTPClient.shared.data(from: LoaderEndpoints.installerChecksum(url))
         let checksum = String(decoding: checksumData, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespaces).first ?? ""
-        guard checksum.range(of: "^[0-9A-Fa-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message("加载器安装包没有有效的 SHA-1 校验值") }
+        guard checksum.range(of: "^[0-9A-Fa-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreForgeInstaller.checksumText1) }
         let jar = try LauncherPaths.safePath("installers/\(instance.loader.rawValue)-\(instance.gameVersion)-\(version).jar", within: paths.cache)
-        await progress(InstallProgress("下载 \(instance.loader.title) 安装程序"))
+        await progress(InstallProgress(Messages.CoreForgeInstaller.jarText1(String(describing: instance.loader.title))))
         try await downloader.fetch(DownloadItem(url: url, destination: jar, sha1: checksum))
         let archive = try Archive(url: jar, accessMode: .read)
         let profile = try JSONDecoder().decode(Profile.self, from: read("install_profile.json", in: archive))
-        guard (profile.minecraft ?? profile.install?.minecraft ?? profile.versionInfo?.inheritsFrom) == instance.gameVersion else { throw RuriError.message("安装程序对应的 Minecraft 版本不匹配") }
+        guard (profile.minecraft ?? profile.install?.minecraft ?? profile.versionInfo?.inheritsFrom) == instance.gameVersion else { throw RuriError.message(Messages.CoreForgeInstaller.profileText1) }
         if let legacy = profile.versionInfo { return try installLegacy(legacy, profile: profile, archive: archive, resources: resources) }
-        guard let json = profile.json else { throw RuriError.message("加载器安装包缺少版本清单") }
+        guard let json = profile.json else { throw RuriError.message(Messages.CoreForgeInstaller.jsonText1) }
         let child = try JSONDecoder().decode(VersionManifest.self, from: read(json, in: archive))
-        guard child.inheritsFrom == instance.gameVersion else { throw RuriError.message("加载器清单的父版本不匹配") }
+        guard child.inheritsFrom == instance.gameVersion else { throw RuriError.message(Messages.CoreForgeInstaller.childText1) }
         let work = try LauncherPaths.safePath("loader-work/\(instance.id.uuidString)/\(instance.loader.rawValue)-\(version)", within: paths.cache)
         try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)
         let jarID = instance.repositoryVersionID ?? instance.gameVersion
         let sourceJar = try paths.clientJar(jarID, instance: instance)
-        guard let client = base.downloads?["client"] else { throw RuriError.message("缺少原版客户端信息") }
+        guard let client = base.downloads?["client"] else { throw RuriError.message(Messages.CoreForgeInstaller.clientText1) }
         try await downloader.fetch(DownloadItem(client, to: sourceJar))
         let vanilla = try LauncherPaths.safePath("versions/\(instance.gameVersion)", within: work)
         try FileManager.default.createDirectory(at: vanilla, withIntermediateDirectories: true)
@@ -101,29 +102,29 @@ public actor ForgeInstaller {
                 try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
                 if FileManager.default.fileExists(atPath: target.path) { try FileManager.default.removeItem(at: target) }
                 let crc = try archive.extract(entry, to: target)
-                guard crc == entry.checksum else { throw RuriError.message("安装器内嵌文件校验失败：\(relative)") }
+                guard crc == entry.checksum else { throw RuriError.message(Messages.CoreForgeInstaller.crcText1(String(describing: relative))) }
             } else if artifact.url?.scheme == "https" { requests.append(DownloadItem(artifact, to: target)) }
         }
-        try await downloader.download(requests, concurrency: concurrency) { done, total in await progress(InstallProgress("准备加载器依赖", completed: done, total: total)) }
+        try await downloader.download(requests, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreForgeInstaller.crcText2, completed: done, total: total)) }
         var runtimes = await JavaDiscovery.scan(paths: paths)
         let java: JavaRuntime
         if let runtime = try? JavaDiscovery.select(from: runtimes, major: base.requiredJava, architecture: GameInstaller.architecture(for: base)) { java = runtime }
         else {
             let service = JavaInstaller(paths: paths)
-            guard let runtime = try await service.available().first(where: { $0.major == base.requiredJava && $0.architecture == GameInstaller.architecture(for: base) }) else { throw RuriError.message("安装加载器需要 Java \(base.requiredJava)") }
+            guard let runtime = try await service.available().first(where: { $0.major == base.requiredJava && $0.architecture == GameInstaller.architecture(for: base) }) else { throw RuriError.message(Messages.CoreForgeInstaller.runtimeText1(String(describing: base.requiredJava))) }
             java = try await service.install(runtime, downloader: downloader, progress: progress); runtimes.append(java)
         }
-        await progress(InstallProgress("运行 \(instance.loader.title) 安装程序"))
+        await progress(InstallProgress(Messages.CoreForgeInstaller.runtimeText2(String(describing: instance.loader.title))))
         let runner = InstallerProcess()
         let log = paths.instance(instance.id).appendingPathComponent("installer.log")
         let status = try await runner.run(java: java, arguments: ["-Djava.awt.headless=true", "-jar", jar.path, "--installClient", work.path], directory: work, logURL: log, runtimePaths: paths) { line in await progress(InstallProgress(line)) }
         guard status == 0 else {
             let tail = await runner.lastOutput()
-            throw RuriError.message("\(instance.loader.title) 安装程序退出（\(status)）。日志：\(log.path)\n\(String(tail.suffix(1200)))")
+            throw RuriError.message(Messages.CoreForgeInstaller.tailText1(String(describing: instance.loader.title), String(describing: status), String(describing: log.path), String(describing: String(tail.suffix(1200)))))
         }
         let installedJSON = try LauncherPaths.safePath("versions/\(child.id)/\(child.id).json", within: work)
         var installed = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: installedJSON))
-        guard installed.id == child.id, installed.inheritsFrom == instance.gameVersion else { throw RuriError.message("安装器生成的版本清单不一致") }
+        guard installed.id == child.id, installed.inheritsFrom == instance.gameVersion else { throw RuriError.message(Messages.CoreForgeInstaller.installedText1) }
         // First validate declared artifacts against the official hashes. Shared
         // cache paths are never given to the external installation process.
         for library in libraries {
@@ -131,20 +132,20 @@ public actor ForgeInstaller {
             let relative = try artifact.path ?? Library.mavenPath(library.name)
             let source = try LauncherPaths.safePath(relative, within: workLibraries)
             if !FileManager.default.fileExists(atPath: source.path) { continue }
-            guard DownloadManager.valid(source, item: DownloadItem(artifact, to: source)) else { throw RuriError.message("加载器生成文件校验失败：\(relative)") }
+            guard DownloadManager.valid(source, item: DownloadItem(artifact, to: source)) else { throw RuriError.message(Messages.CoreForgeInstaller.sourceText1(String(describing: relative))) }
             let target = try LauncherPaths.safePath(relative, within: resources.libraries)
             if !DownloadManager.valid(target, item: DownloadItem(artifact, to: target)) { try copyAtomically(source, to: target) }
         }
         // NeoForge locates patched client jars and mappings dynamically; those
         // processor outputs are absent from the launcher classpath manifest.
         // Preserve and fingerprint them separately, without adding them to -cp.
-        await progress(InstallProgress("校验加载器生成文件"))
+        await progress(InstallProgress(Messages.CoreForgeInstaller.targetText1))
         var generated: [Artifact] = []
         if let enumerator = FileManager.default.enumerator(at: workLibraries, includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey]) {
             while let file = enumerator.nextObject() as? URL {
                 try Task.checkCancellation()
                 let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-                guard values.isSymbolicLink != true else { throw RuriError.message("安装器生成了不支持的符号链接") }
+                guard values.isSymbolicLink != true else { throw RuriError.message(Messages.CoreForgeInstaller.valuesText1) }
                 guard values.isRegularFile == true else { continue }
                 let relative = String(file.path.dropFirst(workLibraries.path.count + 1))
                 guard !seen.contains(relative) else { continue }
@@ -164,26 +165,26 @@ public actor ForgeInstaller {
     }
     private func read(_ path: String, in archive: Archive) throws -> Data {
         let name = path.hasPrefix("/") ? String(path.dropFirst()) : path
-        guard let entry = archive[name], entry.type == .file, entry.uncompressedSize < 8 * 1024 * 1024 else { throw RuriError.message("安装包缺少有效的 \(name)") }
+        guard let entry = archive[name], entry.type == .file, entry.uncompressedSize < 8 * 1024 * 1024 else { throw RuriError.message(Messages.CoreForgeInstaller.entryText1(String(describing: name))) }
         var data = Data(); let crc = try archive.extract(entry) { data.append($0) }
-        guard crc == entry.checksum else { throw RuriError.message("安装包清单校验失败") }; return data
+        guard crc == entry.checksum else { throw RuriError.message(Messages.CoreForgeInstaller.crcText3) }; return data
     }
     private func installLegacy(_ child: VersionManifest, profile: Profile, archive: Archive, resources: GameResourcePaths) throws -> VersionManifest {
         guard let coordinate = profile.install?.path, let filename = profile.install?.filePath,
-              let entry = archive[filename], entry.type == .file else { throw RuriError.message("旧版 Forge 安装包缺少内嵌客户端") }
+              let entry = archive[filename], entry.type == .file else { throw RuriError.message(Messages.CoreForgeInstaller.entryText2) }
         let target = try LauncherPaths.safePath(Library.mavenPath(coordinate), within: resources.libraries)
         try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
         let staging = target.deletingLastPathComponent().appendingPathComponent(".\(UUID().uuidString).jar")
         defer { try? FileManager.default.removeItem(at: staging) }
         let crc = try archive.extract(entry, to: staging)
-        guard crc == entry.checksum else { throw RuriError.message("旧版 Forge 文件校验失败") }
+        guard crc == entry.checksum else { throw RuriError.message(Messages.CoreForgeInstaller.crcText4) }
         try copyAtomically(staging, to: target)
         return child
     }
     private func copyAtomically(_ source: URL, to target: URL) throws {
         if protectExistingFiles, FileManager.default.fileExists(atPath: target.path) {
             guard try InstanceTransfer.sha1(source) == InstanceTransfer.sha1(target) else {
-                throw RuriError.message("新组件需要替换正在使用的依赖文件，原安装已保留：\(target.lastPathComponent)")
+                throw RuriError.message(Messages.CoreForgeInstaller.copyAtomicallyText1(String(describing: target.lastPathComponent)))
             }
             return
         }
@@ -191,7 +192,7 @@ public actor ForgeInstaller {
            target.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(paths.directoryRoot(paths.directoryID(for: id)).standardizedFileURL.resolvingSymlinksInPath().appendingPathComponent("libraries").path + "/"),
            FileManager.default.fileExists(atPath: target.path) {
             guard try InstanceTransfer.sha1(source) == InstanceTransfer.sha1(target) else {
-                throw RuriError.message("已有加载器依赖与整合包所需文件不同，未覆盖：\(target.path)\n请先检查此文件，或选择另一个 Minecraft 文件夹。")
+                throw RuriError.message(Messages.CoreForgeInstaller.idText1(String(describing: target.path)))
             }
             return
         }
@@ -199,6 +200,6 @@ public actor ForgeInstaller {
         let staging = target.deletingLastPathComponent().appendingPathComponent(".\(UUID().uuidString).part")
         defer { try? FileManager.default.removeItem(at: staging) }
         try FileManager.default.copyItem(at: source, to: staging)
-        guard rename(staging.path, target.path) == 0 else { throw RuriError.message("无法保存加载器文件：\(target.lastPathComponent)") }
+        guard rename(staging.path, target.path) == 0 else { throw RuriError.message(Messages.CoreForgeInstaller.stagingText1(String(describing: target.lastPathComponent))) }
     }
 }

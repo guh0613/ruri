@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -55,7 +56,7 @@ enum FileAppleDouble {
         var after = stat(), location = stat(), peerAfter = stat()
         guard fstat(fd, &after) == 0, lstat(sidecar.path, &location) == 0, fstat(peer, &peerAfter) == 0,
               unchanged(before, after), unchanged(before, location), unchanged(peerInfo, peerAfter) else {
-            throw RuriError.message("文件附加信息在枚举期间改变，请重试。")
+            throw RuriError.message(Messages.CoreFileAppleDouble.afterText1)
         }
         return true
     }

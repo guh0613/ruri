@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// Public defaults embedded in the application before it is signed.
@@ -7,7 +8,7 @@ public struct BuildConfiguration: Sendable {
 
     public init(info: [String: Any] = Bundle.main.infoDictionary ?? [:]) {
         microsoftClientID = (info["RuriMicrosoftClientID"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        version = info["RuriVersion"] as? String ?? info["CFBundleShortVersionString"] as? String ?? "开发版本"
+        version = info["RuriVersion"] as? String ?? info["CFBundleShortVersionString"] as? String ?? Messages.CoreBuildConfiguration.versionText1.localized
     }
 
     public func microsoftClientID(override: String) -> String {

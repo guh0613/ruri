@@ -1,10 +1,19 @@
+import RuriLocalization
 import Foundation
 import RuriCore
 
 @main struct CLI {
     @MainActor static func main() async {
+        if let status = LocalizationCommandLine.resourceCheck() { exit(status) }
+        var arguments = Array(CommandLine.arguments.dropFirst())
+        let language: String?
+        do { language = try LocalizationCommandLine.takeLanguage(from: &arguments) }
+        catch { fputs(error.localizedDescription + "\n", stderr); exit(2) }
+        let context = language.map { LocalizationContext(language: $0) } ?? LocalizationContext.processDefault
+        await LocalizationContext.$current.withValue(context) { await run(arguments) }
+    }
+    @MainActor private static func run(_ args: [String]) async {
         do {
-            let args = Array(CommandLine.arguments.dropFirst())
             if args.first == "scan-minecraft" { try await scanMinecraft(args); return }
             let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
             let basePaths = LauncherPaths(root: root)
@@ -12,7 +21,7 @@ import RuriCore
             let storedSource = (try? StateStore.load(paths).settings.downloadSource) ?? .automatic
             let source: DownloadSource
             if let requested = ProcessInfo.processInfo.environment["RURI_DOWNLOAD_SOURCE"] {
-                guard let parsed = DownloadSource(rawValue: requested) else { throw RuriError.message("RURI_DOWNLOAD_SOURCE 应为 automatic、official 或 bmclapi") }
+                guard let parsed = DownloadSource(rawValue: requested) else { throw RuriError.message(Messages.CLICLI.parsedText1) }
                 source = parsed
             } else { source = storedSource }
             await NetworkRouting.shared.configure(source)
@@ -24,105 +33,105 @@ import RuriCore
             case "directories":
                 try manageDirectories(Array(args.dropFirst()), paths: paths)
             case "isolation-policy":
-                guard args.count <= 2 else { throw RuriError.message("用法：ruri-cli isolation-policy [always|modded|never]") }
+                guard args.count <= 2 else { throw RuriError.message(Messages.CLICLI.parsedText2) }
                 if args.count == 2 {
-                    guard let policy = GameIsolationPolicy(rawValue: args[1]) else { throw RuriError.message("隔离规则为 always、modded 或 never。") }
+                    guard let policy = GameIsolationPolicy(rawValue: args[1]) else { throw RuriError.message(Messages.CLICLI.policyText1) }
                     try StateStore.update(paths) { $0.settings.isolationPolicy = policy }
                 }
                 print((try StateStore.load(paths).settings.isolationPolicy ?? .always).title)
             case "run-directory":
-                let usage = "用法：ruri-cli run-directory <实例UUID> <isolated|shared|custom> [自定义路径] [--apply|--copy]。默认预览；首次选择自定义路径会保存目录身份信息。--apply 使用现有内容；--copy 复制到空目标。原目录保留。"
+                let usage = Messages.CLICLI.usageText1.localized
                 guard (3...5).contains(args.count), let id = UUID(uuidString: args[1]), let mode = GameRunDirectory(rawValue: args[2]) else { throw RuriError.message(usage) }
                 var remaining = Array(args.dropFirst(3))
                 let action = remaining.last.flatMap { ["--apply", "--copy"].contains($0) ? $0 : nil }
                 if action != nil { remaining.removeLast() }
                 guard remaining.isEmpty || (mode == .custom && remaining.count == 1 && !remaining[0].hasPrefix("--")) else { throw RuriError.message(usage) }
                 let currentState = try StateStore.load(paths)
-                guard currentState.instances.contains(where: { $0.id == id }) else { throw RuriError.message("这个实例已被移除，请刷新后重试。") }
+                guard currentState.instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.currentStateText1) }
                 let custom = try remaining.first.map { try CustomRunDirectory.register(at: URL(fileURLWithPath: $0), paths: paths.configured(with: currentState)) }
                 let service = GameRunDirectoryChange(paths: paths)
                 let preview = try await service.preview(instanceID: id, target: mode, customDirectory: custom)
-                print("\(preview.instanceName)：\(preview.sourceMode.title) → \(preview.targetMode.title)\n原目录：\(preview.source.path)\n\(preview.sourceFileCount) 个文件，\(preview.sourceBytes) 字节\n目标目录：\(preview.target.path)\n\(preview.targetFileCount) 个文件，\(preview.targetBytes) 字节")
-                if !preview.otherInstances.isEmpty { print("共用目标目录的实例：" + preview.otherInstances.joined(separator: "、")) }
+                print(Messages.CLICLI.previewText1(String(describing: preview.instanceName), String(describing: preview.sourceMode.title), String(describing: preview.targetMode.title), String(describing: preview.source.path), Int64(preview.sourceFileCount), String(describing: preview.sourceBytes), String(describing: preview.target.path), Int64(preview.targetFileCount), String(describing: preview.targetBytes)).localized)
+                if !preview.otherInstances.isEmpty { print(Messages.CLICLI.sharedInstances(LocalizedFormat.list(preview.otherInstances)).localized) }
                 if action == "--copy" {
                     let result = try await service.copyToEmpty(preview) { p in
                         if p.phase != .copying || p.completed % 50 == 0 {
                             try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8))
                         }
                     }
-                    print(result.warning ?? "已复制并切换目录，原数据保留。")
-                    if let url = result.preservedCopy { print("工作副本：\(url.path)") }
-                } else if action == "--apply" { _ = try await service.useExisting(preview); print("已切换到目标现有内容，原目录及其文件已保留。") }
+                    print(result.warning ?? Messages.CLICLI.resultText1.localized)
+                    if let url = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: url.path)).localized) }
+                } else if action == "--apply" { _ = try await service.useExisting(preview); print(Messages.CLICLI.urlText2.localized) }
             case "recover-directory":
-                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message("用法：ruri-cli recover-directory <instance-uuid> [--apply]。默认只查看待恢复操作。") }
+                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText1) }
                 let service = GameRunDirectoryChange(paths: paths)
-                guard let pending = try await service.pendingCopy(instanceID: id) else { print("没有待恢复的运行目录复制。"); break }
-                print("\(pending.owner.instanceName) · \(pending.owner.transactionID)\n\(pending.committed ? "复制已提交，只需清理记录" : "复制尚未提交，恢复会保留工作副本")\n原目录：\(pending.source.path)\n目标目录：\(pending.target.path)")
+                guard let pending = try await service.pendingCopy(instanceID: id) else { print(Messages.CLICLI.pendingText1.localized); break }
+                print(Messages.CLICLI.pendingText4(String(describing: pending.owner.instanceName), String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.pendingText2.localized : Messages.CLICLI.pendingText3.localized), String(describing: pending.source.path), String(describing: pending.target.path)).localized)
                 if args.count == 3 {
                     let result = try await service.recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
-                    print(result.warning ?? "恢复完成。")
-                    if let url = result.preservedCopy { print("工作副本：\(url.path)") }
+                    print(result.warning ?? Messages.CLICLI.resultText2.localized)
+                    if let url = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: url.path)).localized) }
                 }
             case "relocate-directory":
-                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 3 || args[3] == "--apply" else { throw RuriError.message("用法：ruri-cli relocate-directory <实例UUID> <原游戏目录的新路径> [--apply]。默认预览；只更新同一目录的引用，不移动或合并游戏文件。") }
+                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 3 || args[3] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText2) }
                 let service = CustomRunDirectoryRelocation(paths: paths)
                 let preview = try await service.preview(instanceID: id, target: URL(fileURLWithPath: args[2]))
-                print("原位置：\(preview.source.path)\n找回位置：\(preview.target.path)\n将更新以下实例：")
-                for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? "正在使用此目录" : "记住的目录") · \(item.id)") }
-                if args.count == 4 { _ = try await service.apply(preview); print("已更新目录引用，游戏文件原地保留。") }
+                print(Messages.CLICLI.previewText3(String(describing: preview.source.path), String(describing: preview.target.path)).localized)
+                for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? Messages.CLICLI.previewText4.localized : Messages.CLICLI.previewText5.localized) · \(item.id)") }
+                if args.count == 4 { _ = try await service.apply(preview); print(Messages.CLICLI.previewText6.localized) }
             case "copy-instance":
-                let usage = "用法：ruri-cli copy-instance <源实例UUID> <目标文件夹UUID|default> <副本名称> [--without-worlds] [--with-backups] [--apply]。默认预览，--apply 才复制。"
+                let usage = Messages.CLICLI.usageText2.localized
                 guard (4...7).contains(args.count), let id = UUID(uuidString: args[1]),
                       let directory = args[2] == "default" ? GameDirectory.defaultID : UUID(uuidString: args[2]) else { throw RuriError.message(usage) }
                 let flags = Array(args.dropFirst(4))
                 guard flags.allSatisfy({ ["--without-worlds", "--with-backups", "--apply"].contains($0) }), Set(flags).count == flags.count else { throw RuriError.message(usage) }
                 let service = InstanceCopier(paths: paths)
                 let preview = try await service.preview(instanceID: id, name: args[3], directoryID: directory, options: .init(includeWorlds: !flags.contains("--without-worlds"), includeBackups: flags.contains("--with-backups")))
-                print("\(preview.source.name) → \(preview.copy.name)\n源游戏目录：\(preview.sourceGame.path)\n副本位置：\(preview.destination.path)\n\(preview.fileCount) 个文件，\(preview.bytes) 字节\n副本使用独立运行目录；原实例保留。")
+                print(Messages.CLICLI.previewText7(String(describing: preview.source.name), String(describing: preview.copy.name), String(describing: preview.sourceGame.path), String(describing: preview.destination.path), Int64(preview.fileCount), String(describing: preview.bytes)).localized)
                 if flags.contains("--apply") {
                     let result = try await service.copy(preview) { p in
                         if p.phase != .copying || p.completed % 50 == 0 { try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8)) }
                     }
-                    print("Copied instance: \(preview.copy.id)")
+                    print(Messages.CLICLI.resultText3(String(describing: preview.copy.id)).localized)
                     if let warning = result.warning { print(warning) }
-                    if let file = result.preservedCopy { print("工作副本：\(file.path)") }
+                    if let file = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: file.path)).localized) }
                 }
             case "recover-instance-copy":
-                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message("用法：ruri-cli recover-instance-copy <实例UUID> [--apply]。默认查看，--apply 恢复或清理复制。") }
+                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText3) }
                 let service = InstanceCopier(paths: paths)
-                guard let pending = try await service.pending(instanceID: id) else { print("没有待恢复的实例复制。"); break }
-                print("\(pending.owner.sourceName) → \(pending.owner.copyName) · \(pending.owner.transactionID)\n\(pending.committed ? "副本已登记，等待校验和清理" : "副本未完成，恢复会保留工作区")\n目标：\(pending.destination.path)\n工作区：\(pending.workspace.path)")
+                guard let pending = try await service.pending(instanceID: id) else { print(Messages.CLICLI.pendingText5.localized); break }
+                print(Messages.CLICLI.pendingText8(String(describing: pending.owner.sourceName), String(describing: pending.owner.copyName), String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.pendingText6.localized : Messages.CLICLI.pendingText7.localized), String(describing: pending.destination.path), String(describing: pending.workspace.path)).localized)
                 if args.count == 3 {
                     let result = try await service.recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
-                    print(result.warning ?? "已恢复实例复制。")
-                    if let file = result.preservedCopy { print("工作副本：\(file.path)") }
+                    print(result.warning ?? Messages.CLICLI.resultText4.localized)
+                    if let file = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: file.path)).localized) }
                 }
             case "java", "add-java", "forget-java", "default-java", "repair-java", "remove-java":
                 try await manageJava(args, paths: paths)
             case "install-java":
-                guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message("用法：ruri-cli install-java <major> [aarch64|x86_64]") }
+                guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message(Messages.CLICLI.majorText1) }
                 let service = JavaInstaller(paths: paths)
                 let architecture = args.count > 2 ? args[2] : JavaRuntime.hostArchitecture
-                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message("Mojang 没有提供所需运行时") }
+                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message(Messages.CLICLI.runtimeText1) }
                 let installed = try await service.install(runtime, downloader: DownloadManager()) { p in
                     if p.completed % 20 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                 }
-                print("Installed \(installed.label)\n\(installed.path)")
+                print(Messages.CLICLI.installedText1(String(describing: installed.label), String(describing: installed.path)).localized)
             case "fetch":
                 guard args.count >= 5, let url = URL(string: args[1]), let size = Int64(args[4]), size >= 0,
-                      args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message("用法：ruri-cli fetch <https-url> <output> <sha1> <bytes>") }
+                      args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CLICLI.sizeText1) }
                 let item = DownloadItem(url: url, destination: URL(fileURLWithPath: args[2]), sha1: args[3], size: size)
                 let manager = DownloadManager()
-                try await manager.fetch(item) { p in print("\(p.receivedBytes)/\(p.totalBytes ?? size) bytes; resumed \(p.resumedBytes)") }
-                if let transfer = await manager.transfers().first { print("Source: \(transfer.host); attempts: \(transfer.attempt)") }
-                print("Downloaded and verified \(item.destination.lastPathComponent)")
+                try await manager.fetch(item) { p in print(Messages.CLICLI.managerText1(String(describing: p.receivedBytes), String(describing: p.totalBytes ?? size), String(describing: p.resumedBytes)).localized) }
+                if let transfer = await manager.transfers().first { print(Messages.CLICLI.transferText1(String(describing: transfer.host), String(describing: transfer.attempt)).localized) }
+                print(Messages.CLICLI.transferText2(String(describing: item.destination.lastPathComponent)).localized)
             case "versions":
                 let catalog = try await GameInstaller(paths: paths).catalog()
-                print("Latest release: \(catalog.latest.release)")
+                print(Messages.CLICLI.catalogText1(String(describing: catalog.latest.release)).localized)
                 for version in catalog.versions.prefix(20) { print("\(version.id) [\(version.type)]") }
             case "install":
-                guard (2...4).contains(args.count) else { throw RuriError.message("用法：ruri-cli install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader|optifine] [loader-version]") }
-                guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message("不支持的加载器名称") }
+                guard (2...4).contains(args.count) else { throw RuriError.message(Messages.CLICLI.catalogText2) }
+                guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message(Messages.CLICLI.loaderText1) }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
                 if args.count == 4 { instance.loaderVersion = args[3] }
                 instance.launchOverrides = .init()
@@ -136,19 +145,19 @@ import RuriCore
                     if progress.completed % 100 == 0 || progress.completed == progress.total { print("\(progress.stage) \(progress.completed)/\(progress.total)") }
                 }
                 try StateStore.update(paths) { state in state.instances.append(instance); state.selectedInstanceID = instance.id }
-                print("Installed \(instance.id)")
+                print(Messages.CLICLI.leaseText1(String(describing: instance.id)).localized)
             case "export-instance":
-                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli export-instance <instance-uuid> <output.zip> [ruri|complete|multimc|mcbbs|mrpack]") }
+                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText1) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
-                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message("导出格式为 ruri、complete、multimc、mcbbs 或 mrpack") }
+                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message(Messages.CLICLI.formatText1) }
                 try await InstanceTransfer(paths: paths).export(instance, to: URL(fileURLWithPath: args[2]), format: format) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                print("Exported \(instance.name)")
+                print(Messages.CLICLI.formatText2(String(describing: instance.name)).localized)
             case "import-instance":
-                guard args.count >= 2 else { throw RuriError.message("用法：ruri-cli import-instance <folder-or-zip> [name]") }
+                guard args.count >= 2 else { throw RuriError.message(Messages.CLICLI.formatText3) }
                 let transfer = InstanceTransfer(paths: paths)
                 let prepared = try await transfer.prepare(URL(fileURLWithPath: args[1]))
-                print("\(prepared.format): \(prepared.instance.subtitle), \(prepared.fileCount) files")
+                print(Messages.CLICLI.preparedText1(String(describing: prepared.format), String(describing: prepared.instance.subtitle), String(describing: prepared.fileCount)).localized)
                 for warning in prepared.warnings { print(warning) }
                 do {
                     let imported = try await transfer.install(prepared, name: args.count > 2 ? args[2] : prepared.instance.name, importJVMArguments: prepared.format == "MCBBS" || prepared.includesInstallation, installer: GameInstaller(paths: paths)) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
@@ -156,18 +165,18 @@ import RuriCore
                         try StateStore.update(paths) { state in state.instances.append(imported); state.selectedInstanceID = imported.id }
                     }
                     await transfer.discard(prepared)
-                    print("Imported \(imported.id)")
+                    print(Messages.CLICLI.importedText1(String(describing: imported.id)).localized)
                 } catch { await transfer.discard(prepared); throw error }
             case "update-pack", "rollback-pack", "recover-pack-update":
                 try await manageModpackUpdate(args, paths: paths)
             case "components":
                 guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else {
-                    throw RuriError.message("用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]")
+                    throw RuriError.message(Messages.CLICLI.instanceText2)
                 }
                 let service = InstanceComponents(paths: paths)
                 if args.count == 2 {
                     print(instance.subtitle)
-                    if let backup = try await service.backup(for: id) { print("Previous: \(backup.title)") }
+                    if let backup = try await service.backup(for: id) { print(Messages.CLICLI.backupText1(String(describing: backup.title)).localized) }
                     if let reason = InstanceComponents.unavailableReason(instance) { print(reason) }
                 } else if args[2] == "versions", args.count == 4, let loader = LoaderKind(rawValue: args[3]) {
                     for version in try await GameInstaller(paths: paths).loaderVersions(loader, game: instance.gameVersion) { print(version) }
@@ -176,37 +185,37 @@ import RuriCore
                     _ = try await service.change(instance, to: loader, version: args.count == 5 ? args[4] : nil) { p in
                         if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                     }
-                    print("Updated components for \(id)")
+                    print(Messages.CLICLI.loaderText2(String(describing: id)).localized)
                 } else if args[2] == "restore", args.count == 3 {
-                    _ = try await service.restore(instance); print("Restored components for \(id)")
-                } else { throw RuriError.message("用法：ruri-cli components <instance-uuid> [versions <loader> | set <loader> [version] | restore]") }
+                    _ = try await service.restore(instance); print(Messages.CLICLI.loaderText3(String(describing: id)).localized)
+                } else { throw RuriError.message(Messages.CLICLI.instanceText2) }
             case "repair":
-                guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli repair <instance-uuid>") }
+                guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText3) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
                 try await GameInstaller(paths: paths).repair(instance) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                print("Repaired \(instance.id)")
+                print(Messages.CLICLI.leaseText2(String(describing: instance.id)).localized)
             case "plan":
                 let state = try StateStore.load(paths)
-                guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message("用法：ruri-cli plan [实例UUID]") }
+                guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message(Messages.CLICLI.stateText1) }
                 let selectedID = args.count == 2 ? UUID(uuidString: args[1]) : state.selectedInstanceID
-                guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message("没有找到指定实例") }
+                guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message(Messages.CLICLI.storedText1) }
                 let instance = try stored.launchSnapshot(defaults: state.settings)
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let runtimes = await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 })
                 let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
-                if let names = plan.customEnvironmentNames, !names.isEmpty { print("Environment overrides (values hidden): " + names.joined(separator: ", ")) }
+                if let names = plan.customEnvironmentNames, !names.isEmpty { print(Messages.CLICLI.environmentNames(names.joined(separator: ", ")).localized) }
             case "install-content":
-                guard args.count >= 3, let id = UUID(uuidString: args[2]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli install-content <project> <instance-uuid> [version-id]") }
+                guard args.count >= 3, let id = UUID(uuidString: args[2]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText4) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
                 let service = ModrinthService()
                 let versions = try await service.versions(project: args[1], game: instance.gameVersion, loader: instance.loader.modrinthLoader)
-                guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message("找不到兼容内容版本") }
+                guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message(Messages.CLICLI.versionText1) }
                 try await service.install(version: version, type: "mod", instance: instance, paths: paths, downloader: DownloadManager()) { p in print("\(p.stage) \(p.completed)/\(p.total)") }
-                print("Installed \(version.version_number)")
+                print(Messages.CLICLI.leaseText1(String(describing: version.version_number)).localized)
             case "content", "content-action", "update-content":
                 try await manageContent(args, paths: paths)
             case "datapacks":
@@ -218,15 +227,15 @@ import RuriCore
                 var launchArgs = args.dropFirst().filter { $0 != "--detach" }
                 var worldFolder: String?
                 if let index = launchArgs.firstIndex(of: "--world") {
-                    guard index + 1 < launchArgs.count else { throw RuriError.message("--world 后需要存档文件夹名。") }
+                    guard index + 1 < launchArgs.count else { throw RuriError.message(Messages.CLICLI.indexText1) }
                     worldFolder = launchArgs[index + 1]; launchArgs.removeSubrange(index...index + 1)
                 }
-                guard launchArgs.count <= 1 else { throw RuriError.message("用法：ruri-cli launch [instance-uuid] [--world 存档文件夹名] [--detach]") }
+                guard launchArgs.count <= 1 else { throw RuriError.message(Messages.CLICLI.indexText2) }
                 let requestedID = launchArgs.first.flatMap(UUID.init(uuidString:)) ?? (launchArgs.isEmpty ? state.selectedInstanceID : nil)
-                if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message("无效的实例 UUID") }
+                if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message(Messages.CLICLI.requestedIDText1) }
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
-                guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message("请先安装实例并添加账号") }
-                guard account.kind == .offline else { throw RuriError.message("命令行启动当前仅支持离线账号；Microsoft 或外置认证账号请在应用中启动。") }
+                guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message(Messages.CLICLI.accountText1) }
+                guard account.kind == .offline else { throw RuriError.message(Messages.CLICLI.accountText2) }
                 let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {
@@ -251,8 +260,8 @@ import RuriCore
                     try recorder.transition(.starting)
                     try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])
                     handedOff = true
-                    print("Game session: \(recorder.record.id)")
-                    if args.contains("--detach") { print("游戏已交由后台监控，退出命令行不会结束游戏。"); break }
+                    print(Messages.CLICLI.planText1(String(describing: recorder.record.id)).localized)
+                    if args.contains("--detach") { print(Messages.CLICLI.planText2.localized); break }
                     let cursor = try GameSessionLogCursor(paths: paths, session: recorder.record)
                     while true {
                         let record = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
@@ -264,13 +273,13 @@ import RuriCore
                             for line in await cursor.updates { try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8)) }
                         } while final && changed
                         if final {
-                            guard let result = record.exit else { throw RuriError.message("监控没有留下游戏退出结果。请查看运行记录并恢复中断状态。") }
+                            guard let result = record.exit else { throw RuriError.message(Messages.CLICLI.resultText5) }
                             let status = result.shellStatus
-                            print("Game exit: \(status)")
+                            print(Messages.CLICLI.statusText1(String(describing: status)).localized)
                             if status != 0 { exit(status) }
                             break
                         }
-                        if activity != .monitoring { throw RuriError.message("监控已断开，请检查运行记录；游戏可能仍在运行。") }
+                        if activity != .monitoring { throw RuriError.message(Messages.CLICLI.statusText2) }
                         try await Task.sleep(for: .milliseconds(250))
                     }
                 } catch {
@@ -278,19 +287,19 @@ import RuriCore
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             case "quit":
-                guard args.count == 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message("用法：ruri-cli quit <instance-uuid>") }
-                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { !$0.state.isFinished && GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
+                guard args.count == 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message(Messages.CLICLI.idText4) }
+                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { !$0.state.isFinished && GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.recordText1) }
                 let request = try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
-                print("已提交正常退出请求：\(request)。这不代表游戏已经退出；监控会继续记录实际结果。")
+                print(Messages.CLICLI.requestText1(String(describing: request)).localized)
             case "stop":
-                guard args.count == 2, let id = UUID(uuidString: args[1]), try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message("用法：ruri-cli stop <instance-uuid>") }
-                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message("没有可连接的游戏监控进程。") }
+                guard args.count == 2, let id = UUID(uuidString: args[1]), try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.idText5) }
+                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.recordText1) }
                 try GameMonitorClient.requestStop(paths: paths, record: record)
-                print("Stop requested: \(record.id)")
+                print(Messages.CLICLI.recordText2(String(describing: record.id)).localized)
             case "recover-session":
                 guard (3...5).contains(args.count), let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]),
                       Set(args.dropFirst(3)).isSubset(of: ["--apply", "--confirm-game-ended"]) else {
-                    throw RuriError.message("用法：ruri-cli recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]")
+                    throw RuriError.message(Messages.CLICLI.sessionIDText1)
                 }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
                 let status = GameSessionRecovery.status(record)
@@ -299,74 +308,34 @@ import RuriCore
                     let recovered = try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: args.contains("--confirm-game-ended"))
                     print(recovered.title)
                 } else if status == .processEnded || status == .confirmationRequired {
-                    print("使用 --apply 收尾这条记录；仅在已自行确认游戏退出时添加 --confirm-game-ended。")
+                    print(Messages.CLICLI.recoveredText1.localized)
                 }
             case "diagnose":
-                guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message("用法：ruri-cli diagnose <instance-uuid> <session-uuid>") }
+                guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message(Messages.CLICLI.sessionIDText2) }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
                 let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: record)
                 print(diagnosis.title + "\n" + diagnosis.summary)
                 for fact in diagnosis.facts { print("• " + fact) }
                 for finding in diagnosis.findings {
-                    print("\n\(finding.title)（\(finding.confidence.rawValue)）\n\(finding.explanation)")
+                    print("\n\(finding.title)（\(finding.confidence.title)）\n\(finding.explanation)")
                     for evidence in finding.evidence {
                         let document = diagnosis.documents.first { $0.id == evidence.documentID }
-                        print("\(document?.title ?? evidence.documentID) · \(document?.isTail == true ? "末段" : "")第 \(evidence.line) 行\n\(evidence.excerpt)")
+                        print(Messages.CLICLI.documentText2(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.CLICLI.documentText1.localized : ""), String(describing: evidence.line), String(describing: evidence.excerpt)).localized)
                     }
                     for (index, step) in finding.steps.enumerated() { print("\(index + 1). \(step)") }
                 }
-                for limitation in diagnosis.limitations { print("说明：" + limitation) }
+                for limitation in diagnosis.limitations { print(Messages.CLICLI.diagnosticLimitation(limitation).localized) }
             case "sessions":
                 let state = try StateStore.load(paths)
                 let instances: [GameInstance]
                 if args.count > 1 {
-                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message("无效的实例 UUID") }
+                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.requestedIDText1) }
                     instances = [instance]
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print("""
-                Ruri CLI
-                  java
-                  add-java <Java executable or JDK folder>
-                  forget-java <manually added executable path>
-                  default-java <path or automatic>
-                  repair-java <runtime-id>
-                  remove-java <runtime-id> [--apply] [--reset-references] [--partial]
-                  versions
-                  install <version> [fabric|quilt|forge|neoforge|legacyfabric|liteloader|optifine] [loader-version]
-                  install-java <major> [aarch64|x86_64]
-                  repair <instance-uuid>
-                  install-content <project> <instance-uuid> [version-id]
-                  content <instance-uuid> [mod|resourcepack|shader]
-                  content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]
-                  plan [instance-uuid]
-                  launch-settings <defaults|instance-uuid> [set <key> <value> | inherit <key|all>]
-                  update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]
-                  schematics <instance-uuid> [list|info|import|mkdir|export|remove ...] [--apply]
-                  directories <list|add|select|rename|relocate|remove> ...
-                  run-directory <instance-uuid> <isolated|shared|custom> [path] [--apply|--copy]
-                  recover-directory <instance-uuid> [--apply]
-                  relocate-directory <instance-uuid> <original-folder-new-path> [--apply]
-                  copy-instance <source-uuid> <directory-uuid|default> <name> [--without-worlds] [--with-backups] [--apply]
-                  recover-instance-copy <instance-uuid> [--apply]
-                  move-instance <instance-uuid> <directory-uuid|default> [--apply]
-                  recover-instance-move <instance-uuid> [--apply] [--keep-source]
-                  scan-minecraft <directory-or-version-json> [--json]
-                  sessions [instance-uuid]
-                  diagnose <instance-uuid> <session-uuid>
-                  recover-session <instance-uuid> <session-uuid> [--apply] [--confirm-game-ended]
-                  components <instance-uuid> [versions <loader> | set <loader> [version] | restore]
-                  datapacks <instance-uuid> <world-folder> [import <path> | enable|disable|remove <filename>] [--apply]
-                  update-pack <instance-uuid> <archive> [--apply] [--replace-local]
-                  rollback-pack/recover-pack-update <instance-uuid> [--apply]
-                  launch [instance-uuid] [--world folder] [--detach] (offline account)
-                  quit <instance-uuid> (normal application quit)
-                  stop <instance-uuid> (SIGTERM)
-
-                RURI_DATA_DIR overrides the data directory.
-                """)
+            default: print(Messages.CLICLI.recordsText1.localized)
             }
-        } catch { fputs("Error: \(error.localizedDescription)\n", stderr); exit(1) }
+        } catch { fputs(Messages.CLICLI.errorOutput(error.localizedDescription).localized, stderr); exit(1) }
     }
 }

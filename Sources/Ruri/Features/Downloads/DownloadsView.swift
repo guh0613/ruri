@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -9,15 +10,15 @@ struct DownloadsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: "没有下载任务", detail: "安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。") }
+                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: Messages.AppDownloadsView.bodyText1.localized, detail: Messages.AppDownloadsView.bodyText2.localized) }
                 ForEach(model.activities) { activity in
                     Surface {
                         VStack(alignment: .leading, spacing: 14) {
                             HStack {
                                 Image(systemName: activity.status == .completed ? "checkmark.circle.fill" : activity.status == .failed ? "exclamationmark.circle" : "arrow.down.circle").foregroundStyle(activity.status == .failed ? Color.orange : Theme.accent)
                                 Text(activity.title).font(.headline); Spacer()
-                                if activity.status == .running { Button("取消") { model.operation?.cancel() } }
-                                else { Text(activity.status == .completed ? "已完成" : activity.status == .cancelled ? "已取消" : "失败").font(.caption).foregroundStyle(.secondary) }
+                                if activity.status == .running { Button(Messages.Common.cancel.localized) { model.operation?.cancel() } }
+                                else { Text(activity.status == .completed ? Messages.AppDownloadsView.bodyText3.localized : activity.status == .cancelled ? Messages.AppDownloadsView.bodyText4.localized : Messages.AppDownloadsView.bodyText5.localized).font(.caption).foregroundStyle(.secondary) }
                             }
                             if activity.status == .running {
                                 if activity.progress.total > 0 { ProgressView(value: activity.progress.fraction) }
@@ -29,7 +30,7 @@ struct DownloadsView: View {
                     }
                 }
                 if !transfers.isEmpty {
-                    Text("最近的文件传输").font(.headline)
+                    Text(Messages.AppDownloadsView.errorText1.localized).font(.headline)
                     Surface {
                         VStack(spacing: 15) {
                             ForEach(transfers) { transfer in
@@ -60,12 +61,12 @@ struct DownloadsView: View {
             }
         }
     }
-    private func bytes(_ value: Int64) -> String { ByteCountFormatter.string(fromByteCount: value, countStyle: .file) }
+    private func bytes(_ value: Int64) -> String { LocalizedFormat.bytes(value) }
     private func sourceInfo(_ transfer: FileTransfer) -> some View {
         HStack {
             Text(transfer.host).lineLimit(1).truncationMode(.middle)
-            if transfer.attempt > 1 { Text("第 \(transfer.attempt) 次尝试") }
-            if transfer.resumedBytes > 0 { Text("续传 \(bytes(transfer.resumedBytes))") }
+            if transfer.attempt > 1 { Text(Messages.AppDownloadsView.sourceInfoText1(Int64(transfer.attempt)).localized) }
+            if transfer.resumedBytes > 0 { Text(Messages.AppDownloadsView.sourceInfoText2(String(describing: bytes(transfer.resumedBytes))).localized) }
         }
     }
     private func byteInfo(_ transfer: FileTransfer) -> some View {

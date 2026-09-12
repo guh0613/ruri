@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -7,21 +8,21 @@ struct DirectoryMenu: View {
     @Environment(AppModel.self) private var model
     var body: some View {
         Menu {
-            Picker("实例文件夹", selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
-                Text("默认实例文件夹").tag(GameDirectory.defaultID)
+            Picker(Messages.AppGameDirectoriesView.bodyText1.localized, selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
+                Text(Messages.AppGameDirectoriesView.bodyText2.localized).tag(GameDirectory.defaultID)
                 ForEach(model.state.gameDirectories ?? []) { directory in Text(directory.name).tag(directory.id) }
             }.pickerStyle(.inline)
             Divider()
             if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
-                Button("刷新版本列表", systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
+                Button(Messages.AppGameDirectoriesView.bodyText3.localized, systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
             }
-            Button("添加文件夹…", systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-            Button("管理文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
+            Button(Messages.AppGameDirectoriesView.bodyText4.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+            Button(Messages.AppGameDirectoriesView.bodyText5.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
         } label: {
-            Label("实例文件夹", systemImage: "folder")
+            Label(Messages.AppGameDirectoriesView.bodyText1.localized, systemImage: "folder")
         }
         .disabled(model.busy)
-        .help("当前：\(model.selectedDirectoryName)。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。")
+        .help(Messages.AppGameDirectoriesView.bodyText6(String(describing: model.selectedDirectoryName)).localized)
     }
 }
 
@@ -31,13 +32,13 @@ struct GameDirectoriesView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                SectionHeading(title: "实例文件夹", subtitle: "按整合包、游戏版本或磁盘整理你的实例。")
+                SectionHeading(title: Messages.AppGameDirectoriesView.bodyText1.localized, subtitle: Messages.AppGameDirectoriesView.bodyText7.localized)
                 Spacer()
-                Button("添加文件夹…", systemImage: "plus") { model.chooseMinecraftDirectory() }.disabled(model.busy)
+                Button(Messages.AppGameDirectoriesView.bodyText4.localized, systemImage: "plus") { model.chooseMinecraftDirectory() }.disabled(model.busy)
             }
-            Text("添加已有 Minecraft 文件夹即可使用其中的版本，新建实例也保存在当前文件夹。切换文件夹不会结束正在运行的游戏。")
+            Text(Messages.AppGameDirectoriesView.bodyText8.localized)
                 .font(.callout).foregroundStyle(.secondary)
-            Text("从列表移除文件夹会保留游戏文件、实例设置和运行历史；重新添加原文件夹即可恢复。")
+            Text(Messages.AppGameDirectoriesView.bodyText9.localized)
                 .font(.caption).foregroundStyle(.secondary)
             ScrollView {
                 VStack(spacing: 12) {
@@ -45,26 +46,26 @@ struct GameDirectoriesView: View {
                         HStack(alignment: .top) {
                             Image(systemName: "internaldrive").font(.title2)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("默认实例文件夹").font(.headline)
+                                Text(Messages.AppGameDirectoriesView.bodyText2.localized).font(.headline)
                                 Text(model.basePaths.instances.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                                Text("\(model.state.instances.filter { $0.directoryID == nil || $0.directoryID == GameDirectory.defaultID }.count) 个实例").font(.caption)
+                                Text(Messages.AppGameDirectoriesView.bodyText10(Int64(model.state.instances.filter { $0.directoryID == nil || $0.directoryID == GameDirectory.defaultID }.count)).localized).font(.caption)
                             }
                             Spacer()
-                            Button(model.selectedDirectoryID == GameDirectory.defaultID ? "已选择" : "选择") { model.selectDirectory(GameDirectory.defaultID) }
+                            Button(model.selectedDirectoryID == GameDirectory.defaultID ? Messages.AppGameDirectoriesView.bodyText11.localized : Messages.AppGameDirectoriesView.bodyText12.localized) { model.selectDirectory(GameDirectory.defaultID) }
                                 .disabled(model.busy || model.selectedDirectoryID == GameDirectory.defaultID)
                         }
                     }
                     ForEach(model.state.gameDirectories ?? []) { directory in GameDirectoryRow(directory: directory) }
                     if let detached = model.state.detachedMinecraftFolders, !detached.isEmpty {
-                        Text("已移除的文件夹").font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                        Text(Messages.AppGameDirectoriesView.detachedText1.localized).font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
                         ForEach(detached) { folder in DetachedMinecraftFolderRow(folder: folder) }
                     }
                 }.padding(2)
             }
             HStack {
-                Button("重新检查可用性", systemImage: "arrow.clockwise") { Task { await model.refreshDirectoryAvailability() } }
+                Button(Messages.AppGameDirectoriesView.detachedText2.localized, systemImage: "arrow.clockwise") { Task { await model.refreshDirectoryAvailability() } }
                 Spacer()
-                Button("完成") { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
         }.padding(24).frame(width: 690, height: 560)
         .task { await model.refreshDirectoryAvailability() }
@@ -81,17 +82,17 @@ private struct DetachedMinecraftFolderRow: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(folder.directory.name).font(.headline)
                     Text(folder.directory.url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    Text("保留 \(folder.instances.count) 个实例的设置和运行历史").font(.caption).foregroundStyle(.secondary)
+                    Text(Messages.AppGameDirectoriesView.bodyText13(Int64(folder.instances.count)).localized).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button("重新添加") {
+                Button(Messages.AppGameDirectoriesView.bodyText14.localized) {
                     model.restoreMinecraftDirectory(folder, at: folder.directory.resolvingBookmark().url)
                 }.disabled(model.busy)
                 Menu {
-                    Button("选择新位置并添加…") {
+                    Button(Messages.AppGameDirectoriesView.bodyText15.localized) {
                         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true
-                        panel.allowsMultipleSelection = false; panel.prompt = "重新添加"
-                        panel.message = "选择“\(folder.directory.name)”原文件夹的新位置，恢复其中实例的设置和运行历史。"
+                        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppGameDirectoriesView.bodyText14.localized
+                        panel.message = Messages.AppGameDirectoriesView.panelText1(String(describing: folder.directory.name)).localized
                         guard panel.runModal() == .OK, let url = panel.url else { return }
                         model.restoreMinecraftDirectory(folder, at: url)
                     }
@@ -112,21 +113,21 @@ private struct GameDirectoryRow: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Image(systemName: "folder").font(.title2)
-                    TextField("文件夹名称", text: $name).textFieldStyle(.roundedBorder).onSubmit(rename)
-                    if name != directory.name { Button("保存名称", action: rename).disabled(model.busy) }
+                    TextField(Messages.AppGameDirectoriesView.bodyText16.localized, text: $name).textFieldStyle(.roundedBorder).onSubmit(rename)
+                    if name != directory.name { Button(Messages.AppGameDirectoriesView.bodyText17.localized, action: rename).disabled(model.busy) }
                     Spacer()
-                    Button(model.selectedDirectoryID == directory.id ? "已选择" : "选择") { model.selectDirectory(directory.id) }
+                    Button(model.selectedDirectoryID == directory.id ? Messages.AppGameDirectoriesView.bodyText11.localized : Messages.AppGameDirectoriesView.bodyText12.localized) { model.selectDirectory(directory.id) }
                         .disabled(model.busy || model.selectedDirectoryID == directory.id)
                 }
                 Text(directory.url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 HStack {
-                    Label(model.directoryErrors[directory.id] == nil ? "\(count) 个实例 · 可用" : "\(count) 个实例 · 无法访问", systemImage: model.directoryErrors[directory.id] == nil ? "checkmark.circle" : "exclamationmark.triangle")
+                    Label(model.directoryErrors[directory.id] == nil ? Messages.AppGameDirectoriesView.bodyText18(Int64(count)).localized : Messages.AppGameDirectoriesView.bodyText19(Int64(count)).localized, systemImage: model.directoryErrors[directory.id] == nil ? "checkmark.circle" : "exclamationmark.triangle")
                         .font(.caption).foregroundStyle(model.directoryErrors[directory.id] == nil ? Color.secondary : .orange)
                     Spacer()
-                    Button("在 Finder 中显示") { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
+                    Button(Messages.AppGameDirectoriesView.bodyText20.localized) { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
                     Menu {
-                        Button("重新定位原文件夹…") { relocate() }
-                        Button("从列表移除") { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
+                        Button(Messages.AppGameDirectoriesView.bodyText21.localized) { relocate() }
+                        Button(Messages.AppGameDirectoriesView.bodyText22.localized) { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
                     } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
                 }
                 if let issue = model.directoryErrors[directory.id] { Text(issue).font(.caption).foregroundStyle(.secondary) }
@@ -137,7 +138,7 @@ private struct GameDirectoryRow: View {
     private func rename() { model.changeDirectory { try GameDirectoryStore.rename(directory.id, name: name, paths: $0) } }
     private func relocate() {
         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = "选择“\(directory.name)”原文件夹的新位置。Ruri 会核对目录身份，文件不会被移动。"; panel.prompt = "重新定位"
+        panel.message = Messages.AppGameDirectoriesView.panelText2(String(describing: directory.name)).localized; panel.prompt = Messages.AppGameDirectoriesView.panelText3.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         model.changeDirectory { try GameDirectoryStore.relocate(directory.id, to: url, paths: $0) }
     }

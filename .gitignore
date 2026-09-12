@@ -7,3 +7,4 @@ references/
 *.xcuserstate
 xcuserdata/
 /.private/
+__pycache__/

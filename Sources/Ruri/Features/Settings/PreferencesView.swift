@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
@@ -5,47 +6,57 @@ import RuriCore
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
     @State private var showLaunchDefaults = false
+    @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
     var body: some View {
         @Bindable var model = model
         VStack(alignment: .leading, spacing: 0) {
             Form {
-                Section("外观") {
-                    Picker("主题", selection: $model.state.settings.appearance) { Text("跟随系统").tag("system"); Text("浅色").tag("light"); Text("深色").tag("dark") }
+                Section(Messages.AppPreferencesView.modelText1.localized) {
+                    Picker(Messages.AppPreferencesView.modelText2.localized, selection: $model.state.settings.appearance) { Text(Messages.Common.followSystem.localized).tag("system"); Text(Messages.AppPreferencesView.modelText3.localized).tag("light"); Text(Messages.AppPreferencesView.modelText4.localized).tag("dark") }
+                    if LocalizationContext.supportedLanguages.count > 1 {
+                        Picker(Messages.Common.language.localized, selection: $language) {
+                            Text(Messages.Common.followSystem.localized).tag(LocalizationContext.systemPreference)
+                            ForEach(LocalizationContext.supportedLanguages, id: \.self) { identifier in
+                                Text(Locale(identifier: identifier).localizedString(forIdentifier: identifier) ?? identifier).tag(identifier)
+                            }
+                        }
+                        Text(Messages.Common.languageRestart.localized).font(.caption).foregroundStyle(.secondary)
+                    }
                 }
-                Section("游戏默认设置") {
-                    LabeledContent("默认内存分配", value: model.state.settings.defaultLaunchSettings.memory.mode == .automatic ? "自动估算" : "\(model.state.settings.defaultMemoryMB) MB")
-                    Button("编辑默认启动设置…", systemImage: "slider.horizontal.3") { showLaunchDefaults = true }
-                    Text("内存、Java、窗口和附加参数可被实例继承；实例也可按项覆盖。").font(.caption).foregroundStyle(.secondary)
-                    Picker("新实例隔离规则", selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {
+                Section(Messages.AppPreferencesView.modelText5.localized) {
+                    LabeledContent(Messages.AppPreferencesView.modelText6.localized, value: model.state.settings.defaultLaunchSettings.memory.mode == .automatic ? Messages.AppPreferencesView.modelText7.localized : "\(model.state.settings.defaultMemoryMB) MB")
+                    Button(Messages.AppPreferencesView.modelText8.localized, systemImage: "slider.horizontal.3") { showLaunchDefaults = true }
+                    Text(Messages.AppPreferencesView.modelText9.localized).font(.caption).foregroundStyle(.secondary)
+                    Picker(Messages.AppPreferencesView.modelText10.localized, selection: Binding(get: { model.state.settings.isolationPolicy ?? .always }, set: { model.state.settings.isolationPolicy = $0 })) {
                         ForEach(GameIsolationPolicy.allCases) { Text($0.title).tag($0) }
                     }
-                    Text("仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。").font(.caption).foregroundStyle(.secondary)
+                    Text(Messages.AppPreferencesView.modelText11.localized).font(.caption).foregroundStyle(.secondary)
                 }
-                Section("下载与网络") {
-                    Picker("下载源", selection: Binding(get: { model.state.settings.downloadSource ?? .automatic }, set: { model.state.settings.downloadSource = $0 })) {
+                Section(Messages.AppPreferencesView.modelText12.localized) {
+                    Picker(Messages.AppPreferencesView.modelText13.localized, selection: Binding(get: { model.state.settings.downloadSource ?? .automatic }, set: { model.state.settings.downloadSource = $0 })) {
                         ForEach(DownloadSource.allCases) { Text($0.title).tag($0) }
                     }
-                    Stepper("并行下载：\(model.state.settings.concurrentDownloads)", value: $model.state.settings.concurrentDownloads, in: 1...16)
-                    Text("自动切换会优先使用官方源，连接失败时尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。支持范围请求的文件可在取消后继续下载。").font(.caption).foregroundStyle(.secondary)
-                    Link("BMCLAPI 镜像服务", destination: AppLinks.bmclapiDocumentation)
+                    Stepper(Messages.AppPreferencesView.modelText14(String(describing: model.state.settings.concurrentDownloads)).localized, value: $model.state.settings.concurrentDownloads, in: 1...16)
+                    Text(Messages.AppPreferencesView.modelText15.localized).font(.caption).foregroundStyle(.secondary)
+                    Link(Messages.AppPreferencesView.modelText16.localized, destination: AppLinks.bmclapiDocumentation)
                 }
-                Section("Microsoft 登录") {
+                Section(Messages.AppPreferencesView.modelText17.localized) {
                     if !BuildConfiguration().microsoftClientID.isEmpty {
-                        Text("已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。").font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppPreferencesView.modelText18.localized).font(.caption).foregroundStyle(.secondary)
                     }
-                    TextField("自定义应用 Client ID", text: $model.state.settings.microsoftClientID).font(.system(.body, design: .monospaced))
-                    Text("使用 Ruri 自己注册的 Microsoft 公共客户端应用。应用还需要获准访问 Minecraft 服务；这里不使用其他启动器的 Client ID。").font(.caption).foregroundStyle(.secondary)
-                    Link("Microsoft 应用注册文档", destination: AppLinks.microsoftRegistration)
+                    TextField(Messages.AppPreferencesView.modelText19.localized, text: $model.state.settings.microsoftClientID).font(.system(.body, design: .monospaced))
+                    Text(Messages.AppPreferencesView.modelText20.localized).font(.caption).foregroundStyle(.secondary)
+                    Link(Messages.AppPreferencesView.modelText21.localized, destination: AppLinks.microsoftRegistration)
                 }
                 CurseForgeSettingsSection()
-                Section("数据") {
-                    Button("管理实例文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
-                    LabeledContent("数据目录") { Text(model.paths.root.path).font(.caption).textSelection(.enabled) }
-                    Button("在 Finder 中打开数据目录", systemImage: "folder") { do { try model.paths.prepare(); NSWorkspace.shared.open(model.paths.root) } catch { model.error = error.localizedDescription } }
+                Section(Messages.AppPreferencesView.modelText22.localized) {
+                    Button(Messages.AppPreferencesView.modelText23.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
+                    LabeledContent(Messages.AppPreferencesView.modelText24.localized) { Text(model.paths.root.path).font(.caption).textSelection(.enabled) }
+                    Button(Messages.AppPreferencesView.modelText25.localized, systemImage: "folder") { do { try model.paths.prepare(); NSWorkspace.shared.open(model.paths.root) } catch { model.error = error.localizedDescription } }
                 }
-                Section("关于 Ruri") {
-                    LabeledContent("版本", value: BuildConfiguration().version)
-                    Text("原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。").font(.caption).foregroundStyle(.secondary)
+                Section(Messages.AppPreferencesView.modelText26.localized) {
+                    LabeledContent(Messages.AppPreferencesView.modelText27.localized, value: BuildConfiguration().version)
+                    Text(Messages.AppPreferencesView.modelText28.localized).font(.caption).foregroundStyle(.secondary)
                 }
             }.formStyle(.grouped)
         }

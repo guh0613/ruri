@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// A registered game folder. Standard Minecraft repositories own their
@@ -25,13 +26,13 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
             let markerURL = directory.url.appendingPathComponent(markerName)
             let values = try markerURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
             guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024,
-                  entries.allSatisfy({ [markerName, ".DS_Store", "instances", "minecraft"].contains($0.lastPathComponent) }) else { throw RuriError.message("此文件夹已有数据，请通过实例导入入口处理。") }
+                  entries.allSatisfy({ [markerName, ".DS_Store", "instances", "minecraft"].contains($0.lastPathComponent) }) else { throw RuriError.message(Messages.CoreGameDirectory.valuesText1) }
             let marker = try JSONDecoder().decode(Marker.self, from: Data(contentsOf: markerURL))
-            guard !paths.directories.contains(where: { $0.id == marker.id }), marker.id != defaultID else { throw RuriError.message("此实例文件夹已经登记，不能重复添加其副本。") }
+            guard !paths.directories.contains(where: { $0.id == marker.id }), marker.id != defaultID else { throw RuriError.message(Messages.CoreGameDirectory.markerText1) }
             let instances = directory.url.appendingPathComponent("instances")
             if FileManager.default.fileExists(atPath: instances.path) {
                 guard try instances.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true,
-                      try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message("此文件夹仍有实例文件，请通过导入入口预览后导入。") }
+                      try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message(Messages.CoreGameDirectory.instancesText1) }
             }
             var existing = GameDirectory(id: marker.id, name: directory.name, url: directory.url, bookmark: nil, createdAt: Date())
             try existing.validateAvailability()
@@ -39,7 +40,7 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
             return existing
         }
         guard entries.allSatisfy({ $0.lastPathComponent == ".DS_Store" }) else {
-            throw RuriError.message("请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。")
+            throw RuriError.message(Messages.CoreGameDirectory.existingText1)
         }
         var result = directory
         result.bookmark = try directory.url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
@@ -49,14 +50,14 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
 
     public func validateAvailability() throws {
         do {
-            guard url.isFileURL, try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message("路径不是文件夹") }
+            guard url.isFileURL, try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message(Messages.CoreGameDirectory.validateAvailabilityText1) }
             let marker = url.appendingPathComponent(Self.markerName)
             let values = try marker.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-            guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024 else { throw RuriError.message("目录标记无效") }
+            guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 1024 else { throw RuriError.message(Messages.CoreGameDirectory.valuesText2) }
             let record = try JSONDecoder().decode(Marker.self, from: Data(contentsOf: marker))
-            guard record.schema == 1, record.id == id, (record.layout ?? .managed) == (layout ?? .managed) else { throw RuriError.message("目录身份与登记信息不一致") }
+            guard record.schema == 1, record.id == id, (record.layout ?? .managed) == (layout ?? .managed) else { throw RuriError.message(Messages.CoreGameDirectory.recordText1) }
         } catch {
-            throw RuriError.message("无法访问实例文件夹“\(name)”：\(url.path)\n请连接磁盘、检查访问权限或重新定位原文件夹。\n\(error.localizedDescription)")
+            throw RuriError.message(Messages.CoreGameDirectory.recordText2(String(describing: name), String(describing: url.path), String(describing: error.localizedDescription)))
         }
     }
 
@@ -82,7 +83,7 @@ public struct GameDirectory: Codable, Identifiable, Equatable, Sendable {
 
     public static func validName(_ name: String) throws -> String {
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty, name.count <= 100, !name.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) }) else { throw RuriError.message("文件夹名称需为 1–100 个字符。") }
+        guard !name.isEmpty, name.count <= 100, !name.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) }) else { throw RuriError.message(Messages.CoreGameDirectory.nameText1) }
         return name
     }
 }
@@ -106,32 +107,32 @@ extension LauncherPaths {
     public func validateDirectoryConfiguration() throws {
         let ids = directories.map(\.id)
         guard root.isFileURL, Set(ids).count == ids.count, !ids.contains(GameDirectory.defaultID), directories.count <= 100,
-              Set(instanceDirectories.values).union([newInstanceDirectoryID]).subtracting([GameDirectory.defaultID]).isSubset(of: Set(ids)) else { throw RuriError.message("实例文件夹登记信息无效，已暂停操作以保护原数据。") }
+              Set(instanceDirectories.values).union([newInstanceDirectoryID]).subtracting([GameDirectory.defaultID]).isSubset(of: Set(ids)) else { throw RuriError.message(Messages.CoreGameDirectory.idsText1) }
         for directory in directories {
             _ = try GameDirectory.validName(directory.name)
-            guard directory.url.isFileURL, directory.url.path.hasPrefix("/"), (directory.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message("实例文件夹位置无效。") }
+            guard directory.url.isFileURL, directory.url.path.hasPrefix("/"), (directory.bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message(Messages.CoreGameDirectory.idsText2) }
             try checkDirectoryOverlap(directory)
         }
         for (id, version) in instanceRepositoryVersions ?? [:] {
             try MinecraftDirectoryScan.checkIdentifier(version)
-            guard isMinecraftDirectory(directoryID(for: id)) else { throw RuriError.message("本地版本缺少所属 Minecraft 文件夹。") }
+            guard isMinecraftDirectory(directoryID(for: id)) else { throw RuriError.message(Messages.CoreGameDirectory.idsText3) }
         }
         for (id, directory) in instanceDirectories where isMinecraftDirectory(directory) {
-            guard instanceRepositoryVersions?[id] != nil else { throw RuriError.message("Minecraft 文件夹中的实例缺少版本目录名称。") }
+            guard instanceRepositoryVersions?[id] != nil else { throw RuriError.message(Messages.CoreGameDirectory.idsText4) }
         }
         for (id, mode) in instanceRunDirectories ?? [:] where mode == .custom {
-            guard let custom = instanceCustomDirectories?[id] else { throw RuriError.message("实例缺少自定义运行目录信息。") }
+            guard let custom = instanceCustomDirectories?[id] else { throw RuriError.message(Messages.CoreGameDirectory.customText1) }
             try checkCustomRunDirectory(custom)
         }
         for (id, custom) in instanceCustomDirectories ?? [:] {
-            guard instanceRunDirectories?[id] == .custom else { throw RuriError.message("自定义目录与实例策略不一致。") }
+            guard instanceRunDirectories?[id] == .custom else { throw RuriError.message(Messages.CoreGameDirectory.customText2) }
             for other in (instanceCustomDirectories ?? [:]).values where other.url.standardizedFileURL == custom.url.standardizedFileURL {
-                guard other.id == custom.id else { throw RuriError.message("同一自定义路径保存了不同的目录身份。") }
+                guard other.id == custom.id else { throw RuriError.message(Messages.CoreGameDirectory.customText3) }
             }
         }
     }
     func checkNewDirectory(_ directory: GameDirectory) throws {
-        guard directory.url.isFileURL, try directory.url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message("请选择已存在的本地文件夹。") }
+        guard directory.url.isFileURL, try directory.url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message(Messages.CoreGameDirectory.checkNewDirectoryText1) }
         try checkDirectoryOverlap(directory)
     }
     private func checkDirectoryOverlap(_ directory: GameDirectory) throws {
@@ -139,21 +140,21 @@ extension LauncherPaths {
         for other in [root] + directories.filter({ $0.id != directory.id }).map(\.url) + (instanceCustomDirectories ?? [:]).values.map(\.url).filter({ !directory.isMinecraft || !$0.path.hasPrefix(target + "/") }) {
             let existing = other.standardizedFileURL.resolvingSymlinksInPath().path
             guard target != existing, !target.hasPrefix(existing + "/"), !existing.hasPrefix(target == "/" ? "/" : target + "/") else {
-                throw RuriError.message("实例文件夹不能与已登记文件夹或公共数据目录重叠。")
+                throw RuriError.message(Messages.CoreGameDirectory.existingText2)
             }
         }
     }
     public func validateInstanceLocation(_ instanceID: UUID) throws {
         let id = directoryID(for: instanceID)
         if id != GameDirectory.defaultID {
-            guard let directory = directories.first(where: { $0.id == id }) else { throw RuriError.message("找不到实例所属文件夹，请恢复目录登记后重试。") }
+            guard let directory = directories.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameDirectory.directoryText1) }
             try directory.validateAvailability()
         }
         // The selected directory is trusted; its internal managed tree may not
         // escape through a symlink, including one with a not-yet-created leaf.
         let root = directoryRoot(id)
         if isMinecraftDirectory(id) {
-            guard let version = instanceRepositoryVersions?[instanceID] else { throw RuriError.message("实例缺少版本文件夹。") }
+            guard let version = instanceRepositoryVersions?[instanceID] else { throw RuriError.message(Messages.CoreGameDirectory.versionText1) }
             try MinecraftDirectoryScan.checkIdentifier(version)
             _ = try Self.safePath("versions/\(version)/\(version).json", within: root)
             _ = try Self.safePath(".ruri/instances/\(instanceID.uuidString)", within: root)
@@ -166,7 +167,7 @@ extension LauncherPaths {
             if runDirectory(for: instanceID) == .shared { _ = try Self.safePath("minecraft/.ruri", within: root) }
         }
         if runDirectory(for: instanceID) == .custom {
-            guard let custom = instanceCustomDirectories?[instanceID] else { throw RuriError.message("请先选择自定义运行目录。") }
+            guard let custom = instanceCustomDirectories?[instanceID] else { throw RuriError.message(Messages.CoreGameDirectory.customText4) }
             try custom.validateAvailability()
             _ = try Self.safePath(".ruri", within: custom.url)
         }

@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
@@ -52,18 +53,18 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     }
     public func preferredJavaMajor(default minimum: Int) throws -> Int {
         if let selected = javaMajor {
-            guard (6...99).contains(selected), selected >= minimum else { throw RuriError.message("指定的 Java \(selected) 不符合游戏要求，请选择 Java \(minimum) 或更高版本。") }
-            guard supportedJavaMajors?.isEmpty != false || supportedJavaMajors!.contains(selected) else { throw RuriError.message("指定的 Java \(selected) 不在此整合包支持的版本中。") }
+            guard (6...99).contains(selected), selected >= minimum else { throw RuriError.message(Messages.CoreGameInstance.selectedText1(String(describing: selected), String(describing: minimum))) }
+            guard supportedJavaMajors?.isEmpty != false || supportedJavaMajors!.contains(selected) else { throw RuriError.message(Messages.CoreGameInstance.selectedText2(String(describing: selected))) }
             return selected
         }
         guard let supported = supportedJavaMajors, !supported.isEmpty else { return minimum }
-        guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message("整合包指定的 Java 版本与游戏要求的 Java \(minimum) 不兼容。") }
+        guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message(Messages.CoreGameInstance.selectedText3(String(describing: minimum))) }
         return selected
     }
     public var subtitle: String {
         if let details = repositoryComponents ?? importedInstallation?.components {
             let components = details.map { $0.name + " " + $0.version }
-            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? ["本地版本"] : components)).joined(separator: " · ")
+            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? [Messages.CoreGameInstance.componentsText1.localized] : components)).joined(separator: " · ")
         }
         return loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")"
     }

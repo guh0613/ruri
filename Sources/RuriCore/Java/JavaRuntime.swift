@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import Darwin
 
@@ -39,7 +40,7 @@ public enum ProcessRunner {
         guard finished.wait(timeout: .now() + timeout) == .success else {
             if process.isRunning { kill(process.processIdentifier, SIGKILL) }
             _ = finished.wait(timeout: .now() + 1)
-            throw RuriError.message("Java 检测超时，请检查所选程序是否为可用的 Java。")
+            throw RuriError.message(Messages.CoreJavaRuntime.environmentText1)
         }
         let reader = try FileHandle(forReadingFrom: output); defer { try? reader.close() }
         let data = try reader.read(upToCount: 1024 * 1024) ?? Data()
@@ -55,7 +56,7 @@ public enum JavaDiscovery {
         let selection = selection.standardizedFileURL
         let candidates = [selection] + ["Contents/Home/bin/java", "bin/java", "jre.bundle/Contents/Home/bin/java", "libexec/openjdk.jdk/Contents/Home/bin/java"].map { selection.appendingPathComponent($0) }
         guard let executable = candidates.first(where: { $0.lastPathComponent == "java" && FileManager.default.isExecutableFile(atPath: $0.path) && (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) != true }) else {
-            throw RuriError.message("请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
+            throw RuriError.message(Messages.CoreJavaRuntime.executableText1)
         }
         return executable
     }
@@ -63,23 +64,23 @@ public enum JavaDiscovery {
         URL(fileURLWithPath: first).standardizedFileURL.resolvingSymlinksInPath() == URL(fileURLWithPath: second).standardizedFileURL.resolvingSymlinksInPath()
     }
     public static func inspect(_ path: String) throws -> JavaRuntime {
-        guard FileManager.default.isExecutableFile(atPath: path) else { throw RuriError.message("Java 不可执行：\(path)") }
+        guard FileManager.default.isExecutableFile(atPath: path) else { throw RuriError.message(Messages.CoreJavaRuntime.inspectText1(String(describing: path))) }
         let (status, text) = try ProcessRunner.run(URL(fileURLWithPath: path), arguments: ["-XshowSettings:properties", "-version"])
-        guard status == 0 else { throw RuriError.message("无法运行 Java：\(path)") }
+        guard status == 0 else { throw RuriError.message(Messages.CoreJavaRuntime.inspectText2(String(describing: path))) }
         func property(_ key: String) -> String? {
             text.split(separator: "\n").first { $0.trimmingCharacters(in: .whitespaces).hasPrefix(key + " = ") }.map { String($0.components(separatedBy: " = ").dropFirst().joined(separator: " = ")) }
         }
-        guard let version = property("java.version"), let arch = property("os.arch") else { throw RuriError.message("无法识别 Java 版本") }
+        guard let version = property("java.version"), let arch = property("os.arch") else { throw RuriError.message(Messages.CoreJavaRuntime.archText1) }
         let components = version.split(whereSeparator: { !$0.isNumber })
         let major = Int(components.first == "1" ? (components.dropFirst().first ?? "0") : (components.first ?? "0")) ?? 0
-        guard major > 0 else { throw RuriError.message("无法识别 Java 主版本：\(version)") }
+        guard major > 0 else { throw RuriError.message(Messages.CoreJavaRuntime.majorText1(String(describing: version))) }
         return JavaRuntime(path: path, version: version, major: major, architecture: arch == "arm64" ? "aarch64" : (arch == "amd64" ? "x86_64" : arch), vendor: property("java.vendor") ?? "Java")
     }
     public static func select(from runtimes: [JavaRuntime], major: Int, architecture: String? = nil, preferredPath: String? = nil) throws -> JavaRuntime {
         if let path = preferredPath {
-            guard let selected = runtimes.first(where: { $0.path == path }) ?? runtimes.first(where: { sameExecutable($0.path, path) }) else { throw RuriError.message("指定的 Java 不可用，请在实例设置中重新选择。") }
-            guard selected.major >= major else { throw RuriError.message("此游戏需要 Java \(major)，当前指定 Java \(selected.major)。") }
-            if let architecture, selected.architecture != architecture { throw RuriError.message("Java 架构与游戏原生库不匹配，需要 \(architecture)。") }
+            guard let selected = runtimes.first(where: { $0.path == path }) ?? runtimes.first(where: { sameExecutable($0.path, path) }) else { throw RuriError.message(Messages.CoreJavaRuntime.selectedText1) }
+            guard selected.major >= major else { throw RuriError.message(Messages.CoreJavaRuntime.selectedText2(String(describing: major), String(describing: selected.major))) }
+            if let architecture, selected.architecture != architecture { throw RuriError.message(Messages.CoreJavaRuntime.architectureText1(String(describing: architecture))) }
             return selected
         }
         let compatible = runtimes.filter { $0.major == major && (architecture == nil || $0.architecture == architecture) }
@@ -88,7 +89,7 @@ public enum JavaDiscovery {
             let order = $0.version.compare($1.version, options: .numeric)
             return order == .orderedSame ? $0.path < $1.path : order == .orderedDescending
         }).first else {
-            throw RuriError.message("需要 Java \(major)\(architecture == "x86_64" ? "（Intel / Rosetta）" : "")。请到设置 → Java 安装或选择该版本。")
+            throw RuriError.message(Messages.CoreJavaRuntime.orderText1(String(describing: major), String(describing: architecture == "x86_64" ? "（Intel / Rosetta）" : "")))
         }
         return runtime
     }

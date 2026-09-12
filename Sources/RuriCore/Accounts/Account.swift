@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 import CryptoKit
 
@@ -10,14 +11,14 @@ public struct Account: Codable, Identifiable, Equatable, Sendable {
     public var externalLogin: ExternalAccountLogin?
     public var kindLabel: String {
         switch kind {
-        case .offline: "离线账号"
-        case .microsoft: "Microsoft 账号"
-        case .external: "外置认证 · " + (externalLogin?.server.name ?? "认证服务器")
+        case .offline: Messages.CoreAccount.kindLabelText1.localized
+        case .microsoft: Messages.CoreAccount.kindLabelText2.localized
+        case .external: Messages.CoreAccount.externalServer(externalLogin?.server.name ?? Messages.CoreAccount.kindLabelText4.localized).localized
         }
     }
     public init(username: String) throws {
         guard username.range(of: "^[A-Za-z0-9_]{3,16}$", options: .regularExpression) != nil else {
-            throw RuriError.message("玩家名需为 3–16 位英文字母、数字或下划线。")
+            throw RuriError.message(Messages.CoreAccount.kindLabelText5)
         }
         self.id = UUID(); self.kind = .offline; self.username = username
         var bytes = Array(Insecure.MD5.hash(data: Data("OfflinePlayer:\(username)".utf8)))

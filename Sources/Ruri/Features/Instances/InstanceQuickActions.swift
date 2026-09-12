@@ -1,3 +1,4 @@
+import RuriLocalization
 import SwiftUI
 import RuriCore
 
@@ -9,9 +10,9 @@ struct InstanceQuickActions: View {
     let instance: GameInstance
     var body: some View {
         HStack(spacing: 2) {
-            action("实例设置", "slider.horizontal.3") { model.editingInstance = instance }
-            action("管理模组与资源包", "puzzlepiece.extension") { model.contentInstance = instance }
-            action("管理存档与备份", "globe") { model.worldInstance = instance }
+            action(Messages.AppInstanceQuickActions.bodyText1.localized, "slider.horizontal.3") { model.editingInstance = instance }
+            action(Messages.AppInstanceQuickActions.bodyText2.localized, "puzzlepiece.extension") { model.contentInstance = instance }
+            action(Messages.AppInstanceQuickActions.bodyText3.localized, "globe") { model.worldInstance = instance }
         }
     }
     private func action(_ title: String, _ symbol: String, _ perform: @escaping () -> Void) -> some View {

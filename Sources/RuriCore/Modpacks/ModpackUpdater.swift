@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 public actor ModpackUpdater {
@@ -9,12 +10,12 @@ public actor ModpackUpdater {
                         content: [ContentInstallation] = [], concurrency: Int = 8,
                         progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PreparedModpackUpdate {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let instance = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message("实例已从列表移除。") }
+        guard let instance = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceText1) }
         _ = try instance.applyingInstallation(requested, requested: requested)
-        guard let pack = try ModpackRegistry.load(paths: current, instanceID: instance.id) else { throw RuriError.message("此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。") }
-        guard prepared.modpack != nil, !prepared.includesInstallation else { throw RuriError.message("请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。") }
+        guard let pack = try ModpackRegistry.load(paths: current, instanceID: instance.id) else { throw RuriError.message(Messages.CoreModpackUpdater.packText1) }
+        guard prepared.modpack != nil, !prepared.includesInstallation else { throw RuriError.message(Messages.CoreModpackUpdater.packText2) }
         if let origin = pack.origin, let incoming = prepared.modpack?.origin, origin.projectID != nil, incoming.projectID != nil {
-            guard origin.provider == incoming.provider, origin.projectID == incoming.projectID else { throw RuriError.message("所选文件属于另一个整合包项目。") }
+            guard origin.provider == incoming.provider, origin.projectID == incoming.projectID else { throw RuriError.message(Messages.CoreModpackUpdater.incomingText1) }
         }
         let lease = try GameRunLease.acquire(paths: current, instanceID: instance.id)
         defer { withExtendedLifetime(lease) {} }
@@ -32,7 +33,7 @@ public actor ModpackUpdater {
             let staging = LauncherPaths(root: work), transfer = InstanceTransfer(paths: staging)
             try await transfer.completeFiles(prepared, downloader: downloader, concurrency: concurrency, progress: progress)
             let candidate = try await transfer.install(prepared, name: instance.name, importJVMArguments: keepJVMArguments, content: content, installing: { value, _ in value })
-            guard var incoming = try ModpackRegistry.load(paths: staging, instanceID: candidate.id) else { throw RuriError.message("新版整合包没有有效的文件清单。") }
+            guard var incoming = try ModpackRegistry.load(paths: staging, instanceID: candidate.id) else { throw RuriError.message(Messages.CoreModpackUpdater.incomingText2) }
             if incoming.origin == nil, incoming.format == pack.format, let origin = pack.origin {
                 incoming = .init(format: incoming.format, name: incoming.name, version: incoming.version,
                                  origin: .init(provider: origin.provider, projectID: origin.projectID, fileAPI: origin.fileAPI), settings: incoming.settings, files: incoming.files)
@@ -59,7 +60,7 @@ public actor ModpackUpdater {
     func apply(_ plan: PreparedModpackUpdate, keepingLocal: Set<String>, installing: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance,
                progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PersistentState {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let instance = state.instances.first(where: { $0.id == plan.instance.id }) else { throw RuriError.message("实例已从列表移除。") }
+        guard let instance = state.instances.first(where: { $0.id == plan.instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceText1) }
         _ = try instance.applyingInstallation(plan.instance, requested: plan.instance)
         let lease = try GameRunLease.acquire(paths: current, instanceID: instance.id)
         defer { withExtendedLifetime(lease) {} }
@@ -78,7 +79,7 @@ public actor ModpackUpdater {
                             client.path: targetClient.path, client.deletingLastPathComponent().path: targetClient.deletingLastPathComponent().path]
         func rewrite(_ value: String) throws -> String {
             let result = MinecraftInstallationCopy.rewrite(value, replacements: replacements)
-            guard !result.contains(plan.workspace.path) else { throw RuriError.message("新版安装包含无法迁移的临时路径，原实例已保留。") }
+            guard !result.contains(plan.workspace.path) else { throw RuriError.message(Messages.CoreModpackUpdater.resultText1) }
             return result
         }
         func argument(_ value: LaunchArgument) throws -> LaunchArgument {
@@ -87,7 +88,7 @@ public actor ModpackUpdater {
         if var arguments = manifest.arguments { arguments.game = try arguments.game?.map(argument); arguments.jvm = try arguments.jvm?.map(argument); manifest.arguments = arguments }
         if let legacy = manifest.minecraftArguments { manifest.minecraftArguments = try ArgumentTokenizer.join(ArgumentTokenizer.split(legacy).map(rewrite)) }
         let latestState = try StateStore.load(paths)
-        guard let latest = latestState.instances.first(where: { $0.id == instance.id }) else { throw RuriError.message("实例已移除。") }
+        guard let latest = latestState.instances.first(where: { $0.id == instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.latestText1) }
         _ = try latest.applyingInstallation(instance, requested: instance)
         try validate(plan, instance: latest, paths: current)
         var updated = latest
@@ -113,7 +114,7 @@ public actor ModpackUpdater {
             }
             if let target = change.targetPath, let incoming = change.incoming {
                 let source = try LauncherPaths.safePath(incoming.path, within: staging.game(installed.id))
-                guard try ModpackUpdatePlanner.digest(source) == incoming.sha1 else { throw RuriError.message("更新文件在预览后改变：\(incoming.path)") }
+                guard try ModpackUpdatePlanner.digest(source) == incoming.sha1 else { throw RuriError.message(Messages.CoreModpackUpdater.sourceText1(String(describing: incoming.path))) }
                 files.append(.init(target: .init(scope: .game, path: target), group: "game:" + change.id, source: source))
             }
         }
@@ -134,14 +135,14 @@ public actor ModpackUpdater {
         let sourceMetadata = staging.instance(installed.id).appendingPathComponent("source-mcbbs.packmeta")
         try data(FileManager.default.fileExists(atPath: sourceMetadata.path) ? RunDirectoryCopyGuard.read(sourceMetadata, limit: 32 * 1024 * 1024) : nil, path: "source-mcbbs.packmeta")
         try Task.checkCancellation()
-        await progress(InstallProgress("正在应用整合包更新", total: files.count))
+        await progress(InstallProgress(Messages.CoreModpackUpdater.sourceMetadataText1, total: files.count))
         let saved = try ModpackUpdateStore.commit(id: plan.id, original: latest, updated: updated, replacements: files, paths: current)
         discard(plan)
         return saved
     }
     public func rollback(_ requested: GameInstance) throws -> (state: PersistentState, preservedFiles: Int) {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let latest = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message("实例已移除。") }
+        guard let latest = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.latestText1) }
         let lease = try GameRunLease.acquire(paths: current, instanceID: latest.id)
         defer { withExtendedLifetime(lease) {} }
         try lease.excludeLocationOperations()
@@ -152,12 +153,12 @@ public actor ModpackUpdater {
         try requireIndependent(instance, paths: paths)
         guard try RunDirectoryCopyGuard.read(paths.manifest(instance.id), limit: 32 * 1024 * 1024) == plan.manifestData,
               try RunDirectoryCopyGuard.read(paths.instance(instance.id).appendingPathComponent("modpack-state.json"), limit: 64 * 1024 * 1024) == plan.baselineData else {
-            throw RuriError.message("整合包版本或启动配置在预览后改变，请重新准备更新。")
+            throw RuriError.message(Messages.CoreModpackUpdater.validateText1)
         }
         for item in plan.changes {
             for (path, expected) in item.observed {
                 guard try ModpackUpdatePlanner.digest(LauncherPaths.safePath(path, within: paths.game(instance.id))) == expected else {
-                    throw RuriError.message("预览后文件又有修改，请重新生成差异：\(path)")
+                    throw RuriError.message(Messages.CoreModpackUpdater.validateText2(String(describing: path)))
                 }
             }
         }
@@ -168,7 +169,7 @@ public actor ModpackUpdater {
         for other in catalog.versions where other.id != id && other.issue == nil {
             let resolution = try reader.resolveManifestNow(other, in: catalog)
             if resolution.manifest.jar == id || resolution.sourceManifests.contains(where: { $0.url == paths.manifest(instance.id) }) {
-                throw RuriError.message("“\(other.id)”依赖此版本，请先创建独立副本再更新整合包。")
+                throw RuriError.message(Messages.CoreModpackUpdater.resolutionText1(String(describing: other.id)))
             }
         }
     }
