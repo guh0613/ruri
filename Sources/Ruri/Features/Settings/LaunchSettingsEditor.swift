@@ -20,18 +20,14 @@ struct LaunchSettingsEditor: View {
                 HStack {
                     Text(key.title)
                     Spacer()
-                    if showsInheritance {
-                        if overrides.inherits(key) {
-                            Text(Messages.AppLaunchSettingsEditor.followDefault.localized)
-                                .font(.caption).fontWeight(.regular).foregroundStyle(.secondary)
-                        } else {
-                            Button(Messages.AppLaunchSettingsEditor.restoreDefault.localized) {
-                                overrides.setInheritance(true, for: key, defaults: defaults)
-                                if key == .java { javaIssue = nil }
-                            }
-                            .buttonStyle(.borderless).font(.caption).fontWeight(.regular)
-                            .accessibilityLabel(Messages.AppLaunchSettingsEditor.restoreDefaultFormat(key.title).localized)
+                    if showsInheritance && !overrides.inherits(key) {
+                        Button(Messages.AppLaunchSettingsEditor.restoreDefault.localized, systemImage: "arrow.uturn.backward") {
+                            overrides.setInheritance(true, for: key, defaults: defaults)
+                            if key == .java { javaIssue = nil }
                         }
+                        .buttonStyle(.link).labelStyle(.titleAndIcon)
+                        .font(.caption).fontWeight(.regular).foregroundStyle(Color.accentColor)
+                        .accessibilityLabel(Messages.AppLaunchSettingsEditor.restoreDefaultFormat(key.title).localized)
                     }
                 }
             } footer: {

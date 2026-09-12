@@ -43,6 +43,7 @@ struct InstanceMenu<Content: View>: View {
             }
         } label: { label }
         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
+        .labelStyle(.titleAndIcon)
         .help(Messages.AppInstanceMenu.moreActions.localized)
     }
 }

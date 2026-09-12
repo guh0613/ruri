@@ -21,17 +21,17 @@ extension Messages {
         public static func customValueFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText3", table: "Interface", fallback: "自定义%1$@", arguments: [.text(value0)])
         }
-        /// 使用默认设置
+        /// 恢复默认
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText4`.
         public static var restoreDefault: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText4", table: "Interface", fallback: "使用默认设置")
+            .init(key: "appLaunchSettingsEditor.bodyText4", table: "Interface", fallback: "恢复默认")
         }
-        /// %1$@使用默认设置
+        /// %1$@，恢复默认设置
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText5`.
         public static func restoreDefaultFormat(_ value0: String) -> LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText5", table: "Interface", fallback: "%1$@使用默认设置", arguments: [.text(value0)])
+            .init(key: "appLaunchSettingsEditor.bodyText5", table: "Interface", fallback: "%1$@，恢复默认设置", arguments: [.text(value0)])
         }
         /// 自动选择 Java %1$@
         ///
@@ -403,8 +403,8 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.bodyText1": .init("跟随默认设置", []),
             "Interface:appLaunchSettingsEditor.bodyText2": .init("自定义", []),
             "Interface:appLaunchSettingsEditor.bodyText3": .init("自定义%1$@", [.text]),
-            "Interface:appLaunchSettingsEditor.bodyText4": .init("使用默认设置", []),
-            "Interface:appLaunchSettingsEditor.bodyText5": .init("%1$@使用默认设置", [.text]),
+            "Interface:appLaunchSettingsEditor.bodyText4": .init("恢复默认", []),
+            "Interface:appLaunchSettingsEditor.bodyText5": .init("%1$@，恢复默认设置", [.text]),
             "Interface:appLaunchSettingsEditor.majorText1": .init("自动选择 Java %1$@", [.text]),
             "Interface:appLaunchSettingsEditor.pathText1": .init("自动选择游戏所需的 Java", []),
             "Interface:appLaunchSettingsEditor.pathText2": .init("自动分配", []),

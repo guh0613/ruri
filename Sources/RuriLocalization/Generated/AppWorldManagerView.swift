@@ -231,6 +231,24 @@ extension Messages {
         public static var worldZipExported: LocalizedMessage {
             .init(key: "appWorldManagerView.urlText3", table: "Interface", fallback: "已导出存档 ZIP")
         }
+        /// 存档
+        ///
+        /// Resource: `Interface.appWorldManagerView.worldsTab`.
+        public static var worldsTab: LocalizedMessage {
+            .init(key: "appWorldManagerView.worldsTab", table: "Interface", fallback: "存档")
+        }
+        /// 备份
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupsTab`.
+        public static var backupsTab: LocalizedMessage {
+            .init(key: "appWorldManagerView.backupsTab", table: "Interface", fallback: "备份")
+        }
+        /// 更多操作
+        ///
+        /// Resource: `Interface.appWorldManagerView.moreActions`.
+        public static var moreActions: LocalizedMessage {
+            .init(key: "appWorldManagerView.moreActions", table: "Interface", fallback: "更多操作")
+        }
         /// 处理存档文件
         ///
         /// Resource: `Progress.appWorldManagerView.progressText1`.
@@ -276,6 +294,9 @@ extension Messages {
             "Interface:appWorldManagerView.folderText4": .init("已恢复到 %1$@", [.text]),
             "Interface:appWorldManagerView.urlText2": .init("导出 %1$@", [.text]),
             "Interface:appWorldManagerView.urlText3": .init("已导出存档 ZIP", []),
+            "Interface:appWorldManagerView.worldsTab": .init("存档", []),
+            "Interface:appWorldManagerView.backupsTab": .init("备份", []),
+            "Interface:appWorldManagerView.moreActions": .init("更多操作", []),
             "Progress:appWorldManagerView.progressText1": .init("处理存档文件", []),
         ]
     }

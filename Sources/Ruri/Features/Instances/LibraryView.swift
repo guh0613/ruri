@@ -53,7 +53,7 @@ struct LibraryView: View {
                 Menu {
                     Button(Messages.AppLibraryView.importInstanceOrModpack.localized, systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }
                     Button(Messages.AppLibraryView.addGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-                } label: { Label(Messages.AppLibraryView.importContentAction.localized, systemImage: "square.and.arrow.down") }.help(Messages.AppLibraryView.importInstanceModpackOrGameFolder.localized).disabled(model.busy)
+                } label: { Label(Messages.AppLibraryView.importContentAction.localized, systemImage: "square.and.arrow.down").labelStyle(.iconOnly) }.labelStyle(.titleAndIcon).help(Messages.AppLibraryView.importInstanceModpackOrGameFolder.localized).disabled(model.busy)
                 Button { model.showCreate = true } label: { Label(Messages.AppLibraryView.newInstance.localized, systemImage: "plus") }.help(Messages.AppLibraryView.newInstanceShortcut.localized).disabled(model.busy)
             }
         }
@@ -124,7 +124,7 @@ struct LibraryView: View {
                 }
             }
         }
-        .contextMenu { contextActions(instance) }
+        .contextMenu { contextActions(instance).labelStyle(.titleAndIcon) }
     }
 
     // MARK: List
@@ -160,7 +160,7 @@ struct LibraryView: View {
             InstanceMenu(instance: instance, onTrash: { deleteTarget = $0 })
         }
         .padding(.horizontal, 16).padding(.vertical, 12)
-        .contextMenu { contextActions(instance) }
+        .contextMenu { contextActions(instance).labelStyle(.titleAndIcon) }
     }
 
     // MARK: Shared pieces

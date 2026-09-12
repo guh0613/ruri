@@ -47,7 +47,7 @@ struct AccountsView: View {
                     Divider()
                 }
                 Button(Messages.AppAccountsView.removeFromRuri.localized, systemImage: "trash", role: .destructive) { model.removeAccount(account) }
-            } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().disabled(model.busy || model.readOnly)
+            } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy || model.readOnly)
         }
         .padding(.vertical, 4)
     }

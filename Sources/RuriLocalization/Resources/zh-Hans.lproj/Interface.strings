@@ -650,7 +650,7 @@
 "appDiscoverView.contentPickerText5" = "光影";
 
 /* @symbol AppInstanceContentView.manageGameContent @args - */
-"appInstanceContentView.bodyText1" = "管理游戏内容";
+"appInstanceContentView.bodyText1" = "游戏内容";
 
 /* @symbol AppInstanceContentView.content @args - */
 "appInstanceContentView.bodyText2" = "内容";
@@ -2666,10 +2666,10 @@
 "appLaunchSettingsEditor.bodyText3" = "自定义%1$@";
 
 /* @symbol AppLaunchSettingsEditor.restoreDefault @args - */
-"appLaunchSettingsEditor.bodyText4" = "使用默认设置";
+"appLaunchSettingsEditor.bodyText4" = "恢复默认";
 
 /* @symbol AppLaunchSettingsEditor.restoreDefaultFormat @args text */
-"appLaunchSettingsEditor.bodyText5" = "%1$@使用默认设置";
+"appLaunchSettingsEditor.bodyText5" = "%1$@，恢复默认设置";
 
 /* @symbol AppLaunchSettingsEditor.automaticJava @args text */
 "appLaunchSettingsEditor.majorText1" = "自动选择 Java %1$@";
@@ -3479,3 +3479,30 @@
 
 /* @symbol AppGameRunDirectoryChangeView.fileDetails @args - */
 "appGameRunDirectoryChangeView.fileDetails" = "文件详情";
+
+/* @symbol AppInstanceContentView.enabledColumn @args - */
+"appInstanceContentView.enabledColumn" = "启用";
+
+/* @symbol AppInstanceContentView.nameColumn @args - */
+"appInstanceContentView.nameColumn" = "名称";
+
+/* @symbol AppInstanceContentView.versionColumn @args - */
+"appInstanceContentView.versionColumn" = "版本";
+
+/* @symbol AppInstanceContentView.sizeColumn @args - */
+"appInstanceContentView.sizeColumn" = "大小";
+
+/* @symbol AppInstanceContentView.actionsColumn @args - */
+"appInstanceContentView.actionsColumn" = "操作";
+
+/* @symbol AppInstanceContentView.selectionActions @args - */
+"appInstanceContentView.selectionActions" = "选择与批量操作";
+
+/* @symbol AppWorldManagerView.worldsTab @args - */
+"appWorldManagerView.worldsTab" = "存档";
+
+/* @symbol AppWorldManagerView.backupsTab @args - */
+"appWorldManagerView.backupsTab" = "备份";
+
+/* @symbol AppWorldManagerView.moreActions @args - */
+"appWorldManagerView.moreActions" = "更多操作";

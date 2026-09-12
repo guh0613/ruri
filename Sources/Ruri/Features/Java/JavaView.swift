@@ -76,7 +76,7 @@ struct JavaView: View {
                 if let id = entry.managedID {
                     Divider(); Button(Messages.AppJavaView.trashJava.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
                 }
-            } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().disabled(model.busy)
+            } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy)
         }
         .padding(.vertical, 4)
     }

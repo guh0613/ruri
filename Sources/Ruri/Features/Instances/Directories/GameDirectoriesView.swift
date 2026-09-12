@@ -19,9 +19,9 @@ struct DirectoryMenu: View {
             Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
             Button(Messages.AppGameDirectoriesView.manageFolders.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
         } label: {
-            Label(Messages.AppGameDirectoriesView.instanceFolders.localized, systemImage: "folder")
+            Label(Messages.AppGameDirectoriesView.instanceFolders.localized, systemImage: "folder").labelStyle(.iconOnly)
         }
-        .disabled(model.busy)
+        .disabled(model.busy).labelStyle(.titleAndIcon)
         .help(Messages.AppGameDirectoriesView.currentFolder(String(describing: model.selectedDirectoryName)).localized)
     }
 }
@@ -89,14 +89,14 @@ private struct DetachedMinecraftFolderRow: View {
                     model.restoreMinecraftDirectory(folder, at: folder.directory.resolvingBookmark().url)
                 }.disabled(model.busy)
                 Menu {
-                    Button(Messages.AppGameDirectoriesView.chooseNewLocation.localized) {
+                    Button(Messages.AppGameDirectoriesView.chooseNewLocation.localized, systemImage: "folder.badge.plus") {
                         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true
                         panel.allowsMultipleSelection = false; panel.prompt = Messages.AppGameDirectoriesView.readdFolder.localized
                         panel.message = Messages.AppGameDirectoriesView.relocateFolder(folder.directory.name).localized
                         guard panel.runModal() == .OK, let url = panel.url else { return }
                         model.restoreMinecraftDirectory(folder, at: url)
                     }
-                } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
+                } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy)
             }
         }
     }
@@ -126,9 +126,9 @@ private struct GameDirectoryRow: View {
                     Spacer()
                     Button(Messages.AppGameDirectoriesView.showInFinder.localized) { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
                     Menu {
-                        Button(Messages.AppGameDirectoriesView.relocateOriginal.localized) { relocate() }
-                        Button(Messages.AppGameDirectoriesView.removeFromList.localized) { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
-                    } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
+                        Button(Messages.AppGameDirectoriesView.relocateOriginal.localized, systemImage: "folder") { relocate() }
+                        Button(Messages.AppGameDirectoriesView.removeFromList.localized, systemImage: "minus.circle") { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
+                    } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy)
                 }
                 if let issue = model.directoryErrors[directory.id] { Text(issue).font(.caption).foregroundStyle(.secondary) }
             }

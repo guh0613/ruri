@@ -78,14 +78,20 @@ private struct AccountSidebarFooter: View {
         VStack(spacing: 0) {
             Divider()
             Menu {
-                ForEach(model.state.accounts) { account in
-                    Button { model.state.activeAccountID = account.id; model.save() } label: {
-                        if account.id == model.state.activeAccountID { Label(account.username, systemImage: "checkmark") } else { Text(account.username) }
-                    }
+                if !model.state.accounts.isEmpty {
+                    Picker(Messages.AppRootView.switchAccount.localized, selection: Binding(get: { model.state.activeAccountID }, set: { id in
+                        guard id != model.state.activeAccountID else { return }
+                        model.state.activeAccountID = id
+                        model.save()
+                    })) {
+                        ForEach(model.state.accounts) { account in
+                            Text(account.username).tag(Optional(account.id))
+                        }
+                    }.pickerStyle(.inline).labelsHidden()
+                    Divider()
                 }
-                if !model.state.accounts.isEmpty { Divider() }
-                Button(Messages.AppRootView.addAccount.localized) { model.showAccount = true }
-                Button(Messages.AppRootView.manageAccounts.localized) { model.page = .accounts }
+                Button(Messages.AppRootView.addAccount.localized, systemImage: "person.badge.plus") { model.showAccount = true }
+                Button(Messages.AppRootView.manageAccounts.localized, systemImage: "person.2") { model.page = .accounts }
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: model.activeAccount == nil ? "person.crop.circle.badge.plus" : "person.crop.circle.fill")
@@ -99,6 +105,7 @@ private struct AccountSidebarFooter: View {
                 }.padding(.horizontal, 12).padding(.vertical, 10).contentShape(Rectangle())
             }
             .menuStyle(.button).buttonStyle(.plain).menuIndicator(.hidden)
+            .labelStyle(.titleAndIcon)
             .disabled(model.readOnly)
             .padding(.horizontal, 8).padding(.vertical, 8)
             .help(model.activeAccount == nil ? Messages.AppRootView.addAnotherAccount.localized : Messages.AppRootView.switchAccount.localized)

@@ -190,9 +190,11 @@ struct HomeView: View {
         .onTapGesture { model.select(instance) }
         .help(Messages.AppHomeView.setAsFeaturedHint.localized)
         .contextMenu {
-            Button(Messages.AppHomeView.setAsFeatured.localized) { model.select(instance) }
-            Button(Messages.AppHomeView.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
-            Button(Messages.AppHomeView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }
+            Group {
+                Button(Messages.AppHomeView.setAsFeatured.localized, systemImage: "house") { model.select(instance) }
+                Button(Messages.AppHomeView.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
+                Button(Messages.AppHomeView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }
+            }.labelStyle(.titleAndIcon)
         }
     }
 

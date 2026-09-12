@@ -24,41 +24,54 @@ struct WorldManagerView: View {
     private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.worldsAndBackups.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
-            HStack {
-                Picker(Messages.AppWorldManagerView.content.localized, selection: $tab) { Text(Messages.AppWorldManagerView.worldCount(Int64(worlds.count)).localized).tag("worlds"); Text(Messages.AppWorldManagerView.backupCount(Int64(backups.count)).localized).tag("backups") }.pickerStyle(.segmented).frame(width: 270)
+        InstanceManagementSheet(title: Messages.AppWorldManagerView.worldsAndBackups.localized, instanceName: instance.name) {
+            HStack(spacing: 10) {
+                Picker(Messages.AppWorldManagerView.content.localized, selection: $tab) {
+                    Text(Messages.AppWorldManagerView.worldsTab.localized).tag("worlds")
+                    Text(Messages.AppWorldManagerView.backupsTab.localized).tag("backups")
+                }.pickerStyle(.segmented).labelsHidden().frame(width: 200)
                 Spacer()
                 Button(Messages.AppWorldManagerView.importWorld.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help(Messages.AppWorldManagerView.openWorldFolder.localized)
+                Button(Messages.AppWorldManagerView.openWorldFolder.localized, systemImage: "folder") { model.reveal(instance, folder: "saves") }
+                    .labelStyle(.iconOnly).help(Messages.AppWorldManagerView.openWorldFolder.localized)
             }
-            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldManagerView.worldEditNotice.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
-            if !loading && !quickPlaySupported { Text(Messages.AppWorldManagerView.directWorldLaunchUnsupported.localized).font(.caption).foregroundStyle(.secondary) }
-            if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
-            if let status { Text(status).font(.callout).foregroundStyle(Theme.accent) }
-            if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        if tab == "worlds" {
-                            if worlds.isEmpty { EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.noWorlds.localized, detail: Messages.AppWorldManagerView.worldDescription.localized) }
-                            ForEach(worlds) { world in worldRow(world) }
-                        } else {
-                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.noBackups.localized, detail: Messages.AppWorldManagerView.backupDescription.localized) }
-                            ForEach(backups) { backup in backupRow(backup) }
-                        }
-                    }
+        } content: {
+            VStack(alignment: .leading, spacing: 0) {
+                if model.isInstanceInUse(instance.id) {
+                    Label(Messages.AppWorldManagerView.worldEditNotice.localized, systemImage: "play.circle")
+                        .font(.callout).foregroundStyle(.secondary).padding(.horizontal, 20).padding(.vertical, 8)
+                }
+                if let error {
+                    Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled)
+                        .padding(.horizontal, 20).padding(.vertical, 8)
+                }
+                if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+                else if tab == "worlds" && worlds.isEmpty {
+                    EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.noWorlds.localized, detail: Messages.AppWorldManagerView.worldDescription.localized)
+                        .frame(maxHeight: .infinity)
+                } else if tab == "backups" && backups.isEmpty {
+                    EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.noBackups.localized, detail: Messages.AppWorldManagerView.backupDescription.localized)
+                        .frame(maxHeight: .infinity)
+                } else {
+                    List {
+                        if tab == "worlds" { ForEach(worlds) { world in worldRow(world) } }
+                        else { ForEach(backups) { backup in backupRow(backup) } }
+                    }.listStyle(.inset).scrollContentBackground(.hidden)
                 }
             }
-            if model.busy {
-                Divider()
-                HStack {
-                    Spacer()
+        } footer: {
+            HStack(spacing: 12) {
+                Text(tab == "worlds" ? Messages.AppWorldManagerView.worldCount(Int64(worlds.count)).localized : Messages.AppWorldManagerView.backupCount(Int64(backups.count)).localized)
+                    .font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                if let status { Text(status).font(.caption).foregroundStyle(.secondary).lineLimit(1).help(status) }
+                Spacer(minLength: 8)
+                if model.busy {
                     ProgressView().controlSize(.small)
                     Button(Messages.AppWorldManagerView.cancelTask.localized) { model.operation?.cancel() }
                 }
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).buttonStyle(.borderedProminent)
             }
-        }.padding(24).frame(width: 820, height: 650)
+        }
         .task { await reload() }
         .sheet(item: $dataPackWorld) { world in WorldDataPacksView(instance: instance, world: world) }
         .onDisappear {
@@ -86,50 +99,70 @@ struct WorldManagerView: View {
         } message: { Text(deletingWorld?.name ?? deletingBackup?.title ?? "") }
     }
     private func worldRow(_ world: WorldSnapshot) -> some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 12) {
             Group {
                 if let icon = world.icon, let image = NSImage(contentsOf: icon) { Image(nsImage: image).resizable().interpolation(.none).scaledToFill() }
-                else { Image(systemName: "mountain.2.fill").resizable().scaledToFit().padding(13).foregroundStyle(Theme.accent) }
-            }.frame(width: 58, height: 58).background(Theme.accent.opacity(0.08), in: RoundedRectangle(cornerRadius: 12)).clipShape(RoundedRectangle(cornerRadius: 12))
-            VStack(alignment: .leading, spacing: 6) {
-                Text(world.name).font(.headline).lineLimit(1)
-                HStack(spacing: 7) { if let mode = world.gameMode { TagPill(text: mode) }; if let version = world.version { Text(version) }; if let size = world.size { Text(LocalizedFormat.bytes(size)) } }.font(.caption).foregroundStyle(.secondary)
-                Text(world.folder).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(1)
+                else { Image(systemName: "mountain.2").resizable().scaledToFit().padding(9).foregroundStyle(.secondary) }
+            }.frame(width: 40, height: 40).clipShape(RoundedRectangle(cornerRadius: 6))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(world.name).font(.body.weight(.medium)).lineLimit(1).help(world.name)
+                HStack(spacing: 8) {
+                    if let mode = world.gameMode { Text(mode) }
+                    if let version = world.version { Text(version) }
+                    if let size = world.size { Text(LocalizedFormat.bytes(size)) }
+                }.font(.caption).foregroundStyle(.secondary)
+                if world.folder != world.name { Text(world.folder).font(.caption2).foregroundStyle(.secondary).lineLimit(1).help(world.folder) }
                 if let error = world.metadataError { Text(error).font(.caption).foregroundStyle(.orange) }
             }
-            Spacer()
-            Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }
-                .disabled(!canModify || !quickPlaySupported || world.metadataError != nil)
-                .help(quickPlaySupported ? Messages.AppWorldManagerView.launchWorldNotice.localized : Messages.AppWorldManagerView.worldLaunchUnsupported.localized)
+            Spacer(minLength: 12)
+            if quickPlaySupported {
+                Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }
+                    .disabled(!canModify || world.metadataError != nil)
+            }
             Button(Messages.AppWorldManagerView.createBackup.localized, systemImage: "clock.arrow.circlepath") {
                 mutate(Messages.AppWorldManagerView.backupWorld(world.name).localized) { id in
                     _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = Messages.AppWorldManagerView.worldBackedUp(world.name).localized
                 }
             }.disabled(!canModify)
             Menu {
-                Button(Messages.AppWorldManagerView.manageDatapacks.localized) { dataPackWorld = world }.disabled(world.metadataError != nil)
-                Button(Messages.AppWorldManagerView.exportZip.localized) { export(world) }.disabled(!canModify)
-                Button(Messages.AppWorldManagerView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
-                Divider(); Button(Messages.AppWorldManagerView.moveToTrash.localized, role: .destructive) { deletingWorld = world }.disabled(!canModify)
-            } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-        }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
+                if !quickPlaySupported {
+                    Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }.disabled(true)
+                        .help(Messages.AppWorldManagerView.worldLaunchUnsupported.localized)
+                }
+                Button(Messages.AppWorldManagerView.manageDatapacks.localized, systemImage: "shippingbox") { dataPackWorld = world }.disabled(world.metadataError != nil)
+                Button(Messages.AppWorldManagerView.exportZip.localized, systemImage: "square.and.arrow.up") { export(world) }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
+                Divider()
+                Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingWorld = world }.disabled(!canModify)
+            } label: { Image(systemName: "ellipsis") }
+                .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
+                .help(Messages.AppWorldManagerView.moreActions.localized)
+        }.padding(.vertical, 6)
     }
+
     private func backupRow(_ backup: WorldBackup) -> some View {
-        HStack(spacing: 16) {
-            Image(systemName: "archivebox.fill").font(.system(size: 30)).foregroundStyle(Theme.accent).frame(width: 54)
-            VStack(alignment: .leading, spacing: 6) {
-                Text(backup.title).font(.headline).lineLimit(1)
-                Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
-                HStack { Text(LocalizedFormat.bytes(backup.size)); Text(backup.metadata?.displayReason ?? Messages.AppWorldManagerView.backupInfoUnavailable.localized) }.font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
+        HStack(spacing: 12) {
+            Image(systemName: "archivebox").font(.system(size: 24)).foregroundStyle(.secondary).frame(width: 40, height: 40)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(backup.title).font(.body.weight(.medium)).lineLimit(1).help(backup.title)
+                HStack(spacing: 8) {
+                    Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened))
+                    Text(LocalizedFormat.bytes(backup.size))
+                }.font(.caption).foregroundStyle(.secondary)
+                Text(backup.metadata?.displayReason ?? Messages.AppWorldManagerView.backupInfoUnavailable.localized)
+                    .font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
             }
-            Spacer()
-            Button(Messages.AppWorldManagerView.restoreAsCopy.localized) { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
+            Spacer(minLength: 12)
+            Button(Messages.AppWorldManagerView.restoreAsCopy.localized, systemImage: "arrow.counterclockwise") { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
             Menu {
-                Button(Messages.AppWorldManagerView.replaceOriginal.localized) { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
-                Button(Messages.AppWorldManagerView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
-                Divider(); Button(Messages.AppWorldManagerView.moveToTrash.localized, role: .destructive) { deletingBackup = backup }.disabled(!canModify)
-            } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-        }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
+                Button(Messages.AppWorldManagerView.replaceOriginal.localized, systemImage: "arrow.triangle.2.circlepath") { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
+                Button(Messages.AppWorldManagerView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
+                Divider()
+                Button(Messages.AppWorldManagerView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deletingBackup = backup }.disabled(!canModify)
+            } label: { Image(systemName: "ellipsis") }
+                .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
+                .help(Messages.AppWorldManagerView.moreActions.localized)
+        }.padding(.vertical, 6)
     }
     private func reload() async {
         loading = true

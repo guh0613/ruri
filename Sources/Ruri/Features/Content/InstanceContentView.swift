@@ -33,94 +33,27 @@ struct InstanceContentView: View {
     } }
     private var selectedFiles: [LocalContentFile] { filtered.filter { selection.contains($0.id) } }
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 14) {
-                InstanceIcon(loader: instance.loader, png: instance.iconPNG)
-                SectionHeading(title: Messages.AppInstanceContentView.manageGameContent.localized, subtitle: instance.name + " · " + instance.subtitle)
-                Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-            }
-            HStack {
-                Picker(Messages.AppInstanceContentView.content.localized, selection: $kind) { ForEach(ContentKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.segmented).frame(width: 270).disabled(model.busy)
-                Spacer()
-                Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }.disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
-                if !updates.isEmpty || !curseUpdates.isEmpty {
-                    Menu(Messages.AppInstanceContentView.batchUpdate.localized) {
-                        Button(Messages.AppInstanceContentView.updateSelectedContent.localized) { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
-                        Button(Messages.AppInstanceContentView.updateCurrentResults.localized) { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
-                    }.disabled(!canModify || updateTask != nil)
+        InstanceManagementSheet(title: Messages.AppInstanceContentView.manageGameContent.localized, instanceName: instance.name) {
+            controls
+        } content: {
+            VStack(alignment: .leading, spacing: 0) {
+                if model.isInstanceInUse(instance.id) {
+                    Label(Messages.AppInstanceContentView.contentChangesUnavailableWhileRunning.localized, systemImage: "play.circle")
+                        .font(.callout).foregroundStyle(.secondary).padding(.horizontal, 20).padding(.vertical, 8)
                 }
-                Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
-                Button { model.reveal(instance, folder: kind.folder) } label: { Image(systemName: "folder") }.help(Messages.AppInstanceContentView.openContentFolder.localized)
-            }
-            HStack {
-                TextField(Messages.AppInstanceContentView.searchInstalledContent.localized, text: $search).textFieldStyle(.roundedBorder)
-                Picker(Messages.AppInstanceContentView.status.localized, selection: $statusFilter) { ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) } }.labelsHidden().frame(width: 110)
-                Text(Messages.AppInstanceContentView.enabledCount(String(describing: files.filter(\.enabled).count), Int64(files.count)).localized).font(.caption).foregroundStyle(.secondary).monospacedDigit()
-            }
-            HStack {
-                Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized) { selection = Set(filtered.map(\.id)) }.disabled(filtered.isEmpty || loading)
-                if selectedFiles.isEmpty { Text(Messages.AppInstanceContentView.multiSelectHint.localized).font(.caption).foregroundStyle(.secondary) }
-                else {
-                    Button(Messages.AppInstanceContentView.deselect.localized) { selection.removeAll() }
-                    Text(Messages.AppInstanceContentView.selectedCount(Int64(selectedFiles.count)).localized).font(.caption).foregroundStyle(.secondary)
-                    Spacer()
-                    Button(Messages.AppInstanceContentView.enableSelected.localized) { setSelectedEnabled(true) }.disabled(!canModify || selectedFiles.allSatisfy(\.enabled))
-                    Button(Messages.AppInstanceContentView.disableSelected.localized) { setSelectedEnabled(false) }.disabled(!canModify || selectedFiles.allSatisfy { !$0.enabled })
-                    Button(Messages.AppInstanceContentView.removeSelected.localized, role: .destructive) { bulkRemoval = .init(files: selectedFiles) }.disabled(!canModify)
+                if let error {
+                    Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled)
+                        .padding(.horizontal, 20).padding(.vertical, 8)
                 }
+                if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+                else if filtered.isEmpty {
+                    EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? Messages.AppInstanceContentView.contentNotInstalled(kind.title).localized : Messages.AppInstanceContentView.noMatchingContent.localized, detail: Messages.AppInstanceContentView.importOrDiscoverContent.localized)
+                        .frame(maxHeight: .infinity)
+                } else { contentTable }
             }
-            if model.isInstanceInUse(instance.id) { Label(Messages.AppInstanceContentView.contentChangesUnavailableWhileRunning.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
-            if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
-            if updateTask != nil { ProgressView(Messages.AppInstanceContentView.checkingCompatibleReleases.localized).controlSize(.small) }
-            if updatesChecked && updates.isEmpty && curseUpdates.isEmpty { Label(Messages.AppInstanceContentView.latestCompatibleRelease.localized, systemImage: "checkmark.circle").font(.caption).foregroundStyle(Theme.accent) }
-            if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else if filtered.isEmpty {
-                EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? Messages.AppInstanceContentView.contentNotInstalled(kind.title).localized : Messages.AppInstanceContentView.noMatchingContent.localized, detail: Messages.AppInstanceContentView.importOrDiscoverContent.localized).frame(maxHeight: .infinity)
-            } else {
-                List(selection: $selection) {
-                        ForEach(filtered) { file in
-                            HStack(alignment: .center, spacing: 14) {
-                                Toggle(Messages.AppInstanceContentView.enableContent(file.title).localized, isOn: Binding(get: { file.enabled }, set: { enabled in
-                                    mutate("\(enabled ? Messages.AppInstanceContentView.enable.localized : Messages.AppInstanceContentView.disable.localized) \(file.title)") { try await manager.setEnabled(enabled, file: file) }
-                                })).labelsHidden().toggleStyle(.switch).controlSize(.small).disabled(!canModify)
-                                VStack(alignment: .leading, spacing: 5) {
-                                    HStack { Text(file.title).font(.system(size: 13, weight: .semibold)).lineLimit(1); if let provider = file.managed?.provider { TagPill(text: provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : provider) } }
-                                    HStack(spacing: 8) { if let version = file.version { Text(version).lineLimit(1) }; Text(LocalizedFormat.bytes(file.size)) }.font(.caption).foregroundStyle(.secondary)
-                                    Text(file.filename).font(.system(size: 10, design: .monospaced)).foregroundStyle(.tertiary).lineLimit(1).help(file.filename)
-                                }
-                                Spacer(minLength: 4)
-                                if let record = file.managed, let update = updates[record.id] {
-                                    Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { apply(update) }.disabled(!canModify).help(Messages.AppInstanceContentView.updateTo(String(describing: update.available.version_number)).localized)
-                                }
-                                if let record = file.managed, let update = curseUpdates[record.id] {
-                                    Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepare(update) }.disabled(!canModify).help(Messages.AppInstanceContentView.updateTo(String(describing: update.available.displayName)).localized)
-                                }
-                                Menu {
-                                    if let record = file.managed, ["modrinth", "curseforge"].contains(record.provider) {
-                                        Button(Messages.AppInstanceContentView.changeVersion.localized, systemImage: "arrow.triangle.swap") {
-                                            updateTask?.cancel(); updatesChecked = false; updates = [:]; curseUpdates = [:]
-                                            versionTarget = file
-                                        }.disabled(!canModify)
-                                    }
-                                    Button(Messages.AppInstanceContentView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
-                                    if let page = file.managed?.modrinthPageURL {
-                                        Link(Messages.AppInstanceContentView.viewOnModrinth.localized, destination: page)
-                                    }
-                                    Divider()
-                                    Button(Messages.AppInstanceContentView.moveToTrash.localized, role: .destructive) { deleteTarget = file }.disabled(!canModify)
-                                } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-                            }.padding(.vertical, 8).tag(file.id)
-                        }
-                }.listStyle(.bordered)
-            }
-            Divider()
-            HStack {
-                Text(Messages.AppInstanceContentView.contentUpdateNotes.localized).font(.caption).foregroundStyle(.secondary)
-                Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() } }
-                else { Button(Messages.AppInstanceContentView.discoverMoreContent.localized, systemImage: "safari") { model.page = .discover; dismiss() } }
-            }
-        }.padding(24).frame(width: 800, height: 650)
+        } footer: {
+            footer
+        }
         .task(id: kind) { selection.removeAll(); updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
         .onChange(of: search) { pruneSelection() }
         .onChange(of: statusFilter) { pruneSelection() }
@@ -153,6 +86,142 @@ struct InstanceContentView: View {
             Button(Messages.AppInstanceContentView.moveToTrash.localized, role: .destructive) { if let file = deleteTarget { mutate(Messages.AppInstanceContentView.removeContent(file.title).localized) { try await manager.remove(file) } }; deleteTarget = nil }
         } message: { Text(deleteTarget?.filename ?? "") }
     }
+    private var controls: some View {
+        VStack(spacing: 12) {
+            HStack(spacing: 10) {
+                Picker(Messages.AppInstanceContentView.content.localized, selection: $kind) {
+                    ForEach(ContentKind.allCases) { Text($0.title).tag($0) }
+                }.pickerStyle(.segmented).labelsHidden().frame(width: 250).disabled(model.busy)
+                Spacer(minLength: 12)
+                Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath", action: checkUpdates)
+                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.checkForUpdates.localized)
+                    .disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
+                if !updates.isEmpty || !curseUpdates.isEmpty {
+                    Menu {
+                        Button(Messages.AppInstanceContentView.updateSelectedContent.localized, systemImage: "arrow.down.circle") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
+                        Button(Messages.AppInstanceContentView.updateCurrentResults.localized, systemImage: "arrow.down.circle") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
+                    } label: {
+                        Label(Messages.AppInstanceContentView.batchUpdate.localized, systemImage: "square.and.arrow.down.on.square")
+                            .labelStyle(.iconOnly)
+                    }.labelStyle(.titleAndIcon).menuIndicator(.hidden).help(Messages.AppInstanceContentView.batchUpdate.localized)
+                        .disabled(!canModify || updateTask != nil)
+                }
+                Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
+                Button(Messages.AppInstanceContentView.discoverMoreContent.localized, systemImage: "safari") { model.page = .discover; dismiss() }
+                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.discoverMoreContent.localized).disabled(model.busy)
+                Button(Messages.AppInstanceContentView.openContentFolder.localized, systemImage: "folder") { model.reveal(instance, folder: kind.folder) }
+                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.openContentFolder.localized)
+            }
+            HStack(spacing: 12) {
+                HStack(spacing: 6) {
+                    Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+                    TextField(Messages.AppInstanceContentView.searchInstalledContent.localized, text: $search).textFieldStyle(.plain)
+                }.padding(.horizontal, 8).padding(.vertical, 5)
+                    .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
+                Picker(Messages.AppInstanceContentView.status.localized, selection: $statusFilter) {
+                    ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) }
+                }.labelsHidden().frame(width: 120)
+            }
+        }
+    }
+
+    private var contentTable: some View {
+        Table(filtered, selection: $selection) {
+            TableColumn(Messages.AppInstanceContentView.enabledColumn.localized) { file in
+                Toggle(Messages.AppInstanceContentView.enableContent(file.title).localized, isOn: Binding(get: { file.enabled }, set: { enabled in
+                    mutate("\(enabled ? Messages.AppInstanceContentView.enable.localized : Messages.AppInstanceContentView.disable.localized) \(file.title)") { try await manager.setEnabled(enabled, file: file) }
+                })).labelsHidden().toggleStyle(.checkbox).disabled(!canModify)
+            }.width(42)
+            TableColumn(Messages.AppInstanceContentView.nameColumn.localized) { file in
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(file.title).font(.body.weight(.medium)).lineLimit(1).help(file.title)
+                    Text(file.filename).font(.caption2).foregroundStyle(.secondary).lineLimit(1).help(file.filename)
+                }.padding(.vertical, 4)
+            }.width(min: 190, ideal: 330)
+            TableColumn(Messages.AppInstanceContentView.versionColumn.localized) { file in
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(file.version ?? "—").font(.callout).lineLimit(1).help(file.version ?? "—")
+                    if let provider = file.managed?.provider {
+                        Text(provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : provider)
+                            .font(.caption2).lineLimit(1)
+                    }
+                }.foregroundStyle(.secondary)
+            }.width(min: 90, ideal: 130, max: 170)
+            TableColumn(Messages.AppInstanceContentView.sizeColumn.localized) { file in
+                Text(LocalizedFormat.bytes(file.size)).font(.callout).foregroundStyle(.secondary)
+                    .monospacedDigit().frame(maxWidth: .infinity, alignment: .trailing)
+            }.width(76)
+            TableColumn(Messages.AppInstanceContentView.actionsColumn.localized) { file in
+                HStack(spacing: 10) {
+                    Spacer(minLength: 0)
+                    if let record = file.managed, let update = updates[record.id] {
+                        Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { apply(update) }
+                            .labelStyle(.iconOnly).buttonStyle(.borderless).disabled(!canModify)
+                            .help(Messages.AppInstanceContentView.updateTo(update.available.version_number).localized)
+                    }
+                    if let record = file.managed, let update = curseUpdates[record.id] {
+                        Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepare(update) }
+                            .labelStyle(.iconOnly).buttonStyle(.borderless).disabled(!canModify)
+                            .help(Messages.AppInstanceContentView.updateTo(update.available.displayName).localized)
+                    }
+                    Menu { fileActions(file) } label: { Image(systemName: "ellipsis") }
+                        .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
+                        .help(Messages.AppInstanceContentView.actionsColumn.localized)
+                }
+            }.width(68)
+        }.tableStyle(.inset)
+    }
+
+    @ViewBuilder private func fileActions(_ file: LocalContentFile) -> some View {
+        if let record = file.managed, ["modrinth", "curseforge"].contains(record.provider) {
+            Button(Messages.AppInstanceContentView.changeVersion.localized, systemImage: "arrow.triangle.swap") {
+                updateTask?.cancel(); updatesChecked = false; updates = [:]; curseUpdates = [:]
+                versionTarget = file
+            }.disabled(!canModify)
+        }
+        Button(Messages.AppInstanceContentView.showInFinder.localized, systemImage: "folder") { NSWorkspace.shared.activateFileViewerSelecting([file.url]) }
+        if let page = file.managed?.modrinthPageURL {
+            Link(destination: page) { Label(Messages.AppInstanceContentView.viewOnModrinth.localized, systemImage: "arrow.up.right.square") }
+        }
+        Divider()
+        Button(Messages.AppInstanceContentView.moveToTrash.localized, systemImage: "trash", role: .destructive) { deleteTarget = file }.disabled(!canModify)
+    }
+
+    private var footer: some View {
+        HStack(spacing: 12) {
+            Menu {
+                Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized, systemImage: "checkmark.square") { selection = Set(filtered.map(\.id)) }
+                    .disabled(filtered.isEmpty || loading)
+                Button(Messages.AppInstanceContentView.deselect.localized) { selection.removeAll() }.disabled(selectedFiles.isEmpty)
+                Divider()
+                Button(Messages.AppInstanceContentView.enableSelected.localized, systemImage: "checkmark.circle") { setSelectedEnabled(true) }
+                    .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy(\.enabled))
+                Button(Messages.AppInstanceContentView.disableSelected.localized, systemImage: "pause.circle") { setSelectedEnabled(false) }
+                    .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy { !$0.enabled })
+                Button(Messages.AppInstanceContentView.removeSelected.localized, systemImage: "trash", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }
+                    .disabled(!canModify || selectedFiles.isEmpty)
+            } label: {
+                Label(Messages.AppInstanceContentView.selectionActions.localized, systemImage: "checklist").labelStyle(.iconOnly)
+            }.menuIndicator(.hidden).labelStyle(.titleAndIcon).help(Messages.AppInstanceContentView.selectionActions.localized)
+            Text(selectedFiles.isEmpty
+                 ? Messages.AppInstanceContentView.enabledCount(String(files.filter(\.enabled).count), Int64(files.count)).localized
+                 : Messages.AppInstanceContentView.selectedCount(Int64(selectedFiles.count)).localized)
+                .font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            Spacer(minLength: 8)
+            if model.busy {
+                ProgressView().controlSize(.small)
+                Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
+            } else if updateTask != nil {
+                ProgressView().controlSize(.small)
+                Text(Messages.AppInstanceContentView.checkingCompatibleReleases.localized).font(.caption).foregroundStyle(.secondary)
+            } else if updatesChecked && updates.isEmpty && curseUpdates.isEmpty {
+                Label(Messages.AppInstanceContentView.latestCompatibleRelease.localized, systemImage: "checkmark.circle")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).buttonStyle(.borderedProminent)
+        }
+    }
+
     private func reload() async {
         loading = true
         do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items; pruneSelection()

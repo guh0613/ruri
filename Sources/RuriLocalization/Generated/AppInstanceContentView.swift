@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceContentView {
-        /// 管理游戏内容
+        /// 游戏内容
         ///
         /// Resource: `Interface.appInstanceContentView.bodyText1`.
         public static var manageGameContent: LocalizedMessage {
-            .init(key: "appInstanceContentView.bodyText1", table: "Interface", fallback: "管理游戏内容")
+            .init(key: "appInstanceContentView.bodyText1", table: "Interface", fallback: "游戏内容")
         }
         /// 内容
         ///
@@ -273,8 +273,44 @@ extension Messages {
         public static func applyContentUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.applyText1", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
         }
+        /// 启用
+        ///
+        /// Resource: `Interface.appInstanceContentView.enabledColumn`.
+        public static var enabledColumn: LocalizedMessage {
+            .init(key: "appInstanceContentView.enabledColumn", table: "Interface", fallback: "启用")
+        }
+        /// 名称
+        ///
+        /// Resource: `Interface.appInstanceContentView.nameColumn`.
+        public static var nameColumn: LocalizedMessage {
+            .init(key: "appInstanceContentView.nameColumn", table: "Interface", fallback: "名称")
+        }
+        /// 版本
+        ///
+        /// Resource: `Interface.appInstanceContentView.versionColumn`.
+        public static var versionColumn: LocalizedMessage {
+            .init(key: "appInstanceContentView.versionColumn", table: "Interface", fallback: "版本")
+        }
+        /// 大小
+        ///
+        /// Resource: `Interface.appInstanceContentView.sizeColumn`.
+        public static var sizeColumn: LocalizedMessage {
+            .init(key: "appInstanceContentView.sizeColumn", table: "Interface", fallback: "大小")
+        }
+        /// 操作
+        ///
+        /// Resource: `Interface.appInstanceContentView.actionsColumn`.
+        public static var actionsColumn: LocalizedMessage {
+            .init(key: "appInstanceContentView.actionsColumn", table: "Interface", fallback: "操作")
+        }
+        /// 选择与批量操作
+        ///
+        /// Resource: `Interface.appInstanceContentView.selectionActions`.
+        public static var selectionActions: LocalizedMessage {
+            .init(key: "appInstanceContentView.selectionActions", table: "Interface", fallback: "选择与批量操作")
+        }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceContentView.bodyText1": .init("管理游戏内容", []),
+            "Interface:appInstanceContentView.bodyText1": .init("游戏内容", []),
             "Interface:appInstanceContentView.bodyText2": .init("内容", []),
             "Interface:appInstanceContentView.bodyText3": .init("检查更新", []),
             "Interface:appInstanceContentView.bodyText4": .init("批量更新…", []),
@@ -319,6 +355,12 @@ extension Messages {
             "Interface:appInstanceContentView.prepareText1": .init("解析 %1$@ 更新", [.text]),
             "Interface:appInstanceContentView.curseSelectedText1": .init("准备批量更新", []),
             "Interface:appInstanceContentView.applyText1": .init("更新 %1$@", [.text]),
+            "Interface:appInstanceContentView.enabledColumn": .init("启用", []),
+            "Interface:appInstanceContentView.nameColumn": .init("名称", []),
+            "Interface:appInstanceContentView.versionColumn": .init("版本", []),
+            "Interface:appInstanceContentView.sizeColumn": .init("大小", []),
+            "Interface:appInstanceContentView.actionsColumn": .init("操作", []),
+            "Interface:appInstanceContentView.selectionActions": .init("选择与批量操作", []),
         ]
     }
 }
