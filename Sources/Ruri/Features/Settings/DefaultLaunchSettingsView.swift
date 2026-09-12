@@ -38,12 +38,19 @@ import RuriCore
 struct DefaultLaunchSettingsView: View {
     @Environment(AppModel.self) private var model
     @Bindable var draft: DefaultLaunchSettingsDraft
-    let pane: InstanceSettingsPane
 
     var body: some View {
-        Form {
-            LaunchSettingsEditor(overrides: $draft.overrides, defaults: draft.original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
-                .disabled(model.readOnly)
-        }.formStyle(.grouped).scrollContentBackground(.hidden)
+        ScrollViewReader { proxy in
+            Form {
+                LaunchSettingsEditor(overrides: $draft.overrides, defaults: draft.original, runtimes: model.runtimes, showsInheritance: false,
+                                     keys: [.java, .memory, .window, .presentation, .jvmArguments, .gameArguments, .environment, .commands])
+                    .disabled(model.readOnly)
+            }.formStyle(.grouped).scrollContentBackground(.hidden)
+                .onChange(of: draft.issue, initial: true) { _, issue in
+                    if issue != nil, let failure = SettingsValidation.issue(in: draft.values) {
+                        proxy.scrollTo(failure.key, anchor: .top)
+                    }
+                }
+        }
     }
 }

@@ -2777,7 +2777,7 @@
 "appLaunchSettingsEditor.javaIssueText2" = "例如：-Dfile.encoding=UTF-8";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText3" = "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。";
+"appLaunchSettingsEditor.javaIssueText3" = "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsExample @args - */
 "appLaunchSettingsEditor.javaIssueText4" = "填写示例";
@@ -2792,7 +2792,7 @@
 "appLaunchSettingsEditor.javaIssueText7" = "例如：--width 1600 --height 900";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText8" = "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。";
+"appLaunchSettingsEditor.javaIssueText8" = "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsQuotingHelp @args - */
 "appLaunchSettingsEditor.javaIssueText9" = "含空格的参数加引号；这里填写的窗口尺寸优先。";
@@ -2852,7 +2852,7 @@
 "appLaunchSettingsEditor.bodyText12" = "重新估算";
 
 /* @symbol AppLaunchSettingsEditor.initialMemoryField @args - */
-"appLaunchSettingsEditor.memoryText1" = "部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。";
+"appLaunchSettingsEditor.memoryText1" = "部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。";
 
 /* @symbol AppLaunchSettingsEditor.advancedMemory @args - */
 "appLaunchSettingsEditor.errorText1" = "高级内存选项";

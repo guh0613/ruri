@@ -36,7 +36,7 @@ struct LaunchSettingsEditor: View {
                 }
             } footer: {
                 if let help = sectionHelp(key) { Text(help).fixedSize(horizontal: false, vertical: true) }
-            }
+            }.id(key)
         }
     }
     private func sectionHelp(_ key: LaunchSettingKey) -> String? {

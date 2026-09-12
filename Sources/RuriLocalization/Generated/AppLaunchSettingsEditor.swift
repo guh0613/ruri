@@ -195,11 +195,11 @@ extension Messages {
         public static var jvmArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "例如：-Dfile.encoding=UTF-8")
         }
-        /// 用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。
+        /// 用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText3`.
         public static var jvmArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。")
         }
         /// 填写示例
         ///
@@ -225,11 +225,11 @@ extension Messages {
         public static var gameArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText7", table: "Interface", fallback: "例如：--width 1600 --height 900")
         }
-        /// 传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。
+        /// 传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText8`.
         public static var gameArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。")
         }
         /// 含空格的参数加引号；这里填写的窗口尺寸优先。
         ///
@@ -345,11 +345,11 @@ extension Messages {
         public static var reestimateMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText12", table: "Interface", fallback: "重新估算")
         }
-        /// 部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。
+        /// 部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.memoryText1`.
         public static var initialMemoryField: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.memoryText1", table: "Interface", fallback: "部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。")
+            .init(key: "appLaunchSettingsEditor.memoryText1", table: "Interface", fallback: "部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。")
         }
         /// 高级内存选项
         ///
@@ -432,12 +432,12 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.majorText5": .init("选择文件或 JDK…", []),
             "Interface:appLaunchSettingsEditor.javaIssueText1": .init("附加 JVM 参数", []),
             "Interface:appLaunchSettingsEditor.javaIssueText2": .init("例如：-Dfile.encoding=UTF-8", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在内存设置中调整。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText4": .init("填写示例", []),
             "Interface:appLaunchSettingsEditor.javaIssueText5": .init("多个参数用空格分隔，含空格的值加引号。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText6": .init("附加游戏参数", []),
             "Interface:appLaunchSettingsEditor.javaIssueText7": .init("例如：--width 1600 --height 900", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于游戏窗口设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText9": .init("含空格的参数加引号；这里填写的窗口尺寸优先。", []),
             "Interface:appLaunchSettingsEditor.windowSize": .init("窗口尺寸", []),
             "Interface:appLaunchSettingsEditor.javaIssueText10": .init("窗口宽度", []),
@@ -457,7 +457,7 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.bodyText10": .init("选择内存", []),
             "Interface:appLaunchSettingsEditor.bodyText11": .init("根据当前可用内存估算，为 macOS 保留余量。", []),
             "Interface:appLaunchSettingsEditor.bodyText12": .init("重新估算", []),
-            "Interface:appLaunchSettingsEditor.memoryText1": .init("部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。", []),
+            "Interface:appLaunchSettingsEditor.memoryText1": .init("部分内存设置被附加 JVM 参数覆盖，请检查附加 JVM 参数。", []),
             "Interface:appLaunchSettingsEditor.errorText1": .init("高级内存选项", []),
             "Interface:appLaunchSettingsEditor.errorText2": .init("指定初始内存", []),
             "Interface:appLaunchSettingsEditor.errorText3": .init("初始内存", []),

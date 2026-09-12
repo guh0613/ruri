@@ -22,27 +22,13 @@ struct PreferencesView: View {
     var body: some View {
         @Bindable var model = model
         VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 20) {
-                Picker(Messages.AppSettingsLayout.settingsCategory.localized, selection: $model.preferencesPane) {
-                    ForEach(PreferencesPane.allCases) { pane in Text(pane.title).tag(pane) }
-                }.pickerStyle(.segmented).labelsHidden().controlSize(.large).frame(maxWidth: .infinity)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(model.preferencesPane.title).font(.title2.weight(.semibold))
-                    if model.preferencesPane == .game {
-                        Text(Messages.AppPreferencesView.inheritedLaunchSettingsDetails.localized)
-                            .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                if model.preferencesPane == .game {
-                    Picker(Messages.AppPreferencesView.globalGameSettings.localized, selection: $model.defaultLaunchSettingsPane) {
-                        ForEach([InstanceSettingsPane.runtime, .launch, .advanced]) { pane in Text(pane.title).tag(pane) }
-                    }.pickerStyle(.segmented).labelsHidden()
-                }
-            }.frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 8)
+            Picker(Messages.AppSettingsLayout.settingsCategory.localized, selection: $model.preferencesPane) {
+                ForEach(PreferencesPane.allCases) { pane in Text(pane.title).tag(pane) }
+            }.pickerStyle(.segmented).labelsHidden().controlSize(.large)
+                .frame(maxWidth: .infinity).padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 8)
             Group {
                 if model.preferencesPane == .game, let draft = model.defaultLaunchSettingsDraft {
-                    DefaultLaunchSettingsView(draft: draft, pane: model.defaultLaunchSettingsPane)
+                    DefaultLaunchSettingsView(draft: draft)
                 } else if model.preferencesPane == .general {
                     Form { general }.formStyle(.grouped).scrollContentBackground(.hidden)
                 } else if model.preferencesPane == .network {
@@ -188,7 +174,6 @@ struct PreferencesView: View {
         let values = draft.values
         if let failure = SettingsValidation.issue(in: values) {
             model.preferencesPane = .game
-            model.defaultLaunchSettingsPane = .containing(failure.key)
             draft.issue = failure.message
             return
         }
