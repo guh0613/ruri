@@ -40,7 +40,6 @@ struct RootView: View {
                     }
                 }
         }
-        .tint(Theme.accent)
         .frame(minWidth: 760, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
         .sheet(isPresented: $model.showCreate) { CreateInstanceView() }

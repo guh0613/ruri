@@ -2,7 +2,9 @@ import SwiftUI
 import RuriCore
 
 enum Theme {
-    static let accent = Color(red: 0.23, green: 0.47, blue: 0.39)
+    /// The system accent, so custom views stay in step with sidebar icons,
+    /// links and controls, and a user-chosen accent applies everywhere.
+    static let accent = Color.accentColor
 }
 
 struct Surface<Content: View>: View {
@@ -62,9 +64,9 @@ struct InstanceIcon: View {
                 Image(nsImage: image).resizable().scaledToFill()
             } else {
                 Image(systemName: loader.symbol).font(.system(size: size * 0.44, weight: .medium))
-                    .foregroundStyle(loader == .vanilla ? Theme.accent : Color.orange.opacity(0.8))
+                    .foregroundStyle(Theme.accent)
                     .frame(width: size, height: size)
-                    .background((loader == .vanilla ? Theme.accent : Color.orange).opacity(0.10))
+                    .background(Theme.accent.opacity(0.10))
             }
         }.frame(width: size, height: size).clipShape(RoundedRectangle(cornerRadius: size * 0.26))
             .accessibilityHidden(true)
@@ -81,6 +83,71 @@ struct InstanceIcon: View {
         guard (try? InstanceIconImage.validate(data)) != nil, let image = NSImage(data: data) else { return nil }
         images.setObject(image, forKey: data as NSData, cost: 128 * 128 * 4)
         return image
+    }
+}
+
+/// One fact about an instance, laid out in a row of equals under a hero card.
+struct StatTile: View {
+    let label: String
+    let value: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label).font(.caption).foregroundStyle(.secondary)
+            Text(value).font(.callout.weight(.medium)).lineLimit(1)
+        }.frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// A large tappable shortcut: icon, title and one line of detail. Used for
+/// the quick actions on the home page.
+struct ActionTile: View {
+    let symbol: String
+    let title: String
+    let detail: String
+    let action: () -> Void
+    @State private var hovering = false
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 12) {
+                Image(systemName: symbol).font(.system(size: 17, weight: .medium)).foregroundStyle(Theme.accent)
+                    .frame(width: 38, height: 38).background(Theme.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: 11))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title).font(.headline)
+                    Text(detail).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(14).frame(maxWidth: .infinity, alignment: .leading).contentShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+        .background(hovering ? AnyShapeStyle(.primary.opacity(0.035)) : AnyShapeStyle(.background), in: RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(.primary.opacity(0.065), lineWidth: 1))
+        .onHover { hovering = $0 }
+    }
+}
+
+/// A dashed placeholder that closes a grid with its creation action, like
+/// the "new" tile in a template chooser.
+struct DashedTile: View {
+    let symbol: String
+    let title: String
+    let detail: String
+    let action: () -> Void
+    @State private var hovering = false
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: symbol).font(.system(size: 24, weight: .medium))
+                Text(title).font(.headline)
+                Text(detail).font(.caption).foregroundStyle(.tertiary)
+            }
+            .foregroundStyle(hovering ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(.secondary))
+            .frame(maxWidth: .infinity, maxHeight: .infinity).contentShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+        .background(hovering ? Theme.accent.opacity(0.05) : Color.clear, in: RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6, 5])).foregroundStyle(.primary.opacity(0.18)))
+        .onHover { hovering = $0 }
     }
 }
 

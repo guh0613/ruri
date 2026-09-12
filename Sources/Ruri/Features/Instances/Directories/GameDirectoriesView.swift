@@ -18,9 +18,10 @@ struct DirectoryMenu: View {
             Button("添加文件夹…", systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
             Button("管理文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
         } label: {
-            Label(model.selectedDirectoryName, systemImage: "folder").labelStyle(.titleAndIcon).lineLimit(1)
-        }.disabled(model.busy)
-        .help("选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。")
+            Label("实例文件夹", systemImage: "folder")
+        }
+        .disabled(model.busy)
+        .help("当前：\(model.selectedDirectoryName)。选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。")
     }
 }
 

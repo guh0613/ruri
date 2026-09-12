@@ -36,8 +36,8 @@ struct DiscoverView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 ViewThatFits(in: .horizontal) {
-                    HStack(spacing: 18) { searchField.frame(minWidth: 210); contentPicker.frame(width: 310) }
-                    VStack(alignment: .leading, spacing: 12) { searchField; contentPicker }
+                    HStack(spacing: 18) { contentPicker.fixedSize(); Spacer(); sourcePicker.fixedSize() }
+                    VStack(alignment: .leading, spacing: 12) { contentPicker; sourcePicker }
                 }
                 if missingKey {
                     Surface {
@@ -67,10 +67,10 @@ struct DiscoverView: View {
                 }
             }.padding(28)
         }
+        .searchable(text: $search, placement: .toolbar, prompt: "搜索模组、整合包、光影…")
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                Picker("内容来源", selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).help("内容来源")
-                Button { model.chooseInstanceImport() } label: { Label("导入整合包…", systemImage: "square.and.arrow.down").labelStyle(.titleAndIcon) }.disabled(model.busy)
+            ToolbarItem(placement: .primaryAction) {
+                Button { model.chooseInstanceImport() } label: { Label("导入整合包", systemImage: "square.and.arrow.down") }.help("导入本地整合包…").disabled(model.busy)
             }
         }
         .onChange(of: queryID) { offset = 0 }
@@ -105,7 +105,9 @@ struct DiscoverView: View {
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
     }
-    private var searchField: some View { TextField("搜索模组、整合包、光影…", text: $search).textFieldStyle(.roundedBorder) }
+    private var sourcePicker: some View {
+        Picker("内容来源", selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).labelsHidden().help("内容来源")
+    }
     private var contentPicker: some View {
         Picker("内容类型", selection: $type) { Text("整合包").tag("modpack"); Text("模组").tag("mod"); Text("资源包").tag("resourcepack"); Text("光影").tag("shader") }.pickerStyle(.segmented)
     }
