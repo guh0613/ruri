@@ -34,12 +34,7 @@ struct DiscoverView: View {
     private var missingKey: Bool { source == .curseforge && !model.curseForgeConfigured }
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack {
-                    SectionHeading(title: "让世界，多一点不同", subtitle: "从 \(source.rawValue) 发现社区创作的内容。")
-                    Spacer(); Button("导入整合包…", systemImage: "square.and.arrow.down") { model.chooseInstanceImport() }.disabled(model.busy)
-                }
-                Picker("内容来源", selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).frame(maxWidth: 310)
+            VStack(alignment: .leading, spacing: 20) {
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 18) { searchField.frame(minWidth: 210); contentPicker.frame(width: 310) }
                     VStack(alignment: .leading, spacing: 12) { searchField; contentPicker }
@@ -70,7 +65,13 @@ struct DiscoverView: View {
                         }
                     }
                 }
-            }.padding(30)
+            }.padding(28)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Picker("内容来源", selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).help("内容来源")
+                Button { model.chooseInstanceImport() } label: { Label("导入整合包…", systemImage: "square.and.arrow.down").labelStyle(.titleAndIcon) }.disabled(model.busy)
+            }
         }
         .onChange(of: queryID) { offset = 0 }
         .task(id: "\(queryID):\(offset):\(retry):\(model.curseForgeConfigured)") {

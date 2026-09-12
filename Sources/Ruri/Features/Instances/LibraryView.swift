@@ -9,22 +9,7 @@ struct LibraryView: View {
     var filtered: [GameInstance] { model.directoryInstances.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) || $0.gameVersion.contains(search) }.sorted { $0.favorite != $1.favorite ? $0.favorite : $0.createdAt > $1.createdAt } }
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack {
-                    SectionHeading(title: model.selectedDirectoryName, subtitle: "\(model.directoryInstances.count) 个实例 · 在实例设置中查看运行目录。")
-                    Spacer()
-                    Menu {
-                        Button("导入实例或整合包…") { model.chooseInstanceImport() }
-                        Button("添加游戏文件夹…") { model.chooseMinecraftDirectory() }
-                    } label: { Label("导入", systemImage: "square.and.arrow.down") }.disabled(model.busy)
-                    Button("新建实例", systemImage: "plus") { model.showCreate = true }.buttonStyle(.borderedProminent).disabled(model.busy)
-                }
-                HStack {
-                    TextField("搜索实例或版本", text: $search).textFieldStyle(.roundedBorder).frame(maxWidth: 330)
-                    if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
-                        Button("刷新版本", systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }.disabled(model.busy)
-                    }
-                }
+            VStack(alignment: .leading, spacing: 20) {
                 if let issue = model.directoryErrors[model.selectedDirectoryID] {
                     VStack(alignment: .leading, spacing: 8) {
                         Label("实例文件夹无法访问", systemImage: "externaldrive.badge.exclamationmark").font(.headline)
@@ -36,7 +21,7 @@ struct LibraryView: View {
                     RepositoryImportRecoveryView(directoryID: model.selectedDirectoryID)
                 }
                 if filtered.isEmpty {
-                    EmptyPanel(symbol: "square.stack.3d.up", title: model.directoryInstances.isEmpty ? "这个文件夹还没有实例" : "没有匹配的实例", detail: "创建一个游戏实例，或导入你喜爱的整合包。")
+                    EmptyPanel(symbol: model.directoryInstances.isEmpty ? "square.grid.2x2" : "magnifyingglass", title: model.directoryInstances.isEmpty ? "这个文件夹还没有实例" : "没有匹配的实例", detail: model.directoryInstances.isEmpty ? "新建一个实例，或导入整合包。" : "换个名称或版本号试试。")
                 }
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 245), spacing: 18)], spacing: 18) {
                     ForEach(filtered) { instance in
@@ -49,7 +34,7 @@ struct LibraryView: View {
                                     Spacer()
                                     if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption) }
                                     Menu {
-                                        Button("设为首页实例") { model.select(instance) }
+                                        Button("在主页中显示") { model.select(instance) }
                                         Button(instance.favorite ? "取消收藏" : "收藏") { var value = instance; value.favorite.toggle(); model.update(value) }
                                         Button("实例设置", systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                                         Button("在 Finder 中显示", systemImage: "folder") { model.reveal(instance) }
@@ -88,7 +73,18 @@ struct LibraryView: View {
                         }
                     }
                 }
-            }.padding(30)
+            }.padding(28)
+        }
+        .searchable(text: $search, placement: .toolbar, prompt: "搜索实例或版本")
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                DirectoryMenu()
+                Menu {
+                    Button("导入实例或整合包…") { model.chooseInstanceImport() }
+                    Button("添加游戏文件夹…") { model.chooseMinecraftDirectory() }
+                } label: { Label("导入", systemImage: "square.and.arrow.down").labelStyle(.titleAndIcon) }.disabled(model.busy)
+                Button { model.showCreate = true } label: { Label("新建实例", systemImage: "plus").labelStyle(.titleAndIcon) }.help("新建实例 ⌘N").disabled(model.busy)
+            }
         }
         .confirmationDialog("将实例移到废纸篓？", isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
             Button("移到废纸篓", role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }

@@ -2,26 +2,26 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-struct DirectorySidebarPicker: View {
+/// Toolbar menu that switches the instance folder shown in the library.
+struct DirectoryMenu: View {
     @Environment(AppModel.self) private var model
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("实例文件夹").font(.caption).foregroundStyle(.secondary)
-            Menu {
-                Button("默认实例文件夹") { select(GameDirectory.defaultID) }
-                ForEach(model.state.gameDirectories ?? []) { directory in
-                    Button(directory.name) { select(directory.id) }
-                }
-                Divider()
-                Button("添加文件夹…", systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-                Button("管理文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
-            } label: {
-                Label(model.selectedDirectoryName, systemImage: "folder").lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
-            }.disabled(model.busy)
-            .help("选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。")
-        }
+        Menu {
+            Picker("实例文件夹", selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
+                Text("默认实例文件夹").tag(GameDirectory.defaultID)
+                ForEach(model.state.gameDirectories ?? []) { directory in Text(directory.name).tag(directory.id) }
+            }.pickerStyle(.inline)
+            Divider()
+            if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
+                Button("刷新版本列表", systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
+            }
+            Button("添加文件夹…", systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+            Button("管理文件夹…", systemImage: "folder.badge.gearshape") { model.showDirectories = true }
+        } label: {
+            Label(model.selectedDirectoryName, systemImage: "folder").labelStyle(.titleAndIcon).lineLimit(1)
+        }.disabled(model.busy)
+        .help("选择要浏览和安装到的文件夹；运行中的游戏会继续受监控。")
     }
-    private func select(_ id: UUID) { model.selectDirectory(id) }
 }
 
 struct GameDirectoriesView: View {

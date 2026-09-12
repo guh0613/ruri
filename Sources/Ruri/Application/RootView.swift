@@ -7,46 +7,17 @@ struct RootView: View {
     var body: some View {
         @Bindable var model = model
         NavigationSplitView {
-            VStack(spacing: 0) {
-                HStack(spacing: 11) {
-                    Image(systemName: "cube.transparent.fill").font(.system(size: 29, weight: .medium)).foregroundStyle(Theme.accent)
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text("Ruri").font(.system(size: 24, weight: .bold, design: .rounded))
-                        Text("MINECRAFT LAUNCHER").font(.system(size: 8, weight: .semibold)).tracking(1.4).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                }.padding(.horizontal, 23).padding(.top, 23).padding(.bottom, 28)
-                DirectorySidebarPicker().padding(.horizontal, 16).padding(.bottom, 10)
-                List(selection: $model.page) {
-                    Section("游戏") { ForEach([Page.home, .library, .discover, .downloads]) { page in sidebarRow(page) } }
-                    Section("管理") { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
-                }.listStyle(.sidebar).scrollContentBackground(.hidden)
-                Spacer(minLength: 0)
-                if let task = model.activeActivity {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(task.title).font(.caption.weight(.medium)).lineLimit(1)
-                        ProgressView(value: task.progress.fraction).tint(Theme.accent)
-                        Text(task.progress.stage).font(.caption2).foregroundStyle(.secondary).lineLimit(1)
-                    }.padding(18).onTapGesture { model.page = .downloads }
-                }
-                Divider().padding(.horizontal, 16)
-                Button { model.page = .accounts } label: {
-                    HStack(spacing: 10) {
-                        Image(systemName: "person.crop.square.fill").font(.system(size: 26)).foregroundStyle(Theme.accent)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(model.activeAccount?.username ?? "添加玩家账号").font(.system(size: 12, weight: .semibold))
-                            Text(model.activeAccount?.kindLabel ?? "准备好你的下一场冒险").font(.system(size: 10)).foregroundStyle(.secondary)
-                        }
-                        Spacer(); Image(systemName: "chevron.up.chevron.down").font(.caption2).foregroundStyle(.tertiary)
-                    }.padding(18)
-                }.buttonStyle(.plain)
-            }.navigationSplitViewColumnWidth(min: 200, ideal: 218, max: 250)
+            List(selection: $model.page) {
+                Section { ForEach([Page.home, .library, .discover, .downloads]) { page in sidebarRow(page) } }
+                Section("管理") { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
+            }
+            .listStyle(.sidebar)
+            .controlSize(.large)
+            .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
+            .navigationSplitViewColumnWidth(min: 210, ideal: 236, max: 320)
         } detail: {
             VStack(spacing: 0) {
-                if let notice = model.notice {
-                    HStack { Image(systemName: "info.circle"); Text(notice).font(.callout); Spacer(); if let id = model.noticeSessionID { Button("查看记录") { model.showSession(id) } }; if let url = model.noticeFileURL { Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([url]) } }; Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
-                        .padding(12).background(Theme.accent.opacity(0.08))
-                }
+                if let notice = model.notice { NoticeBar(notice: notice) }
                 Group {
                     switch model.page {
                     case .home: HomeView()
@@ -58,12 +29,14 @@ struct RootView: View {
                     case .settings: PreferencesView()
                     }
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.background(Color(nsColor: .windowBackgroundColor))
+            }
                 .navigationTitle(model.page.title)
                 .toolbar {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        if model.runningID != nil { Button { model.showSession(model.runningID.flatMap { model.activeSessions[$0]?.id }) } label: { Label("运行日志", systemImage: "terminal") } }
-                        Button { model.showCreate = true } label: { Label("新建实例", systemImage: "plus") }.help("新建实例 ⌘N").disabled(model.busy)
+                    if let runningID = model.runningID {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label("运行记录", systemImage: "terminal") }
+                                .help("查看正在运行的游戏的记录 ⌘L")
+                        }
                     }
                 }
         }
@@ -86,6 +59,68 @@ struct RootView: View {
         .task { await model.boot() }
     }
     private func sidebarRow(_ page: Page) -> some View {
-        Label(page.title, systemImage: page.symbol).font(.system(size: 13)).padding(.vertical, 5).tag(page)
+        HStack {
+            Label(page.title, systemImage: page.symbol)
+            Spacer()
+            if page == .downloads, let task = model.activeActivity {
+                if task.progress.total > 0 { ProgressView(value: task.progress.fraction).progressViewStyle(.circular).controlSize(.mini) }
+                else { ProgressView().controlSize(.mini) }
+            }
+        }.padding(.vertical, 3).tag(page)
+    }
+}
+
+/// The signed-in player, shown at the bottom of the sidebar like the account
+/// entry in the App Store. The menu switches accounts without leaving the page.
+private struct AccountSidebarFooter: View {
+    @Environment(AppModel.self) private var model
+    var body: some View {
+        VStack(spacing: 0) {
+            Divider()
+            Menu {
+                ForEach(model.state.accounts) { account in
+                    Button { model.state.activeAccountID = account.id; model.save() } label: {
+                        if account.id == model.state.activeAccountID { Label(account.username, systemImage: "checkmark") } else { Text(account.username) }
+                    }
+                }
+                if !model.state.accounts.isEmpty { Divider() }
+                Button("添加账号…") { model.showAccount = true }
+                Button("管理账号…") { model.page = .accounts }
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: model.activeAccount == nil ? "person.crop.circle.badge.plus" : "person.crop.circle.fill")
+                        .font(.system(size: 30)).symbolRenderingMode(.hierarchical).foregroundStyle(model.activeAccount == nil ? AnyShapeStyle(.secondary) : AnyShapeStyle(Theme.accent))
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(model.activeAccount?.username ?? "未登录").font(.system(size: 13, weight: .semibold))
+                        Text(model.activeAccount?.kindLabel ?? "添加账号后即可启动游戏").font(.system(size: 11)).foregroundStyle(.secondary)
+                    }.lineLimit(1)
+                    Spacer(minLength: 4)
+                    Image(systemName: "chevron.up.chevron.down").font(.system(size: 10, weight: .semibold)).foregroundStyle(.tertiary)
+                }.padding(.horizontal, 12).padding(.vertical, 10).contentShape(Rectangle())
+            }
+            .menuStyle(.button).buttonStyle(.plain).menuIndicator(.hidden)
+            .disabled(model.readOnly)
+            .padding(.horizontal, 8).padding(.vertical, 8)
+            .help(model.activeAccount == nil ? "添加账号" : "切换账号")
+        }
+    }
+}
+
+private struct NoticeBar: View {
+    @Environment(AppModel.self) private var model
+    let notice: String
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "info.circle").foregroundStyle(Theme.accent)
+            Text(notice).font(.callout).lineLimit(2)
+            Spacer()
+            if let id = model.noticeSessionID { Button("查看记录") { model.showSession(id) } }
+            if let url = model.noticeFileURL { Button("在 Finder 中显示") { NSWorkspace.shared.activateFileViewerSelecting([url]) } }
+            Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain).foregroundStyle(.secondary)
+        }
+        .controlSize(.small)
+        .padding(.horizontal, 16).padding(.vertical, 9)
+        .background(.bar)
+        .overlay(alignment: .bottom) { Divider() }
     }
 }

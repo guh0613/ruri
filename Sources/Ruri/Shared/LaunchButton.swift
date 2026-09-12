@@ -5,9 +5,28 @@ import RuriCore
 struct LaunchButton: View {
     @Environment(AppModel.self) private var model
     let instance: GameInstance
+    var size: ControlSize = .regular
+    /// Icon-only form for compact rows: a plain accent-colored circle instead of a filled button.
+    var compact = false
+    private var session: GameSession? { model.activeSessions[instance.id] }
+    private var title: String {
+        if session != nil { return session?.gameIdentity?.isAlive == true ? "返回游戏" : "查看运行记录" }
+        return instance.installed ? "启动游戏" : "继续安装"
+    }
+    private var disabled: Bool { session == nil && (model.busy || model.isInstanceInUse(instance.id)) }
+    private func activate() { if session != nil { model.returnToGame(instance.id) } else { model.launch(instance) } }
     var body: some View {
-        Button { if model.activeSessions[instance.id] != nil { model.returnToGame(instance.id) } else { model.launch(instance) } } label: {
-            Label(model.activeSessions[instance.id] != nil ? (model.activeSessions[instance.id]?.gameIdentity?.isAlive == true ? "返回游戏" : "查看运行记录") : instance.installed ? "启动游戏" : "继续安装", systemImage: model.activeSessions[instance.id] != nil ? "arrow.up.forward.app" : "play.fill").padding(.horizontal, 15).padding(.vertical, 9)
-        }.buttonStyle(.borderedProminent).disabled(model.activeSessions[instance.id] == nil && (model.busy || model.isInstanceInUse(instance.id)))
+        if compact {
+            Button(action: activate) {
+                Image(systemName: session != nil ? "arrow.up.forward.circle.fill" : "play.circle.fill")
+                    .font(.system(size: 30)).symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(disabled ? AnyShapeStyle(.tertiary) : AnyShapeStyle(Theme.accent))
+                    .accessibilityLabel(title)
+            }.buttonStyle(.plain).help(title).disabled(disabled)
+        } else {
+            Button(action: activate) {
+                Label(title, systemImage: session != nil ? "arrow.up.forward.app" : "play.fill").padding(.horizontal, 6)
+            }.buttonStyle(.borderedProminent).controlSize(size).help(title).disabled(disabled)
+        }
     }
 }

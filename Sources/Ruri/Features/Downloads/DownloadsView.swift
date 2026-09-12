@@ -8,9 +8,8 @@ struct DownloadsView: View {
     @State private var transfers: [FileTransfer] = []
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                SectionHeading(title: "下载任务", subtitle: "文件自动校验，重试时继续下载可用的未完成文件。")
-                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: "一切就绪", detail: "安装游戏或下载内容时，可以在这里查看进度。") }
+            VStack(alignment: .leading, spacing: 16) {
+                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: "没有下载任务", detail: "安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。") }
                 ForEach(model.activities) { activity in
                     Surface {
                         VStack(alignment: .leading, spacing: 14) {
@@ -52,7 +51,7 @@ struct DownloadsView: View {
                         }
                     }
                 }
-            }.padding(30)
+            }.padding(28)
         }
         .task {
             while !Task.isCancelled {

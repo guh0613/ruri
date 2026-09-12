@@ -8,7 +8,6 @@ struct PreferencesView: View {
     var body: some View {
         @Bindable var model = model
         VStack(alignment: .leading, spacing: 0) {
-            SectionHeading(title: "按你的习惯", subtitle: "为下一次启动做好准备。 ").padding(30)
             Form {
                 Section("外观") {
                     Picker("主题", selection: $model.state.settings.appearance) { Text("跟随系统").tag("system"); Text("浅色").tag("light"); Text("深色").tag("dark") }

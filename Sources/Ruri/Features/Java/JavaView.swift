@@ -10,14 +10,8 @@ struct JavaView: View {
     @State private var removal: JavaRemovalRequest?
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack {
-                    SectionHeading(title: "为游戏选对 Java", subtitle: "自动识别版本与架构，让每个实例使用合适的运行时。")
-                    Spacer()
-                    Button("添加本机 Java…", systemImage: "plus") { model.chooseJava() }.disabled(model.busy)
-                    Button("重新检测", systemImage: "arrow.clockwise") { Task { await model.scanJava() } }.disabled(model.scanningJava || model.busy)
-                }
-                if model.scanningJava { ProgressView("正在检测本机 Java…") }
+            VStack(alignment: .leading, spacing: 16) {
+                if model.scanningJava { ProgressView("正在检测本机 Java…").controlSize(.small) }
                 if model.javaEntries.isEmpty && !model.scanningJava { EmptyPanel(symbol: "cup.and.saucer", title: "没有找到 Java", detail: "添加已经安装的 Java，或从下方下载游戏运行时。") }
                 ForEach(model.javaEntries) { entry in runtimeRow(entry) }
                 Surface {
@@ -40,8 +34,15 @@ struct JavaView: View {
                         HStack { Link("Azul Zulu 下载", destination: AppLinks.azulJavaDownloads); Link("Eclipse Temurin 下载", destination: AppLinks.temurinJavaDownloads) }.font(.callout)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }.padding(30)
-        }.sheet(item: $removal) { JavaRemovalView(request: $0) }
+            }.padding(28)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button { Task { await model.scanJava() } } label: { Label("重新检测", systemImage: "arrow.clockwise") }.help("重新检测本机 Java").disabled(model.scanningJava || model.busy)
+                Button { model.chooseJava() } label: { Label("添加本机 Java…", systemImage: "plus").labelStyle(.titleAndIcon) }.disabled(model.busy)
+            }
+        }
+        .sheet(item: $removal) { JavaRemovalView(request: $0) }
         .task {
             loadingRemote = true
             do { available = try await JavaInstaller(paths: model.paths).available() } catch { javaError = error.localizedDescription }

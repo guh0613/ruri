@@ -8,9 +8,8 @@ struct AccountsView: View {
     @State private var appearanceAccount: Account?
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack { SectionHeading(title: "以你的身份出发", subtitle: "在多个玩家身份之间轻松切换。"); Spacer(); Button("添加账号", systemImage: "plus") { model.showAccount = true }.buttonStyle(.borderedProminent) }
-                if model.state.accounts.isEmpty { EmptyPanel(symbol: "person.crop.circle.badge.plus", title: "欢迎，冒险家", detail: "添加 Microsoft 账号，或使用离线身份游玩本地世界。") }
+            VStack(alignment: .leading, spacing: 16) {
+                if model.state.accounts.isEmpty { EmptyPanel(symbol: "person.crop.circle.badge.plus", title: "还没有账号", detail: "添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。") }
                 ForEach(model.state.accounts) { account in
                     Surface {
                         HStack(spacing: 16) {
@@ -39,8 +38,10 @@ struct AccountsView: View {
                 Surface {
                     Label("登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。", systemImage: "lock.shield").font(.callout).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }.padding(30)
-        }.sheet(item: $relogin) { ExternalAccountReloginView(account: $0) }
+            }.padding(28)
+        }
+        .toolbar { ToolbarItem(placement: .primaryAction) { Button { model.showAccount = true } label: { Label("添加账号", systemImage: "plus").labelStyle(.titleAndIcon) }.disabled(model.busy || model.readOnly) } }
+        .sheet(item: $relogin) { ExternalAccountReloginView(account: $0) }
             .sheet(item: $appearanceAccount) { AccountAppearanceView(account: $0) }
     }
     private func run(_ operation: @escaping @MainActor @Sendable () async throws -> Void) {
