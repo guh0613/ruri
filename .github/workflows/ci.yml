@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-26
+            arch: arm64
+          - runner: macos-26-intel
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+      RURI_BUILD_DIR: .build/ci
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.0.1
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          xcrun swift --version
+      - name: Build all products
+        run: scripts/swift-build.sh --force-resolved-versions
+      - name: Test
+        run: scripts/swift-build.sh test --force-resolved-versions

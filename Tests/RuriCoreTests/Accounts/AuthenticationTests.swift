@@ -3,6 +3,18 @@ import Testing
 @testable import RuriCore
 
 struct AuthenticationTests {
+    @Test func distributionDefaultsPreserveAccountConfigurationOverrides() throws {
+        let bundledID = UUID().uuidString, customID = UUID().uuidString
+        let configuration = BuildConfiguration(info: ["RuriMicrosoftClientID": bundledID, "RuriVersion": "0.2.0-beta.1", "CFBundleShortVersionString": "0.2.0"])
+        let oldSettings = try JSONDecoder().decode(AppSettings.self, from: Data(#"{"concurrentDownloads":8,"microsoftClientID":"","showSnapshots":false,"defaultMemoryMB":4096,"appearance":"system"}"#.utf8))
+        #expect(configuration.microsoftClientID(override: oldSettings.microsoftClientID) == bundledID)
+        #expect(configuration.microsoftClientID(override: " \n") == bundledID)
+        #expect(configuration.microsoftClientID(override: " \(customID)\n") == customID)
+        #expect(configuration.version == "0.2.0-beta.1")
+        #expect(BuildConfiguration(info: [:]).microsoftClientID(override: "") == "")
+        #expect(BuildConfiguration(info: [:]).microsoftClientID(override: customID) == customID)
+    }
+
     @Test func configuredSessionExercisesOfficialAuthenticationExchange() async throws {
         let stub = EndpointHTTPFixture([
             "login.microsoftonline.com/consumers/oauth2/v2.0/devicecode": Data(#"{"device_code":"device","user_code":"USER","verification_uri":"https://www.microsoft.com/link","expires_in":900}"#.utf8),

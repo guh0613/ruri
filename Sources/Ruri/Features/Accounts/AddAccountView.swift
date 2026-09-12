@@ -19,7 +19,7 @@ struct AddAccountView: View {
             } else if mode == "offline" {
                 TextField("玩家名", text: $username).textFieldStyle(.roundedBorder)
                 Text("使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。").font(.callout).foregroundStyle(.secondary)
-            } else if model.state.settings.microsoftClientID.isEmpty {
+            } else if model.state.settings.effectiveMicrosoftClientID.isEmpty {
                 Label("先配置 Microsoft 应用", systemImage: "key.horizontal").font(.headline)
                 Text("Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。").font(.callout).foregroundStyle(.secondary)
                 Button("前往设置") { model.page = .settings; dismiss() }
@@ -38,7 +38,7 @@ struct AddAccountView: View {
                 if mode == "offline" {
                     Button("添加账号") { do { try model.addOffline(username); dismiss() } catch { self.error = error.localizedDescription } }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(username.isEmpty)
                 } else if mode == "microsoft", code == nil {
-                    Button("继续登录") { login() }.buttonStyle(.borderedProminent).disabled(task != nil || model.state.settings.microsoftClientID.isEmpty)
+                    Button("继续登录") { login() }.buttonStyle(.borderedProminent).disabled(task != nil || model.state.settings.effectiveMicrosoftClientID.isEmpty)
                 }
             }
         }.padding(30).frame(width: 500).onDisappear { task?.cancel() }
@@ -47,7 +47,7 @@ struct AddAccountView: View {
         error = nil
         task = Task {
             do {
-                let auth = MicrosoftAuth(clientID: model.state.settings.microsoftClientID)
+                let auth = MicrosoftAuth(clientID: model.state.settings.effectiveMicrosoftClientID)
                 let code = try await auth.begin(); self.code = code
                 NSWorkspace.shared.open(code.verification_uri)
                 let (account, credentials) = try await auth.finish(code)

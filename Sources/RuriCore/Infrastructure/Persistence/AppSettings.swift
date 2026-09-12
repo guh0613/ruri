@@ -3,6 +3,9 @@ import Foundation
 public struct AppSettings: Codable, Equatable, Sendable {
     public var concurrentDownloads = 8
     public var microsoftClientID = ""
+    public var effectiveMicrosoftClientID: String {
+        BuildConfiguration().microsoftClientID(override: microsoftClientID)
+    }
     public var showSnapshots = false
     public var defaultMemoryMB = 4096 {
         didSet { if defaultMemorySettings != nil { defaultMemorySettings?.maximumMB = defaultMemoryMB; defaultMemorySettings?.mode = .manual } }

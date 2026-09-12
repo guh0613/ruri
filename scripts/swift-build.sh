@@ -1,11 +1,18 @@
 #!/bin/zsh
 # Build Ruri with the selected Xcode SDK and accurate Mach-O SDK metadata.
 # Usage: scripts/swift-build.sh -c debug --product Ruri
+# Tests: scripts/swift-build.sh test --filter AuthenticationTests
 # DEVELOPER_DIR selects Xcode; RURI_BUILD_DIR optionally selects the build folder.
 set -euo pipefail
 cd "${0:A:h:h}"
 if [[ -z "${DEVELOPER_DIR:-}" && -d /Applications/Xcode-beta.app/Contents/Developer ]]; then
   export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer
+fi
+
+swift_command=build
+if [[ "${1:-}" == test ]]; then
+  swift_command=test
+  shift
 fi
 
 # This entry point builds this package for macOS. Keep SDK selection consistent
@@ -39,4 +46,4 @@ build_args=(
 if [[ -n "${RURI_BUILD_DIR:-}" ]]; then
   build_args+=(--scratch-path "$RURI_BUILD_DIR")
 fi
-exec xcrun swift build "${build_args[@]}" "$@"
+exec xcrun swift "$swift_command" "${build_args[@]}" "$@"
