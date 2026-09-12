@@ -30,6 +30,8 @@ struct RootView: View {
                     }
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+                .background { Color(nsColor: .windowBackgroundColor).ignoresSafeArea(edges: .top) }
+                .overlay(alignment: .top) { Divider() }
                 .navigationTitle(model.page.title)
                 .toolbar {
                     if let runningID = model.runningID {
@@ -40,6 +42,7 @@ struct RootView: View {
                     }
                 }
         }
+        .background(TransparentWindowTitlebar().allowsHitTesting(false))
         .tint(Theme.accent)
         .frame(minWidth: 760, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
