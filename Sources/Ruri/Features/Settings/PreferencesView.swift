@@ -5,7 +5,6 @@ import RuriCore
 
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
-    @State private var curseForgeKey = ""
     @State private var showLaunchDefaults = false
     @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
     var body: some View {
@@ -140,7 +139,7 @@ struct PreferencesView: View {
                 Link(Messages.AppPreferencesView.microsoftRegistrationDocs.localized, destination: AppLinks.microsoftRegistration)
             }.fixedSize(horizontal: false, vertical: true)
         }
-        CurseForgeSettingsSection(key: $curseForgeKey)
+        CurseForgeSettingsSection()
     }
 
 }

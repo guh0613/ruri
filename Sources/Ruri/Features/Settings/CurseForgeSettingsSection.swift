@@ -1,46 +1,86 @@
 import RuriLocalization
 import SwiftUI
-import AppKit
 import RuriCore
 
 struct CurseForgeSettingsSection: View {
     @Environment(AppModel.self) private var model
-    @Binding var key: String
-    @State private var error: String?
+    @State private var configuringKey = false
     var body: some View {
         Section {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text("API Key")
-                    Spacer()
-                    Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.keychainSaved.localized : Messages.AppCurseForgeSettingsSection.notConfigured.localized)
-                        .font(.caption).foregroundStyle(.secondary)
-                    if model.curseForgeConfigured {
-                        Button(Messages.AppCurseForgeSettingsSection.removeApiKey.localized) {
-                            do { try CurseForgeKeyStore.remove(); key = ""; error = nil; model.curseForgeConfigured = false }
-                            catch { self.error = error.localizedDescription }
-                        }.buttonStyle(.borderless).font(.caption).disabled(model.readOnly)
-                    }
-                }
-                HStack(spacing: 12) {
-                    SecureField("API Key", text: $key, prompt: Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized))
-                        .labelsHidden().textFieldStyle(.roundedBorder).multilineTextAlignment(.leading)
-                        .accessibilityLabel("API Key")
-                    Button(Messages.AppCurseForgeSettingsSection.saveToKeychain.localized) {
-                        do { try CurseForgeKeyStore.save(key); key = ""; error = nil; model.curseForgeConfigured = true }
-                        catch { self.error = error.localizedDescription }
-                    }.fixedSize().disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                }.disabled(model.readOnly)
-                if let error { Text(error).foregroundStyle(.red).font(.caption).fixedSize(horizontal: false, vertical: true) }
-            }.padding(.vertical, 3)
+            HStack(spacing: 12) {
+                Text("API Key")
+                Spacer()
+                Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.configured.localized : Messages.AppCurseForgeSettingsSection.notConfigured.localized)
+                    .foregroundStyle(.secondary)
+                Button(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.changeApiKey.localized : Messages.AppCurseForgeSettingsSection.configureApiKey.localized) {
+                    configuringKey = true
+                }.fixedSize().disabled(model.readOnly)
+            }
         } header: {
             Text("CurseForge")
         } footer: {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(Messages.AppCurseForgeSettingsSection.apiKeyUsage.localized)
-                Link(Messages.AppCurseForgeSettingsSection.apiApplicationGuide.localized, destination: AppLinks.curseForgeAPI)
-            }.fixedSize(horizontal: false, vertical: true)
+            Text(Messages.AppCurseForgeSettingsSection.apiKeyUsage.localized).fixedSize(horizontal: false, vertical: true)
         }
+        .sheet(isPresented: $configuringKey) { CurseForgeAPIKeyView() }
+    }
+}
+
+struct CurseForgeAPIKeyView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @State private var key = ""
+    @State private var error: String?
+    @FocusState private var keyIsFocused: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text(Messages.AppCurseForgeSettingsSection.apiKeySettings.localized).font(.title2.weight(.semibold))
+            VStack(alignment: .leading, spacing: 8) {
+                SecureField("API Key", text: $key, prompt: Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized))
+                    .textFieldStyle(.roundedBorder).multilineTextAlignment(.leading)
+                    .focused($keyIsFocused).accessibilityLabel("API Key").disabled(model.readOnly)
+                Text(Messages.AppCurseForgeSettingsSection.apiKeyStorageHelp.localized)
+                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Link(Messages.AppCurseForgeSettingsSection.apiApplicationGuide.localized, destination: AppLinks.curseForgeAPI)
+                    .font(.callout)
+            }
+            if let error {
+                Label(error, systemImage: "exclamationmark.circle.fill").font(.callout).foregroundStyle(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            HStack(spacing: 12) {
+                if model.curseForgeConfigured {
+                    Button(Messages.AppCurseForgeSettingsSection.removeApiKey.localized, role: .destructive, action: remove)
+                        .disabled(model.readOnly)
+                }
+                Spacer()
+                Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppCurseForgeSettingsSection.saveToKeychain.localized, action: save)
+                    .buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
+                    .disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || model.readOnly)
+            }
+        }.padding(24).frame(width: 480)
+        .interactiveDismissDisabled(!key.isEmpty)
+        .onAppear { keyIsFocused = true }
         .onChange(of: key) { error = nil }
+    }
+
+    private func save() {
+        guard !model.readOnly else { return }
+        do {
+            try CurseForgeKeyStore.save(key)
+            model.curseForgeConfigured = true
+            key = ""
+            dismiss()
+        } catch { self.error = error.localizedDescription }
+    }
+    private func remove() {
+        guard !model.readOnly else { return }
+        do {
+            try CurseForgeKeyStore.remove()
+            model.curseForgeConfigured = false
+            key = ""
+            dismiss()
+        } catch { self.error = error.localizedDescription }
     }
 }

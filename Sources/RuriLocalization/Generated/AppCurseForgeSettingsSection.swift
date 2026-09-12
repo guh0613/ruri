@@ -27,11 +27,11 @@ extension Messages {
         public static var enterApiKey: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText4", table: "Interface", fallback: "输入 API Key")
         }
-        /// 保存到钥匙串
+        /// 保存
         ///
         /// Resource: `Interface.appCurseForgeSettingsSection.bodyText5`.
         public static var saveToKeychain: LocalizedMessage {
-            .init(key: "appCurseForgeSettingsSection.bodyText5", table: "Interface", fallback: "保存到钥匙串")
+            .init(key: "appCurseForgeSettingsSection.bodyText5", table: "Interface", fallback: "保存")
         }
         /// 移除 Key
         ///
@@ -39,27 +39,62 @@ extension Messages {
         public static var removeApiKey: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText6", table: "Interface", fallback: "移除 Key")
         }
-        /// 用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。
+        /// 用于 CurseForge 内容搜索、整合包下载与更新。
         ///
         /// Resource: `Interface.appCurseForgeSettingsSection.errorText1`.
         public static var apiKeyUsage: LocalizedMessage {
-            .init(key: "appCurseForgeSettingsSection.errorText1", table: "Interface", fallback: "用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。")
+            .init(key: "appCurseForgeSettingsSection.errorText1", table: "Interface", fallback: "用于 CurseForge 内容搜索、整合包下载与更新。")
         }
-        /// CurseForge 第三方 API 申请说明
+        /// 了解如何申请 API Key
         ///
         /// Resource: `Interface.appCurseForgeSettingsSection.errorText2`.
         public static var apiApplicationGuide: LocalizedMessage {
-            .init(key: "appCurseForgeSettingsSection.errorText2", table: "Interface", fallback: "CurseForge 第三方 API 申请说明")
+            .init(key: "appCurseForgeSettingsSection.errorText2", table: "Interface", fallback: "了解如何申请 API Key")
+        }
+        /// 已配置
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.configured`.
+        public static var configured: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.configured", table: "Interface", fallback: "已配置")
+        }
+        /// 设置…
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.configureApiKey`.
+        public static var configureApiKey: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.configureApiKey", table: "Interface", fallback: "设置…")
+        }
+        /// 更换…
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.changeApiKey`.
+        public static var changeApiKey: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.changeApiKey", table: "Interface", fallback: "更换…")
+        }
+        /// CurseForge API Key
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.apiKeySettings`.
+        public static var apiKeySettings: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.apiKeySettings", table: "Interface", fallback: "CurseForge API Key")
+        }
+        /// 密钥保存在 macOS 钥匙串中，不会随实例导出。
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.apiKeyStorageHelp`.
+        public static var apiKeyStorageHelp: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.apiKeyStorageHelp", table: "Interface", fallback: "密钥保存在 macOS 钥匙串中，不会随实例导出。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appCurseForgeSettingsSection.bodyText1": .init("已保存在钥匙串", []),
             "Interface:appCurseForgeSettingsSection.bodyText2": .init("尚未配置", []),
             "Interface:appCurseForgeSettingsSection.bodyText3": .init("输入新 Key 以替换", []),
             "Interface:appCurseForgeSettingsSection.bodyText4": .init("输入 API Key", []),
-            "Interface:appCurseForgeSettingsSection.bodyText5": .init("保存到钥匙串", []),
+            "Interface:appCurseForgeSettingsSection.bodyText5": .init("保存", []),
             "Interface:appCurseForgeSettingsSection.bodyText6": .init("移除 Key", []),
-            "Interface:appCurseForgeSettingsSection.errorText1": .init("用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。", []),
-            "Interface:appCurseForgeSettingsSection.errorText2": .init("CurseForge 第三方 API 申请说明", []),
+            "Interface:appCurseForgeSettingsSection.errorText1": .init("用于 CurseForge 内容搜索、整合包下载与更新。", []),
+            "Interface:appCurseForgeSettingsSection.errorText2": .init("了解如何申请 API Key", []),
+            "Interface:appCurseForgeSettingsSection.configured": .init("已配置", []),
+            "Interface:appCurseForgeSettingsSection.configureApiKey": .init("设置…", []),
+            "Interface:appCurseForgeSettingsSection.changeApiKey": .init("更换…", []),
+            "Interface:appCurseForgeSettingsSection.apiKeySettings": .init("CurseForge API Key", []),
+            "Interface:appCurseForgeSettingsSection.apiKeyStorageHelp": .init("密钥保存在 macOS 钥匙串中，不会随实例导出。", []),
         ]
     }
 }
