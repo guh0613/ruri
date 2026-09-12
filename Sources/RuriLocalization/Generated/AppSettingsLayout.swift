@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum AppSettingsLayout {
-        public static var titleText1: LocalizedMessage {
+        /// 概览
+        ///
+        /// Resource: `Interface.appSettingsLayout.titleText1`.
+        public static var overview: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText1", table: "Interface", fallback: "概览")
         }
-        public static var titleText2: LocalizedMessage {
+        /// Java 与内存
+        ///
+        /// Resource: `Interface.appSettingsLayout.titleText2`.
+        public static var javaAndMemory: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText2", table: "Interface", fallback: "Java 与内存")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 窗口与启动
+        ///
+        /// Resource: `Interface.appSettingsLayout.titleText3`.
+        public static var windowAndLaunch: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText3", table: "Interface", fallback: "窗口与启动")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 参数与环境
+        ///
+        /// Resource: `Interface.appSettingsLayout.titleText4`.
+        public static var argumentsAndEnvironment: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText4", table: "Interface", fallback: "参数与环境")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 文件与目录
+        ///
+        /// Resource: `Interface.appSettingsLayout.titleText5`.
+        public static var filesAndDirectories: LocalizedMessage {
             .init(key: "appSettingsLayout.titleText5", table: "Interface", fallback: "文件与目录")
         }
-        public static var detailText1: LocalizedMessage {
+        /// 名称、外观与游戏组件。
+        ///
+        /// Resource: `Interface.appSettingsLayout.detailText1`.
+        public static var overviewDetails: LocalizedMessage {
             .init(key: "appSettingsLayout.detailText1", table: "Interface", fallback: "名称、外观与游戏组件。")
         }
-        public static var detailText2: LocalizedMessage {
+        /// 选择运行游戏的 Java，以及游戏可以使用的内存。
+        ///
+        /// Resource: `Interface.appSettingsLayout.detailText2`.
+        public static var javaAndMemoryDetails: LocalizedMessage {
             .init(key: "appSettingsLayout.detailText2", table: "Interface", fallback: "选择运行游戏的 Java，以及游戏可以使用的内存。")
         }
-        public static var detailText3: LocalizedMessage {
+        /// 调整游戏窗口和启动器在游戏运行时的行为。
+        ///
+        /// Resource: `Interface.appSettingsLayout.detailText3`.
+        public static var windowAndLaunchDetails: LocalizedMessage {
             .init(key: "appSettingsLayout.detailText3", table: "Interface", fallback: "调整游戏窗口和启动器在游戏运行时的行为。")
         }
-        public static var detailText4: LocalizedMessage {
+        /// 为模组或故障排查配置附加参数，通常无需修改。
+        ///
+        /// Resource: `Interface.appSettingsLayout.detailText4`.
+        public static var argumentsAndEnvironmentDetails: LocalizedMessage {
             .init(key: "appSettingsLayout.detailText4", table: "Interface", fallback: "为模组或故障排查配置附加参数，通常无需修改。")
         }
-        public static var detailText5: LocalizedMessage {
+        /// 查看游戏文件的位置，或复制、移动这个实例。
+        ///
+        /// Resource: `Interface.appSettingsLayout.detailText5`.
+        public static var filesAndDirectoriesDetails: LocalizedMessage {
             .init(key: "appSettingsLayout.detailText5", table: "Interface", fallback: "查看游戏文件的位置，或复制、移动这个实例。")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 设置分类
+        ///
+        /// Resource: `Interface.appSettingsLayout.bodyText1`.
+        public static var settingsCategory: LocalizedMessage {
             .init(key: "appSettingsLayout.bodyText1", table: "Interface", fallback: "设置分类")
         }
         static let definitions: [String: MessageDefinition] = [

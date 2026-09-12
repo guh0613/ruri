@@ -3,49 +3,94 @@ import Foundation
 
 extension Messages {
     public enum CLIJavaCommands {
-        public static var manageJavaText1: LocalizedMessage {
+        /// 不可用的 Java
+        ///
+        /// Resource: `CLI.cLIJavaCommands.manageJavaText1`.
+        public static var unavailableJava: LocalizedMessage {
             .init(key: "cLIJavaCommands.manageJavaText1", table: "CLI", fallback: "不可用的 Java")
         }
-        public static func idText1(_ value0: String) -> LocalizedMessage {
+        ///   ID: %1$@
+        ///
+        /// Resource: `CLI.cLIJavaCommands.idText1`.
+        public static func javaID(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIJavaCommands.idText1", table: "CLI", fallback: "  ID: %1$@", arguments: [.text(value0)])
         }
-        public static var issueText2: LocalizedMessage {
+        /// Java 已添加
+        ///
+        /// Resource: `CLI.cLIJavaCommands.issueText2`.
+        public static var javaAdded: LocalizedMessage {
             .init(key: "cLIJavaCommands.issueText2", table: "CLI", fallback: "Java 已添加")
         }
-        public static var issueText4: LocalizedMessage {
+        /// 已从手动列表移除，Java 文件和启动设置保留
+        ///
+        /// Resource: `CLI.cLIJavaCommands.issueText4`.
+        public static var javaForgotten: LocalizedMessage {
             .init(key: "cLIJavaCommands.issueText4", table: "CLI", fallback: "已从手动列表移除，Java 文件和启动设置保留")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 默认 Java 已更新
+        ///
+        /// Resource: `CLI.cLIJavaCommands.fileText1`.
+        public static var defaultJavaUpdated: LocalizedMessage {
             .init(key: "cLIJavaCommands.fileText1", table: "CLI", fallback: "默认 Java 已更新")
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// 已修复 %1$@
+        ///
+        /// Resource: `CLI.cLIJavaCommands.resultText1`.
+        public static func javaRepaired(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIJavaCommands.resultText1", table: "CLI", fallback: "已修复 %1$@", arguments: [.text(value0)])
         }
-        public static var referencesText1: LocalizedMessage {
+        /// 没有启动设置引用此 Java
+        ///
+        /// Resource: `CLI.cLIJavaCommands.referencesText1`.
+        public static var javaReferencesNone: LocalizedMessage {
             .init(key: "cLIJavaCommands.referencesText1", table: "CLI", fallback: "没有启动设置引用此 Java")
         }
-        public static var referencesText3: LocalizedMessage {
+        /// Java 文件已移到废纸篓
+        ///
+        /// Resource: `CLI.cLIJavaCommands.referencesText3`.
+        public static var javaTrashed: LocalizedMessage {
             .init(key: "cLIJavaCommands.referencesText3", table: "CLI", fallback: "Java 文件已移到废纸篓")
         }
+        /// 仍有以下设置引用：%1$@
+        ///
+        /// Resource: `CLI.cLIJavaCommands.javaReferences`.
         public static func javaReferences(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIJavaCommands.javaReferences", table: "CLI", fallback: "仍有以下设置引用：%1$@", arguments: [.text(value0)])
         }
-        public static var issueText1: LocalizedMessage {
+        /// 用法：add-java <Java 路径或 JDK 文件夹>
+        ///
+        /// Resource: `Errors.cLIJavaCommands.issueText1`.
+        public static var addJavaUsage: LocalizedMessage {
             .init(key: "cLIJavaCommands.issueText1", table: "Errors", fallback: "用法：add-java <Java 路径或 JDK 文件夹>")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 用法：forget-java <手动添加的 java 可执行文件路径>
+        ///
+        /// Resource: `Errors.cLIJavaCommands.issueText3`.
+        public static var forgetJavaUsage: LocalizedMessage {
             .init(key: "cLIJavaCommands.issueText3", table: "Errors", fallback: "用法：forget-java <手动添加的 java 可执行文件路径>")
         }
-        public static var issueText5: LocalizedMessage {
+        /// 用法：default-java <Java 路径或 automatic>
+        ///
+        /// Resource: `Errors.cLIJavaCommands.issueText5`.
+        public static var defaultJavaUsage: LocalizedMessage {
             .init(key: "cLIJavaCommands.issueText5", table: "Errors", fallback: "用法：default-java <Java 路径或 automatic>")
         }
-        public static var fileText2: LocalizedMessage {
+        /// 用法：repair-java <运行时 ID，使用 java 命令查看>
+        ///
+        /// Resource: `Errors.cLIJavaCommands.fileText2`.
+        public static var repairJavaUsage: LocalizedMessage {
             .init(key: "cLIJavaCommands.fileText2", table: "Errors", fallback: "用法：repair-java <运行时 ID，使用 java 命令查看>")
         }
-        public static var availableText1: LocalizedMessage {
+        /// 找不到此运行时的原始下载清单，请重新安装所需 Java 版本。
+        ///
+        /// Resource: `Errors.cLIJavaCommands.availableText1`.
+        public static var runtimeManifestUnavailable: LocalizedMessage {
             .init(key: "cLIJavaCommands.availableText1", table: "Errors", fallback: "找不到此运行时的原始下载清单，请重新安装所需 Java 版本。")
         }
-        public static var resultText2: LocalizedMessage {
+        /// 用法：remove-java <运行时 ID> [--apply] [--reset-references] [--partial]
+        ///
+        /// Resource: `Errors.cLIJavaCommands.resultText2`.
+        public static var removeJavaUsage: LocalizedMessage {
             .init(key: "cLIJavaCommands.resultText2", table: "Errors", fallback: "用法：remove-java <运行时 ID> [--apply] [--reset-references] [--partial]")
         }
         static let definitions: [String: MessageDefinition] = [

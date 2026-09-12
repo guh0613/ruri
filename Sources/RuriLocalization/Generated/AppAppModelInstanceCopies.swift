@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceCopies {
-        public static func copyInstanceText1(_ value0: String) -> LocalizedMessage {
+        /// 复制 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstanceCopies.copyInstanceText1`.
+        public static func copyInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.copyInstanceText1", table: "Interface", fallback: "复制 %1$@", arguments: [.text(value0)])
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// 已创建“%1$@”，游戏文件独立保存，原实例保留。
+        ///
+        /// Resource: `Interface.appAppModelInstanceCopies.resultText1`.
+        public static func copyCreated(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.resultText1", table: "Interface", fallback: "已创建“%1$@”，游戏文件独立保存，原实例保留。", arguments: [.text(value0)])
         }
-        public static func recoverInstanceCopyText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复 %1$@ 的实例复制
+        ///
+        /// Resource: `Interface.appAppModelInstanceCopies.recoverInstanceCopyText1`.
+        public static func recoverInstanceCopy(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.recoverInstanceCopyText1", table: "Interface", fallback: "恢复 %1$@ 的实例复制", arguments: [.text(value0)])
         }
-        public static var resultText2: LocalizedMessage {
+        /// 副本已完成，复制记录已清理。
+        ///
+        /// Resource: `Interface.appAppModelInstanceCopies.resultText2`.
+        public static var copyCompleted: LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.resultText2", table: "Interface", fallback: "副本已完成，复制记录已清理。")
         }
-        public static var resultText3: LocalizedMessage {
+        /// 未完成的副本已另行保留，原实例可继续使用。
+        ///
+        /// Resource: `Interface.appAppModelInstanceCopies.resultText3`.
+        public static var copyKept: LocalizedMessage {
             .init(key: "appAppModelInstanceCopies.resultText3", table: "Interface", fallback: "未完成的副本已另行保留，原实例可继续使用。")
         }
         static let definitions: [String: MessageDefinition] = [

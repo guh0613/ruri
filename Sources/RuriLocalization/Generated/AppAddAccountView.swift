@@ -3,58 +3,112 @@ import Foundation
 
 extension Messages {
     public enum AppAddAccountView {
-        public static var bodyText1: LocalizedMessage {
+        /// 添加玩家账号
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText1`.
+        public static var addAccount: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText1", table: "Interface", fallback: "添加玩家账号")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 登录一次，随时回到你的世界。
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText2`.
+        public static var accountSubtitle: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText2", table: "Interface", fallback: "登录一次，随时回到你的世界。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 账号类型
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText3`.
+        public static var accountType: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText3", table: "Interface", fallback: "账号类型")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 外置认证
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText4`.
+        public static var externalAuth: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText4", table: "Interface", fallback: "外置认证")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 离线账号
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText5`.
+        public static var offlineAccount: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText5", table: "Interface", fallback: "离线账号")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 玩家名
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText6`.
+        public static var playerName: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText6", table: "Interface", fallback: "玩家名")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText7`.
+        public static var playerNameHelp: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText7", table: "Interface", fallback: "使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 先配置 Microsoft 应用
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText8`.
+        public static var configureMicrosoft: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText8", table: "Interface", fallback: "先配置 Microsoft 应用")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText9`.
+        public static var microsoftHelp: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText9", table: "Interface", fallback: "Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 前往设置
+        ///
+        /// Resource: `Interface.appAddAccountView.bodyText10`.
+        public static var openSettings: LocalizedMessage {
             .init(key: "appAddAccountView.bodyText10", table: "Interface", fallback: "前往设置")
         }
-        public static var codeText1: LocalizedMessage {
+        /// 在浏览器中登录 Microsoft，并输入此代码：
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText1`.
+        public static var enterMicrosoftCode: LocalizedMessage {
             .init(key: "appAddAccountView.codeText1", table: "Interface", fallback: "在浏览器中登录 Microsoft，并输入此代码：")
         }
-        public static var codeText2: LocalizedMessage {
+        /// 复制代码
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText2`.
+        public static var copyCode: LocalizedMessage {
             .init(key: "appAddAccountView.codeText2", table: "Interface", fallback: "复制代码")
         }
-        public static var codeText3: LocalizedMessage {
+        /// 打开 Microsoft 登录页面
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText3`.
+        public static var openMicrosoftLogin: LocalizedMessage {
             .init(key: "appAddAccountView.codeText3", table: "Interface", fallback: "打开 Microsoft 登录页面")
         }
-        public static var codeText4: LocalizedMessage {
+        /// 等待浏览器中完成登录…
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText4`.
+        public static var waitingMicrosoftLogin: LocalizedMessage {
             .init(key: "appAddAccountView.codeText4", table: "Interface", fallback: "等待浏览器中完成登录…")
         }
-        public static var codeText5: LocalizedMessage {
+        /// 使用你拥有 Minecraft Java 版的 Microsoft 账号登录。
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText5`.
+        public static var minecraftOwnership: LocalizedMessage {
             .init(key: "appAddAccountView.codeText5", table: "Interface", fallback: "使用你拥有 Minecraft Java 版的 Microsoft 账号登录。")
         }
-        public static var codeText6: LocalizedMessage {
+        /// 正在请求登录代码…
+        ///
+        /// Resource: `Interface.appAddAccountView.codeText6`.
+        public static var requestLoginCode: LocalizedMessage {
             .init(key: "appAddAccountView.codeText6", table: "Interface", fallback: "正在请求登录代码…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 添加账号
+        ///
+        /// Resource: `Interface.appAddAccountView.errorText1`.
+        public static var addAccountAction: LocalizedMessage {
             .init(key: "appAddAccountView.errorText1", table: "Interface", fallback: "添加账号")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 继续登录
+        ///
+        /// Resource: `Interface.appAddAccountView.errorText2`.
+        public static var continueLogin: LocalizedMessage {
             .init(key: "appAddAccountView.errorText2", table: "Interface", fallback: "继续登录")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -7,7 +7,7 @@ public enum StateStore {
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
-        guard (1...currentSchemaVersion).contains(result.schemaVersion) else { throw RuriError.message(Messages.CoreStateStore.resultText1) }
+        guard (1...currentSchemaVersion).contains(result.schemaVersion) else { throw RuriError.message(Messages.CoreStateStore.newerDataVersion) }
         try validate(result, paths: paths)
         return result
     }
@@ -20,7 +20,7 @@ public enum StateStore {
         let result: PersistentState
         if current.revision == state.revision { result = state }
         else {
-            guard let baseline, baseline.revision == state.revision else { throw conflict(Messages.CoreStateStore.baselineText1.localized) }
+            guard let baseline, baseline.revision == state.revision else { throw conflict(Messages.CoreStateStore.dataUpdatedElsewhere.localized) }
             result = try merge(base: baseline, local: state, remote: current)
         }
         return try write(result, paths: paths)
@@ -36,8 +36,8 @@ public enum StateStore {
     }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
         try JavaRuntimeStore.validate(state.settings.javaLocations ?? [])
-        guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message(Messages.CoreStateStore.validateText1) }
-        guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message(Messages.CoreStateStore.validateText2) }
+        guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message(Messages.CoreStateStore.snapshotCannotOverwriteSettings) }
+        guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message(Messages.CoreStateStore.duplicateInstancesOrAccounts) }
         for instance in state.instances {
             try instance.importedInstallation?.validate()
             if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
@@ -47,7 +47,7 @@ public enum StateStore {
         let directories = (state.gameDirectories ?? []).map(\.id) + detached.map(\.id)
         let instances = state.instances.map(\.id) + detached.flatMap { $0.instances.map(\.id) }
         guard Set(directories).count == directories.count, Set(instances).count == instances.count else {
-            throw RuriError.message(Messages.CoreStateStore.instancesText1)
+            throw RuriError.message(Messages.CoreStateStore.duplicateDirectoryIdentities)
         }
         for folder in detached { try folder.validate(paths: paths) }
     }
@@ -68,20 +68,20 @@ public enum StateStore {
         try paths.prepare()
         let file = try LauncherPaths.safePath(".ruri-state.lock", within: paths.root)
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreStateStore.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreStateStore.settingsLockFailed) }
         var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
         guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw RuriError.message(Messages.CoreStateStore.infoText1)
+            close(fd); throw RuriError.message(Messages.CoreStateStore.saveInProgress)
         }
         return fd
     }
     private static func conflict(_ field: String) -> RuriError {
         let parts = field.split(separator: ".").map(String.init)
-        let labels = ["instances": Messages.CoreStateStore.labelsText1.localized, "accounts": Messages.CoreStateStore.labelsText2.localized, "gameDirectories": Messages.CoreStateStore.labelsText3.localized, "detachedMinecraftFolders": Messages.CoreStateStore.labelsText4.localized, "settings": Messages.CoreStateStore.labelsText5.localized,
-                      "name": Messages.CoreStateStore.labelsText6.localized, "favorite": Messages.CoreStateStore.labelsText7.localized, "memoryMB": Messages.CoreStateStore.labelsText8.localized, "defaultMemoryMB": Messages.CoreStateStore.labelsText9.localized, "javaPath": Messages.CoreStateStore.labelsText10.localized,
-                      "width": Messages.CoreStateStore.labelsText11.localized, "height": Messages.CoreStateStore.labelsText12.localized, "appearance": Messages.CoreStateStore.labelsText13.localized, "downloadSource": Messages.CoreStateStore.labelsText14.localized,
-                      "extraJVMArguments": Messages.CoreStateStore.labelsText15.localized, "extraGameArguments": Messages.CoreStateStore.labelsText16.localized, "directoryID": Messages.CoreStateStore.labelsText17.localized,
-                      "memory": Messages.CoreStateStore.labelsText18.localized, "defaultMemorySettings": Messages.CoreStateStore.labelsText19.localized]
+        let labels = ["instances": Messages.CoreStateStore.sameInstance.localized, "accounts": Messages.CoreStateStore.sameAccount.localized, "gameDirectories": Messages.CoreStateStore.sameInstanceDirectory.localized, "detachedMinecraftFolders": Messages.CoreStateStore.retainedFolderRecord.localized, "settings": Messages.CoreStateStore.launcherSettings.localized,
+                      "name": Messages.CoreStateStore.name.localized, "favorite": Messages.CoreStateStore.favoriteStatus.localized, "memoryMB": Messages.CoreStateStore.memory.localized, "defaultMemoryMB": Messages.CoreStateStore.defaultMemory.localized, "javaPath": Messages.CoreStateStore.javaSelection.localized,
+                      "width": Messages.CoreStateStore.windowWidth.localized, "height": Messages.CoreStateStore.windowHeight.localized, "appearance": Messages.CoreStateStore.appearance.localized, "downloadSource": Messages.CoreStateStore.downloadSource.localized,
+                      "extraJVMArguments": Messages.CoreStateStore.jvmArguments.localized, "extraGameArguments": Messages.CoreStateStore.gameArguments.localized, "directoryID": Messages.CoreStateStore.owningFolder.localized,
+                      "memory": Messages.CoreStateStore.memoryPolicy.localized, "defaultMemorySettings": Messages.CoreStateStore.defaultMemoryPolicy.localized]
         let description: String
         if let first = parts.first, let subject = labels[first] {
             if parts.count > 1, let field = parts.last.flatMap({ labels[$0] }) {
@@ -91,15 +91,15 @@ public enum StateStore {
             } else {
                 description = Messages.CoreStateStore.subjectConflict(subject).localized
             }
-        } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = Messages.CoreStateStore.subjectText3.localized }
+        } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = Messages.CoreStateStore.selectionChangedElsewhere.localized }
         else { description = field }
-        return .message(Messages.CoreStateStore.subjectText4(String(describing: description)).localized)
+        return .message(Messages.CoreStateStore.saveConflictPreservingOriginal(String(describing: description)).localized)
     }
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {
         func object(_ state: PersistentState) throws -> [String: Any] {
             var normalized = state; normalizeMemory(&normalized)
-            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict(Messages.CoreStateStore.resultText2.localized) }
+            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict(Messages.CoreStateStore.invalidDataFormat.localized) }
             result.removeValue(forKey: "revision"); result.removeValue(forKey: "schemaVersion")
             return result
         }

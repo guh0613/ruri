@@ -3,79 +3,154 @@ import Foundation
 
 extension Messages {
     public enum CoreNBT {
-        public static var compressText1: LocalizedMessage {
+        /// NBT 文件过大
+        ///
+        /// Resource: `Errors.coreNBT.compressText1`.
+        public static var nbtCompressionInputTooLarge: LocalizedMessage {
             .init(key: "coreNBT.compressText1", table: "Errors", fallback: "NBT 文件过大")
         }
-        public static var streamText1: LocalizedMessage {
+        /// 无法初始化 gzip 压缩
+        ///
+        /// Resource: `Errors.coreNBT.streamText1`.
+        public static var gzipCompressionInitializationFailed: LocalizedMessage {
             .init(key: "coreNBT.streamText1", table: "Errors", fallback: "无法初始化 gzip 压缩")
         }
-        public static var statusText1: LocalizedMessage {
+        /// 无法压缩 NBT
+        ///
+        /// Resource: `Errors.coreNBT.statusText1`.
+        public static var nbtCompressionFailed: LocalizedMessage {
             .init(key: "coreNBT.statusText1", table: "Errors", fallback: "无法压缩 NBT")
         }
-        public static var decompressText1: LocalizedMessage {
+        /// 压缩 NBT 文件过大
+        ///
+        /// Resource: `Errors.coreNBT.decompressText1`.
+        public static var compressedNbtInputTooLarge: LocalizedMessage {
             .init(key: "coreNBT.decompressText1", table: "Errors", fallback: "压缩 NBT 文件过大")
         }
-        public static var streamText2: LocalizedMessage {
+        /// 无法初始化 gzip 解压
+        ///
+        /// Resource: `Errors.coreNBT.streamText2`.
+        public static var gzipDecompressionInitializationFailed: LocalizedMessage {
             .init(key: "coreNBT.streamText2", table: "Errors", fallback: "无法初始化 gzip 解压")
         }
-        public static var writtenText1: LocalizedMessage {
+        /// NBT 解压大小超出限制
+        ///
+        /// Resource: `Errors.coreNBT.writtenText1`.
+        public static var nbtDecompressedSizeExceeded: LocalizedMessage {
             .init(key: "coreNBT.writtenText1", table: "Errors", fallback: "NBT 解压大小超出限制")
         }
-        public static var writtenText2: LocalizedMessage {
+        /// gzip 文件包含多余数据
+        ///
+        /// Resource: `Errors.coreNBT.writtenText2`.
+        public static var gzipTrailingDataFound: LocalizedMessage {
             .init(key: "coreNBT.writtenText2", table: "Errors", fallback: "gzip 文件包含多余数据")
         }
-        public static var writtenText3: LocalizedMessage {
+        /// gzip 文件损坏或校验失败
+        ///
+        /// Resource: `Errors.coreNBT.writtenText3`.
+        public static var gzipDataCorruptOrChecksumFailed: LocalizedMessage {
             .init(key: "coreNBT.writtenText3", table: "Errors", fallback: "gzip 文件损坏或校验失败")
         }
-        public static var readText1: LocalizedMessage {
+        /// NBT 根节点不是复合标签
+        ///
+        /// Resource: `Errors.coreNBT.readText1`.
+        public static var nbtRootIsNotCompound: LocalizedMessage {
             .init(key: "coreNBT.readText1", table: "Errors", fallback: "NBT 根节点不是复合标签")
         }
-        public static var valueText1: LocalizedMessage {
+        /// NBT 根节点后有多余数据
+        ///
+        /// Resource: `Errors.coreNBT.valueText1`.
+        public static var nbtTrailingDataFound: LocalizedMessage {
             .init(key: "coreNBT.valueText1", table: "Errors", fallback: "NBT 根节点后有多余数据")
         }
-        public static var replacementsText1: LocalizedMessage {
+        /// NBT 文件结构或大小无效
+        ///
+        /// Resource: `Errors.coreNBT.replacementsText1`.
+        public static var invalidNbtStructureOrSize: LocalizedMessage {
             .init(key: "coreNBT.replacementsText1", table: "Errors", fallback: "NBT 文件结构或大小无效")
         }
-        public static var rewriteCompoundText1: LocalizedMessage {
+        /// NBT 结构超出限制
+        ///
+        /// Resource: `Errors.coreNBT.rewriteCompoundText1`.
+        public static var nbtStructureSizeExceeded: LocalizedMessage {
             .init(key: "coreNBT.rewriteCompoundText1", table: "Errors", fallback: "NBT 结构超出限制")
         }
-        public static var nameText1: LocalizedMessage {
+        /// NBT 包含重复标签
+        ///
+        /// Resource: `Errors.coreNBT.nameText1`.
+        public static var duplicateNbtTag: LocalizedMessage {
             .init(key: "coreNBT.nameText1", table: "Errors", fallback: "NBT 包含重复标签")
         }
-        public static var nameText2: LocalizedMessage {
+        /// 存档数据包配置不是复合标签
+        ///
+        /// Resource: `Errors.coreNBT.nameText2`.
+        public static var worldDataPackConfigNotCompound: LocalizedMessage {
             .init(key: "coreNBT.nameText2", table: "Errors", fallback: "存档数据包配置不是复合标签")
         }
-        public static var nameText3: LocalizedMessage {
+        /// 存档缺少 Data 标签
+        ///
+        /// Resource: `Errors.coreNBT.nameText3`.
+        public static var worldDataMissingDataTag: LocalizedMessage {
             .init(key: "coreNBT.nameText3", table: "Errors", fallback: "存档缺少 Data 标签")
         }
-        public static var stringListText1: LocalizedMessage {
+        /// 数据包数量超出限制
+        ///
+        /// Resource: `Errors.coreNBT.stringListText1`.
+        public static var dataPackCountExceeded: LocalizedMessage {
             .init(key: "coreNBT.stringListText1", table: "Errors", fallback: "数据包数量超出限制")
         }
-        public static var bytesText1: LocalizedMessage {
+        /// NBT 字符串过长
+        ///
+        /// Resource: `Errors.coreNBT.bytesText1`.
+        public static var nbtStringTooLong: LocalizedMessage {
             .init(key: "coreNBT.bytesText1", table: "Errors", fallback: "NBT 字符串过长")
         }
-        public static var widthText1: LocalizedMessage {
+        /// NBT 数组越界
+        ///
+        /// Resource: `Errors.coreNBT.widthText1`.
+        public static var nbtArrayIndexOutOfBounds: LocalizedMessage {
             .init(key: "coreNBT.widthText1", table: "Errors", fallback: "NBT 数组越界")
         }
-        public static var countText1: LocalizedMessage {
+        /// NBT 列表无效
+        ///
+        /// Resource: `Errors.coreNBT.countText1`.
+        public static var invalidNbtList: LocalizedMessage {
             .init(key: "coreNBT.countText1", table: "Errors", fallback: "NBT 列表无效")
         }
-        public static func keyText1(_ value0: String) -> LocalizedMessage {
+        /// 未知 NBT 标签：%1$@
+        ///
+        /// Resource: `Errors.coreNBT.keyText1`.
+        public static func unknownNbtTag(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNBT.keyText1", table: "Errors", fallback: "未知 NBT 标签：%1$@", arguments: [.text(value0)])
         }
-        public static var byteText1: LocalizedMessage {
+        /// NBT 文件被截断
+        ///
+        /// Resource: `Errors.coreNBT.byteText1`.
+        public static var truncatedNbtFile: LocalizedMessage {
             .init(key: "coreNBT.byteText1", table: "Errors", fallback: "NBT 文件被截断")
         }
-        public static var unsignedText1: LocalizedMessage {
+        /// NBT 数值越界
+        ///
+        /// Resource: `Errors.coreNBT.unsignedText1`.
+        public static var nbtNumberOutOfRange: LocalizedMessage {
             .init(key: "coreNBT.unsignedText1", table: "Errors", fallback: "NBT 数值越界")
         }
-        public static var valueText2: LocalizedMessage {
+        /// NBT 数组长度为负
+        ///
+        /// Resource: `Errors.coreNBT.valueText2`.
+        public static var negativeNbtArrayLength: LocalizedMessage {
             .init(key: "coreNBT.valueText2", table: "Errors", fallback: "NBT 数组长度为负")
         }
-        public static var lengthText1: LocalizedMessage {
+        /// NBT 字符串越界
+        ///
+        /// Resource: `Errors.coreNBT.lengthText1`.
+        public static var nbtStringIndexOutOfBounds: LocalizedMessage {
             .init(key: "coreNBT.lengthText1", table: "Errors", fallback: "NBT 字符串越界")
         }
-        public static var aText1: LocalizedMessage {
+        /// NBT 字符编码无效
+        ///
+        /// Resource: `Errors.coreNBT.aText1`.
+        public static var invalidNbtStringEncoding: LocalizedMessage {
             .init(key: "coreNBT.aText1", table: "Errors", fallback: "NBT 字符编码无效")
         }
         static let definitions: [String: MessageDefinition] = [

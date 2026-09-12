@@ -11,7 +11,7 @@
   },
   {
     "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
-    "literal": "\"CurseForge · \\(project.authors?.map(\\.name).joined(separator: \", \") ?? Messages.AppCurseForgeInstallView.bodyText1.localized)\"",
+    "literal": "\"CurseForge · \\(project.authors?.map(\\.name).joined(separator: \", \") ?? Messages.AppCurseForgeInstallView.communityContent.localized)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
@@ -496,7 +496,7 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
-    "literal": "\"[Ruri] \\(record.failure ?? Messages.CoreGameMonitor.handleText1.localized)\\n\"",
+    "literal": "\"[Ruri] \\(record.failure ?? Messages.CoreGameMonitor.monitorStartFailed.localized)\\n\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
   },
   {
@@ -521,7 +521,7 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.exitText3.localized : record.failure ?? Messages.CoreGameSession.failText1.localized)\"",
+    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
   },
   {

@@ -3,52 +3,100 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceMenu {
-        public static var bodyText1: LocalizedMessage {
+        /// 在主页中显示
+        ///
+        /// Resource: `Interface.appInstanceMenu.bodyText1`.
+        public static var showOnHome: LocalizedMessage {
             .init(key: "appInstanceMenu.bodyText1", table: "Interface", fallback: "在主页中显示")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 取消收藏
+        ///
+        /// Resource: `Interface.appInstanceMenu.bodyText2`.
+        public static var unfavorite: LocalizedMessage {
             .init(key: "appInstanceMenu.bodyText2", table: "Interface", fallback: "取消收藏")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 收藏
+        ///
+        /// Resource: `Interface.appInstanceMenu.bodyText3`.
+        public static var favorite: LocalizedMessage {
             .init(key: "appInstanceMenu.bodyText3", table: "Interface", fallback: "收藏")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 实例设置
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText1`.
+        public static var instanceSettings: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText1", table: "Interface", fallback: "实例设置")
         }
-        public static var valueText2: LocalizedMessage {
+        /// 管理模组与资源包
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText2`.
+        public static var manageModsAndResourcePacks: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText2", table: "Interface", fallback: "管理模组与资源包")
         }
-        public static var valueText3: LocalizedMessage {
+        /// 管理存档与备份
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText3`.
+        public static var manageSavesAndBackups: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText3", table: "Interface", fallback: "管理存档与备份")
         }
-        public static var valueText4: LocalizedMessage {
+        /// 管理原理图
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText4`.
+        public static var manageSchematics: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText4", table: "Interface", fallback: "管理原理图")
         }
-        public static var valueText5: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText5`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText5", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var valueText6: LocalizedMessage {
+        /// 恢复实例复制…
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText6`.
+        public static var recoverInstanceCopy: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText6", table: "Interface", fallback: "恢复实例复制…")
         }
-        public static var valueText7: LocalizedMessage {
+        /// 复制实例…
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText7`.
+        public static var copyInstance: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText7", table: "Interface", fallback: "复制实例…")
         }
-        public static var valueText8: LocalizedMessage {
+        /// 导出实例…
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText8`.
+        public static var exportInstance: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText8", table: "Interface", fallback: "导出实例…")
         }
-        public static var valueText9: LocalizedMessage {
+        /// 恢复实例移动…
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText9`.
+        public static var recoverInstanceMove: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText9", table: "Interface", fallback: "恢复实例移动…")
         }
-        public static var valueText10: LocalizedMessage {
+        /// 移动到其他文件夹…
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText10`.
+        public static var moveToOtherFolder: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText10", table: "Interface", fallback: "移动到其他文件夹…")
         }
-        public static var valueText11: LocalizedMessage {
+        /// 修复游戏文件
+        ///
+        /// Resource: `Interface.appInstanceMenu.valueText11`.
+        public static var repairGameFiles: LocalizedMessage {
             .init(key: "appInstanceMenu.valueText11", table: "Interface", fallback: "修复游戏文件")
         }
-        public static var onTrashText1: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appInstanceMenu.onTrashText1`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appInstanceMenu.onTrashText1", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var onTrashText2: LocalizedMessage {
+        /// 更多操作
+        ///
+        /// Resource: `Interface.appInstanceMenu.onTrashText2`.
+        public static var moreActions: LocalizedMessage {
             .init(key: "appInstanceMenu.onTrashText2", table: "Interface", fallback: "更多操作")
         }
         static let definitions: [String: MessageDefinition] = [

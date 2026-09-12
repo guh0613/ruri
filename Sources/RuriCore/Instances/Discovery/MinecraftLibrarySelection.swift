@@ -66,7 +66,7 @@ enum MinecraftLibrarySelector {
     }
 
     static func select(_ input: [MinecraftLibraryDeclaration]) throws -> Selection {
-        guard input.count <= 10_000 else { throw RuriError.message(Messages.CoreMinecraftLibrarySelection.selectText1) }
+        guard input.count <= 10_000 else { throw RuriError.message(Messages.CoreMinecraftLibrarySelection.tooManyLibraries) }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         var groups: [Group: Versions] = [:], slots: [Candidate?] = [], discarded: [Discarded] = []
         for declaration in input {
@@ -75,7 +75,7 @@ enum MinecraftLibrarySelector {
             _ = try Library.mavenPath(library.name)
             let coordinate = library.name.split(separator: "@", maxSplits: 1)[0].split(separator: ":").map(String.init)
             let version = coordinate[2]
-            guard library.name.utf8.count <= 2_048, version.utf8.count <= 256 else { throw RuriError.message(Messages.CoreMinecraftLibrarySelection.versionText1) }
+            guard library.name.utf8.count <= 2_048, version.utf8.count <= 256 else { throw RuriError.message(Messages.CoreMinecraftLibrarySelection.libraryNameTooLong) }
             let key = Group(artifact: coordinate.prefix(2).joined(separator: ":"), rules: try encoder.encode(library.rules))
             let native = library.natives != nil || library.downloads?.classifiers?.keys.contains(where: { $0.hasPrefix("native") }) == true ||
                 (coordinate.count == 4 && coordinate[3].hasPrefix("natives-"))

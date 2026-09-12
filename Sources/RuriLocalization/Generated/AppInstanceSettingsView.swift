@@ -3,163 +3,322 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceSettingsView {
-        public static var bodyText1: LocalizedMessage {
+        /// 实例设置
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.bodyText1`.
+        public static var instanceSettings: LocalizedMessage {
             .init(key: "appInstanceSettingsView.bodyText1", table: "Interface", fallback: "实例设置")
         }
-        public static var versionsText1: LocalizedMessage {
+        /// 整合包支持的 Java
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.versionsText1`.
+        public static var supportedJava: LocalizedMessage {
             .init(key: "appInstanceSettingsView.versionsText1", table: "Interface", fallback: "整合包支持的 Java")
         }
-        public static var settingsIssueText1: LocalizedMessage {
+        /// 恢复默认
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText1`.
+        public static var restoreDefaults: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText1", table: "Interface", fallback: "恢复默认")
         }
-        public static var settingsIssueText2: LocalizedMessage {
+        /// 恢复所有启动设置
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText2`.
+        public static var restoreLaunchSettings: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText2", table: "Interface", fallback: "恢复所有启动设置")
         }
-        public static var settingsIssueText3: LocalizedMessage {
+        /// 恢复启动设置的继承关系，保留名称和图标。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText3`.
+        public static var restoreInheritedSettings: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "恢复启动设置的继承关系，保留名称和图标。")
         }
-        public static var settingsIssueText4: LocalizedMessage {
+        /// 有未保存的更改
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText4`.
+        public static var unsavedChanges: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText4", table: "Interface", fallback: "有未保存的更改")
         }
-        public static var settingsIssueText5: LocalizedMessage {
+        /// 设置用于下一次启动
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText5`.
+        public static var applyNextLaunch: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText5", table: "Interface", fallback: "设置用于下一次启动")
         }
-        public static var settingsIssueText6: LocalizedMessage {
+        /// 保存
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText6`.
+        public static var save: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText6", table: "Interface", fallback: "保存")
         }
-        public static var overviewText1: LocalizedMessage {
+        /// 实例信息
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText1`.
+        public static var instanceInfo: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText1", table: "Interface", fallback: "实例信息")
         }
-        public static var overviewText2: LocalizedMessage {
+        /// 名称
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText2`.
+        public static var nameLabel: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText2", table: "Interface", fallback: "名称")
         }
-        public static var overviewText3: LocalizedMessage {
+        /// 实例名称
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText3`.
+        public static var instanceName: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText3", table: "Interface", fallback: "实例名称")
         }
-        public static var overviewText4: LocalizedMessage {
+        /// 输入实例名称
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText4`.
+        public static var enterInstanceName: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText4", table: "Interface", fallback: "输入实例名称")
         }
-        public static var overviewText5: LocalizedMessage {
+        /// 收藏此实例
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText5`.
+        public static var favoriteInstance: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText5", table: "Interface", fallback: "收藏此实例")
         }
-        public static var overviewText6: LocalizedMessage {
+        /// 实例图标
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText6`.
+        public static var instanceIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText6", table: "Interface", fallback: "实例图标")
         }
-        public static var overviewText7: LocalizedMessage {
+        /// 选择图片后会自动裁剪为正方形。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText7`.
+        public static var iconCropNotice: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText7", table: "Interface", fallback: "选择图片后会自动裁剪为正方形。")
         }
-        public static var overviewText8: LocalizedMessage {
+        /// 更改图标
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText8`.
+        public static var changeIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText8", table: "Interface", fallback: "更改图标")
         }
-        public static var overviewText9: LocalizedMessage {
+        /// 选择图片…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText9`.
+        public static var chooseImage: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText9", table: "Interface", fallback: "选择图片…")
         }
-        public static var overviewText10: LocalizedMessage {
+        /// 恢复默认图标
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText10`.
+        public static var restoreDefaultIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText10", table: "Interface", fallback: "恢复默认图标")
         }
-        public static var overviewText11: LocalizedMessage {
+        /// 游戏组件
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText11`.
+        public static var gameComponents: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText11", table: "Interface", fallback: "游戏组件")
         }
-        public static var overviewText12: LocalizedMessage {
+        /// 加载器
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText12`.
+        public static var loader: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText12", table: "Interface", fallback: "加载器")
         }
-        public static var overviewText13: LocalizedMessage {
+        /// 管理…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText13`.
+        public static var manageComponents: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText13", table: "Interface", fallback: "管理…")
         }
-        public static var overviewText14: LocalizedMessage {
+        /// 整合包更新
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText14`.
+        public static var packUpdate: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText14", table: "Interface", fallback: "整合包更新")
         }
-        public static var overviewText15: LocalizedMessage {
+        /// 检查版本、安装更新或恢复上次配置。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText15`.
+        public static var packUpdateDescription: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText15", table: "Interface", fallback: "检查版本、安装更新或恢复上次配置。")
         }
-        public static var overviewText16: LocalizedMessage {
+        /// 查看…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.overviewText16`.
+        public static var viewPackUpdate: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText16", table: "Interface", fallback: "查看…")
         }
-        public static var filesText1: LocalizedMessage {
+        /// 运行目录
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.filesText1`.
+        public static var runDirectory: LocalizedMessage {
             .init(key: "appInstanceSettingsView.filesText1", table: "Interface", fallback: "运行目录")
         }
-        public static var filesText2: LocalizedMessage {
+        /// 保存方式
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.filesText2`.
+        public static var saveMethod: LocalizedMessage {
             .init(key: "appInstanceSettingsView.filesText2", table: "Interface", fallback: "保存方式")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 位置与隔离
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText1`.
+        public static var locationAndIsolation: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText1", table: "Interface", fallback: "位置与隔离")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 恢复目录复制…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText2`.
+        public static var recoverDirectoryCopy: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText2", table: "Interface", fallback: "恢复目录复制…")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 切换运行目录…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText3`.
+        public static var switchRunDirectory: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText3", table: "Interface", fallback: "切换运行目录…")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 重新定位原游戏目录…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText4`.
+        public static var relocateOriginalDirectory: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText4", table: "Interface", fallback: "重新定位原游戏目录…")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 重新定位记住的自定义目录…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText5`.
+        public static var relocateCustomDirectory: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText5", table: "Interface", fallback: "重新定位记住的自定义目录…")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 打开文件夹
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText6`.
+        public static var openFolder: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText6", table: "Interface", fallback: "打开文件夹")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 模组
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText7`.
+        public static var mods: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText7", table: "Interface", fallback: "模组")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 存档
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText8`.
+        public static var worlds: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText8", table: "Interface", fallback: "存档")
         }
-        public static var errorText9: LocalizedMessage {
+        /// 未完成的实例复制
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText9`.
+        public static var incompleteCopy: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText9", table: "Interface", fallback: "未完成的实例复制")
         }
-        public static var errorText10: LocalizedMessage {
+        /// 继续处理上次复制保留的文件。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText10`.
+        public static var incompleteCopyDescription: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText10", table: "Interface", fallback: "继续处理上次复制保留的文件。")
         }
-        public static var errorText11: LocalizedMessage {
+        /// 恢复…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText11`.
+        public static var recover: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText11", table: "Interface", fallback: "恢复…")
         }
-        public static var errorText12: LocalizedMessage {
+        /// 复制实例
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText12`.
+        public static var copyInstance: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText12", table: "Interface", fallback: "复制实例")
         }
-        public static var errorText13: LocalizedMessage {
+        /// 保留原实例，创建一份独立副本。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText13`.
+        public static var copyDescription: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText13", table: "Interface", fallback: "保留原实例，创建一份独立副本。")
         }
-        public static var errorText14: LocalizedMessage {
+        /// 复制…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText14`.
+        public static var copy: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText14", table: "Interface", fallback: "复制…")
         }
-        public static var errorText15: LocalizedMessage {
+        /// 未完成的实例移动
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText15`.
+        public static var incompleteMove: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText15", table: "Interface", fallback: "未完成的实例移动")
         }
-        public static var errorText16: LocalizedMessage {
+        /// 继续处理上次移动保留的文件。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText16`.
+        public static var incompleteMoveDescription: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText16", table: "Interface", fallback: "继续处理上次移动保留的文件。")
         }
-        public static var errorText17: LocalizedMessage {
+        /// 移动实例
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText17`.
+        public static var moveInstance: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText17", table: "Interface", fallback: "移动实例")
         }
-        public static var errorText18: LocalizedMessage {
+        /// 将实例转移到其他游戏文件夹。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText18`.
+        public static var moveDescription: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText18", table: "Interface", fallback: "将实例转移到其他游戏文件夹。")
         }
-        public static var errorText19: LocalizedMessage {
+        /// 移动…
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText19`.
+        public static var move: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText19", table: "Interface", fallback: "移动…")
         }
-        public static var errorText20: LocalizedMessage {
+        /// 复制与移动
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText20`.
+        public static var copyAndMove: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText20", table: "Interface", fallback: "复制与移动")
         }
-        public static var errorText21: LocalizedMessage {
+        /// 文件操作会在对应页面确认后执行，无需点击这里的“保存”。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText21`.
+        public static var fileOperationNotice: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText21", table: "Interface", fallback: "文件操作会在对应页面确认后执行，无需点击这里的“保存”。")
         }
-        public static var errorText22: LocalizedMessage {
+        /// 保留的工作文件
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText22`.
+        public static var retainedWorkFiles: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText22", table: "Interface", fallback: "保留的工作文件")
         }
-        public static func errorText23(_ value0: String) -> LocalizedMessage {
+        /// 副本 %1$@
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText23`.
+        public static func copyLabel(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText23", table: "Interface", fallback: "副本 %1$@", arguments: [.text(value0)])
         }
-        public static var errorText24: LocalizedMessage {
+        /// 在 Finder 中查看
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.errorText24`.
+        public static var viewInFinder: LocalizedMessage {
             .init(key: "appInstanceSettingsView.errorText24", table: "Interface", fallback: "在 Finder 中查看")
         }
-        public static var saveText1: LocalizedMessage {
+        /// 请填写实例名称。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.saveText1`.
+        public static var nameRequired: LocalizedMessage {
             .init(key: "appInstanceSettingsView.saveText1", table: "Interface", fallback: "请填写实例名称。")
         }
-        public static var issueText1: LocalizedMessage {
+        /// 此实例已不在当前文件夹中，请关闭设置后刷新。
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.issueText1`.
+        public static var instanceMissing: LocalizedMessage {
             .init(key: "appInstanceSettingsView.issueText1", table: "Interface", fallback: "此实例已不在当前文件夹中，请关闭设置后刷新。")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 选择图标
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.panelText1`.
+        public static var chooseIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.panelText1", table: "Interface", fallback: "选择图标")
         }
         static let definitions: [String: MessageDefinition] = [

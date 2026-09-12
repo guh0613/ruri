@@ -21,13 +21,13 @@ public actor ContentBatchUpdater {
 
     public func prepare(modrinth updates: [ContentUpdate], curseforge curseUpdates: [CurseForgeUpdate], instance: GameInstance, paths: LauncherPaths) async throws -> ContentBatchUpdatePlan {
         let selected = updates.map(\.installed) + curseUpdates.map(\.installed)
-        guard !selected.isEmpty, Set(selected.map(\.id)).count == selected.count else { throw RuriError.message(Messages.CoreContentBatchUpdater.selectedText1) }
+        guard !selected.isEmpty, Set(selected.map(\.id)).count == selected.count else { throw RuriError.message(Messages.CoreContentBatchUpdater.selectionInvalid) }
         let manager = ContentManager(paths: paths, instanceID: instance.id), baseline = try await manager.records()
         for record in selected {
-            guard baseline.contains(record), FileManager.default.fileExists(atPath: paths.game(instance.id).appendingPathComponent(record.relativePath).path) else { throw RuriError.message(Messages.CoreContentBatchUpdater.managerText1(String(describing: record.title))) }
+            guard baseline.contains(record), FileManager.default.fileExists(atPath: paths.game(instance.id).appendingPathComponent(record.relativePath).path) else { throw RuriError.message(Messages.CoreContentBatchUpdater.contentChanged(record.title)) }
         }
         guard updates.allSatisfy({ $0.installed.provider == "modrinth" && $0.installed.projectID == $0.available.project_id }),
-              curseUpdates.allSatisfy({ $0.installed.provider == "curseforge" && $0.installed.projectID == String($0.available.modId) }) else { throw RuriError.message(Messages.CoreContentBatchUpdater.managerText2) }
+              curseUpdates.allSatisfy({ $0.installed.provider == "curseforge" && $0.installed.projectID == String($0.available.modId) }) else { throw RuriError.message(Messages.CoreContentBatchUpdater.installedProjectMismatch) }
         var modFiles: [PlannedModrinthFile] = []
         for kind in ContentKind.allCases {
             let roots = updates.filter { $0.installed.kind == kind }.map(\.available)
@@ -49,7 +49,7 @@ public actor ContentBatchUpdater {
         let state = try StateStore.load(paths)
         guard let current = state.instances.first(where: { $0.id == plan.instance.id }),
               current.gameVersion == plan.instance.gameVersion, current.loader == plan.instance.loader, current.loaderVersion == plan.instance.loaderVersion else {
-            throw RuriError.message(Messages.CoreContentBatchUpdater.currentText1)
+            throw RuriError.message(Messages.CoreContentBatchUpdater.instanceVersionChanged)
         }
         try paths.validateBinding(current)
         _ = try current.applyingInstallation(plan.instance, requested: plan.instance)
@@ -58,7 +58,7 @@ public actor ContentBatchUpdater {
         let curseFiles = try await curseforge.materialize(plan.curseforge, paths: paths, downloader: downloader, manualFiles: manualFiles, progress: progress)
         let modFiles = try await modrinth.materialize(plan.modrinth, paths: paths, downloader: downloader, progress: progress)
         try Task.checkCancellation()
-        await progress(InstallProgress(Messages.CoreContentBatchUpdater.modFilesText1(Int64(plan.selectedIDs.count))))
+        await progress(InstallProgress(Messages.CoreContentBatchUpdater.applyingContentUpdates(Int64(plan.selectedIDs.count))))
         try await ContentManager(paths: paths, instanceID: current.id).install(modFiles + curseFiles, expecting: plan.baseline)
     }
 }

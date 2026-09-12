@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum AppAccountsView {
-        public static var bodyText1: LocalizedMessage {
+        /// 还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。
+        ///
+        /// Resource: `Interface.appAccountsView.bodyText1`.
+        public static var emptyState: LocalizedMessage {
             .init(key: "appAccountsView.bodyText1", table: "Interface", fallback: "还没有账号。添加 Microsoft 账号或外置认证账号登录正版服务器，也可以使用离线账号游玩本地世界。")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 账号
+        ///
+        /// Resource: `Interface.appAccountsView.bodyText2`.
+        public static var account: LocalizedMessage {
             .init(key: "appAccountsView.bodyText2", table: "Interface", fallback: "账号")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。
+        ///
+        /// Resource: `Interface.appAccountsView.bodyText3`.
+        public static var credentials: LocalizedMessage {
             .init(key: "appAccountsView.bodyText3", table: "Interface", fallback: "登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 添加账号
+        ///
+        /// Resource: `Interface.appAccountsView.bodyText4`.
+        public static var addAccount: LocalizedMessage {
             .init(key: "appAccountsView.bodyText4", table: "Interface", fallback: "添加账号")
         }
-        public static var loginText1: LocalizedMessage {
+        /// 当前使用
+        ///
+        /// Resource: `Interface.appAccountsView.loginText1`.
+        public static var currentAccount: LocalizedMessage {
             .init(key: "appAccountsView.loginText1", table: "Interface", fallback: "当前使用")
         }
-        public static var loginText2: LocalizedMessage {
+        /// 使用此账号
+        ///
+        /// Resource: `Interface.appAccountsView.loginText2`.
+        public static var useAccount: LocalizedMessage {
             .init(key: "appAccountsView.loginText2", table: "Interface", fallback: "使用此账号")
         }
-        public static var loginText3: LocalizedMessage {
+        /// 皮肤与披风…
+        ///
+        /// Resource: `Interface.appAccountsView.loginText3`.
+        public static var appearance: LocalizedMessage {
             .init(key: "appAccountsView.loginText3", table: "Interface", fallback: "皮肤与披风…")
         }
-        public static var loginText4: LocalizedMessage {
+        /// 刷新登录状态
+        ///
+        /// Resource: `Interface.appAccountsView.loginText4`.
+        public static var refreshLogin: LocalizedMessage {
             .init(key: "appAccountsView.loginText4", table: "Interface", fallback: "刷新登录状态")
         }
-        public static var loginText5: LocalizedMessage {
+        /// 重新登录
+        ///
+        /// Resource: `Interface.appAccountsView.loginText5`.
+        public static var relogin: LocalizedMessage {
             .init(key: "appAccountsView.loginText5", table: "Interface", fallback: "重新登录")
         }
-        public static var loginText6: LocalizedMessage {
+        /// 退出登录并移除
+        ///
+        /// Resource: `Interface.appAccountsView.loginText6`.
+        public static var removeLogin: LocalizedMessage {
             .init(key: "appAccountsView.loginText6", table: "Interface", fallback: "退出登录并移除")
         }
-        public static var loginText7: LocalizedMessage {
+        /// 从 Ruri 移除账号
+        ///
+        /// Resource: `Interface.appAccountsView.loginText7`.
+        public static var removeFromRuri: LocalizedMessage {
             .init(key: "appAccountsView.loginText7", table: "Interface", fallback: "从 Ruri 移除账号")
         }
-        public static var runText1: LocalizedMessage {
+        /// 更新账号
+        ///
+        /// Resource: `Interface.appAccountsView.runText1`.
+        public static var updateAccount: LocalizedMessage {
             .init(key: "appAccountsView.runText1", table: "Interface", fallback: "更新账号")
         }
         static let definitions: [String: MessageDefinition] = [

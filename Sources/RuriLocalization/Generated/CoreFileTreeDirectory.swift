@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreFileTreeDirectory {
-        public static func fdText1(_ value0: String) -> LocalizedMessage {
+        /// 无法读取目录：%1$@
+        ///
+        /// Resource: `Errors.coreFileTreeDirectory.fdText1`.
+        public static func directoryReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTreeDirectory.fdText1", table: "Errors", fallback: "无法读取目录：%1$@", arguments: [.text(value0)])
         }
-        public static func streamText1(_ value0: String) -> LocalizedMessage {
+        /// 无法枚举目录：%1$@
+        ///
+        /// Resource: `Errors.coreFileTreeDirectory.streamText1`.
+        public static func directoryEnumerationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTreeDirectory.streamText1", table: "Errors", fallback: "无法枚举目录：%1$@", arguments: [.text(value0)])
         }
-        public static var entryText1: LocalizedMessage {
+        /// 读取目录时发生错误。
+        ///
+        /// Resource: `Errors.coreFileTreeDirectory.entryText1`.
+        public static var directoryEntryReadFailed: LocalizedMessage {
             .init(key: "coreFileTreeDirectory.entryText1", table: "Errors", fallback: "读取目录时发生错误。")
         }
-        public static var nameText1: LocalizedMessage {
+        /// 目录包含无法表示的文件名，原文件已保留。
+        ///
+        /// Resource: `Errors.coreFileTreeDirectory.nameText1`.
+        public static var unrepresentableFilename: LocalizedMessage {
             .init(key: "coreFileTreeDirectory.nameText1", table: "Errors", fallback: "目录包含无法表示的文件名，原文件已保留。")
         }
-        public static var nameText2: LocalizedMessage {
+        /// 目录文件数量超过限制。
+        ///
+        /// Resource: `Errors.coreFileTreeDirectory.nameText2`.
+        public static var tooManyDirectoryFiles: LocalizedMessage {
             .init(key: "coreFileTreeDirectory.nameText2", table: "Errors", fallback: "目录文件数量超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [

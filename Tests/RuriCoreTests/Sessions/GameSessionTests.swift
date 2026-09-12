@@ -51,7 +51,7 @@ struct GameSessionTests {
         let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         recorder.addSecrets(["private-localization-secret"])
-        let message = Messages.CoreNetwork.streamText1("private-localization-secret")
+        let message = Messages.CoreNetwork.downloadChecksumFailed("private-localization-secret")
         try recorder.fail(RuriError.message(message), cancelled: false)
         let data = try Data(contentsOf: recorder.directory.appendingPathComponent("session.json"))
         #expect(!String(decoding: data, as: UTF8.self).contains("private-localization-secret"))

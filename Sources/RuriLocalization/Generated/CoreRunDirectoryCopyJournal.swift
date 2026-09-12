@@ -3,55 +3,106 @@ import Foundation
 
 extension Messages {
     public enum CoreRunDirectoryCopyJournal {
-        public static func valueText1(_ value0: String) -> LocalizedMessage {
+        /// 无法确认复制项目的文件身份：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.valueText1`.
+        public static func sourceIdentityUnknown(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.valueText1", table: "Errors", fallback: "无法确认复制项目的文件身份：%1$@", arguments: [.text(value0)])
         }
-        public static var targetText1: LocalizedMessage {
+        /// 运行目录复制记录无效，工作副本已保留。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.targetText1`.
+        public static var invalidRecord: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.targetText1", table: "Errors", fallback: "运行目录复制记录无效，工作副本已保留。")
         }
-        public static var customText1: LocalizedMessage {
+        /// 复制记录缺少自定义目标目录。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.customText1`.
+        public static var missingCustomTarget: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.customText1", table: "Errors", fallback: "复制记录缺少自定义目标目录。")
         }
-        public static var customText2: LocalizedMessage {
+        /// 复制工作区位置无效。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.customText2`.
+        public static var invalidWorkspace: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.customText2", table: "Errors", fallback: "复制工作区位置无效。")
         }
-        public static var keysText1: LocalizedMessage {
+        /// 运行目录复制项目记录无效。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.keysText1`.
+        public static var invalidKeys: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.keysText1", table: "Errors", fallback: "运行目录复制项目记录无效。")
         }
-        public static var publishedText1: LocalizedMessage {
+        /// 发布副本的文件身份记录无效。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText1`.
+        public static var invalidPublishedIdentity: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.publishedText1", table: "Errors", fallback: "发布副本的文件身份记录无效。")
         }
-        public static var publishedText2: LocalizedMessage {
+        /// 运行目录复制记录包含目标安装文件，未移动这些文件。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText2`.
+        public static var installedFilesPreserved: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.publishedText2", table: "Errors", fallback: "运行目录复制记录包含目标安装文件，未移动这些文件。")
         }
-        public static var publishedText3: LocalizedMessage {
+        /// 运行目录复制记录包含无效的备份路径。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText3`.
+        public static var invalidBackupPath: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.publishedText3", table: "Errors", fallback: "运行目录复制记录包含无效的备份路径。")
         }
-        public static var publishedText4: LocalizedMessage {
+        /// 运行目录复制记录包含保留路径。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText4`.
+        public static var retainedPath: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.publishedText4", table: "Errors", fallback: "运行目录复制记录包含保留路径。")
         }
-        public static var firstText1: LocalizedMessage {
+        /// 运行目录复制记录包含目标安装目录。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.firstText1`.
+        public static var targetDirectoryPresent: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.firstText1", table: "Errors", fallback: "运行目录复制记录包含目标安装目录。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 运行目录复制记录超过大小限制。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.dataText1`.
+        public static var sizeLimit: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.dataText1", table: "Errors", fallback: "运行目录复制记录超过大小限制。")
         }
-        public static var idText1: LocalizedMessage {
+        /// 此实例有未完成的运行目录复制，请在实例设置中恢复后继续。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.idText1`.
+        public static var unfinishedCopy: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.idText1", table: "Errors", fallback: "此实例有未完成的运行目录复制，请在实例设置中恢复后继续。")
         }
-        public static func markerText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText1`.
+        public static func copyInProgress(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.markerText1", table: "Errors", fallback: "“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。", arguments: [.text(value0)])
         }
-        public static var markerText2: LocalizedMessage {
+        /// 共享目录的复制占用记录无效。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText2`.
+        public static var invalidSharedCopyLock: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.markerText2", table: "Errors", fallback: "共享目录的复制占用记录无效。")
         }
-        public static var markerText3: LocalizedMessage {
+        /// 共享目录的占用记录已经改变，未清除其他操作的记录。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText3`.
+        public static var changedSharedCopyLock: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.markerText3", table: "Errors", fallback: "共享目录的占用记录已经改变，未清除其他操作的记录。")
         }
-        public static func fdText1(_ value0: String) -> LocalizedMessage {
+        /// 无法读取运行目录复制记录，请检查 %1$@。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.fdText1`.
+        public static func recordReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.fdText1", table: "Errors", fallback: "无法读取运行目录复制记录，请检查 %1$@。", arguments: [.text(value0)])
         }
-        public static var infoText1: LocalizedMessage {
+        /// 运行目录复制记录不是有效文件或超过大小限制。
+        ///
+        /// Resource: `Errors.coreRunDirectoryCopyJournal.infoText1`.
+        public static var invalidRecordFile: LocalizedMessage {
             .init(key: "coreRunDirectoryCopyJournal.infoText1", table: "Errors", fallback: "运行目录复制记录不是有效文件或超过大小限制。")
         }
         static let definitions: [String: MessageDefinition] = [

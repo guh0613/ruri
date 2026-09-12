@@ -3,31 +3,58 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstallation {
-        public static var recordInstallationText1: LocalizedMessage {
+        /// 设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。
+        ///
+        /// Resource: `Errors.appAppModelInstallation.recordInstallationText1`.
+        public static var installationWritePaused: LocalizedMessage {
             .init(key: "appAppModelInstallation.recordInstallationText1", table: "Errors", fallback: "设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 实例已被移除，未重新登记。
+        ///
+        /// Resource: `Errors.appAppModelInstallation.indexText1`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "appAppModelInstallation.indexText1", table: "Errors", fallback: "实例已被移除，未重新登记。")
         }
-        public static func installText1(_ value0: String) -> LocalizedMessage {
+        /// 安装 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstallation.installText1`.
+        public static func installInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.installText1", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已准备就绪
+        ///
+        /// Resource: `Interface.appAppModelInstallation.resultText1`.
+        public static func installationResult(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.resultText1", table: "Interface", fallback: "%1$@ 已准备就绪", arguments: [.text(value0)])
         }
-        public static func repairText1(_ value0: String) -> LocalizedMessage {
+        /// 修复 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstallation.repairText1`.
+        public static func repairInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.repairText1", table: "Interface", fallback: "修复 %1$@", arguments: [.text(value0)])
         }
-        public static func changeComponentsText1(_ value0: String) -> LocalizedMessage {
+        /// 更换 %1$@ 的加载器
+        ///
+        /// Resource: `Interface.appAppModelInstallation.changeComponentsText1`.
+        public static func changeLoader(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.changeComponentsText1", table: "Interface", fallback: "更换 %1$@ 的加载器", arguments: [.text(value0)])
         }
-        public static func savedText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 已切换为 %2$@，下次启动生效
+        ///
+        /// Resource: `Interface.appAppModelInstallation.savedText1`.
+        public static func loaderConfigurationSaved(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.savedText1", table: "Interface", fallback: "%1$@ 已切换为 %2$@，下次启动生效", arguments: [.text(value0), .text(value1)])
         }
-        public static func restoreComponentsText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复 %1$@ 的加载器配置
+        ///
+        /// Resource: `Interface.appAppModelInstallation.restoreComponentsText1`.
+        public static func restoreLoaderConfiguration(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstallation.restoreComponentsText1", table: "Interface", fallback: "恢复 %1$@ 的加载器配置", arguments: [.text(value0)])
         }
-        public static var savedText2: LocalizedMessage {
+        /// 已恢复上次的加载器配置
+        ///
+        /// Resource: `Interface.appAppModelInstallation.savedText2`.
+        public static var loaderConfigurationRestored: LocalizedMessage {
             .init(key: "appAppModelInstallation.savedText2", table: "Interface", fallback: "已恢复上次的加载器配置")
         }
         static let definitions: [String: MessageDefinition] = [

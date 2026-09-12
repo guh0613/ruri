@@ -14,32 +14,32 @@ struct JavaView: View {
     var body: some View {
         Form {
             Section {
-                if model.scanningJava { ProgressView(Messages.AppJavaView.bodyText1.localized).controlSize(.small) }
+                if model.scanningJava { ProgressView(Messages.AppJavaView.detectingJava.localized).controlSize(.small) }
                 if model.javaEntries.isEmpty && !model.scanningJava {
-                    Label(Messages.AppJavaView.bodyText2.localized, systemImage: "cup.and.saucer").foregroundStyle(.secondary).padding(.vertical, 4)
+                    Label(Messages.AppJavaView.noJavaFound.localized, systemImage: "cup.and.saucer").foregroundStyle(.secondary).padding(.vertical, 4)
                 }
                 ForEach(model.javaEntries) { entry in runtimeRow(entry) }
             } header: {
-                Text(Messages.AppJavaView.bodyText3.localized)
+                Text(Messages.AppJavaView.localJava.localized)
             }
             Section {
-                if loadingRemote { ProgressView(Messages.AppJavaView.bodyText4.localized).controlSize(.small) }
+                if loadingRemote { ProgressView(Messages.AppJavaView.fetchingRuntimes.localized).controlSize(.small) }
                 if let javaError { Text(javaError).font(.caption).foregroundStyle(.orange) }
                 ForEach(available) { runtime in remoteRow(runtime) }
             } header: {
-                Text(Messages.AppJavaView.javaErrorText1.localized)
+                Text(Messages.AppJavaView.officialRuntimes.localized)
             } footer: {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(Messages.AppJavaView.javaErrorText2.localized)
-                    HStack(spacing: 14) { Link(Messages.AppJavaView.javaErrorText3.localized, destination: AppLinks.azulJavaDownloads); Link(Messages.AppJavaView.javaErrorText4.localized, destination: AppLinks.temurinJavaDownloads) }
+                    Text(Messages.AppJavaView.javaRequirements.localized)
+                    HStack(spacing: 14) { Link(Messages.AppJavaView.zuluDownload.localized, destination: AppLinks.azulJavaDownloads); Link(Messages.AppJavaView.temurinDownload.localized, destination: AppLinks.temurinJavaDownloads) }
                 }
             }
         }
         .formStyle(.grouped)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button { Task { await model.scanJava() } } label: { Label(Messages.AppJavaView.javaErrorText5.localized, systemImage: "arrow.clockwise") }.help(Messages.AppJavaView.javaErrorText6.localized).disabled(model.scanningJava || model.busy)
-                Button { model.chooseJava() } label: { Label(Messages.AppJavaView.javaErrorText7.localized, systemImage: "plus") }.help(Messages.AppJavaView.javaErrorText8.localized).disabled(model.busy)
+                Button { Task { await model.scanJava() } } label: { Label(Messages.AppJavaView.redetect.localized, systemImage: "arrow.clockwise") }.help(Messages.AppJavaView.redetectLocalJava.localized).disabled(model.scanningJava || model.busy)
+                Button { model.chooseJava() } label: { Label(Messages.AppJavaView.addLocalJava.localized, systemImage: "plus") }.help(Messages.AppJavaView.addInstalledJava.localized).disabled(model.busy)
             }
         }
         .sheet(item: $removal) { JavaRemovalView(request: $0) }
@@ -58,23 +58,23 @@ struct JavaView: View {
                 .frame(width: 40, height: 40).background(Theme.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
-                    Text(runtime?.label ?? remote?.label ?? Messages.AppJavaView.runtimeText1.localized).font(.headline)
+                    Text(runtime?.label ?? remote?.label ?? Messages.AppJavaView.unavailableJava.localized).font(.headline)
                     TagPill(text: entry.source)
-                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) { TagPill(text: Messages.AppJavaView.selectedText1.localized) }
+                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) { TagPill(text: Messages.AppJavaView.defaultSelection.localized) }
                 }
                 if let issue = entry.issue { Text(issue).font(.caption).foregroundStyle(.orange) }
                 else if let runtime { Text(runtime.version).font(.caption).foregroundStyle(.secondary) }
                 Text(entry.path).font(.system(size: 10, design: .monospaced)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).textSelection(.enabled).help(entry.path)
             }
             Spacer()
-            if let remote { Button(Messages.AppJavaView.remoteText1.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
+            if let remote { Button(Messages.AppJavaView.repair.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
             Menu {
-                if entry.runtime != nil { Button(Messages.AppJavaView.remoteText2.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
-                Button(Messages.AppJavaView.remoteText3.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
-                Button(Messages.AppJavaView.remoteText4.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
-                if entry.manual { Button(Messages.AppJavaView.remoteText5.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
+                if entry.runtime != nil { Button(Messages.AppJavaView.setDefaultJava.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
+                Button(Messages.AppJavaView.relocatePath.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
+                Button(Messages.AppJavaView.showInFinder.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
+                if entry.manual { Button(Messages.AppJavaView.removeManualJava.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
                 if let id = entry.managedID {
-                    Divider(); Button(Messages.AppJavaView.idText1.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
+                    Divider(); Button(Messages.AppJavaView.trashJava.localized, systemImage: "trash", role: .destructive) { requestRemoval(id) }
                 }
             } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().disabled(model.busy)
         }
@@ -87,9 +87,9 @@ struct JavaView: View {
         return HStack {
             Text(runtime.label)
             Spacer()
-            if resumable { Button(Messages.AppJavaView.brokenText1.localized) { requestRemoval(runtime.id, partial: true) }.disabled(model.busy) }
-            if installed { Text(Messages.AppJavaView.brokenText2.localized).font(.callout).foregroundStyle(.secondary) }
-            else { Button(broken ? Messages.AppJavaView.remoteText1.localized : resumable ? Messages.AppJavaView.brokenText3.localized : Messages.AppJavaView.brokenText4.localized) { model.installJava(runtime, repairing: broken) }.disabled(model.busy) }
+            if resumable { Button(Messages.AppJavaView.incompleteDownloads.localized) { requestRemoval(runtime.id, partial: true) }.disabled(model.busy) }
+            if installed { Text(Messages.AppJavaView.installed.localized).font(.callout).foregroundStyle(.secondary) }
+            else { Button(broken ? Messages.AppJavaView.repair.localized : resumable ? Messages.AppJavaView.continueInstall.localized : Messages.AppJavaView.install.localized) { model.installJava(runtime, repairing: broken) }.disabled(model.busy) }
         }
         .padding(.vertical, 2)
     }
@@ -109,17 +109,17 @@ private struct JavaRemovalView: View {
     @State private var resetReferences = false
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text(request.partial ? Messages.AppJavaView.bodyText5.localized : Messages.AppJavaView.bodyText6.localized).font(.title2.bold())
+            Text(request.partial ? Messages.AppJavaView.cleanIncompleteDownloads.localized : Messages.AppJavaView.removeManagedJava.localized).font(.title2.bold())
             Text(request.title).font(.callout).textSelection(.enabled)
             if !request.references.isEmpty {
-                Text(Messages.AppJavaView.bodyText7.localized).font(.callout)
+                Text(Messages.AppJavaView.javaStillReferenced.localized).font(.callout)
                 ScrollView { VStack(alignment: .leading) { ForEach(Array(request.references.enumerated()), id: \.offset) { _, name in Text(name) } }.frame(maxWidth: .infinity, alignment: .leading) }.frame(maxHeight: 140)
-                Toggle(Messages.AppJavaView.bodyText8.localized, isOn: $resetReferences)
+                Toggle(Messages.AppJavaView.switchToAutomaticJava.localized, isOn: $resetReferences)
             }
-            Text(Messages.AppJavaView.bodyText9.localized).font(.caption).foregroundStyle(.secondary)
+            Text(Messages.AppJavaView.trashNotice.localized).font(.caption).foregroundStyle(.secondary)
             HStack {
                 Spacer(); Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.AppJavaView.bodyText10.localized, role: .destructive) { model.removeJava(request.id, resetReferences: resetReferences, partial: request.partial); dismiss() }
+                Button(Messages.AppJavaView.moveToTrash.localized, role: .destructive) { model.removeJava(request.id, resetReferences: resetReferences, partial: request.partial); dismiss() }
                     .disabled(!request.references.isEmpty && !resetReferences)
             }
         }.padding(24).frame(width: 480)

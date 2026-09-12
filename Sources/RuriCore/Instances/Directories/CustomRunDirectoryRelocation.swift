@@ -51,7 +51,7 @@ public actor CustomRunDirectoryRelocation {
 
     public func preview(instanceID: UUID, target: URL) throws -> CustomRunDirectoryRelocationPreview {
         let state = try StateStore.load(paths)
-        guard let original = state.instances.first(where: { $0.id == instanceID })?.customRunDirectory else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.originalText1) }
+        guard let original = state.instances.first(where: { $0.id == instanceID })?.customRunDirectory else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.noSavedCustomDirectory) }
         let replacement = try original.relocated(to: target, paths: paths.configured(with: state))
         try validateOriginal(original, replacement: replacement)
         let affected = affectedInstances(state, original: original)
@@ -90,17 +90,17 @@ public actor CustomRunDirectoryRelocation {
     }
     private func validateOriginal(_ original: CustomRunDirectory, replacement: CustomRunDirectory) throws {
         if !original.isSameLocation(as: replacement), (try? original.validateAvailability()) != nil {
-            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.validateOriginalText1)
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.originalDirectoryStillAvailable)
         }
     }
     private func validate(_ preview: CustomRunDirectoryRelocationPreview, state: PersistentState) throws {
         let affected = affectedInstances(state, original: preview.original)
         guard affected.contains(where: { $0.id == preview.instanceID }), affected.map(CustomRunDirectoryBinding.init) == preview.bindings else {
-            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.affectedText1)
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.directoryPolicyChanged)
         }
         try validateOriginal(preview.original, replacement: preview.replacement)
         try preview.replacement.validateAvailability()
-        guard preview.identity.matches(preview.replacement.url) else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.affectedText2) }
+        guard preview.identity.matches(preview.replacement.url) else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.affectedFolderChanged) }
         try paths.configured(with: replacing(preview.original, with: preview.replacement, in: state)).validateDirectoryConfiguration()
     }
 }
@@ -119,7 +119,7 @@ private final class CustomRunDirectoryRelocationAccess {
             var metadataOnly = instance; metadataOnly.runDirectory = .isolated
             instanceLeases.append(try GameRunLease.acquire(paths: current.including(metadataOnly), instanceID: instance.id))
         }
-        guard var representative = affected.first else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.representativeText1) }
+        guard var representative = affected.first else { throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.noReferencingInstances) }
         representative.runDirectory = .custom; representative.customRunDirectory = replacement
         let checked = relocated.including(representative)
         rootLease = try SharedGameDirectoryLease.acquire(paths: checked, instanceID: representative.id, ignoringSession: nil)
@@ -127,7 +127,7 @@ private final class CustomRunDirectoryRelocationAccess {
             let lock = GameDataOperationLock(); try lock.acquire(directory: checked.gameDataState(representative.id), name: name); operations.append(lock)
         }
         for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: checked.gameDataState(representative.id).appendingPathComponent(name).path) {
-            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.lockText1)
+            throw RuriError.message(Messages.CoreCustomRunDirectoryRelocation.directoryOperationsPending)
         }
         worlds = try InstanceTransfer.lockWorlds(replacement.url)
         try replacement.validateAvailability()

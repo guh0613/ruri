@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreSchematicManager {
-        public static var parentText1: LocalizedMessage {
+        /// 同名文件或文件夹已存在。
+        ///
+        /// Resource: `Errors.coreSchematicManager.parentText1`.
+        public static var duplicateFileOrFolder: LocalizedMessage {
             .init(key: "coreSchematicManager.parentText1", table: "Errors", fallback: "同名文件或文件夹已存在。")
         }
-        public static var importFilesText1: LocalizedMessage {
+        /// 请选择 1–200 个原理图文件。
+        ///
+        /// Resource: `Errors.coreSchematicManager.importFilesText1`.
+        public static var invalidImportFileCount: LocalizedMessage {
             .init(key: "coreSchematicManager.importFilesText1", table: "Errors", fallback: "请选择 1–200 个原理图文件。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 请选择 litematic、schem、schematic 或 nbt 原理图文件。
+        ///
+        /// Resource: `Errors.coreSchematicManager.infoText1`.
+        public static var unsupportedSchematicFormat: LocalizedMessage {
             .init(key: "coreSchematicManager.infoText1", table: "Errors", fallback: "请选择 litematic、schem、schematic 或 nbt 原理图文件。")
         }
-        public static func targetText1(_ value0: String) -> LocalizedMessage {
+        /// 同名原理图已存在：%1$@。请先改名或移走旧文件。
+        ///
+        /// Resource: `Errors.coreSchematicManager.targetText1`.
+        public static func duplicateSchematicName(_ value0: String) -> LocalizedMessage {
             .init(key: "coreSchematicManager.targetText1", table: "Errors", fallback: "同名原理图已存在：%1$@。请先改名或移走旧文件。", arguments: [.text(value0)])
         }
-        public static var sourceText1: LocalizedMessage {
+        /// 请选择单个原理图文件导出。
+        ///
+        /// Resource: `Errors.coreSchematicManager.sourceText1`.
+        public static var singleSourceRequired: LocalizedMessage {
             .init(key: "coreSchematicManager.sourceText1", table: "Errors", fallback: "请选择单个原理图文件导出。")
         }
-        public static var sourceText2: LocalizedMessage {
+        /// 导出位置与原文件相同。
+        ///
+        /// Resource: `Errors.coreSchematicManager.sourceText2`.
+        public static var exportDestinationSameAsSource: LocalizedMessage {
             .init(key: "coreSchematicManager.sourceText2", table: "Errors", fallback: "导出位置与原文件相同。")
         }
-        public static var stagingText1: LocalizedMessage {
+        /// 无法保存导出的原理图。
+        ///
+        /// Resource: `Errors.coreSchematicManager.stagingText1`.
+        public static var schematicExportSaveFailed: LocalizedMessage {
             .init(key: "coreSchematicManager.stagingText1", table: "Errors", fallback: "无法保存导出的原理图。")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 文件夹没有原理图信息。
+        ///
+        /// Resource: `Errors.coreSchematicManager.fileText1`.
+        public static var schematicInfoMissing: LocalizedMessage {
             .init(key: "coreSchematicManager.fileText1", table: "Errors", fallback: "文件夹没有原理图信息。")
         }
-        public static var fileText2: LocalizedMessage {
+        /// 原理图文件已改变，请刷新列表。
+        ///
+        /// Resource: `Errors.coreSchematicManager.fileText2`.
+        public static var schematicFileChanged: LocalizedMessage {
             .init(key: "coreSchematicManager.fileText2", table: "Errors", fallback: "原理图文件已改变，请刷新列表。")
         }
-        public static var validateNameText1: LocalizedMessage {
+        /// 请输入有效的文件或文件夹名称。
+        ///
+        /// Resource: `Errors.coreSchematicManager.validateNameText1`.
+        public static var invalidFileOrFolderName: LocalizedMessage {
             .init(key: "coreSchematicManager.validateNameText1", table: "Errors", fallback: "请输入有效的文件或文件夹名称。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 原理图管理不修改符号链接目录。
+        ///
+        /// Resource: `Errors.coreSchematicManager.currentText1`.
+        public static var symlinkDirectoryUnchanged: LocalizedMessage {
             .init(key: "coreSchematicManager.currentText1", table: "Errors", fallback: "原理图管理不修改符号链接目录。")
         }
-        public static var currentText2: LocalizedMessage {
+        /// 原理图管理不修改符号链接。
+        ///
+        /// Resource: `Errors.coreSchematicManager.currentText2`.
+        public static var symlinkUnchanged: LocalizedMessage {
             .init(key: "coreSchematicManager.currentText2", table: "Errors", fallback: "原理图管理不修改符号链接。")
         }
         static let definitions: [String: MessageDefinition] = [

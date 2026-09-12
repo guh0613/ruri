@@ -21,27 +21,27 @@ public struct GameExit: Codable, Equatable, Sendable {
     public var shellStatus: Int32 { reason == .signal ? 128 + status : status }
     public var summary: String { summaryMessage.localized }
     public var summaryMessage: LocalizedMessage {
-        if stoppedByLauncher { return Messages.CoreGameExit.summaryText1 }
-        if succeeded { return Messages.CoreGameExit.summaryText2 }
-        if reason == .signal { return Messages.CoreGameExit.summaryText3(String(describing: signalName)) }
-        return Messages.CoreGameExit.summaryText4(String(describing: status))
+        if stoppedByLauncher { return Messages.CoreGameExit.requestedExit }
+        if succeeded { return Messages.CoreGameExit.normalExit }
+        if reason == .signal { return Messages.CoreGameExit.processExitReason(String(describing: signalName)) }
+        return Messages.CoreGameExit.crashExit(String(describing: status))
     }
     public var explanation: String {
-        if stoppedByLauncher { return Messages.CoreGameExit.explanationText1.localized }
-        if succeeded { return normalQuitRequested == true ? Messages.CoreGameExit.explanationText2.localized : Messages.CoreGameExit.explanationText3.localized }
+        if stoppedByLauncher { return Messages.CoreGameExit.ruriRequestedExit.localized }
+        if succeeded { return normalQuitRequested == true ? Messages.CoreGameExit.normalExitSucceeded.localized : Messages.CoreGameExit.processExitedSuccessfully.localized }
         if reason == .signal && [9, 15].contains(status) {
-            return Messages.CoreGameExit.explanationText4.localized
+            return Messages.CoreGameExit.terminationSignalReceived.localized
         }
         if reason == .exit && status == 143 {
-            return Messages.CoreGameExit.explanationText5.localized
+            return Messages.CoreGameExit.javaTerminationSignal.localized
         }
-        return Messages.CoreGameExit.explanationText6.localized
+        return Messages.CoreGameExit.exitStatusNeedsLogs.localized
     }
     public var logDescription: String {
-        Messages.CoreGameExit.logDescriptionText5(String(describing: summary), String(describing: processID), String(describing: reason == .signal ? Messages.CoreGameExit.logDescriptionText1.localized : Messages.CoreGameExit.logDescriptionText2.localized), String(describing: status), String(describing: stopRequested ? Messages.CoreGameExit.logDescriptionText3.localized : Messages.CoreGameExit.logDescriptionText4.localized), String(describing: normalQuitRequested == true ? Messages.CoreGameExit.logDescriptionText3.localized : Messages.CoreGameExit.logDescriptionText4.localized), String(describing: startedAt.ISO8601Format()), String(describing: endedAt.ISO8601Format())).localized
+        Messages.CoreGameExit.exitLogLine(summary, String(describing: processID), String(describing: reason == .signal ? Messages.CoreGameExit.signalLabel.localized : Messages.CoreGameExit.exitCodeLabel.localized), String(describing: status), String(describing: stopRequested ? Messages.CoreGameExit.yesLabel.localized : Messages.CoreGameExit.noLabel.localized), String(describing: normalQuitRequested == true ? Messages.CoreGameExit.yesLabel.localized : Messages.CoreGameExit.noLabel.localized), String(describing: startedAt.ISO8601Format()), String(describing: endedAt.ISO8601Format())).localized
     }
     private var signalName: String {
-        [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? Messages.CoreGameExit.signalNameText1(String(describing: status)).localized
+        [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? Messages.CoreGameExit.signalValue(String(describing: status)).localized
     }
     public func save(paths: LauncherPaths, instanceID: UUID) throws {
         let url = try LauncherPaths.safePath("last-exit.json", within: paths.instance(instanceID))
@@ -53,7 +53,7 @@ public struct GameExit: Codable, Equatable, Sendable {
 public struct GameCrashReport: Identifiable, Sendable {
     public enum Kind: String, Sendable {
         case minecraft = "Minecraft", jvm
-        public var title: String { switch self { case .minecraft: "Minecraft"; case .jvm: Messages.CoreGameExit.titleText1.localized } }
+        public var title: String { switch self { case .minecraft: "Minecraft"; case .jvm: Messages.CoreGameExit.javaVirtualMachine.localized } }
     }
     public let url: URL
     public let kind: Kind

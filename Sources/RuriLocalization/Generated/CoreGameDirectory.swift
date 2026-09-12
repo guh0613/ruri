@@ -3,67 +3,132 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDirectory {
-        public static var valuesText1: LocalizedMessage {
+        /// 此文件夹已有数据，请通过实例导入入口处理。
+        ///
+        /// Resource: `Errors.coreGameDirectory.valuesText1`.
+        public static var directoryHasData: LocalizedMessage {
             .init(key: "coreGameDirectory.valuesText1", table: "Errors", fallback: "此文件夹已有数据，请通过实例导入入口处理。")
         }
-        public static var markerText1: LocalizedMessage {
+        /// 此实例文件夹已经登记，不能重复添加其副本。
+        ///
+        /// Resource: `Errors.coreGameDirectory.markerText1`.
+        public static var directoryAlreadyRegistered: LocalizedMessage {
             .init(key: "coreGameDirectory.markerText1", table: "Errors", fallback: "此实例文件夹已经登记，不能重复添加其副本。")
         }
-        public static var instancesText1: LocalizedMessage {
+        /// 此文件夹仍有实例文件，请通过导入入口预览后导入。
+        ///
+        /// Resource: `Errors.coreGameDirectory.instancesText1`.
+        public static var directoryHasInstances: LocalizedMessage {
             .init(key: "coreGameDirectory.instancesText1", table: "Errors", fallback: "此文件夹仍有实例文件，请通过导入入口预览后导入。")
         }
-        public static var existingText1: LocalizedMessage {
+        /// 请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。
+        ///
+        /// Resource: `Errors.coreGameDirectory.existingText1`.
+        public static var directoryMustBeEmpty: LocalizedMessage {
             .init(key: "coreGameDirectory.existingText1", table: "Errors", fallback: "请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。")
         }
-        public static var validateAvailabilityText1: LocalizedMessage {
+        /// 路径不是文件夹
+        ///
+        /// Resource: `Errors.coreGameDirectory.validateAvailabilityText1`.
+        public static var pathNotDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.validateAvailabilityText1", table: "Errors", fallback: "路径不是文件夹")
         }
-        public static var valuesText2: LocalizedMessage {
+        /// 目录标记无效
+        ///
+        /// Resource: `Errors.coreGameDirectory.valuesText2`.
+        public static var invalidMarker: LocalizedMessage {
             .init(key: "coreGameDirectory.valuesText2", table: "Errors", fallback: "目录标记无效")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 目录身份与登记信息不一致
+        ///
+        /// Resource: `Errors.coreGameDirectory.recordText1`.
+        public static var identityMismatch: LocalizedMessage {
             .init(key: "coreGameDirectory.recordText1", table: "Errors", fallback: "目录身份与登记信息不一致")
         }
-        public static func recordText2(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// 无法访问实例文件夹“%1$@”：%2$@
+        /// 请连接磁盘、检查访问权限或重新定位原文件夹。
+        /// %3$@
+        ///
+        /// Resource: `Errors.coreGameDirectory.recordText2`.
+        public static func inaccessibleDirectory(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "coreGameDirectory.recordText2", table: "Errors", fallback: "无法访问实例文件夹“%1$@”：%2$@\n请连接磁盘、检查访问权限或重新定位原文件夹。\n%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var nameText1: LocalizedMessage {
+        /// 文件夹名称需为 1–100 个字符。
+        ///
+        /// Resource: `Errors.coreGameDirectory.nameText1`.
+        public static var invalidName: LocalizedMessage {
             .init(key: "coreGameDirectory.nameText1", table: "Errors", fallback: "文件夹名称需为 1–100 个字符。")
         }
-        public static var idsText1: LocalizedMessage {
+        /// 实例文件夹登记信息无效，已暂停操作以保护原数据。
+        ///
+        /// Resource: `Errors.coreGameDirectory.idsText1`.
+        public static var invalidRegistration: LocalizedMessage {
             .init(key: "coreGameDirectory.idsText1", table: "Errors", fallback: "实例文件夹登记信息无效，已暂停操作以保护原数据。")
         }
-        public static var idsText2: LocalizedMessage {
+        /// 实例文件夹位置无效。
+        ///
+        /// Resource: `Errors.coreGameDirectory.idsText2`.
+        public static var invalidLocation: LocalizedMessage {
             .init(key: "coreGameDirectory.idsText2", table: "Errors", fallback: "实例文件夹位置无效。")
         }
-        public static var idsText3: LocalizedMessage {
+        /// 本地版本缺少所属 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreGameDirectory.idsText3`.
+        public static var missingMinecraftFolder: LocalizedMessage {
             .init(key: "coreGameDirectory.idsText3", table: "Errors", fallback: "本地版本缺少所属 Minecraft 文件夹。")
         }
-        public static var idsText4: LocalizedMessage {
+        /// Minecraft 文件夹中的实例缺少版本目录名称。
+        ///
+        /// Resource: `Errors.coreGameDirectory.idsText4`.
+        public static var missingVersionDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.idsText4", table: "Errors", fallback: "Minecraft 文件夹中的实例缺少版本目录名称。")
         }
-        public static var customText1: LocalizedMessage {
+        /// 实例缺少自定义运行目录信息。
+        ///
+        /// Resource: `Errors.coreGameDirectory.customText1`.
+        public static var missingCustomRunDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.customText1", table: "Errors", fallback: "实例缺少自定义运行目录信息。")
         }
-        public static var customText2: LocalizedMessage {
+        /// 自定义目录与实例策略不一致。
+        ///
+        /// Resource: `Errors.coreGameDirectory.customText2`.
+        public static var customDirectoryMismatch: LocalizedMessage {
             .init(key: "coreGameDirectory.customText2", table: "Errors", fallback: "自定义目录与实例策略不一致。")
         }
-        public static var customText3: LocalizedMessage {
+        /// 同一自定义路径保存了不同的目录身份。
+        ///
+        /// Resource: `Errors.coreGameDirectory.customText3`.
+        public static var duplicateCustomDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.customText3", table: "Errors", fallback: "同一自定义路径保存了不同的目录身份。")
         }
-        public static var checkNewDirectoryText1: LocalizedMessage {
+        /// 请选择已存在的本地文件夹。
+        ///
+        /// Resource: `Errors.coreGameDirectory.checkNewDirectoryText1`.
+        public static var requireExistingDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.checkNewDirectoryText1", table: "Errors", fallback: "请选择已存在的本地文件夹。")
         }
-        public static var existingText2: LocalizedMessage {
+        /// 实例文件夹不能与已登记文件夹或公共数据目录重叠。
+        ///
+        /// Resource: `Errors.coreGameDirectory.existingText2`.
+        public static var overlappingDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.existingText2", table: "Errors", fallback: "实例文件夹不能与已登记文件夹或公共数据目录重叠。")
         }
-        public static var directoryText1: LocalizedMessage {
+        /// 找不到实例所属文件夹，请恢复目录登记后重试。
+        ///
+        /// Resource: `Errors.coreGameDirectory.directoryText1`.
+        public static var missingParentDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.directoryText1", table: "Errors", fallback: "找不到实例所属文件夹，请恢复目录登记后重试。")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 实例缺少版本文件夹。
+        ///
+        /// Resource: `Errors.coreGameDirectory.versionText1`.
+        public static var missingVersionFolder: LocalizedMessage {
             .init(key: "coreGameDirectory.versionText1", table: "Errors", fallback: "实例缺少版本文件夹。")
         }
-        public static var customText4: LocalizedMessage {
+        /// 请先选择自定义运行目录。
+        ///
+        /// Resource: `Errors.coreGameDirectory.customText4`.
+        public static var requireCustomDirectory: LocalizedMessage {
             .init(key: "coreGameDirectory.customText4", table: "Errors", fallback: "请先选择自定义运行目录。")
         }
         static let definitions: [String: MessageDefinition] = [

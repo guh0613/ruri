@@ -3,55 +3,106 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunch {
-        public static var newlineText1: LocalizedMessage {
+        /// [Ruri] 单行日志过长，已省略
+        ///
+        /// Resource: `Core.coreLaunch.newlineText1`.
+        public static var longLogLineOmitted: LocalizedMessage {
             .init(key: "coreLaunch.newlineText1", table: "Core", fallback: "[Ruri] 单行日志过长，已省略")
         }
-        public static var qText1: LocalizedMessage {
+        /// 启动参数中的引号或反斜杠未闭合。
+        ///
+        /// Resource: `Errors.coreLaunch.qText1`.
+        public static var unclosedLaunchQuoting: LocalizedMessage {
             .init(key: "coreLaunch.qText1", table: "Errors", fallback: "启动参数中的引号或反斜杠未闭合。")
         }
-        public static var buildText1: LocalizedMessage {
+        /// 请先完成外置认证并准备认证组件。
+        ///
+        /// Resource: `Errors.coreLaunch.buildText1`.
+        public static var externalAuthRequired: LocalizedMessage {
             .init(key: "coreLaunch.buildText1", table: "Errors", fallback: "请先完成外置认证并准备认证组件。")
         }
-        public static var buildText2: LocalizedMessage {
+        /// 整合包尚未完成导入，请先完成导入后再启动。
+        ///
+        /// Resource: `Errors.coreLaunch.buildText2`.
+        public static var packImportIncomplete: LocalizedMessage {
             .init(key: "coreLaunch.buildText2", table: "Errors", fallback: "整合包尚未完成导入，请先完成导入后再启动。")
         }
-        public static var mainClassText1: LocalizedMessage {
+        /// 启动清单没有主类
+        ///
+        /// Resource: `Errors.coreLaunch.mainClassText1`.
+        public static var mainClassMissing: LocalizedMessage {
             .init(key: "coreLaunch.mainClassText1", table: "Errors", fallback: "启动清单没有主类")
         }
-        public static var mainClassText2: LocalizedMessage {
+        /// 启动清单尚未合并父版本
+        ///
+        /// Resource: `Errors.coreLaunch.mainClassText2`.
+        public static var parentManifestUnmerged: LocalizedMessage {
             .init(key: "coreLaunch.mainClassText2", table: "Errors", fallback: "启动清单尚未合并父版本")
         }
-        public static var mainClassText3: LocalizedMessage {
+        /// 内存或窗口大小设置无效
+        ///
+        /// Resource: `Errors.coreLaunch.mainClassText3`.
+        public static var invalidMemoryOrWindow: LocalizedMessage {
             .init(key: "coreLaunch.mainClassText3", table: "Errors", fallback: "内存或窗口大小设置无效")
         }
-        public static var architectureText1: LocalizedMessage {
+        /// 此版本的兼容规则不支持当前 macOS 环境。
+        ///
+        /// Resource: `Errors.coreLaunch.architectureText1`.
+        public static var unsupportedArchitecture: LocalizedMessage {
             .init(key: "coreLaunch.architectureText1", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
         }
-        public static func architectureText2(_ value0: String) -> LocalizedMessage {
+        /// Java 与游戏原生库的架构不匹配。需要 %1$@。
+        ///
+        /// Resource: `Errors.coreLaunch.architectureText2`.
+        public static func nativeArchitectureMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunch.architectureText2", table: "Errors", fallback: "Java 与游戏原生库的架构不匹配。需要 %1$@。", arguments: [.text(value0)])
         }
-        public static var architectureText3: LocalizedMessage {
+        /// 所选 Java 不符合游戏或整合包的版本要求。
+        ///
+        /// Resource: `Errors.coreLaunch.architectureText3`.
+        public static var javaVersionIncompatible: LocalizedMessage {
             .init(key: "coreLaunch.architectureText3", table: "Errors", fallback: "所选 Java 不符合游戏或整合包的版本要求。")
         }
-        public static var architectureText4: LocalizedMessage {
+        /// 所选运行时不是实例指定的 Java 主版本。
+        ///
+        /// Resource: `Errors.coreLaunch.architectureText4`.
+        public static var javaMajorVersionMismatch: LocalizedMessage {
             .init(key: "coreLaunch.architectureText4", table: "Errors", fallback: "所选运行时不是实例指定的 Java 主版本。")
         }
-        public static var seenText1: LocalizedMessage {
+        /// 加载器生成文件缺失，请先修复实例。
+        ///
+        /// Resource: `Errors.coreLaunch.seenText1`.
+        public static var generatedFilesMissing: LocalizedMessage {
             .init(key: "coreLaunch.seenText1", table: "Errors", fallback: "加载器生成文件缺失，请先修复实例。")
         }
-        public static func seenText2(_ value0: String) -> LocalizedMessage {
+        /// 游戏文件缺失：%1$@。请先修复实例。
+        ///
+        /// Resource: `Errors.coreLaunch.seenText2`.
+        public static func gameFilesMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunch.seenText2", table: "Errors", fallback: "游戏文件缺失：%1$@。请先修复实例。", arguments: [.text(value0)])
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// 启动清单包含未支持的变量：%1$@
+        ///
+        /// Resource: `Errors.coreLaunch.resultText1`.
+        public static func unsupportedManifestVariable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunch.resultText1", table: "Errors", fallback: "启动清单包含未支持的变量：%1$@", arguments: [.text(value0)])
         }
-        public static var extrasText1: LocalizedMessage {
+        /// 附加 JVM 参数不能覆盖游戏主类或 classpath。
+        ///
+        /// Resource: `Errors.coreLaunch.extrasText1`.
+        public static var jvmArgumentsOverride: LocalizedMessage {
             .init(key: "coreLaunch.extrasText1", table: "Errors", fallback: "附加 JVM 参数不能覆盖游戏主类或 classpath。")
         }
-        public static var reservedText1: LocalizedMessage {
+        /// 附加游戏参数不能覆盖账号身份、令牌或游戏目录。
+        ///
+        /// Resource: `Errors.coreLaunch.reservedText1`.
+        public static var gameArgumentsOverride: LocalizedMessage {
             .init(key: "coreLaunch.reservedText1", table: "Errors", fallback: "附加游戏参数不能覆盖账号身份、令牌或游戏目录。")
         }
-        public static var startText1: LocalizedMessage {
+        /// 游戏已在运行或正在结束
+        ///
+        /// Resource: `Errors.coreLaunch.startText1`.
+        public static var gameAlreadyRunning: LocalizedMessage {
             .init(key: "coreLaunch.startText1", table: "Errors", fallback: "游戏已在运行或正在结束")
         }
         static let definitions: [String: MessageDefinition] = [

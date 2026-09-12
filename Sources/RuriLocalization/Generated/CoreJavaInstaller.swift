@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaInstaller {
-        public static func existingText1(_ value0: String) -> LocalizedMessage {
+        /// 此 Java 已损坏，请在 Java 页面点击“修复”：%1$@
+        ///
+        /// Resource: `Errors.coreJavaInstaller.existingText1`.
+        public static func javaCorrupt(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaInstaller.existingText1", table: "Errors", fallback: "此 Java 已损坏，请在 Java 页面点击“修复”：%1$@", arguments: [.text(value0)])
         }
-        public static var replacingText1: LocalizedMessage {
+        /// 此 Java 已由另一个操作安装，请重新检测。
+        ///
+        /// Resource: `Errors.coreJavaInstaller.replacingText1`.
+        public static var javaAlreadyInstalled: LocalizedMessage {
             .init(key: "coreJavaInstaller.replacingText1", table: "Errors", fallback: "此 Java 已由另一个操作安装，请重新检测。")
         }
-        public static var artifactText1: LocalizedMessage {
+        /// Java 文件清单缺少下载信息
+        ///
+        /// Resource: `Errors.coreJavaInstaller.artifactText1`.
+        public static var manifestDownloadInfoMissing: LocalizedMessage {
             .init(key: "coreJavaInstaller.artifactText1", table: "Errors", fallback: "Java 文件清单缺少下载信息")
         }
-        public static var linkText1: LocalizedMessage {
+        /// Java 清单包含不安全链接
+        ///
+        /// Resource: `Errors.coreJavaInstaller.linkText1`.
+        public static var insecureManifestLink: LocalizedMessage {
             .init(key: "coreJavaInstaller.linkText1", table: "Errors", fallback: "Java 清单包含不安全链接")
         }
-        public static var resolvedText1: LocalizedMessage {
+        /// Java 链接超出运行时目录
+        ///
+        /// Resource: `Errors.coreJavaInstaller.resolvedText1`.
+        public static var linkEscapesRuntime: LocalizedMessage {
             .init(key: "coreJavaInstaller.resolvedText1", table: "Errors", fallback: "Java 链接超出运行时目录")
         }
-        public static func resolvedText2(_ value0: String) -> LocalizedMessage {
+        /// 不支持的 Java 文件类型：%1$@
+        ///
+        /// Resource: `Errors.coreJavaInstaller.resolvedText2`.
+        public static func unsupportedJavaFileType(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaInstaller.resolvedText2", table: "Errors", fallback: "不支持的 Java 文件类型：%1$@", arguments: [.text(value0)])
         }
-        public static var existingText2: LocalizedMessage {
+        /// Java 目录中存在不一致的链接
+        ///
+        /// Resource: `Errors.coreJavaInstaller.existingText2`.
+        public static var inconsistentJavaLinks: LocalizedMessage {
             .init(key: "coreJavaInstaller.existingText2", table: "Errors", fallback: "Java 目录中存在不一致的链接")
         }
-        public static var checkedText1: LocalizedMessage {
+        /// 下载的 Java 版本或架构不符合要求
+        ///
+        /// Resource: `Errors.coreJavaInstaller.checkedText1`.
+        public static var javaVersionMismatch: LocalizedMessage {
             .init(key: "coreJavaInstaller.checkedText1", table: "Errors", fallback: "下载的 Java 版本或架构不符合要求")
         }
-        public static var checkedText2: LocalizedMessage {
+        /// 无法替换 Java 目录，原运行时仍保留。
+        ///
+        /// Resource: `Errors.coreJavaInstaller.checkedText2`.
+        public static var javaDirectoryReplaceFailed: LocalizedMessage {
             .init(key: "coreJavaInstaller.checkedText2", table: "Errors", fallback: "无法替换 Java 目录，原运行时仍保留。")
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// 修复后的 Java 无法运行，原副本保留在：%1$@
+        ///
+        /// Resource: `Errors.coreJavaInstaller.resultText1`.
+        public static func repairedJavaUnrunnable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaInstaller.resultText1", table: "Errors", fallback: "修复后的 Java 无法运行，原副本保留在：%1$@", arguments: [.text(value0)])
         }
-        public static func manifestURLText1(_ value0: String) -> LocalizedMessage {
+        /// 读取 Java %1$@ 文件清单
+        ///
+        /// Resource: `Progress.coreJavaInstaller.manifestURLText1`.
+        public static func readJavaManifest(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaInstaller.manifestURLText1", table: "Progress", fallback: "读取 Java %1$@ 文件清单", arguments: [.text(value0)])
         }
-        public static func resolvedText3(_ value0: String) -> LocalizedMessage {
+        /// 下载 Java %1$@
+        ///
+        /// Resource: `Progress.coreJavaInstaller.resolvedText3`.
+        public static func downloadJava(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaInstaller.resolvedText3", table: "Progress", fallback: "下载 Java %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

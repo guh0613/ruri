@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum AppRuriApp {
-        public static var bodyText1: LocalizedMessage {
+        /// 显示主窗口
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText1`.
+        public static var showMainWindow: LocalizedMessage {
             .init(key: "appRuriApp.bodyText1", table: "Interface", fallback: "显示主窗口")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 新建游戏实例
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText2`.
+        public static var newInstance: LocalizedMessage {
             .init(key: "appRuriApp.bodyText2", table: "Interface", fallback: "新建游戏实例")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 导入实例或整合包…
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText3`.
+        public static var importInstance: LocalizedMessage {
             .init(key: "appRuriApp.bodyText3", table: "Interface", fallback: "导入实例或整合包…")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 添加游戏文件夹…
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText4`.
+        public static var addGameFolder: LocalizedMessage {
             .init(key: "appRuriApp.bodyText4", table: "Interface", fallback: "添加游戏文件夹…")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 设置…
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText5`.
+        public static var settings: LocalizedMessage {
             .init(key: "appRuriApp.bodyText5", table: "Interface", fallback: "设置…")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 游戏
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText6`.
+        public static var gameMenu: LocalizedMessage {
             .init(key: "appRuriApp.bodyText6", table: "Interface", fallback: "游戏")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 启动选中实例
+        ///
+        /// Resource: `Interface.appRuriApp.bodyText7`.
+        public static var launchSelectedInstance: LocalizedMessage {
             .init(key: "appRuriApp.bodyText7", table: "Interface", fallback: "启动选中实例")
         }
-        public static func instanceText1(_ value0: String) -> LocalizedMessage {
+        /// 返回 %1$@
+        ///
+        /// Resource: `Interface.appRuriApp.instanceText1`.
+        public static func returnToInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appRuriApp.instanceText1", table: "Interface", fallback: "返回 %1$@", arguments: [.text(value0)])
         }
-        public static func instanceText2(_ value0: String) -> LocalizedMessage {
+        /// 请求退出 %1$@
+        ///
+        /// Resource: `Interface.appRuriApp.instanceText2`.
+        public static func requestExit(_ value0: String) -> LocalizedMessage {
             .init(key: "appRuriApp.instanceText2", table: "Interface", fallback: "请求退出 %1$@", arguments: [.text(value0)])
         }
-        public static func instanceText3(_ value0: String) -> LocalizedMessage {
+        /// 终止 %1$@ 的进程…
+        ///
+        /// Resource: `Interface.appRuriApp.instanceText3`.
+        public static func terminateInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appRuriApp.instanceText3", table: "Interface", fallback: "终止 %1$@ 的进程…", arguments: [.text(value0)])
         }
-        public static var instanceText4: LocalizedMessage {
+        /// 运行记录与日志
+        ///
+        /// Resource: `Interface.appRuriApp.instanceText4`.
+        public static var processLogs: LocalizedMessage {
             .init(key: "appRuriApp.instanceText4", table: "Interface", fallback: "运行记录与日志")
         }
-        public static var instanceText5: LocalizedMessage {
+        /// 在 Finder 中显示实例
+        ///
+        /// Resource: `Interface.appRuriApp.instanceText5`.
+        public static var revealInstance: LocalizedMessage {
             .init(key: "appRuriApp.instanceText5", table: "Interface", fallback: "在 Finder 中显示实例")
         }
-        public static var showText1: LocalizedMessage {
+        /// 显示 Ruri
+        ///
+        /// Resource: `Interface.appRuriApp.showText1`.
+        public static var showRuri: LocalizedMessage {
             .init(key: "appRuriApp.showText1", table: "Interface", fallback: "显示 Ruri")
         }
         static let definitions: [String: MessageDefinition] = [

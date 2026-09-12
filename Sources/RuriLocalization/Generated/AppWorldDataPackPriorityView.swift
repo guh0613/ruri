@@ -3,31 +3,58 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPackPriorityView {
-        public static var bodyText1: LocalizedMessage {
+        /// 数据包优先级
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.bodyText1`.
+        public static var dataPackPriority: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.bodyText1", table: "Interface", fallback: "数据包优先级")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.bodyText2`.
+        public static var priorityDetails: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.bodyText2", table: "Interface", fallback: "越靠上优先级越高，同名内容会覆盖下方数据包。拖动本地数据包或使用箭头调整，下次进入世界时生效。")
         }
-        public static var snapshotText1: LocalizedMessage {
+        /// 原版
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText1`.
+        public static var vanilla: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.snapshotText1", table: "Interface", fallback: "原版")
         }
-        public static var snapshotText2: LocalizedMessage {
+        /// 本地文件缺失或未启用，保留原记录
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText2`.
+        public static var missingOrDisabled: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.snapshotText2", table: "Interface", fallback: "本地文件缺失或未启用，保留原记录")
         }
-        public static var snapshotText3: LocalizedMessage {
+        /// 游戏或模组提供
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText3`.
+        public static var providedByGameOrMod: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.snapshotText3", table: "Interface", fallback: "游戏或模组提供")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 提高优先级
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.indexText1`.
+        public static var increasePriority: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.indexText1", table: "Interface", fallback: "提高优先级")
         }
-        public static var indexText2: LocalizedMessage {
+        /// 降低优先级
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.indexText2`.
+        public static var decreasePriority: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.indexText2", table: "Interface", fallback: "降低优先级")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 保存顺序
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.errorText1`.
+        public static var saveOrder: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.errorText1", table: "Interface", fallback: "保存顺序")
         }
-        public static var snapshotText4: LocalizedMessage {
+        /// 调整数据包优先级
+        ///
+        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText4`.
+        public static var adjustDataPackPriority: LocalizedMessage {
             .init(key: "appWorldDataPackPriorityView.snapshotText4", table: "Interface", fallback: "调整数据包优先级")
         }
         static let definitions: [String: MessageDefinition] = [

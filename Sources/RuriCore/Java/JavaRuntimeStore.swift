@@ -16,7 +16,7 @@ public struct JavaRuntimeEntry: Identifiable, Sendable {
     public let addedRuntime: JavaRuntime?
     public let managedID: String?
     public let remote: RemoteJava?
-    public var source: String { managedID != nil ? Messages.CoreJavaRuntimeStore.sourceText1.localized : manual ? Messages.CoreJavaRuntimeStore.sourceText2.localized : configured ? Messages.CoreJavaRuntimeStore.sourceText3.localized : Messages.CoreJavaRuntimeStore.sourceText4.localized }
+    public var source: String { managedID != nil ? Messages.CoreJavaRuntimeStore.downloadedByRuri.localized : manual ? Messages.CoreJavaRuntimeStore.addedManually.localized : configured ? Messages.CoreJavaRuntimeStore.fromLaunchSettings.localized : Messages.CoreJavaRuntimeStore.detectedAutomatically.localized }
 }
 public struct JavaRemovalResult: Sendable {
     public let state: PersistentState
@@ -45,13 +45,13 @@ public enum JavaRuntimeStore {
     static func validate(_ locations: [JavaLocation]) throws {
         guard locations.count <= 256, Set(locations.map(\.path)).count == locations.count,
               locations.allSatisfy({ $0.path.hasPrefix("/") && $0.path.utf8.count <= 8192 && !$0.path.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) }) else {
-            throw RuriError.message(Messages.CoreJavaRuntimeStore.validateText1)
+            throw RuriError.message(Messages.CoreJavaRuntimeStore.invalidManualJavaPathRecord)
         }
     }
     static func directory(_ id: String, paths: LauncherPaths, partial: Bool = false) throws -> URL {
-        guard !id.isEmpty, id.utf8.count <= 240, !id.hasPrefix("."), !id.contains("/"), !id.contains("\\"), !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreJavaRuntimeStore.directoryText1) }
+        guard !id.isEmpty, id.utf8.count <= 240, !id.hasPrefix("."), !id.contains("/"), !id.contains("\\"), !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreJavaRuntimeStore.invalidJavaRuntimeName) }
         let raw = paths.runtimes.appendingPathComponent((partial ? ".partial-" : "") + id)
-        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: raw.path)) == nil else { throw RuriError.message(Messages.CoreJavaRuntimeStore.rawText1) }
+        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: raw.path)) == nil else { throw RuriError.message(Messages.CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory) }
         return try LauncherPaths.safePath((partial ? ".partial-" : "") + id, within: paths.runtimes)
     }
     private static func contains(_ path: String, directory: URL) -> Bool {
@@ -63,7 +63,7 @@ public enum JavaRuntimeStore {
     }
     private static func references(in state: PersistentState, directory: URL) -> [String] {
         var result: [String] = []
-        if let path = state.settings.defaultLaunchSettings.java.path, contains(path, directory: directory) { result.append(Messages.CoreJavaRuntimeStore.pathText1.localized) }
+        if let path = state.settings.defaultLaunchSettings.java.path, contains(path, directory: directory) { result.append(Messages.CoreJavaRuntimeStore.defaultLaunchSettings.localized) }
         for instance in state.instances + (state.detachedMinecraftFolders ?? []).flatMap(\.instances) {
             if let path = instance.resolvedLaunchSettings(defaults: state.settings).java.path, contains(path, directory: directory) { result.append(instance.name) }
         }
@@ -71,7 +71,7 @@ public enum JavaRuntimeStore {
     }
     public static func trash(_ id: String, paths: LauncherPaths, resetReferences: Bool = false, partial: Bool = false) throws -> JavaRemovalResult {
         let root = try directory(id, paths: paths, partial: partial)
-        guard FileManager.default.fileExists(atPath: root.path) else { throw RuriError.message(Messages.CoreJavaRuntimeStore.rootText1) }
+        guard FileManager.default.fileExists(atPath: root.path) else { throw RuriError.message(Messages.CoreJavaRuntimeStore.javaRuntimeDirectoryMissing) }
         let lease = try JavaRuntimeLease.acquire(id: id, paths: paths, exclusive: true)
         defer { withExtendedLifetime(lease) {} }
         try JavaRuntimeLease.requireNoRunningProcess(in: root)
@@ -80,7 +80,7 @@ public enum JavaRuntimeStore {
         do {
             let saved = try StateStore.update(paths) { state in
                 let references = references(in: state, directory: root)
-                guard references.isEmpty || resetReferences else { throw RuriError.message(Messages.CoreJavaRuntimeStore.referencesText1(String(describing: references.joined(separator: "、")))) }
+                guard references.isEmpty || resetReferences else { throw RuriError.message(Messages.CoreJavaRuntimeStore.javaStillReferencedBySettings(String(describing: references.joined(separator: "、")))) }
                 if resetReferences { replaceReferences(in: &state, matching: { contains($0, directory: root) }, with: nil) }
                 state.settings.javaLocations?.removeAll { contains($0.path, directory: root) }
                 try FileManager.default.trashItem(at: root, resultingItemURL: &trashed)
@@ -89,7 +89,7 @@ public enum JavaRuntimeStore {
         } catch {
             if let trashed {
                 do { try FileManager.default.moveItem(at: trashed as URL, to: root) }
-                catch { throw RuriError.message(Messages.CoreJavaRuntimeStore.trashedText1) }
+                catch { throw RuriError.message(Messages.CoreJavaRuntimeStore.javaReferenceSaveFailed) }
             }
             throw error
         }

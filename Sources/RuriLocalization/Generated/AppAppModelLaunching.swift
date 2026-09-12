@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelLaunching {
-        public static var serverText1: LocalizedMessage {
+        /// 请重新添加外置认证账号。
+        ///
+        /// Resource: `Errors.appAppModelLaunching.serverText1`.
+        public static var externalAuthRequired: LocalizedMessage {
             .init(key: "appAppModelLaunching.serverText1", table: "Errors", fallback: "请重新添加外置认证账号。")
         }
-        public static var runtimeText1: LocalizedMessage {
+        /// Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。
+        ///
+        /// Resource: `Errors.appAppModelLaunching.runtimeText1`.
+        public static var javaRuntimeUnavailable: LocalizedMessage {
             .init(key: "appAppModelLaunching.runtimeText1", table: "Errors", fallback: "Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
         }
-        public static var storedText1: LocalizedMessage {
+        /// 这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。
+        ///
+        /// Resource: `Interface.appAppModelLaunching.storedText1`.
+        public static var instanceInUse: LocalizedMessage {
             .init(key: "appAppModelLaunching.storedText1", table: "Interface", fallback: "这个实例或共享目录正在使用中，请查看运行记录或实例设置中的恢复入口。")
         }
-        public static func presentationText1(_ value0: String) -> LocalizedMessage {
+        /// 启动 %1$@
+        ///
+        /// Resource: `Interface.appAppModelLaunching.presentationText1`.
+        public static func launchingInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelLaunching.presentationText1", table: "Interface", fallback: "启动 %1$@", arguments: [.text(value0)])
         }
-        public static func messageText1(_ value0: String) -> LocalizedMessage {
+        /// 运行记录未能完整写入：%1$@
+        ///
+        /// Resource: `Interface.appAppModelLaunching.messageText1`.
+        public static func runRecordIncomplete(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelLaunching.messageText1", table: "Interface", fallback: "运行记录未能完整写入：%1$@", arguments: [.text(value0)])
         }
+        /// [Ruri] 进入存档：%1$@
+        ///
+        /// Resource: `Interface.appAppModelLaunching.worldLaunch`.
         public static func worldLaunch(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelLaunching.worldLaunch", table: "Interface", fallback: "[Ruri] 进入存档：%1$@", arguments: [.text(value0)])
         }
+        /// %1$@，可在运行记录中查看详情。
+        ///
+        /// Resource: `Interface.appAppModelLaunching.launchFailureNotice`.
         public static func launchFailureNotice(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelLaunching.launchFailureNotice", table: "Interface", fallback: "%1$@，可在运行记录中查看详情。", arguments: [.text(value0)])
         }
-        public static var installedText1: LocalizedMessage {
+        /// 正在检查账号和 Java
+        ///
+        /// Resource: `Progress.appAppModelLaunching.installedText1`.
+        public static var checkingAccountAndJava: LocalizedMessage {
             .init(key: "appAppModelLaunching.installedText1", table: "Progress", fallback: "正在检查账号和 Java")
         }
-        public static var serverText2: LocalizedMessage {
+        /// 正在准备外置认证组件
+        ///
+        /// Resource: `Progress.appAppModelLaunching.serverText2`.
+        public static var preparingAuthComponent: LocalizedMessage {
             .init(key: "appAppModelLaunching.serverText2", table: "Progress", fallback: "正在准备外置认证组件")
         }
-        public static func serviceText1(_ value0: String) -> LocalizedMessage {
+        /// 正在准备所需的 Java %1$@
+        ///
+        /// Resource: `Progress.appAppModelLaunching.serviceText1`.
+        public static func preparingJava(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelLaunching.serviceText1", table: "Progress", fallback: "正在准备所需的 Java %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

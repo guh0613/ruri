@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackUpdater {
-        public static var instanceText1: LocalizedMessage {
+        /// 实例已从列表移除。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.instanceText1`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "coreModpackUpdater.instanceText1", table: "Errors", fallback: "实例已从列表移除。")
         }
-        public static var packText1: LocalizedMessage {
+        /// 此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.packText1`.
+        public static var missingPackSource: LocalizedMessage {
             .init(key: "coreModpackUpdater.packText1", table: "Errors", fallback: "此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。")
         }
-        public static var packText2: LocalizedMessage {
+        /// 请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.packText2`.
+        public static var invalidPackSelection: LocalizedMessage {
             .init(key: "coreModpackUpdater.packText2", table: "Errors", fallback: "请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。")
         }
-        public static var incomingText1: LocalizedMessage {
+        /// 所选文件属于另一个整合包项目。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.incomingText1`.
+        public static var wrongPackProject: LocalizedMessage {
             .init(key: "coreModpackUpdater.incomingText1", table: "Errors", fallback: "所选文件属于另一个整合包项目。")
         }
-        public static var incomingText2: LocalizedMessage {
+        /// 新版整合包没有有效的文件清单。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.incomingText2`.
+        public static var missingFileManifest: LocalizedMessage {
             .init(key: "coreModpackUpdater.incomingText2", table: "Errors", fallback: "新版整合包没有有效的文件清单。")
         }
-        public static var resultText1: LocalizedMessage {
+        /// 新版安装包含无法迁移的临时路径，原实例已保留。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.resultText1`.
+        public static var unmigratableTemporaryPath: LocalizedMessage {
             .init(key: "coreModpackUpdater.resultText1", table: "Errors", fallback: "新版安装包含无法迁移的临时路径，原实例已保留。")
         }
-        public static var latestText1: LocalizedMessage {
+        /// 实例已移除。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.latestText1`.
+        public static var instanceRemovedAfterPreview: LocalizedMessage {
             .init(key: "coreModpackUpdater.latestText1", table: "Errors", fallback: "实例已移除。")
         }
-        public static func sourceText1(_ value0: String) -> LocalizedMessage {
+        /// 更新文件在预览后改变：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdater.sourceText1`.
+        public static func updateFilesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdater.sourceText1", table: "Errors", fallback: "更新文件在预览后改变：%1$@", arguments: [.text(value0)])
         }
-        public static var validateText1: LocalizedMessage {
+        /// 整合包版本或启动配置在预览后改变，请重新准备更新。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.validateText1`.
+        public static var previewConfigurationChanged: LocalizedMessage {
             .init(key: "coreModpackUpdater.validateText1", table: "Errors", fallback: "整合包版本或启动配置在预览后改变，请重新准备更新。")
         }
-        public static func validateText2(_ value0: String) -> LocalizedMessage {
+        /// 预览后文件又有修改，请重新生成差异：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdater.validateText2`.
+        public static func filesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdater.validateText2", table: "Errors", fallback: "预览后文件又有修改，请重新生成差异：%1$@", arguments: [.text(value0)])
         }
-        public static func resolutionText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”依赖此版本，请先创建独立副本再更新整合包。
+        ///
+        /// Resource: `Errors.coreModpackUpdater.resolutionText1`.
+        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdater.resolutionText1", table: "Errors", fallback: "“%1$@”依赖此版本，请先创建独立副本再更新整合包。", arguments: [.text(value0)])
         }
-        public static var sourceMetadataText1: LocalizedMessage {
+        /// 正在应用整合包更新
+        ///
+        /// Resource: `Progress.coreModpackUpdater.sourceMetadataText1`.
+        public static var applyingUpdate: LocalizedMessage {
             .init(key: "coreModpackUpdater.sourceMetadataText1", table: "Progress", fallback: "正在应用整合包更新")
         }
         static let definitions: [String: MessageDefinition] = [

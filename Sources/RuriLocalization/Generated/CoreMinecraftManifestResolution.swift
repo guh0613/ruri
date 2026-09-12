@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftManifestResolution {
-        public static var mainText1: LocalizedMessage {
+        /// 合并后的版本清单没有游戏主类，请检查原安装。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestResolution.mainText1`.
+        public static var mainClassMissing: LocalizedMessage {
             .init(key: "coreMinecraftManifestResolution.mainText1", table: "Errors", fallback: "合并后的版本清单没有游戏主类，请检查原安装。")
         }
-        public static var jarIDText1: LocalizedMessage {
+        /// 合并后的版本清单缺少游戏 JAR 引用。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestResolution.jarIDText1`.
+        public static var gameJarMissing: LocalizedMessage {
             .init(key: "coreMinecraftManifestResolution.jarIDText1", table: "Errors", fallback: "合并后的版本清单缺少游戏 JAR 引用。")
         }
-        public static var rawLibrariesText1: LocalizedMessage {
+        /// 依赖库清单包含无效声明。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestResolution.rawLibrariesText1`.
+        public static var invalidLibraries: LocalizedMessage {
             .init(key: "coreMinecraftManifestResolution.rawLibrariesText1", table: "Errors", fallback: "依赖库清单包含无效声明。")
         }
-        public static func hintText1(_ value0: String) -> LocalizedMessage {
+        /// 依赖库的位置提示无效：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftManifestResolution.hintText1`.
+        public static func invalidLibraryHint(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftManifestResolution.hintText1", table: "Errors", fallback: "依赖库的位置提示无效：%1$@", arguments: [.text(value0)])
         }
-        public static func valueText1(_ value0: String) -> LocalizedMessage {
+        /// 本地依赖库的文件名无效：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftManifestResolution.valueText1`.
+        public static func invalidLibraryFilename(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftManifestResolution.valueText1", table: "Errors", fallback: "本地依赖库的文件名无效：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

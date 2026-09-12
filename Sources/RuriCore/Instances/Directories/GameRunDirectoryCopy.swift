@@ -11,10 +11,10 @@ public struct RunDirectoryCopyProgress: Sendable {
     public let totalBytes: Int64
     public var progress: InstallProgress {
         switch phase {
-        case .verifying: .init(Messages.CoreGameRunDirectoryCopy.progressText1, completed: completed, total: total)
-        case .copying: .init(Messages.CoreGameRunDirectoryCopy.progressText2(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: completed, total: total)
-        case .publishing: .init(Messages.CoreGameRunDirectoryCopy.progressText3(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
-        case .committed: .init(Messages.CoreGameRunDirectoryCopy.progressText4, completed: 1, total: 1)
+        case .verifying: .init(Messages.CoreGameRunDirectoryCopy.validatingFileContents, completed: completed, total: total)
+        case .copying: .init(Messages.CoreGameRunDirectoryCopy.copyingGameFiles(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: completed, total: total)
+        case .publishing: .init(Messages.CoreGameRunDirectoryCopy.writingDestination(String(describing: LocalizedFormat.bytes(bytesCopied)), String(describing: LocalizedFormat.bytes(totalBytes))), completed: totalBytes > 0 ? Int(bytesCopied) : completed, total: totalBytes > 0 ? Int(totalBytes) : total)
+        case .committed: .init(Messages.CoreGameRunDirectoryCopy.cleaningCopyRecord, completed: 1, total: 1)
         }
     }
 }
@@ -35,13 +35,13 @@ public struct RunDirectoryCopyFailure: LocalizedError, Sendable {
     public let message: String
     public let preservedCopy: URL?
     public let cancelled: Bool
-    public var errorDescription: String? { message + (preservedCopy.map { Messages.CoreGameRunDirectoryCopy.errorDescriptionText1(String(describing: $0.path)).localized } ?? "") }
+    public var errorDescription: String? { message + (preservedCopy.map { Messages.CoreGameRunDirectoryCopy.workCopyRetained($0.path).localized } ?? "") }
 }
 
 extension GameRunDirectoryChange {
     public func copyToEmpty(_ preview: GameRunDirectoryChangePreview, progress: @Sendable (RunDirectoryCopyProgress) -> Void = { _ in }) async throws -> RunDirectoryCopyResult {
         if let issue = preview.copyIssue { throw RuriError.message(issue) }
-        guard preview.canCopyToTarget else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.issueText1) }
+        guard preview.canCopyToTarget else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.destinationConflict) }
         let initial = try StateStore.load(paths)
         let current = paths.configured(with: initial)
         let instance = try find(preview.instanceID, in: initial)
@@ -88,7 +88,7 @@ extension GameRunDirectoryChange {
                     journal.items.append(.init(area: area, name: url.lastPathComponent, identity: try .read(url)))
                 }
             }
-            guard journal.items.count <= 4096 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.incomingText1) }
+            guard journal.items.count <= 4096 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.tooManyTopLevelItems) }
             journal.phase = .publishing; try journal.save(paths: current)
             var sizes: [String: Int64] = [:]
             for (area, entries) in [(RunDirectoryCopyJournal.Area.game, preview.sourceSnapshot.game), (.metadata, preview.sourceSnapshot.metadata)] {
@@ -111,7 +111,7 @@ extension GameRunDirectoryChange {
                     publishedBytes += amount
                     progress(.init(phase: .publishing, completed: index, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
                 }
-                guard (journal.items[index].publishedIdentity ?? item.identity).matches(destination) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.completedBytesText1) }
+                guard (journal.items[index].publishedIdentity ?? item.identity).matches(destination) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.publishedItemChanged) }
                 publishedBytes = completedBytes + (sizes[item.area.rawValue + "/" + item.name] ?? 0)
                 progress(.init(phase: .publishing, completed: index + 1, total: journal.items.count, bytesCopied: publishedBytes, totalBytes: preview.sourceBytes))
             }
@@ -131,20 +131,20 @@ extension GameRunDirectoryChange {
         } catch {
             if !activated {
                 try? FileManager.default.removeItem(at: preparing)
-                throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.remainderText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled)
+                throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.copyNotStarted(error.localizedDescription).localized, preservedCopy: nil, cancelled: Task.isCancelled)
             }
             if committed == nil {
                 do {
                     let saved = try StateStore.load(paths)
                     if saved.instances.first(where: { $0.id == instance.id })?.lastRunDirectoryChangeID == journal.id { committed = saved }
                 } catch {
-                    throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.savedText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled)
+                    throw RunDirectoryCopyFailure(message: Messages.CoreGameRunDirectoryCopy.directorySettingsUnconfirmed(error.localizedDescription).localized, preservedCopy: nil, cancelled: Task.isCancelled)
                 }
             }
             if let committed {
-                return .init(state: committed, preservedCopy: nil, warning: Messages.CoreGameRunDirectoryCopy.committedText1(String(describing: error.localizedDescription)).localized)
+                return .init(state: committed, preservedCopy: nil, warning: Messages.CoreGameRunDirectoryCopy.directorySwitchedCleanupPending(error.localizedDescription).localized)
             }
-            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreGameRunDirectoryCopy.reasonText1.localized : Messages.CoreGameRunDirectoryCopy.reasonText2(String(describing: error.localizedDescription)).localized
+            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreGameRunDirectoryCopy.copyCancelled.localized : Messages.CoreGameRunDirectoryCopy.copyIncomplete(error.localizedDescription).localized
             do {
                 let preserved = try abandon(journal, access: access)
                 throw RunDirectoryCopyFailure(message: reason + (preserved.warning.map { "\n" + $0 } ?? ""), preservedCopy: preserved.workspace, cancelled: Task.isCancelled || error is CancellationError)
@@ -172,7 +172,7 @@ extension GameRunDirectoryChange {
         let state = try StateStore.load(paths)
         let current = paths.configured(with: state)
         let journal = try RunDirectoryCopyJournal.load(paths: current, instanceID: instanceID)
-        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.journalText1) }
+        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.copyJournalChanged) }
         let instance = try find(instanceID, in: state)
         try validateJournalBinding(journal, current: instance)
         let originalPaths = current.including(journal.original)
@@ -180,7 +180,7 @@ extension GameRunDirectoryChange {
         defer { withExtendedLifetime(access) {} }
         try access.lockFiles()
         let latest = try RunDirectoryCopyJournal.load(paths: current, instanceID: instanceID)
-        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.latestText1) }
+        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.copyRecordChanged) }
         let freshState = try StateStore.load(paths), fresh = try find(instanceID, in: freshState)
         try validateJournalBinding(latest, current: fresh)
         if fresh.lastRunDirectoryChangeID == journal.id {
@@ -195,23 +195,23 @@ extension GameRunDirectoryChange {
               current.repositoryVersionID == journal.original.repositoryVersionID,
               current.gameVersion == journal.original.gameVersion, current.loader == journal.original.loader, current.loaderVersion == journal.original.loaderVersion,
               current.lastRunDirectoryChangeID == journal.id || current.runDirectory == journal.original.runDirectory else {
-            throw RuriError.message(Messages.CoreGameRunDirectoryCopy.validateJournalBindingText1)
+            throw RuriError.message(Messages.CoreGameRunDirectoryCopy.instanceSettingsChangedDuringCopy)
         }
         if current.lastRunDirectoryChangeID != journal.id, journal.original.runDirectory == .custom {
-            guard let expected = journal.original.customRunDirectory, current.customRunDirectory?.isSameLocation(as: expected) == true else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.expectedText1) }
+            guard let expected = journal.original.customRunDirectory, current.customRunDirectory?.isSameLocation(as: expected) == true else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.sourceDirectoryChangedDuringCopy) }
         }
     }
     private func removeEmptyTree(_ url: URL) throws {
         guard FileManager.default.fileExists(atPath: url.path) else { return }
         let entries = try FileTree.entries(in: url)
-        guard entries.allSatisfy(\.directory) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText1) }
+        guard entries.allSatisfy(\.directory) else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.newDestinationFiles) }
         for entry in entries.sorted(by: { $0.path.count > $1.path.count }) {
-            guard rmdir(entry.url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText2) }
+            guard rmdir(entry.url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.newFilesInEmptyDestination) }
         }
-        guard rmdir(url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.entriesText3) }
+        guard rmdir(url.path) == 0 else { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.destinationNotEmpty) }
     }
     private func cleanupWarning(_ remainder: URL?) -> String? {
-        remainder == nil ? nil : Messages.CoreGameRunDirectoryCopy.cleanupWarningText1.localized
+        remainder == nil ? nil : Messages.CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning.localized
     }
     private func cleanup(_ journal: RunDirectoryCopyJournal, access: RunDirectoryChangeAccess) throws -> URL? {
         try access.sourcePaths.validateInstanceLocation(journal.original.id)
@@ -247,7 +247,7 @@ extension GameRunDirectoryChange {
             guard (item.publishedIdentity ?? item.identity).matches(destination) else {
                 var info = stat()
                 if lstat(destination.path, &info) == 0 { retained.append(item.name) }
-                else if errno != ENOENT { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.infoText1(String(describing: item.name))) }
+                else if errno != ENOENT { throw RuriError.message(Messages.CoreGameRunDirectoryCopy.destinationInspectionFailed(item.name)) }
                 continue
             }
             if item.publishedIdentity != nil {
@@ -269,7 +269,7 @@ extension GameRunDirectoryChange {
         try FileManager.default.createDirectory(at: recovery.deletingLastPathComponent(), withIntermediateDirectories: true)
         try RunDirectoryCopyGuard.clear(journal, paths: access.targetPaths)
         try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: recovery)
-        let warning = retained.isEmpty ? nil : Messages.CoreGameRunDirectoryCopy.warningText1(Int64(retained.count), String(describing: retained.prefix(5).joined(separator: "、"))).localized
+        let warning = retained.isEmpty ? nil : Messages.CoreGameRunDirectoryCopy.changedFileIdentitiesRetained(Int64(retained.count), String(describing: retained.prefix(5).joined(separator: "、"))).localized
         if journal.stagingOnTarget == true {
             let workspace = try journal.workspace(paths: access.sourcePaths)
             if FileManager.default.fileExists(atPath: workspace.path) { return (workspace, warning) }

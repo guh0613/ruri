@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelCurseForge {
-        public static var urlText1: LocalizedMessage {
+        /// 此整合包需要先从 CurseForge 页面下载。
+        ///
+        /// Resource: `Errors.appAppModelCurseForge.urlText1`.
+        public static var downloadRequired: LocalizedMessage {
             .init(key: "appAppModelCurseForge.urlText1", table: "Errors", fallback: "此整合包需要先从 CurseForge 页面下载。")
         }
-        public static var urlText2: LocalizedMessage {
+        /// 整合包校验失败
+        ///
+        /// Resource: `Errors.appAppModelCurseForge.urlText2`.
+        public static var packValidationFailed: LocalizedMessage {
             .init(key: "appAppModelCurseForge.urlText2", table: "Errors", fallback: "整合包校验失败")
         }
-        public static func installCurseForgeText1(_ value0: String) -> LocalizedMessage {
+        /// 安装 %1$@
+        ///
+        /// Resource: `Interface.appAppModelCurseForge.installCurseForgeText1`.
+        public static func installPack(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelCurseForge.installCurseForgeText1", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
         }
-        public static func installCurseForgeText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已安装
+        ///
+        /// Resource: `Interface.appAppModelCurseForge.installCurseForgeText2`.
+        public static func packInstalled(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelCurseForge.installCurseForgeText2", table: "Interface", fallback: "%1$@ 已安装", arguments: [.text(value0)])
         }
-        public static func readCurseForgePackText1(_ value0: String) -> LocalizedMessage {
+        /// 读取 %1$@
+        ///
+        /// Resource: `Interface.appAppModelCurseForge.readCurseForgePackText1`.
+        public static func readPack(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelCurseForge.readCurseForgePackText1", table: "Interface", fallback: "读取 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

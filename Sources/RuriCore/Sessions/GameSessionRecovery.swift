@@ -17,24 +17,24 @@ public enum GameSessionRecovery {
         case finished, monitoring, monitorUnconfirmed, gameRunning, commandRunning, processEnded, confirmationRequired
         public var title: String {
             switch self {
-            case .finished: Messages.CoreGameSessionRecovery.titleText1.localized
-            case .monitoring: Messages.CoreGameSessionRecovery.titleText2.localized
-            case .monitorUnconfirmed: Messages.CoreGameSessionRecovery.titleText3.localized
-            case .gameRunning: Messages.CoreGameSessionRecovery.titleText4.localized
-            case .commandRunning: Messages.CoreGameSessionRecovery.titleText5.localized
-            case .processEnded: Messages.CoreGameSessionRecovery.titleText6.localized
-            case .confirmationRequired: Messages.CoreGameSessionRecovery.titleText7.localized
+            case .finished: Messages.CoreGameSessionRecovery.recordAlreadyFinished.localized
+            case .monitoring: Messages.CoreGameSessionRecovery.monitorStillRunning.localized
+            case .monitorUnconfirmed: Messages.CoreGameSessionRecovery.cannotCheckMonitorProcess.localized
+            case .gameRunning: Messages.CoreGameSessionRecovery.gameRunningMonitorDisconnected.localized
+            case .commandRunning: Messages.CoreGameSessionRecovery.launchCommandRunningMonitorDisconnected.localized
+            case .processEnded: Messages.CoreGameSessionRecovery.gameProcessGoneWithoutExit.localized
+            case .confirmationRequired: Messages.CoreGameSessionRecovery.monitorInterruptedUnknownGameState.localized
             }
         }
         public var explanation: String {
             switch self {
-            case .finished: Messages.CoreGameSessionRecovery.explanationText1.localized
-            case .monitoring: Messages.CoreGameSessionRecovery.explanationText2.localized
-            case .monitorUnconfirmed: Messages.CoreGameSessionRecovery.explanationText3.localized
-            case .gameRunning: Messages.CoreGameSessionRecovery.explanationText4.localized
-            case .commandRunning: Messages.CoreGameSessionRecovery.explanationText5.localized
-            case .processEnded: Messages.CoreGameSessionRecovery.explanationText6.localized
-            case .confirmationRequired: Messages.CoreGameSessionRecovery.explanationText7.localized
+            case .finished: Messages.CoreGameSessionRecovery.noRecoveryNeeded.localized
+            case .monitoring: Messages.CoreGameSessionRecovery.waitForMonitorOrCheckGame.localized
+            case .monitorUnconfirmed: Messages.CoreGameSessionRecovery.insufficientProcessInformation.localized
+            case .gameRunning: Messages.CoreGameSessionRecovery.matchingProcessIdentity.localized
+            case .commandRunning: Messages.CoreGameSessionRecovery.launchCommandStillExists.localized
+            case .processEnded: Messages.CoreGameSessionRecovery.originalProcessGone.localized
+            case .confirmationRequired: Messages.CoreGameSessionRecovery.unverifiedGameExit.localized
             }
         }
     }
@@ -56,26 +56,26 @@ public enum GameSessionRecovery {
         let lease = try GameRunLease.acquire(paths: paths, instanceID: expected.instanceID, ignoringSession: expected.id)
         defer { withExtendedLifetime(lease) {} }
         var record = try GameSessionStore.load(paths: paths, instanceID: expected.instanceID, sessionID: expected.id)
-        guard record == expected else { throw RuriError.message(Messages.CoreGameSessionRecovery.recordText1) }
+        guard record == expected else { throw RuriError.message(Messages.CoreGameSessionRecovery.recordChanged) }
         let resolution: GameSessionInterruption.Resolution
         switch status(record) {
-        case .finished: throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText1)
-        case .monitoring: throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText2)
-        case .monitorUnconfirmed: throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText3)
-        case .gameRunning: throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText4)
-        case .commandRunning: throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText5)
+        case .finished: throw RuriError.message(Messages.CoreGameSessionRecovery.runCompleted)
+        case .monitoring: throw RuriError.message(Messages.CoreGameSessionRecovery.monitorStillWriting)
+        case .monitorUnconfirmed: throw RuriError.message(Messages.CoreGameSessionRecovery.monitorExitUnconfirmed)
+        case .gameRunning: throw RuriError.message(Messages.CoreGameSessionRecovery.gameProcessStillExists)
+        case .commandRunning: throw RuriError.message(Messages.CoreGameSessionRecovery.launchCommandStillExistsResolution)
         case .processEnded: resolution = .knownProcessEnded
         case .confirmationRequired:
-            guard userConfirmedEnded else { throw RuriError.message(Messages.CoreGameSessionRecovery.resolutionText6) }
+            guard userConfirmedEnded else { throw RuriError.message(Messages.CoreGameSessionRecovery.gameExitUnconfirmed) }
             resolution = .userConfirmedEnded
         }
         let date = Date()
         if let exit = record.exit {
-            let explanationMessage = Messages.CoreGameSessionRecovery.explanationText8
+            let explanationMessage = Messages.CoreGameSessionRecovery.monitorInterruptedAfterExit
             let explanation = explanationMessage.localized
             if record.stage == .afterCommand && record.commandResults?.last?.phase != .after {
                 record.commandResults = (record.commandResults ?? []) + [GameCommandResult(phase: .after, startedAt: record.updatedAt, endedAt: date, status: nil, cancelled: false, timedOut: false,
-                    error: Messages.CoreGameSessionRecovery.explanationText9.localized, errorMessage: Messages.CoreGameSessionRecovery.explanationText9.recorded())]
+                    error: Messages.CoreGameSessionRecovery.interruptedUnknownCommandResult.localized, errorMessage: Messages.CoreGameSessionRecovery.interruptedUnknownCommandResult.recorded())]
             }
             record.commandIdentity = nil
             record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
@@ -89,8 +89,8 @@ public enum GameSessionRecovery {
             return record
         }
         let explanationMessage = resolution == .knownProcessEnded
-            ? Messages.CoreGameSessionRecovery.explanationText10
-            : Messages.CoreGameSessionRecovery.explanationText11
+            ? Messages.CoreGameSessionRecovery.interruptedGameProcessGone
+            : Messages.CoreGameSessionRecovery.interruptedUnverifiedGameExit
         let explanation = explanationMessage.localized
         record.interruption = .init(resolution: resolution, observedAt: date, previousStage: record.stage, explanation: explanation, explanationMessage: explanationMessage.recorded())
         record.state = .interrupted; record.stage = .monitorRecovery; record.updatedAt = date
@@ -109,11 +109,11 @@ public enum GameSessionRecovery {
     private static func appendRecoveryLog(_ text: String, date: Date, paths: LauncherPaths, record: GameSession) throws {
         let url = try GameSessionStore.logURL(paths: paths, session: record)
         let fd = open(url.path, O_WRONLY | O_APPEND | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameSessionRecovery.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogAppendFailed) }
         defer { Darwin.close(fd) }
         var attributes = stat()
-        guard fstat(fd, &attributes) == 0, attributes.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreGameSessionRecovery.attributesText1) }
+        guard fstat(fd, &attributes) == 0, attributes.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogNotRegularFile) }
         let data = Data(("\n[Ruri] \(date.ISO8601Format()) \(text)\n").utf8)
-        guard data.withUnsafeBytes({ Darwin.write(fd, $0.baseAddress, $0.count) }) == data.count else { throw RuriError.message(Messages.CoreGameSessionRecovery.dataText1) }
+        guard data.withUnsafeBytes({ Darwin.write(fd, $0.baseAddress, $0.count) }) == data.count else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogSaveFailed) }
     }
 }

@@ -3,40 +3,79 @@ import Foundation
 
 extension Messages {
     public enum CLIDirectories {
-        public static func stateText1(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// %1$@ %2$@ 默认实例文件夹
+        ///   %3$@
+        ///
+        /// Resource: `CLI.cLIDirectories.stateText1`.
+        public static func defaultDirectorySummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "cLIDirectories.stateText1", table: "CLI", fallback: "%1$@ %2$@ 默认实例文件夹\n  %3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var availabilityText1: LocalizedMessage {
+        /// 可用
+        ///
+        /// Resource: `CLI.cLIDirectories.availabilityText1`.
+        public static var directoryAvailable: LocalizedMessage {
             .init(key: "cLIDirectories.availabilityText1", table: "CLI", fallback: "可用")
         }
-        public static var availabilityText2: LocalizedMessage {
+        /// 无法访问
+        ///
+        /// Resource: `CLI.cLIDirectories.availabilityText2`.
+        public static var directoryUnavailable: LocalizedMessage {
             .init(key: "cLIDirectories.availabilityText2", table: "CLI", fallback: "无法访问")
         }
-        public static func availabilityText3(_ value0: String, _ value1: String, _ value2: String, _ value3: Int64, _ value4: String, _ value5: String) -> LocalizedMessage {
+        /// %1$@ %2$@ %3$@ [%4$lld 个实例 · %5$@]
+        ///   %6$@
+        ///
+        /// Resource: `CLI.cLIDirectories.availabilityText3`.
+        public static func directorySummary(_ value0: String, _ value1: String, _ value2: String, _ value3: Int64, _ value4: String, _ value5: String) -> LocalizedMessage {
             .init(key: "cLIDirectories.availabilityText3", table: "CLI", fallback: "%1$@ %2$@ %3$@ [%4$lld 个实例 · %5$@]\n  %6$@", arguments: [.text(value0), .text(value1), .text(value2), .integer(value3), .text(value4), .text(value5)])
         }
-        public static func availabilityText4(_ value0: String, _ value1: String, _ value2: Int64, _ value3: String) -> LocalizedMessage {
+        ///   %1$@ %2$@ [已从列表移除 · 保留 %3$lld 个实例设置]
+        ///   %4$@
+        ///
+        /// Resource: `CLI.cLIDirectories.availabilityText4`.
+        public static func removedDirectorySummary(_ value0: String, _ value1: String, _ value2: Int64, _ value3: String) -> LocalizedMessage {
             .init(key: "cLIDirectories.availabilityText4", table: "CLI", fallback: "  %1$@ %2$@ [已从列表移除 · 保留 %3$lld 个实例设置]\n  %4$@", arguments: [.text(value0), .text(value1), .integer(value2), .text(value3)])
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// Added %1$@
+        ///
+        /// Resource: `CLI.cLIDirectories.resultText1`.
+        public static func directoryAdded(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIDirectories.resultText1", table: "CLI", fallback: "Added %1$@", arguments: [.text(value0)])
         }
-        public static var resultText2: LocalizedMessage {
+        /// 可完成导入
+        ///
+        /// Resource: `CLI.cLIDirectories.resultText2`.
+        public static var importReady: LocalizedMessage {
             .init(key: "cLIDirectories.resultText2", table: "CLI", fallback: "可完成导入")
         }
-        public static var resultText3: LocalizedMessage {
+        /// 未完成安装
+        ///
+        /// Resource: `CLI.cLIDirectories.resultText3`.
+        public static var installationIncomplete: LocalizedMessage {
             .init(key: "cLIDirectories.resultText3", table: "CLI", fallback: "未完成安装")
         }
-        public static func keptText1(_ value0: String) -> LocalizedMessage {
+        /// 导入已取消，工作文件保留在：%1$@
+        ///
+        /// Resource: `CLI.cLIDirectories.keptText1`.
+        public static func importFilesRetained(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIDirectories.keptText1", table: "CLI", fallback: "导入已取消，工作文件保留在：%1$@", arguments: [.text(value0)])
         }
-        public static var keptText2: LocalizedMessage {
+        /// 导入已完成
+        ///
+        /// Resource: `CLI.cLIDirectories.keptText2`.
+        public static var importCompleted: LocalizedMessage {
             .init(key: "cLIDirectories.keptText2", table: "CLI", fallback: "导入已完成")
         }
-        public static var idText1: LocalizedMessage {
+        /// Updated directory settings
+        ///
+        /// Resource: `CLI.cLIDirectories.idText1`.
+        public static var directorySettingsUpdated: LocalizedMessage {
             .init(key: "cLIDirectories.idText1", table: "CLI", fallback: "Updated directory settings")
         }
-        public static var usageText1: LocalizedMessage {
+        /// 用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder] | imports | recover-import <uuid> <--finish|--keep-files>]
+        ///
+        /// Resource: `CLI.cLIDirectories.usageText1`.
+        public static var directoriesUsage: LocalizedMessage {
             .init(key: "cLIDirectories.usageText1", table: "CLI", fallback: "用法：ruri-cli directories [list | add <Minecraft-folder> <name> | select <uuid> | rename <uuid> <name> | relocate <uuid> <original-folder> | remove <uuid> | restore <uuid> [original-folder] | imports | recover-import <uuid> <--finish|--keep-files>]")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadActivity {
-        public static var titleText1: LocalizedMessage {
+        /// 下载中
+        ///
+        /// Resource: `Core.coreDownloadActivity.titleText1`.
+        public static var downloading: LocalizedMessage {
             .init(key: "coreDownloadActivity.titleText1", table: "Core", fallback: "下载中")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 正在重试
+        ///
+        /// Resource: `Core.coreDownloadActivity.titleText2`.
+        public static var retrying: LocalizedMessage {
             .init(key: "coreDownloadActivity.titleText2", table: "Core", fallback: "正在重试")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 已校验
+        ///
+        /// Resource: `Core.coreDownloadActivity.titleText3`.
+        public static var validated: LocalizedMessage {
             .init(key: "coreDownloadActivity.titleText3", table: "Core", fallback: "已校验")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 失败
+        ///
+        /// Resource: `Core.coreDownloadActivity.titleText4`.
+        public static var failed: LocalizedMessage {
             .init(key: "coreDownloadActivity.titleText4", table: "Core", fallback: "失败")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 已取消
+        ///
+        /// Resource: `Core.coreDownloadActivity.titleText5`.
+        public static var cancelled: LocalizedMessage {
             .init(key: "coreDownloadActivity.titleText5", table: "Core", fallback: "已取消")
         }
         static let definitions: [String: MessageDefinition] = [

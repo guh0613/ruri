@@ -16,8 +16,8 @@ public struct GameNormalQuitAttempt: Codable, Equatable, Sendable {
     public let accepted: Bool
     public var explanation: String { explanationMessage.localized }
     public var explanationMessage: LocalizedMessage {
-        accepted ? Messages.CoreGameNormalQuit.explanationText1
-                 : Messages.CoreGameNormalQuit.explanationText2
+        accepted ? Messages.CoreGameNormalQuit.normalExitRequestPending
+                 : Messages.CoreGameNormalQuit.normalExitRequestFailed
     }
 }
 
@@ -37,8 +37,8 @@ extension GameMonitorClient {
         let current = try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id)
         guard !current.state.isFinished, current.monitorIdentity == record.monitorIdentity,
               current.gameIdentity == record.gameIdentity, current.monitorIdentity?.isAlive == true,
-              current.gameIdentity?.isAlive == true else { throw RuriError.message(Messages.CoreGameNormalQuit.currentText1) }
-        guard current.nativeQuitSupported == true else { throw RuriError.message(Messages.CoreGameNormalQuit.currentText2) }
+              current.gameIdentity?.isAlive == true else { throw RuriError.message(Messages.CoreGameNormalQuit.quitStateChanged) }
+        guard current.nativeQuitSupported == true else { throw RuriError.message(Messages.CoreGameNormalQuit.appExitRequestDisabled) }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: current.instanceID, sessionID: current.id)
         let request = GameNormalQuitRequest(version: 1, id: UUID(), sessionID: current.id, requestedAt: Date())
         let file = try LauncherPaths.safePath("quit-request.json", within: directory)

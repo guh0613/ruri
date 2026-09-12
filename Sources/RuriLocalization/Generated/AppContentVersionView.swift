@@ -3,64 +3,124 @@ import Foundation
 
 extension Messages {
     public enum AppContentVersionView {
-        public static var pageText1: LocalizedMessage {
+        /// 此内容没有可查询的版本来源。
+        ///
+        /// Resource: `Errors.appContentVersionView.pageText1`.
+        public static var noVersionSource: LocalizedMessage {
             .init(key: "appContentVersionView.pageText1", table: "Errors", fallback: "此内容没有可查询的版本来源。")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 更换内容版本
+        ///
+        /// Resource: `Interface.appContentVersionView.bodyText1`.
+        public static var replaceVersion: LocalizedMessage {
             .init(key: "appContentVersionView.bodyText1", table: "Interface", fallback: "更换内容版本")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 实例已移除
+        ///
+        /// Resource: `Interface.appContentVersionView.bodyText2`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "appContentVersionView.bodyText2", table: "Interface", fallback: "实例已移除")
         }
-        public static func bodyText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 当前版本：%1$@ · %2$@
+        ///
+        /// Resource: `Interface.appContentVersionView.bodyText3`.
+        public static func currentVersion(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appContentVersionView.bodyText3", table: "Interface", fallback: "当前版本：%1$@ · %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static func planText1(_ value0: Int64) -> LocalizedMessage {
+        /// 将安装 %1$lld 个文件，包含必需依赖。
+        ///
+        /// Resource: `Interface.appContentVersionView.planText1`.
+        public static func installPlan(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appContentVersionView.planText1", table: "Interface", fallback: "将安装 %1$lld 个文件，包含必需依赖。", arguments: [.integer(value0)])
         }
-        public static var planText2: LocalizedMessage {
+        /// 包含 Beta / Alpha 测试版
+        ///
+        /// Resource: `Interface.appContentVersionView.planText2`.
+        public static var includePrereleases: LocalizedMessage {
             .init(key: "appContentVersionView.planText2", table: "Interface", fallback: "包含 Beta / Alpha 测试版")
         }
-        public static var planText3: LocalizedMessage {
+        /// 查找兼容版本…
+        ///
+        /// Resource: `Interface.appContentVersionView.planText3`.
+        public static var findCompatibleVersion: LocalizedMessage {
             .init(key: "appContentVersionView.planText3", table: "Interface", fallback: "查找兼容版本…")
         }
-        public static var planText4: LocalizedMessage {
+        /// 已安装
+        ///
+        /// Resource: `Interface.appContentVersionView.planText4`.
+        public static var installed: LocalizedMessage {
             .init(key: "appContentVersionView.planText4", table: "Interface", fallback: "已安装")
         }
-        public static var planText5: LocalizedMessage {
+        /// 没有匹配的版本。可查看测试版或其他分页。
+        ///
+        /// Resource: `Interface.appContentVersionView.planText5`.
+        public static var noMatchingVersion: LocalizedMessage {
             .init(key: "appContentVersionView.planText5", table: "Interface", fallback: "没有匹配的版本。可查看测试版或其他分页。")
         }
-        public static var planText6: LocalizedMessage {
+        /// 上一页
+        ///
+        /// Resource: `Interface.appContentVersionView.planText6`.
+        public static var previousPage: LocalizedMessage {
             .init(key: "appContentVersionView.planText6", table: "Interface", fallback: "上一页")
         }
-        public static func planText7(_ value0: Int64) -> LocalizedMessage {
+        /// 第 %1$lld 页
+        ///
+        /// Resource: `Interface.appContentVersionView.planText7`.
+        public static func pageNumber(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appContentVersionView.planText7", table: "Interface", fallback: "第 %1$lld 页", arguments: [.integer(value0)])
         }
-        public static var planText8: LocalizedMessage {
+        /// 下一页
+        ///
+        /// Resource: `Interface.appContentVersionView.planText8`.
+        public static var nextPage: LocalizedMessage {
             .init(key: "appContentVersionView.planText8", table: "Interface", fallback: "下一页")
         }
-        public static var planText9: LocalizedMessage {
+        /// 可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。
+        ///
+        /// Resource: `Interface.appContentVersionView.planText9`.
+        public static var versionSelectionInfo: LocalizedMessage {
             .init(key: "appContentVersionView.planText9", table: "Interface", fallback: "可选择旧版或新版。会按所选版本处理必需依赖，并保留当前启用或停用状态。")
         }
-        public static var planText10: LocalizedMessage {
+        /// 正在解析必需依赖…
+        ///
+        /// Resource: `Interface.appContentVersionView.planText10`.
+        public static var resolveDependencies: LocalizedMessage {
             .init(key: "appContentVersionView.planText10", table: "Interface", fallback: "正在解析必需依赖…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 返回版本列表
+        ///
+        /// Resource: `Interface.appContentVersionView.errorText1`.
+        public static var returnToVersions: LocalizedMessage {
             .init(key: "appContentVersionView.errorText1", table: "Interface", fallback: "返回版本列表")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 安装所选版本
+        ///
+        /// Resource: `Interface.appContentVersionView.errorText2`.
+        public static var installSelectedVersion: LocalizedMessage {
             .init(key: "appContentVersionView.errorText2", table: "Interface", fallback: "安装所选版本")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 查看安装清单
+        ///
+        /// Resource: `Interface.appContentVersionView.errorText3`.
+        public static var viewInstallPlan: LocalizedMessage {
             .init(key: "appContentVersionView.errorText3", table: "Interface", fallback: "查看安装清单")
         }
-        public static func versionText1(_ value0: String) -> LocalizedMessage {
+        /// 更换 %1$@ 的版本
+        ///
+        /// Resource: `Interface.appContentVersionView.versionText1`.
+        public static func replaceItemVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "appContentVersionView.versionText1", table: "Interface", fallback: "更换 %1$@ 的版本", arguments: [.text(value0)])
         }
-        public static func versionText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 已更换为 %2$@
+        ///
+        /// Resource: `Interface.appContentVersionView.versionText2`.
+        public static func versionReplaced(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appContentVersionView.versionText2", table: "Interface", fallback: "%1$@ 已更换为 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var valueText1: LocalizedMessage {
+        /// 正式版
+        ///
+        /// Resource: `Interface.appContentVersionView.valueText1`.
+        public static var stableRelease: LocalizedMessage {
             .init(key: "appContentVersionView.valueText1", table: "Interface", fallback: "正式版")
         }
         static let definitions: [String: MessageDefinition] = [

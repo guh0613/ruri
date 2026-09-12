@@ -3,61 +3,118 @@ import Foundation
 
 extension Messages {
     public enum CoreExternalAuthentication {
-        public static var nameText1: LocalizedMessage {
+        /// 认证服务器
+        ///
+        /// Resource: `Core.coreExternalAuthentication.nameText1`.
+        public static var authenticationServerName: LocalizedMessage {
             .init(key: "coreExternalAuthentication.nameText1", table: "Core", fallback: "认证服务器")
         }
-        public static var hostText1: LocalizedMessage {
+        /// 请输入不含账号、查询参数或片段的 HTTPS 认证服务器地址。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.hostText1`.
+        public static var invalidAuthenticationServerURLInput: LocalizedMessage {
             .init(key: "coreExternalAuthentication.hostText1", table: "Errors", fallback: "请输入不含账号、查询参数或片段的 HTTPS 认证服务器地址。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 认证服务器地址无效。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.urlText1`.
+        public static var invalidAuthenticationServerURL: LocalizedMessage {
             .init(key: "coreExternalAuthentication.urlText1", table: "Errors", fallback: "认证服务器地址无效。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 认证服务器返回了无效的角色信息。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.validateText1`.
+        public static var invalidRoleResponse: LocalizedMessage {
             .init(key: "coreExternalAuthentication.validateText1", table: "Errors", fallback: "认证服务器返回了无效的角色信息。")
         }
-        public static var profileText1: LocalizedMessage {
+        /// 请先选择一个游戏角色。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.profileText1`.
+        public static var roleSelectionRequired: LocalizedMessage {
             .init(key: "coreExternalAuthentication.profileText1", table: "Errors", fallback: "请先选择一个游戏角色。")
         }
-        public static var existingText1: LocalizedMessage {
+        /// 原来的角色已不可用，请重新添加账号并选择角色。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.existingText1`.
+        public static var previousRoleUnavailable: LocalizedMessage {
             .init(key: "coreExternalAuthentication.existingText1", table: "Errors", fallback: "原来的角色已不可用，请重新添加账号并选择角色。")
         }
-        public static var urlText2: LocalizedMessage {
+        /// 认证服务器地址已变更，请重新添加账号。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.urlText2`.
+        public static var authenticationServerChanged: LocalizedMessage {
             .init(key: "coreExternalAuthentication.urlText2", table: "Errors", fallback: "认证服务器地址已变更，请重新添加账号。")
         }
-        public static var loginText1: LocalizedMessage {
+        /// 请填写认证站账号和密码。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.loginText1`.
+        public static var credentialsRequired: LocalizedMessage {
             .init(key: "coreExternalAuthentication.loginText1", table: "Errors", fallback: "请填写认证站账号和密码。")
         }
-        public static var resultText1: LocalizedMessage {
+        /// 这个账号还没有游戏角色，请先到认证站创建角色。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.resultText1`.
+        public static var noGameRole: LocalizedMessage {
             .init(key: "coreExternalAuthentication.resultText1", table: "Errors", fallback: "这个账号还没有游戏角色，请先到认证站创建角色。")
         }
-        public static var selectText1: LocalizedMessage {
+        /// 请重新登录并选择可用角色。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.selectText1`.
+        public static var loginAndSelectRole: LocalizedMessage {
             .init(key: "coreExternalAuthentication.selectText1", table: "Errors", fallback: "请重新登录并选择可用角色。")
         }
-        public static var resultText2: LocalizedMessage {
+        /// 认证服务器未返回所选角色，请重新登录。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.resultText2`.
+        public static var selectedRoleMissing: LocalizedMessage {
             .init(key: "coreExternalAuthentication.resultText2", table: "Errors", fallback: "认证服务器未返回所选角色，请重新登录。")
         }
-        public static var loginText2: LocalizedMessage {
+        /// 账号缺少认证服务器信息，请重新添加。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.loginText2`.
+        public static var missingAuthenticationServerInfo: LocalizedMessage {
             .init(key: "coreExternalAuthentication.loginText2", table: "Errors", fallback: "账号缺少认证服务器信息，请重新添加。")
         }
-        public static var tokensText1: LocalizedMessage {
+        /// 认证服务器返回了无效的令牌校验结果。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.tokensText1`.
+        public static var invalidTokenValidation: LocalizedMessage {
             .init(key: "coreExternalAuthentication.tokensText1", table: "Errors", fallback: "认证服务器返回了无效的令牌校验结果。")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 认证服务器返回了无效的登录凭据。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.valueText1`.
+        public static var invalidLoginCredentials: LocalizedMessage {
             .init(key: "coreExternalAuthentication.valueText1", table: "Errors", fallback: "认证服务器返回了无效的登录凭据。")
         }
-        public static var valueText2: LocalizedMessage {
+        /// 此地址没有提供外置认证信息，请检查认证站给出的 API 地址。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.valueText2`.
+        public static var externalAuthInfoMissing: LocalizedMessage {
             .init(key: "coreExternalAuthentication.valueText2", table: "Errors", fallback: "此地址没有提供外置认证信息，请检查认证站给出的 API 地址。")
         }
-        public static var valueText3: LocalizedMessage {
+        /// 此地址没有提供有效的外置认证元数据。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.valueText3`.
+        public static var externalAuthMetadataMissing: LocalizedMessage {
             .init(key: "coreExternalAuthentication.valueText3", table: "Errors", fallback: "此地址没有提供有效的外置认证元数据。")
         }
-        public static var requireSuccessText1: LocalizedMessage {
+        /// 认证失败：账号密码不正确，或登录已失效，请重新登录。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.requireSuccessText1`.
+        public static var authenticationFailed: LocalizedMessage {
             .init(key: "coreExternalAuthentication.requireSuccessText1", table: "Errors", fallback: "认证失败：账号密码不正确，或登录已失效，请重新登录。")
         }
-        public static func requireSuccessText2(_ value0: String) -> LocalizedMessage {
+        /// 认证服务器返回 HTTP %1$@，请稍后重试。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.requireSuccessText2`.
+        public static func authenticationHTTPError(_ value0: String) -> LocalizedMessage {
             .init(key: "coreExternalAuthentication.requireSuccessText2", table: "Errors", fallback: "认证服务器返回 HTTP %1$@，请稍后重试。", arguments: [.text(value0)])
         }
-        public static var responseText1: LocalizedMessage {
+        /// 认证服务器返回的数据无效或过大。
+        ///
+        /// Resource: `Errors.coreExternalAuthentication.responseText1`.
+        public static var invalidAuthenticationResponse: LocalizedMessage {
             .init(key: "coreExternalAuthentication.responseText1", table: "Errors", fallback: "认证服务器返回的数据无效或过大。")
         }
         static let definitions: [String: MessageDefinition] = [

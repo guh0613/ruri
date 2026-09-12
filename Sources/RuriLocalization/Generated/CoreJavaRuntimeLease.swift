@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaRuntimeLease {
-        public static var acquireText1: LocalizedMessage {
+        /// Java 运行时名称无效。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeLease.acquireText1`.
+        public static var invalidJavaRuntimeName: LocalizedMessage {
             .init(key: "coreJavaRuntimeLease.acquireText1", table: "Errors", fallback: "Java 运行时名称无效。")
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法锁定 Java 运行时。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeLease.fdText1`.
+        public static var javaRuntimeLockFailed: LocalizedMessage {
             .init(key: "coreJavaRuntimeLease.fdText1", table: "Errors", fallback: "无法锁定 Java 运行时。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// Java 运行时锁文件无效。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeLease.infoText1`.
+        public static var invalidJavaRuntimeLock: LocalizedMessage {
             .init(key: "coreJavaRuntimeLease.infoText1", table: "Errors", fallback: "Java 运行时锁文件无效。")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeLease.valueText1`.
+        public static var javaRuntimeInUse: LocalizedMessage {
             .init(key: "coreJavaRuntimeLease.valueText1", table: "Errors", fallback: "此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。")
         }
-        public static func executableText1(_ value0: String) -> LocalizedMessage {
+        /// 此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeLease.executableText1`.
+        public static func javaRuntimeUsedByProcess(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntimeLease.executableText1", table: "Errors", fallback: "此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

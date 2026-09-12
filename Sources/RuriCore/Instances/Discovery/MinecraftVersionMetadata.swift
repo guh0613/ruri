@@ -27,18 +27,18 @@ extension MinecraftDirectoryScan {
         if exists(jar) {
             do { jarVersion = try Self.jarVersion(jar) }
             catch is CancellationError { throw CancellationError() }
-            catch { warnings.append(Messages.CoreMinecraftVersionMetadata.jarVersionText1(String(describing: error.localizedDescription)).localized) }
-        } else { warnings.append(Messages.CoreMinecraftVersionMetadata.jarVersionText2.localized) }
+            catch { warnings.append(Messages.CoreMinecraftVersionMetadata.jarVersionReadFailed(error.localizedDescription).localized) }
+        } else { warnings.append(Messages.CoreMinecraftVersionMetadata.localJarMissing.localized) }
         let gameVersion = [jarVersion, declared].compactMap { $0 }.first(where: { !$0.isEmpty && $0.count <= 128 && !$0.contains("/") && !$0.contains("\\") && !$0.contains("\0") })
             ?? [reference, id].first(where: Self.isGameVersion)
-        if gameVersion == nil { warnings.append(Messages.CoreMinecraftVersionMetadata.gameVersionText1.localized) }
-        if let jarVersion, let declared, jarVersion != declared { warnings.append(Messages.CoreMinecraftVersionMetadata.declaredText1.localized) }
+        if gameVersion == nil { warnings.append(Messages.CoreMinecraftVersionMetadata.actualVersionUnknown.localized) }
+        if let jarVersion, let declared, jarVersion != declared { warnings.append(Messages.CoreMinecraftVersionMetadata.declaredVersionMismatch.localized) }
         var components: [String: String] = [:]
         let labels = ["fabric": "Fabric", "quilt": "Quilt", "forge": "Forge", "neoforge": "NeoForge", "optifine": "OptiFine", "liteloader": "LiteLoader", "legacyfabric": "Legacy Fabric", "cleanroom": "Cleanroom"]
         for node in nodes {
             if let name = node["id"] as? String, let label = labels[name.lowercased()], let version = node["version"] as? String { components[label] = version }
         }
-        guard let rawLibraries = graph.value["libraries"] as? [[String: Any]] else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.rawLibrariesText1) }
+        guard let rawLibraries = graph.value["libraries"] as? [[String: Any]] else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidLibraryManifest) }
         let declarations = try rawLibraries.map(MinecraftLibraryDeclaration.readMetadata)
         let libraries = try MinecraftLibrarySelector.select(declarations).libraries.map(\.library)
         let architecture = GameInstaller.architecture(for: VersionManifest(id: id, libraries: libraries))
@@ -69,7 +69,7 @@ extension MinecraftDirectoryScan {
         else if let forge = argument("--fml.forgeVersion"), components["NeoForge"] == nil { components["Forge"] = forge }
         if components.isEmpty, let main = nodes.reversed().compactMap({ $0["mainClass"] as? String }).first,
            !["net.minecraft.client.main.Main", "net.minecraft.client.Minecraft", "com.mojang.rubydung.RubyDung"].contains(main) {
-            warnings.append(Messages.CoreMinecraftVersionMetadata.mainText1(String(describing: main)).localized)
+            warnings.append(Messages.CoreMinecraftVersionMetadata.unknownLaunchEntry(String(describing: main)).localized)
         }
         return .init(gameVersion: gameVersion, components: components.sorted { $0.key < $1.key }.map { .init(name: $0.key, version: $0.value) }, warnings: warnings)
     }
@@ -78,11 +78,11 @@ extension MinecraftDirectoryScan {
         guard let value, !(value is NSNull) else { return nil }
         if let value = value as? String { return value }
         if let value = value as? [String: Any], let id = value["id"] as? String { return id }
-        throw RuriError.message(Messages.CoreMinecraftVersionMetadata.idText1)
+        throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidVersionReference)
     }
     static func checkIdentifier(_ name: String) throws {
         guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, name.utf8.count <= 255, name != ".", name != "..", !name.contains("/"), !name.contains("\\"),
-              !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.checkIdentifierText1) }
+              !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidInheritancePath) }
     }
     private static func isGameVersion(_ value: String) -> Bool {
         value.count <= 128 && value.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:(?:-pre|-rc)[0-9]+| Pre-Release [0-9]+| Release Candidate [0-9]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil
@@ -93,17 +93,17 @@ extension MinecraftDirectoryScan {
     }
     private static func jarVersion(_ jar: URL) throws -> String? {
         let info = try jar.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-        guard info.isRegularFile == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.infoText1) }
+        guard info.isRegularFile == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.jarNotRegularFile) }
         let archive = try Archive(url: jar, accessMode: .read)
         guard let entry = archive["version.json"] else { return nil }
-        guard entry.type == .file, entry.uncompressedSize <= 1_048_576 else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.entryText1) }
+        guard entry.type == .file, entry.uncompressedSize <= 1_048_576 else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.jarVersionInfoInvalid) }
         var data = Data()
         let crc = try archive.extract(entry) { part in
             try Task.checkCancellation()
-            guard data.count + part.count <= 1_048_576 else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.crcText1) }
+            guard data.count + part.count <= 1_048_576 else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.jarVersionInfoTooLarge) }
             data.append(part)
         }
-        guard crc == entry.checksum else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.crcText2) }
+        guard crc == entry.checksum else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.jarVersionInfoChecksumFailed) }
         return (try JSONSerialization.jsonObject(with: data) as? [String: Any])?["id"] as? String
     }
 }

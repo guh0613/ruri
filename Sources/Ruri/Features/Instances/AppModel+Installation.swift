@@ -22,45 +22,45 @@ extension AppModel {
     }
     func install(_ instance: GameInstance) {
         guard !busy, !readOnly else { return }
-        perform(Messages.AppAppModelInstallation.installText1(String(describing: instance.name)), instanceID: instance.id) { [self] id in
+        perform(Messages.AppAppModelInstallation.installInstance(instance.name), instanceID: instance.id) { [self] id in
             let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
                 await self?.progress(id, progress)
             }
-            try recordInstallation(result, requested: instance); notice = Messages.AppAppModelInstallation.resultText1(String(describing: result.name)).localized
+            try recordInstallation(result, requested: instance); notice = Messages.AppAppModelInstallation.installationResult(result.name).localized
         }
     }
     func recordInstallation(_ result: GameInstance, requested: GameInstance) throws {
         save()
-        guard !readOnly else { throw RuriError.message(Messages.AppAppModelInstallation.recordInstallationText1) }
+        guard !readOnly else { throw RuriError.message(Messages.AppAppModelInstallation.installationWritePaused) }
         let saved = try StateStore.update(basePaths) { latest in
-            guard let index = latest.instances.firstIndex(where: { $0.id == result.id }) else { throw RuriError.message(Messages.AppAppModelInstallation.indexText1) }
+            guard let index = latest.instances.firstIndex(where: { $0.id == result.id }) else { throw RuriError.message(Messages.AppAppModelInstallation.instanceRemoved) }
             latest.instances[index] = try latest.instances[index].applyingInstallation(result, requested: requested)
         }
         acceptState(saved)
     }
     func repair(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id) else { return }
-        perform(Messages.AppAppModelInstallation.repairText1(String(describing: instance.name)), instanceID: instance.id) { [self] id in
+        perform(Messages.AppAppModelInstallation.repairInstance(instance.name), instanceID: instance.id) { [self] id in
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
     func changeComponents(_ instance: GameInstance, loader: LoaderKind, version: String?) {
         guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
         save()
-        perform(Messages.AppAppModelInstallation.changeComponentsText1(String(describing: instance.name))) { [self] id in
+        perform(Messages.AppAppModelInstallation.changeLoader(instance.name)) { [self] id in
             let service = await InstanceComponents(paths: paths, downloader: installer.downloader)
             let saved = try await service.change(instance, to: loader, version: version, concurrency: state.settings.concurrentDownloads) { [weak self] p in
                 await self?.progress(id, p)
             }
-            acceptState(saved); notice = Messages.AppAppModelInstallation.savedText1(String(describing: instance.name), String(describing: loader.title)).localized
+            acceptState(saved); notice = Messages.AppAppModelInstallation.loaderConfigurationSaved(instance.name, loader.title).localized
         }
     }
     func restoreComponents(_ instance: GameInstance) {
         guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
         save()
-        perform(Messages.AppAppModelInstallation.restoreComponentsText1(String(describing: instance.name))) { [self] _ in
+        perform(Messages.AppAppModelInstallation.restoreLoaderConfiguration(instance.name)) { [self] _ in
             let saved = try await InstanceComponents(paths: paths).restore(instance)
-            acceptState(saved); notice = Messages.AppAppModelInstallation.savedText2.localized
+            acceptState(saved); notice = Messages.AppAppModelInstallation.loaderConfigurationRestored.localized
         }
     }
 }

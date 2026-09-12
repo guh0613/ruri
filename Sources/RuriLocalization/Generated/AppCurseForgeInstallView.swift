@@ -3,67 +3,130 @@ import Foundation
 
 extension Messages {
     public enum AppCurseForgeInstallView {
-        public static var bodyText1: LocalizedMessage {
+        /// 社区创作
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.bodyText1`.
+        public static var communityContent: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.bodyText1", table: "Interface", fallback: "社区创作")
         }
-        public static func planText1(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// 将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText1`.
+        public static func installPlan(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText1", table: "Interface", fallback: "将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", arguments: [.text(value0), .integer(value1)])
         }
-        public static var planText2: LocalizedMessage {
+        /// 安装到实例
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText2`.
+        public static var installToInstance: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText2", table: "Interface", fallback: "安装到实例")
         }
-        public static var planText3: LocalizedMessage {
+        /// 选择实例
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText3`.
+        public static var chooseInstance: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText3", table: "Interface", fallback: "选择实例")
         }
-        public static var planText4: LocalizedMessage {
+        /// 查找兼容版本…
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText4`.
+        public static var findCompatibleVersions: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText4", table: "Interface", fallback: "查找兼容版本…")
         }
-        public static var planText5: LocalizedMessage {
+        /// 内容版本
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText5`.
+        public static var contentVersion: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText5", table: "Interface", fallback: "内容版本")
         }
-        public static var planText6: LocalizedMessage {
+        /// 这一页没有兼容版本。
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText6`.
+        public static var noCompatibleVersions: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText6", table: "Interface", fallback: "这一页没有兼容版本。")
         }
-        public static var planText7: LocalizedMessage {
+        /// 请先选择已安装的实例；模组需要相应加载器。
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText7`.
+        public static var instanceSelectionNotice: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText7", table: "Interface", fallback: "请先选择已安装的实例；模组需要相应加载器。")
         }
-        public static var planText8: LocalizedMessage {
+        /// 上一页
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText8`.
+        public static var previousPage: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText8", table: "Interface", fallback: "上一页")
         }
-        public static func planText9(_ value0: Int64) -> LocalizedMessage {
+        /// 第 %1$lld 页
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText9`.
+        public static func pageNumber(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText9", table: "Interface", fallback: "第 %1$lld 页", arguments: [.integer(value0)])
         }
-        public static var planText10: LocalizedMessage {
+        /// 下一页
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.planText10`.
+        public static var nextPage: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.planText10", table: "Interface", fallback: "下一页")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 整合包清单
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.fileText1`.
+        public static var packManifest: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.fileText1", table: "Interface", fallback: "整合包清单")
         }
-        public static var fileText2: LocalizedMessage {
+        /// 光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.fileText2`.
+        public static var shaderpackNotice: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.fileText2", table: "Interface", fallback: "光影文件放入 shaderpacks；实例需要安装 Iris 或其他兼容光影加载模组。")
         }
-        public static var fileText3: LocalizedMessage {
+        /// 正在解析必需依赖…
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.fileText3`.
+        public static var resolveDependencies: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.fileText3", table: "Interface", fallback: "正在解析必需依赖…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 返回
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.errorText1`.
+        public static var back: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.errorText1", table: "Interface", fallback: "返回")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 读取整合包
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.errorText2`.
+        public static var readPack: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.errorText2", table: "Interface", fallback: "读取整合包")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 查看安装清单
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.errorText3`.
+        public static var viewInstallPlan: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.errorText3", table: "Interface", fallback: "查看安装清单")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 安装
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.errorText4`.
+        public static var install: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.errorText4", table: "Interface", fallback: "安装")
         }
-        public static func bodyText2(_ value0: String) -> LocalizedMessage {
+        /// 更新 %1$@
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.bodyText2`.
+        public static func updatePack(_ value0: String) -> LocalizedMessage {
             .init(key: "appCurseForgeInstallView.bodyText2", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
         }
-        public static func bodyText3(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// %1$@ · %2$lld 个文件，包含必需依赖
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.bodyText3`.
+        public static func updateSummary(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appCurseForgeInstallView.bodyText3", table: "Interface", fallback: "%1$@ · %2$lld 个文件，包含必需依赖", arguments: [.text(value0), .integer(value1)])
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 更新
+        ///
+        /// Resource: `Interface.appCurseForgeInstallView.bodyText4`.
+        public static var update: LocalizedMessage {
             .init(key: "appCurseForgeInstallView.bodyText4", table: "Interface", fallback: "更新")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -31,12 +31,12 @@ public actor InstanceMover {
     public func preview(instanceID: UUID, directoryID: UUID) async throws -> InstanceMovePreview {
         try Task.checkCancellation()
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let source = state.instances.first(where: { $0.id == instanceID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText1) }
+        guard let source = state.instances.first(where: { $0.id == instanceID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceInstanceMissing) }
         if source.repositoryVersionID != nil || current.isMinecraftDirectory(directoryID) {
             return try await repositoryPreview(source: source, directoryID: directoryID, paths: current)
         }
-        guard current.directoryID(for: instanceID) != directoryID else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText2) }
-        guard directoryID == GameDirectory.defaultID || current.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceText3) }
+        guard current.directoryID(for: instanceID) != directoryID else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceAlreadyInTarget) }
+        guard directoryID == GameDirectory.defaultID || current.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreInstanceMovePreview.targetInstanceMissing) }
         let id = UUID()
         var moved = source; moved.directoryID = directoryID; moved.lastInstanceMoveID = id
         if source.runDirectory == .shared {
@@ -49,9 +49,9 @@ public actor InstanceMover {
         defer { withExtendedLifetime(access) {} }
         let identity = try RunDirectoryCopyJournal.Identity.read(current.instance(instanceID))
         let snapshot = try InstanceMoveSnapshot.capture(instance: source, paths: current, transactionID: id)
-        guard identity.matches(current.instance(instanceID)) else { throw RuriError.message(Messages.CoreInstanceMovePreview.snapshotText1) }
+        guard identity.matches(current.instance(instanceID)) else { throw RuriError.message(Messages.CoreInstanceMovePreview.sourceFolderReplacedDuringPreview) }
         // A download or another settings window can finish while files are hashed.
-        guard try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) == source else { throw RuriError.message(Messages.CoreInstanceMovePreview.snapshotText2) }
+        guard try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) == source else { throw RuriError.message(Messages.CoreInstanceMovePreview.settingsChangedDuringPreview) }
         func collection(_ id: UUID) -> GameDirectory? {
             var value = current.directories.first { $0.id == id }; value?.bookmark = nil; return value
         }
@@ -64,12 +64,12 @@ public actor InstanceMover {
     /// Call under the source's operation locks immediately before activating a
     /// move. A preview is a file snapshot, not permission to move later changes.
     func validate(_ preview: InstanceMovePreview, state: PersistentState) throws {
-        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreInstanceMovePreview.validateText1) }
+        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreInstanceMovePreview.settingsChangedAfterPreview) }
         let current = paths.configured(with: state), target = current.including(preview.moved)
         try current.validateInstanceLocation(preview.source.id); try target.validateInstanceLocation(preview.moved.id)
         guard current.instance(preview.source.id).standardizedFileURL == preview.sourceDirectory.standardizedFileURL,
               target.instance(preview.moved.id).standardizedFileURL == preview.destination.standardizedFileURL,
-              preview.sourceIdentity.matches(preview.sourceDirectory) else { throw RuriError.message(Messages.CoreInstanceMovePreview.currentText1) }
+              preview.sourceIdentity.matches(preview.sourceDirectory) else { throw RuriError.message(Messages.CoreInstanceMovePreview.locationChangedAfterPreview) }
         try Self.requireAbsent(preview.destination)
         try preview.snapshot.requireUnchanged(instance: preview.source, paths: current, transactionID: preview.id)
     }
@@ -78,8 +78,8 @@ public actor InstanceMover {
         // fileExists does not see dangling symlinks; those must not be replaced.
         var info = stat()
         if lstat(url.path, &info) == 0 {
-            throw RuriError.message(Messages.CoreInstanceMovePreview.infoText1)
+            throw RuriError.message(Messages.CoreInstanceMovePreview.targetAlreadyContainsInstance)
         }
-        guard errno == ENOENT else { throw RuriError.message(Messages.CoreInstanceMovePreview.infoText2) }
+        guard errno == ENOENT else { throw RuriError.message(Messages.CoreInstanceMovePreview.targetAvailabilityUnknown) }
     }
 }

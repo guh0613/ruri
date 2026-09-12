@@ -3,7 +3,7 @@ import Foundation
 
 public struct ModpackFileChange: Identifiable, Sendable {
     public enum Action: String, Sendable { case add, replace, remove, keep
-        public var title: String { switch self { case .add: Messages.CoreModpackUpdatePlan.titleText1.localized; case .replace: Messages.CoreModpackUpdatePlan.titleText2.localized; case .remove: Messages.CoreModpackUpdatePlan.titleText3.localized; case .keep: Messages.CoreModpackUpdatePlan.titleText4.localized } }
+        public var title: String { switch self { case .add: Messages.CoreModpackUpdatePlan.newFile.localized; case .replace: Messages.CoreModpackUpdatePlan.replacedFile.localized; case .remove: Messages.CoreModpackUpdatePlan.removedFile.localized; case .keep: Messages.CoreModpackUpdatePlan.keepLocalFile.localized } }
     }
     public let id: String
     public let previousPath: String?
@@ -31,10 +31,10 @@ public struct PreparedModpackUpdate: Identifiable, Sendable {
 
 enum ModpackUpdatePlanner {
     static func digest(_ file: URL) throws -> String? {
-        if (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) != nil { throw RuriError.message(Messages.CoreModpackUpdatePlan.digestText1(String(describing: file.lastPathComponent))) }
+        if (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) != nil { throw RuriError.message(Messages.CoreModpackUpdatePlan.symlinkUpdateSkipped(file.lastPathComponent)) }
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let info = try file.resourceValues(forKeys: [.isRegularFileKey])
-        guard info.isRegularFile == true else { throw RuriError.message(Messages.CoreModpackUpdatePlan.infoText1(String(describing: file.lastPathComponent))) }
+        guard info.isRegularFile == true else { throw RuriError.message(Messages.CoreModpackUpdatePlan.destinationFolderExists(file.lastPathComponent)) }
         return try InstanceTransfer.sha1(file)
     }
     static func protected(_ path: String) -> Bool {
@@ -60,7 +60,7 @@ enum ModpackUpdatePlanner {
             let disabled = file.path + ".disabled"
             if ["mods/", "resourcepacks/", "shaderpacks/"].contains(where: file.path.hasPrefix), try digest(LauncherPaths.safePath(disabled, within: game)) != nil { return disabled }
             let found = try Set(file.identities.flatMap { aliases[$0] ?? [] }).filter { try digest(LauncherPaths.safePath($0, within: game)) != nil }
-            guard found.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.foundText1(String(describing: file.path))) }
+            guard found.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.duplicateLocalMatches(file.path)) }
             return found.first
         }
         func change(previous: InstalledModpack.File?, incoming: InstalledModpack.File?) throws -> ModpackFileChange? {
@@ -81,14 +81,14 @@ enum ModpackUpdatePlanner {
             if let previous, let incoming, previous.sha1 == incoming.sha1, previous.path == incoming.path { return nil }
             if previous != nil, source == nil {
                 action = incoming?.force == true ? .replace : .keep
-                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.incomingText1.localized : Messages.CoreModpackUpdatePlan.incomingText2.localized; conflict = incoming != nil
+                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.packRequiresReadd.localized : Messages.CoreModpackUpdatePlan.locallyRemoved.localized; conflict = incoming != nil
             } else if incoming == nil {
                 action = edited ? .keep : .remove; conflict = edited
-                explanation = edited ? Messages.CoreModpackUpdatePlan.incomingText3.localized : nil
+                explanation = edited ? Messages.CoreModpackUpdatePlan.removedUpstreamLocallyModified.localized : nil
             } else if previous == nil && collision == incoming?.sha1 { return nil }
             else if edited && previous != nil || (collision != nil && target != source) {
                 action = incoming?.force == true ? .replace : .keep; conflict = true
-                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.incomingText4.localized : Messages.CoreModpackUpdatePlan.incomingText5.localized
+                explanation = incoming?.force == true ? Messages.CoreModpackUpdatePlan.replacementRequiredLocalModified.localized : Messages.CoreModpackUpdatePlan.localModificationConflict.localized
             } else { action = previous == nil ? .add : .replace }
             return .init(id: id, previousPath: source, targetPath: target, action: action, conflict: conflict, explanation: explanation, incoming: incoming, observed: observed)
         }
@@ -96,11 +96,11 @@ enum ModpackUpdatePlanner {
             var previous = oldByPath[file.path]
             if previous == nil && !file.identities.isEmpty {
                 let matches = old.files.filter { !consumed.contains($0.path) && !Set($0.identities).isDisjoint(with: file.identities) }
-                guard matches.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.matchesText1(String(describing: file.path))) }
+                guard matches.count <= 1 else { throw RuriError.message(Messages.CoreModpackUpdatePlan.multipleFilesForProject(file.path)) }
                 previous = matches.first
             }
             if let previous {
-                guard consumed.insert(previous.path).inserted else { throw RuriError.message(Messages.CoreModpackUpdatePlan.previousText1(String(describing: file.path))) }
+                guard consumed.insert(previous.path).inserted else { throw RuriError.message(Messages.CoreModpackUpdatePlan.duplicatePackFiles(file.path)) }
             }
             if let item = try change(previous: previous, incoming: file) { result.append(item) }
         }

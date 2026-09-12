@@ -3,31 +3,58 @@ import Foundation
 
 extension Messages {
     public enum CLIDataPackCommands {
-        public static var usageText1: LocalizedMessage {
+        /// 用法：datapacks <instance-uuid> <世界文件夹> [import <路径> | enable|disable|remove <文件名> | order [优先级从高到低的完整标识列表] | search <关键词> | download <项目ID> [版本ID]] [--apply]
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.usageText1`.
+        public static var datapackUsage: LocalizedMessage {
             .init(key: "cLIDataPackCommands.usageText1", table: "CLI", fallback: "用法：datapacks <instance-uuid> <世界文件夹> [import <路径> | enable|disable|remove <文件名> | order [优先级从高到低的完整标识列表] | search <关键词> | download <项目ID> [版本ID]] [--apply]")
         }
-        public static var keysText1: LocalizedMessage {
+        /// 优先级从高到低：
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.keysText1`.
+        public static var priorityOrder: LocalizedMessage {
             .init(key: "cLIDataPackCommands.keysText1", table: "CLI", fallback: "优先级从高到低：")
         }
-        public static func resultsText1(_ value0: Int64) -> LocalizedMessage {
+        /// 共 %1$lld 个结果，显示前 20 个
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.resultsText1`.
+        public static func searchResults(_ value0: Int64) -> LocalizedMessage {
             .init(key: "cLIDataPackCommands.resultsText1", table: "CLI", fallback: "共 %1$lld 个结果，显示前 20 个", arguments: [.integer(value0)])
         }
-        public static func planText1(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+        /// %1$lld 个文件，%2$@ 字节
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.planText1`.
+        public static func datapackPlan(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "cLIDataPackCommands.planText1", table: "CLI", fallback: "%1$lld 个文件，%2$@ 字节", arguments: [.integer(value0), .text(value1)])
         }
-        public static var leaseText1: LocalizedMessage {
+        /// 已安装，下次进入世界时生效。
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.leaseText1`.
+        public static var datapackInstalled: LocalizedMessage {
             .init(key: "cLIDataPackCommands.leaseText1", table: "CLI", fallback: "已安装，下次进入世界时生效。")
         }
-        public static var leaseText2: LocalizedMessage {
+        /// 添加 --apply 执行。数据包更改将在下次进入世界时生效。
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.leaseText2`.
+        public static var datapackApplyRequired: LocalizedMessage {
             .init(key: "cLIDataPackCommands.leaseText2", table: "CLI", fallback: "添加 --apply 执行。数据包更改将在下次进入世界时生效。")
         }
-        public static func trashText1(_ value0: String) -> LocalizedMessage {
+        /// 已移到废纸篓：%1$@
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.trashText1`.
+        public static func datapackTrashed(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIDataPackCommands.trashText1", table: "CLI", fallback: "已移到废纸篓：%1$@", arguments: [.text(value0)])
         }
-        public static func trashText2(_ value0: String) -> LocalizedMessage {
+        /// 配置备份：%1$@
+        ///
+        /// Resource: `CLI.cLIDataPackCommands.trashText2`.
+        public static func datapackBackup(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIDataPackCommands.trashText2", table: "CLI", fallback: "配置备份：%1$@", arguments: [.text(value0)])
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 没有对应的兼容数据包版本。测试版本请显式指定版本 ID。
+        ///
+        /// Resource: `Errors.cLIDataPackCommands.selectedText1`.
+        public static var incompatibleDatapack: LocalizedMessage {
             .init(key: "cLIDataPackCommands.selectedText1", table: "Errors", fallback: "没有对应的兼容数据包版本。测试版本请显式指定版本 ID。")
         }
         static let definitions: [String: MessageDefinition] = [

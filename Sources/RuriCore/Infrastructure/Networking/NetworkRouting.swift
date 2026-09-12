@@ -4,7 +4,7 @@ import Foundation
 public enum DownloadSource: String, Codable, CaseIterable, Identifiable, Sendable {
     case automatic, official, bmclapi
     public var id: String { rawValue }
-    public var title: String { switch self { case .automatic: Messages.CoreNetworkRouting.titleText1.localized; case .official: Messages.CoreNetworkRouting.titleText2.localized; case .bmclapi: Messages.CoreNetworkRouting.titleText3.localized } }
+    public var title: String { switch self { case .automatic: Messages.CoreNetworkRouting.automaticRouting.localized; case .official: Messages.CoreNetworkRouting.officialSource.localized; case .bmclapi: Messages.CoreNetworkRouting.bmclapiPreferred.localized } }
     public func candidates(for url: URL) -> [URL] {
         guard self != .official, let mirror = Self.mirror(url) else { return [url] }
         return self == .bmclapi ? [mirror, url] : [url, mirror]

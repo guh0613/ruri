@@ -32,7 +32,7 @@ public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
     case memory, java, jvmArguments, gameArguments, window, presentation, environment, commands
     public var id: String { rawValue }
     public var title: String {
-        switch self { case .memory: Messages.CoreLaunchSettings.titleText1.localized; case .java: Messages.CoreLaunchSettings.titleText2.localized; case .jvmArguments: Messages.CoreLaunchSettings.titleText3.localized; case .gameArguments: Messages.CoreLaunchSettings.titleText4.localized; case .window: Messages.CoreLaunchSettings.titleText5.localized; case .presentation: Messages.CoreLaunchSettings.titleText6.localized; case .environment: Messages.CoreLaunchSettings.titleText7.localized; case .commands: Messages.CoreLaunchSettings.titleText8.localized }
+        switch self { case .memory: Messages.CoreLaunchSettings.memory.localized; case .java: Messages.CoreLaunchSettings.javaRuntime.localized; case .jvmArguments: Messages.CoreLaunchSettings.jvmArguments.localized; case .gameArguments: Messages.CoreLaunchSettings.gameArguments.localized; case .window: Messages.CoreLaunchSettings.gameWindow.localized; case .presentation: Messages.CoreLaunchSettings.launcherAndLogs.localized; case .environment: Messages.CoreLaunchSettings.environmentVariables.localized; case .commands: Messages.CoreLaunchSettings.launchCommands.localized }
     }
 }
 
@@ -56,12 +56,12 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     }
     public func validate(availability: MemoryAvailability = .current()) throws {
         let baseMemory = try memory.resolve(availability: availability)
-        guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message(Messages.CoreLaunchSettings.baseMemoryText1) }
-        guard jvmArguments.count <= 32768, gameArguments.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.baseMemoryText2) }
+        guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message(Messages.CoreLaunchSettings.invalidWindowSize) }
+        guard jvmArguments.count <= 32768, gameArguments.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.argumentsTooLong) }
         if let path = java.path {
-            guard path.hasPrefix("/"), !path.contains("\0"), path.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.pathText1) }
+            guard path.hasPrefix("/"), !path.contains("\0"), path.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.javaPath) }
         }
-        if let major = java.major, !(6...99).contains(major) { throw RuriError.message(Messages.CoreLaunchSettings.majorText1) }
+        if let major = java.major, !(6...99).contains(major) { throw RuriError.message(Messages.CoreLaunchSettings.majorVersion) }
         _ = try LaunchEnvironment(environment)
         try commands.validate()
         _ = try JVMHeapArguments.resolve(base: baseMemory, arguments: ArgumentTokenizer.split(jvmArguments))

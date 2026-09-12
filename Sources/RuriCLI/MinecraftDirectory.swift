@@ -6,7 +6,7 @@ extension CLI {
     static func scanMinecraft(_ args: [String]) async throws {
         let flags = Array(args.dropFirst(2))
         guard (2...4).contains(args.count), Set(flags).count == flags.count, Set(flags).isSubset(of: ["--json", "--resolve"]) else {
-            throw RuriError.message(Messages.CLIMinecraftDirectory.flagsText1)
+            throw RuriError.message(Messages.CLIMinecraftDirectory.scanHint)
         }
         let reader = MinecraftDirectoryReader(), catalog = try await reader.scan(URL(fileURLWithPath: args[1]))
         var manifests: [String: MinecraftManifestOutput] = [:], issues: [String: String] = [:]
@@ -22,21 +22,21 @@ extension CLI {
             print(String(decoding: try encoder.encode(MinecraftDirectoryOutput(catalog, manifests: manifests, issues: issues)), as: UTF8.self))
             return
         }
-        print(Messages.CLIMinecraftDirectory.encoderText1(String(describing: catalog.directory.path), Int64(catalog.versions.count)).localized)
+        print(Messages.CLIMinecraftDirectory.discoveredVersions(catalog.directory.path, Int64(catalog.versions.count)).localized)
         for version in catalog.versions {
             print("\n\(version.id) · \(version.subtitle)")
-            if let issue = version.issue { print(Messages.CLIMinecraftDirectory.issueText1(String(describing: issue)).localized); continue }
+            if let issue = version.issue { print(Messages.CLIMinecraftDirectory.unreadableDirectory(String(describing: issue)).localized); continue }
             if let manifest = manifests[version.id] {
-                print(Messages.CLIMinecraftDirectory.manifestText1(String(describing: manifest.mainClass), Int64(manifest.libraryDeclarations)).localized)
-                print(Messages.CLIMinecraftDirectory.manifestText2(Int64(manifest.selectedLibraryCount), Int64(manifest.localLibraries.count), Int64(manifest.discardedLibraries.count)).localized)
-                print(Messages.CLIMinecraftDirectory.manifestText3(String(describing: manifest.clientFile)).localized)
+                print(Messages.CLIMinecraftDirectory.launchManifest(String(describing: manifest.mainClass), Int64(manifest.libraryDeclarations)).localized)
+                print(Messages.CLIMinecraftDirectory.dependencySelection(Int64(manifest.selectedLibraryCount), Int64(manifest.localLibraries.count), Int64(manifest.discardedLibraries.count)).localized)
+                print(Messages.CLIMinecraftDirectory.gameJar(String(describing: manifest.clientFile)).localized)
             }
-            if let issue = issues[version.id] { print(Messages.CLIMinecraftDirectory.issueText2(String(describing: issue)).localized) }
+            if let issue = issues[version.id] { print(Messages.CLIMinecraftDirectory.manifestMergeFailed(String(describing: issue)).localized) }
             for location in version.gameLocations {
-                print("\(location.title)\(location.id == version.suggestedLocationID ? Messages.CLIMinecraftDirectory.issueText3.localized : "")：\(location.directory.path)")
-                print(location.available ? (location.contents.isEmpty ? Messages.CLIMinecraftDirectory.issueText4.localized : location.contents.joined(separator: "、")) : Messages.CLIMinecraftDirectory.issueText5.localized)
+                print("\(location.title)\(location.id == version.suggestedLocationID ? Messages.CLIMinecraftDirectory.originalConfiguration.localized : "")：\(location.directory.path)")
+                print(location.available ? (location.contents.isEmpty ? Messages.CLIMinecraftDirectory.missingGameData.localized : location.contents.joined(separator: "、")) : Messages.CLIMinecraftDirectory.unavailableLocation.localized)
             }
-            for warning in version.warnings { print(Messages.CLIMinecraftDirectory.issueText6(String(describing: warning)).localized) }
+            for warning in version.warnings { print(Messages.CLIMinecraftDirectory.directoryHint(String(describing: warning)).localized) }
         }
     }
 }

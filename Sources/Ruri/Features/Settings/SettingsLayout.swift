@@ -7,11 +7,11 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .overview: Messages.AppSettingsLayout.titleText1.localized
-        case .runtime: Messages.AppSettingsLayout.titleText2.localized
-        case .launch: Messages.AppSettingsLayout.titleText3.localized
-        case .advanced: Messages.AppSettingsLayout.titleText4.localized
-        case .files: Messages.AppSettingsLayout.titleText5.localized
+        case .overview: Messages.AppSettingsLayout.overview.localized
+        case .runtime: Messages.AppSettingsLayout.javaAndMemory.localized
+        case .launch: Messages.AppSettingsLayout.windowAndLaunch.localized
+        case .advanced: Messages.AppSettingsLayout.argumentsAndEnvironment.localized
+        case .files: Messages.AppSettingsLayout.filesAndDirectories.localized
         }
     }
     var symbol: String {
@@ -25,11 +25,11 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     }
     var detail: String {
         switch self {
-        case .overview: Messages.AppSettingsLayout.detailText1.localized
-        case .runtime: Messages.AppSettingsLayout.detailText2.localized
-        case .launch: Messages.AppSettingsLayout.detailText3.localized
-        case .advanced: Messages.AppSettingsLayout.detailText4.localized
-        case .files: Messages.AppSettingsLayout.detailText5.localized
+        case .overview: Messages.AppSettingsLayout.overviewDetails.localized
+        case .runtime: Messages.AppSettingsLayout.javaAndMemoryDetails.localized
+        case .launch: Messages.AppSettingsLayout.windowAndLaunchDetails.localized
+        case .advanced: Messages.AppSettingsLayout.argumentsAndEnvironmentDetails.localized
+        case .files: Messages.AppSettingsLayout.filesAndDirectoriesDetails.localized
         }
     }
     var launchKeys: [LaunchSettingKey] {
@@ -60,7 +60,7 @@ struct SettingsLayout<Content: View>: View {
                 }.padding(.horizontal, 18).padding(.top, 22).padding(.bottom, 8)
                 List(panes, selection: $selection) { pane in
                     Label(pane.title, systemImage: pane.symbol).lineLimit(2).fixedSize(horizontal: false, vertical: true).padding(.vertical, 6).tag(pane)
-                }.listStyle(.sidebar).scrollContentBackground(.hidden).accessibilityLabel(Messages.AppSettingsLayout.bodyText1.localized)
+                }.listStyle(.sidebar).scrollContentBackground(.hidden).accessibilityLabel(Messages.AppSettingsLayout.settingsCategory.localized)
             }.frame(width: 180).background(.thinMaterial)
             Divider()
             VStack(alignment: .leading, spacing: 0) {

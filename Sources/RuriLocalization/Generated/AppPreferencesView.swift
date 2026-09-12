@@ -3,88 +3,172 @@ import Foundation
 
 extension Messages {
     public enum AppPreferencesView {
-        public static var modelText1: LocalizedMessage {
+        /// 外观
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText1`.
+        public static var appearance: LocalizedMessage {
             .init(key: "appPreferencesView.modelText1", table: "Interface", fallback: "外观")
         }
-        public static var modelText2: LocalizedMessage {
+        /// 主题
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText2`.
+        public static var theme: LocalizedMessage {
             .init(key: "appPreferencesView.modelText2", table: "Interface", fallback: "主题")
         }
-        public static var modelText3: LocalizedMessage {
+        /// 浅色
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText3`.
+        public static var light: LocalizedMessage {
             .init(key: "appPreferencesView.modelText3", table: "Interface", fallback: "浅色")
         }
-        public static var modelText4: LocalizedMessage {
+        /// 深色
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText4`.
+        public static var dark: LocalizedMessage {
             .init(key: "appPreferencesView.modelText4", table: "Interface", fallback: "深色")
         }
-        public static var modelText5: LocalizedMessage {
+        /// 游戏默认设置
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText5`.
+        public static var systemDefault: LocalizedMessage {
             .init(key: "appPreferencesView.modelText5", table: "Interface", fallback: "游戏默认设置")
         }
-        public static var modelText6: LocalizedMessage {
+        /// 默认内存分配
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText6`.
+        public static var defaultMemory: LocalizedMessage {
             .init(key: "appPreferencesView.modelText6", table: "Interface", fallback: "默认内存分配")
         }
-        public static var modelText7: LocalizedMessage {
+        /// 自动估算
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText7`.
+        public static var automaticEstimate: LocalizedMessage {
             .init(key: "appPreferencesView.modelText7", table: "Interface", fallback: "自动估算")
         }
-        public static var modelText8: LocalizedMessage {
+        /// 编辑默认启动设置…
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText8`.
+        public static var editDefaultLaunchSettings: LocalizedMessage {
             .init(key: "appPreferencesView.modelText8", table: "Interface", fallback: "编辑默认启动设置…")
         }
-        public static var modelText9: LocalizedMessage {
+        /// 内存、Java、窗口和附加参数可被实例继承；实例也可按项覆盖。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText9`.
+        public static var inheritedLaunchSettingsDetails: LocalizedMessage {
             .init(key: "appPreferencesView.modelText9", table: "Interface", fallback: "内存、Java、窗口和附加参数可被实例继承；实例也可按项覆盖。")
         }
-        public static var modelText10: LocalizedMessage {
+        /// 新实例隔离规则
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText10`.
+        public static var newInstanceIsolation: LocalizedMessage {
             .init(key: "appPreferencesView.modelText10", table: "Interface", fallback: "新实例隔离规则")
         }
-        public static var modelText11: LocalizedMessage {
+        /// 仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText11`.
+        public static var newInstanceIsolationDetails: LocalizedMessage {
             .init(key: "appPreferencesView.modelText11", table: "Interface", fallback: "仅用于此后新建的实例，已有实例保持原目录。导入的整合包始终独立；共享目录中的实例共用模组、存档和游戏设置，一次只能运行一个。")
         }
-        public static var modelText12: LocalizedMessage {
+        /// 下载与网络
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText12`.
+        public static var downloadsAndNetwork: LocalizedMessage {
             .init(key: "appPreferencesView.modelText12", table: "Interface", fallback: "下载与网络")
         }
-        public static var modelText13: LocalizedMessage {
+        /// 下载源
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText13`.
+        public static var downloadSource: LocalizedMessage {
             .init(key: "appPreferencesView.modelText13", table: "Interface", fallback: "下载源")
         }
-        public static func modelText14(_ value0: String) -> LocalizedMessage {
+        /// 并行下载：%1$@
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText14`.
+        public static func parallelDownloads(_ value0: String) -> LocalizedMessage {
             .init(key: "appPreferencesView.modelText14", table: "Interface", fallback: "并行下载：%1$@", arguments: [.text(value0)])
         }
-        public static var modelText15: LocalizedMessage {
+        /// 自动切换会优先使用官方源，连接失败时尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。支持范围请求的文件可在取消后继续下载。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText15`.
+        public static var automaticMirrorDetails: LocalizedMessage {
             .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "自动切换会优先使用官方源，连接失败时尝试 BMCLAPI。镜像用于游戏资源和加载器下载，账号登录始终连接原服务。支持范围请求的文件可在取消后继续下载。")
         }
-        public static var modelText16: LocalizedMessage {
+        /// BMCLAPI 镜像服务
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText16`.
+        public static var bmclapiMirror: LocalizedMessage {
             .init(key: "appPreferencesView.modelText16", table: "Interface", fallback: "BMCLAPI 镜像服务")
         }
-        public static var modelText17: LocalizedMessage {
+        /// Microsoft 登录
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText17`.
+        public static var microsoftLogin: LocalizedMessage {
             .init(key: "appPreferencesView.modelText17", table: "Interface", fallback: "Microsoft 登录")
         }
-        public static var modelText18: LocalizedMessage {
+        /// 已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText18`.
+        public static var microsoftLoginDetails: LocalizedMessage {
             .init(key: "appPreferencesView.modelText18", table: "Interface", fallback: "已内置 Microsoft 登录配置，可直接添加账号。下方留空即可使用默认配置。")
         }
-        public static var modelText19: LocalizedMessage {
+        /// 自定义应用 Client ID
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText19`.
+        public static var customClientID: LocalizedMessage {
             .init(key: "appPreferencesView.modelText19", table: "Interface", fallback: "自定义应用 Client ID")
         }
-        public static var modelText20: LocalizedMessage {
+        /// 使用 Ruri 自己注册的 Microsoft 公共客户端应用。应用还需要获准访问 Minecraft 服务；这里不使用其他启动器的 Client ID。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText20`.
+        public static var customClientIDDetails: LocalizedMessage {
             .init(key: "appPreferencesView.modelText20", table: "Interface", fallback: "使用 Ruri 自己注册的 Microsoft 公共客户端应用。应用还需要获准访问 Minecraft 服务；这里不使用其他启动器的 Client ID。")
         }
-        public static var modelText21: LocalizedMessage {
+        /// Microsoft 应用注册文档
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText21`.
+        public static var microsoftRegistrationDocs: LocalizedMessage {
             .init(key: "appPreferencesView.modelText21", table: "Interface", fallback: "Microsoft 应用注册文档")
         }
-        public static var modelText22: LocalizedMessage {
+        /// 数据
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText22`.
+        public static var data: LocalizedMessage {
             .init(key: "appPreferencesView.modelText22", table: "Interface", fallback: "数据")
         }
-        public static var modelText23: LocalizedMessage {
+        /// 管理实例文件夹…
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText23`.
+        public static var manageInstanceFolders: LocalizedMessage {
             .init(key: "appPreferencesView.modelText23", table: "Interface", fallback: "管理实例文件夹…")
         }
-        public static var modelText24: LocalizedMessage {
+        /// 数据目录
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText24`.
+        public static var dataDirectory: LocalizedMessage {
             .init(key: "appPreferencesView.modelText24", table: "Interface", fallback: "数据目录")
         }
-        public static var modelText25: LocalizedMessage {
+        /// 在 Finder 中打开数据目录
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText25`.
+        public static var openDataDirectory: LocalizedMessage {
             .init(key: "appPreferencesView.modelText25", table: "Interface", fallback: "在 Finder 中打开数据目录")
         }
-        public static var modelText26: LocalizedMessage {
+        /// 关于 Ruri
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText26`.
+        public static var aboutRuri: LocalizedMessage {
             .init(key: "appPreferencesView.modelText26", table: "Interface", fallback: "关于 Ruri")
         }
-        public static var modelText27: LocalizedMessage {
+        /// 版本
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText27`.
+        public static var version: LocalizedMessage {
             .init(key: "appPreferencesView.modelText27", table: "Interface", fallback: "版本")
         }
-        public static var modelText28: LocalizedMessage {
+        /// 原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。
+        ///
+        /// Resource: `Interface.appPreferencesView.modelText28`.
+        public static var aboutRuriDescription: LocalizedMessage {
             .init(key: "appPreferencesView.modelText28", table: "Interface", fallback: "原生 SwiftUI Minecraft Java 启动器。与 Mojang、Microsoft 无隶属关系。参考 HMCL 的功能与兼容策略，使用独立的 Swift 实现。")
         }
         static let definitions: [String: MessageDefinition] = [

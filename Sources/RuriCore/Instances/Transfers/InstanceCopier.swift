@@ -35,23 +35,23 @@ public actor InstanceCopier {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         let original = try instance(instanceID, in: state)
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreInstanceCopier.nameText1) }
+        guard !name.isEmpty, name.count <= 256, !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreInstanceCopier.copyNameInvalid) }
         var copy = original; copy.id = UUID(); copy.name = name; copy.createdAt = Date(); copy.lastPlayed = nil; copy.playTime = 0; copy.favorite = false
         copy.directoryID = directoryID; copy.runDirectory = .isolated; copy.customRunDirectory = nil; copy.lastRunDirectoryChangeID = nil; copy.lastInstanceMoveID = nil; copy.frozenMemory = nil
         let id = UUID(); copy.lastInstanceCopyID = id
         var collection = current.directories.first(where: { $0.id == directoryID }); collection?.bookmark = nil
-        guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message(Messages.CoreInstanceCopier.collectionText1) }
+        guard directoryID == GameDirectory.defaultID || collection != nil else { throw RuriError.message(Messages.CoreInstanceCopier.targetInstanceFolderMissing) }
         if current.isMinecraftDirectory(directoryID) {
             return try await repositoryPreview(original: original, copy: copy, id: id, collection: collection!, paths: current, options: options)
         }
-        guard original.repositoryVersionID == nil else { throw RuriError.message(Messages.CoreInstanceCopier.collectionText2) }
+        guard original.repositoryVersionID == nil else { throw RuriError.message(Messages.CoreInstanceCopier.minecraftFolderRequired) }
         let journal = InstanceCopyJournal(id: id, original: original, copy: copy, targetCollection: collection, createdAt: Date(), phase: .copying)
         try journal.validate()
         try journal.validateTarget(paths: current)
         let access = try await acquire(original, paths: current); defer { withExtendedLifetime(access) {} }
         let snapshot = try entries(original, paths: current, options: options)
         let manifest = try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(current.instance(original.id)))
-        guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText1) }
+        guard try entries(original, paths: current, options: options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.sourceChangedDuringPreview) }
         return .init(id: id, source: original, copy: copy, sourceGame: current.game(original.id), destination: try journal.destination(paths: current), options: options, targetCollection: collection, entries: snapshot, manifest: manifest)
     }
 
@@ -79,7 +79,7 @@ public actor InstanceCopier {
             try journal.save(paths: current, at: preparing)
             try RunDirectoryFileCopy.moveWithoutReplacing(preparing, to: root); activated = true
             try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.targetLocationText1) }
+            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.copyWorkspaceConflict) }
             var bytes: Int64 = 0, completed = 0
             var lastProgress = Date.distantPast
             func validateLocations() throws { try current.validateInstanceLocation(source.id); try targetLocation.validateTarget(paths: current) }
@@ -111,7 +111,7 @@ public actor InstanceCopier {
                 publishedBytes += amount
                 progress(.init(phase: .publishing, completed: 0, total: 1, bytesCopied: publishedBytes, totalBytes: publicationBytes))
             }
-            guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else { throw RuriError.message(Messages.CoreInstanceCopier.publishedBytesText1) }
+            guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else { throw RuriError.message(Messages.CoreInstanceCopier.publishedCopyChanged) }
             progress(.init(phase: .publishing, completed: 1, total: 1, bytesCopied: publicationBytes, totalBytes: publicationBytes))
             try Task.checkCancellation()
             progress(.init(phase: .verifying, completed: 0, total: 0, bytesCopied: 0, totalBytes: publicationBytes))
@@ -125,15 +125,15 @@ public actor InstanceCopier {
             progress(.init(phase: .committed, completed: 1, total: 1, bytesCopied: preview.bytes, totalBytes: preview.bytes))
             journal.phase = .committed; try journal.save(paths: current)
             let remainder = try cleanup(journal, paths: current)
-            return .init(state: committed!, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.remainderText1.localized })
+            return .init(state: committed!, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.copyCompletedWithTemporaryFiles.localized })
         } catch {
             if !activated { try? FileManager.default.removeItem(at: preparing); throw error }
             if committed == nil {
                 do { let latest = try StateStore.load(paths); if latest.instances.first(where: { $0.id == journal.copy.id })?.lastInstanceCopyID == journal.id { committed = latest } }
-                catch { throw RunDirectoryCopyFailure(message: Messages.CoreInstanceCopier.latestText1(String(describing: error.localizedDescription)).localized, preservedCopy: nil, cancelled: Task.isCancelled) }
+                catch { throw RunDirectoryCopyFailure(message: Messages.CoreInstanceCopier.copyCommitUncertain(error.localizedDescription).localized, preservedCopy: nil, cancelled: Task.isCancelled) }
             }
-            if let committed { return .init(state: committed, preservedCopy: nil, warning: Messages.CoreInstanceCopier.committedText1(String(describing: error.localizedDescription)).localized) }
-            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceCopier.reasonText1.localized : Messages.CoreInstanceCopier.reasonText2(String(describing: error.localizedDescription)).localized
+            if let committed { return .init(state: committed, preservedCopy: nil, warning: Messages.CoreInstanceCopier.copyCommittedCleanupPending(error.localizedDescription).localized) }
+            let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceCopier.copyCancelled.localized : Messages.CoreInstanceCopier.copyFailed(error.localizedDescription).localized
             do {
                 let result = try abandon(journal, paths: current)
                 throw RunDirectoryCopyFailure(message: reason + (result.warning.map { "\n" + $0 } ?? ""), preservedCopy: result.workspace, cancelled: Task.isCancelled || error is CancellationError)
@@ -160,32 +160,32 @@ public actor InstanceCopier {
         if let pending = try repositoryPending(instanceID: sourceID, state: state), pending.recovery.copySource?.transactionID == transactionID {
             let kept = try RepositoryImportStore.recover(pending.recovery.id, directoryID: pending.directory.id,
                                                         finish: pending.recovery.registered, paths: paths)
-            return .init(state: try StateStore.load(paths), preservedCopy: kept, warning: kept.map { _ in Messages.CoreInstanceCopier.keptText1.localized })
+            return .init(state: try StateStore.load(paths), preservedCopy: kept, warning: kept.map { _ in Messages.CoreInstanceCopier.workFilesKept.localized })
         }
         let journal = try InstanceCopyJournal.load(paths: current, sourceID: sourceID)
-        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreInstanceCopier.journalText1) }
+        guard journal.id == transactionID else { throw RuriError.message(Messages.CoreInstanceCopier.pendingCopyChanged) }
         var source = try instance(sourceID, in: state); source.runDirectory = .isolated
         let lease = try GameRunLease.acquire(paths: current.including(source), instanceID: sourceID, directoryChangeID: journal.id)
         defer { withExtendedLifetime(lease) {} }
         let latest = try InstanceCopyJournal.load(paths: current, sourceID: sourceID)
-        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreInstanceCopier.latestText2) }
+        guard latest.id == journal.id else { throw RuriError.message(Messages.CoreInstanceCopier.copyRecordChanged) }
         let saved = try StateStore.load(paths), configured = paths.configured(with: saved)
         try latest.validateTarget(paths: configured)
         if let copy = saved.instances.first(where: { $0.id == latest.copy.id }) {
-            guard copy.lastInstanceCopyID == latest.id, copy.directoryID == latest.copy.directoryID, copy.runDirectory == .isolated else { throw RuriError.message(Messages.CoreInstanceCopier.copyText1) }
+            guard copy.lastInstanceCopyID == latest.id, copy.directoryID == latest.copy.directoryID, copy.runDirectory == .isolated else { throw RuriError.message(Messages.CoreInstanceCopier.copyRegistrationMismatch) }
             let remainder = try cleanup(latest, paths: configured)
-            return .init(state: saved, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.remainderText2.localized })
+            return .init(state: saved, preservedCopy: remainder, warning: remainder.map { _ in Messages.CoreInstanceCopier.copyCleanupIncomplete.localized })
         }
         let result = try abandon(latest, paths: configured)
         return .init(state: saved, preservedCopy: result.workspace, warning: result.warning)
     }
 
     private func instance(_ id: UUID, in state: PersistentState) throws -> GameInstance {
-        guard let value = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceCopier.valueText1) }; return value
+        guard let value = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceCopier.sourceRemoved) }; return value
     }
     private func validate(_ preview: InstanceCopyPreview, state: PersistentState) throws {
         let original = try instance(preview.source.id, in: state)
-        guard !state.instances.contains(where: { $0.id == preview.copy.id }), original == preview.source else { throw RuriError.message(Messages.CoreInstanceCopier.originalText1) }
+        guard !state.instances.contains(where: { $0.id == preview.copy.id }), original == preview.source else { throw RuriError.message(Messages.CoreInstanceCopier.sourceSettingsChanged) }
         let journal = InstanceCopyJournal(id: preview.id, original: original, copy: preview.copy, targetCollection: preview.targetCollection, createdAt: Date(), phase: .copying)
         try journal.validateTarget(paths: paths.configured(with: state))
     }
@@ -193,7 +193,7 @@ public actor InstanceCopier {
         let snapshot = try entries(preview.source, paths: paths, options: preview.options)
         guard snapshot == preview.entries,
               try FileTreeManifest.capture(snapshot, requiringDirectories: ["minecraft"], rootAttributes: FileExtendedAttributes.capture(paths.instance(preview.source.id))) == preview.manifest,
-              try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.snapshotText1) }
+              try entries(preview.source, paths: paths, options: preview.options) == snapshot else { throw RuriError.message(Messages.CoreInstanceCopier.sourceFilesChanged) }
     }
     func acquire(_ instance: GameInstance, paths: LauncherPaths) async throws -> InstanceCopyAccess {
         let access = try InstanceCopyAccess(instance: instance, paths: paths)
@@ -217,22 +217,22 @@ public actor InstanceCopier {
             let root = ["content.json", "world-backups"].contains(name) ? paths.gameDataState(source.id) : paths.instance(source.id)
             let file = try LauncherPaths.safePath(name, within: root)
             guard FileManager.default.fileExists(atPath: file.path) else {
-                if name == "version.json" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.fileText1) }
-                if name == "installation" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.fileText2) }
+                if name == "version.json" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.installedManifestMissing) }
+                if name == "installation" && source.installed { throw RuriError.message(Messages.CoreInstanceCopier.installationFolderMissing) }
                 continue
             }
             let values = try file.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey, .contentModificationDateKey])
-            guard values.isSymbolicLink != true, values.isDirectory == true || values.isRegularFile == true else { throw RuriError.message(Messages.CoreInstanceCopier.valuesText1(String(describing: name))) }
-            if name == "installation" && values.isDirectory != true { throw RuriError.message(Messages.CoreInstanceCopier.valuesText2) }
+            guard values.isSymbolicLink != true, values.isDirectory == true || values.isRegularFile == true else { throw RuriError.message(Messages.CoreInstanceCopier.unsupportedMetadataFiles(name)) }
+            if name == "installation" && values.isDirectory != true { throw RuriError.message(Messages.CoreInstanceCopier.installationPathInvalid) }
             if name == "version.json" && source.installed {
-                guard values.isRegularFile == true, (values.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceCopier.valuesText3) }
+                guard values.isRegularFile == true, (values.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceCopier.invalidInstanceManifest) }
                 let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: file))
-                guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText2) }
+                guard manifest.mainClass != nil, manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreInstanceCopier.launchManifestNotReady) }
             }
             result.append(.init(url: file, path: name, directory: values.isDirectory == true, size: Int64(values.fileSize ?? 0), modified: values.contentModificationDate ?? .distantPast))
             if values.isDirectory == true { result += try FileTree.entries(in: file).map { .init(url: $0.url, path: name + "/" + $0.path, directory: $0.directory, size: $0.size, modified: $0.modified) } }
         }
-        guard result.count <= 150_000, result.filter({ !$0.directory }).reduce(Int64(0), { $0 + $1.size }) <= 128 * 1024 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceCopier.manifestText3) }
+        guard result.count <= 150_000, result.filter({ !$0.directory }).reduce(Int64(0), { $0 + $1.size }) <= 128 * 1024 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceCopier.copyLimitExceeded) }
         return result
     }
     private func rebindModpack(_ root: URL, copy: GameInstance) throws {
@@ -253,7 +253,7 @@ public actor InstanceCopier {
         try journal.validateTarget(paths: paths)
         let destination = try journal.destination(paths: paths)
         guard (journal.publishedIdentity ?? journal.stagedIdentity)?.matches(destination) == true else {
-            throw RuriError.message(Messages.CoreInstanceCopier.destinationText1)
+            throw RuriError.message(Messages.CoreInstanceCopier.destinationFolderUnavailable)
         }
         if let digest = journal.verificationDigest {
             let record = try InstanceCopyJournal.root(paths: paths, sourceID: journal.original.id).appendingPathComponent("verification.json")
@@ -275,8 +275,8 @@ public actor InstanceCopier {
         for name in locks {
             var info = stat()
             if lstat(directory.appendingPathComponent(name).path, &info) == 0 {
-                guard info.st_mode & S_IFMT == S_IFREG, info.st_size == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.infoText1) }
-            } else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.infoText2) }
+                guard info.st_mode & S_IFMT == S_IFREG, info.st_size == 0 else { throw RuriError.message(Messages.CoreInstanceCopier.unexpectedOperationLock) }
+            } else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.lockUnavailable) }
         }
         try manifest.requireMatch(in: directory, excluding: locks.union([InstanceCopyGuard.markerName]), ignoringTransientFiles: true)
     }
@@ -289,8 +289,8 @@ public actor InstanceCopier {
             try RunDirectoryFileCopy.returnToWorkspace(destination, workspace: workspace)
         } else {
             var info = stat()
-            if lstat(destination.path, &info) == 0 { warning = Messages.CoreInstanceCopier.infoText3(String(describing: destination.path)).localized }
-            else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.infoText4) }
+            if lstat(destination.path, &info) == 0 { warning = Messages.CoreInstanceCopier.unknownTargetFolder(destination.path).localized }
+            else if errno != ENOENT { throw RuriError.message(Messages.CoreInstanceCopier.targetStateUnconfirmed) }
         }
         let record = try retire(journal, paths: paths)
         return (FileManager.default.fileExists(atPath: workspace.path) ? workspace : record, warning)
@@ -308,7 +308,7 @@ final class InstanceCopyAccess {
         for name in [".content-operation.lock", ".world-operation.lock"] {
             let lock = GameDataOperationLock(); try lock.acquire(directory: paths.gameDataState(instance.id), name: name); locks.append(lock)
         }
-        for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) { throw RuriError.message(Messages.CoreInstanceCopier.lockText1) }
+        for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) { throw RuriError.message(Messages.CoreInstanceCopier.pendingFileOperation) }
         worlds = try InstanceTransfer.lockWorlds(paths.game(instance.id))
     }
     deinit { worlds.forEach { close($0) } }

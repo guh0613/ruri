@@ -36,12 +36,12 @@ enum MinecraftGameDataFiles {
             ((sameLocation(sourceRoot, repository) && sameLocation(targetRoot, version)) ||
              (sameLocation(sourceRoot, version) && sameLocation(targetRoot, repository)))
         if !repositoryPair && (from == to || from.hasPrefix(to + "/") || to.hasPrefix(from + "/")) {
-            return Messages.CoreMinecraftGameDataFiles.repositoryPairText1.localized
+            return Messages.CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories.localized
         }
         let reserved = Set(reservedNames(paths: targetPaths, instanceID: instanceID).map(key))
         let collisions = Set(source.game.compactMap { $0.path.split(separator: "/").first.map(String.init) }).filter { reserved.contains(key($0)) }
         if !collisions.isEmpty {
-            return Messages.CoreMinecraftGameDataFiles.collisionsText1(String(describing: collisions.sorted().joined(separator: "、"))).localized
+            return Messages.CoreMinecraftGameDataFiles.contentCollisions(String(describing: collisions.sorted().joined(separator: "、"))).localized
         }
         return nil
     }

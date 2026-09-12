@@ -3,43 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreCustomRunDirectory {
-        public static var candidateText1: LocalizedMessage {
+        /// 请选择已存在的游戏文件夹。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.candidateText1`.
+        public static var existingGameFolderRequired: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.candidateText1", table: "Errors", fallback: "请选择已存在的游戏文件夹。")
         }
-        public static var validateConfigurationText1: LocalizedMessage {
+        /// 自定义运行目录登记信息无效。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.validateConfigurationText1`.
+        public static var invalidConfiguration: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.validateConfigurationText1", table: "Errors", fallback: "自定义运行目录登记信息无效。")
         }
-        public static var valuesText1: LocalizedMessage {
+        /// 路径已失联或不再是原文件夹。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.valuesText1`.
+        public static var pathUnlinked: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.valuesText1", table: "Errors", fallback: "路径已失联或不再是原文件夹。")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 目录身份与选取时不一致。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.recordText1`.
+        public static var directoryIdentityChanged: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.recordText1", table: "Errors", fallback: "目录身份与选取时不一致。")
         }
-        public static func recordText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 无法访问自定义运行目录：%1$@
+        /// 请连接原磁盘、检查权限或重新定位原文件夹。
+        /// %2$@
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.recordText2`.
+        public static func directoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreCustomRunDirectory.recordText2", table: "Errors", fallback: "无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法读取自定义目录身份标记。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.fdText1`.
+        public static var markerUnreadable: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.fdText1", table: "Errors", fallback: "无法读取自定义目录身份标记。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 自定义目录身份标记无效。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.infoText1`.
+        public static var invalidMarker: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.infoText1", table: "Errors", fallback: "自定义目录身份标记无效。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 自定义目录标记过大。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.dataText1`.
+        public static var oversizedMarker: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.dataText1", table: "Errors", fallback: "自定义目录标记过大。")
         }
-        public static var markerText1: LocalizedMessage {
+        /// 自定义目录标记版本无效。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.markerText1`.
+        public static var invalidMarkerVersion: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.markerText1", table: "Errors", fallback: "自定义目录标记版本无效。")
         }
-        public static var overlapsText1: LocalizedMessage {
+        /// 自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.overlapsText1`.
+        public static var overlappingDirectory: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.overlapsText1", table: "Errors", fallback: "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。")
         }
-        public static var existingText1: LocalizedMessage {
+        /// 同一路径的目录身份已经改变，请重新检查原目录。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.existingText1`.
+        public static var identityChanged: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.existingText1", table: "Errors", fallback: "同一路径的目录身份已经改变，请重新检查原目录。")
         }
-        public static var existingText2: LocalizedMessage {
+        /// 此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.existingText2`.
+        public static var duplicateDirectory: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.existingText2", table: "Errors", fallback: "此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。")
         }
-        public static var existingText3: LocalizedMessage {
+        /// 自定义运行目录之间不能相互嵌套。
+        ///
+        /// Resource: `Errors.coreCustomRunDirectory.existingText3`.
+        public static var nestedDirectories: LocalizedMessage {
             .init(key: "coreCustomRunDirectory.existingText3", table: "Errors", fallback: "自定义运行目录之间不能相互嵌套。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -18,10 +18,10 @@ public final class GameRunLease: @unchecked Sendable {
         try paths.prepareInstance(instanceID)
         let file = try LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID))
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameRunLease.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameRunLease.runLockUnavailable) }
         var lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET); lock.l_len = 0
         guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            Darwin.close(fd); throw RuriError.message(Messages.CoreGameRunLease.lockText1)
+            Darwin.close(fd); throw RuriError.message(Messages.CoreGameRunLease.instanceAlreadyRunning)
         }
         var shared: SharedGameDirectoryLease?
         do {
@@ -29,7 +29,7 @@ public final class GameRunLease: @unchecked Sendable {
             if paths.runDirectory(for: instanceID) != .isolated { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession, directoryChangeID: directoryChangeID) }
             let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
             guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
-                throw RuriError.message(Messages.CoreGameRunLease.recordsText1)
+                throw RuriError.message(Messages.CoreGameRunLease.activeRunSession)
             }
         } catch { Darwin.close(fd); throw error }
         return GameRunLease(fd, sharedDirectory: shared, location: location)

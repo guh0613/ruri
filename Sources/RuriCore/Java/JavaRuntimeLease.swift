@@ -20,16 +20,16 @@ public final class JavaRuntimeLease: @unchecked Sendable {
         return try acquire(id: id, paths: paths, exclusive: false)
     }
     static func acquire(id: String, paths: LauncherPaths, exclusive: Bool) throws -> JavaRuntimeLease {
-        guard !id.isEmpty, !id.hasPrefix("."), !id.contains("/"), !id.contains("\\"), !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreJavaRuntimeLease.acquireText1) }
+        guard !id.isEmpty, !id.hasPrefix("."), !id.contains("/"), !id.contains("\\"), !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreJavaRuntimeLease.invalidJavaRuntimeName) }
         let directory = try LauncherPaths.safePath(".locks", within: paths.runtimes)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let lockFile = try LauncherPaths.safePath(id + ".lock", within: directory)
         let fd = open(lockFile.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreJavaRuntimeLease.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreJavaRuntimeLease.javaRuntimeLockFailed) }
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { close(fd); throw RuriError.message(Messages.CoreJavaRuntimeLease.infoText1) }
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { close(fd); throw RuriError.message(Messages.CoreJavaRuntimeLease.invalidJavaRuntimeLock) }
         var value = flock(); value.l_type = Int16(exclusive ? F_WRLCK : F_RDLCK); value.l_whence = Int16(SEEK_SET)
-        guard fcntl(fd, F_OFD_SETLK, &value) == 0 else { close(fd); throw RuriError.message(Messages.CoreJavaRuntimeLease.valueText1) }
+        guard fcntl(fd, F_OFD_SETLK, &value) == 0 else { close(fd); throw RuriError.message(Messages.CoreJavaRuntimeLease.javaRuntimeInUse) }
         return JavaRuntimeLease(fd)
     }
     static func requireNoRunningProcess(in directory: URL) throws {
@@ -43,7 +43,7 @@ public final class JavaRuntimeLease: @unchecked Sendable {
             let size = buffer.withUnsafeMutableBytes { proc_pidpath(pid, $0.baseAddress, UInt32($0.count)) }
             if size > 0 {
                 let executable = String(decoding: buffer.prefix(while: { $0 != 0 }).map { UInt8(bitPattern: $0) }, as: UTF8.self)
-                if executable.hasPrefix(prefix) { throw RuriError.message(Messages.CoreJavaRuntimeLease.executableText1(String(describing: pid))) }
+                if executable.hasPrefix(prefix) { throw RuriError.message(Messages.CoreJavaRuntimeLease.javaRuntimeUsedByProcess(String(describing: pid))) }
             }
         }
     }

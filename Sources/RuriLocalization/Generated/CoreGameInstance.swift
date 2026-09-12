@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreGameInstance {
-        public static var componentsText1: LocalizedMessage {
+        /// 本地版本
+        ///
+        /// Resource: `Core.coreGameInstance.componentsText1`.
+        public static var localVersion: LocalizedMessage {
             .init(key: "coreGameInstance.componentsText1", table: "Core", fallback: "本地版本")
         }
-        public static func selectedText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。
+        ///
+        /// Resource: `Errors.coreGameInstance.selectedText1`.
+        public static func javaBelowRequiredVersion(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreGameInstance.selectedText1", table: "Errors", fallback: "指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", arguments: [.text(value0), .text(value1)])
         }
-        public static func selectedText2(_ value0: String) -> LocalizedMessage {
+        /// 指定的 Java %1$@ 不在此整合包支持的版本中。
+        ///
+        /// Resource: `Errors.coreGameInstance.selectedText2`.
+        public static func javaUnsupportedByPack(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameInstance.selectedText2", table: "Errors", fallback: "指定的 Java %1$@ 不在此整合包支持的版本中。", arguments: [.text(value0)])
         }
-        public static func selectedText3(_ value0: String) -> LocalizedMessage {
+        /// 整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。
+        ///
+        /// Resource: `Errors.coreGameInstance.selectedText3`.
+        public static func packJavaVersionMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameInstance.selectedText3", table: "Errors", fallback: "整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

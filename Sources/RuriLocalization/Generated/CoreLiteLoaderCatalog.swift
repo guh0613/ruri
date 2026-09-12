@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum CoreLiteLoaderCatalog {
-        public static var valueText1: LocalizedMessage {
+        /// LiteLoader 文件校验信息无效。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.valueText1`.
+        public static var invalidFileChecksum: LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.valueText1", table: "Errors", fallback: "LiteLoader 文件校验信息无效。")
         }
-        public static var argumentsText1: LocalizedMessage {
+        /// LiteLoader 清单的启动入口无法识别。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.argumentsText1`.
+        public static var unrecognizedLaunchEntry: LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.argumentsText1", table: "Errors", fallback: "LiteLoader 清单的启动入口无法识别。")
         }
-        public static func releaseText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.releaseText1`.
+        public static func loaderNotFound(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.releaseText1", table: "Errors", fallback: "找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", arguments: [.text(value0), .text(value1)])
         }
-        public static var valueText2: LocalizedMessage {
+        /// LiteLoader 快照缺少有效的 SHA-1 校验信息。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.valueText2`.
+        public static var invalidSnapshotChecksum: LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.valueText2", table: "Errors", fallback: "LiteLoader 快照缺少有效的 SHA-1 校验信息。")
         }
-        public static var numberText1: LocalizedMessage {
+        /// LiteLoader 快照版本信息无效。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.numberText1`.
+        public static var invalidSnapshotVersion: LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.numberText1", table: "Errors", fallback: "LiteLoader 快照版本信息无效。")
         }
-        public static var componentsText1: LocalizedMessage {
+        /// LiteLoader 依赖下载地址无效。
+        ///
+        /// Resource: `Errors.coreLiteLoaderCatalog.componentsText1`.
+        public static var invalidDependencyURL: LocalizedMessage {
             .init(key: "coreLiteLoaderCatalog.componentsText1", table: "Errors", fallback: "LiteLoader 依赖下载地址无效。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -23,12 +23,12 @@ struct CurseForgeFileRow: View {
                 Spacer()
                 if manual {
                     if checking { ProgressView().controlSize(.small) }
-                    else if selectedURL != nil { Label(Messages.AppCurseForgeFilePicker.bodyText1.localized, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(Theme.accent) }
-                    else { TagPill(text: Messages.AppCurseForgeFilePicker.bodyText2.localized) }
-                } else { Label(Messages.AppCurseForgeFilePicker.bodyText3.localized, systemImage: "arrow.down.circle").font(.caption).foregroundStyle(.secondary) }
+                    else if selectedURL != nil { Label(Messages.AppCurseForgeFilePicker.verified.localized, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(Theme.accent) }
+                    else { TagPill(text: Messages.AppCurseForgeFilePicker.manualDownload.localized) }
+                } else { Label(Messages.AppCurseForgeFilePicker.automaticDownload.localized, systemImage: "arrow.down.circle").font(.caption).foregroundStyle(.secondary) }
             }
             if manual {
-                HStack { Link(Messages.AppCurseForgeFilePicker.bodyText4.localized, destination: page); Spacer(); Button(selectedURL == nil ? Messages.AppCurseForgeFilePicker.bodyText5.localized : Messages.AppCurseForgeFilePicker.bodyText6.localized) { choose() }.disabled(checking) }.font(.callout)
+                HStack { Link(Messages.AppCurseForgeFilePicker.openDownloadPage.localized, destination: page); Spacer(); Button(selectedURL == nil ? Messages.AppCurseForgeFilePicker.chooseDownloadedFile.localized : Messages.AppCurseForgeFilePicker.chooseAnotherFile.localized) { choose() }.disabled(checking) }.font(.callout)
             }
             if let error { Text(error).font(.caption).foregroundStyle(.orange) }
         }.padding(14).background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 10))
@@ -38,7 +38,7 @@ struct CurseForgeFileRow: View {
     }
     private func choose() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = false; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppCurseForgeFilePicker.panelText1(String(describing: file.fileName)).localized
+        panel.message = Messages.AppCurseForgeFilePicker.selectFile(file.fileName).localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         checking = true; error = nil
         Task {
@@ -57,7 +57,7 @@ struct CurseForgePlanFiles: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if files.contains(where: \.requiresManualDownload) {
-                Text(Messages.AppCurseForgeFilePicker.bodyText7.localized).font(.callout).foregroundStyle(.secondary)
+                Text(Messages.AppCurseForgeFilePicker.manualDownloadNotice.localized).font(.callout).foregroundStyle(.secondary)
             }
             ForEach(files) { item in
                 CurseForgeFileRow(file: item.file, title: item.project.name, page: item.pageURL, manual: item.requiresManualDownload,

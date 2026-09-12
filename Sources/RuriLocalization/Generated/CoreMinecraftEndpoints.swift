@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftEndpoints {
-        public static var assetText1: LocalizedMessage {
+        /// 资源索引包含无效哈希
+        ///
+        /// Resource: `Errors.coreMinecraftEndpoints.assetText1`.
+        public static var invalidAssetHash: LocalizedMessage {
             .init(key: "coreMinecraftEndpoints.assetText1", table: "Errors", fallback: "资源索引包含无效哈希")
         }
         static let definitions: [String: MessageDefinition] = [

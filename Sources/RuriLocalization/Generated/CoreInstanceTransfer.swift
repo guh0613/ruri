@@ -3,106 +3,211 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceTransfer {
-        public static var titleText1: LocalizedMessage {
+        /// Ruri 实例
+        ///
+        /// Resource: `Core.coreInstanceTransfer.titleText1`.
+        public static var ruriInstance: LocalizedMessage {
             .init(key: "coreInstanceTransfer.titleText1", table: "Core", fallback: "Ruri 实例")
         }
-        public static var titleText2: LocalizedMessage {
+        /// Ruri 完整副本
+        ///
+        /// Resource: `Core.coreInstanceTransfer.titleText2`.
+        public static var ruriFullCopy: LocalizedMessage {
             .init(key: "coreInstanceTransfer.titleText2", table: "Core", fallback: "Ruri 完整副本")
         }
-        public static var reasonText1: LocalizedMessage {
+        /// 操作已取消。
+        ///
+        /// Resource: `Core.coreInstanceTransfer.reasonText1`.
+        public static var operationCancelled: LocalizedMessage {
             .init(key: "coreInstanceTransfer.reasonText1", table: "Core", fallback: "操作已取消。")
         }
-        public static func keptText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包导入未完成，工作文件已保留，可重新导入。
+        /// %1$@
+        ///
+        /// Resource: `Core.coreInstanceTransfer.keptText1`.
+        public static func packImportIncomplete(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.keptText1", table: "Core", fallback: "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", arguments: [.text(value0)])
         }
-        public static func failureText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 整合包导入需要恢复，请在实例库处理未完成的导入。
+        /// %1$@
+        /// %2$@
+        ///
+        /// Resource: `Core.coreInstanceTransfer.failureText3`.
+        public static func importNeedsRecovery(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.failureText3", table: "Core", fallback: "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var infoText1: LocalizedMessage {
+        /// 未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。
+        ///
+        /// Resource: `Core.coreInstanceTransfer.infoText1`.
+        public static var unsupportedManifest: LocalizedMessage {
             .init(key: "coreInstanceTransfer.infoText1", table: "Core", fallback: "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。")
         }
-        public static var infoText2: LocalizedMessage {
+        /// 目录包含多个实例，请选择其中一个实例目录。
+        ///
+        /// Resource: `Core.coreInstanceTransfer.infoText2`.
+        public static var multipleInstanceDirectories: LocalizedMessage {
             .init(key: "coreInstanceTransfer.infoText2", table: "Core", fallback: "目录包含多个实例，请选择其中一个实例目录。")
         }
-        public static var commandsText1: LocalizedMessage {
+        /// 已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。
+        ///
+        /// Resource: `Core.coreInstanceTransfer.commandsText1`.
+        public static var retainedCommands: LocalizedMessage {
             .init(key: "coreInstanceTransfer.commandsText1", table: "Core", fallback: "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。")
         }
-        public static var gamesText2: LocalizedMessage {
+        /// 实例带有自定义 JVM 参数，确认内容后可选择保留。
+        ///
+        /// Resource: `Core.coreInstanceTransfer.gamesText2`.
+        public static var customJvmArguments: LocalizedMessage {
             .init(key: "coreInstanceTransfer.gamesText2", table: "Core", fallback: "实例带有自定义 JVM 参数，确认内容后可选择保留。")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 此实例包需要更新版本的 Ruri，或缺少安装文件信息。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.instanceText1`.
+        public static var unsupportedInstanceVersion: LocalizedMessage {
             .init(key: "coreInstanceTransfer.instanceText1", table: "Errors", fallback: "此实例包需要更新版本的 Ruri，或缺少安装文件信息。")
         }
-        public static var isDirectoryText1: LocalizedMessage {
+        /// 请选择实际实例目录或压缩包。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.isDirectoryText1`.
+        public static var actualDirectoryRequired: LocalizedMessage {
             .init(key: "coreInstanceTransfer.isDirectoryText1", table: "Errors", fallback: "请选择实际实例目录或压缩包。")
         }
-        public static func itemText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包内附文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.itemText1`.
+        public static func bundledFileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.itemText1", table: "Errors", fallback: "整合包内附文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static func itemText2(_ value0: String) -> LocalizedMessage {
+        /// 整合包缺少文件且未提供下载源：%1$@
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.itemText2`.
+        public static func missingBundledFileDownloadSource(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.itemText2", table: "Errors", fallback: "整合包缺少文件且未提供下载源：%1$@", arguments: [.text(value0)])
         }
-        public static var failureText1: LocalizedMessage {
+        /// 文件缺少可用下载源
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.failureText1`.
+        public static var missingDownloadSource: LocalizedMessage {
             .init(key: "coreInstanceTransfer.failureText1", table: "Errors", fallback: "文件缺少可用下载源")
         }
-        public static func itemText3(_ value0: String) -> LocalizedMessage {
+        /// 整合包文件缺失或已修改：%1$@
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.itemText3`.
+        public static func modifiedBundledFile(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.itemText3", table: "Errors", fallback: "整合包文件缺失或已修改：%1$@", arguments: [.text(value0)])
         }
-        public static var completeText1: LocalizedMessage {
+        /// 此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.completeText1`.
+        public static var localFilesRequireFullCopy: LocalizedMessage {
             .init(key: "coreInstanceTransfer.completeText1", table: "Errors", fallback: "此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。")
         }
-        public static var completeText2: LocalizedMessage {
+        /// 此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.completeText2`.
+        public static var legacyFabricUnsupported: LocalizedMessage {
             .init(key: "coreInstanceTransfer.completeText2", table: "Errors", fallback: "此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
         }
-        public static var completeText3: LocalizedMessage {
+        /// 此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.completeText3`.
+        public static var liteLoaderUnsupported: LocalizedMessage {
             .init(key: "coreInstanceTransfer.completeText3", table: "Errors", fallback: "此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
         }
-        public static var completeText4: LocalizedMessage {
+        /// 此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.completeText4`.
+        public static var optifineUnsupported: LocalizedMessage {
             .init(key: "coreInstanceTransfer.completeText4", table: "Errors", fallback: "此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。")
         }
-        public static var instanceText2: LocalizedMessage {
+        /// 此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.instanceText2`.
+        public static var disabledCommandsUnsupported: LocalizedMessage {
             .init(key: "coreInstanceTransfer.instanceText2", table: "Errors", fallback: "此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
         }
-        public static var locksText1: LocalizedMessage {
+        /// 此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.locksText1`.
+        public static var extraLaunchSettings: LocalizedMessage {
             .init(key: "coreInstanceTransfer.locksText1", table: "Errors", fallback: "此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。")
         }
-        public static func infoText3(_ value0: String) -> LocalizedMessage {
+        /// 实例清单不是有效文件：%1$@
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.infoText3`.
+        public static func invalidInstanceManifest(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.infoText3", table: "Errors", fallback: "实例清单不是有效文件：%1$@", arguments: [.text(value0)])
         }
-        public static var gameText1: LocalizedMessage {
+        /// MultiMC 实例清单无效或缺少 Minecraft 版本。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.gameText1`.
+        public static var invalidMultiMCManifest: LocalizedMessage {
             .init(key: "coreInstanceTransfer.gameText1", table: "Errors", fallback: "MultiMC 实例清单无效或缺少 Minecraft 版本。")
         }
-        public static func unknownText1(_ value0: String) -> LocalizedMessage {
+        /// 此实例包含尚未支持的组件：%1$@
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.unknownText1`.
+        public static func unsupportedComponents(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.unknownText1", table: "Errors", fallback: "此实例包含尚未支持的组件：%1$@", arguments: [.text(value0)])
         }
-        public static var loadersText1: LocalizedMessage {
+        /// 实例同时声明了多个加载器，暂时无法迁移。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.loadersText1`.
+        public static var multipleLoadersUnsupported: LocalizedMessage {
             .init(key: "coreInstanceTransfer.loadersText1", table: "Errors", fallback: "实例同时声明了多个加载器，暂时无法迁移。")
         }
-        public static func urlText1(_ value0: String) -> LocalizedMessage {
+        /// 实例包含自定义 %1$@，需要先处理这些补丁后再迁移。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.urlText1`.
+        public static func customPatchRequiresHandling(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceTransfer.urlText1", table: "Errors", fallback: "实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", arguments: [.text(value0)])
         }
-        public static var gamesText1: LocalizedMessage {
+        /// 实例需要唯一的 minecraft 或 .minecraft 游戏目录。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.gamesText1`.
+        public static var uniqueGameDirectory: LocalizedMessage {
             .init(key: "coreInstanceTransfer.gamesText1", table: "Errors", fallback: "实例需要唯一的 minecraft 或 .minecraft 游戏目录。")
         }
-        public static var iconText1: LocalizedMessage {
+        /// 实例版本、内存或窗口设置无效。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.iconText1`.
+        public static var invalidIconSettings: LocalizedMessage {
             .init(key: "coreInstanceTransfer.iconText1", table: "Errors", fallback: "实例版本、内存或窗口设置无效。")
         }
-        public static var savesText1: LocalizedMessage {
+        /// 存档目录不能是符号链接。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.savesText1`.
+        public static var symlinkSaves: LocalizedMessage {
             .init(key: "coreInstanceTransfer.savesText1", table: "Errors", fallback: "存档目录不能是符号链接。")
         }
-        public static var infoText4: LocalizedMessage {
+        /// 存档包含符号链接。
+        ///
+        /// Resource: `Errors.coreInstanceTransfer.infoText4`.
+        public static var symlinkInSaves: LocalizedMessage {
             .init(key: "coreInstanceTransfer.infoText4", table: "Errors", fallback: "存档包含符号链接。")
         }
-        public static var workspaceText1: LocalizedMessage {
+        /// 正在识别实例
+        ///
+        /// Resource: `Progress.coreInstanceTransfer.workspaceText1`.
+        public static var identifyingInstance: LocalizedMessage {
             .init(key: "coreInstanceTransfer.workspaceText1", table: "Progress", fallback: "正在识别实例")
         }
-        public static var excludedText1: LocalizedMessage {
+        /// 正在复制实例内容
+        ///
+        /// Resource: `Progress.coreInstanceTransfer.excludedText1`.
+        public static var copyingInstanceContents: LocalizedMessage {
             .init(key: "coreInstanceTransfer.excludedText1", table: "Progress", fallback: "正在复制实例内容")
         }
-        public static var failureText2: LocalizedMessage {
+        /// 补齐整合包文件
+        ///
+        /// Resource: `Progress.coreInstanceTransfer.failureText2`.
+        public static var completingPackFiles: LocalizedMessage {
             .init(key: "coreInstanceTransfer.failureText2", table: "Progress", fallback: "补齐整合包文件")
         }
-        public static var cfgText1: LocalizedMessage {
+        /// 正在导出实例
+        ///
+        /// Resource: `Progress.coreInstanceTransfer.cfgText1`.
+        public static var exportingInstance: LocalizedMessage {
             .init(key: "coreInstanceTransfer.cfgText1", table: "Progress", fallback: "正在导出实例")
         }
         static let definitions: [String: MessageDefinition] = [

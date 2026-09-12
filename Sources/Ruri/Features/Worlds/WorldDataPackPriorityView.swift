@@ -13,20 +13,20 @@ struct WorldDataPackPriorityView: View {
     private var manager: WorldManager { WorldManager(paths: model.paths, instanceID: instance.id) }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeading(title: Messages.AppWorldDataPackPriorityView.bodyText1.localized, subtitle: world.name)
-            Text(Messages.AppWorldDataPackPriorityView.bodyText2.localized).font(.callout).foregroundStyle(.secondary)
+            SectionHeading(title: Messages.AppWorldDataPackPriorityView.dataPackPriority.localized, subtitle: world.name)
+            Text(Messages.AppWorldDataPackPriorityView.priorityDetails.localized).font(.callout).foregroundStyle(.secondary)
             if let snapshot {
                 List {
                     ForEach(keys, id: \.self) { key in
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(key == "vanilla" ? Messages.AppWorldDataPackPriorityView.snapshotText1.localized : key.hasPrefix("file/") ? String(key.dropFirst(5)) : key).lineLimit(1)
-                                if !snapshot.localKeys.contains(key) { Text(key.hasPrefix("file/") ? Messages.AppWorldDataPackPriorityView.snapshotText2.localized : Messages.AppWorldDataPackPriorityView.snapshotText3.localized).font(.caption).foregroundStyle(.secondary) }
+                                Text(key == "vanilla" ? Messages.AppWorldDataPackPriorityView.vanilla.localized : key.hasPrefix("file/") ? String(key.dropFirst(5)) : key).lineLimit(1)
+                                if !snapshot.localKeys.contains(key) { Text(key.hasPrefix("file/") ? Messages.AppWorldDataPackPriorityView.missingOrDisabled.localized : Messages.AppWorldDataPackPriorityView.providedByGameOrMod.localized).font(.caption).foregroundStyle(.secondary) }
                             }
                             Spacer()
                             if snapshot.localKeys.contains(key), let index = keys.firstIndex(of: key) {
-                                Button { keys.swapAt(index, index - 1) } label: { Image(systemName: "arrow.up") }.help(Messages.AppWorldDataPackPriorityView.indexText1.localized).disabled(index == 0 || model.busy)
-                                Button { keys.swapAt(index, index + 1) } label: { Image(systemName: "arrow.down") }.help(Messages.AppWorldDataPackPriorityView.indexText2.localized).disabled(index + 1 == keys.count || model.busy)
+                                Button { keys.swapAt(index, index - 1) } label: { Image(systemName: "arrow.up") }.help(Messages.AppWorldDataPackPriorityView.increasePriority.localized).disabled(index == 0 || model.busy)
+                                Button { keys.swapAt(index, index + 1) } label: { Image(systemName: "arrow.down") }.help(Messages.AppWorldDataPackPriorityView.decreasePriority.localized).disabled(index + 1 == keys.count || model.busy)
                             }
                         }.padding(.vertical, 5)
                     }.onMove { indices, destination in
@@ -39,7 +39,7 @@ struct WorldDataPackPriorityView: View {
             HStack {
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
                 Spacer()
-                Button(Messages.AppWorldDataPackPriorityView.errorText1.localized) { save() }.buttonStyle(.borderedProminent)
+                Button(Messages.AppWorldDataPackPriorityView.saveOrder.localized) { save() }.buttonStyle(.borderedProminent)
                     .disabled(snapshot == nil || keys == snapshot?.keys || model.busy || model.isInstanceInUse(instance.id))
             }
         }.padding(24).frame(width: 610, height: 520).interactiveDismissDisabled(model.busy)
@@ -50,7 +50,7 @@ struct WorldDataPackPriorityView: View {
     }
     private func save() {
         guard let snapshot else { return }
-        model.perform(Messages.AppWorldDataPackPriorityView.snapshotText4, presentErrors: false, instanceID: instance.id) { _ in
+        model.perform(Messages.AppWorldDataPackPriorityView.adjustDataPackPriority, presentErrors: false, instanceID: instance.id) { _ in
             do { try await manager.setDataPackPriority(keys, folder: world.folder, expecting: snapshot); dismiss() }
             catch { self.error = error.localizedDescription; throw error }
         }

@@ -3,58 +3,112 @@ import Foundation
 
 extension Messages {
     public enum CoreContentManager {
-        public static var titleText1: LocalizedMessage {
+        /// 模组
+        ///
+        /// Resource: `Core.coreContentManager.titleText1`.
+        public static var mods: LocalizedMessage {
             .init(key: "coreContentManager.titleText1", table: "Core", fallback: "模组")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 资源包
+        ///
+        /// Resource: `Core.coreContentManager.titleText2`.
+        public static var resourcePacks: LocalizedMessage {
             .init(key: "coreContentManager.titleText2", table: "Core", fallback: "资源包")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 光影
+        ///
+        /// Resource: `Core.coreContentManager.titleText3`.
+        public static var shaders: LocalizedMessage {
             .init(key: "coreContentManager.titleText3", table: "Core", fallback: "光影")
         }
-        public static var importedIDsText1: LocalizedMessage {
+        ///  或
+        ///
+        /// Resource: `Core.coreContentManager.importedIDsText1`.
+        public static var importedIDsSeparator: LocalizedMessage {
             .init(key: "coreContentManager.importedIDsText1", table: "Core", fallback: " 或 ")
         }
-        public static var recordText2: LocalizedMessage {
+        /// 本地文件
+        ///
+        /// Resource: `Core.coreContentManager.recordText2`.
+        public static var localFile: LocalizedMessage {
             .init(key: "coreContentManager.recordText2", table: "Core", fallback: "本地文件")
         }
-        public static func piecesText1(_ value0: String) -> LocalizedMessage {
+        /// 无效的内容路径：%1$@
+        ///
+        /// Resource: `Errors.coreContentManager.piecesText1`.
+        public static func invalidContentPath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.piecesText1", table: "Errors", fallback: "无效的内容路径：%1$@", arguments: [.text(value0)])
         }
-        public static func targetText1(_ value0: String) -> LocalizedMessage {
+        /// 内容管理不修改符号链接：%1$@
+        ///
+        /// Resource: `Errors.coreContentManager.targetText1`.
+        public static func symlinkUnmodified(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.targetText1", table: "Errors", fallback: "内容管理不修改符号链接：%1$@", arguments: [.text(value0)])
         }
-        public static func backupText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。
+        ///
+        /// Resource: `Errors.coreContentManager.backupText1`.
+        public static func missingRestoreBackup(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreContentManager.backupText1", table: "Errors", fallback: "内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。", arguments: [.text(value0), .text(value1)])
         }
-        public static func presentText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。
+        ///
+        /// Resource: `Errors.coreContentManager.presentText1`.
+        public static func contentChangedAfterPreview(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.presentText1", table: "Errors", fallback: "%1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。", arguments: [.text(value0)])
         }
-        public static var installsText1: LocalizedMessage {
+        /// 安装计划包含同一项目的多个版本
+        ///
+        /// Resource: `Errors.coreContentManager.installsText1`.
+        public static var duplicateProjectVersions: LocalizedMessage {
             .init(key: "coreContentManager.installsText1", table: "Errors", fallback: "安装计划包含同一项目的多个版本")
         }
-        public static func recordText1(_ value0: String) -> LocalizedMessage {
+        /// 无效内容文件名：%1$@
+        ///
+        /// Resource: `Errors.coreContentManager.recordText1`.
+        public static func invalidContentFilename(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.recordText1", table: "Errors", fallback: "无效内容文件名：%1$@", arguments: [.text(value0)])
         }
-        public static func checkText1(_ value0: String) -> LocalizedMessage {
+        /// 待安装文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreContentManager.checkText1`.
+        public static func pendingFileValidationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.checkText1", table: "Errors", fallback: "待安装文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static var newPathsText1: LocalizedMessage {
+        /// 多个内容项目使用了相同的文件名
+        ///
+        /// Resource: `Errors.coreContentManager.newPathsText1`.
+        public static var duplicateContentFilenames: LocalizedMessage {
             .init(key: "coreContentManager.newPathsText1", table: "Errors", fallback: "多个内容项目使用了相同的文件名")
         }
-        public static func urlText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 的必需依赖尚未启用。请先启用依赖，再安装或更新。
+        ///
+        /// Resource: `Errors.coreContentManager.urlText1`.
+        public static func requiredDependencyDisabled(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.urlText1", table: "Errors", fallback: "%1$@ 的必需依赖尚未启用。请先启用依赖，再安装或更新。", arguments: [.text(value0)])
         }
-        public static func checkText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已在外部修改。请先备份或移走该文件，再更新。
+        ///
+        /// Resource: `Errors.coreContentManager.checkText2`.
+        public static func externallyModifiedContent(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.checkText2", table: "Errors", fallback: "%1$@ 已在外部修改。请先备份或移走该文件，再更新。", arguments: [.text(value0)])
         }
-        public static func targetText2(_ value0: String) -> LocalizedMessage {
+        /// 目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。
+        ///
+        /// Resource: `Errors.coreContentManager.targetText2`.
+        public static func targetFileConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.targetText2", table: "Errors", fallback: "目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。", arguments: [.text(value0)])
         }
-        public static func importedIDsText2(_ value0: String) -> LocalizedMessage {
+        /// 请选择 %1$@ 文件
+        ///
+        /// Resource: `Errors.coreContentManager.importedIDsText2`.
+        public static func chooseFiles(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.importedIDsText2", table: "Errors", fallback: "请选择 %1$@ 文件", arguments: [.text(value0)])
         }
-        public static func idText1(_ value0: String) -> LocalizedMessage {
+        /// 所选文件或实例中已存在模组 %1$@，请先处理重复文件。
+        ///
+        /// Resource: `Errors.coreContentManager.idText1`.
+        public static func duplicateModID(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentManager.idText1", table: "Errors", fallback: "所选文件或实例中已存在模组 %1$@，请先处理重复文件。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

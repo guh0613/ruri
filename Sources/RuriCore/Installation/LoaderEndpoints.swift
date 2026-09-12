@@ -15,7 +15,7 @@ enum LoaderEndpoints {
         case .fabric: fabric
         case .quilt: quilt
         case .legacyfabric: legacyFabric
-        default: throw RuriError.message(Messages.CoreLoaderEndpoints.profileServiceText1)
+        default: throw RuriError.message(Messages.CoreLoaderEndpoints.loaderProfileServiceUnavailable)
         }
     }
     static func versions(loader: LoaderKind, game: String) throws -> URL {
@@ -34,7 +34,7 @@ enum LoaderEndpoints {
         repository(loader: loader, game: game).appending(component: "maven-metadata.xml")
     }
     static func installer(loader: LoaderKind, game: String, version: String) throws -> URL {
-        guard loader.usesInstaller else { throw RuriError.message(Messages.CoreLoaderEndpoints.installerText1) }
+        guard loader.usesInstaller else { throw RuriError.message(Messages.CoreLoaderEndpoints.loaderInstallerUnavailable) }
         let legacyName = loader == .forge || game == "1.20.1"
         let coordinate = legacyName ? "\(game)-\(version)" : version
         let artifact = legacyName ? "forge" : "neoforge"

@@ -18,60 +18,60 @@ public struct GameDiagnosticBundle: Sendable {
     public let files: [File]
 
     public static func preview(session: GameSession, diagnosis: GameDiagnosis, additionalPrivateText: [String] = [], homeDirectory: String = NSHomeDirectory()) throws -> Self {
-        guard session.id == diagnosis.sessionID else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.previewText1) }
+        guard session.id == diagnosis.sessionID else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.diagnosticRunMismatch) }
         let redactor = GameShareRedactor(additionalPrivateText: additionalPrivateText, homeDirectory: homeDirectory)
         var files: [File] = []
         func append(id: String, path: String, title: String, text: String) {
             let redacted = redactor.redact(text)
             files.append(.init(id: id, path: path, title: title, text: redacted, changedByRedaction: redacted != text))
         }
-        var summary = Messages.CoreGameDiagnosticBundle.summaryText1(String(describing: session.createdAt.ISO8601Format()), String(describing: diagnosis.title), String(describing: diagnosis.summary)).localized
+        var summary = Messages.CoreGameDiagnosticBundle.diagnosticReportHeader(String(describing: session.createdAt.ISO8601Format()), diagnosis.title, diagnosis.summary).localized
         for finding in diagnosis.findings {
             summary += "\n\(finding.title)（\(finding.confidence.title)）\n\(finding.explanation)\n"
             for (index, step) in finding.steps.enumerated() { summary += "\(index + 1). \(step)\n" }
             // Excerpts are intentionally separate selectable files. Deselecting
             // a log must also remove its quoted contents from the package.
         }
-        summary += Messages.CoreGameDiagnosticBundle.summaryText2.localized + (diagnosis.limitations.isEmpty ? Messages.CoreGameDiagnosticBundle.summaryText3.localized : diagnosis.limitations.joined(separator: "\n"))
-        append(id: "summary", path: "diagnosis.txt", title: Messages.CoreGameDiagnosticBundle.summaryText4.localized, text: summary + "\n")
+        summary += Messages.CoreGameDiagnosticBundle.readScopeHeader.localized + (diagnosis.limitations.isEmpty ? Messages.CoreGameDiagnosticBundle.noReadErrors.localized : diagnosis.limitations.joined(separator: "\n"))
+        append(id: "summary", path: "diagnosis.txt", title: Messages.CoreGameDiagnosticBundle.diagnosticConclusionHeader.localized, text: summary + "\n")
         var environment = Messages.CoreGameDiagnosticBundle.environment(
             session.gameVersion,
             session.loader,
             session.loaderVersion ?? "",
-            session.java ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
-            session.memory?.summary ?? Messages.CoreGameDiagnosticBundle.environmentText2(String(session.memoryMB)).localized,
+            session.java ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
+            session.memory?.summary ?? Messages.CoreGameDiagnosticBundle.heapLimit(String(session.memoryMB)).localized,
             session.operatingSystem,
             session.hostArchitecture,
             session.accountMode,
             session.createdAt.ISO8601Format(),
             session.stage.title,
             session.state.rawValue,
-            session.exit?.reason.rawValue ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
-            session.exit.map { String($0.status) } ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
-            session.exit.map { $0.stopRequested ? Messages.CoreGameDiagnosticBundle.yes.localized : Messages.CoreGameDiagnosticBundle.no.localized } ?? Messages.CoreGameDiagnosticBundle.environmentText1.localized,
-            session.exit?.normalQuitRequested == true ? Messages.CoreGameDiagnosticBundle.yes.localized : session.normalQuitAttempt?.accepted == true ? Messages.CoreGameDiagnosticBundle.exitPending.localized : Messages.CoreGameDiagnosticBundle.environmentText1.localized).localized
+            session.exit?.reason.rawValue ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
+            session.exit.map { String($0.status) } ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
+            session.exit.map { $0.stopRequested ? Messages.CoreGameDiagnosticBundle.yes.localized : Messages.CoreGameDiagnosticBundle.no.localized } ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
+            session.exit?.normalQuitRequested == true ? Messages.CoreGameDiagnosticBundle.yes.localized : session.normalQuitAttempt?.accepted == true ? Messages.CoreGameDiagnosticBundle.exitPending.localized : Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized).localized
         if let interruption = session.interruption {
             environment += Messages.CoreGameDiagnosticBundle.recoveryEnvironment(interruption.observedAt.ISO8601Format(), interruption.resolution.rawValue, interruption.displayExplanation).localized
         }
-        append(id: "environment", path: "environment.txt", title: Messages.CoreGameDiagnosticBundle.interruptionText1.localized, text: environment + "\n")
+        append(id: "environment", path: "environment.txt", title: Messages.CoreGameDiagnosticBundle.gameJavaSystemEnvironment.localized, text: environment + "\n")
         for (index, document) in diagnosis.documents.enumerated() {
             try Task.checkCancellation()
             let stem = document.kind == .output ? "output" : document.kind == .preparation ? "preparation" : document.kind == .jvmReport ? "jvm-report" : "minecraft-report"
             let path = "evidence/\(String(format: "%02d", index + 1))-\(stem)\(document.isTail ? "-tail" : "").txt"
-            let heading = Messages.CoreGameDiagnosticBundle.headingText5(String(describing: document.title), String(describing: document.truncated ? Messages.CoreGameDiagnosticBundle.headingText1.localized : Messages.CoreGameDiagnosticBundle.headingText2.localized), String(describing: document.isTail ? Messages.CoreGameDiagnosticBundle.headingText3.localized : Messages.CoreGameDiagnosticBundle.headingText4.localized)).localized
-            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.headingText6.localized : ""), text: heading + document.text)
+            let heading = Messages.CoreGameDiagnosticBundle.sourceRangeHeading(document.title, String(describing: document.truncated ? Messages.CoreGameDiagnosticBundle.truncatedFileHeading.localized : Messages.CoreGameDiagnosticBundle.completeFileHeading.localized), String(describing: document.isTail ? Messages.CoreGameDiagnosticBundle.tailLineNumberHeading.localized : Messages.CoreGameDiagnosticBundle.bodyLineNumberHeading.localized)).localized
+            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""), text: heading + document.text)
         }
         return .init(sessionID: session.id, createdAt: Date(), files: files)
     }
 
     public func export(selectedIDs: Set<String>, to destination: URL, paths: LauncherPaths) throws {
         let selected = files.filter { selectedIDs.contains($0.id) }
-        guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.selectedText1) }
-        guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.selectedText2) }
+        guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.invalidReportSelection) }
+        guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.zipSaveLocationSelection) }
         let target = destination.resolvingSymlinksInPath().standardizedFileURL.path
         for url in [paths.root] + paths.directories.map(\.url) {
             let root = url.resolvingSymlinksInPath().standardizedFileURL.path
-            guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.rootText1) }
+            guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid) }
         }
         let staging = destination.deletingLastPathComponent().appendingPathComponent(".ruri-diagnostic-\(UUID().uuidString).zip")
         defer { try? FileManager.default.removeItem(at: staging) }
@@ -88,7 +88,7 @@ public struct GameDiagnosticBundle: Sendable {
             }
         }
         try Task.checkCancellation()
-        guard rename(staging.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.dataText1) }
+        guard rename(staging.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.diagnosticBundleSaveFailed) }
     }
 }
 

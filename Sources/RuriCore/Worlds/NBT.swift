@@ -11,9 +11,9 @@ public indirect enum NBTValue: Sendable, Equatable {
 
 public enum Gzip {
     static func compress(_ data: Data) throws -> Data {
-        guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.compressText1) }
+        guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.nbtCompressionInputTooLarge) }
         var stream = z_stream()
-        guard deflateInit2_(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message(Messages.CoreNBT.streamText1) }
+        guard deflateInit2_(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message(Messages.CoreNBT.gzipCompressionInitializationFailed) }
         defer { deflateEnd(&stream) }
         return try data.withUnsafeBytes { input in
             stream.next_in = UnsafeMutablePointer(mutating: input.bindMemory(to: UInt8.self).baseAddress)
@@ -27,14 +27,14 @@ public enum Gzip {
                 }
                 output.append(contentsOf: buffer.prefix(buffer.count - Int(stream.avail_out)))
                 if status == Z_STREAM_END { return output }
-                guard status == Z_OK else { throw RuriError.message(Messages.CoreNBT.statusText1) }
+                guard status == Z_OK else { throw RuriError.message(Messages.CoreNBT.nbtCompressionFailed) }
             }
         }
     }
     public static func decompress(_ data: Data, limit: Int = 32 * 1024 * 1024) throws -> Data {
-        guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.decompressText1) }
+        guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.compressedNbtInputTooLarge) }
         var stream = z_stream()
-        guard inflateInit2_(&stream, 15 + 16, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message(Messages.CoreNBT.streamText2) }
+        guard inflateInit2_(&stream, 15 + 16, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message(Messages.CoreNBT.gzipDecompressionInitializationFailed) }
         defer { inflateEnd(&stream) }
         return try data.withUnsafeBytes { input in
             stream.next_in = UnsafeMutablePointer(mutating: input.bindMemory(to: UInt8.self).baseAddress)
@@ -48,13 +48,13 @@ public enum Gzip {
                     return inflate(&stream, Z_NO_FLUSH)
                 }
                 let written = buffer.count - Int(stream.avail_out)
-                guard written <= limit - output.count else { throw RuriError.message(Messages.CoreNBT.writtenText1) }
+                guard written <= limit - output.count else { throw RuriError.message(Messages.CoreNBT.nbtDecompressedSizeExceeded) }
                 output.append(contentsOf: buffer.prefix(written))
                 if status == Z_STREAM_END {
-                    guard stream.avail_in == 0 else { throw RuriError.message(Messages.CoreNBT.writtenText2) }
+                    guard stream.avail_in == 0 else { throw RuriError.message(Messages.CoreNBT.gzipTrailingDataFound) }
                     return output
                 }
-                guard status == Z_OK, written > 0 || stream.avail_in > 0 else { throw RuriError.message(Messages.CoreNBT.writtenText3) }
+                guard status == Z_OK, written > 0 || stream.avail_in > 0 else { throw RuriError.message(Messages.CoreNBT.gzipDataCorruptOrChecksumFailed) }
             }
         }
     }
@@ -66,39 +66,39 @@ public struct NBTReader {
     private var remainingTags = 200_000
     public init(data: Data) throws {
         let decoded = data.starts(with: [0x1f, 0x8b]) ? try Gzip.decompress(data) : data
-        guard decoded.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.compressText1) }
+        guard decoded.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.nbtCompressionInputTooLarge) }
         bytes = Array(decoded)
     }
     public mutating func read() throws -> NBTValue {
-        guard try byte() == 10 else { throw RuriError.message(Messages.CoreNBT.readText1) }
+        guard try byte() == 10 else { throw RuriError.message(Messages.CoreNBT.nbtRootIsNotCompound) }
         _ = try text()
         let value = try payload(10, depth: 0)
-        guard offset == bytes.count else { throw RuriError.message(Messages.CoreNBT.valueText1) }
+        guard offset == bytes.count else { throw RuriError.message(Messages.CoreNBT.nbtTrailingDataFound) }
         return value
     }
     // Copy untouched tags verbatim: NBTValue deliberately does not retain numeric
     // widths, array types or empty-list subtypes, so it cannot be used as a writer.
     static func updatingDataPacks(_ data: Data, enabled: [String], disabled: [String]) throws -> Data {
         var reader = try NBTReader(data: data)
-        guard try reader.byte() == 10 else { throw RuriError.message(Messages.CoreNBT.readText1) }
+        guard try reader.byte() == 10 else { throw RuriError.message(Messages.CoreNBT.nbtRootIsNotCompound) }
         _ = try reader.text()
         var result = Data(reader.bytes[..<reader.offset])
         let replacements = try ["Enabled": stringList("Enabled", enabled), "Disabled": stringList("Disabled", disabled)]
         result += try reader.rewriteCompound(path: ["Data", "DataPacks"], replacements: replacements, depth: 0)
-        guard reader.offset == reader.bytes.count, result.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.replacementsText1) }
+        guard reader.offset == reader.bytes.count, result.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.invalidNbtStructureOrSize) }
         return data.starts(with: [0x1f, 0x8b]) ? try Gzip.compress(result) : result
     }
     private mutating func rewriteCompound(path: [String], replacements: [String: Data], depth: Int) throws -> Data {
         remainingTags -= 1
-        guard remainingTags >= 0, depth <= 64 else { throw RuriError.message(Messages.CoreNBT.rewriteCompoundText1) }
+        guard remainingTags >= 0, depth <= 64 else { throw RuriError.message(Messages.CoreNBT.nbtStructureSizeExceeded) }
         var result = Data(), seen = Set<String>()
         while true {
             let start = offset, type = try byte()
             if type == 0 { break }
             let name = try text()
-            guard seen.insert(name).inserted else { throw RuriError.message(Messages.CoreNBT.nameText1) }
+            guard seen.insert(name).inserted else { throw RuriError.message(Messages.CoreNBT.duplicateNbtTag) }
             if name == path.first {
-                guard type == 10 else { throw RuriError.message(Messages.CoreNBT.nameText2) }
+                guard type == 10 else { throw RuriError.message(Messages.CoreNBT.worldDataPackConfigNotCompound) }
                 result += Data(bytes[start..<offset])
                 result += try rewriteCompound(path: Array(path.dropFirst()), replacements: replacements, depth: depth + 1)
             } else {
@@ -109,7 +109,7 @@ public struct NBTReader {
         if path.isEmpty {
             for name in replacements.keys.sorted() where !seen.contains(name) { result += replacements[name]! }
         } else if let name = path.first, !seen.contains(name) {
-            guard path == ["DataPacks"] else { throw RuriError.message(Messages.CoreNBT.nameText3) }
+            guard path == ["DataPacks"] else { throw RuriError.message(Messages.CoreNBT.worldDataMissingDataTag) }
             result += Data([10]) + (try Self.encodedString(name))
             for name in replacements.keys.sorted() { result += replacements[name]! }
             result.append(0)
@@ -118,7 +118,7 @@ public struct NBTReader {
         return result
     }
     private static func stringList(_ name: String, _ values: [String]) throws -> Data {
-        guard values.count <= 4096 else { throw RuriError.message(Messages.CoreNBT.stringListText1) }
+        guard values.count <= 4096 else { throw RuriError.message(Messages.CoreNBT.dataPackCountExceeded) }
         let count = UInt32(values.count)
         var result = Data([9]) + (try encodedString(name)) + Data([8, UInt8(truncatingIfNeeded: count >> 24), UInt8(truncatingIfNeeded: count >> 16), UInt8(truncatingIfNeeded: count >> 8), UInt8(truncatingIfNeeded: count)])
         for value in values { result += try encodedString(value) }
@@ -131,12 +131,12 @@ public struct NBTReader {
             else if unit <= 0x7ff { bytes.append(contentsOf: [0xc0 | UInt8(unit >> 6), 0x80 | UInt8(unit & 0x3f)]) }
             else { bytes.append(contentsOf: [0xe0 | UInt8(unit >> 12), 0x80 | UInt8((unit >> 6) & 0x3f), 0x80 | UInt8(unit & 0x3f)]) }
         }
-        guard bytes.count <= 65535 else { throw RuriError.message(Messages.CoreNBT.bytesText1) }
+        guard bytes.count <= 65535 else { throw RuriError.message(Messages.CoreNBT.nbtStringTooLong) }
         return Data([UInt8(bytes.count >> 8), UInt8(bytes.count & 255)]) + bytes
     }
     private mutating func payload(_ tag: UInt8, depth: Int) throws -> NBTValue {
         remainingTags -= 1
-        guard remainingTags >= 0, depth <= 64 else { throw RuriError.message(Messages.CoreNBT.rewriteCompoundText1) }
+        guard remainingTags >= 0, depth <= 64 else { throw RuriError.message(Messages.CoreNBT.nbtStructureSizeExceeded) }
         switch tag {
         case 1: return .integer(Int64(Int8(bitPattern: try byte())))
         case 2: return .integer(Int64(Int16(bitPattern: UInt16(try unsigned(2)))))
@@ -147,13 +147,13 @@ public struct NBTReader {
         case 7, 11, 12:
             let count = try count()
             let width = tag == 7 ? 1 : tag == 11 ? 4 : 8
-            guard count <= (bytes.count - offset) / width else { throw RuriError.message(Messages.CoreNBT.widthText1) }
+            guard count <= (bytes.count - offset) / width else { throw RuriError.message(Messages.CoreNBT.nbtArrayIndexOutOfBounds) }
             let length = count * width; defer { offset += length }
             return .array(Data(bytes[offset..<(offset + length)]))
         case 8: return .string(try text())
         case 9:
             let subtype = try byte(); let count = try count()
-            guard count <= remainingTags, count == 0 || (1...12).contains(subtype) else { throw RuriError.message(Messages.CoreNBT.countText1) }
+            guard count <= remainingTags, count == 0 || (1...12).contains(subtype) else { throw RuriError.message(Messages.CoreNBT.invalidNbtList) }
             var values: [NBTValue] = []; values.reserveCapacity(count)
             for _ in 0..<count { values.append(try payload(subtype, depth: depth + 1)) }
             return .list(values)
@@ -163,30 +163,30 @@ public struct NBTReader {
                 let type = try byte()
                 if type == 0 { break }
                 let key = try text()
-                guard value[key] == nil else { throw RuriError.message(Messages.CoreNBT.nameText1) }
+                guard value[key] == nil else { throw RuriError.message(Messages.CoreNBT.duplicateNbtTag) }
                 value[key] = try payload(type, depth: depth + 1)
             }
             return .compound(value)
-        default: throw RuriError.message(Messages.CoreNBT.keyText1(String(describing: tag)))
+        default: throw RuriError.message(Messages.CoreNBT.unknownNbtTag(String(describing: tag)))
         }
     }
     private mutating func byte() throws -> UInt8 {
-        guard offset < bytes.count else { throw RuriError.message(Messages.CoreNBT.byteText1) }
+        guard offset < bytes.count else { throw RuriError.message(Messages.CoreNBT.truncatedNbtFile) }
         defer { offset += 1 }; return bytes[offset]
     }
     private mutating func unsigned(_ count: Int) throws -> UInt64 {
-        guard count <= bytes.count - offset else { throw RuriError.message(Messages.CoreNBT.unsignedText1) }
+        guard count <= bytes.count - offset else { throw RuriError.message(Messages.CoreNBT.nbtNumberOutOfRange) }
         var value: UInt64 = 0
         for _ in 0..<count { value = (value << 8) | UInt64(try byte()) }
         return value
     }
     private mutating func count() throws -> Int {
         let value = Int32(bitPattern: UInt32(try unsigned(4)))
-        guard value >= 0 else { throw RuriError.message(Messages.CoreNBT.valueText2) }; return Int(value)
+        guard value >= 0 else { throw RuriError.message(Messages.CoreNBT.negativeNbtArrayLength) }; return Int(value)
     }
     private mutating func text() throws -> String {
         let length = Int(try unsigned(2))
-        guard length <= bytes.count - offset else { throw RuriError.message(Messages.CoreNBT.lengthText1) }
+        guard length <= bytes.count - offset else { throw RuriError.message(Messages.CoreNBT.nbtStringIndexOutOfBounds) }
         let data = Data(bytes[offset..<(offset + length)]); offset += length
         if let result = String(data: data, encoding: .utf8) { return result }
         // Java NBT strings use modified UTF-8, including CESU-8 surrogate pairs.
@@ -195,12 +195,12 @@ public struct NBTReader {
             let a = input[i]; i += 1
             if a < 0x80 { units.append(UInt16(a)) }
             else if a & 0xe0 == 0xc0 {
-                guard i < input.count, input[i] & 0xc0 == 0x80 else { throw RuriError.message(Messages.CoreNBT.aText1) }
+                guard i < input.count, input[i] & 0xc0 == 0x80 else { throw RuriError.message(Messages.CoreNBT.invalidNbtStringEncoding) }
                 units.append(UInt16(a & 0x1f) << 6 | UInt16(input[i] & 0x3f)); i += 1
             } else if a & 0xf0 == 0xe0 {
-                guard i + 1 < input.count, input[i] & 0xc0 == 0x80, input[i + 1] & 0xc0 == 0x80 else { throw RuriError.message(Messages.CoreNBT.aText1) }
+                guard i + 1 < input.count, input[i] & 0xc0 == 0x80, input[i + 1] & 0xc0 == 0x80 else { throw RuriError.message(Messages.CoreNBT.invalidNbtStringEncoding) }
                 units.append(UInt16(a & 0x0f) << 12 | UInt16(input[i] & 0x3f) << 6 | UInt16(input[i + 1] & 0x3f)); i += 2
-            } else { throw RuriError.message(Messages.CoreNBT.aText1) }
+            } else { throw RuriError.message(Messages.CoreNBT.invalidNbtStringEncoding) }
         }
         return String(decoding: units, as: UTF16.self)
     }

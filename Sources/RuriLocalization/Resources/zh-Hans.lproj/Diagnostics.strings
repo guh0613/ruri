@@ -1,346 +1,346 @@
-/* @symbol CoreGameDiagnosis.titleText1 @args - */
+/* @symbol CoreGameDiagnosis.checkInstanceSettings @args - */
 "coreGameDiagnosis.titleText1" = "检查实例设置";
 
-/* @symbol CoreGameDiagnosis.titleText2 @args - */
+/* @symbol CoreGameDiagnosis.manageMods @args - */
 "coreGameDiagnosis.titleText2" = "管理模组";
 
-/* @symbol CoreGameDiagnosis.titleText3 @args - */
+/* @symbol CoreGameDiagnosis.checkAccount @args - */
 "coreGameDiagnosis.titleText3" = "检查账号";
 
-/* @symbol CoreGameDiagnosis.titleText4 @args - */
+/* @symbol CoreGameDiagnosis.repairInstallationFiles @args - */
 "coreGameDiagnosis.titleText4" = "修复安装文件";
 
-/* @symbol CoreGameDiagnosis.titleText5 @args - */
+/* @symbol CoreGameDiagnosis.viewRunFiles @args - */
 "coreGameDiagnosis.titleText5" = "查看运行文件";
 
-/* @symbol CoreGameDiagnosis.titleText6 @args - */
+/* @symbol CoreGameDiagnosis.collectDiagnosticReports @args - */
 "coreGameDiagnosis.titleText6" = "收集诊断报告";
 
-/* @symbol CoreGameDiagnosis.titleText7 @args - */
+/* @symbol CoreGameDiagnosis.logExplicitReport @args - */
 "coreGameDiagnosis.titleText7" = "日志明确报告";
 
-/* @symbol CoreGameDiagnosis.titleText8 @args - */
+/* @symbol CoreGameDiagnosis.cluesNeedingVerification @args - */
 "coreGameDiagnosis.titleText8" = "需要验证的线索";
 
-/* @symbol CoreGameDiagnosis.attributesText1 @args - */
+/* @symbol CoreGameDiagnosis.evidenceNotRegularFile @args - */
 "coreGameDiagnosis.attributesText1" = "证据不是普通文件。";
 
-/* @symbol CoreGameDiagnosis.countText1 @args text */
+/* @symbol CoreGameDiagnosis.analysisReadLimit @args text */
 "coreGameDiagnosis.countText1" = "分析读取量已达 16 MiB，未读取 %1$@。";
 
-/* @symbol CoreGameDiagnosis.tailTextText2 @args text */
+/* @symbol CoreGameDiagnosis.boundedTail @args text */
 "coreGameDiagnosis.tailTextText2" = "%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。";
 
-/* @symbol CoreGameDiagnosis.reportsText1 @args - */
+/* @symbol CoreGameDiagnosis.invalidEvidencePathSkipped @args - */
 "coreGameDiagnosis.reportsText1" = "跳过无效证据路径。";
 
-/* @symbol CoreGameDiagnosis.kindText1 @args text,text */
+/* @symbol CoreGameDiagnosis.unreadableReport @args text,text */
 "coreGameDiagnosis.kindText1" = "未能读取 %1$@：%2$@";
 
-/* @symbol CoreGameDiagnosis.kindText2 @args integer */
+/* @symbol CoreGameDiagnosis.reportLimit @args integer */
 "coreGameDiagnosis.kindText2" = "本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。";
 
-/* @symbol CoreGameDiagnosis.kindText3 @args text */
+/* @symbol CoreGameDiagnosis.sessionLogReadFailure @args text */
 "coreGameDiagnosis.kindText3" = "未能读取会话日志：%1$@";
 
-/* @symbol CoreGameDiagnosis.factsText1 @args text */
+/* @symbol CoreGameDiagnosis.lastRecordedPhase @args text */
 "coreGameDiagnosis.factsText1" = "最后记录阶段：%1$@";
 
-/* @symbol CoreGameDiagnosis.factsText2 @args - */
+/* @symbol CoreGameDiagnosis.javaNotRecorded @args - */
 "coreGameDiagnosis.factsText2" = "未记录 Java";
 
-/* @symbol CoreGameDiagnosis.factsText3 @args text,text */
+/* @symbol CoreGameDiagnosis.memoryLimit @args text,text */
 "coreGameDiagnosis.factsText3" = "%1$@ · 内存上限 %2$@ MB";
 
-/* @symbol CoreGameDiagnosis.exitText1 @args - */
+/* @symbol CoreGameDiagnosis.terminationSignal @args - */
 "coreGameDiagnosis.exitText1" = "终止信号";
 
-/* @symbol CoreGameDiagnosis.exitText2 @args - */
+/* @symbol CoreGameDiagnosis.exitCode @args - */
 "coreGameDiagnosis.exitText2" = "退出码";
 
-/* @symbol CoreGameDiagnosis.exitText3 @args - */
+/* @symbol CoreGameDiagnosis.hasExitStatus @args - */
 "coreGameDiagnosis.exitText3" = "有";
 
-/* @symbol CoreGameDiagnosis.exitText4 @args - */
+/* @symbol CoreGameDiagnosis.noExitStatus @args - */
 "coreGameDiagnosis.exitText4" = "无";
 
-/* @symbol CoreGameDiagnosis.exitText5 @args text,text,text */
+/* @symbol CoreGameDiagnosis.exitSummary @args text,text,text */
 "coreGameDiagnosis.exitText5" = "%1$@：%2$@；Ruri 结束请求：%3$@";
 
-/* @symbol CoreGameDiagnosis.exitText6 @args - */
+/* @symbol CoreGameDiagnosis.normalExitRequested @args - */
 "coreGameDiagnosis.exitText6" = "系统曾接收 Ruri 的正常退出请求。";
 
-/* @symbol CoreGameDiagnosis.interruptionText1 @args text */
+/* @symbol CoreGameDiagnosis.recoveryRecordTime @args text */
 "coreGameDiagnosis.interruptionText1" = "恢复记录时间：%1$@（不是游戏退出时间）";
 
-/* @symbol CoreGameDiagnosis.interruptionText2 @args - */
+/* @symbol CoreGameDiagnosis.processIdentityInvalid @args - */
 "coreGameDiagnosis.interruptionText2" = "原进程身份已失效";
 
-/* @symbol CoreGameDiagnosis.interruptionText3 @args - */
+/* @symbol CoreGameDiagnosis.userConfirmedExit @args - */
 "coreGameDiagnosis.interruptionText3" = "用户确认游戏已退出";
 
-/* @symbol CoreGameDiagnosis.interruptionText4 @args text */
+/* @symbol CoreGameDiagnosis.recoveryBasis @args text */
 "coreGameDiagnosis.interruptionText4" = "恢复依据：%1$@";
 
-/* @symbol CoreGameDiagnosis.summaryText1 @args - */
+/* @symbol CoreGameDiagnosis.runWithoutExitRecord @args - */
 "coreGameDiagnosis.summaryText1" = "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。";
 
-/* @symbol CoreGameDiagnosis.summaryText2 @args - */
+/* @symbol CoreGameDiagnosis.monitoringInterrupted @args - */
 "coreGameDiagnosis.summaryText2" = "监控记录已中断，未取得游戏的退出结果。";
 
-/* @symbol CoreGameDiagnosis.summaryText3 @args - */
+/* @symbol CoreGameDiagnosis.launchCancelled @args - */
 "coreGameDiagnosis.summaryText3" = "启动已取消，没有证据表明游戏发生了崩溃。";
 
-/* @symbol CoreGameDiagnosis.summaryText4 @args - */
+/* @symbol CoreGameDiagnosis.runCompleted @args - */
 "coreGameDiagnosis.summaryText4" = "本次运行已经结束，无需进行崩溃处理。";
 
-/* @symbol CoreGameDiagnosis.summaryText5 @args - */
+/* @symbol CoreGameDiagnosis.processTerminated @args - */
 "coreGameDiagnosis.summaryText5" = "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。";
 
-/* @symbol CoreGameDiagnosis.summaryText6 @args text */
+/* @symbol CoreGameDiagnosis.launchPreparationFailed @args text */
 "coreGameDiagnosis.summaryText6" = "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。";
 
-/* @symbol CoreGameDiagnosis.summaryText7 @args - */
+/* @symbol CoreGameDiagnosis.confirmedAbnormalExit @args - */
 "coreGameDiagnosis.summaryText7" = "已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。";
 
-/* @symbol CoreGameDiagnosis.summaryText8 @args integer */
+/* @symbol CoreGameDiagnosis.relatedErrorCount @args integer */
 "coreGameDiagnosis.summaryText8" = "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。";
 
-/* @symbol CoreGameDiagnosis.actionText1 @args text */
+/* @symbol CoreGameDiagnosis.actionFailed @args text */
 "coreGameDiagnosis.actionText1" = "%1$@失败";
 
-/* @symbol CoreGameDiagnosis.actionText2 @args - */
+/* @symbol CoreGameDiagnosis.preparationError @args - */
 "coreGameDiagnosis.actionText2" = "这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。";
 
-/* @symbol CoreGameDiagnosis.actionText3 @args - */
+/* @symbol CoreGameDiagnosis.guidanceCheckErrors @args - */
 "coreGameDiagnosis.actionText3" = "核对下方原始错误以及对应设置，处理后重新启动。";
 
-/* @symbol CoreGameDiagnosis.actionText4 @args - */
+/* @symbol CoreGameDiagnosis.guidanceCollectRetry @args - */
 "coreGameDiagnosis.actionText4" = "若仍然失败，收集这次运行记录，以便比较重试前后的错误。";
 
-/* @symbol CoreGameDiagnosis.rulesText1 @args - */
+/* @symbol CoreGameDiagnosis.classVersionUnreadable @args - */
 "coreGameDiagnosis.rulesText1" = "Java 无法读取所需的类版本";
 
-/* @symbol CoreGameDiagnosis.rulesText2 @args - */
+/* @symbol CoreGameDiagnosis.classVersionUnsupported @args - */
 "coreGameDiagnosis.rulesText2" = "Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。";
 
-/* @symbol CoreGameDiagnosis.rulesText3 @args - */
+/* @symbol CoreGameDiagnosis.classVersionCheck @args - */
 "coreGameDiagnosis.rulesText3" = "在实例设置核对 Java，按游戏和整合包要求选择版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText4 @args - */
+/* @symbol CoreGameDiagnosis.classVersionModCheck @args - */
 "coreGameDiagnosis.rulesText4" = "如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。";
 
-/* @symbol CoreGameDiagnosis.rulesText5 @args - */
+/* @symbol CoreGameDiagnosis.launchArgumentRejected @args - */
 "coreGameDiagnosis.rulesText5" = "Java 启动参数被拒绝";
 
-/* @symbol CoreGameDiagnosis.rulesText6 @args - */
+/* @symbol CoreGameDiagnosis.launchArgumentExplanation @args - */
 "coreGameDiagnosis.rulesText6" = "虚拟机报告参数或内存上限无效，游戏尚未正常启动。";
 
-/* @symbol CoreGameDiagnosis.rulesText7 @args - */
+/* @symbol CoreGameDiagnosis.launchArgumentCheck @args - */
 "coreGameDiagnosis.rulesText7" = "核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。";
 
-/* @symbol CoreGameDiagnosis.rulesText8 @args - */
+/* @symbol CoreGameDiagnosis.launchArgumentRetry @args - */
 "coreGameDiagnosis.rulesText8" = "确认内存上限与所选 Java 匹配，然后重试。";
 
-/* @symbol CoreGameDiagnosis.rulesText9 @args - */
+/* @symbol CoreGameDiagnosis.missingLaunchEntry @args - */
 "coreGameDiagnosis.rulesText9" = "找不到游戏启动入口";
 
-/* @symbol CoreGameDiagnosis.rulesText10 @args - */
+/* @symbol CoreGameDiagnosis.missingMainClassExplanation @args - */
 "coreGameDiagnosis.rulesText10" = "Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。";
 
-/* @symbol CoreGameDiagnosis.rulesText11 @args - */
+/* @symbol CoreGameDiagnosis.missingMainClass @args - */
 "coreGameDiagnosis.rulesText11" = "找不到或无法加载主类";
 
-/* @symbol CoreGameDiagnosis.rulesText12 @args - */
+/* @symbol CoreGameDiagnosis.missingMainClassCjk @args - */
 "coreGameDiagnosis.rulesText12" = "找不到或無法載入主要類別";
 
-/* @symbol CoreGameDiagnosis.rulesText13 @args - */
+/* @symbol CoreGameDiagnosis.missingMainClassCheck @args - */
 "coreGameDiagnosis.rulesText13" = "检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。";
 
-/* @symbol CoreGameDiagnosis.rulesText14 @args - */
+/* @symbol CoreGameDiagnosis.missingMainClassReport @args - */
 "coreGameDiagnosis.rulesText14" = "保留现有配置与存档；若修复后仍失败，附上这次报告。";
 
-/* @symbol CoreGameDiagnosis.rulesText15 @args - */
+/* @symbol CoreGameDiagnosis.loaderModConflict @args - */
 "coreGameDiagnosis.rulesText15" = "加载器拒绝了模组组合";
 
-/* @symbol CoreGameDiagnosis.rulesText16 @args - */
+/* @symbol CoreGameDiagnosis.loaderModConflictExplanation @args - */
 "coreGameDiagnosis.rulesText16" = "加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。";
 
-/* @symbol CoreGameDiagnosis.rulesText17 @args - */
+/* @symbol CoreGameDiagnosis.loaderModConflictCheck @args - */
 "coreGameDiagnosis.rulesText17" = "按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText18 @args - */
+/* @symbol CoreGameDiagnosis.loaderModConflictRetry @args - */
 "coreGameDiagnosis.rulesText18" = "在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。";
 
-/* @symbol CoreGameDiagnosis.rulesText19 @args - */
+/* @symbol CoreGameDiagnosis.duplicateMod @args - */
 "coreGameDiagnosis.rulesText19" = "加载器发现重复模组";
 
-/* @symbol CoreGameDiagnosis.rulesText20 @args - */
+/* @symbol CoreGameDiagnosis.duplicateModExplanation @args - */
 "coreGameDiagnosis.rulesText20" = "同一个模组被加载多次，可能存在不同版本或重复来源。";
 
-/* @symbol CoreGameDiagnosis.rulesText21 @args - */
+/* @symbol CoreGameDiagnosis.duplicateModCheck @args - */
 "coreGameDiagnosis.rulesText21" = "在模组管理中核对原文列出的文件和版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText22 @args - */
+/* @symbol CoreGameDiagnosis.duplicateModRetry @args - */
 "coreGameDiagnosis.rulesText22" = "停用多余的一份后重试；不要同时删掉所有版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText23 @args - */
+/* @symbol CoreGameDiagnosis.modInitializationFailure @args - */
 "coreGameDiagnosis.rulesText23" = "模组初始化失败";
 
-/* @symbol CoreGameDiagnosis.rulesText24 @args - */
+/* @symbol CoreGameDiagnosis.modInitializationExplanation @args - */
 "coreGameDiagnosis.rulesText24" = "加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。";
 
-/* @symbol CoreGameDiagnosis.rulesText25 @args - */
+/* @symbol CoreGameDiagnosis.modInitializationCheck @args - */
 "coreGameDiagnosis.rulesText25" = "核对证据中列出的模组、依赖与加载器版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText26 @args - */
+/* @symbol CoreGameDiagnosis.modInitializationRetry @args - */
 "coreGameDiagnosis.rulesText26" = "若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。";
 
-/* @symbol CoreGameDiagnosis.rulesText27 @args - */
+/* @symbol CoreGameDiagnosis.outOfMemory @args - */
 "coreGameDiagnosis.rulesText27" = "Java 报告内存耗尽";
 
-/* @symbol CoreGameDiagnosis.rulesText28 @args - */
+/* @symbol CoreGameDiagnosis.outOfMemoryExplanation @args - */
 "coreGameDiagnosis.rulesText28" = "错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。";
 
-/* @symbol CoreGameDiagnosis.rulesText29 @args - */
+/* @symbol CoreGameDiagnosis.outOfMemoryTypes @args - */
 "coreGameDiagnosis.rulesText29" = "先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。";
 
-/* @symbol CoreGameDiagnosis.rulesText30 @args - */
+/* @symbol CoreGameDiagnosis.outOfMemoryCheck @args - */
 "coreGameDiagnosis.rulesText30" = "仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。";
 
-/* @symbol CoreGameDiagnosis.rulesText31 @args - */
+/* @symbol CoreGameDiagnosis.nativeMemoryAllocationFailure @args - */
 "coreGameDiagnosis.rulesText31" = "虚拟机无法分配所需内存";
 
-/* @symbol CoreGameDiagnosis.rulesText32 @args - */
+/* @symbol CoreGameDiagnosis.nativeMemoryAllocationExplanation @args - */
 "coreGameDiagnosis.rulesText32" = "JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。";
 
-/* @symbol CoreGameDiagnosis.rulesText33 @args - */
+/* @symbol CoreGameDiagnosis.nativeMemoryCheck @args - */
 "coreGameDiagnosis.rulesText33" = "检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。";
 
-/* @symbol CoreGameDiagnosis.rulesText34 @args - */
+/* @symbol CoreGameDiagnosis.nativeMemoryRetry @args - */
 "coreGameDiagnosis.rulesText34" = "调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。";
 
-/* @symbol CoreGameDiagnosis.rulesText35 @args - */
+/* @symbol CoreGameDiagnosis.architectureMismatch @args - */
 "coreGameDiagnosis.rulesText35" = "本地库或 Java 的架构不匹配";
 
-/* @symbol CoreGameDiagnosis.rulesText36 @args - */
+/* @symbol CoreGameDiagnosis.architectureMismatchExplanation @args - */
 "coreGameDiagnosis.rulesText36" = "系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。";
 
-/* @symbol CoreGameDiagnosis.rulesText37 @args - */
+/* @symbol CoreGameDiagnosis.architectureCheck @args - */
 "coreGameDiagnosis.rulesText37" = "核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText38 @args - */
+/* @symbol CoreGameDiagnosis.architectureModCheck @args - */
 "coreGameDiagnosis.rulesText38" = "检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。";
 
-/* @symbol CoreGameDiagnosis.rulesText39 @args - */
+/* @symbol CoreGameDiagnosis.mainThreadViolation @args - */
 "coreGameDiagnosis.rulesText39" = "窗口初始化违反 macOS 主线程要求";
 
-/* @symbol CoreGameDiagnosis.rulesText40 @args - */
+/* @symbol CoreGameDiagnosis.mainThreadViolationExplanation @args - */
 "coreGameDiagnosis.rulesText40" = "Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。";
 
-/* @symbol CoreGameDiagnosis.rulesText41 @args - */
+/* @symbol CoreGameDiagnosis.mainThreadCheck @args - */
 "coreGameDiagnosis.rulesText41" = "核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。";
 
-/* @symbol CoreGameDiagnosis.rulesText42 @args - */
+/* @symbol CoreGameDiagnosis.mainThreadReport @args - */
 "coreGameDiagnosis.rulesText42" = "保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。";
 
-/* @symbol CoreGameDiagnosis.rulesText43 @args - */
+/* @symbol CoreGameDiagnosis.configReadFailure @args - */
 "coreGameDiagnosis.rulesText43" = "配置文件读取失败";
 
-/* @symbol CoreGameDiagnosis.rulesText44 @args - */
+/* @symbol CoreGameDiagnosis.configReadExplanation @args - */
 "coreGameDiagnosis.rulesText44" = "加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。";
 
-/* @symbol CoreGameDiagnosis.rulesText45 @args - */
+/* @symbol CoreGameDiagnosis.configBackup @args - */
 "coreGameDiagnosis.rulesText45" = "先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。";
 
-/* @symbol CoreGameDiagnosis.rulesText46 @args - */
+/* @symbol CoreGameDiagnosis.configRepair @args - */
 "coreGameDiagnosis.rulesText46" = "按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。";
 
-/* @symbol CoreGameDiagnosis.rulesText47 @args - */
+/* @symbol CoreGameDiagnosis.mixinApplyFailure @args - */
 "coreGameDiagnosis.rulesText47" = "错误上下文中有 Mixin 应用失败";
 
-/* @symbol CoreGameDiagnosis.rulesText48 @args - */
+/* @symbol CoreGameDiagnosis.mixinApplyExplanation @args - */
 "coreGameDiagnosis.rulesText48" = "这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。";
 
-/* @symbol CoreGameDiagnosis.rulesText49 @args - */
+/* @symbol CoreGameDiagnosis.mixinDependencyCheck @args - */
 "coreGameDiagnosis.rulesText49" = "先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。";
 
-/* @symbol CoreGameDiagnosis.rulesText50 @args - */
+/* @symbol CoreGameDiagnosis.mixinModCheck @args - */
 "coreGameDiagnosis.rulesText50" = "通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。";
 
-/* @symbol CoreGameDiagnosis.rulesText51 @args - */
+/* @symbol CoreGameDiagnosis.jvmCrash @args - */
 "coreGameDiagnosis.rulesText51" = "JVM 记录了本机崩溃";
 
-/* @symbol CoreGameDiagnosis.rulesText52 @args - */
+/* @symbol CoreGameDiagnosis.jvmCrashExplanation @args - */
 "coreGameDiagnosis.rulesText52" = "虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。";
 
-/* @symbol CoreGameDiagnosis.rulesText53 @args - */
+/* @symbol CoreGameDiagnosis.jvmCrashReport @args - */
 "coreGameDiagnosis.rulesText53" = "保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。";
 
-/* @symbol CoreGameDiagnosis.rulesText54 @args - */
+/* @symbol CoreGameDiagnosis.jvmCrashCheck @args - */
 "coreGameDiagnosis.rulesText54" = "核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。";
 
-/* @symbol CoreGameDiagnosis.rulesText55 @args - */
+/* @symbol CoreGameDiagnosis.debugCrash @args - */
 "coreGameDiagnosis.rulesText55" = "报告注明手动触发调试崩溃";
 
-/* @symbol CoreGameDiagnosis.rulesText56 @args - */
+/* @symbol CoreGameDiagnosis.debugCrashExplanation @args - */
 "coreGameDiagnosis.rulesText56" = "Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。";
 
-/* @symbol CoreGameDiagnosis.rulesText57 @args - */
+/* @symbol CoreGameDiagnosis.debugCrashRetry @args - */
 "coreGameDiagnosis.rulesText57" = "若这是有意触发的调试操作，保存所需报告后正常重新启动。";
 
-/* @symbol CoreGameDiagnosticBundle.previewText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.diagnosticRunMismatch @args - */
 "coreGameDiagnosticBundle.previewText1" = "诊断与运行记录不匹配，请重新分析。";
 
-/* @symbol CoreGameDiagnosticBundle.summaryText1 @args text,text,text */
+/* @symbol CoreGameDiagnosticBundle.diagnosticReportHeader @args text,text,text */
 "coreGameDiagnosticBundle.summaryText1" = "Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n";
 
-/* @symbol CoreGameDiagnosticBundle.summaryText2 @args - */
+/* @symbol CoreGameDiagnosticBundle.readScopeHeader @args - */
 "coreGameDiagnosticBundle.summaryText2" = "\n读取范围与缺失信息\n";
 
-/* @symbol CoreGameDiagnosticBundle.summaryText3 @args - */
+/* @symbol CoreGameDiagnosticBundle.noReadErrors @args - */
 "coreGameDiagnosticBundle.summaryText3" = "未发现读取截断或读取错误。";
 
-/* @symbol CoreGameDiagnosticBundle.summaryText4 @args - */
+/* @symbol CoreGameDiagnosticBundle.diagnosticConclusionHeader @args - */
 "coreGameDiagnosticBundle.summaryText4" = "诊断结论与处理步骤";
 
-/* @symbol CoreGameDiagnosticBundle.environmentText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.environmentUnrecorded @args - */
 "coreGameDiagnosticBundle.environmentText1" = "未记录";
 
-/* @symbol CoreGameDiagnosticBundle.environmentText2 @args text */
+/* @symbol CoreGameDiagnosticBundle.heapLimit @args text */
 "coreGameDiagnosticBundle.environmentText2" = "堆上限 %1$@ MB";
 
-/* @symbol CoreGameDiagnosticBundle.interruptionText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.gameJavaSystemEnvironment @args - */
 "coreGameDiagnosticBundle.interruptionText1" = "游戏、Java 与系统环境";
 
-/* @symbol CoreGameDiagnosticBundle.headingText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.truncatedFileHeading @args - */
 "coreGameDiagnosticBundle.headingText1" = "片段，可能缺少上下文";
 
-/* @symbol CoreGameDiagnosticBundle.headingText2 @args - */
+/* @symbol CoreGameDiagnosticBundle.completeFileHeading @args - */
 "coreGameDiagnosticBundle.headingText2" = "已读取的完整文件";
 
-/* @symbol CoreGameDiagnosticBundle.headingText3 @args - */
+/* @symbol CoreGameDiagnosticBundle.tailLineNumberHeading @args - */
 "coreGameDiagnosticBundle.headingText3" = "末段内从 1 开始，不是原文件行号";
 
-/* @symbol CoreGameDiagnosticBundle.headingText4 @args - */
+/* @symbol CoreGameDiagnosticBundle.bodyLineNumberHeading @args - */
 "coreGameDiagnosticBundle.headingText4" = "正文从原文件第 1 行开始";
 
-/* @symbol CoreGameDiagnosticBundle.headingText5 @args text,text,text */
+/* @symbol CoreGameDiagnosticBundle.sourceRangeHeading @args text,text,text */
 "coreGameDiagnosticBundle.headingText5" = "来源：%1$@\n范围：%2$@\n行号：%3$@\n\n";
 
-/* @symbol CoreGameDiagnosticBundle.headingText6 @args - */
+/* @symbol CoreGameDiagnosticBundle.excerptHeading @args - */
 "coreGameDiagnosticBundle.headingText6" = " · 片段";
 
-/* @symbol CoreGameDiagnosticBundle.selectedText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.invalidReportSelection @args - */
 "coreGameDiagnosticBundle.selectedText1" = "请选择有效的报告内容。";
 
-/* @symbol CoreGameDiagnosticBundle.selectedText2 @args - */
+/* @symbol CoreGameDiagnosticBundle.zipSaveLocationSelection @args - */
 "coreGameDiagnosticBundle.selectedText2" = "请选择 ZIP 文件保存位置。";
 
-/* @symbol CoreGameDiagnosticBundle.rootText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid @args - */
 "coreGameDiagnosticBundle.rootText1" = "请将诊断包保存在 Ruri 数据目录和实例文件夹之外。";
 
-/* @symbol CoreGameDiagnosticBundle.dataText1 @args - */
+/* @symbol CoreGameDiagnosticBundle.diagnosticBundleSaveFailed @args - */
 "coreGameDiagnosticBundle.dataText1" = "无法保存诊断包。";
 
 /* @symbol CoreGameDiagnosticBundle.environment @args text,text,text,text,text,text,text,text,text,text,text,text,text,text,text */

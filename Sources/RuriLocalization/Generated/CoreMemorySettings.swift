@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreMemorySettings {
-        public static var titleText1: LocalizedMessage {
+        /// 自动估算
+        ///
+        /// Resource: `Core.coreMemorySettings.titleText1`.
+        public static var automaticEstimation: LocalizedMessage {
             .init(key: "coreMemorySettings.titleText1", table: "Core", fallback: "自动估算")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 内存设置
+        ///
+        /// Resource: `Core.coreMemorySettings.titleText2`.
+        public static var memorySettings: LocalizedMessage {
             .init(key: "coreMemorySettings.titleText2", table: "Core", fallback: "内存设置")
         }
-        public static var titleText3: LocalizedMessage {
+        /// JVM 参数覆盖
+        ///
+        /// Resource: `Core.coreMemorySettings.titleText3`.
+        public static var jvmOverride: LocalizedMessage {
             .init(key: "coreMemorySettings.titleText3", table: "Core", fallback: "JVM 参数覆盖")
         }
-        public static var summaryText1: LocalizedMessage {
+        /// 由 JVM 自动决定
+        ///
+        /// Resource: `Core.coreMemorySettings.summaryText1`.
+        public static var automaticallyManagedMemory: LocalizedMessage {
             .init(key: "coreMemorySettings.summaryText1", table: "Core", fallback: "由 JVM 自动决定")
         }
-        public static func summaryText2(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// 堆上限 %1$@ · 初始 %2$@ · %3$@
+        ///
+        /// Resource: `Core.coreMemorySettings.summaryText2`.
+        public static func memorySummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "coreMemorySettings.summaryText2", table: "Core", fallback: "堆上限 %1$@ · 初始 %2$@ · %3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var resolveText1: LocalizedMessage {
+        /// 内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。
+        ///
+        /// Resource: `Errors.coreMemorySettings.resolveText1`.
+        public static var invalidMemoryLimits: LocalizedMessage {
             .init(key: "coreMemorySettings.resolveText1", table: "Errors", fallback: "内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。")
         }
-        public static var maximumText1: LocalizedMessage {
+        /// 无法读取物理内存，请使用手动内存设置。
+        ///
+        /// Resource: `Errors.coreMemorySettings.maximumText1`.
+        public static var physicalMemoryUnreadable: LocalizedMessage {
             .init(key: "coreMemorySettings.maximumText1", table: "Errors", fallback: "无法读取物理内存，请使用手动内存设置。")
         }
-        public static func initialText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。
+        ///
+        /// Resource: `Errors.coreMemorySettings.initialText1`.
+        public static func initialHeapTooLarge(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreMemorySettings.initialText1", table: "Errors", fallback: "初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。", arguments: [.text(value0), .text(value1)])
         }
-        public static var valueText1: LocalizedMessage {
+        /// JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。
+        ///
+        /// Resource: `Errors.coreMemorySettings.valueText1`.
+        public static var heapSettingsMismatch: LocalizedMessage {
             .init(key: "coreMemorySettings.valueText1", table: "Errors", fallback: "JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。")
         }
-        public static func numberText1(_ value0: String) -> LocalizedMessage {
+        /// 无效的 JVM 内存大小：%1$@。请使用字节数或 K/M/G 单位。
+        ///
+        /// Resource: `Errors.coreMemorySettings.numberText1`.
+        public static func invalidMemorySize(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMemorySettings.numberText1", table: "Errors", fallback: "无效的 JVM 内存大小：%1$@。请使用字节数或 K/M/G 单位。", arguments: [.text(value0)])
         }
-        public static var numberText2: LocalizedMessage {
+        /// JVM 内存大小超出可表示范围。
+        ///
+        /// Resource: `Errors.coreMemorySettings.numberText2`.
+        public static var memorySizeOutOfRange: LocalizedMessage {
             .init(key: "coreMemorySettings.numberText2", table: "Errors", fallback: "JVM 内存大小超出可表示范围。")
         }
         static let definitions: [String: MessageDefinition] = [

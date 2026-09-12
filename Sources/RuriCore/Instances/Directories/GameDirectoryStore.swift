@@ -25,7 +25,7 @@ public enum GameDirectoryStore {
     }
     @discardableResult public static func select(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         let result = try StateStore.update(paths) { state in
-            guard id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw RuriError.message(Messages.CoreGameDirectoryStore.resultText1) }
+            guard id == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == id }) == true else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderRemoved) }
             state.selectedDirectoryID = id
             if !state.instances.contains(where: { $0.id == state.selectedInstanceID && ($0.directoryID ?? GameDirectory.defaultID) == id }) {
                 state.selectedInstanceID = state.instances.first(where: { ($0.directoryID ?? GameDirectory.defaultID) == id })?.id
@@ -38,7 +38,7 @@ public enum GameDirectoryStore {
     }
     @discardableResult public static func rename(_ id: UUID, name: String, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
-            guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.indexText1) }
+            guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderMissing) }
             state.gameDirectories?[index].name = try GameDirectory.validName(name)
         }
     }
@@ -47,7 +47,7 @@ public enum GameDirectoryStore {
         var sharedLease: SharedGameDirectoryLease?
         defer { withExtendedLifetime(leases) {}; withExtendedLifetime(sharedLease) {} }
         return try StateStore.update(paths) { state in
-            guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }), let original = state.gameDirectories?[index] else { throw RuriError.message(Messages.CoreGameDirectoryStore.indexText1) }
+            guard let index = state.gameDirectories?.firstIndex(where: { $0.id == id }), let original = state.gameDirectories?[index] else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderMissing) }
             try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             let current = paths.configured(with: state)
@@ -55,7 +55,7 @@ public enum GameDirectoryStore {
             try RepositoryImportStore.requireDirectoryAvailable(candidate)
             state.gameDirectories?[index] = candidate
             if original.url.standardizedFileURL.resolvingSymlinksInPath().path != url.standardizedFileURL.resolvingSymlinksInPath().path,
-               (try? original.validateAvailability()) != nil { throw RuriError.message(Messages.CoreGameDirectoryStore.candidateText1) }
+               (try? original.validateAvailability()) != nil { throw RuriError.message(Messages.CoreGameDirectoryStore.folderStillAccessible) }
             let relocated = paths.configured(with: state)
             for instance in state.instances where instance.directoryID == id {
                 // Only the managed history/metadata moved. A custom game root
@@ -86,7 +86,7 @@ public enum GameDirectoryStore {
             try InstanceCopyGuard.requireDirectoryAvailable(id, paths: paths)
             try InstanceMoveGuard.requireDirectoryAvailable(id, paths: paths)
             try RepositoryImportStore.requireDirectoryAvailable(id, paths: paths)
-            guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.indexText1) }
+            guard let directory = state.gameDirectories?.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderMissing) }
             if directory.isMinecraft {
                 let current = paths.configured(with: state)
                 var lockedRoots = Set<String>()
@@ -107,11 +107,11 @@ public enum GameDirectoryStore {
                 state.instances.removeAll { $0.directoryID == id }
                 if !state.instances.contains(where: { $0.id == state.selectedInstanceID }) { state.selectedInstanceID = nil }
             } else {
-                guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.selectedText1) }
+                guard !state.instances.contains(where: { $0.directoryID == id }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderContainsInstances) }
                 if (try? directory.validateAvailability()) != nil {
                     let instances = directory.url.appendingPathComponent("instances")
                     if FileManager.default.fileExists(atPath: instances.path) {
-                        guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.instancesText1) }
+                        guard try FileManager.default.contentsOfDirectory(atPath: instances.path).allSatisfy({ $0 == ".DS_Store" }) else { throw RuriError.message(Messages.CoreGameDirectoryStore.folderHasUnlistedInstances) }
                     }
                 }
             }

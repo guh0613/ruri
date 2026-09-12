@@ -3,94 +3,184 @@ import Foundation
 
 extension Messages {
     public enum AppJavaView {
-        public static var bodyText1: LocalizedMessage {
+        /// 正在检测本机 Java…
+        ///
+        /// Resource: `Interface.appJavaView.bodyText1`.
+        public static var detectingJava: LocalizedMessage {
             .init(key: "appJavaView.bodyText1", table: "Interface", fallback: "正在检测本机 Java…")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。
+        ///
+        /// Resource: `Interface.appJavaView.bodyText2`.
+        public static var noJavaFound: LocalizedMessage {
             .init(key: "appJavaView.bodyText2", table: "Interface", fallback: "没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 本机 Java
+        ///
+        /// Resource: `Interface.appJavaView.bodyText3`.
+        public static var localJava: LocalizedMessage {
             .init(key: "appJavaView.bodyText3", table: "Interface", fallback: "本机 Java")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 获取 Mojang 运行时列表…
+        ///
+        /// Resource: `Interface.appJavaView.bodyText4`.
+        public static var fetchingRuntimes: LocalizedMessage {
             .init(key: "appJavaView.bodyText4", table: "Interface", fallback: "获取 Mojang 运行时列表…")
         }
-        public static var javaErrorText1: LocalizedMessage {
+        /// 官方游戏运行时
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText1`.
+        public static var officialRuntimes: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText1", table: "Interface", fallback: "官方游戏运行时")
         }
-        public static var javaErrorText2: LocalizedMessage {
+        /// Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText2`.
+        public static var javaRequirements: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText2", table: "Interface", fallback: "Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。")
         }
-        public static var javaErrorText3: LocalizedMessage {
+        /// Azul Zulu 下载
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText3`.
+        public static var zuluDownload: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText3", table: "Interface", fallback: "Azul Zulu 下载")
         }
-        public static var javaErrorText4: LocalizedMessage {
+        /// Eclipse Temurin 下载
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText4`.
+        public static var temurinDownload: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText4", table: "Interface", fallback: "Eclipse Temurin 下载")
         }
-        public static var javaErrorText5: LocalizedMessage {
+        /// 重新检测
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText5`.
+        public static var redetect: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText5", table: "Interface", fallback: "重新检测")
         }
-        public static var javaErrorText6: LocalizedMessage {
+        /// 重新检测本机 Java
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText6`.
+        public static var redetectLocalJava: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText6", table: "Interface", fallback: "重新检测本机 Java")
         }
-        public static var javaErrorText7: LocalizedMessage {
+        /// 添加本机 Java…
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText7`.
+        public static var addLocalJava: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText7", table: "Interface", fallback: "添加本机 Java…")
         }
-        public static var javaErrorText8: LocalizedMessage {
+        /// 添加本机已安装的 Java…
+        ///
+        /// Resource: `Interface.appJavaView.javaErrorText8`.
+        public static var addInstalledJava: LocalizedMessage {
             .init(key: "appJavaView.javaErrorText8", table: "Interface", fallback: "添加本机已安装的 Java…")
         }
-        public static var runtimeText1: LocalizedMessage {
+        /// 不可用的 Java
+        ///
+        /// Resource: `Interface.appJavaView.runtimeText1`.
+        public static var unavailableJava: LocalizedMessage {
             .init(key: "appJavaView.runtimeText1", table: "Interface", fallback: "不可用的 Java")
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 默认
+        ///
+        /// Resource: `Interface.appJavaView.selectedText1`.
+        public static var defaultSelection: LocalizedMessage {
             .init(key: "appJavaView.selectedText1", table: "Interface", fallback: "默认")
         }
-        public static var remoteText1: LocalizedMessage {
+        /// 修复
+        ///
+        /// Resource: `Interface.appJavaView.remoteText1`.
+        public static var repair: LocalizedMessage {
             .init(key: "appJavaView.remoteText1", table: "Interface", fallback: "修复")
         }
-        public static var remoteText2: LocalizedMessage {
+        /// 设为默认 Java
+        ///
+        /// Resource: `Interface.appJavaView.remoteText2`.
+        public static var setDefaultJava: LocalizedMessage {
             .init(key: "appJavaView.remoteText2", table: "Interface", fallback: "设为默认 Java")
         }
-        public static var remoteText3: LocalizedMessage {
+        /// 重新选择路径…
+        ///
+        /// Resource: `Interface.appJavaView.remoteText3`.
+        public static var relocatePath: LocalizedMessage {
             .init(key: "appJavaView.remoteText3", table: "Interface", fallback: "重新选择路径…")
         }
-        public static var remoteText4: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appJavaView.remoteText4`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appJavaView.remoteText4", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var remoteText5: LocalizedMessage {
+        /// 从手动列表移除
+        ///
+        /// Resource: `Interface.appJavaView.remoteText5`.
+        public static var removeManualJava: LocalizedMessage {
             .init(key: "appJavaView.remoteText5", table: "Interface", fallback: "从手动列表移除")
         }
-        public static var idText1: LocalizedMessage {
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.appJavaView.idText1`.
+        public static var trashJava: LocalizedMessage {
             .init(key: "appJavaView.idText1", table: "Interface", fallback: "移到废纸篓…")
         }
-        public static var brokenText1: LocalizedMessage {
+        /// 清理未完成文件
+        ///
+        /// Resource: `Interface.appJavaView.brokenText1`.
+        public static var incompleteDownloads: LocalizedMessage {
             .init(key: "appJavaView.brokenText1", table: "Interface", fallback: "清理未完成文件")
         }
-        public static var brokenText2: LocalizedMessage {
+        /// 已安装
+        ///
+        /// Resource: `Interface.appJavaView.brokenText2`.
+        public static var installed: LocalizedMessage {
             .init(key: "appJavaView.brokenText2", table: "Interface", fallback: "已安装")
         }
-        public static var brokenText3: LocalizedMessage {
+        /// 继续安装
+        ///
+        /// Resource: `Interface.appJavaView.brokenText3`.
+        public static var continueInstall: LocalizedMessage {
             .init(key: "appJavaView.brokenText3", table: "Interface", fallback: "继续安装")
         }
-        public static var brokenText4: LocalizedMessage {
+        /// 安装
+        ///
+        /// Resource: `Interface.appJavaView.brokenText4`.
+        public static var install: LocalizedMessage {
             .init(key: "appJavaView.brokenText4", table: "Interface", fallback: "安装")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 清理未完成的 Java 下载
+        ///
+        /// Resource: `Interface.appJavaView.bodyText5`.
+        public static var cleanIncompleteDownloads: LocalizedMessage {
             .init(key: "appJavaView.bodyText5", table: "Interface", fallback: "清理未完成的 Java 下载")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 移除 Ruri 下载的 Java
+        ///
+        /// Resource: `Interface.appJavaView.bodyText6`.
+        public static var removeManagedJava: LocalizedMessage {
             .init(key: "appJavaView.bodyText6", table: "Interface", fallback: "移除 Ruri 下载的 Java")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 以下设置仍在使用这一路径：
+        ///
+        /// Resource: `Interface.appJavaView.bodyText7`.
+        public static var javaStillReferenced: LocalizedMessage {
             .init(key: "appJavaView.bodyText7", table: "Interface", fallback: "以下设置仍在使用这一路径：")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 将这些设置改为自动选择 Java
+        ///
+        /// Resource: `Interface.appJavaView.bodyText8`.
+        public static var switchToAutomaticJava: LocalizedMessage {
             .init(key: "appJavaView.bodyText8", table: "Interface", fallback: "将这些设置改为自动选择 Java")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 文件会移到废纸篓；正在被游戏或安装器使用时无法移除。
+        ///
+        /// Resource: `Interface.appJavaView.bodyText9`.
+        public static var trashNotice: LocalizedMessage {
             .init(key: "appJavaView.bodyText9", table: "Interface", fallback: "文件会移到废纸篓；正在被游戏或安装器使用时无法移除。")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appJavaView.bodyText10`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appJavaView.bodyText10", table: "Interface", fallback: "移到废纸篓")
         }
         static let definitions: [String: MessageDefinition] = [

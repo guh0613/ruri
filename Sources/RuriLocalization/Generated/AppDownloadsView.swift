@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum AppDownloadsView {
-        public static var bodyText1: LocalizedMessage {
+        /// 没有下载任务
+        ///
+        /// Resource: `Interface.appDownloadsView.bodyText1`.
+        public static var noDownloadTasks: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText1", table: "Interface", fallback: "没有下载任务")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。
+        ///
+        /// Resource: `Interface.appDownloadsView.bodyText2`.
+        public static var downloadProgressDetails: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText2", table: "Interface", fallback: "安装游戏或下载内容时，可以在这里查看进度。文件会自动校验，重试时继续下载未完成的部分。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 已完成
+        ///
+        /// Resource: `Interface.appDownloadsView.bodyText3`.
+        public static var completed: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText3", table: "Interface", fallback: "已完成")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 已取消
+        ///
+        /// Resource: `Interface.appDownloadsView.bodyText4`.
+        public static var cancelled: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText4", table: "Interface", fallback: "已取消")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 失败
+        ///
+        /// Resource: `Interface.appDownloadsView.bodyText5`.
+        public static var failed: LocalizedMessage {
             .init(key: "appDownloadsView.bodyText5", table: "Interface", fallback: "失败")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 最近的文件传输
+        ///
+        /// Resource: `Interface.appDownloadsView.errorText1`.
+        public static var recentFileTransfers: LocalizedMessage {
             .init(key: "appDownloadsView.errorText1", table: "Interface", fallback: "最近的文件传输")
         }
-        public static func sourceInfoText1(_ value0: Int64) -> LocalizedMessage {
+        /// 第 %1$lld 次尝试
+        ///
+        /// Resource: `Interface.appDownloadsView.sourceInfoText1`.
+        public static func attemptNumber(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appDownloadsView.sourceInfoText1", table: "Interface", fallback: "第 %1$lld 次尝试", arguments: [.integer(value0)])
         }
-        public static func sourceInfoText2(_ value0: String) -> LocalizedMessage {
+        /// 续传 %1$@
+        ///
+        /// Resource: `Interface.appDownloadsView.sourceInfoText2`.
+        public static func resumeDownload(_ value0: String) -> LocalizedMessage {
             .init(key: "appDownloadsView.sourceInfoText2", table: "Interface", fallback: "续传 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

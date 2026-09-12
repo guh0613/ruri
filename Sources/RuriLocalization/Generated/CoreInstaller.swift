@@ -3,70 +3,137 @@ import Foundation
 
 extension Messages {
     public enum CoreInstaller {
-        public static var installText1: LocalizedMessage {
+        /// 此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。
+        ///
+        /// Resource: `Errors.coreInstaller.installText1`.
+        public static var localVersionManifestRequiresRepair: LocalizedMessage {
             .init(key: "coreInstaller.installText1", table: "Errors", fallback: "此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。")
         }
-        public static var installText2: LocalizedMessage {
+        /// 此版本已存在，请使用修复功能。
+        ///
+        /// Resource: `Errors.coreInstaller.installText2`.
+        public static var versionAlreadyInstalled: LocalizedMessage {
             .init(key: "coreInstaller.installText2", table: "Errors", fallback: "此版本已存在，请使用修复功能。")
         }
-        public static func versionText1(_ value0: String) -> LocalizedMessage {
+        /// 找不到 Minecraft %1$@
+        ///
+        /// Resource: `Errors.coreInstaller.versionText1`.
+        public static func minecraftVersionNotFound(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.versionText1", table: "Errors", fallback: "找不到 Minecraft %1$@", arguments: [.text(value0)])
         }
-        public static func loaderVersionText1(_ value0: String) -> LocalizedMessage {
+        /// 此版本没有可用的 %1$@ 加载器。
+        ///
+        /// Resource: `Errors.coreInstaller.loaderVersionText1`.
+        public static func loaderVersionUnavailable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.loaderVersionText1", table: "Errors", fallback: "此版本没有可用的 %1$@ 加载器。", arguments: [.text(value0)])
         }
-        public static var applyingPackLibrariesText1: LocalizedMessage {
+        /// 整合包依赖库数量超过限制
+        ///
+        /// Resource: `Errors.coreInstaller.applyingPackLibrariesText1`.
+        public static var modpackDependencyCountExceeded: LocalizedMessage {
             .init(key: "coreInstaller.applyingPackLibrariesText1", table: "Errors", fallback: "整合包依赖库数量超过限制")
         }
-        public static var applyingPackLibrariesText2: LocalizedMessage {
+        /// 整合包依赖不能指定已有游戏文件的位置。
+        ///
+        /// Resource: `Errors.coreInstaller.applyingPackLibrariesText2`.
+        public static var dependencyTargetsExistingGameFile: LocalizedMessage {
             .init(key: "coreInstaller.applyingPackLibrariesText2", table: "Errors", fallback: "整合包依赖不能指定已有游戏文件的位置。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 整合包依赖库的下载地址无效
+        ///
+        /// Resource: `Errors.coreInstaller.urlText1`.
+        public static var invalidDependencyDownloadURL: LocalizedMessage {
             .init(key: "coreInstaller.urlText1", table: "Errors", fallback: "整合包依赖库的下载地址无效")
         }
-        public static var versionText2: LocalizedMessage {
+        /// 此版本已从游戏文件夹移除，请刷新实例列表。
+        ///
+        /// Resource: `Errors.coreInstaller.versionText2`.
+        public static var versionRemovedFromGameFolder: LocalizedMessage {
             .init(key: "coreInstaller.versionText2", table: "Errors", fallback: "此版本已从游戏文件夹移除，请刷新实例列表。")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 游戏资源索引缺失，请先修复实例。
+        ///
+        /// Resource: `Errors.coreInstaller.fileText1`.
+        public static var gameResourceIndexMissing: LocalizedMessage {
             .init(key: "coreInstaller.fileText1", table: "Errors", fallback: "游戏资源索引缺失，请先修复实例。")
         }
-        public static var rootText1: LocalizedMessage {
+        /// 资源索引包含无效哈希
+        ///
+        /// Resource: `Errors.coreInstaller.rootText1`.
+        public static var invalidResourceIndexHash: LocalizedMessage {
             .init(key: "coreInstaller.rootText1", table: "Errors", fallback: "资源索引包含无效哈希")
         }
-        public static func sourceText1(_ value0: String) -> LocalizedMessage {
+        /// 缓存资源缺失或已损坏，请先修复实例：%1$@
+        ///
+        /// Resource: `Errors.coreInstaller.sourceText1`.
+        public static func cachedResourceMissingOrCorrupt(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.sourceText1", table: "Errors", fallback: "缓存资源缺失或已损坏，请先修复实例：%1$@", arguments: [.text(value0)])
         }
-        public static var archText1: LocalizedMessage {
+        /// 此版本的兼容规则不支持当前 macOS 环境。
+        ///
+        /// Resource: `Errors.coreInstaller.archText1`.
+        public static var unsupportedMacOSCompatibility: LocalizedMessage {
             .init(key: "coreInstaller.archText1", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
         }
-        public static var pathText1: LocalizedMessage {
+        /// 生成依赖缺少路径
+        ///
+        /// Resource: `Errors.coreInstaller.pathText1`.
+        public static var generatedDependencyPathMissing: LocalizedMessage {
             .init(key: "coreInstaller.pathText1", table: "Errors", fallback: "生成依赖缺少路径")
         }
-        public static var nativePathText1: LocalizedMessage {
+        /// 原生库缺少文件路径
+        ///
+        /// Resource: `Errors.coreInstaller.nativePathText1`.
+        public static var nativeLibraryPathMissing: LocalizedMessage {
             .init(key: "coreInstaller.nativePathText1", table: "Errors", fallback: "原生库缺少文件路径")
         }
-        public static func workspaceText1(_ value0: String) -> LocalizedMessage {
+        /// 新组件需要替换正在使用的依赖文件，原安装已保留：%1$@
+        ///
+        /// Resource: `Errors.coreInstaller.workspaceText1`.
+        public static func componentDependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.workspaceText1", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
         }
-        public static func workspaceText2(_ value0: String) -> LocalizedMessage {
+        /// 已有游戏文件与整合包所需文件不同，未覆盖：%1$@
+        /// 请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreInstaller.workspaceText2`.
+        public static func existingGameFileConflictsWithModpack(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.workspaceText2", table: "Errors", fallback: "已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", arguments: [.text(value0)])
         }
-        public static var locationText1: LocalizedMessage {
+        /// 正在获取版本清单
+        ///
+        /// Resource: `Progress.coreInstaller.locationText1`.
+        public static var fetchingVersionManifest: LocalizedMessage {
             .init(key: "coreInstaller.locationText1", table: "Progress", fallback: "正在获取版本清单")
         }
-        public static func instanceText1(_ value0: String) -> LocalizedMessage {
+        /// 正在安装 %1$@
+        ///
+        /// Resource: `Progress.coreInstaller.instanceText1`.
+        public static func installingInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstaller.instanceText1", table: "Progress", fallback: "正在安装 %1$@", arguments: [.text(value0)])
         }
-        public static var encoderText1: LocalizedMessage {
+        /// 安装完成
+        ///
+        /// Resource: `Progress.coreInstaller.encoderText1`.
+        public static var installationCompleted: LocalizedMessage {
             .init(key: "coreInstaller.encoderText1", table: "Progress", fallback: "安装完成")
         }
-        public static var targetText1: LocalizedMessage {
+        /// 正在下载游戏与依赖库
+        ///
+        /// Resource: `Progress.coreInstaller.targetText1`.
+        public static var downloadingGameAndDependencies: LocalizedMessage {
             .init(key: "coreInstaller.targetText1", table: "Progress", fallback: "正在下载游戏与依赖库")
         }
-        public static var subpathText1: LocalizedMessage {
+        /// 正在下载游戏资源
+        ///
+        /// Resource: `Progress.coreInstaller.subpathText1`.
+        public static var downloadingGameResources: LocalizedMessage {
             .init(key: "coreInstaller.subpathText1", table: "Progress", fallback: "正在下载游戏资源")
         }
-        public static var subpathText2: LocalizedMessage {
+        /// 正在准备 macOS 原生库
+        ///
+        /// Resource: `Progress.coreInstaller.subpathText2`.
+        public static var preparingMacOSNativeLibraries: LocalizedMessage {
             .init(key: "coreInstaller.subpathText2", table: "Progress", fallback: "正在准备 macOS 原生库")
         }
         static let definitions: [String: MessageDefinition] = [

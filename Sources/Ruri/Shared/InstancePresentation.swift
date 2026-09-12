@@ -6,7 +6,7 @@ import RuriCore
 /// both describe an instance the same way.
 extension AppModel {
     func statusLabel(_ instance: GameInstance) -> String {
-        runningLabel(instance.id) ?? (instance.repositoryIssue != nil ? Messages.AppInstancePresentation.statusLabelText1.localized : instance.installed ? Messages.AppInstancePresentation.statusLabelText2.localized : Messages.AppInstancePresentation.statusLabelText3.localized)
+        runningLabel(instance.id) ?? (instance.repositoryIssue != nil ? Messages.AppInstancePresentation.needsCheck.localized : instance.installed ? Messages.AppInstancePresentation.ready.localized : Messages.AppInstancePresentation.pendingInstall.localized)
     }
     func statusIsNominal(_ instance: GameInstance) -> Bool {
         runningLabel(instance.id) == nil && instance.repositoryIssue == nil && instance.installed
@@ -20,16 +20,16 @@ extension AppModel {
         return .green
     }
     func memoryLabel(_ instance: GameInstance) -> String {
-        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview() else { return Messages.AppInstancePresentation.memoryText1.localized }
-        return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? Messages.AppInstancePresentation.memoryText2.localized : memory.maximumSource == .jvmArguments ? Messages.AppInstancePresentation.memoryText3.localized : "")
+        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview() else { return Messages.AppInstancePresentation.memoryNeedsCheck.localized }
+        return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? Messages.AppInstancePresentation.automaticMemory.localized : memory.maximumSource == .jvmArguments ? Messages.AppInstancePresentation.memoryArguments.localized : "")
     }
 }
 
 extension GameInstance {
-    var lastPlayedLabel: String { lastPlayed.map { Messages.AppInstancePresentation.lastPlayed(LocalizedFormat.relative($0)).localized } ?? Messages.AppInstancePresentation.lastPlayedLabelText2.localized }
+    var lastPlayedLabel: String { lastPlayed.map { Messages.AppInstancePresentation.lastPlayed(LocalizedFormat.relative($0)).localized } ?? Messages.AppInstancePresentation.neverPlayed.localized }
     var playTimeLabel: String {
-        guard playTime >= 60 else { return playTime > 0 ? Messages.AppInstancePresentation.playTimeLabelText1.localized : Messages.AppInstancePresentation.lastPlayedLabelText2.localized }
+        guard playTime >= 60 else { return playTime > 0 ? Messages.AppInstancePresentation.lessThanAMinute.localized : Messages.AppInstancePresentation.neverPlayed.localized }
         return LocalizedFormat.duration(playTime)
     }
-    var loaderLabel: String { loader == .vanilla ? Messages.AppInstancePresentation.loaderLabelText1.localized : loader.title + (loaderVersion.map { " " + $0 } ?? "") }
+    var loaderLabel: String { loader == .vanilla ? Messages.AppInstancePresentation.vanilla.localized : loader.title + (loaderVersion.map { " " + $0 } ?? "") }
 }

@@ -19,12 +19,12 @@ extension MinecraftDirectoryScan {
     private mutating func resolveManifest(_ id: String, ancestors: inout Set<String>, count: inout Int) throws -> MinecraftManifestGraph {
         try Task.checkCancellation()
         try Self.checkIdentifier(id)
-        guard ancestors.insert(id).inserted, ancestors.count <= 32 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.resolveManifestText1) }
+        guard ancestors.insert(id).inserted, ancestors.count <= 32 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.inheritanceCycle) }
         defer { ancestors.remove(id) }
         let raw = try object(path("versions/\(id)/\(id).json"))
         var isRoot = false
         if let value = raw["root"], !(value is NSNull) {
-            guard let number = value as? NSNumber, CFGetTypeID(number) == CFBooleanGetTypeID() else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.numberText1) }
+            guard let number = value as? NSNumber, CFGetTypeID(number) == CFBooleanGetTypeID() else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidRoot) }
             isRoot = number.boolValue
         }
         // Folder names are the repository identities. A stale internal id must
@@ -35,11 +35,11 @@ extension MinecraftDirectoryScan {
         if let explicitJar { try Self.checkIdentifier(explicitJar) }
         let patches: [[String: Any]]?
         if let value = raw["patches"], !(value is NSNull) {
-            guard let list = value as? [[String: Any]] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.listText1) }
+            guard let list = value as? [[String: Any]] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidPatchList) }
             patches = list
         } else { patches = nil }
         count += 1 + (patches?.count ?? 0)
-        guard count <= 1_024 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.listText2) }
+        guard count <= 1_024 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.componentLimit) }
         var graph: MinecraftManifestGraph
         if let parentID {
             graph = try resolveManifest(parentID, ancestors: &ancestors, count: &count)
@@ -68,7 +68,7 @@ extension MinecraftDirectoryScan {
             // Patches may retain their old inheritsFrom as source metadata.
             // Neither that reference nor nested patches execute recursively.
             if let nested = patch["patches"], !(nested is NSNull), (nested as? [Any])?.isEmpty != true {
-                let warning = Messages.CoreMinecraftManifestGraph.warningText1.localized
+                let warning = Messages.CoreMinecraftManifestGraph.nestedPatchWarning.localized
                 if !graph.warnings.contains(warning) { graph.warnings.append(warning) }
             }
             graph.value = try Self.compose(parent: graph.value, child: patch, inherited: false)
@@ -77,16 +77,16 @@ extension MinecraftDirectoryScan {
         graph.value["id"] = id
         graph.value.removeValue(forKey: "inheritsFrom")
         graph.value.removeValue(forKey: "patches")
-        graph.value["libraries"] = try Self.array(graph.value["libraries"], name: Messages.CoreMinecraftManifestGraph.warningText2.localized)
+        graph.value["libraries"] = try Self.array(graph.value["libraries"], name: Messages.CoreMinecraftManifestGraph.libraries.localized)
         // HMCL accepts either enum spelling (client/CLIENT). Normalize the
         // effective map without changing the retained source JSON.
         for key in ["downloads", "logging"] {
             if let value = graph.value[key], !(value is NSNull) {
-                guard let map = value as? [String: Any] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.mapText1) }
+                guard let map = value as? [String: Any] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidDownloadInfo) }
                 var normalized: [String: Any] = [:]
                 for (name, item) in map {
                     let canonical = name.lowercased()
-                    guard normalized[canonical] == nil else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.canonicalText1(String(describing: canonical))) }
+                    guard normalized[canonical] == nil else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.duplicateDownloadType(String(describing: canonical))) }
                     normalized[canonical] = item
                 }
                 graph.value[key] = normalized
@@ -102,26 +102,26 @@ extension MinecraftDirectoryScan {
             if let value = child[key], !(value is NSNull) { result[key] = value }
         }
         if inherited, let jar = try identifier(child["jar"]) { result["jar"] = jar }
-        let parentLibraries = try array(parent["libraries"], name: Messages.CoreMinecraftManifestGraph.warningText2.localized)
-        let childLibraries = try array(child["libraries"], name: Messages.CoreMinecraftManifestGraph.warningText2.localized)
+        let parentLibraries = try array(parent["libraries"], name: Messages.CoreMinecraftManifestGraph.libraries.localized)
+        let childLibraries = try array(child["libraries"], name: Messages.CoreMinecraftManifestGraph.libraries.localized)
         // Inheritance prioritizes child libraries; patches append in priority
         // order. Keep rule-distinct declarations for the later library resolver.
         result["libraries"] = inherited ? childLibraries + parentLibraries : parentLibraries + childLibraries
-        guard ((result["libraries"] as? [Any])?.count ?? 0) <= 10_000 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.childLibrariesText1) }
-        let compatibility = try array(parent["compatibilityRules"], name: Messages.CoreMinecraftManifestGraph.compatibilityText1.localized) + array(child["compatibilityRules"], name: Messages.CoreMinecraftManifestGraph.compatibilityText1.localized)
+        guard ((result["libraries"] as? [Any])?.count ?? 0) <= 10_000 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.libraryLimit) }
+        let compatibility = try array(parent["compatibilityRules"], name: Messages.CoreMinecraftManifestGraph.compatibilityRules.localized) + array(child["compatibilityRules"], name: Messages.CoreMinecraftManifestGraph.compatibilityRules.localized)
         if !compatibility.isEmpty { result["compatibilityRules"] = compatibility }
         if let parentArguments = try argumentObject(parent["arguments"]), let childArguments = try argumentObject(child["arguments"]) {
             var merged: [String: Any] = [:]
             for key in ["game", "jvm"] {
-                let values = try array(parentArguments[key], name: Messages.CoreMinecraftManifestGraph.valuesText1.localized) + array(childArguments[key], name: Messages.CoreMinecraftManifestGraph.valuesText1.localized)
-                guard values.count <= 16_384 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.valuesText2) }
+                let values = try array(parentArguments[key], name: Messages.CoreMinecraftManifestGraph.launchArguments.localized) + array(childArguments[key], name: Messages.CoreMinecraftManifestGraph.launchArguments.localized)
+                guard values.count <= 16_384 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.argumentLimit) }
                 if parentArguments[key] != nil || childArguments[key] != nil { merged[key] = values }
             }
             result["arguments"] = merged
         } else if let childArguments = try argumentObject(child["arguments"]) { result["arguments"] = childArguments }
         let minimum = try [parent["minimumLauncherVersion"], child["minimumLauncherVersion"]].compactMap { value -> Int? in
             guard let value, !(value is NSNull) else { return nil }
-            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(), number.doubleValue == Double(number.intValue), number.intValue >= 0 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.numberText2) }
+            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(), number.doubleValue == Double(number.intValue), number.intValue >= 0 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidLauncherVersion) }
             return number.intValue
         }.max()
         if let minimum { result["minimumLauncherVersion"] = minimum }
@@ -130,18 +130,18 @@ extension MinecraftDirectoryScan {
 
     private static func argumentObject(_ value: Any?) throws -> [String: Any]? {
         guard let value, !(value is NSNull) else { return nil }
-        guard let object = value as? [String: Any] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.objectText1) }
+        guard let object = value as? [String: Any] else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidArgumentObject) }
         return object
     }
     private static func array(_ value: Any?, name: String) throws -> [Any] {
         guard let value, !(value is NSNull) else { return [] }
-        guard let array = value as? [Any], array.count <= 16_384 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.arrayText1(String(describing: name))) }
+        guard let array = value as? [Any], array.count <= 16_384 else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidManifestArray(name)) }
         return array
     }
     private static func patchPriority(_ patch: [String: Any]) throws -> Int {
         guard let value = patch["priority"], !(value is NSNull) else { return Int(Int32.min) }
         guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(), number.doubleValue == Double(number.intValue),
-              (Int(Int32.min)...Int(Int32.max)).contains(number.intValue) else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.numberText3) }
+              (Int(Int32.min)...Int(Int32.max)).contains(number.intValue) else { throw RuriError.message(Messages.CoreMinecraftManifestGraph.invalidPatchPriority) }
         return number.intValue
     }
 }

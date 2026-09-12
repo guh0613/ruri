@@ -56,7 +56,7 @@ enum FileAppleDouble {
         var after = stat(), location = stat(), peerAfter = stat()
         guard fstat(fd, &after) == 0, lstat(sidecar.path, &location) == 0, fstat(peer, &peerAfter) == 0,
               unchanged(before, after), unchanged(before, location), unchanged(peerInfo, peerAfter) else {
-            throw RuriError.message(Messages.CoreFileAppleDouble.afterText1)
+            throw RuriError.message(Messages.CoreFileAppleDouble.fileChangedDuringEnumeration)
         }
         return true
     }

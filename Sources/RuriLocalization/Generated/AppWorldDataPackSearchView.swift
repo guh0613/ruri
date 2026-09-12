@@ -3,70 +3,136 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPackSearchView {
-        public static var bodyText1: LocalizedMessage {
+        /// 查找数据包
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.bodyText1`.
+        public static var searchDataPacks: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.bodyText1", table: "Interface", fallback: "查找数据包")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 搜索数据包名称
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.bodyText2`.
+        public static var searchPlaceholder: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.bodyText2", table: "Interface", fallback: "搜索数据包名称")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 查找兼容数据包…
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText1`.
+        public static var findCompatibleDataPacks: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText1", table: "Interface", fallback: "查找兼容数据包…")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 没有找到匹配的数据包
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText2`.
+        public static var noMatchingDataPacks: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText2", table: "Interface", fallback: "没有找到匹配的数据包")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 试试英文名称，或使用更短的关键词。
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText3`.
+        public static var searchHint: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText3", table: "Interface", fallback: "试试英文名称，或使用更短的关键词。")
         }
-        public static func errorText4(_ value0: Int64) -> LocalizedMessage {
+        /// %1$lld 个结果
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText4`.
+        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText4", table: "Interface", fallback: "%1$lld 个结果", arguments: [.integer(value0)])
         }
-        public static var errorText5: LocalizedMessage {
+        /// 上一页
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText5`.
+        public static var previousPage: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText5", table: "Interface", fallback: "上一页")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 下一页
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText6`.
+        public static var nextPage: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText6", table: "Interface", fallback: "下一页")
         }
-        public static func bodyText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 安装到 “%1$@” · Minecraft %2$@
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.bodyText3`.
+        public static func installTarget(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.bodyText3", table: "Interface", fallback: "安装到 “%1$@” · Minecraft %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 获取版本…
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.bodyText4`.
+        public static var loadingVersions: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.bodyText4", table: "Interface", fallback: "获取版本…")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 解析必需依赖…
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.bodyText5`.
+        public static var resolvingDependencies: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.bodyText5", table: "Interface", fallback: "解析必需依赖…")
         }
-        public static func planText1(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+        /// 共 %1$lld 个数据包 · %2$@
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText1`.
+        public static func dataPackCount(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText1", table: "Interface", fallback: "共 %1$lld 个数据包 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
-        public static var planText2: LocalizedMessage {
+        ///  · 必需依赖
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText2`.
+        public static var requiredDependencies: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText2", table: "Interface", fallback: " · 必需依赖")
         }
-        public static var planText3: LocalizedMessage {
+        /// 安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText3`.
+        public static var installHelp: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText3", table: "Interface", fallback: "安装后启用，下次进入世界时生效。已有同名文件会保留，并提示先处理冲突。")
         }
-        public static var planText4: LocalizedMessage {
+        /// 显示 Beta / Alpha 版本
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText4`.
+        public static var showPrereleases: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText4", table: "Interface", fallback: "显示 Beta / Alpha 版本")
         }
-        public static var planText5: LocalizedMessage {
+        /// 没有兼容版本。
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText5`.
+        public static var noCompatibleVersions: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText5", table: "Interface", fallback: "没有兼容版本。")
         }
-        public static var planText6: LocalizedMessage {
+        /// 版本
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText6`.
+        public static var version: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText6", table: "Interface", fallback: "版本")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 在 Modrinth 查看
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText7`.
+        public static var viewOnModrinth: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText7", table: "Interface", fallback: "在 Modrinth 查看")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 查看安装清单
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText8`.
+        public static var viewInstallManifest: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText8", table: "Interface", fallback: "查看安装清单")
         }
-        public static var errorText9: LocalizedMessage {
+        /// 安装
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.errorText9`.
+        public static var installDataPack: LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.errorText9", table: "Interface", fallback: "安装")
         }
-        public static func planText7(_ value0: String) -> LocalizedMessage {
+        /// 安装数据包 %1$@
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText7`.
+        public static func installDataPackFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText7", table: "Interface", fallback: "安装数据包 %1$@", arguments: [.text(value0)])
         }
-        public static func planText8(_ value0: String) -> LocalizedMessage {
+        /// 数据包已安装到 “%1$@”
+        ///
+        /// Resource: `Interface.appWorldDataPackSearchView.planText8`.
+        public static func dataPackInstalled(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldDataPackSearchView.planText8", table: "Interface", fallback: "数据包已安装到 “%1$@”", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

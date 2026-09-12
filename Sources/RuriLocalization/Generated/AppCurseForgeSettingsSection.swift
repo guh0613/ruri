@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum AppCurseForgeSettingsSection {
-        public static var bodyText1: LocalizedMessage {
+        /// 已保存在钥匙串
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText1`.
+        public static var keychainSaved: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText1", table: "Interface", fallback: "已保存在钥匙串")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 尚未配置
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText2`.
+        public static var notConfigured: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText2", table: "Interface", fallback: "尚未配置")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 输入新 Key 以替换
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText3`.
+        public static var replaceApiKey: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText3", table: "Interface", fallback: "输入新 Key 以替换")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 输入 API Key
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText4`.
+        public static var enterApiKey: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText4", table: "Interface", fallback: "输入 API Key")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 保存到钥匙串
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText5`.
+        public static var saveToKeychain: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText5", table: "Interface", fallback: "保存到钥匙串")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 移除 Key
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bodyText6`.
+        public static var removeApiKey: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.bodyText6", table: "Interface", fallback: "移除 Key")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.errorText1`.
+        public static var apiKeyUsage: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.errorText1", table: "Interface", fallback: "用于 CurseForge 内容搜索、整合包下载与更新。Key 保存在 macOS 钥匙串中，实例导出不包含它。")
         }
-        public static var errorText2: LocalizedMessage {
+        /// CurseForge 第三方 API 申请说明
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.errorText2`.
+        public static var apiApplicationGuide: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.errorText2", table: "Interface", fallback: "CurseForge 第三方 API 申请说明")
         }
         static let definitions: [String: MessageDefinition] = [

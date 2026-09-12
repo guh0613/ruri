@@ -3,64 +3,124 @@ import Foundation
 
 extension Messages {
     public enum CoreMCBBSPack {
-        public static func authorText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包作者：%1$@
+        ///
+        /// Resource: `Core.coreMCBBSPack.authorText1`.
+        public static func packAuthor(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMCBBSPack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
         }
-        public static var authorText2: LocalizedMessage {
+        /// 此整合包提供了 JVM 参数，可在下方查看并选择保留。
+        ///
+        /// Resource: `Core.coreMCBBSPack.authorText2`.
+        public static var packJvmArgumentsNotice: LocalizedMessage {
             .init(key: "coreMCBBSPack.authorText2", table: "Core", fallback: "此整合包提供了 JVM 参数，可在下方查看并选择保留。")
         }
-        public static var authorText3: LocalizedMessage {
+        /// 缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。
+        ///
+        /// Resource: `Core.coreMCBBSPack.authorText3`.
+        public static var packMissingFilesNotice: LocalizedMessage {
             .init(key: "coreMCBBSPack.authorText3", table: "Core", fallback: "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。")
         }
-        public static func authorText4(_ value0: Int64) -> LocalizedMessage {
+        /// 需要解析 %1$lld 个 CurseForge 文件。
+        ///
+        /// Resource: `Core.coreMCBBSPack.authorText4`.
+        public static func curseForgeFilesToResolve(_ value0: Int64) -> LocalizedMessage {
             .init(key: "coreMCBBSPack.authorText4", table: "Core", fallback: "需要解析 %1$lld 个 CurseForge 文件。", arguments: [.integer(value0)])
         }
-        public static var gameVersionText1: LocalizedMessage {
+        /// MCBBS 整合包清单无效或缺少游戏版本
+        ///
+        /// Resource: `Errors.coreMCBBSPack.gameVersionText1`.
+        public static var invalidPackGameVersion: LocalizedMessage {
             .init(key: "coreMCBBSPack.gameVersionText1", table: "Errors", fallback: "MCBBS 整合包清单无效或缺少游戏版本")
         }
-        public static func unknownText1(_ value0: String) -> LocalizedMessage {
+        /// MCBBS 整合包包含尚未接入的组件：%1$@
+        ///
+        /// Resource: `Errors.coreMCBBSPack.unknownText1`.
+        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMCBBSPack.unknownText1", table: "Errors", fallback: "MCBBS 整合包包含尚未接入的组件：%1$@", arguments: [.text(value0)])
         }
-        public static var loadersText1: LocalizedMessage {
+        /// MCBBS 整合包同时声明多个加载器，暂时无法安装。
+        ///
+        /// Resource: `Errors.coreMCBBSPack.loadersText1`.
+        public static var multiplePackLoaders: LocalizedMessage {
             .init(key: "coreMCBBSPack.loadersText1", table: "Errors", fallback: "MCBBS 整合包同时声明多个加载器，暂时无法安装。")
         }
-        public static var minimumText1: LocalizedMessage {
+        /// 整合包内存要求无效
+        ///
+        /// Resource: `Errors.coreMCBBSPack.minimumText1`.
+        public static var invalidPackMemoryRequirement: LocalizedMessage {
             .init(key: "coreMCBBSPack.minimumText1", table: "Errors", fallback: "整合包内存要求无效")
         }
-        public static var infoText1: LocalizedMessage {
+        /// MCBBS overrides 必须是实际目录
+        ///
+        /// Resource: `Errors.coreMCBBSPack.infoText1`.
+        public static var invalidOverridesDirectory: LocalizedMessage {
             .init(key: "coreMCBBSPack.infoText1", table: "Errors", fallback: "MCBBS overrides 必须是实际目录")
         }
-        public static var infoText2: LocalizedMessage {
+        /// 整合包文件数量超过限制
+        ///
+        /// Resource: `Errors.coreMCBBSPack.infoText2`.
+        public static var packFileCountExceeded: LocalizedMessage {
             .init(key: "coreMCBBSPack.infoText2", table: "Errors", fallback: "整合包文件数量超过限制")
         }
-        public static var hashText1: LocalizedMessage {
+        /// MCBBS 文件缺少路径或有效的 SHA-1
+        ///
+        /// Resource: `Errors.coreMCBBSPack.hashText1`.
+        public static var missingFileHash: LocalizedMessage {
             .init(key: "coreMCBBSPack.hashText1", table: "Errors", fallback: "MCBBS 文件缺少路径或有效的 SHA-1")
         }
-        public static func hashText2(_ value0: String) -> LocalizedMessage {
+        /// MCBBS 文件路径无效：%1$@
+        ///
+        /// Resource: `Errors.coreMCBBSPack.hashText2`.
+        public static func invalidPackFilePath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMCBBSPack.hashText2", table: "Errors", fallback: "MCBBS 文件路径无效：%1$@", arguments: [.text(value0)])
         }
-        public static var baseText1: LocalizedMessage {
+        /// MCBBS fileApi 下载源无效
+        ///
+        /// Resource: `Errors.coreMCBBSPack.baseText1`.
+        public static var invalidFileApiSource: LocalizedMessage {
             .init(key: "coreMCBBSPack.baseText1", table: "Errors", fallback: "MCBBS fileApi 下载源无效")
         }
-        public static var idText1: LocalizedMessage {
+        /// MCBBS CurseForge 文件标识无效
+        ///
+        /// Resource: `Errors.coreMCBBSPack.idText1`.
+        public static var invalidCurseForgeFileID: LocalizedMessage {
             .init(key: "coreMCBBSPack.idText1", table: "Errors", fallback: "MCBBS CurseForge 文件标识无效")
         }
-        public static func idText2(_ value0: String) -> LocalizedMessage {
+        /// 不支持的 MCBBS 文件类型：%1$@
+        ///
+        /// Resource: `Errors.coreMCBBSPack.idText2`.
+        public static func unsupportedPackFileType(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMCBBSPack.idText2", table: "Errors", fallback: "不支持的 MCBBS 文件类型：%1$@", arguments: [.text(value0)])
         }
-        public static var idText3: LocalizedMessage {
+        /// MCBBS 清单存在重复路径或项目
+        ///
+        /// Resource: `Errors.coreMCBBSPack.idText3`.
+        public static var duplicatePackPathOrProject: LocalizedMessage {
             .init(key: "coreMCBBSPack.idText3", table: "Errors", fallback: "MCBBS 清单存在重复路径或项目")
         }
-        public static var exportMCBBSText1: LocalizedMessage {
+        /// 整合包版本、作者或描述无效
+        ///
+        /// Resource: `Errors.coreMCBBSPack.exportMCBBSText1`.
+        public static var invalidPackMetadata: LocalizedMessage {
             .init(key: "coreMCBBSPack.exportMCBBSText1", table: "Errors", fallback: "整合包版本、作者或描述无效")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 请完成加载器安装后再导出整合包
+        ///
+        /// Resource: `Errors.coreMCBBSPack.versionText1`.
+        public static var loaderInstallRequiredForExport: LocalizedMessage {
             .init(key: "coreMCBBSPack.versionText1", table: "Errors", fallback: "请完成加载器安装后再导出整合包")
         }
-        public static var snapshotText1: LocalizedMessage {
+        /// 正在准备整合包
+        ///
+        /// Resource: `Progress.coreMCBBSPack.snapshotText1`.
+        public static var preparingPack: LocalizedMessage {
             .init(key: "coreMCBBSPack.snapshotText1", table: "Progress", fallback: "正在准备整合包")
         }
-        public static var extrasText1: LocalizedMessage {
+        /// 正在导出 MCBBS 整合包
+        ///
+        /// Resource: `Progress.coreMCBBSPack.extrasText1`.
+        public static var exportingMCBBSPack: LocalizedMessage {
             .init(key: "coreMCBBSPack.extrasText1", table: "Progress", fallback: "正在导出 MCBBS 整合包")
         }
         static let definitions: [String: MessageDefinition] = [

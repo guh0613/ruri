@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreModrinth {
-        public static var kindText1: LocalizedMessage {
+        /// 不支持的内容类型
+        ///
+        /// Resource: `Errors.coreModrinth.kindText1`.
+        public static var unsupportedContentType: LocalizedMessage {
             .init(key: "coreModrinth.kindText1", table: "Errors", fallback: "不支持的内容类型")
         }
-        public static var preparedText1: LocalizedMessage {
+        /// 此文件不是 Modrinth 整合包
+        ///
+        /// Resource: `Errors.coreModrinth.preparedText1`.
+        public static var notModrinthPack: LocalizedMessage {
             .init(key: "coreModrinth.preparedText1", table: "Errors", fallback: "此文件不是 Modrinth 整合包")
         }
-        public static var filesText1: LocalizedMessage {
+        /// 正在应用内容更新
+        ///
+        /// Resource: `Progress.coreModrinth.filesText1`.
+        public static var applyingContentUpdate: LocalizedMessage {
             .init(key: "coreModrinth.filesText1", table: "Progress", fallback: "正在应用内容更新")
         }
         static let definitions: [String: MessageDefinition] = [

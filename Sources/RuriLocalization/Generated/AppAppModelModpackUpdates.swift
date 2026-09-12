@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelModpackUpdates {
-        public static func prepareModpackUpdateText1(_ value0: String) -> LocalizedMessage {
+        /// 准备 %1$@ 的整合包更新
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.prepareModpackUpdateText1`.
+        public static func preparingModpackUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.prepareModpackUpdateText1", table: "Interface", fallback: "准备 %1$@ 的整合包更新", arguments: [.text(value0)])
         }
-        public static func applyModpackUpdateText1(_ value0: String) -> LocalizedMessage {
+        /// 更新 %1$@
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.applyModpackUpdateText1`.
+        public static func applyingModpackUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.applyModpackUpdateText1", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
         }
-        public static func savedText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 已更新至 %2$@
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.savedText1`.
+        public static func modpackUpdated(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.savedText1", table: "Interface", fallback: "%1$@ 已更新至 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static func rollbackModpackText1(_ value0: String) -> LocalizedMessage {
+        /// 回退 %1$@ 的整合包更新
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.rollbackModpackText1`.
+        public static func rollingBackModpackUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.rollbackModpackText1", table: "Interface", fallback: "回退 %1$@ 的整合包更新", arguments: [.text(value0)])
         }
-        public static var resultText1: LocalizedMessage {
+        /// 已回退上次整合包更新
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.resultText1`.
+        public static var modpackRollbackComplete: LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.resultText1", table: "Interface", fallback: "已回退上次整合包更新")
         }
-        public static func resultText2(_ value0: Int64) -> LocalizedMessage {
+        /// 已回退整合包，保留了 %1$lld 项更新后的本地修改
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.resultText2`.
+        public static func modpackRollbackPreservedChanges(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.resultText2", table: "Interface", fallback: "已回退整合包，保留了 %1$lld 项更新后的本地修改", arguments: [.integer(value0)])
         }
-        public static func recoverModpackUpdateText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复 %1$@ 的整合包更新
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.recoverModpackUpdateText1`.
+        public static func recoveringModpackUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.recoverModpackUpdateText1", table: "Interface", fallback: "恢复 %1$@ 的整合包更新", arguments: [.text(value0)])
         }
-        public static var savedText2: LocalizedMessage {
+        /// 整合包更新记录已恢复
+        ///
+        /// Resource: `Interface.appAppModelModpackUpdates.savedText2`.
+        public static var modpackUpdateRecovered: LocalizedMessage {
             .init(key: "appAppModelModpackUpdates.savedText2", table: "Interface", fallback: "整合包更新记录已恢复")
         }
         static let definitions: [String: MessageDefinition] = [

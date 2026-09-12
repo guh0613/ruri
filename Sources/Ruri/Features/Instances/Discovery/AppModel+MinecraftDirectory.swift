@@ -9,7 +9,7 @@ extension AppModel {
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelMinecraftDirectory.baseText1) { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.recoverGameFolder) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) {
                 try MinecraftFolderStore.restore(folder.id, from: url, paths: base)
             }.value
@@ -22,13 +22,13 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
-        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppAppModelMinecraftDirectory.panelText1.localized
-        panel.message = Messages.AppAppModelMinecraftDirectory.panelText2.localized
+        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppAppModelMinecraftDirectory.addGameFolder.localized
+        panel.message = Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelMinecraftDirectory.baseText2) { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.addGameFolderEntry) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) {
                 try MinecraftFolderStore.add(name: url.lastPathComponent, url: url, paths: base)
             }.value

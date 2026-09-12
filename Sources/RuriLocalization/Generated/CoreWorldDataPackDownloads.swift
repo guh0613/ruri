@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldDataPackDownloads {
-        public static var itemText1: LocalizedMessage {
+        /// 数据包依赖数量超过限制。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.itemText1`.
+        public static var tooManyDataPackDependencies: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.itemText1", table: "Errors", fallback: "数据包依赖数量超过限制。")
         }
-        public static func itemText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 没有适用于 Minecraft %2$@ 的数据包版本。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.itemText2`.
+        public static func noDataPackVersionForGame(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.itemText2", table: "Errors", fallback: "%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。", arguments: [.text(value0), .text(value1)])
         }
-        public static var itemText3: LocalizedMessage {
+        /// 必需依赖要求同一数据包的不同版本，请选择其他版本。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.itemText3`.
+        public static var conflictingDataPackVersions: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.itemText3", table: "Errors", fallback: "必需依赖要求同一数据包的不同版本，请选择其他版本。")
         }
-        public static func matchText1(_ value0: String) -> LocalizedMessage {
+        /// 找不到兼容的数据包依赖：%1$@。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.matchText1`.
+        public static func compatibleDataPackMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.matchText1", table: "Errors", fallback: "找不到兼容的数据包依赖：%1$@。", arguments: [.text(value0)])
         }
-        public static var matchText2: LocalizedMessage {
+        /// 数据包的必需依赖缺少项目或版本标识。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.matchText2`.
+        public static var incompleteRequiredDependency: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.matchText2", table: "Errors", fallback: "数据包的必需依赖缺少项目或版本标识。")
         }
-        public static func matchText3(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 与必需依赖不兼容，无法一起安装。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.matchText3`.
+        public static func incompatibleRequiredDependency(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.matchText3", table: "Errors", fallback: "%1$@ 与必需依赖不兼容，无法一起安装。", arguments: [.text(value0)])
         }
-        public static func fileText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.fileText1`.
+        public static func missingDataPackArchive(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.fileText1", table: "Errors", fallback: "%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。", arguments: [.text(value0)])
         }
-        public static var fileText2: LocalizedMessage {
+        /// 多个数据包使用相同的文件名，无法一起安装。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.fileText2`.
+        public static var duplicateDataPackFilename: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.fileText2", table: "Errors", fallback: "多个数据包使用相同的文件名，无法一起安装。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 实例的游戏版本已改变，请重新选择数据包。
+        ///
+        /// Resource: `Errors.coreWorldDataPackDownloads.currentText1`.
+        public static var gameVersionChanged: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.currentText1", table: "Errors", fallback: "实例的游戏版本已改变，请重新选择数据包。")
         }
-        public static func destinationText1(_ value0: String) -> LocalizedMessage {
+        /// 下载 %1$@
+        ///
+        /// Resource: `Progress.coreWorldDataPackDownloads.destinationText1`.
+        public static func downloadDataPack(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.destinationText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
-        public static var destinationText2: LocalizedMessage {
+        /// 正在导入数据包
+        ///
+        /// Resource: `Progress.coreWorldDataPackDownloads.destinationText2`.
+        public static var importingDataPack: LocalizedMessage {
             .init(key: "coreWorldDataPackDownloads.destinationText2", table: "Progress", fallback: "正在导入数据包")
         }
         static let definitions: [String: MessageDefinition] = [

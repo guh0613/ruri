@@ -22,30 +22,30 @@ struct InstanceComponentsView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            SectionHeading(title: Messages.AppInstanceComponentsView.bodyText1.localized, subtitle: instance.name + " · Minecraft " + instance.gameVersion)
-            LabeledContent(Messages.AppInstanceComponentsView.bodyText2.localized, value: instance.loader.title + (instance.loaderVersion.map { " " + $0 } ?? ""))
+            SectionHeading(title: Messages.AppInstanceComponentsView.manageLoader.localized, subtitle: instance.name + " · Minecraft " + instance.gameVersion)
+            LabeledContent(Messages.AppInstanceComponentsView.current.localized, value: instance.loader.title + (instance.loaderVersion.map { " " + $0 } ?? ""))
             if let reason { Label(reason, systemImage: "info.circle").foregroundStyle(.secondary) }
             else {
-                Picker(Messages.AppInstanceComponentsView.reasonText1.localized, selection: $loader) {
+                Picker(Messages.AppInstanceComponentsView.loader.localized, selection: $loader) {
                     ForEach(LoaderKind.allCases) { Text($0.title).tag($0) }
                 }.pickerStyle(.menu)
                 if loader != .vanilla {
-                    if loader == .optifine { Text(Messages.AppInstanceComponentsView.reasonText2.localized).font(.caption).foregroundStyle(.secondary) }
-                    if loading { ProgressView(Messages.AppInstanceComponentsView.reasonText3.localized).controlSize(.small) }
+                    if loader == .optifine { Text(Messages.AppInstanceComponentsView.optifineSource.localized).font(.caption).foregroundStyle(.secondary) }
+                    if loading { ProgressView(Messages.AppInstanceComponentsView.findingCompatibleVersions.localized).controlSize(.small) }
                     else if let error {
                         Text(error).font(.callout).foregroundStyle(.orange)
-                        Button(Messages.AppInstanceComponentsView.errorText1.localized) { retry += 1 }
+                        Button(Messages.AppInstanceComponentsView.retry.localized) { retry += 1 }
                     } else {
-                        Picker(Messages.AppInstanceComponentsView.errorText2.localized, selection: $version) {
+                        Picker(Messages.AppInstanceComponentsView.version.localized, selection: $version) {
                             ForEach(versions, id: \.self) { value in
-                                Text(value + (loader == instance.loader && value == instance.loaderVersion ? Messages.AppInstanceComponentsView.errorText3.localized : "")).tag(value)
+                                Text(value + (loader == instance.loader && value == instance.loaderVersion ? Messages.AppInstanceComponentsView.currentVersion.localized : "")).tag(value)
                             }
                         }
                     }
                 }
-                Text(loader == .vanilla ? Messages.AppInstanceComponentsView.errorText4.localized : Messages.AppInstanceComponentsView.errorText5.localized)
+                Text(loader == .vanilla ? Messages.AppInstanceComponentsView.removeLoaderDetails.localized : Messages.AppInstanceComponentsView.changeLoaderDetails.localized)
                     .font(.callout).foregroundStyle(.secondary)
-                Text(Messages.AppInstanceComponentsView.errorText6.localized)
+                Text(Messages.AppInstanceComponentsView.applyLoaderDetails.localized)
                     .font(.caption).foregroundStyle(.secondary)
             }
             if let backup {
@@ -56,15 +56,15 @@ struct InstanceComponentsView: View {
                         Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
-                    Button(Messages.AppInstanceComponentsView.backupText2.localized) { model.restoreComponents(instance); dismiss() }
+                    Button(Messages.AppInstanceComponentsView.restorePreviousConfiguration.localized) { model.restoreComponents(instance); dismiss() }
                         .disabled(model.busy || model.isInstanceInUse(instance.id))
                 }
             }
             HStack {
                 Spacer()
-                Button(Messages.AppInstanceComponentsView.backupText3.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                Button(Messages.AppInstanceComponentsView.close.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 if reason == nil {
-                    Button(loader == .vanilla ? Messages.AppInstanceComponentsView.backupText4.localized : Messages.AppInstanceComponentsView.backupText5.localized) {
+                    Button(loader == .vanilla ? Messages.AppInstanceComponentsView.removeLoader.localized : Messages.AppInstanceComponentsView.applyLoader.localized) {
                         model.changeComponents(instance, loader: loader, version: loader == .vanilla ? nil : version); dismiss()
                     }.buttonStyle(.borderedProminent)
                         .disabled(!changed || model.busy || model.isInstanceInUse(instance.id) || (loader != .vanilla && (loading || error != nil || version.isEmpty)))
@@ -87,7 +87,7 @@ struct InstanceComponentsView: View {
                     version = current
                 } else { version = result.first ?? "" }
                 versions = result
-                if result.isEmpty { error = Messages.AppInstanceComponentsView.currentText1.localized }
+                if result.isEmpty { error = Messages.AppInstanceComponentsView.noCompatibleLoader.localized }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
             if !Task.isCancelled { loading = false }
         }

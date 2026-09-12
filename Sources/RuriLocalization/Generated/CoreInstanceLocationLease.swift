@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceLocationLease {
-        public static var requireCurrentDirectoryText1: LocalizedMessage {
+        /// 此实例的导入或复制尚未完成，请先在实例库处理工作文件。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.requireCurrentDirectoryText1`.
+        public static var requireCurrentDirectory: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.requireCurrentDirectoryText1", table: "Errors", fallback: "此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
         }
-        public static var stateText1: LocalizedMessage {
+        /// 此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.stateText1`.
+        public static var folderRemoved: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.stateText1", table: "Errors", fallback: "此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 此实例已移动到另一个文件夹，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.instanceText1`.
+        public static var instanceMoved: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.instanceText1", table: "Errors", fallback: "此实例已移动到另一个文件夹，请刷新后重试。")
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法锁定实例位置。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.fdText1`.
+        public static var lockFailed: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.fdText1", table: "Errors", fallback: "无法锁定实例位置。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 实例位置锁不是普通文件。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.infoText1`.
+        public static var lockNotRegularFile: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.infoText1", table: "Errors", fallback: "实例位置锁不是普通文件。")
         }
-        public static var lockText1: LocalizedMessage {
+        /// 实例正在移动或仍有文件操作，请稍后重试。
+        ///
+        /// Resource: `Errors.coreInstanceLocationLease.lockText1`.
+        public static var operationInProgress: LocalizedMessage {
             .init(key: "coreInstanceLocationLease.lockText1", table: "Errors", fallback: "实例正在移动或仍有文件操作，请稍后重试。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,46 +3,88 @@ import Foundation
 
 extension Messages {
     public enum AppRepositoryImportRecoveryView {
-        public static var bodyText1: LocalizedMessage {
+        /// 复制收尾
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText1`.
+        public static var copyCleanup: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText1", table: "Interface", fallback: "复制收尾")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 未完成的实例复制
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText2`.
+        public static var incompleteCopy: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText2", table: "Interface", fallback: "未完成的实例复制")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 导入收尾
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText3`.
+        public static var importCleanup: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText3", table: "Interface", fallback: "导入收尾")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 未完成的整合包导入
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText4`.
+        public static var incompleteImport: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText4", table: "Interface", fallback: "未完成的整合包导入")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 实例文件已准备好，可以完成操作。
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText5`.
+        public static var filesReady: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText5", table: "Interface", fallback: "实例文件已准备好，可以完成操作。")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 操作尚未完成。可以保留工作文件并取消，再重新尝试。
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText6`.
+        public static var operationIncomplete: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText6", table: "Interface", fallback: "操作尚未完成。可以保留工作文件并取消，再重新尝试。")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 完成导入
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText7`.
+        public static var finishImport: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText7", table: "Interface", fallback: "完成导入")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 完成复制
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText8`.
+        public static var finishCopy: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText8", table: "Interface", fallback: "完成复制")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 保留文件并取消
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText9`.
+        public static var keepAndCancel: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText9", table: "Interface", fallback: "保留文件并取消")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 查看工作文件
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText10`.
+        public static var viewWorkFiles: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.bodyText10", table: "Interface", fallback: "查看工作文件")
         }
-        public static var baseText1: LocalizedMessage {
+        /// 完成实例操作
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.baseText1`.
+        public static var finishInstanceOperation: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.baseText1", table: "Interface", fallback: "完成实例操作")
         }
-        public static var baseText2: LocalizedMessage {
+        /// 保留工作文件
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.baseText2`.
+        public static var keepWorkFiles: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.baseText2", table: "Interface", fallback: "保留工作文件")
         }
-        public static func keptText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已就绪
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.keptText1`.
+        public static func ready(_ value0: String) -> LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.keptText1", table: "Interface", fallback: "%1$@ 已就绪", arguments: [.text(value0)])
         }
-        public static var keptText2: LocalizedMessage {
+        /// 已取消，工作文件已保留。
+        ///
+        /// Resource: `Interface.appRepositoryImportRecoveryView.keptText2`.
+        public static var cancelledWorkFilesKept: LocalizedMessage {
             .init(key: "appRepositoryImportRecoveryView.keptText2", table: "Interface", fallback: "已取消，工作文件已保留。")
         }
         static let definitions: [String: MessageDefinition] = [

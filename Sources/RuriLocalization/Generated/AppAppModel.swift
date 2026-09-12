@@ -3,28 +3,55 @@ import Foundation
 
 extension Messages {
     public enum AppAppModel {
-        public static var remoteText1: LocalizedMessage {
+        /// 数据索引在外部被移除或替换，已暂停写入。请检查数据目录。
+        ///
+        /// Resource: `Errors.appAppModel.remoteText1`.
+        public static var externalIndexChanged: LocalizedMessage {
             .init(key: "appAppModel.remoteText1", table: "Errors", fallback: "数据索引在外部被移除或替换，已暂停写入。请检查数据目录。")
         }
-        public static var selectedDirectoryNameText1: LocalizedMessage {
+        /// 默认实例文件夹
+        ///
+        /// Resource: `Interface.appAppModel.selectedDirectoryNameText1`.
+        public static var defaultInstanceDirectory: LocalizedMessage {
             .init(key: "appAppModel.selectedDirectoryNameText1", table: "Interface", fallback: "默认实例文件夹")
         }
-        public static func rootText1(_ value0: String) -> LocalizedMessage {
+        /// 无法读取 Ruri 数据，已暂停写入以保护原文件。
+        /// %1$@
+        ///
+        /// Resource: `Interface.appAppModel.rootText1`.
+        public static func unreadableData(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModel.rootText1", table: "Interface", fallback: "无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", arguments: [.text(value0)])
         }
-        public static func saveText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@
+        /// 已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。
+        ///
+        /// Resource: `Interface.appAppModel.saveText1`.
+        public static func savePaused(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModel.saveText1", table: "Interface", fallback: "%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", arguments: [.text(value0)])
         }
-        public static func basePathsText1(_ value0: String) -> LocalizedMessage {
+        /// 无法恢复目录登记：%1$@
+        ///
+        /// Resource: `Interface.appAppModel.basePathsText1`.
+        public static func directoryRecoveryFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModel.basePathsText1", table: "Interface", fallback: "无法恢复目录登记：%1$@", arguments: [.text(value0)])
         }
-        public static var iText2: LocalizedMessage {
+        /// 任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。
+        ///
+        /// Resource: `Interface.appAppModel.iText2`.
+        public static var taskCancelled: LocalizedMessage {
             .init(key: "appAppModel.iText2", table: "Interface", fallback: "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。")
         }
-        public static func remoteText2(_ value0: String) -> LocalizedMessage {
+        /// 无法同步其他客户端的更改，已暂停写入以保留原数据。
+        /// %1$@
+        ///
+        /// Resource: `Interface.appAppModel.remoteText2`.
+        public static func externalChangesDetected(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModel.remoteText2", table: "Interface", fallback: "无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", arguments: [.text(value0)])
         }
-        public static var iText1: LocalizedMessage {
+        /// 已完成
+        ///
+        /// Resource: `Progress.appAppModel.iText1`.
+        public static var taskCompleted: LocalizedMessage {
             .init(key: "appAppModel.iText1", table: "Progress", fallback: "已完成")
         }
         static let definitions: [String: MessageDefinition] = [

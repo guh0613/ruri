@@ -21,7 +21,7 @@ import RuriCore
             let storedSource = (try? StateStore.load(paths).settings.downloadSource) ?? .automatic
             let source: DownloadSource
             if let requested = ProcessInfo.processInfo.environment["RURI_DOWNLOAD_SOURCE"] {
-                guard let parsed = DownloadSource(rawValue: requested) else { throw RuriError.message(Messages.CLICLI.parsedText1) }
+                guard let parsed = DownloadSource(rawValue: requested) else { throw RuriError.message(Messages.CLICLI.invalidDownloadSource) }
                 source = parsed
             } else { source = storedSource }
             await NetworkRouting.shared.configure(source)
@@ -33,25 +33,25 @@ import RuriCore
             case "directories":
                 try manageDirectories(Array(args.dropFirst()), paths: paths)
             case "isolation-policy":
-                guard args.count <= 2 else { throw RuriError.message(Messages.CLICLI.parsedText2) }
+                guard args.count <= 2 else { throw RuriError.message(Messages.CLICLI.isolationPolicyUsage) }
                 if args.count == 2 {
-                    guard let policy = GameIsolationPolicy(rawValue: args[1]) else { throw RuriError.message(Messages.CLICLI.policyText1) }
+                    guard let policy = GameIsolationPolicy(rawValue: args[1]) else { throw RuriError.message(Messages.CLICLI.isolationPolicyValues) }
                     try StateStore.update(paths) { $0.settings.isolationPolicy = policy }
                 }
                 print((try StateStore.load(paths).settings.isolationPolicy ?? .always).title)
             case "run-directory":
-                let usage = Messages.CLICLI.usageText1.localized
+                let usage = Messages.CLICLI.runDirectoryUsage.localized
                 guard (3...5).contains(args.count), let id = UUID(uuidString: args[1]), let mode = GameRunDirectory(rawValue: args[2]) else { throw RuriError.message(usage) }
                 var remaining = Array(args.dropFirst(3))
                 let action = remaining.last.flatMap { ["--apply", "--copy"].contains($0) ? $0 : nil }
                 if action != nil { remaining.removeLast() }
                 guard remaining.isEmpty || (mode == .custom && remaining.count == 1 && !remaining[0].hasPrefix("--")) else { throw RuriError.message(usage) }
                 let currentState = try StateStore.load(paths)
-                guard currentState.instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.currentStateText1) }
+                guard currentState.instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.removedInstance) }
                 let custom = try remaining.first.map { try CustomRunDirectory.register(at: URL(fileURLWithPath: $0), paths: paths.configured(with: currentState)) }
                 let service = GameRunDirectoryChange(paths: paths)
                 let preview = try await service.preview(instanceID: id, target: mode, customDirectory: custom)
-                print(Messages.CLICLI.previewText1(String(describing: preview.instanceName), String(describing: preview.sourceMode.title), String(describing: preview.targetMode.title), String(describing: preview.source.path), Int64(preview.sourceFileCount), String(describing: preview.sourceBytes), String(describing: preview.target.path), Int64(preview.targetFileCount), String(describing: preview.targetBytes)).localized)
+                print(Messages.CLICLI.runDirectoryPreview(preview.instanceName, preview.sourceMode.title, preview.targetMode.title, preview.source.path, Int64(preview.sourceFileCount), String(describing: preview.sourceBytes), preview.target.path, Int64(preview.targetFileCount), String(describing: preview.targetBytes)).localized)
                 if !preview.otherInstances.isEmpty { print(Messages.CLICLI.sharedInstances(LocalizedFormat.list(preview.otherInstances)).localized) }
                 if action == "--copy" {
                     let result = try await service.copyToEmpty(preview) { p in
@@ -59,79 +59,79 @@ import RuriCore
                             try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8))
                         }
                     }
-                    print(result.warning ?? Messages.CLICLI.resultText1.localized)
-                    if let url = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: url.path)).localized) }
-                } else if action == "--apply" { _ = try await service.useExisting(preview); print(Messages.CLICLI.urlText2.localized) }
+                    print(result.warning ?? Messages.CLICLI.runDirectoryResult.localized)
+                    if let url = result.preservedCopy { print(Messages.CLICLI.workCopyPath(url.path).localized) }
+                } else if action == "--apply" { _ = try await service.useExisting(preview); print(Messages.CLICLI.switchedToExistingDirectory.localized) }
             case "recover-directory":
-                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText1) }
+                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.recoverDirectoryUsage) }
                 let service = GameRunDirectoryChange(paths: paths)
-                guard let pending = try await service.pendingCopy(instanceID: id) else { print(Messages.CLICLI.pendingText1.localized); break }
-                print(Messages.CLICLI.pendingText4(String(describing: pending.owner.instanceName), String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.pendingText2.localized : Messages.CLICLI.pendingText3.localized), String(describing: pending.source.path), String(describing: pending.target.path)).localized)
+                guard let pending = try await service.pendingCopy(instanceID: id) else { print(Messages.CLICLI.noPendingDirectoryCopy.localized); break }
+                print(Messages.CLICLI.directoryCopyDetails(pending.owner.instanceName, String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.directoryCopyCommitted.localized : Messages.CLICLI.directoryCopyIncomplete.localized), pending.source.path, pending.target.path).localized)
                 if args.count == 3 {
                     let result = try await service.recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
-                    print(result.warning ?? Messages.CLICLI.resultText2.localized)
-                    if let url = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: url.path)).localized) }
+                    print(result.warning ?? Messages.CLICLI.directoryCopyRecovered.localized)
+                    if let url = result.preservedCopy { print(Messages.CLICLI.workCopyPath(url.path).localized) }
                 }
             case "relocate-directory":
-                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 3 || args[3] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText2) }
+                guard (3...4).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 3 || args[3] == "--apply" else { throw RuriError.message(Messages.CLICLI.relocateDirectoryUsage) }
                 let service = CustomRunDirectoryRelocation(paths: paths)
                 let preview = try await service.preview(instanceID: id, target: URL(fileURLWithPath: args[2]))
-                print(Messages.CLICLI.previewText3(String(describing: preview.source.path), String(describing: preview.target.path)).localized)
-                for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? Messages.CLICLI.previewText4.localized : Messages.CLICLI.previewText5.localized) · \(item.id)") }
-                if args.count == 4 { _ = try await service.apply(preview); print(Messages.CLICLI.previewText6.localized) }
+                print(Messages.CLICLI.relocateDirectoryPreview(preview.source.path, preview.target.path).localized)
+                for item in preview.instances { print("  \(item.name) · \(item.usesDirectory ? Messages.CLICLI.currentDirectory.localized : Messages.CLICLI.rememberedDirectory.localized) · \(item.id)") }
+                if args.count == 4 { _ = try await service.apply(preview); print(Messages.CLICLI.directoryReferenceUpdated.localized) }
             case "copy-instance":
-                let usage = Messages.CLICLI.usageText2.localized
+                let usage = Messages.CLICLI.copyInstanceUsage.localized
                 guard (4...7).contains(args.count), let id = UUID(uuidString: args[1]),
                       let directory = args[2] == "default" ? GameDirectory.defaultID : UUID(uuidString: args[2]) else { throw RuriError.message(usage) }
                 let flags = Array(args.dropFirst(4))
                 guard flags.allSatisfy({ ["--without-worlds", "--with-backups", "--apply"].contains($0) }), Set(flags).count == flags.count else { throw RuriError.message(usage) }
                 let service = InstanceCopier(paths: paths)
                 let preview = try await service.preview(instanceID: id, name: args[3], directoryID: directory, options: .init(includeWorlds: !flags.contains("--without-worlds"), includeBackups: flags.contains("--with-backups")))
-                print(Messages.CLICLI.previewText7(String(describing: preview.source.name), String(describing: preview.copy.name), String(describing: preview.sourceGame.path), String(describing: preview.destination.path), Int64(preview.fileCount), String(describing: preview.bytes)).localized)
+                print(Messages.CLICLI.copyInstancePreview(preview.source.name, preview.copy.name, preview.sourceGame.path, preview.destination.path, Int64(preview.fileCount), String(describing: preview.bytes)).localized)
                 if flags.contains("--apply") {
                     let result = try await service.copy(preview) { p in
                         if p.phase != .copying || p.completed % 50 == 0 { try? FileHandle.standardOutput.write(contentsOf: Data("\(p.phase.rawValue) \(p.completed)/\(p.total) · \(p.bytesCopied)/\(p.totalBytes) bytes\n".utf8)) }
                     }
-                    print(Messages.CLICLI.resultText3(String(describing: preview.copy.id)).localized)
+                    print(Messages.CLICLI.copiedInstance(String(describing: preview.copy.id)).localized)
                     if let warning = result.warning { print(warning) }
-                    if let file = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: file.path)).localized) }
+                    if let file = result.preservedCopy { print(Messages.CLICLI.workCopyPath(file.path).localized) }
                 }
             case "recover-instance-copy":
-                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.idText3) }
+                guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]), args.count == 2 || args[2] == "--apply" else { throw RuriError.message(Messages.CLICLI.recoverInstanceCopyUsage) }
                 let service = InstanceCopier(paths: paths)
-                guard let pending = try await service.pending(instanceID: id) else { print(Messages.CLICLI.pendingText5.localized); break }
-                print(Messages.CLICLI.pendingText8(String(describing: pending.owner.sourceName), String(describing: pending.owner.copyName), String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.pendingText6.localized : Messages.CLICLI.pendingText7.localized), String(describing: pending.destination.path), String(describing: pending.workspace.path)).localized)
+                guard let pending = try await service.pending(instanceID: id) else { print(Messages.CLICLI.noPendingInstanceCopy.localized); break }
+                print(Messages.CLICLI.instanceCopyDetails(String(describing: pending.owner.sourceName), String(describing: pending.owner.copyName), String(describing: pending.owner.transactionID), String(describing: pending.committed ? Messages.CLICLI.instanceCopyCommitted.localized : Messages.CLICLI.instanceCopyIncomplete.localized), pending.destination.path, pending.workspace.path).localized)
                 if args.count == 3 {
                     let result = try await service.recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
-                    print(result.warning ?? Messages.CLICLI.resultText4.localized)
-                    if let file = result.preservedCopy { print(Messages.CLICLI.urlText1(String(describing: file.path)).localized) }
+                    print(result.warning ?? Messages.CLICLI.instanceCopyRecovered.localized)
+                    if let file = result.preservedCopy { print(Messages.CLICLI.workCopyPath(file.path).localized) }
                 }
             case "java", "add-java", "forget-java", "default-java", "repair-java", "remove-java":
                 try await manageJava(args, paths: paths)
             case "install-java":
-                guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message(Messages.CLICLI.majorText1) }
+                guard args.count >= 2, let major = Int(args[1]) else { throw RuriError.message(Messages.CLICLI.installJavaUsage) }
                 let service = JavaInstaller(paths: paths)
                 let architecture = args.count > 2 ? args[2] : JavaRuntime.hostArchitecture
-                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message(Messages.CLICLI.runtimeText1) }
+                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message(Messages.CLICLI.unavailableRuntime) }
                 let installed = try await service.install(runtime, downloader: DownloadManager()) { p in
                     if p.completed % 20 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                 }
-                print(Messages.CLICLI.installedText1(String(describing: installed.label), String(describing: installed.path)).localized)
+                print(Messages.CLICLI.installCompleted(installed.label, installed.path).localized)
             case "fetch":
                 guard args.count >= 5, let url = URL(string: args[1]), let size = Int64(args[4]), size >= 0,
-                      args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CLICLI.sizeText1) }
+                      args[3].range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CLICLI.fetchUsage) }
                 let item = DownloadItem(url: url, destination: URL(fileURLWithPath: args[2]), sha1: args[3], size: size)
                 let manager = DownloadManager()
-                try await manager.fetch(item) { p in print(Messages.CLICLI.managerText1(String(describing: p.receivedBytes), String(describing: p.totalBytes ?? size), String(describing: p.resumedBytes)).localized) }
-                if let transfer = await manager.transfers().first { print(Messages.CLICLI.transferText1(String(describing: transfer.host), String(describing: transfer.attempt)).localized) }
-                print(Messages.CLICLI.transferText2(String(describing: item.destination.lastPathComponent)).localized)
+                try await manager.fetch(item) { p in print(Messages.CLICLI.transferProgress(String(describing: p.receivedBytes), String(describing: p.totalBytes ?? size), String(describing: p.resumedBytes)).localized) }
+                if let transfer = await manager.transfers().first { print(Messages.CLICLI.transferSource(String(describing: transfer.host), String(describing: transfer.attempt)).localized) }
+                print(Messages.CLICLI.downloadVerified(item.destination.lastPathComponent).localized)
             case "versions":
                 let catalog = try await GameInstaller(paths: paths).catalog()
-                print(Messages.CLICLI.catalogText1(String(describing: catalog.latest.release)).localized)
+                print(Messages.CLICLI.latestRelease(String(describing: catalog.latest.release)).localized)
                 for version in catalog.versions.prefix(20) { print("\(version.id) [\(version.type)]") }
             case "install":
-                guard (2...4).contains(args.count) else { throw RuriError.message(Messages.CLICLI.catalogText2) }
-                guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message(Messages.CLICLI.loaderText1) }
+                guard (2...4).contains(args.count) else { throw RuriError.message(Messages.CLICLI.installUsage) }
+                guard let loader = args.count > 2 ? LoaderKind(rawValue: args[2]) : .vanilla else { throw RuriError.message(Messages.CLICLI.unsupportedLoader) }
                 var instance = GameInstance(name: "\(args[1]) \(loader.title)", gameVersion: args[1], loader: loader)
                 if args.count == 4 { instance.loaderVersion = args[3] }
                 instance.launchOverrides = .init()
@@ -145,19 +145,19 @@ import RuriCore
                     if progress.completed % 100 == 0 || progress.completed == progress.total { print("\(progress.stage) \(progress.completed)/\(progress.total)") }
                 }
                 try StateStore.update(paths) { state in state.instances.append(instance); state.selectedInstanceID = instance.id }
-                print(Messages.CLICLI.leaseText1(String(describing: instance.id)).localized)
+                print(Messages.CLICLI.installedItem(String(describing: instance.id)).localized)
             case "export-instance":
-                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText1) }
+                guard args.count >= 3, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.exportInstanceUsage) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
-                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message(Messages.CLICLI.formatText1) }
+                guard let format = args.count > 3 ? InstanceExportFormat(rawValue: args[3]) : .ruri else { throw RuriError.message(Messages.CLICLI.exportFormat) }
                 try await InstanceTransfer(paths: paths).export(instance, to: URL(fileURLWithPath: args[2]), format: format) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                print(Messages.CLICLI.formatText2(String(describing: instance.name)).localized)
+                print(Messages.CLICLI.exportCompleted(instance.name).localized)
             case "import-instance":
-                guard args.count >= 2 else { throw RuriError.message(Messages.CLICLI.formatText3) }
+                guard args.count >= 2 else { throw RuriError.message(Messages.CLICLI.importInstanceUsage) }
                 let transfer = InstanceTransfer(paths: paths)
                 let prepared = try await transfer.prepare(URL(fileURLWithPath: args[1]))
-                print(Messages.CLICLI.preparedText1(String(describing: prepared.format), String(describing: prepared.instance.subtitle), String(describing: prepared.fileCount)).localized)
+                print(Messages.CLICLI.preparationSummary(String(describing: prepared.format), prepared.instance.subtitle, String(describing: prepared.fileCount)).localized)
                 for warning in prepared.warnings { print(warning) }
                 do {
                     let imported = try await transfer.install(prepared, name: args.count > 2 ? args[2] : prepared.instance.name, importJVMArguments: prepared.format == "MCBBS" || prepared.includesInstallation, installer: GameInstaller(paths: paths)) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
@@ -165,18 +165,18 @@ import RuriCore
                         try StateStore.update(paths) { state in state.instances.append(imported); state.selectedInstanceID = imported.id }
                     }
                     await transfer.discard(prepared)
-                    print(Messages.CLICLI.importedText1(String(describing: imported.id)).localized)
+                    print(Messages.CLICLI.importCompleted(String(describing: imported.id)).localized)
                 } catch { await transfer.discard(prepared); throw error }
             case "update-pack", "rollback-pack", "recover-pack-update":
                 try await manageModpackUpdate(args, paths: paths)
             case "components":
                 guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else {
-                    throw RuriError.message(Messages.CLICLI.instanceText2)
+                    throw RuriError.message(Messages.CLICLI.componentsUsage)
                 }
                 let service = InstanceComponents(paths: paths)
                 if args.count == 2 {
                     print(instance.subtitle)
-                    if let backup = try await service.backup(for: id) { print(Messages.CLICLI.backupText1(String(describing: backup.title)).localized) }
+                    if let backup = try await service.backup(for: id) { print(Messages.CLICLI.previousBackup(backup.title).localized) }
                     if let reason = InstanceComponents.unavailableReason(instance) { print(reason) }
                 } else if args[2] == "versions", args.count == 4, let loader = LoaderKind(rawValue: args[3]) {
                     for version in try await GameInstaller(paths: paths).loaderVersions(loader, game: instance.gameVersion) { print(version) }
@@ -185,21 +185,21 @@ import RuriCore
                     _ = try await service.change(instance, to: loader, version: args.count == 5 ? args[4] : nil) { p in
                         if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                     }
-                    print(Messages.CLICLI.loaderText2(String(describing: id)).localized)
+                    print(Messages.CLICLI.componentsUpdated(String(describing: id)).localized)
                 } else if args[2] == "restore", args.count == 3 {
-                    _ = try await service.restore(instance); print(Messages.CLICLI.loaderText3(String(describing: id)).localized)
-                } else { throw RuriError.message(Messages.CLICLI.instanceText2) }
+                    _ = try await service.restore(instance); print(Messages.CLICLI.componentsRestored(String(describing: id)).localized)
+                } else { throw RuriError.message(Messages.CLICLI.componentsUsage) }
             case "repair":
-                guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText3) }
+                guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.repairInstanceUsage) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
                 try await GameInstaller(paths: paths).repair(instance) { p in if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") } }
-                print(Messages.CLICLI.leaseText2(String(describing: instance.id)).localized)
+                print(Messages.CLICLI.repairCompleted(String(describing: instance.id)).localized)
             case "plan":
                 let state = try StateStore.load(paths)
-                guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message(Messages.CLICLI.stateText1) }
+                guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message(Messages.CLICLI.planUsage) }
                 let selectedID = args.count == 2 ? UUID(uuidString: args[1]) : state.selectedInstanceID
-                guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message(Messages.CLICLI.storedText1) }
+                guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message(Messages.CLICLI.instanceNotFound) }
                 let instance = try stored.launchSnapshot(defaults: state.settings)
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let runtimes = await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 })
@@ -208,14 +208,14 @@ import RuriCore
                 print(plan.redactedCommand)
                 if let names = plan.customEnvironmentNames, !names.isEmpty { print(Messages.CLICLI.environmentNames(names.joined(separator: ", ")).localized) }
             case "install-content":
-                guard args.count >= 3, let id = UUID(uuidString: args[2]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.instanceText4) }
+                guard args.count >= 3, let id = UUID(uuidString: args[2]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.installContentUsage) }
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id)
                 defer { withExtendedLifetime(lease) {} }
                 let service = ModrinthService()
                 let versions = try await service.versions(project: args[1], game: instance.gameVersion, loader: instance.loader.modrinthLoader)
-                guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message(Messages.CLICLI.versionText1) }
+                guard let version = args.count > 3 ? versions.first(where: { $0.id == args[3] }) : versions.first else { throw RuriError.message(Messages.CLICLI.incompatibleContentVersion) }
                 try await service.install(version: version, type: "mod", instance: instance, paths: paths, downloader: DownloadManager()) { p in print("\(p.stage) \(p.completed)/\(p.total)") }
-                print(Messages.CLICLI.leaseText1(String(describing: version.version_number)).localized)
+                print(Messages.CLICLI.installedItem(String(describing: version.version_number)).localized)
             case "content", "content-action", "update-content":
                 try await manageContent(args, paths: paths)
             case "datapacks":
@@ -227,15 +227,15 @@ import RuriCore
                 var launchArgs = args.dropFirst().filter { $0 != "--detach" }
                 var worldFolder: String?
                 if let index = launchArgs.firstIndex(of: "--world") {
-                    guard index + 1 < launchArgs.count else { throw RuriError.message(Messages.CLICLI.indexText1) }
+                    guard index + 1 < launchArgs.count else { throw RuriError.message(Messages.CLICLI.worldRequired) }
                     worldFolder = launchArgs[index + 1]; launchArgs.removeSubrange(index...index + 1)
                 }
-                guard launchArgs.count <= 1 else { throw RuriError.message(Messages.CLICLI.indexText2) }
+                guard launchArgs.count <= 1 else { throw RuriError.message(Messages.CLICLI.launchUsage) }
                 let requestedID = launchArgs.first.flatMap(UUID.init(uuidString:)) ?? (launchArgs.isEmpty ? state.selectedInstanceID : nil)
-                if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message(Messages.CLICLI.requestedIDText1) }
+                if !launchArgs.isEmpty && requestedID == nil { throw RuriError.message(Messages.CLICLI.invalidInstanceID) }
                 let selected = requestedID.flatMap { id in state.instances.first { $0.id == id } } ?? (launchArgs.isEmpty ? state.instances.last : nil)
-                guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message(Messages.CLICLI.accountText1) }
-                guard account.kind == .offline else { throw RuriError.message(Messages.CLICLI.accountText2) }
+                guard let stored = selected, let account = state.accounts.first(where: { $0.id == state.activeAccountID }) else { throw RuriError.message(Messages.CLICLI.accountRequired) }
+                guard account.kind == .offline else { throw RuriError.message(Messages.CLICLI.offlineOnly) }
                 let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {
@@ -260,8 +260,8 @@ import RuriCore
                     try recorder.transition(.starting)
                     try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])
                     handedOff = true
-                    print(Messages.CLICLI.planText1(String(describing: recorder.record.id)).localized)
-                    if args.contains("--detach") { print(Messages.CLICLI.planText2.localized); break }
+                    print(Messages.CLICLI.gameSession(String(describing: recorder.record.id)).localized)
+                    if args.contains("--detach") { print(Messages.CLICLI.monitorDetached.localized); break }
                     let cursor = try GameSessionLogCursor(paths: paths, session: recorder.record)
                     while true {
                         let record = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
@@ -273,13 +273,13 @@ import RuriCore
                             for line in await cursor.updates { try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8)) }
                         } while final && changed
                         if final {
-                            guard let result = record.exit else { throw RuriError.message(Messages.CLICLI.resultText5) }
+                            guard let result = record.exit else { throw RuriError.message(Messages.CLICLI.noGameExitResult) }
                             let status = result.shellStatus
-                            print(Messages.CLICLI.statusText1(String(describing: status)).localized)
+                            print(Messages.CLICLI.gameExit(String(describing: status)).localized)
                             if status != 0 { exit(status) }
                             break
                         }
-                        if activity != .monitoring { throw RuriError.message(Messages.CLICLI.statusText2) }
+                        if activity != .monitoring { throw RuriError.message(Messages.CLICLI.statusDisconnected) }
                         try await Task.sleep(for: .milliseconds(250))
                     }
                 } catch {
@@ -287,19 +287,19 @@ import RuriCore
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             case "quit":
-                guard args.count == 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message(Messages.CLICLI.idText4) }
-                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { !$0.state.isFinished && GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.recordText1) }
+                guard args.count == 2, let id = UUID(uuidString: args[1]) else { throw RuriError.message(Messages.CLICLI.quitUsage) }
+                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { !$0.state.isFinished && GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.noMonitorProcess) }
                 let request = try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
-                print(Messages.CLICLI.requestText1(String(describing: request)).localized)
+                print(Messages.CLICLI.gracefulQuitRequested(String(describing: request)).localized)
             case "stop":
-                guard args.count == 2, let id = UUID(uuidString: args[1]), try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.idText5) }
-                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.recordText1) }
+                guard args.count == 2, let id = UUID(uuidString: args[1]), try StateStore.load(paths).instances.contains(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.stopUsage) }
+                guard let record = try GameSessionStore.list(paths: paths, instanceID: id).first(where: { GameMonitorClient.activity($0) == .monitoring }) else { throw RuriError.message(Messages.CLICLI.noMonitorProcess) }
                 try GameMonitorClient.requestStop(paths: paths, record: record)
-                print(Messages.CLICLI.recordText2(String(describing: record.id)).localized)
+                print(Messages.CLICLI.stopRequested(String(describing: record.id)).localized)
             case "recover-session":
                 guard (3...5).contains(args.count), let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]),
                       Set(args.dropFirst(3)).isSubset(of: ["--apply", "--confirm-game-ended"]) else {
-                    throw RuriError.message(Messages.CLICLI.sessionIDText1)
+                    throw RuriError.message(Messages.CLICLI.recoverSessionUsage)
                 }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
                 let status = GameSessionRecovery.status(record)
@@ -308,10 +308,10 @@ import RuriCore
                     let recovered = try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: args.contains("--confirm-game-ended"))
                     print(recovered.title)
                 } else if status == .processEnded || status == .confirmationRequired {
-                    print(Messages.CLICLI.recoveredText1.localized)
+                    print(Messages.CLICLI.recoverSessionInstructions.localized)
                 }
             case "diagnose":
-                guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message(Messages.CLICLI.sessionIDText2) }
+                guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message(Messages.CLICLI.diagnoseUsage) }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
                 let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: record)
                 print(diagnosis.title + "\n" + diagnosis.summary)
@@ -320,7 +320,7 @@ import RuriCore
                     print("\n\(finding.title)（\(finding.confidence.title)）\n\(finding.explanation)")
                     for evidence in finding.evidence {
                         let document = diagnosis.documents.first { $0.id == evidence.documentID }
-                        print(Messages.CLICLI.documentText2(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.CLICLI.documentText1.localized : ""), String(describing: evidence.line), String(describing: evidence.excerpt)).localized)
+                        print(Messages.CLICLI.diagnosticDocument(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.CLICLI.logTail.localized : ""), String(describing: evidence.line), String(describing: evidence.excerpt)).localized)
                     }
                     for (index, step) in finding.steps.enumerated() { print("\(index + 1). \(step)") }
                 }
@@ -329,12 +329,12 @@ import RuriCore
                 let state = try StateStore.load(paths)
                 let instances: [GameInstance]
                 if args.count > 1 {
-                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.requestedIDText1) }
+                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.invalidInstanceID) }
                     instances = [instance]
                 } else { instances = state.instances }
                 let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
                 for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
-            default: print(Messages.CLICLI.recordsText1.localized)
+            default: print(Messages.CLICLI.cliUsage.localized)
             }
         } catch { fputs(Messages.CLICLI.errorOutput(error.localizedDescription).localized, stderr); exit(1) }
     }

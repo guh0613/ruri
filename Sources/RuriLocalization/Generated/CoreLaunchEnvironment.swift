@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunchEnvironment {
-        public static var javaKeysText1: LocalizedMessage {
+        /// 环境变量包含空字符或超过 64 KB。
+        ///
+        /// Resource: `Errors.coreLaunchEnvironment.javaKeysText1`.
+        public static var javaEnvironmentTooLarge: LocalizedMessage {
             .init(key: "coreLaunchEnvironment.javaKeysText1", table: "Errors", fallback: "环境变量包含空字符或超过 64 KB。")
         }
-        public static func nameText1(_ value0: String) -> LocalizedMessage {
+        /// 第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。
+        ///
+        /// Resource: `Errors.coreLaunchEnvironment.nameText1`.
+        public static func invalidEnvironmentName(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchEnvironment.nameText1", table: "Errors", fallback: "第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。", arguments: [.text(value0)])
         }
-        public static func nameText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。
+        ///
+        /// Resource: `Errors.coreLaunchEnvironment.nameText2`.
+        public static func managedEnvironmentVariable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchEnvironment.nameText2", table: "Errors", fallback: "%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。", arguments: [.text(value0)])
         }
-        public static func nameText3(_ value0: String) -> LocalizedMessage {
+        /// 环境变量重复：%1$@
+        ///
+        /// Resource: `Errors.coreLaunchEnvironment.nameText3`.
+        public static func duplicateEnvironmentVariable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchEnvironment.nameText3", table: "Errors", fallback: "环境变量重复：%1$@", arguments: [.text(value0)])
         }
-        public static var nameText4: LocalizedMessage {
+        /// 自定义环境变量不能超过 256 项。
+        ///
+        /// Resource: `Errors.coreLaunchEnvironment.nameText4`.
+        public static var tooManyEnvironmentVariables: LocalizedMessage {
             .init(key: "coreLaunchEnvironment.nameText4", table: "Errors", fallback: "自定义环境变量不能超过 256 项。")
         }
         static let definitions: [String: MessageDefinition] = [

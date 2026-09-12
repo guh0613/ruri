@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreInstallerProcess {
-        public static var runText1: LocalizedMessage {
+        /// 安装程序已经在运行
+        ///
+        /// Resource: `Errors.coreInstallerProcess.runText1`.
+        public static var installerAlreadyRunning: LocalizedMessage {
             .init(key: "coreInstallerProcess.runText1", table: "Errors", fallback: "安装程序已经在运行")
         }
         static let definitions: [String: MessageDefinition] = [

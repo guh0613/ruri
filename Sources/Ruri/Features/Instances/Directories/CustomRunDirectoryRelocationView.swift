@@ -15,36 +15,36 @@ struct CustomRunDirectoryRelocationView: View {
     private var original: CustomRunDirectory? { model.state.instances.first(where: { $0.id == instanceID })?.customRunDirectory }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeading(title: Messages.AppCustomRunDirectoryRelocationView.bodyText1.localized, subtitle: Messages.AppCustomRunDirectoryRelocationView.bodyText2.localized)
+            SectionHeading(title: Messages.AppCustomRunDirectoryRelocationView.recoverDirectory.localized, subtitle: Messages.AppCustomRunDirectoryRelocationView.relocationHelp.localized)
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    Text(Messages.AppCustomRunDirectoryRelocationView.bodyText3.localized).font(.callout).foregroundStyle(.secondary)
+                    Text(Messages.AppCustomRunDirectoryRelocationView.relocationInstructions.localized).font(.callout).foregroundStyle(.secondary)
                     VStack(alignment: .leading, spacing: 5) {
-                        Text(Messages.AppCustomRunDirectoryRelocationView.bodyText4.localized).font(.headline)
-                        Text(original?.url.path ?? Messages.AppCustomRunDirectoryRelocationView.bodyText5.localized).font(.caption).textSelection(.enabled)
+                        Text(Messages.AppCustomRunDirectoryRelocationView.originalLocation.localized).font(.headline)
+                        Text(original?.url.path ?? Messages.AppCustomRunDirectoryRelocationView.unregisteredDirectory.localized).font(.caption).textSelection(.enabled)
                     }
                     HStack {
-                        Text(selected?.path ?? Messages.AppCustomRunDirectoryRelocationView.bodyText6.localized).font(.caption).textSelection(.enabled)
+                        Text(selected?.path ?? Messages.AppCustomRunDirectoryRelocationView.newLocationNotSelected.localized).font(.caption).textSelection(.enabled)
                         Spacer()
-                        Button(Messages.AppCustomRunDirectoryRelocationView.bodyText7.localized, systemImage: "folder") { selectFolder() }.disabled(model.busy || checking)
+                        Button(Messages.AppCustomRunDirectoryRelocationView.chooseOriginalFolder.localized, systemImage: "folder") { selectFolder() }.disabled(model.busy || checking)
                     }
-                    if checking { ProgressView(Messages.AppCustomRunDirectoryRelocationView.bodyText8.localized) }
+                    if checking { ProgressView(Messages.AppCustomRunDirectoryRelocationView.checkingDirectory.localized) }
                     if let preview {
                         Divider()
-                        Text(Messages.AppCustomRunDirectoryRelocationView.previewText1(Int64(preview.instances.count)).localized).font(.headline)
+                        Text(Messages.AppCustomRunDirectoryRelocationView.previewInstanceCount(Int64(preview.instances.count)).localized).font(.headline)
                         ForEach(preview.instances) { item in
-                            LabeledContent(item.name, value: item.usesDirectory ? Messages.AppCustomRunDirectoryRelocationView.previewText2.localized : Messages.AppCustomRunDirectoryRelocationView.previewText3.localized)
+                            LabeledContent(item.name, value: item.usesDirectory ? Messages.AppCustomRunDirectoryRelocationView.useDirectory.localized : Messages.AppCustomRunDirectoryRelocationView.rememberLocation.localized)
                         }
-                        Text(Messages.AppCustomRunDirectoryRelocationView.previewText4.localized).font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppCustomRunDirectoryRelocationView.locationHelp.localized).font(.caption).foregroundStyle(.secondary)
                     }
                     if let issue { Label(issue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(2)
             }
             HStack {
-                if selected != nil { Button(Messages.AppCustomRunDirectoryRelocationView.issueText1.localized, systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(checking || model.busy) }
+                if selected != nil { Button(Messages.AppCustomRunDirectoryRelocationView.recheck.localized, systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(checking || model.busy) }
                 Spacer()
-                Button(Messages.AppCustomRunDirectoryRelocationView.issueText2.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
-                Button(Messages.AppCustomRunDirectoryRelocationView.issueText3.localized) {
+                Button(Messages.AppCustomRunDirectoryRelocationView.close.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
+                Button(Messages.AppCustomRunDirectoryRelocationView.updateDirectory.localized) {
                     if let preview { model.relocateCustomDirectory(preview) { dismiss() } }
                 }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
             }
@@ -63,7 +63,7 @@ struct CustomRunDirectoryRelocationView: View {
     }
     private func selectFolder() {
         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppCustomRunDirectoryRelocationView.panelText1.localized
+        panel.message = Messages.AppCustomRunDirectoryRelocationView.chooseOriginalDirectory.localized
         panel.begin { response in if response == .OK, let url = panel.url { selected = url; refresh = UUID() } }
     }
 }

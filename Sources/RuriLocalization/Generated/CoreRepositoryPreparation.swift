@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryPreparation {
-        public static var prefixText1: LocalizedMessage {
+        /// 本地依赖库位于游戏文件夹之外。
+        ///
+        /// Resource: `Errors.coreRepositoryPreparation.prefixText1`.
+        public static var dependencyOutsideGameFolder: LocalizedMessage {
             .init(key: "coreRepositoryPreparation.prefixText1", table: "Errors", fallback: "本地依赖库位于游戏文件夹之外。")
         }
-        public static func fileText1(_ value0: String) -> LocalizedMessage {
+        /// 原生依赖库缺失，请修复此版本：%1$@
+        ///
+        /// Resource: `Errors.coreRepositoryPreparation.fileText1`.
+        public static func missingNativeDependency(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryPreparation.fileText1", table: "Errors", fallback: "原生依赖库缺失，请修复此版本：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

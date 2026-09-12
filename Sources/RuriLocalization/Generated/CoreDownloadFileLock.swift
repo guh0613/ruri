@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadFileLock {
-        public static var directoryText1: LocalizedMessage {
+        /// 下载缓存目录不能是符号链接
+        ///
+        /// Resource: `Errors.coreDownloadFileLock.directoryText1`.
+        public static var downloadCacheSymlink: LocalizedMessage {
             .init(key: "coreDownloadFileLock.directoryText1", table: "Errors", fallback: "下载缓存目录不能是符号链接")
         }
-        public static func fdText1(_ value0: String) -> LocalizedMessage {
+        /// 无法锁定下载文件：%1$@
+        ///
+        /// Resource: `Errors.coreDownloadFileLock.fdText1`.
+        public static func downloadFileLockFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreDownloadFileLock.fdText1", table: "Errors", fallback: "无法锁定下载文件：%1$@", arguments: [.text(value0)])
         }
-        public static func lockText1(_ value0: String) -> LocalizedMessage {
+        /// 无法取得下载文件锁：%1$@
+        ///
+        /// Resource: `Errors.coreDownloadFileLock.lockText1`.
+        public static func downloadFileLockUnavailable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreDownloadFileLock.lockText1", table: "Errors", fallback: "无法取得下载文件锁：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

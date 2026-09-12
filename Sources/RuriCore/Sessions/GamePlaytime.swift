@@ -12,10 +12,10 @@ public enum GamePlaytimeStore {
         let file = try LauncherPaths.safePath("playtime.json", within: paths.instance(instanceID))
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let attributes = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message(Messages.CoreGamePlaytime.attributesText1) }
+        guard attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 8_388_608 else { throw RuriError.message(Messages.CoreGamePlaytime.invalidPlaytimeRecord) }
         let record = try JSONDecoder().decode(GamePlaytime.self, from: Data(contentsOf: file))
         guard record.base.isFinite, record.base >= 0, record.sessions.count <= 100_000,
-              record.sessions.allSatisfy({ UUID(uuidString: $0.key) != nil && $0.value.isFinite && $0.value >= 0 }) else { throw RuriError.message(Messages.CoreGamePlaytime.attributesText1) }
+              record.sessions.allSatisfy({ UUID(uuidString: $0.key) != nil && $0.value.isFinite && $0.value >= 0 }) else { throw RuriError.message(Messages.CoreGamePlaytime.invalidPlaytimeRecord) }
         return record
     }
     /// Called by the session owner while holding the instance run lease.
@@ -38,7 +38,7 @@ public actor GameSessionLogCursor {
     public private(set) var updates: [String] = []
     public init(paths: LauncherPaths, session: GameSession) throws {
         let url = try GameSessionStore.logURL(paths: paths, session: session)
-        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message(Messages.CoreGamePlaytime.urlText1) }
+        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message(Messages.CoreGamePlaytime.logNotRegularFile) }
         handle = try FileHandle(forReadingFrom: url)
         let length = try handle.seekToEnd(), limit: UInt64 = 2_097_152
         let offset = length > limit ? length - limit : 0
@@ -61,7 +61,7 @@ public actor GameSessionLogCursor {
             added.append(String(decoding: pending[..<newline], as: UTF8.self)); pending.removeSubrange(...newline)
         }
         if final && !pending.isEmpty { added.append(String(decoding: pending, as: UTF8.self)); pending.removeAll() }
-        if pending.count > 2_097_152 { pending.removeAll(); added.append(Messages.CoreGamePlaytime.newlineText1.localized) }
+        if pending.count > 2_097_152 { pending.removeAll(); added.append(Messages.CoreGamePlaytime.longLogLineOmitted.localized) }
         updates = added
         guard !added.isEmpty else { return false }
         lines += added

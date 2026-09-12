@@ -4,7 +4,7 @@ import Foundation
 public enum InstanceExportFormat: String, CaseIterable, Sendable, Identifiable {
     case ruri, complete, multimc, mcbbs, mrpack
     public var id: String { rawValue }
-    public var title: String { switch self { case .ruri: Messages.CoreInstanceTransfer.titleText1.localized; case .complete: Messages.CoreInstanceTransfer.titleText2.localized; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
+    public var title: String { switch self { case .ruri: Messages.CoreInstanceTransfer.ruriInstance.localized; case .complete: Messages.CoreInstanceTransfer.ruriFullCopy.localized; case .multimc: "Prism / MultiMC"; case .mcbbs: "MCBBS / HMCL"; case .mrpack: "Modrinth" } }
 }
 
 public struct PreparedInstanceImport: Identifiable, Sendable {
@@ -97,7 +97,7 @@ struct PortableInstance: Codable {
         if installation != nil { formatVersion = 2 }
     }
     func instance() throws -> GameInstance {
-        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.instanceText1) }
+        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.unsupportedInstanceVersion) }
         try installation?.validate()
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
@@ -128,9 +128,9 @@ public actor InstanceTransfer {
         let workspace = paths.cache.appendingPathComponent("transfer-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         do {
-            progress(InstallProgress(Messages.CoreInstanceTransfer.workspaceText1))
+            progress(InstallProgress(Messages.CoreInstanceTransfer.identifyingInstance))
             let isDirectory = try source.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard isDirectory.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.isDirectoryText1) }
+            guard isDirectory.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.actualDirectoryRequired) }
             let unpacked: URL
             if isDirectory.isDirectory == true { unpacked = source }
             else {
@@ -150,7 +150,7 @@ public actor InstanceTransfer {
                 excluded = Set(excluded.filter { $0 == ".ruri" || ($0.hasPrefix("saves/") && $0.hasSuffix("/session.lock")) })
             }
             if FileManager.default.fileExists(atPath: description.game.path) {
-                try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.excludedText1, completed: done, total: total)) }
+                try FileTree.copy(from: description.game, to: snapshot, excluding: excluded) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.copyingInstanceContents, completed: done, total: total)) }
             } else { try FileManager.default.createDirectory(at: snapshot, withIntermediateDirectories: true) }
             for overlay in description.overlays {
                 if FileManager.default.fileExists(atPath: overlay.path) { try FileTree.overlay(from: overlay, to: snapshot, excluding: excluded) }
@@ -161,8 +161,8 @@ public actor InstanceTransfer {
             for file in packFiles {
                 let item = try file.item(in: snapshot)
                 if FileManager.default.fileExists(atPath: item.destination.path) {
-                    guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.itemText1(String(describing: file.path))) }
-                } else if file.url == nil { throw RuriError.message(Messages.CoreInstanceTransfer.itemText2(String(describing: file.path))) }
+                    guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.bundledFileChecksumFailed(file.path)) }
+                } else if file.url == nil { throw RuriError.message(Messages.CoreInstanceTransfer.missingBundledFileDownloadSource(file.path)) }
             }
             let installation = try description.installation.map {
                 try PreparedMinecraftInstallation.capture($0, in: workspace, instance: description.instance, paths: paths)
@@ -218,12 +218,12 @@ public actor InstanceTransfer {
                         do { try await downloader.fetch(file.item(in: root, url: url)); return }
                         catch { if Task.isCancelled { throw CancellationError() }; failure = error }
                     }
-                    throw failure ?? RuriError.message(Messages.CoreInstanceTransfer.failureText1)
+                    throw failure ?? RuriError.message(Messages.CoreInstanceTransfer.missingDownloadSource)
                 }
             }
             while index < min(max(1, min(16, concurrency)), files.count) { add(files[index]); index += 1 }
             while try await group.next() != nil {
-                completed += 1; await progress(InstallProgress(Messages.CoreInstanceTransfer.failureText2, completed: completed, total: files.count))
+                completed += 1; await progress(InstallProgress(Messages.CoreInstanceTransfer.completingPackFiles, completed: completed, total: files.count))
                 if index < files.count { add(files[index]); index += 1 }
             }
         }
@@ -239,7 +239,7 @@ public actor InstanceTransfer {
         var instance = try destinationInstance(prepared, name: name, importJVMArguments: importJVMArguments)
         for file in prepared.selectedPackFiles {
             let item = try file.item(in: prepared.game)
-            guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.itemText3(String(describing: file.path))) }
+            guard DownloadManager.valid(item.destination, item: item) else { throw RuriError.message(Messages.CoreInstanceTransfer.modifiedBundledFile(file.path)) }
         }
         try Self.validatePackContent(content, references: prepared.curseForgeFiles)
         let transaction = try instance.repositoryVersionID == nil ? nil : RepositoryImportTransaction(instance: instance, paths: paths)
@@ -269,12 +269,12 @@ public actor InstanceTransfer {
             return try transaction?.publish(instance) ?? instance
         } catch {
             if let transaction {
-                let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceTransfer.reasonText1.localized : error.localizedDescription
+                let reason = Task.isCancelled || error is CancellationError ? Messages.CoreInstanceTransfer.operationCancelled.localized : error.localizedDescription
                 do {
                     let kept = try transaction.preserve()
-                    throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.keptText1(String(describing: reason)).localized, preservedFiles: kept)
+                    throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.packImportIncomplete(String(describing: reason)).localized, preservedFiles: kept)
                 } catch let failure as RepositoryImportFailure { throw failure }
-                catch { throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.failureText3(String(describing: reason), String(describing: error.localizedDescription)).localized, preservedFiles: transaction.workspace) }
+                catch { throw RepositoryImportFailure(message: Messages.CoreInstanceTransfer.importNeedsRecovery(String(describing: reason), error.localizedDescription).localized, preservedFiles: transaction.workspace) }
             }
             try? FileManager.default.removeItem(at: location.instance(instance.id)); throw error
         }
@@ -283,19 +283,19 @@ public actor InstanceTransfer {
     public func export(_ instance: GameInstance, to destination: URL, format: InstanceExportFormat = .ruri, includeWorlds: Bool = true, details: ModpackExportDetails = .init(),
                        progress: @Sendable (InstallProgress) -> Void = { _ in }) async throws {
         let complete = format == .complete || (format == .ruri && (instance.repositoryVersionID != nil || instance.importedInstallation != nil))
-        guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.completeText1) }
+        guard complete || (instance.repositoryVersionID == nil && instance.importedInstallation == nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.localFilesRequireFullCopy) }
         if instance.loader == .legacyfabric && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message(Messages.CoreInstanceTransfer.completeText2)
+            throw RuriError.message(Messages.CoreInstanceTransfer.legacyFabricUnsupported)
         }
         if instance.loader == .liteloader && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message(Messages.CoreInstanceTransfer.completeText3)
+            throw RuriError.message(Messages.CoreInstanceTransfer.liteLoaderUnsupported)
         }
         if instance.loader == .optifine && [.multimc, .mrpack].contains(format) {
-            throw RuriError.message(Messages.CoreInstanceTransfer.completeText4)
+            throw RuriError.message(Messages.CoreInstanceTransfer.optifineUnsupported)
         }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         if instance.launchCommands?.isEmpty == false, ![.ruri, .complete].contains(format) {
-            throw RuriError.message(Messages.CoreInstanceTransfer.instanceText2)
+            throw RuriError.message(Messages.CoreInstanceTransfer.disabledCommandsUnsupported)
         }
         // Portable formats already carry the maximum heap. Encode additional
         // structured limits as ordinary JVM arguments before user arguments,
@@ -311,7 +311,7 @@ public actor InstanceTransfer {
         if complete { try await exportComplete(instance, to: destination, includeWorlds: includeWorlds, progress: progress); return }
         if format == .mrpack { try await exportMRPack(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
         if format == .mcbbs { try exportMCBBS(instance, game: game, to: destination, includeWorlds: includeWorlds, details: details, progress: progress); return }
-        if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message(Messages.CoreInstanceTransfer.locksText1) }
+        if format == .multimc, instance.extraGameArguments?.isEmpty == false || instance.packLibraries?.isEmpty == false || instance.supportedJavaMajors?.isEmpty == false { throw RuriError.message(Messages.CoreInstanceTransfer.extraLaunchSettings) }
         var extra: [String: Data] = [:]
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         if format == .ruri {
@@ -332,9 +332,9 @@ public actor InstanceTransfer {
                        "OverrideJavaArgs=\(!instance.extraJVMArguments.isEmpty)", "JvmArgs=\(Self.iniEncode(instance.extraJVMArguments))"].joined(separator: "\n") + "\n"
             extra["instance.cfg"] = Data(cfg.utf8)
         }
-        progress(InstallProgress(Messages.CoreInstanceTransfer.cfgText1))
+        progress(InstallProgress(Messages.CoreInstanceTransfer.exportingInstance))
         try SafeArchive.create(from: game, to: destination, prefix: format == .ruri ? "minecraft" : ".minecraft", additionalFiles: extra,
-                               excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.cfgText1, completed: done, total: total)) }
+                               excluding: Self.exclusions(game, includeWorlds: includeWorlds)) { done, total in progress(InstallProgress(Messages.CoreInstanceTransfer.exportingInstance, completed: done, total: total)) }
     }
 
     private static func findRoot(_ source: URL) throws -> URL {
@@ -344,12 +344,12 @@ public actor InstanceTransfer {
             let info = try $0.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             return info.isDirectory == true && info.isSymbolicLink != true && recognized($0)
         }
-        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? Messages.CoreInstanceTransfer.infoText1 : Messages.CoreInstanceTransfer.infoText2) }
+        guard candidates.count == 1 else { throw RuriError.message(candidates.isEmpty ? Messages.CoreInstanceTransfer.unsupportedManifest : Messages.CoreInstanceTransfer.multipleInstanceDirectories) }
         return candidates[0]
     }
     static func read(_ url: URL) throws -> Data {
         let info = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 4 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceTransfer.infoText3(String(describing: url.lastPathComponent))) }
+        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 4 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceTransfer.invalidInstanceManifest(url.lastPathComponent)) }
         return try Data(contentsOf: url)
     }
     static func describe(_ root: URL) throws -> InstanceImportDescription {
@@ -374,15 +374,15 @@ public actor InstanceTransfer {
             format = "Prism / MultiMC"
             let pack = try JSONDecoder().decode(MultiMCPack.self, from: read(root.appendingPathComponent("mmc-pack.json")))
             guard pack.formatVersion == 1, Set(pack.components.map(\.uid)).count == pack.components.count,
-                  let game = pack.components.first(where: { $0.uid == "net.minecraft" })?.version else { throw RuriError.message(Messages.CoreInstanceTransfer.gameText1) }
+                  let game = pack.components.first(where: { $0.uid == "net.minecraft" })?.version else { throw RuriError.message(Messages.CoreInstanceTransfer.invalidMultiMCManifest) }
             let supported = Set(loaderIDs.keys).union(["net.minecraft", "org.lwjgl", "org.lwjgl3", "net.fabricmc.intermediary", "org.quiltmc.hashed"])
             let unknown = Set(pack.components.map(\.uid)).subtracting(supported)
-            guard unknown.isEmpty else { throw RuriError.message(Messages.CoreInstanceTransfer.unknownText1(String(describing: unknown.sorted().joined(separator: ", ")))) }
+            guard unknown.isEmpty else { throw RuriError.message(Messages.CoreInstanceTransfer.unsupportedComponents(String(describing: unknown.sorted().joined(separator: ", ")))) }
             let loaders = pack.components.filter { loaderIDs[$0.uid] != nil }
-            guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreInstanceTransfer.loadersText1) }
+            guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreInstanceTransfer.multipleLoadersUnsupported) }
             for folder in ["patches", "jarmods"] {
                 let url = root.appendingPathComponent(folder)
-                if fm.fileExists(atPath: url.path), !(try FileTree.entries(in: url)).isEmpty { throw RuriError.message(Messages.CoreInstanceTransfer.urlText1(String(describing: folder))) }
+                if fm.fileExists(atPath: url.path), !(try FileTree.entries(in: url)).isEmpty { throw RuriError.message(Messages.CoreInstanceTransfer.customPatchRequiresHandling(String(describing: folder))) }
             }
             let cfgURL = root.appendingPathComponent("instance.cfg")
             let cfg = fm.fileExists(atPath: cfgURL.path) ? try iniDecode(String(decoding: read(cfgURL), as: UTF8.self)) : [:]
@@ -398,11 +398,11 @@ public actor InstanceTransfer {
             if !commands.isEmpty { instance.launchCommands = commands }
         }
         try validate(instance)
-        if instance.launchCommands?.isEmpty == false { warnings.append(Messages.CoreInstanceTransfer.commandsText1.localized) }
+        if instance.launchCommands?.isEmpty == false { warnings.append(Messages.CoreInstanceTransfer.retainedCommands.localized) }
         let games = ["minecraft", ".minecraft"].map { root.appendingPathComponent($0) }.filter { fm.fileExists(atPath: $0.path) }
         guard games.count == 1, try games[0].resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isDirectory == true,
-              try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.gamesText1) }
-        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreInstanceTransfer.gamesText2.localized) }
+              try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.uniqueGameDirectory) }
+        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreInstanceTransfer.customJvmArguments.localized) }
         let source = root.appendingPathComponent("ruri-source-mcbbs.packmeta")
         return InstanceImportDescription(instance: instance, game: games[0], format: format, warnings: warnings, records: records,
                                          sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil,
@@ -416,7 +416,7 @@ public actor InstanceTransfer {
               instance.loader == .vanilla || !(instance.loaderVersion ?? "").isEmpty,
               (512...131072).contains(instance.memoryMB), (320...16384).contains(instance.width), (240...16384).contains(instance.height),
               instance.extraJVMArguments.count <= 32768, (instance.extraGameArguments?.count ?? 0) <= 32768, (instance.supportedJavaMajors ?? []).allSatisfy({ (6...100).contains($0) }),
-              instance.javaMajor == nil || (6...99).contains(instance.javaMajor!) else { throw RuriError.message(Messages.CoreInstanceTransfer.iconText1) }
+              instance.javaMajor == nil || (6...99).contains(instance.javaMajor!) else { throw RuriError.message(Messages.CoreInstanceTransfer.invalidIconSettings) }
         _ = try GameInstaller.applyingPackLibraries(instance.packLibraries ?? [], to: VersionManifest(id: "pack", libraries: []))
     }
     static func exclusions(_ game: URL, includeWorlds: Bool) throws -> Set<String> {
@@ -436,12 +436,12 @@ public actor InstanceTransfer {
     static func lockWorlds(_ game: URL) throws -> [Int32] {
         let saves = game.appendingPathComponent("saves")
         guard FileManager.default.fileExists(atPath: saves.path) else { return [] }
-        guard try saves.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.savesText1) }
+        guard try saves.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.symlinkSaves) }
         var locks: [Int32] = []
         do {
             for world in try FileManager.default.contentsOfDirectory(at: saves, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey]) {
                 let info = try world.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-                guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.infoText4) }
+                guard info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.symlinkInSaves) }
                 if info.isDirectory == true, let lock = try WorldManager.readLock(world) { locks.append(lock) }
             }
             return locks

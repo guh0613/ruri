@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreLoaderEndpoints {
-        public static var profileServiceText1: LocalizedMessage {
+        /// 此加载器不提供 Fabric/Quilt 启动清单。
+        ///
+        /// Resource: `Errors.coreLoaderEndpoints.profileServiceText1`.
+        public static var loaderProfileServiceUnavailable: LocalizedMessage {
             .init(key: "coreLoaderEndpoints.profileServiceText1", table: "Errors", fallback: "此加载器不提供 Fabric/Quilt 启动清单。")
         }
-        public static var installerText1: LocalizedMessage {
+        /// 此加载器不使用 Forge 安装包。
+        ///
+        /// Resource: `Errors.coreLoaderEndpoints.installerText1`.
+        public static var loaderInstallerUnavailable: LocalizedMessage {
             .init(key: "coreLoaderEndpoints.installerText1", table: "Errors", fallback: "此加载器不使用 Forge 安装包。")
         }
         static let definitions: [String: MessageDefinition] = [

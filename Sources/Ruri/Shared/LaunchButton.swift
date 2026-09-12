@@ -11,8 +11,8 @@ struct LaunchButton: View {
     var compact = false
     private var session: GameSession? { model.activeSessions[instance.id] }
     private var title: String {
-        if session != nil { return session?.gameIdentity?.isAlive == true ? Messages.AppLaunchButton.titleText1.localized : Messages.AppLaunchButton.titleText2.localized }
-        return instance.installed ? Messages.AppLaunchButton.titleText3.localized : Messages.AppLaunchButton.titleText4.localized
+        if session != nil { return session?.gameIdentity?.isAlive == true ? Messages.AppLaunchButton.returnToGame.localized : Messages.AppLaunchButton.viewRunHistory.localized }
+        return instance.installed ? Messages.AppLaunchButton.launchGame.localized : Messages.AppLaunchButton.continueInstallation.localized
     }
     private var disabled: Bool { session == nil && (model.busy || model.isInstanceInUse(instance.id)) }
     private func activate() { if session != nil { model.returnToGame(instance.id) } else { model.launch(instance) } }

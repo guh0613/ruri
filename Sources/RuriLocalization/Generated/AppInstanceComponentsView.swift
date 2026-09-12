@@ -3,54 +3,105 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceComponentsView {
-        public static var bodyText1: LocalizedMessage {
+        /// 管理加载器
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.bodyText1`.
+        public static var manageLoader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.bodyText1", table: "Interface", fallback: "管理加载器")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 当前
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.bodyText2`.
+        public static var current: LocalizedMessage {
             .init(key: "appInstanceComponentsView.bodyText2", table: "Interface", fallback: "当前")
         }
-        public static var reasonText1: LocalizedMessage {
+        /// 加载器
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.reasonText1`.
+        public static var loader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.reasonText1", table: "Interface", fallback: "加载器")
         }
-        public static var reasonText2: LocalizedMessage {
+        /// OptiFine 版本与安装包由 BMCLAPI 提供。
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.reasonText2`.
+        public static var optifineSource: LocalizedMessage {
             .init(key: "appInstanceComponentsView.reasonText2", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
         }
-        public static var reasonText3: LocalizedMessage {
+        /// 正在查找兼容版本…
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.reasonText3`.
+        public static var findingCompatibleVersions: LocalizedMessage {
             .init(key: "appInstanceComponentsView.reasonText3", table: "Interface", fallback: "正在查找兼容版本…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 重试
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText1`.
+        public static var retry: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText1", table: "Interface", fallback: "重试")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 版本
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText2`.
+        public static var version: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText2", table: "Interface", fallback: "版本")
         }
-        public static var errorText3: LocalizedMessage {
+        /// （当前）
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText3`.
+        public static var currentVersion: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText3", table: "Interface", fallback: "（当前）")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 移除加载器后按原版启动，模组文件仍会保留。
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText4`.
+        public static var removeLoaderDetails: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText4", table: "Interface", fallback: "移除加载器后按原版启动，模组文件仍会保留。")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 可升级、降级或更换加载器。现有模组需要与所选加载器兼容。
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText5`.
+        public static var changeLoaderDetails: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText5", table: "Interface", fallback: "可升级、降级或更换加载器。现有模组需要与所选加载器兼容。")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.errorText6`.
+        public static var applyLoaderDetails: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "保留存档、模组、游戏客户端和实例设置；重新生成启动清单，其中的自定义修改不会继承。应用成功后可恢复上次的加载器配置。")
         }
-        public static var backupText2: LocalizedMessage {
+        /// 恢复上次配置
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.backupText2`.
+        public static var restorePreviousConfiguration: LocalizedMessage {
             .init(key: "appInstanceComponentsView.backupText2", table: "Interface", fallback: "恢复上次配置")
         }
-        public static var backupText3: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.backupText3`.
+        public static var close: LocalizedMessage {
             .init(key: "appInstanceComponentsView.backupText3", table: "Interface", fallback: "关闭")
         }
-        public static var backupText4: LocalizedMessage {
+        /// 移除加载器
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.backupText4`.
+        public static var removeLoader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.backupText4", table: "Interface", fallback: "移除加载器")
         }
-        public static var backupText5: LocalizedMessage {
+        /// 应用加载器
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.backupText5`.
+        public static var applyLoader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.backupText5", table: "Interface", fallback: "应用加载器")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 此 Minecraft 版本没有兼容的加载器版本。
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.currentText1`.
+        public static var noCompatibleLoader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.currentText1", table: "Interface", fallback: "此 Minecraft 版本没有兼容的加载器版本。")
         }
+        /// 上次配置：%1$@
+        ///
+        /// Resource: `Interface.appInstanceComponentsView.previousComponents`.
         public static func previousComponents(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceComponentsView.previousComponents", table: "Interface", fallback: "上次配置：%1$@", arguments: [.text(value0)])
         }

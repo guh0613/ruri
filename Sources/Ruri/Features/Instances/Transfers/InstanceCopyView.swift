@@ -23,49 +23,49 @@ struct InstanceCopyView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeading(title: recovery == nil ? Messages.AppInstanceCopyView.bodyText1.localized : Messages.AppInstanceCopyView.bodyText2.localized, subtitle: instance.name)
+            SectionHeading(title: recovery == nil ? Messages.AppInstanceCopyView.copyInstance.localized : Messages.AppInstanceCopyView.recoverCopy.localized, subtitle: instance.name)
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if let recovery {
-                        Label(recovery.committed ? Messages.AppInstanceCopyView.recoveryText1.localized : Messages.AppInstanceCopyView.recoveryText2.localized, systemImage: "arrow.counterclockwise").font(.headline)
-                        Text(Messages.AppInstanceCopyView.recoveryText3(String(describing: recovery.destination.path)).localized).font(.caption).textSelection(.enabled)
-                        Text(recovery.committed ? Messages.AppInstanceCopyView.recoveryText4.localized : Messages.AppInstanceCopyView.recoveryText5.localized).font(.callout).foregroundStyle(.secondary)
-                        Button(Messages.AppInstanceCopyView.recoveryText6.localized, systemImage: "folder") { NSWorkspace.shared.open(recovery.workspace) }
+                        Label(recovery.committed ? Messages.AppInstanceCopyView.copyCreated.localized : Messages.AppInstanceCopyView.copyIncomplete.localized, systemImage: "arrow.counterclockwise").font(.headline)
+                        Text(Messages.AppInstanceCopyView.targetLabel(recovery.destination.path).localized).font(.caption).textSelection(.enabled)
+                        Text(recovery.committed ? Messages.AppInstanceCopyView.copyValidationHelp.localized : Messages.AppInstanceCopyView.recoverCopyHelp.localized).font(.callout).foregroundStyle(.secondary)
+                        Button(Messages.AppInstanceCopyView.showWorkspace.localized, systemImage: "folder") { NSWorkspace.shared.open(recovery.workspace) }
                     } else {
-                        TextField(Messages.AppInstanceCopyView.recoveryText7.localized, text: $name).textFieldStyle(.roundedBorder).disabled(model.busy)
-                        Picker(Messages.AppInstanceCopyView.recoveryText8.localized, selection: $directoryID) {
-                            Text(Messages.AppInstanceCopyView.recoveryText9.localized).tag(GameDirectory.defaultID)
+                        TextField(Messages.AppInstanceCopyView.copyNameField.localized, text: $name).textFieldStyle(.roundedBorder).disabled(model.busy)
+                        Picker(Messages.AppInstanceCopyView.saveTo.localized, selection: $directoryID) {
+                            Text(Messages.AppInstanceCopyView.defaultInstanceDirectory.localized).tag(GameDirectory.defaultID)
                             ForEach(model.state.gameDirectories ?? []) { Text($0.name).tag($0.id) }
                         }.disabled(model.busy)
-                        Button(Messages.AppInstanceCopyView.recoveryText10.localized, systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
-                        Toggle(Messages.AppInstanceCopyView.recoveryText11.localized, isOn: $includeWorlds).disabled(model.busy)
-                        Toggle(Messages.AppInstanceCopyView.recoveryText12.localized, isOn: $includeBackups).disabled(model.busy)
+                        Button(Messages.AppInstanceCopyView.addTargetFolder.localized, systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
+                        Toggle(Messages.AppInstanceCopyView.copyWorlds.localized, isOn: $includeWorlds).disabled(model.busy)
+                        Toggle(Messages.AppInstanceCopyView.copyBackups.localized, isOn: $includeBackups).disabled(model.busy)
                         Text(instance.repositoryVersionID == nil && instance.importedInstallation == nil
-                             ? Messages.AppInstanceCopyView.recoveryText13.localized
-                             : Messages.AppInstanceCopyView.recoveryText14.localized)
+                             ? Messages.AppInstanceCopyView.copyManagedDescription.localized
+                             : Messages.AppInstanceCopyView.copyPortableDescription.localized)
                             .font(.callout).foregroundStyle(.secondary)
                         if let preview {
                             Divider()
-                            LabeledContent(Messages.AppInstanceCopyView.previewText1.localized, value: Messages.Common.filesAndSize(Int64(preview.fileCount), LocalizedFormat.bytes(preview.bytes)).localized)
-                            Text(Messages.AppInstanceCopyView.recoveryText3(String(describing: preview.destination.path)).localized).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                            if !preview.source.installed { Text(Messages.AppInstanceCopyView.previewText3.localized).font(.caption).foregroundStyle(.secondary) }
+                            LabeledContent(Messages.AppInstanceCopyView.files.localized, value: Messages.Common.filesAndSize(Int64(preview.fileCount), LocalizedFormat.bytes(preview.bytes)).localized)
+                            Text(Messages.AppInstanceCopyView.targetLabel(preview.destination.path).localized).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                            if !preview.source.installed { Text(Messages.AppInstanceCopyView.pendingInstallDescription.localized).font(.caption).foregroundStyle(.secondary) }
                         }
                     }
-                    if checking { ProgressView(Messages.AppInstanceCopyView.previewText4.localized) }
+                    if checking { ProgressView(Messages.AppInstanceCopyView.checkingInstance.localized) }
                     if let issue { Label(issue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(2)
             }
-            if model.busy { ProgressView(cancelling ? Messages.AppInstanceCopyView.issueText1.localized : model.activeActivity?.progress.stage ?? Messages.AppInstanceCopyView.issueText2.localized).controlSize(.small) }
+            if model.busy { ProgressView(cancelling ? Messages.AppInstanceCopyView.cancelingCopy.localized : model.activeActivity?.progress.stage ?? Messages.AppInstanceCopyView.processingInstance.localized).controlSize(.small) }
             HStack {
-                Button(Messages.AppInstanceCopyView.issueText3.localized, systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(checking || model.busy)
+                Button(Messages.AppInstanceCopyView.refreshPreview.localized, systemImage: "arrow.clockwise") { refresh = UUID() }.disabled(checking || model.busy)
                 Spacer()
-                Button(model.busy ? Messages.AppInstanceCopyView.issueText4.localized : Messages.AppInstanceCopyView.issueText5.localized) {
+                Button(model.busy ? Messages.AppInstanceCopyView.cancelCopy.localized : Messages.AppInstanceCopyView.close.localized) {
                     if model.busy { cancelling = true; model.operation?.cancel() } else { dismiss() }
                 }.keyboardShortcut(.cancelAction).disabled(cancelling || (model.busy && recovery != nil))
                 if let recovery {
-                    Button(recovery.committed ? Messages.AppInstanceCopyView.recoveryText15.localized : Messages.AppInstanceCopyView.recoveryText16.localized) { model.recoverInstanceCopy(recovery) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
+                    Button(recovery.committed ? Messages.AppInstanceCopyView.validateAndComplete.localized : Messages.AppInstanceCopyView.recoverAndKeepCopy.localized) { model.recoverInstanceCopy(recovery) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
                 } else {
-                    Button(Messages.AppInstanceCopyView.recoveryText17.localized) { if let preview { model.copyInstance(preview) { dismiss() } } }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
+                    Button(Messages.AppInstanceCopyView.createCopy.localized) { if let preview { model.copyInstance(preview) { dismiss() } } }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
                 }
             }
         }.padding(24).frame(width: 640, height: 535)
@@ -87,7 +87,7 @@ struct InstanceCopyView: View {
     }
     private func addDirectory() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppInstanceCopyView.panelText1.localized
+        panel.message = Messages.AppInstanceCopyView.minecraftFolderDescription.localized
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
             model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }

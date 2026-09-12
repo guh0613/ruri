@@ -14,11 +14,11 @@ extension GameInstance {
               (result.directoryID ?? GameDirectory.defaultID) == (directoryID ?? GameDirectory.defaultID),
               (runDirectory ?? .isolated) == (requested.runDirectory ?? .isolated),
               (result.runDirectory ?? .isolated) == (runDirectory ?? .isolated) else {
-            throw RuriError.message(Messages.CoreInstallationState.applyingInstallationText1)
+            throw RuriError.message(Messages.CoreInstallationState.installationChangedBeforeApply)
         }
         if runDirectory == .custom {
             guard let current = customRunDirectory, let original = requested.customRunDirectory, let installed = result.customRunDirectory,
-                  current.isSameLocation(as: original), current.isSameLocation(as: installed) else { throw RuriError.message(Messages.CoreInstallationState.installedText1) }
+                  current.isSameLocation(as: original), current.isSameLocation(as: installed) else { throw RuriError.message(Messages.CoreInstallationState.customDirectoryChangedDuringInstall) }
         }
         var current = self
         current.installed = result.installed; current.loaderVersion = result.loaderVersion; current.directoryID = result.directoryID

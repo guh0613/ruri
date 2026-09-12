@@ -18,7 +18,7 @@ struct InstanceMoveSnapshot: Sendable {
         var sharedGame: [FileTree.Entry] = [], sharedMetadata: [FileTree.Entry] = []
         if instance.runDirectory == .shared {
             let prior = previousDataPath(transactionID)
-            guard !before.contains(where: { $0.path == prior || $0.path.hasPrefix(prior + "/") }) else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.priorText1) }
+            guard !before.contains(where: { $0.path == prior || $0.path.hasPrefix(prior + "/") }) else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.retainedDirectoryExists) }
             let relocated: Set<String> = ["minecraft", "content.json", "world-backups"]
             files = before.map { entry in
                 guard relocated.contains(String(entry.path.split(separator: "/")[0])) else { return entry }
@@ -40,10 +40,10 @@ struct InstanceMoveSnapshot: Sendable {
         // Capture again because the mapped shared files do not all belong to the
         // metadata tree whose identity and digest guard source retirement.
         guard try FileTree.entries(in: metadata, ignoringTransientFiles: false) == before,
-              try FileTreeManifest.capture(in: metadata) == original else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.destinationText1) }
+              try FileTreeManifest.capture(in: metadata) == original else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.instanceFilesChanged) }
         if instance.runDirectory == .shared {
             guard try FileTree.entries(in: paths.game(instance.id), excluding: [".ruri"], ignoringTransientFiles: false) == sharedGame,
-                  try sharedContentEntries(instance: instance, paths: paths) == sharedMetadata else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.destinationText2) }
+                  try sharedContentEntries(instance: instance, paths: paths) == sharedMetadata else { throw RuriError.message(Messages.CoreInstanceMoveSnapshot.sharedDirectoryChanged) }
         }
         return .init(entries: files, original: original, destination: destination, hasPreviousData: hasPreviousData)
     }
@@ -57,7 +57,7 @@ struct InstanceMoveSnapshot: Sendable {
     func requireUnchanged(instance: GameInstance, paths: LauncherPaths, transactionID: UUID) throws {
         let current = try Self.capture(instance: instance, paths: paths, transactionID: transactionID)
         guard current.original == original, current.destination == destination, current.entries == entries else {
-            throw RuriError.message(Messages.CoreInstanceMoveSnapshot.currentText1)
+            throw RuriError.message(Messages.CoreInstanceMoveSnapshot.instanceContentsChanged)
         }
     }
 }

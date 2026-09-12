@@ -24,36 +24,36 @@ struct CurseForgeInstallView: View {
     private var packIsManual: Bool { project.allowModDistribution == false || selected?.downloadURL == nil }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            SectionHeading(title: project.name, subtitle: "CurseForge · \(project.authors?.map(\.name).joined(separator: ", ") ?? Messages.AppCurseForgeInstallView.bodyText1.localized)")
+            SectionHeading(title: project.name, subtitle: "CurseForge · \(project.authors?.map(\.name).joined(separator: ", ") ?? Messages.AppCurseForgeInstallView.communityContent.localized)")
             if let plan {
-                Text(Messages.AppCurseForgeInstallView.planText1(String(describing: plan.instance.name), Int64(plan.files.count)).localized).foregroundStyle(.secondary)
+                Text(Messages.AppCurseForgeInstallView.installPlan(plan.instance.name, Int64(plan.files.count)).localized).foregroundStyle(.secondary)
                 ScrollView { CurseForgePlanFiles(files: plan.files, manualFiles: $manualFiles) }.frame(maxHeight: 360)
             } else {
                 Text(project.summary).font(.callout).foregroundStyle(.secondary).lineLimit(4)
                 if !isPack {
-                    Picker(Messages.AppCurseForgeInstallView.planText2.localized, selection: $instanceID) {
-                        Text(Messages.AppCurseForgeInstallView.planText3.localized).tag(nil as UUID?)
+                    Picker(Messages.AppCurseForgeInstallView.installToInstance.localized, selection: $instanceID) {
+                        Text(Messages.AppCurseForgeInstallView.chooseInstance.localized).tag(nil as UUID?)
                         ForEach(model.state.instances.filter { $0.installed && (project.contentType != "mod" || $0.loader != .vanilla) }) { Text($0.name + " · " + $0.subtitle).tag(Optional($0.id)) }
                     }.disabled(resolving)
                 }
-                if loading { ProgressView(Messages.AppCurseForgeInstallView.planText4.localized) }
+                if loading { ProgressView(Messages.AppCurseForgeInstallView.findCompatibleVersions.localized) }
                 else if !versions.isEmpty {
-                    Picker(Messages.AppCurseForgeInstallView.planText5.localized, selection: $selectedID) { ForEach(versions) { Text($0.displayName + ($0.releaseType == 2 ? " · Beta" : $0.releaseType == 3 ? " · Alpha" : "")).tag(Optional($0.id)) } }.disabled(resolving)
-                } else { Text(isPack || instance != nil ? Messages.AppCurseForgeInstallView.planText6.localized : Messages.AppCurseForgeInstallView.planText7.localized).foregroundStyle(.secondary) }
+                    Picker(Messages.AppCurseForgeInstallView.contentVersion.localized, selection: $selectedID) { ForEach(versions) { Text($0.displayName + ($0.releaseType == 2 ? " · Beta" : $0.releaseType == 3 ? " · Alpha" : "")).tag(Optional($0.id)) } }.disabled(resolving)
+                } else { Text(isPack || instance != nil ? Messages.AppCurseForgeInstallView.noCompatibleVersions.localized : Messages.AppCurseForgeInstallView.instanceSelectionNotice.localized).foregroundStyle(.secondary) }
                 if total > 50 {
-                    HStack { Button(Messages.AppCurseForgeInstallView.planText8.localized) { offset = max(0, offset - 50) }.disabled(offset == 0 || loading || resolving); Text(Messages.AppCurseForgeInstallView.planText9(Int64(offset / 50 + 1)).localized).font(.caption); Button(Messages.AppCurseForgeInstallView.planText10.localized) { offset += 50 }.disabled(offset + 50 >= total || loading || resolving) }
+                    HStack { Button(Messages.AppCurseForgeInstallView.previousPage.localized) { offset = max(0, offset - 50) }.disabled(offset == 0 || loading || resolving); Text(Messages.AppCurseForgeInstallView.pageNumber(Int64(offset / 50 + 1)).localized).font(.caption); Button(Messages.AppCurseForgeInstallView.nextPage.localized) { offset += 50 }.disabled(offset + 50 >= total || loading || resolving) }
                 }
                 if isPack, let file = selected, packIsManual {
-                    CurseForgeFileRow(file: file, title: Messages.AppCurseForgeInstallView.fileText1.localized, page: project.page(for: file.id), manual: true, selectedURL: Binding(get: { manualFiles[file.id] }, set: { manualFiles[file.id] = $0 }))
+                    CurseForgeFileRow(file: file, title: Messages.AppCurseForgeInstallView.packManifest.localized, page: project.page(for: file.id), manual: true, selectedURL: Binding(get: { manualFiles[file.id] }, set: { manualFiles[file.id] = $0 }))
                 }
-                if project.contentType == "shader" { Text(Messages.AppCurseForgeInstallView.fileText2.localized).font(.caption).foregroundStyle(.secondary) }
+                if project.contentType == "shader" { Text(Messages.AppCurseForgeInstallView.shaderpackNotice.localized).font(.caption).foregroundStyle(.secondary) }
             }
-            if resolving { ProgressView(Messages.AppCurseForgeInstallView.fileText3.localized) }
+            if resolving { ProgressView(Messages.AppCurseForgeInstallView.resolveDependencies.localized) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange) }
             HStack {
-                if plan != nil { Button(Messages.AppCurseForgeInstallView.errorText1.localized) { plan = nil } }
+                if plan != nil { Button(Messages.AppCurseForgeInstallView.back.localized) { plan = nil } }
                 Spacer(); Button(Messages.Common.cancel.localized) { resolution?.cancel(); dismiss() }.keyboardShortcut(.cancelAction)
-                Button(plan == nil ? (isPack ? Messages.AppCurseForgeInstallView.errorText2.localized : Messages.AppCurseForgeInstallView.errorText3.localized) : Messages.AppCurseForgeInstallView.errorText4.localized) { advance() }.buttonStyle(.borderedProminent).disabled(!canContinue)
+                Button(plan == nil ? (isPack ? Messages.AppCurseForgeInstallView.readPack.localized : Messages.AppCurseForgeInstallView.viewInstallPlan.localized) : Messages.AppCurseForgeInstallView.install.localized) { advance() }.buttonStyle(.borderedProminent).disabled(!canContinue)
             }
         }.padding(26).frame(width: 570).interactiveDismissDisabled(resolving)
         .onAppear { instanceID = model.selected.flatMap { project.contentType == "mod" && $0.loader == .vanilla ? nil : $0.id } }
@@ -105,9 +105,9 @@ struct CurseForgePlanView: View {
     @State private var manualFiles: [Int: URL] = [:]
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            SectionHeading(title: Messages.AppCurseForgeInstallView.bodyText2(String(describing: plan.title)).localized, subtitle: Messages.AppCurseForgeInstallView.bodyText3(String(describing: plan.instance.name), Int64(plan.files.count)).localized)
+            SectionHeading(title: Messages.AppCurseForgeInstallView.updatePack(plan.title).localized, subtitle: Messages.AppCurseForgeInstallView.updateSummary(plan.instance.name, Int64(plan.files.count)).localized)
             ScrollView { CurseForgePlanFiles(files: plan.files, manualFiles: $manualFiles) }.frame(maxHeight: 360)
-            HStack { Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction); Spacer(); Button(Messages.AppCurseForgeInstallView.bodyText4.localized) { model.installCurseForge(plan, manualFiles: manualFiles); dismiss() }.buttonStyle(.borderedProminent).disabled(model.busy || model.isInstanceInUse(plan.instance.id) || !plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil }) }
+            HStack { Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction); Spacer(); Button(Messages.AppCurseForgeInstallView.update.localized) { model.installCurseForge(plan, manualFiles: manualFiles); dismiss() }.buttonStyle(.borderedProminent).disabled(model.busy || model.isInstanceInUse(plan.instance.id) || !plan.manualFiles.allSatisfy { manualFiles[$0.id] != nil }) }
         }.padding(26).frame(width: 570)
     }
 }

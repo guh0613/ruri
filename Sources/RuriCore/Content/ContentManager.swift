@@ -5,7 +5,7 @@ import ZIPFoundation
 public enum ContentKind: String, Codable, CaseIterable, Sendable, Identifiable {
     case mod, resourcepack, shader
     public var id: String { rawValue }
-    public var title: String { switch self { case .mod: Messages.CoreContentManager.titleText1.localized; case .resourcepack: Messages.CoreContentManager.titleText2.localized; case .shader: Messages.CoreContentManager.titleText3.localized } }
+    public var title: String { switch self { case .mod: Messages.CoreContentManager.mods.localized; case .resourcepack: Messages.CoreContentManager.resourcePacks.localized; case .shader: Messages.CoreContentManager.shaders.localized } }
     public var folder: String { switch self { case .mod: "mods"; case .resourcepack: "resourcepacks"; case .shader: "shaderpacks" } }
     public var fileExtension: String { self == .mod ? "jar" : "zip" }
     public var fileExtensions: [String] { self == .mod ? ["jar", "litemod"] : ["zip"] }
@@ -86,11 +86,11 @@ public actor ContentManager {
     }
     func contentURL(_ path: String) throws -> URL {
         let pieces = path.split(separator: "/", omittingEmptySubsequences: false)
-        guard pieces.count == 2, ContentKind.allCases.contains(where: { $0.folder == pieces[0] }) else { throw RuriError.message(Messages.CoreContentManager.piecesText1(String(describing: path))) }
+        guard pieces.count == 2, ContentKind.allCases.contains(where: { $0.folder == pieces[0] }) else { throw RuriError.message(Messages.CoreContentManager.invalidContentPath(path)) }
         let directory = root.appendingPathComponent(String(pieces[0]))
         let target = directory.appendingPathComponent(String(pieces[1]))
         for url in [directory, target] where (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) != nil {
-            throw RuriError.message(Messages.CoreContentManager.targetText1(String(describing: url.lastPathComponent)))
+            throw RuriError.message(Messages.CoreContentManager.symlinkUnmodified(url.lastPathComponent))
         }
         return try LauncherPaths.safePath(String(pieces[1]), within: directory)
     }
@@ -129,7 +129,7 @@ public actor ContentManager {
         let journal = try JSONDecoder().decode(Journal.self, from: Data(contentsOf: journalURL))
         for path in journal.originals {
             let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
-            guard journal.affected.contains(path), (try? fm.attributesOfItem(atPath: backup.path)[.type]) as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentManager.backupText1(String(describing: path), String(describing: transactionURL.path))) }
+            guard journal.affected.contains(path), (try? fm.attributesOfItem(atPath: backup.path)[.type]) as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentManager.missingRestoreBackup(path, transactionURL.path)) }
         }
         // Backups remain in place throughout recovery so another interrupted
         // recovery can safely repeat the same operation.
@@ -156,22 +156,22 @@ public actor ContentManager {
                 let actual = oldRecords.first { $0.id == item.record.id }
                 let present = try actual.map { FileManager.default.fileExists(atPath: try contentURL($0.relativePath).path) } ?? true
                 guard actual == expected, present else {
-                    throw RuriError.message(Messages.CoreContentManager.presentText1(String(describing: item.record.title)))
+                    throw RuriError.message(Messages.CoreContentManager.contentChangedAfterPreview(item.record.title))
                 }
             }
         }
         var installs = incoming
-        guard Set(installs.map { $0.record.id }).count == installs.count else { throw RuriError.message(Messages.CoreContentManager.installsText1) }
+        guard Set(installs.map { $0.record.id }).count == installs.count else { throw RuriError.message(Messages.CoreContentManager.duplicateProjectVersions) }
         // Preserve a user's disabled state when updating a project.
         for i in installs.indices {
             if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
             let record = installs[i].record
-            guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.recordText1(String(describing: record.filename))) }
+            guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.invalidContentFilename(record.filename)) }
             let check = DownloadItem(url: nil, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)
-            guard DownloadManager.valid(installs[i].source, item: check) else { throw RuriError.message(Messages.CoreContentManager.checkText1(String(describing: record.filename))) }
+            guard DownloadManager.valid(installs[i].source, item: check) else { throw RuriError.message(Messages.CoreContentManager.pendingFileValidationFailed(record.filename)) }
         }
         let newPaths = installs.map { $0.record.relativePath }
-        guard Set(newPaths).count == newPaths.count else { throw RuriError.message(Messages.CoreContentManager.newPathsText1) }
+        guard Set(newPaths).count == newPaths.count else { throw RuriError.message(Messages.CoreContentManager.duplicateContentFilenames) }
         let incomingIDs = Set(installs.map { $0.record.id })
         let futureRecords = oldRecords.filter { !incomingIDs.contains($0.id) } + installs.map(\.record)
         for record in installs.map(\.record) where record.enabled {
@@ -183,20 +183,20 @@ public actor ContentManager {
                     return FileManager.default.fileExists(atPath: url.path)
                 }
             }
-            guard unavailable.isEmpty else { throw RuriError.message(Messages.CoreContentManager.urlText1(String(describing: record.title))) }
+            guard unavailable.isEmpty else { throw RuriError.message(Messages.CoreContentManager.requiredDependencyDisabled(record.title)) }
         }
         let replaced = oldRecords.filter { incomingIDs.contains($0.id) }
         for old in replaced {
             let file = try contentURL(old.relativePath)
             if fm.fileExists(atPath: file.path) {
                 let check = DownloadItem(url: nil, destination: file, sha1: old.sha1, sha512: old.sha512, md5: old.md5, size: old.size)
-                guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreContentManager.checkText2(String(describing: old.filename))) }
+                guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreContentManager.externallyModifiedContent(old.filename)) }
             }
         }
         let replacedPaths = Set(replaced.map(\.relativePath))
         for path in newPaths where !replacedPaths.contains(path) {
             let target = try contentURL(path)
-            guard !fm.fileExists(atPath: target.path) else { throw RuriError.message(Messages.CoreContentManager.targetText2(String(describing: target.lastPathComponent))) }
+            guard !fm.fileExists(atPath: target.path) else { throw RuriError.message(Messages.CoreContentManager.targetFileConflict(target.lastPathComponent)) }
         }
         let affected = Array(Set(newPaths).union(replacedPaths)).sorted()
         try changeFiles(affected: affected, oldRecords: oldRecords) {
@@ -238,12 +238,12 @@ public actor ContentManager {
         let existing = try scan(kind)
         var importedIDs = Set<String>()
         for file in files {
-            guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.importedIDsText2(String(describing: kind.fileExtensions.map { "." + $0 }.joined(separator: Messages.CoreContentManager.importedIDsText1.localized)))) }
+            guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.chooseFiles(String(describing: kind.fileExtensions.map { "." + $0 }.joined(separator: Messages.CoreContentManager.importedIDsSeparator.localized)))) }
             _ = try Archive(url: file, accessMode: .read)
             let size = try file.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
             let info = kind == .mod ? Self.modInfo(file) : nil
-            if let id = info?.id, existing.contains(where: { $0.modID == id }) || !importedIDs.insert(id).inserted { throw RuriError.message(Messages.CoreContentManager.idText1(String(describing: info?.name ?? id))) }
-            let record = ManagedContent(provider: "local", projectID: UUID().uuidString, versionID: "local", title: info?.name ?? file.deletingPathExtension().lastPathComponent, versionName: info?.version ?? Messages.CoreContentManager.recordText2.localized, kind: kind, filename: file.lastPathComponent, size: Int64(size))
+            if let id = info?.id, existing.contains(where: { $0.modID == id }) || !importedIDs.insert(id).inserted { throw RuriError.message(Messages.CoreContentManager.duplicateModID(String(describing: info?.name ?? id))) }
+            let record = ManagedContent(provider: "local", projectID: UUID().uuidString, versionID: "local", title: info?.name ?? file.deletingPathExtension().lastPathComponent, versionName: info?.version ?? Messages.CoreContentManager.localFile.localized, kind: kind, filename: file.lastPathComponent, size: Int64(size))
             plans.append(ContentInstallation(record: record, source: file))
         }
         try install(plans)

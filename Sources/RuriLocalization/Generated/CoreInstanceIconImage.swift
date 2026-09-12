@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceIconImage {
-        public static var sizeText1: LocalizedMessage {
+        /// 请选择不超过 20 MB 的图片文件。
+        ///
+        /// Resource: `Errors.coreInstanceIconImage.sizeText1`.
+        public static var imageTooLarge: LocalizedMessage {
             .init(key: "coreInstanceIconImage.sizeText1", table: "Errors", fallback: "请选择不超过 20 MB 的图片文件。")
         }
-        public static var imageText1: LocalizedMessage {
+        /// 无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。
+        ///
+        /// Resource: `Errors.coreInstanceIconImage.imageText1`.
+        public static var unsupportedImageFormat: LocalizedMessage {
             .init(key: "coreInstanceIconImage.imageText1", table: "Errors", fallback: "无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。")
         }
-        public static var destinationText1: LocalizedMessage {
+        /// 无法保存实例图标。
+        ///
+        /// Resource: `Errors.coreInstanceIconImage.destinationText1`.
+        public static var iconSaveFailed: LocalizedMessage {
             .init(key: "coreInstanceIconImage.destinationText1", table: "Errors", fallback: "无法保存实例图标。")
         }
-        public static var heightText1: LocalizedMessage {
+        /// 实例图标无效，请重新选择图片。
+        ///
+        /// Resource: `Errors.coreInstanceIconImage.heightText1`.
+        public static var invalidIconImage: LocalizedMessage {
             .init(key: "coreInstanceIconImage.heightText1", table: "Errors", fallback: "实例图标无效，请重新选择图片。")
         }
         static let definitions: [String: MessageDefinition] = [

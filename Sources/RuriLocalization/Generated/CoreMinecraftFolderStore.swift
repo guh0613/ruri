@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftFolderStore {
-        public static var currentText1: LocalizedMessage {
+        /// 导入或复制尚需完成，请处理实例库中的工作文件。
+        ///
+        /// Resource: `Core.coreMinecraftFolderStore.currentText1`.
+        public static var pendingWorkFiles: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.currentText1", table: "Core", fallback: "导入或复制尚需完成，请处理实例库中的工作文件。")
         }
-        public static var currentText2: LocalizedMessage {
+        /// 版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。
+        ///
+        /// Resource: `Core.coreMinecraftFolderStore.currentText2`.
+        public static var versionDirectoryMissing: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.currentText2", table: "Core", fallback: "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。")
         }
-        public static var retainedText1: LocalizedMessage {
+        /// 文件夹列表已改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.retainedText1`.
+        public static var folderListChanged: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.retainedText1", table: "Errors", fallback: "文件夹列表已改变，请刷新后重试。")
         }
-        public static var existingText1: LocalizedMessage {
+        /// 此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.existingText1`.
+        public static var alreadyAddedFolder: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.existingText1", table: "Errors", fallback: "此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 无法识别此文件夹的 Ruri 标记。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.infoText1`.
+        public static var invalidRuriMarker: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.infoText1", table: "Errors", fallback: "无法识别此文件夹的 Ruri 标记。")
         }
-        public static var markerText1: LocalizedMessage {
+        /// 此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.markerText1`.
+        public static var duplicateFolder: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.markerText1", table: "Errors", fallback: "此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。")
         }
-        public static var locatedText1: LocalizedMessage {
+        /// 原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.locatedText1`.
+        public static var originalFolderAvailable: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.locatedText1", table: "Errors", fallback: "原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
         }
-        public static var catalogText1: LocalizedMessage {
+        /// 文件夹位置已改变，请重新刷新。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.catalogText1`.
+        public static var locationChanged: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.catalogText1", table: "Errors", fallback: "文件夹位置已改变，请重新刷新。")
         }
-        public static func targetText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 无法接入“%1$@”的自定义游戏目录：%2$@
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.targetText1`.
+        public static func customDirectoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.targetText1", table: "Errors", fallback: "无法接入“%1$@”的自定义游戏目录：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var versionIDText1: LocalizedMessage {
+        /// 找不到本地版本。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.versionIDText1`.
+        public static var localVersionMissing: LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.versionIDText1", table: "Errors", fallback: "找不到本地版本。")
         }
-        public static func catalogText2(_ value0: String) -> LocalizedMessage {
+        /// 请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.catalogText2`.
+        public static func dependencyCheckRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.catalogText2", table: "Errors", fallback: "请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", arguments: [.text(value0)])
         }
-        public static func resolvedText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”依赖此版本，请先处理依赖它的版本。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.resolvedText1`.
+        public static func dependencyExists(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.resolvedText1", table: "Errors", fallback: "“%1$@”依赖此版本，请先处理依赖它的版本。", arguments: [.text(value0)])
         }
-        public static func stateText1(_ value0: String) -> LocalizedMessage {
+        /// 此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。
+        ///
+        /// Resource: `Errors.coreMinecraftFolderStore.stateText1`.
+        public static func duplicateVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftFolderStore.stateText1", table: "Errors", fallback: "此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

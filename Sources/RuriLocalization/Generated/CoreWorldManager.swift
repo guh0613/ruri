@@ -3,85 +3,166 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldManager {
-        public static var backupText1: LocalizedMessage {
+        /// 手动备份
+        ///
+        /// Resource: `Core.coreWorldManager.backupText1`.
+        public static var manualBackup: LocalizedMessage {
             .init(key: "coreWorldManager.backupText1", table: "Core", fallback: "手动备份")
         }
-        public static var lockText1: LocalizedMessage {
+        /// 恢复前自动备份
+        ///
+        /// Resource: `Core.coreWorldManager.lockText1`.
+        public static var automaticBackup: LocalizedMessage {
             .init(key: "coreWorldManager.lockText1", table: "Core", fallback: "恢复前自动备份")
         }
-        public static var baseText1: LocalizedMessage {
+        /// 导入的世界
+        ///
+        /// Resource: `Core.coreWorldManager.baseText1`.
+        public static var importedWorld: LocalizedMessage {
             .init(key: "coreWorldManager.baseText1", table: "Core", fallback: "导入的世界")
         }
-        public static var readerText1: LocalizedMessage {
+        /// 无法读取存档信息，仍可备份文件。
+        ///
+        /// Resource: `Core.coreWorldManager.readerText1`.
+        public static var worldInfoReadFailed: LocalizedMessage {
             .init(key: "coreWorldManager.readerText1", table: "Core", fallback: "无法读取存档信息，仍可备份文件。")
         }
-        public static var modesText1: LocalizedMessage {
+        /// 生存
+        ///
+        /// Resource: `Core.coreWorldManager.modesText1`.
+        public static var survivalMode: LocalizedMessage {
             .init(key: "coreWorldManager.modesText1", table: "Core", fallback: "生存")
         }
-        public static var modesText2: LocalizedMessage {
+        /// 创造
+        ///
+        /// Resource: `Core.coreWorldManager.modesText2`.
+        public static var creativeMode: LocalizedMessage {
             .init(key: "coreWorldManager.modesText2", table: "Core", fallback: "创造")
         }
-        public static var modesText3: LocalizedMessage {
+        /// 冒险
+        ///
+        /// Resource: `Core.coreWorldManager.modesText3`.
+        public static var adventureMode: LocalizedMessage {
             .init(key: "coreWorldManager.modesText3", table: "Core", fallback: "冒险")
         }
-        public static var modesText4: LocalizedMessage {
+        /// 旁观
+        ///
+        /// Resource: `Core.coreWorldManager.modesText4`.
+        public static var spectatorMode: LocalizedMessage {
             .init(key: "coreWorldManager.modesText4", table: "Core", fallback: "旁观")
         }
-        public static var modeText1: LocalizedMessage {
+        /// 极限
+        ///
+        /// Resource: `Core.coreWorldManager.modeText1`.
+        public static var hardcoreMode: LocalizedMessage {
             .init(key: "coreWorldManager.modeText1", table: "Core", fallback: "极限")
         }
+        /// %1$@ 恢复
+        ///
+        /// Resource: `Core.coreWorldManager.restoredFolder`.
         public static func restoredFolder(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldManager.restoredFolder", table: "Core", fallback: "%1$@ 恢复", arguments: [.text(value0)])
         }
-        public static var worldURLText1: LocalizedMessage {
+        /// 无效的存档目录名
+        ///
+        /// Resource: `Errors.coreWorldManager.worldURLText1`.
+        public static var invalidWorldDirectoryName: LocalizedMessage {
             .init(key: "coreWorldManager.worldURLText1", table: "Errors", fallback: "无效的存档目录名")
         }
-        public static var targetText1: LocalizedMessage {
+        /// 存档管理不修改符号链接目录
+        ///
+        /// Resource: `Errors.coreWorldManager.targetText1`.
+        public static var symlinkDirectoryUnmodified: LocalizedMessage {
             .init(key: "coreWorldManager.targetText1", table: "Errors", fallback: "存档管理不修改符号链接目录")
         }
-        public static var worldText1: LocalizedMessage {
+        /// 找不到存档的 level.dat
+        ///
+        /// Resource: `Errors.coreWorldManager.worldText1`.
+        public static var levelDataMissing: LocalizedMessage {
             .init(key: "coreWorldManager.worldText1", table: "Errors", fallback: "找不到存档的 level.dat")
         }
-        public static var sourceText1: LocalizedMessage {
+        /// 备份缺少存档数据
+        ///
+        /// Resource: `Errors.coreWorldManager.sourceText1`.
+        public static var backupDataMissing: LocalizedMessage {
             .init(key: "coreWorldManager.sourceText1", table: "Errors", fallback: "备份缺少存档数据")
         }
-        public static func journalText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 存档恢复需要检查，文件保留在 %1$@。%2$@
+        ///
+        /// Resource: `Errors.coreWorldManager.journalText1`.
+        public static func restoreNeedsReview(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreWorldManager.journalText1", table: "Errors", fallback: "存档恢复需要检查，文件保留在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var hasTargetText1: LocalizedMessage {
+        /// 恢复目录与现有存档发生冲突，已保留两份数据
+        ///
+        /// Resource: `Errors.coreWorldManager.hasTargetText1`.
+        public static var restoreDirectoryConflict: LocalizedMessage {
             .init(key: "coreWorldManager.hasTargetText1", table: "Errors", fallback: "恢复目录与现有存档发生冲突，已保留两份数据")
         }
-        public static var hasTargetText2: LocalizedMessage {
+        /// 恢复前的存档目录缺失，请使用自动备份恢复
+        ///
+        /// Resource: `Errors.coreWorldManager.hasTargetText2`.
+        public static var originalWorldMissing: LocalizedMessage {
             .init(key: "coreWorldManager.hasTargetText2", table: "Errors", fallback: "恢复前的存档目录缺失，请使用自动备份恢复")
         }
-        public static var candidateText1: LocalizedMessage {
+        /// 请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件
+        ///
+        /// Resource: `Errors.coreWorldManager.candidateText1`.
+        public static var invalidWorldFolder: LocalizedMessage {
             .init(key: "coreWorldManager.candidateText1", table: "Errors", fallback: "请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件")
         }
-        public static var worldText2: LocalizedMessage {
+        /// 存档不存在
+        ///
+        /// Resource: `Errors.coreWorldManager.worldText2`.
+        public static var worldMissing: LocalizedMessage {
             .init(key: "coreWorldManager.worldText2", table: "Errors", fallback: "存档不存在")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 备份不属于当前实例
+        ///
+        /// Resource: `Errors.coreWorldManager.fileText1`.
+        public static var backupWrongInstance: LocalizedMessage {
             .init(key: "coreWorldManager.fileText1", table: "Errors", fallback: "备份不属于当前实例")
         }
-        public static var nameText1: LocalizedMessage {
+        /// 无法生成唯一存档目录
+        ///
+        /// Resource: `Errors.coreWorldManager.nameText1`.
+        public static var uniqueWorldDirectory: LocalizedMessage {
             .init(key: "coreWorldManager.nameText1", table: "Errors", fallback: "无法生成唯一存档目录")
         }
-        public static var entryText1: LocalizedMessage {
+        /// 不是有效的 Ruri 存档备份
+        ///
+        /// Resource: `Errors.coreWorldManager.entryText1`.
+        public static var invalidBackup: LocalizedMessage {
             .init(key: "coreWorldManager.entryText1", table: "Errors", fallback: "不是有效的 Ruri 存档备份")
         }
-        public static var checksumText1: LocalizedMessage {
+        /// 备份元数据校验失败
+        ///
+        /// Resource: `Errors.coreWorldManager.checksumText1`.
+        public static var checksumFailed: LocalizedMessage {
             .init(key: "coreWorldManager.checksumText1", table: "Errors", fallback: "备份元数据校验失败")
         }
-        public static var resultText1: LocalizedMessage {
+        /// 备份版本不受支持
+        ///
+        /// Resource: `Errors.coreWorldManager.resultText1`.
+        public static var unsupportedBackupVersion: LocalizedMessage {
             .init(key: "coreWorldManager.resultText1", table: "Errors", fallback: "备份版本不受支持")
         }
-        public static var fileText2: LocalizedMessage {
+        /// NBT 文件过大
+        ///
+        /// Resource: `Errors.coreWorldManager.fileText2`.
+        public static var nbtTooLarge: LocalizedMessage {
             .init(key: "coreWorldManager.fileText2", table: "Errors", fallback: "NBT 文件过大")
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法读取存档锁文件
+        ///
+        /// Resource: `Errors.coreWorldManager.fdText1`.
+        public static var lockReadFailed: LocalizedMessage {
             .init(key: "coreWorldManager.fdText1", table: "Errors", fallback: "无法读取存档锁文件")
         }
-        public static var lockText2: LocalizedMessage {
+        /// 存档正在被游戏使用，请退出该世界后重试。
+        ///
+        /// Resource: `Errors.coreWorldManager.lockText2`.
+        public static var worldInUse: LocalizedMessage {
             .init(key: "coreWorldManager.lockText2", table: "Errors", fallback: "存档正在被游戏使用，请退出该世界后重试。")
         }
         static let definitions: [String: MessageDefinition] = [

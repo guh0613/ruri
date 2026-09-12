@@ -3,121 +3,238 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceMoveView {
-        public static var directoryNameText1: LocalizedMessage {
+        /// 默认实例文件夹
+        ///
+        /// Resource: `Interface.appInstanceMoveView.directoryNameText1`.
+        public static var defaultInstanceDirectory: LocalizedMessage {
             .init(key: "appInstanceMoveView.directoryNameText1", table: "Interface", fallback: "默认实例文件夹")
         }
-        public static var directoryNameText2: LocalizedMessage {
+        /// 无法访问的文件夹
+        ///
+        /// Resource: `Interface.appInstanceMoveView.directoryNameText2`.
+        public static var inaccessibleDirectory: LocalizedMessage {
             .init(key: "appInstanceMoveView.directoryNameText2", table: "Interface", fallback: "无法访问的文件夹")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 移动实例
+        ///
+        /// Resource: `Interface.appInstanceMoveView.bodyText1`.
+        public static var moveInstance: LocalizedMessage {
             .init(key: "appInstanceMoveView.bodyText1", table: "Interface", fallback: "移动实例")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 恢复实例移动
+        ///
+        /// Resource: `Interface.appInstanceMoveView.bodyText2`.
+        public static var recoverMove: LocalizedMessage {
             .init(key: "appInstanceMoveView.bodyText2", table: "Interface", fallback: "恢复实例移动")
         }
-        public static var recoveryText1: LocalizedMessage {
+        /// 目标实例已就绪，等待清理
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText1`.
+        public static var targetReady: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText1", table: "Interface", fallback: "目标实例已就绪，等待清理")
         }
-        public static var recoveryText2: LocalizedMessage {
+        /// 移动尚未完成，原实例仍保留
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText2`.
+        public static var moveIncomplete: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText2", table: "Interface", fallback: "移动尚未完成，原实例仍保留")
         }
-        public static var recoveryText3: LocalizedMessage {
+        /// 原位置
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText3`.
+        public static var sourceLocation: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText3", table: "Interface", fallback: "原位置")
         }
-        public static var recoveryText4: LocalizedMessage {
+        /// 目标位置
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText4`.
+        public static var targetLocation: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText4", table: "Interface", fallback: "目标位置")
         }
-        public static var recoveryText5: LocalizedMessage {
+        /// 校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText5`.
+        public static var moveValidationHelp: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText5", table: "Interface", fallback: "校验目标和原文件后继续清理。原文件有变化或希望自行核对时，可以保留原文件完成移动。")
         }
-        public static var recoveryText6: LocalizedMessage {
+        /// 恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText6`.
+        public static var recoverMoveHelp: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText6", table: "Interface", fallback: "恢复会收回本次发布的文件，并保留工作副本；原实例可以继续使用。")
         }
-        public static var recoveryText7: LocalizedMessage {
+        /// 查看工作区
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText7`.
+        public static var showWorkspace: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText7", table: "Interface", fallback: "查看工作区")
         }
-        public static var recoveryText8: LocalizedMessage {
+        /// 查看原文件
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText8`.
+        public static var showSource: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText8", table: "Interface", fallback: "查看原文件")
         }
-        public static var recoveryText9: LocalizedMessage {
+        /// 查看目标
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText9`.
+        public static var showTarget: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText9", table: "Interface", fallback: "查看目标")
         }
-        public static var recoveryText10: LocalizedMessage {
+        /// 当前文件夹
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText10`.
+        public static var currentFolder: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText10", table: "Interface", fallback: "当前文件夹")
         }
-        public static var recoveryText11: LocalizedMessage {
+        /// 移动到
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText11`.
+        public static var moveTo: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText11", table: "Interface", fallback: "移动到")
         }
-        public static var recoveryText12: LocalizedMessage {
+        /// 选择目标文件夹
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText12`.
+        public static var chooseTargetFolder: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText12", table: "Interface", fallback: "选择目标文件夹")
         }
-        public static var recoveryText13: LocalizedMessage {
+        /// 添加目标文件夹…
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText13`.
+        public static var addTargetFolder: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText13", table: "Interface", fallback: "添加目标文件夹…")
         }
-        public static var recoveryText14: LocalizedMessage {
+        /// 实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText14`.
+        public static var moveSettingsPreserved: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText14", table: "Interface", fallback: "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。Java 和公共资源继续共用。")
         }
-        public static var recoveryText15: LocalizedMessage {
+        /// 实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText15`.
+        public static var moveContentPreserved: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText15", table: "Interface", fallback: "实例名称、收藏、启动设置、游玩时长和运行历史都会保留。本地游戏文件与依赖随实例移动，Java 继续共用。")
         }
-        public static var recoveryText16: LocalizedMessage {
+        /// 存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText16`.
+        public static var moveWorldsPreserved: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText16", table: "Interface", fallback: "存档、模组、备份和游戏设置随实例移动；目标校验通过后才会清理原文件。")
         }
-        public static var recoveryText17: LocalizedMessage {
+        /// 当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText17`.
+        public static var moveSharedContent: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText17", table: "Interface", fallback: "当前共享游戏内容和备份会复制到目标，改为独立运行。原共享目录会保留，供其他实例继续使用。")
         }
-        public static var recoveryText18: LocalizedMessage {
+        /// 移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText18`.
+        public static var moveCustomDirectory: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText18", table: "Interface", fallback: "移动实例记录和历史，自定义运行目录中的游戏文件与备份保持原处。")
         }
-        public static var previewText1: LocalizedMessage {
+        /// 移动文件
+        ///
+        /// Resource: `Interface.appInstanceMoveView.previewText1`.
+        public static var moveFiles: LocalizedMessage {
             .init(key: "appInstanceMoveView.previewText1", table: "Interface", fallback: "移动文件")
         }
-        public static var previewText3: LocalizedMessage {
+        /// 目标实例
+        ///
+        /// Resource: `Interface.appInstanceMoveView.previewText3`.
+        public static var moveTargetInstance: LocalizedMessage {
             .init(key: "appInstanceMoveView.previewText3", table: "Interface", fallback: "目标实例")
         }
-        public static var keptText1: LocalizedMessage {
+        /// 保留的运行目录
+        ///
+        /// Resource: `Interface.appInstanceMoveView.keptText1`.
+        public static var keepRunDirectory: LocalizedMessage {
             .init(key: "appInstanceMoveView.keptText1", table: "Interface", fallback: "保留的运行目录")
         }
-        public static var priorText1: LocalizedMessage {
+        /// 以前留下的独立目录内容也会保留在目标实例中。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.priorText1`.
+        public static var previousDirectoryContent: LocalizedMessage {
             .init(key: "appInstanceMoveView.priorText1", table: "Interface", fallback: "以前留下的独立目录内容也会保留在目标实例中。")
         }
-        public static var priorText2: LocalizedMessage {
+        /// 旧内容
+        ///
+        /// Resource: `Interface.appInstanceMoveView.priorText2`.
+        public static var oldContent: LocalizedMessage {
             .init(key: "appInstanceMoveView.priorText2", table: "Interface", fallback: "旧内容")
         }
-        public static var priorText3: LocalizedMessage {
+        /// 正在核对实例、运行历史与文件…
+        ///
+        /// Resource: `Interface.appInstanceMoveView.priorText3`.
+        public static var checkingInstance: LocalizedMessage {
             .init(key: "appInstanceMoveView.priorText3", table: "Interface", fallback: "正在核对实例、运行历史与文件…")
         }
-        public static var operationIssueText1: LocalizedMessage {
+        /// 正在移动实例…
+        ///
+        /// Resource: `Interface.appInstanceMoveView.operationIssueText1`.
+        public static var operationMoving: LocalizedMessage {
             .init(key: "appInstanceMoveView.operationIssueText1", table: "Interface", fallback: "正在移动实例…")
         }
-        public static var operationIssueText2: LocalizedMessage {
+        /// 正在结束当前步骤；已提交的移动会保留恢复入口。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.operationIssueText2`.
+        public static var operationFinishing: LocalizedMessage {
             .init(key: "appInstanceMoveView.operationIssueText2", table: "Interface", fallback: "正在结束当前步骤；已提交的移动会保留恢复入口。")
         }
-        public static var operationIssueText3: LocalizedMessage {
+        /// 刷新
+        ///
+        /// Resource: `Interface.appInstanceMoveView.operationIssueText3`.
+        public static var refresh: LocalizedMessage {
             .init(key: "appInstanceMoveView.operationIssueText3", table: "Interface", fallback: "刷新")
         }
-        public static var operationIssueText4: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appInstanceMoveView.operationIssueText4`.
+        public static var close: LocalizedMessage {
             .init(key: "appInstanceMoveView.operationIssueText4", table: "Interface", fallback: "关闭")
         }
-        public static var recoveryText19: LocalizedMessage {
+        /// 完成移动
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText19`.
+        public static var completeMove: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText19", table: "Interface", fallback: "完成移动")
         }
-        public static var recoveryText20: LocalizedMessage {
+        /// 校验并清理原文件
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText20`.
+        public static var validateAndClean: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText20", table: "Interface", fallback: "校验并清理原文件")
         }
-        public static var recoveryText21: LocalizedMessage {
+        /// 保留原文件并完成
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText21`.
+        public static var keepSourceAndComplete: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText21", table: "Interface", fallback: "保留原文件并完成")
         }
-        public static var recoveryText22: LocalizedMessage {
+        /// 恢复并保留副本
+        ///
+        /// Resource: `Interface.appInstanceMoveView.recoveryText22`.
+        public static var recoverAndKeepCopy: LocalizedMessage {
             .init(key: "appInstanceMoveView.recoveryText22", table: "Interface", fallback: "恢复并保留副本")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 请先添加另一个实例文件夹。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.valueText1`.
+        public static var anotherFolderRequired: LocalizedMessage {
             .init(key: "appInstanceMoveView.valueText1", table: "Interface", fallback: "请先添加另一个实例文件夹。")
         }
-        public static func revealText1(_ value0: String) -> LocalizedMessage {
+        /// 此位置暂时无法访问，请连接磁盘后重试：%1$@
+        ///
+        /// Resource: `Interface.appInstanceMoveView.revealText1`.
+        public static func inaccessibleLocation(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceMoveView.revealText1", table: "Interface", fallback: "此位置暂时无法访问，请连接磁盘后重试：%1$@", arguments: [.text(value0)])
         }
-        public static var panelText1: LocalizedMessage {
+        /// 选择 Minecraft 文件夹保存实例，也可以新建空文件夹。
+        ///
+        /// Resource: `Interface.appInstanceMoveView.panelText1`.
+        public static var minecraftFolderDescription: LocalizedMessage {
             .init(key: "appInstanceMoveView.panelText1", table: "Interface", fallback: "选择 Minecraft 文件夹保存实例，也可以新建空文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [

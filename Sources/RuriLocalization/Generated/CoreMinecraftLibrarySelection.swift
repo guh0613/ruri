@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftLibrarySelection {
-        public static var selectText1: LocalizedMessage {
+        /// 依赖库声明数量超过限制。
+        ///
+        /// Resource: `Errors.coreMinecraftLibrarySelection.selectText1`.
+        public static var tooManyLibraries: LocalizedMessage {
             .init(key: "coreMinecraftLibrarySelection.selectText1", table: "Errors", fallback: "依赖库声明数量超过限制。")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 依赖库名称或版本号过长。
+        ///
+        /// Resource: `Errors.coreMinecraftLibrarySelection.versionText1`.
+        public static var libraryNameTooLong: LocalizedMessage {
             .init(key: "coreMinecraftLibrarySelection.versionText1", table: "Errors", fallback: "依赖库名称或版本号过长。")
         }
         static let definitions: [String: MessageDefinition] = [

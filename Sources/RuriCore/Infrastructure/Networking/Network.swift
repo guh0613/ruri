@@ -14,7 +14,7 @@ public struct HTTPClient: Sendable {
     }
     public func data(for input: URLRequest) async throws -> Data {
         let candidates = await routing.candidates(for: input)
-        var lastError: any Error = RuriError.message(Messages.CoreNetwork.lastErrorText1)
+        var lastError: any Error = RuriError.message(Messages.CoreNetwork.missingRequestURL)
         for url in candidates {
             do {
                 var request = input; request.url = url
@@ -23,7 +23,7 @@ public struct HTTPClient: Sendable {
                 let (data, response) = try await session.data(for: request)
                 guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
                     let status = (response as? HTTPURLResponse)?.statusCode ?? 0
-                    throw RuriError.message(Messages.CoreNetwork.statusText2(String(describing: url.host ?? Messages.CoreNetwork.statusText1.localized), String(describing: status)))
+                    throw RuriError.message(Messages.CoreNetwork.httpError(String(describing: url.host ?? Messages.CoreNetwork.serviceName.localized), String(describing: status)))
                 }
                 return data
             } catch { if Task.isCancelled { throw CancellationError() }; lastError = error }
@@ -81,19 +81,19 @@ public actor DownloadManager {
     public func fetch(_ item: DownloadItem, progress: @escaping @Sendable (DownloadTransferProgress) -> Void = { _ in }) async throws {
         try Task.checkCancellation()
         if Self.valid(item.destination, item: item) { return }
-        guard let url = item.url else { throw RuriError.message(Messages.CoreNetwork.urlText1(String(describing: item.destination.lastPathComponent))) }
-        guard url.scheme == "https" else { throw RuriError.message(Messages.CoreNetwork.urlText3(String(describing: url.host ?? Messages.CoreNetwork.urlText2.localized))) }
+        guard let url = item.url else { throw RuriError.message(Messages.CoreNetwork.installerFileMissing(item.destination.lastPathComponent)) }
+        guard url.scheme == "https" else { throw RuriError.message(Messages.CoreNetwork.httpsRequired(String(describing: url.host ?? Messages.CoreNetwork.unknownSource.localized))) }
         let identity = Self.identity(item)
         let key = item.destination.standardizedFileURL.path
         if let existing = inFlight[key] {
-            guard existing.identity == identity else { throw RuriError.message(Messages.CoreNetwork.existingText1(String(describing: item.destination.lastPathComponent))) }
+            guard existing.identity == identity else { throw RuriError.message(Messages.CoreNetwork.duplicateDownloadDestination(item.destination.lastPathComponent)) }
             try await existing.task.value; try Task.checkCancellation(); return
         }
         let candidates = await routing.candidates(for: url)
         if Self.valid(item.destination, item: item) { return }
         // Recheck after the routing await so simultaneous callers still share one writer.
         if let existing = inFlight[key] {
-            guard existing.identity == identity else { throw RuriError.message(Messages.CoreNetwork.existingText1(String(describing: item.destination.lastPathComponent))) }
+            guard existing.identity == identity else { throw RuriError.message(Messages.CoreNetwork.duplicateDownloadDestination(item.destination.lastPathComponent)) }
             try await existing.task.value; try Task.checkCancellation(); return
         }
         let task = Task { try await self.performFetch(item, identity: identity, candidates: candidates, progress: progress) }
@@ -126,7 +126,7 @@ public actor DownloadManager {
             do {
                 let url = candidates[attempt % candidates.count]
                 if Self.valid(files.data, item: item), item.sha1 != nil || item.sha512 != nil || item.md5 != nil {
-                    guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.urlText4) }
+                    guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.verifiedDownloadSaveFailed) }
                     try? FileManager.default.removeItem(at: files.metadata); return
                 }
                 let state = (try? Data(contentsOf: files.metadata)).flatMap { try? JSONDecoder().decode(DownloadResumeState.self, from: $0) }
@@ -149,8 +149,8 @@ public actor DownloadManager {
                 }
                 try await stream.run(request: request, transport: transport)
                 try Task.checkCancellation()
-                guard Self.valid(files.data, item: item) else { throw DownloadFailure(message: Messages.CoreNetwork.streamText1(String(describing: item.destination.lastPathComponent)).localized, discardPartial: true) }
-                guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.streamText2(String(describing: item.destination.lastPathComponent))) }
+                guard Self.valid(files.data, item: item) else { throw DownloadFailure(message: Messages.CoreNetwork.downloadChecksumFailed(item.destination.lastPathComponent).localized, discardPartial: true) }
+                guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.downloadSaveFailed(item.destination.lastPathComponent)) }
                 try? FileManager.default.removeItem(at: files.metadata)
                 return
             } catch {

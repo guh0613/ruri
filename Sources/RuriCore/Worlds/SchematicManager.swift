@@ -51,23 +51,23 @@ public actor SchematicManager {
         try withLock {
             try validateName(name)
             let parent = try path(directory), destination = try path(directory.isEmpty ? name : directory + "/" + name)
-            guard !FileManager.default.fileExists(atPath: destination.path) else { throw RuriError.message(Messages.CoreSchematicManager.parentText1) }
+            guard !FileManager.default.fileExists(atPath: destination.path) else { throw RuriError.message(Messages.CoreSchematicManager.duplicateFileOrFolder) }
             try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
             try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: false)
         }
     }
     public func importFiles(_ sources: [URL], directory: String = "") throws {
         try withLock {
-            guard !sources.isEmpty, sources.count <= 200 else { throw RuriError.message(Messages.CoreSchematicManager.importFilesText1) }
+            guard !sources.isEmpty, sources.count <= 200 else { throw RuriError.message(Messages.CoreSchematicManager.invalidImportFileCount) }
             let parent = try path(directory)
             var targets: [URL] = [], names = Set<String>()
             for source in sources {
                 try validateName(source.lastPathComponent)
                 let info = try source.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-                guard info.isRegularFile == true, info.isSymbolicLink != true, Self.fileExtensions.contains(source.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreSchematicManager.infoText1) }
+                guard info.isRegularFile == true, info.isSymbolicLink != true, Self.fileExtensions.contains(source.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreSchematicManager.unsupportedSchematicFormat) }
                 let target = parent.appendingPathComponent(source.lastPathComponent)
                 guard names.insert(source.lastPathComponent.lowercased()).inserted, !FileManager.default.fileExists(atPath: target.path), (try? FileManager.default.destinationOfSymbolicLink(atPath: target.path)) == nil else {
-                    throw RuriError.message(Messages.CoreSchematicManager.targetText1(String(describing: source.lastPathComponent)))
+                    throw RuriError.message(Messages.CoreSchematicManager.duplicateSchematicName(source.lastPathComponent))
                 }
                 targets.append(target)
             }
@@ -92,13 +92,13 @@ public actor SchematicManager {
     public func export(_ entry: SchematicEntry, to destination: URL) throws {
         try withLock {
             let source = try checked(entry)
-            guard !entry.isDirectory else { throw RuriError.message(Messages.CoreSchematicManager.sourceText1) }
-            guard source.resolvingSymlinksInPath() != destination.standardizedFileURL.resolvingSymlinksInPath() else { throw RuriError.message(Messages.CoreSchematicManager.sourceText2) }
+            guard !entry.isDirectory else { throw RuriError.message(Messages.CoreSchematicManager.singleSourceRequired) }
+            guard source.resolvingSymlinksInPath() != destination.standardizedFileURL.resolvingSymlinksInPath() else { throw RuriError.message(Messages.CoreSchematicManager.exportDestinationSameAsSource) }
             let staging = destination.deletingLastPathComponent().appendingPathComponent(".ruri-export-" + UUID().uuidString)
             defer { try? FileManager.default.removeItem(at: staging) }
             try FileManager.default.copyItem(at: source, to: staging)
             try Task.checkCancellation()
-            guard rename(staging.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreSchematicManager.stagingText1) }
+            guard rename(staging.path, destination.path) == 0 else { throw RuriError.message(Messages.CoreSchematicManager.schematicExportSaveFailed) }
         }
     }
     @discardableResult public func remove(_ entry: SchematicEntry) throws -> URL? {
@@ -112,7 +112,7 @@ public actor SchematicManager {
     public func info(_ entry: SchematicEntry) throws -> SchematicInfo {
         try withLock {
             let file = try checked(entry)
-            guard !entry.isDirectory else { throw RuriError.message(Messages.CoreSchematicManager.fileText1) }
+            guard !entry.isDirectory else { throw RuriError.message(Messages.CoreSchematicManager.schematicInfoMissing) }
             var reader = try NBTReader(data: RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024))
             let raw = try reader.read(), root = raw["Schematic"] ?? raw, metadata = root["Metadata"]
             let size: [Int64]
@@ -133,19 +133,19 @@ public actor SchematicManager {
     }
     private func checked(_ entry: SchematicEntry) throws -> URL {
         let file = try path(entry.id), info = try file.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey])
-        guard file.standardizedFileURL == entry.url.standardizedFileURL, entry.isDirectory ? info.isDirectory == true : info.isRegularFile == true else { throw RuriError.message(Messages.CoreSchematicManager.fileText2) }
+        guard file.standardizedFileURL == entry.url.standardizedFileURL, entry.isDirectory ? info.isDirectory == true : info.isRegularFile == true else { throw RuriError.message(Messages.CoreSchematicManager.schematicFileChanged) }
         return file
     }
     private func validateName(_ name: String) throws {
-        guard !name.isEmpty, !name.hasPrefix("."), !name.contains("/"), !name.contains("\\"), !name.contains("\0") else { throw RuriError.message(Messages.CoreSchematicManager.validateNameText1) }
+        guard !name.isEmpty, !name.hasPrefix("."), !name.contains("/"), !name.contains("\\"), !name.contains("\0") else { throw RuriError.message(Messages.CoreSchematicManager.invalidFileOrFolderName) }
     }
     private func path(_ relative: String) throws -> URL {
         var current = root
-        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: current.path)) == nil else { throw RuriError.message(Messages.CoreSchematicManager.currentText1) }
+        guard (try? FileManager.default.destinationOfSymbolicLink(atPath: current.path)) == nil else { throw RuriError.message(Messages.CoreSchematicManager.symlinkDirectoryUnchanged) }
         if relative.isEmpty { return current }
         for part in relative.split(separator: "/", omittingEmptySubsequences: false) {
             try validateName(String(part)); current.appendPathComponent(String(part))
-            guard (try? FileManager.default.destinationOfSymbolicLink(atPath: current.path)) == nil else { throw RuriError.message(Messages.CoreSchematicManager.currentText2) }
+            guard (try? FileManager.default.destinationOfSymbolicLink(atPath: current.path)) == nil else { throw RuriError.message(Messages.CoreSchematicManager.symlinkUnchanged) }
         }
         return try LauncherPaths.safePath(relative, within: root)
     }

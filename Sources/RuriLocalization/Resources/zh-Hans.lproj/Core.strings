@@ -1,889 +1,889 @@
-/* @symbol CoreAccount.kindLabelText1 @args - */
+/* @symbol CoreAccount.offlineAccount @args - */
 "coreAccount.kindLabelText1" = "离线账号";
 
-/* @symbol CoreAccount.kindLabelText2 @args - */
+/* @symbol CoreAccount.microsoftAccount @args - */
 "coreAccount.kindLabelText2" = "Microsoft 账号";
 
-/* @symbol CoreAccount.kindLabelText4 @args - */
+/* @symbol CoreAccount.externalAuth @args - */
 "coreAccount.kindLabelText4" = "认证服务器";
 
-/* @symbol CoreAccountAppearance.textureText1 @args - */
+/* @symbol CoreAccountAppearance.cape @args - */
 "coreAccountAppearance.textureText1" = "披风";
 
-/* @symbol CoreAccountAppearance.textureText2 @args - */
+/* @symbol CoreAccountAppearance.currentSkin @args - */
 "coreAccountAppearance.textureText2" = "当前皮肤";
 
-/* @symbol CoreAccountAppearance.textureText3 @args - */
+/* @symbol CoreAccountAppearance.currentCape @args - */
 "coreAccountAppearance.textureText3" = "当前披风";
 
-/* @symbol CoreAuthentication.failureText1 @args text */
+/* @symbol CoreAuthentication.keychainAccessFailed @args text */
 "coreAuthentication.failureText1" = "钥匙串访问失败（%1$@），请重新登录或检查系统授权。";
 
-/* @symbol CoreAuthentication.refreshText1 @args - */
+/* @symbol CoreAuthentication.loginCancelled @args - */
 "coreAuthentication.refreshText1" = "登录已取消。";
 
-/* @symbol CoreAuthentication.refreshText2 @args - */
+/* @symbol CoreAuthentication.microsoftLoginExpiredOrFailed @args - */
 "coreAuthentication.refreshText2" = "Microsoft 登录已过期或失败，请重试。";
 
-/* @symbol CoreAuthentication.explanationText1 @args - */
+/* @symbol CoreAuthentication.xboxProfileMissing @args - */
 "coreAuthentication.explanationText1" = "此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。";
 
-/* @symbol CoreAuthentication.explanationText2 @args - */
+/* @symbol CoreAuthentication.xboxLiveUnavailableInRegion @args - */
 "coreAuthentication.explanationText2" = "Xbox Live 在此账号所在地区不可用。";
 
-/* @symbol CoreAuthentication.explanationText3 @args - */
+/* @symbol CoreAuthentication.xboxAgeVerificationRequired @args - */
 "coreAuthentication.explanationText3" = "此账号需要在 Xbox 完成年龄验证。";
 
-/* @symbol CoreAuthentication.explanationText4 @args - */
+/* @symbol CoreAuthentication.childAccountFamilyApprovalRequired @args - */
 "coreAuthentication.explanationText4" = "此儿童账号需要加入 Microsoft 家庭并由家长授权。";
 
-/* @symbol CoreAuthentication.explanationText5 @args text */
+/* @symbol CoreAuthentication.xboxLoginFailed @args text */
 "coreAuthentication.explanationText5" = "Xbox 登录失败（%1$@）。";
 
-/* @symbol CoreAuthentication.explanationText6 @args - */
+/* @symbol CoreAuthentication.authenticationService @args - */
 "coreAuthentication.explanationText6" = "认证服务";
 
-/* @symbol CoreExternalAuthentication.nameText1 @args - */
+/* @symbol CoreExternalAuthentication.authenticationServerName @args - */
 "coreExternalAuthentication.nameText1" = "认证服务器";
 
-/* @symbol CorePlayerTextureImage.titleText1 @args - */
+/* @symbol CorePlayerTextureImage.skinTitle @args - */
 "corePlayerTextureImage.titleText1" = "皮肤";
 
-/* @symbol CorePlayerTextureImage.titleText2 @args - */
+/* @symbol CorePlayerTextureImage.capeTitle @args - */
 "corePlayerTextureImage.titleText2" = "披风";
 
-/* @symbol CorePlayerTextureImage.titleText3 @args - */
+/* @symbol CorePlayerTextureImage.classicArmsTitle @args - */
 "corePlayerTextureImage.titleText3" = "经典（宽手臂）";
 
-/* @symbol CorePlayerTextureImage.titleText4 @args - */
+/* @symbol CorePlayerTextureImage.slimArmsTitle @args - */
 "corePlayerTextureImage.titleText4" = "纤细（窄手臂）";
 
-/* @symbol CorePlayerTextureImage.validText1 @args - */
+/* @symbol CorePlayerTextureImage.invalidMicrosoftSkinSize @args - */
 "corePlayerTextureImage.validText1" = "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。";
 
-/* @symbol CorePlayerTextureImage.validText2 @args - */
+/* @symbol CorePlayerTextureImage.invalidSkinDimensions @args - */
 "corePlayerTextureImage.validText2" = "皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。";
 
-/* @symbol CorePlayerTextureImage.invalidText1 @args - */
+/* @symbol CorePlayerTextureImage.invalidSkinImage @args - */
 "corePlayerTextureImage.invalidText1" = "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。";
 
-/* @symbol CoreContentManager.titleText1 @args - */
+/* @symbol CoreContentManager.mods @args - */
 "coreContentManager.titleText1" = "模组";
 
-/* @symbol CoreContentManager.titleText2 @args - */
+/* @symbol CoreContentManager.resourcePacks @args - */
 "coreContentManager.titleText2" = "资源包";
 
-/* @symbol CoreContentManager.titleText3 @args - */
+/* @symbol CoreContentManager.shaders @args - */
 "coreContentManager.titleText3" = "光影";
 
-/* @symbol CoreContentManager.importedIDsText1 @args - */
+/* @symbol CoreContentManager.importedIDsSeparator @args - */
 "coreContentManager.importedIDsText1" = " 或 ";
 
-/* @symbol CoreContentManager.recordText2 @args - */
+/* @symbol CoreContentManager.localFile @args - */
 "coreContentManager.recordText2" = "本地文件";
 
-/* @symbol CoreCurseForge.keyText1 @args - */
+/* @symbol CoreCurseForge.apiKeyMissing @args - */
 "coreCurseForge.keyText1" = "请先在设置中配置 Ruri 的 CurseForge API Key。";
 
-/* @symbol CoreCurseForge.keyText2 @args text */
+/* @symbol CoreCurseForge.apiKeyReadFailed @args text */
 "coreCurseForge.keyText2" = "无法读取 CurseForge API Key（钥匙串状态 %1$@）。";
 
-/* @symbol CoreCurseForge.idsText2 @args - */
+/* @symbol CoreCurseForge.bulkContentUpdate @args - */
 "coreCurseForge.idsText2" = "批量内容更新";
 
-/* @symbol CoreBuildConfiguration.versionText1 @args - */
+/* @symbol CoreBuildConfiguration.developmentVersion @args - */
 "coreBuildConfiguration.versionText1" = "开发版本";
 
-/* @symbol CoreFileExtendedAttributes.failureText1 @args text */
+/* @symbol CoreFileExtendedAttributes.attributeVerificationFailed @args text */
 "coreFileExtendedAttributes.failureText1" = "无法核对文件附加信息：%1$@";
 
-/* @symbol CoreDownloadActivity.titleText1 @args - */
+/* @symbol CoreDownloadActivity.downloading @args - */
 "coreDownloadActivity.titleText1" = "下载中";
 
-/* @symbol CoreDownloadActivity.titleText2 @args - */
+/* @symbol CoreDownloadActivity.retrying @args - */
 "coreDownloadActivity.titleText2" = "正在重试";
 
-/* @symbol CoreDownloadActivity.titleText3 @args - */
+/* @symbol CoreDownloadActivity.validated @args - */
 "coreDownloadActivity.titleText3" = "已校验";
 
-/* @symbol CoreDownloadActivity.titleText4 @args - */
+/* @symbol CoreDownloadActivity.failed @args - */
 "coreDownloadActivity.titleText4" = "失败";
 
-/* @symbol CoreDownloadActivity.titleText5 @args - */
+/* @symbol CoreDownloadActivity.cancelled @args - */
 "coreDownloadActivity.titleText5" = "已取消";
 
-/* @symbol CoreDownloadStream.piecesText1 @args - */
+/* @symbol CoreDownloadStream.invalidDownloadRange @args - */
 "coreDownloadStream.piecesText1" = "服务器返回了无效的下载范围";
 
-/* @symbol CoreDownloadStream.urlSessionText1 @args - */
+/* @symbol CoreDownloadStream.insecureDownloadRedirect @args - */
 "coreDownloadStream.urlSessionText1" = "下载服务重定向到了非 HTTPS 地址";
 
-/* @symbol CoreDownloadStream.httpText1 @args - */
+/* @symbol CoreDownloadStream.invalidDownloadResponse @args - */
 "coreDownloadStream.httpText1" = "下载服务响应无效";
 
-/* @symbol CoreDownloadStream.httpText2 @args text */
+/* @symbol CoreDownloadStream.downloadHTTPError @args text */
 "coreDownloadStream.httpText2" = "下载服务返回 HTTP %1$@";
 
-/* @symbol CoreDownloadStream.encodingText1 @args - */
+/* @symbol CoreDownloadStream.missingDownloadHash @args - */
 "coreDownloadStream.encodingText1" = "下载服务未提供可校验的原始文件";
 
-/* @symbol CoreDownloadStream.rangeText1 @args - */
+/* @symbol CoreDownloadStream.resumeRangeMismatch @args - */
 "coreDownloadStream.rangeText1" = "服务器续传范围与本地文件不一致";
 
-/* @symbol CoreDownloadStream.expectedEndText1 @args - */
+/* @symbol CoreDownloadStream.downloadSizeMismatch @args - */
 "coreDownloadStream.expectedEndText1" = "服务器文件大小与清单不一致";
 
-/* @symbol CoreDownloadStream.expectedEndText2 @args - */
+/* @symbol CoreDownloadStream.downloadSaveFailed @args - */
 "coreDownloadStream.expectedEndText2" = "无法保存下载文件";
 
-/* @symbol CoreDownloadStream.lengthText1 @args - */
+/* @symbol CoreDownloadStream.resumeFileChanged @args - */
 "coreDownloadStream.lengthText1" = "本地续传文件在下载期间发生变化";
 
-/* @symbol CoreDownloadStream.totalText1 @args - */
+/* @symbol CoreDownloadStream.downloadExceedsExpectedSize @args - */
 "coreDownloadStream.totalText1" = "下载数据超过清单大小";
 
-/* @symbol CoreDownloadStream.handleText1 @args - */
+/* @symbol CoreDownloadStream.missingDownloadResponse @args - */
 "coreDownloadStream.handleText1" = "下载数据缺少有效响应";
 
-/* @symbol CoreDownloadStream.expectedEndText3 @args - */
+/* @symbol CoreDownloadStream.downloadEndedEarly @args - */
 "coreDownloadStream.expectedEndText3" = "下载提前结束，可以继续重试";
 
-/* @symbol CoreNetwork.statusText1 @args - */
+/* @symbol CoreNetwork.serviceName @args - */
 "coreNetwork.statusText1" = "服务";
 
-/* @symbol CoreNetwork.urlText2 @args - */
+/* @symbol CoreNetwork.unknownSource @args - */
 "coreNetwork.urlText2" = "未知来源";
 
-/* @symbol CoreNetwork.streamText1 @args text */
+/* @symbol CoreNetwork.downloadChecksumFailed @args text */
 "coreNetwork.streamText1" = "文件校验失败：%1$@";
 
-/* @symbol CoreNetworkRouting.titleText1 @args - */
+/* @symbol CoreNetworkRouting.automaticRouting @args - */
 "coreNetworkRouting.titleText1" = "自动切换";
 
-/* @symbol CoreNetworkRouting.titleText2 @args - */
+/* @symbol CoreNetworkRouting.officialSource @args - */
 "coreNetworkRouting.titleText2" = "官方源";
 
-/* @symbol CoreNetworkRouting.titleText3 @args - */
+/* @symbol CoreNetworkRouting.bmclapiPreferred @args - */
 "coreNetworkRouting.titleText3" = "BMCLAPI 优先";
 
-/* @symbol CoreStateStore.baselineText1 @args - */
+/* @symbol CoreStateStore.dataUpdatedElsewhere @args - */
 "coreStateStore.baselineText1" = "数据已由另一个 Ruri 更新";
 
-/* @symbol CoreStateStore.labelsText1 @args - */
+/* @symbol CoreStateStore.sameInstance @args - */
 "coreStateStore.labelsText1" = "同一实例";
 
-/* @symbol CoreStateStore.labelsText2 @args - */
+/* @symbol CoreStateStore.sameAccount @args - */
 "coreStateStore.labelsText2" = "同一账号";
 
-/* @symbol CoreStateStore.labelsText3 @args - */
+/* @symbol CoreStateStore.sameInstanceDirectory @args - */
 "coreStateStore.labelsText3" = "同一实例文件夹";
 
-/* @symbol CoreStateStore.labelsText4 @args - */
+/* @symbol CoreStateStore.retainedFolderRecord @args - */
 "coreStateStore.labelsText4" = "保留的文件夹记录";
 
-/* @symbol CoreStateStore.labelsText5 @args - */
+/* @symbol CoreStateStore.launcherSettings @args - */
 "coreStateStore.labelsText5" = "启动器设置";
 
-/* @symbol CoreStateStore.labelsText6 @args - */
+/* @symbol CoreStateStore.name @args - */
 "coreStateStore.labelsText6" = "名称";
 
-/* @symbol CoreStateStore.labelsText7 @args - */
+/* @symbol CoreStateStore.favoriteStatus @args - */
 "coreStateStore.labelsText7" = "收藏状态";
 
-/* @symbol CoreStateStore.labelsText8 @args - */
+/* @symbol CoreStateStore.memory @args - */
 "coreStateStore.labelsText8" = "内存";
 
-/* @symbol CoreStateStore.labelsText9 @args - */
+/* @symbol CoreStateStore.defaultMemory @args - */
 "coreStateStore.labelsText9" = "默认内存";
 
-/* @symbol CoreStateStore.labelsText10 @args - */
+/* @symbol CoreStateStore.javaSelection @args - */
 "coreStateStore.labelsText10" = "Java 选择";
 
-/* @symbol CoreStateStore.labelsText11 @args - */
+/* @symbol CoreStateStore.windowWidth @args - */
 "coreStateStore.labelsText11" = "窗口宽度";
 
-/* @symbol CoreStateStore.labelsText12 @args - */
+/* @symbol CoreStateStore.windowHeight @args - */
 "coreStateStore.labelsText12" = "窗口高度";
 
-/* @symbol CoreStateStore.labelsText13 @args - */
+/* @symbol CoreStateStore.appearance @args - */
 "coreStateStore.labelsText13" = "外观";
 
-/* @symbol CoreStateStore.labelsText14 @args - */
+/* @symbol CoreStateStore.downloadSource @args - */
 "coreStateStore.labelsText14" = "下载源";
 
-/* @symbol CoreStateStore.labelsText15 @args - */
+/* @symbol CoreStateStore.jvmArguments @args - */
 "coreStateStore.labelsText15" = "JVM 参数";
 
-/* @symbol CoreStateStore.labelsText16 @args - */
+/* @symbol CoreStateStore.gameArguments @args - */
 "coreStateStore.labelsText16" = "游戏参数";
 
-/* @symbol CoreStateStore.labelsText17 @args - */
+/* @symbol CoreStateStore.owningFolder @args - */
 "coreStateStore.labelsText17" = "所属文件夹";
 
-/* @symbol CoreStateStore.labelsText18 @args - */
+/* @symbol CoreStateStore.memoryPolicy @args - */
 "coreStateStore.labelsText18" = "内存策略";
 
-/* @symbol CoreStateStore.labelsText19 @args - */
+/* @symbol CoreStateStore.defaultMemoryPolicy @args - */
 "coreStateStore.labelsText19" = "默认内存策略";
 
-/* @symbol CoreStateStore.subjectText3 @args - */
+/* @symbol CoreStateStore.selectionChangedElsewhere @args - */
 "coreStateStore.subjectText3" = "当前实例、文件夹或账号的选择已在另一窗口改变";
 
-/* @symbol CoreStateStore.subjectText4 @args text */
+/* @symbol CoreStateStore.saveConflictPreservingOriginal @args text */
 "coreStateStore.subjectText4" = "保存冲突：%1$@。原文件已保留，请重新载入后再修改。";
 
-/* @symbol CoreStateStore.resultText2 @args - */
+/* @symbol CoreStateStore.invalidDataFormat @args - */
 "coreStateStore.resultText2" = "数据格式无效";
 
-/* @symbol CoreInstanceComponents.unavailableReasonText1 @args - */
+/* @symbol CoreInstanceComponents.installationRequired @args - */
 "coreInstanceComponents.unavailableReasonText1" = "请先完成此实例的安装。";
 
-/* @symbol CoreInstanceComponents.additionalText3 @args - */
+/* @symbol CoreInstanceComponents.multipleLoadersUnsupported @args - */
 "coreInstanceComponents.additionalText3" = "此实例同时使用多个加载器，暂不支持保留组合的更换操作。";
 
-/* @symbol CoreLoaderKind.titleText1 @args - */
+/* @symbol CoreLoaderKind.vanilla @args - */
 "coreLoaderKind.titleText1" = "原版";
 
-/* @symbol CoreOptiFineCatalog.invalidText1 @args - */
+/* @symbol CoreOptiFineCatalog.invalidVersionInfo @args - */
 "coreOptiFineCatalog.invalidText1" = "OptiFine 安装包的版本信息无效。";
 
-/* @symbol CoreGameRunDirectory.titleText1 @args - */
+/* @symbol CoreGameRunDirectory.isolatedDirectory @args - */
 "coreGameRunDirectory.titleText1" = "独立运行目录";
 
-/* @symbol CoreGameRunDirectory.titleText2 @args - */
+/* @symbol CoreGameRunDirectory.sharedDirectory @args - */
 "coreGameRunDirectory.titleText2" = "共享运行目录";
 
-/* @symbol CoreGameRunDirectory.titleText3 @args - */
+/* @symbol CoreGameRunDirectory.customDirectory @args - */
 "coreGameRunDirectory.titleText3" = "自定义运行目录";
 
-/* @symbol CoreGameRunDirectory.explanationText1 @args - */
+/* @symbol CoreGameRunDirectory.isolatedDirectoryDescription @args - */
 "coreGameRunDirectory.explanationText1" = "此实例单独保存模组、存档和游戏设置。";
 
-/* @symbol CoreGameRunDirectory.explanationText2 @args - */
+/* @symbol CoreGameRunDirectory.sharedDirectoryDescription @args - */
 "coreGameRunDirectory.explanationText2" = "与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。";
 
-/* @symbol CoreGameRunDirectory.explanationText3 @args - */
+/* @symbol CoreGameRunDirectory.customDirectoryDescription @args - */
 "coreGameRunDirectory.explanationText3" = "在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。";
 
-/* @symbol CoreGameRunDirectory.titleText4 @args - */
+/* @symbol CoreGameRunDirectory.allNewInstancesIsolated @args - */
 "coreGameRunDirectory.titleText4" = "所有新实例独立";
 
-/* @symbol CoreGameRunDirectory.titleText5 @args - */
+/* @symbol CoreGameRunDirectory.loaderInstancesIsolated @args - */
 "coreGameRunDirectory.titleText5" = "有模组加载器的实例独立";
 
-/* @symbol CoreGameRunDirectory.titleText6 @args - */
+/* @symbol CoreGameRunDirectory.newInstancesShared @args - */
 "coreGameRunDirectory.titleText6" = "新实例使用共享目录";
 
-/* @symbol CoreGameRunDirectoryCopy.progressText1 @args - */
+/* @symbol CoreGameRunDirectoryCopy.validatingFileContents @args - */
 "coreGameRunDirectoryCopy.progressText1" = "正在校验文件内容…";
 
-/* @symbol CoreGameRunDirectoryCopy.progressText2 @args text,text */
+/* @symbol CoreGameRunDirectoryCopy.copyingGameFiles @args text,text */
 "coreGameRunDirectoryCopy.progressText2" = "正在复制游戏文件（%1$@ / %2$@）";
 
-/* @symbol CoreGameRunDirectoryCopy.progressText3 @args text,text */
+/* @symbol CoreGameRunDirectoryCopy.writingDestination @args text,text */
 "coreGameRunDirectoryCopy.progressText3" = "正在写入目标（%1$@ / %2$@）";
 
-/* @symbol CoreGameRunDirectoryCopy.progressText4 @args - */
+/* @symbol CoreGameRunDirectoryCopy.cleaningCopyRecord @args - */
 "coreGameRunDirectoryCopy.progressText4" = "目录已更新，正在清理复制记录";
 
-/* @symbol CoreGameRunDirectoryCopy.errorDescriptionText1 @args text */
+/* @symbol CoreGameRunDirectoryCopy.workCopyRetained @args text */
 "coreGameRunDirectoryCopy.errorDescriptionText1" = "\n工作副本保留在：%1$@";
 
-/* @symbol CoreGameRunDirectoryCopy.remainderText1 @args text */
+/* @symbol CoreGameRunDirectoryCopy.copyNotStarted @args text */
 "coreGameRunDirectoryCopy.remainderText1" = "运行目录复制尚未开始：%1$@";
 
-/* @symbol CoreGameRunDirectoryCopy.savedText1 @args text */
+/* @symbol CoreGameRunDirectoryCopy.directorySettingsUnconfirmed @args text */
 "coreGameRunDirectoryCopy.savedText1" = "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@";
 
-/* @symbol CoreGameRunDirectoryCopy.committedText1 @args text */
+/* @symbol CoreGameRunDirectoryCopy.directorySwitchedCleanupPending @args text */
 "coreGameRunDirectoryCopy.committedText1" = "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@";
 
-/* @symbol CoreGameRunDirectoryCopy.reasonText1 @args - */
+/* @symbol CoreGameRunDirectoryCopy.copyCancelled @args - */
 "coreGameRunDirectoryCopy.reasonText1" = "运行目录复制已取消，原目录和设置未改动。";
 
-/* @symbol CoreGameRunDirectoryCopy.reasonText2 @args text */
+/* @symbol CoreGameRunDirectoryCopy.copyIncomplete @args text */
 "coreGameRunDirectoryCopy.reasonText2" = "运行目录复制未完成：%1$@";
 
-/* @symbol CoreGameRunDirectoryCopy.cleanupWarningText1 @args - */
+/* @symbol CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning @args - */
 "coreGameRunDirectoryCopy.cleanupWarningText1" = "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。";
 
-/* @symbol CoreGameRunDirectoryCopy.warningText1 @args integer,text */
+/* @symbol CoreGameRunDirectoryCopy.changedFileIdentitiesRetained @args integer,text */
 "coreGameRunDirectoryCopy.warningText1" = "目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。";
 
-/* @symbol CoreMinecraftFolderStore.currentText1 @args - */
+/* @symbol CoreMinecraftFolderStore.pendingWorkFiles @args - */
 "coreMinecraftFolderStore.currentText1" = "导入或复制尚需完成，请处理实例库中的工作文件。";
 
-/* @symbol CoreMinecraftFolderStore.currentText2 @args - */
+/* @symbol CoreMinecraftFolderStore.versionDirectoryMissing @args - */
 "coreMinecraftFolderStore.currentText2" = "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。";
 
-/* @symbol CoreMinecraftGameDataFiles.repositoryPairText1 @args - */
+/* @symbol CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories @args - */
 "coreMinecraftGameDataFiles.repositoryPairText1" = "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。";
 
-/* @symbol CoreMinecraftGameDataFiles.collisionsText1 @args text */
+/* @symbol CoreMinecraftGameDataFiles.contentCollisions @args text */
 "coreMinecraftGameDataFiles.collisionsText1" = "当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。";
 
-/* @symbol CoreMinecraftDirectoryCatalog.subtitleText1 @args - */
+/* @symbol CoreMinecraftDirectoryCatalog.minecraftVersionPending @args - */
 "coreMinecraftDirectoryCatalog.subtitleText1" = "Minecraft 版本待确认";
 
-/* @symbol CoreMinecraftGameLocations.labelsText1 @args - */
+/* @symbol CoreMinecraftGameLocations.worlds @args - */
 "coreMinecraftGameLocations.labelsText1" = "存档";
 
-/* @symbol CoreMinecraftGameLocations.labelsText2 @args - */
+/* @symbol CoreMinecraftGameLocations.mods @args - */
 "coreMinecraftGameLocations.labelsText2" = "模组";
 
-/* @symbol CoreMinecraftGameLocations.labelsText3 @args - */
+/* @symbol CoreMinecraftGameLocations.modConfigs @args - */
 "coreMinecraftGameLocations.labelsText3" = "模组配置";
 
-/* @symbol CoreMinecraftGameLocations.labelsText4 @args - */
+/* @symbol CoreMinecraftGameLocations.resourcePacks @args - */
 "coreMinecraftGameLocations.labelsText4" = "资源包";
 
-/* @symbol CoreMinecraftGameLocations.labelsText5 @args - */
+/* @symbol CoreMinecraftGameLocations.shaders @args - */
 "coreMinecraftGameLocations.labelsText5" = "光影";
 
-/* @symbol CoreMinecraftGameLocations.labelsText6 @args - */
+/* @symbol CoreMinecraftGameLocations.gameSettings @args - */
 "coreMinecraftGameLocations.labelsText6" = "游戏设置";
 
-/* @symbol CoreMinecraftGameLocations.contentsText1 @args - */
+/* @symbol CoreMinecraftGameLocations.sharedGameDirectory @args - */
 "coreMinecraftGameLocations.contentsText1" = "共享游戏目录";
 
-/* @symbol CoreMinecraftGameLocations.contentsText2 @args - */
+/* @symbol CoreMinecraftGameLocations.sharedDirectoryContents @args - */
 "coreMinecraftGameLocations.contentsText2" = "此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。";
 
-/* @symbol CoreMinecraftGameLocations.contentsText3 @args - */
+/* @symbol CoreMinecraftGameLocations.versionDirectory @args - */
 "coreMinecraftGameLocations.contentsText3" = "版本独立目录";
 
-/* @symbol CoreMinecraftGameLocations.contentsText4 @args - */
+/* @symbol CoreMinecraftGameLocations.versionDirectoryContents @args - */
 "coreMinecraftGameLocations.contentsText4" = "启用版本隔离时，游戏数据通常位于这个版本文件夹。";
 
-/* @symbol CoreMinecraftGameLocations.urlText1 @args - */
+/* @symbol CoreMinecraftGameLocations.launcherGameData @args - */
 "coreMinecraftGameLocations.urlText1" = "原启动器为此版本指定的游戏数据位置。";
 
-/* @symbol CoreMinecraftGameLocations.urlText2 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclCustomDirectory @args - */
 "coreMinecraftGameLocations.urlText2" = "HMCL 自定义目录";
 
-/* @symbol CoreMinecraftGameLocations.urlText3 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclCustomDirectoryWarning @args - */
 "coreMinecraftGameLocations.urlText3" = "HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。";
 
-/* @symbol CoreMinecraftGameLocations.urlText4 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclGlobalDirectoryWarning @args - */
 "coreMinecraftGameLocations.urlText4" = "此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。";
 
-/* @symbol CoreMinecraftGameLocations.settingsText1 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclGlobalSettings @args - */
 "coreMinecraftGameLocations.settingsText1" = "此版本继承旧版 HMCL 的全局设置，请确认游戏数据位置。";
 
-/* @symbol CoreMinecraftGameLocations.urlText5 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclCustomDirectoryMissing @args - */
 "coreMinecraftGameLocations.urlText5" = "旧版 HMCL 的自定义目录无法定位，请手动确认。";
 
-/* @symbol CoreMinecraftGameLocations.urlText6 @args - */
+/* @symbol CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable @args - */
 "coreMinecraftGameLocations.urlText6" = "无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。";
 
-/* @symbol CoreMinecraftGameLocations.urlText7 @args - */
+/* @symbol CoreMinecraftGameLocations.officialCustomDirectory @args - */
 "coreMinecraftGameLocations.urlText7" = "官方启动器自定义目录";
 
-/* @symbol CoreMinecraftGameLocations.urlText8 @args - */
+/* @symbol CoreMinecraftGameLocations.officialDirectoryMissing @args - */
 "coreMinecraftGameLocations.urlText8" = "一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。";
 
-/* @symbol CoreMinecraftGameLocations.suggestedText1 @args - */
+/* @symbol CoreMinecraftGameLocations.multipleLauncherProfiles @args - */
 "coreMinecraftGameLocations.suggestedText1" = "此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。";
 
-/* @symbol CoreMinecraftGameLocations.suggestedText2 @args - */
+/* @symbol CoreMinecraftGameLocations.noRunDirectory @args - */
 "coreMinecraftGameLocations.suggestedText2" = "没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。";
 
-/* @symbol CoreMinecraftManifestGraph.warningText1 @args - */
+/* @symbol CoreMinecraftManifestGraph.nestedPatchWarning @args - */
 "coreMinecraftManifestGraph.warningText1" = "补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。";
 
-/* @symbol CoreMinecraftManifestGraph.warningText2 @args - */
+/* @symbol CoreMinecraftManifestGraph.libraries @args - */
 "coreMinecraftManifestGraph.warningText2" = "依赖库";
 
-/* @symbol CoreMinecraftManifestGraph.compatibilityText1 @args - */
+/* @symbol CoreMinecraftManifestGraph.compatibilityRules @args - */
 "coreMinecraftManifestGraph.compatibilityText1" = "兼容规则";
 
-/* @symbol CoreMinecraftManifestGraph.valuesText1 @args - */
+/* @symbol CoreMinecraftManifestGraph.launchArguments @args - */
 "coreMinecraftManifestGraph.valuesText1" = "启动参数";
 
-/* @symbol CoreMinecraftVersionMetadata.jarVersionText1 @args text */
+/* @symbol CoreMinecraftVersionMetadata.jarVersionReadFailed @args text */
 "coreMinecraftVersionMetadata.jarVersionText1" = "无法从游戏 JAR 读取版本信息：%1$@";
 
-/* @symbol CoreMinecraftVersionMetadata.jarVersionText2 @args - */
+/* @symbol CoreMinecraftVersionMetadata.localJarMissing @args - */
 "coreMinecraftVersionMetadata.jarVersionText2" = "本地游戏 JAR 缺失，接入时需要补齐游戏文件。";
 
-/* @symbol CoreMinecraftVersionMetadata.gameVersionText1 @args - */
+/* @symbol CoreMinecraftVersionMetadata.actualVersionUnknown @args - */
 "coreMinecraftVersionMetadata.gameVersionText1" = "无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。";
 
-/* @symbol CoreMinecraftVersionMetadata.declaredText1 @args - */
+/* @symbol CoreMinecraftVersionMetadata.declaredVersionMismatch @args - */
 "coreMinecraftVersionMetadata.declaredText1" = "游戏 JAR 与清单声明的版本不同，需要在接入前核对。";
 
-/* @symbol CoreMinecraftVersionMetadata.mainText1 @args text */
+/* @symbol CoreMinecraftVersionMetadata.unknownLaunchEntry @args text */
 "coreMinecraftVersionMetadata.mainText1" = "此版本使用尚未识别的启动入口：%1$@";
 
-/* @symbol CoreGameInstance.componentsText1 @args - */
+/* @symbol CoreGameInstance.localVersion @args - */
 "coreGameInstance.componentsText1" = "本地版本";
 
-/* @symbol CoreInstanceCopier.remainderText1 @args - */
+/* @symbol CoreInstanceCopier.copyCompletedWithTemporaryFiles @args - */
 "coreInstanceCopier.remainderText1" = "实例已复制，部分临时文件保留，可在 Finder 中查看。";
 
-/* @symbol CoreInstanceCopier.latestText1 @args text */
+/* @symbol CoreInstanceCopier.copyCommitUncertain @args text */
 "coreInstanceCopier.latestText1" = "无法确认实例复制是否已提交，请通过恢复入口检查。%1$@";
 
-/* @symbol CoreInstanceCopier.committedText1 @args text */
+/* @symbol CoreInstanceCopier.copyCommittedCleanupPending @args text */
 "coreInstanceCopier.committedText1" = "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@";
 
-/* @symbol CoreInstanceCopier.reasonText1 @args - */
+/* @symbol CoreInstanceCopier.copyCancelled @args - */
 "coreInstanceCopier.reasonText1" = "实例复制已取消，原实例及其文件保留。";
 
-/* @symbol CoreInstanceCopier.reasonText2 @args text */
+/* @symbol CoreInstanceCopier.copyFailed @args text */
 "coreInstanceCopier.reasonText2" = "实例复制未完成：%1$@";
 
-/* @symbol CoreInstanceCopier.keptText1 @args - */
+/* @symbol CoreInstanceCopier.workFilesKept @args - */
 "coreInstanceCopier.keptText1" = "复制尚未完成，工作文件已保留，可以重新复制。";
 
-/* @symbol CoreInstanceCopier.remainderText2 @args - */
+/* @symbol CoreInstanceCopier.copyCleanupIncomplete @args - */
 "coreInstanceCopier.remainderText2" = "复制已完成，部分临时文件未删除，可在 Finder 中查看。";
 
-/* @symbol CoreInstanceCopier.infoText3 @args text */
+/* @symbol CoreInstanceCopier.unknownTargetFolder @args text */
 "coreInstanceCopier.infoText3" = "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@";
 
-/* @symbol CoreInstanceTransfer.titleText1 @args - */
+/* @symbol CoreInstanceTransfer.ruriInstance @args - */
 "coreInstanceTransfer.titleText1" = "Ruri 实例";
 
-/* @symbol CoreInstanceTransfer.titleText2 @args - */
+/* @symbol CoreInstanceTransfer.ruriFullCopy @args - */
 "coreInstanceTransfer.titleText2" = "Ruri 完整副本";
 
-/* @symbol CoreInstanceTransfer.reasonText1 @args - */
+/* @symbol CoreInstanceTransfer.operationCancelled @args - */
 "coreInstanceTransfer.reasonText1" = "操作已取消。";
 
-/* @symbol CoreInstanceTransfer.keptText1 @args text */
+/* @symbol CoreInstanceTransfer.packImportIncomplete @args text */
 "coreInstanceTransfer.keptText1" = "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@";
 
-/* @symbol CoreInstanceTransfer.failureText3 @args text,text */
+/* @symbol CoreInstanceTransfer.importNeedsRecovery @args text,text */
 "coreInstanceTransfer.failureText3" = "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@";
 
-/* @symbol CoreInstanceTransfer.infoText1 @args - */
+/* @symbol CoreInstanceTransfer.unsupportedManifest @args - */
 "coreInstanceTransfer.infoText1" = "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。";
 
-/* @symbol CoreInstanceTransfer.infoText2 @args - */
+/* @symbol CoreInstanceTransfer.multipleInstanceDirectories @args - */
 "coreInstanceTransfer.infoText2" = "目录包含多个实例，请选择其中一个实例目录。";
 
-/* @symbol CoreInstanceTransfer.commandsText1 @args - */
+/* @symbol CoreInstanceTransfer.retainedCommands @args - */
 "coreInstanceTransfer.commandsText1" = "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。";
 
-/* @symbol CoreInstanceTransfer.gamesText2 @args - */
+/* @symbol CoreInstanceTransfer.customJvmArguments @args - */
 "coreInstanceTransfer.gamesText2" = "实例带有自定义 JVM 参数，确认内容后可选择保留。";
 
-/* @symbol CoreInstanceMoveProgress.progressText1 @args - */
+/* @symbol CoreInstanceMoveProgress.validatingInstanceFiles @args - */
 "coreInstanceMoveProgress.progressText1" = "正在校验实例文件…";
 
-/* @symbol CoreInstanceMoveProgress.progressText2 @args - */
+/* @symbol CoreInstanceMoveProgress.copyingInstanceFiles @args - */
 "coreInstanceMoveProgress.progressText2" = "正在复制实例文件…";
 
-/* @symbol CoreInstanceMoveProgress.progressText3 @args - */
+/* @symbol CoreInstanceMoveProgress.writingDestinationFolder @args - */
 "coreInstanceMoveProgress.progressText3" = "正在写入目标文件夹…";
 
-/* @symbol CoreInstanceMoveProgress.progressText4 @args - */
+/* @symbol CoreInstanceMoveProgress.verifyingMovedInstance @args - */
 "coreInstanceMoveProgress.progressText4" = "实例已移动，正在核对原文件…";
 
-/* @symbol CoreInstanceMoveProgress.progressText5 @args - */
+/* @symbol CoreInstanceMoveProgress.organizingOriginalFiles @args - */
 "coreInstanceMoveProgress.progressText5" = "正在整理原实例文件…";
 
-/* @symbol CoreInstanceMoveProgress.progressText6 @args - */
+/* @symbol CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles @args - */
 "coreInstanceMoveProgress.progressText6" = "正在清理已核验的原文件…";
 
-/* @symbol CoreInstanceMover.latestText1 @args text */
+/* @symbol CoreInstanceMover.moveCommitUnknown @args text */
 "coreInstanceMover.latestText1" = "无法确认实例移动是否已经提交，请通过恢复入口检查。%1$@";
 
-/* @symbol CoreInstanceMover.latestText2 @args text */
+/* @symbol CoreInstanceMover.moveCommitted @args text */
 "coreInstanceMover.latestText2" = "实例已移动，原文件或工作记录还需检查。请恢复实例移动。%1$@";
 
-/* @symbol CoreInstanceMover.preservedText1 @args - */
+/* @symbol CoreInstanceMover.moveCancelled @args - */
 "coreInstanceMover.preservedText1" = "移动已取消，原实例保留，工作副本已另存。";
 
-/* @symbol CoreInstanceMover.preservedText2 @args text */
+/* @symbol CoreInstanceMover.moveIncomplete @args text */
 "coreInstanceMover.preservedText2" = "移动未完成，原实例保留。%1$@";
 
-/* @symbol CoreInstanceMover.failureText1 @args text,text */
+/* @symbol CoreInstanceMover.moveFailed @args text,text */
 "coreInstanceMover.failureText1" = "移动未完成，原实例保留。请连接原磁盘并恢复移动。%1$@\n%2$@";
 
-/* @symbol CoreInstanceMover.recordText2 @args - */
+/* @symbol CoreInstanceMover.moveRecovered @args - */
 "coreInstanceMover.recordText2" = "未完成的移动已恢复，原实例和工作副本保留。";
 
-/* @symbol CoreInstanceMover.retiredRecordText1 @args - */
+/* @symbol CoreInstanceMover.originalOrWorkspaceFilesRetained @args - */
 "coreInstanceMover.retiredRecordText1" = "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。";
 
-/* @symbol CoreRepositoryInstanceMover.savedText1 @args text */
+/* @symbol CoreRepositoryInstanceMover.moveCommittedNeedsRecovery @args text */
 "coreRepositoryInstanceMover.savedText1" = "实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@";
 
-/* @symbol CoreRepositoryInstanceMover.keptText1 @args - */
+/* @symbol CoreRepositoryInstanceMover.moveCancelledWithBackup @args - */
 "coreRepositoryInstanceMover.keptText1" = "移动已取消，原实例保留，工作副本已另存。";
 
-/* @symbol CoreRepositoryInstanceMover.keptText2 @args text */
+/* @symbol CoreRepositoryInstanceMover.moveIncompleteOriginalRetained @args text */
 "coreRepositoryInstanceMover.keptText2" = "移动未完成，原实例保留。%1$@";
 
-/* @symbol CoreRepositoryInstanceMover.failureText1 @args text,text */
+/* @symbol CoreRepositoryInstanceMover.moveRecoveryRequired @args text,text */
 "coreRepositoryInstanceMover.failureText1" = "移动需要恢复，原实例保留。%1$@\n%2$@";
 
-/* @symbol CoreRepositoryInstanceMover.recordText3 @args - */
+/* @symbol CoreRepositoryInstanceMover.moveRecoveredWithFiles @args - */
 "coreRepositoryInstanceMover.recordText3" = "未完成的移动已恢复，原实例及工作副本保留。";
 
-/* @symbol CoreRepositoryInstanceMover.recordLocationText1 @args - */
+/* @symbol CoreRepositoryInstanceMover.movedWithRetainedFiles @args - */
 "coreRepositoryInstanceMover.recordLocationText1" = "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。";
 
-/* @symbol CoreRepositoryInstanceCopy.latestText1 @args - */
+/* @symbol CoreRepositoryInstanceCopy.copyCleanupPending @args - */
 "coreRepositoryInstanceCopy.latestText1" = "副本已创建，部分工作文件尚未清理，可在实例库完成清理。";
 
-/* @symbol CoreRepositoryInstanceCopy.reasonText1 @args - */
+/* @symbol CoreRepositoryInstanceCopy.copyCancelled @args - */
 "coreRepositoryInstanceCopy.reasonText1" = "实例复制已取消，原实例及其文件保留。";
 
-/* @symbol CoreRepositoryInstanceCopy.reasonText2 @args text */
+/* @symbol CoreRepositoryInstanceCopy.copyIncomplete @args text */
 "coreRepositoryInstanceCopy.reasonText2" = "实例复制未完成：%1$@";
 
-/* @symbol CoreJavaRuntimeStore.sourceText1 @args - */
+/* @symbol CoreJavaRuntimeStore.downloadedByRuri @args - */
 "coreJavaRuntimeStore.sourceText1" = "Ruri 下载";
 
-/* @symbol CoreJavaRuntimeStore.sourceText2 @args - */
+/* @symbol CoreJavaRuntimeStore.addedManually @args - */
 "coreJavaRuntimeStore.sourceText2" = "手动添加";
 
-/* @symbol CoreJavaRuntimeStore.sourceText3 @args - */
+/* @symbol CoreJavaRuntimeStore.fromLaunchSettings @args - */
 "coreJavaRuntimeStore.sourceText3" = "启动设置";
 
-/* @symbol CoreJavaRuntimeStore.sourceText4 @args - */
+/* @symbol CoreJavaRuntimeStore.detectedAutomatically @args - */
 "coreJavaRuntimeStore.sourceText4" = "自动检测";
 
-/* @symbol CoreJavaRuntimeStore.pathText1 @args - */
+/* @symbol CoreJavaRuntimeStore.defaultLaunchSettings @args - */
 "coreJavaRuntimeStore.pathText1" = "默认启动设置";
 
-/* @symbol CoreLaunch.newlineText1 @args - */
+/* @symbol CoreLaunch.longLogLineOmitted @args - */
 "coreLaunch.newlineText1" = "[Ruri] 单行日志过长，已省略";
 
-/* @symbol CoreLaunchCommands.titleText1 @args - */
+/* @symbol CoreLaunchCommands.beforeLaunchCommand @args - */
 "coreLaunchCommands.titleText1" = "启动前命令";
 
-/* @symbol CoreLaunchCommands.titleText2 @args - */
+/* @symbol CoreLaunchCommands.afterExitCommand @args - */
 "coreLaunchCommands.titleText2" = "退出后命令";
 
-/* @symbol CoreLaunchCommands.summaryText5 @args - */
+/* @symbol CoreLaunchCommands.unknownResult @args - */
 "coreLaunchCommands.summaryText5" = "未知";
 
-/* @symbol CoreLaunchSettings.titleText1 @args - */
+/* @symbol CoreLaunchSettings.memory @args - */
 "coreLaunchSettings.titleText1" = "内存";
 
-/* @symbol CoreLaunchSettings.titleText2 @args - */
+/* @symbol CoreLaunchSettings.javaRuntime @args - */
 "coreLaunchSettings.titleText2" = "Java 运行时";
 
-/* @symbol CoreLaunchSettings.titleText3 @args - */
+/* @symbol CoreLaunchSettings.jvmArguments @args - */
 "coreLaunchSettings.titleText3" = "附加 JVM 参数";
 
-/* @symbol CoreLaunchSettings.titleText4 @args - */
+/* @symbol CoreLaunchSettings.gameArguments @args - */
 "coreLaunchSettings.titleText4" = "附加游戏参数";
 
-/* @symbol CoreLaunchSettings.titleText5 @args - */
+/* @symbol CoreLaunchSettings.gameWindow @args - */
 "coreLaunchSettings.titleText5" = "游戏窗口";
 
-/* @symbol CoreLaunchSettings.titleText6 @args - */
+/* @symbol CoreLaunchSettings.launcherAndLogs @args - */
 "coreLaunchSettings.titleText6" = "启动器与日志";
 
-/* @symbol CoreLaunchSettings.titleText7 @args - */
+/* @symbol CoreLaunchSettings.environmentVariables @args - */
 "coreLaunchSettings.titleText7" = "游戏环境变量";
 
-/* @symbol CoreLaunchSettings.titleText8 @args - */
+/* @symbol CoreLaunchSettings.launchCommands @args - */
 "coreLaunchSettings.titleText8" = "启动命令";
 
-/* @symbol CoreMemorySettings.titleText1 @args - */
+/* @symbol CoreMemorySettings.automaticEstimation @args - */
 "coreMemorySettings.titleText1" = "自动估算";
 
-/* @symbol CoreMemorySettings.titleText2 @args - */
+/* @symbol CoreMemorySettings.memorySettings @args - */
 "coreMemorySettings.titleText2" = "内存设置";
 
-/* @symbol CoreMemorySettings.titleText3 @args - */
+/* @symbol CoreMemorySettings.jvmOverride @args - */
 "coreMemorySettings.titleText3" = "JVM 参数覆盖";
 
-/* @symbol CoreMemorySettings.summaryText1 @args - */
+/* @symbol CoreMemorySettings.automaticallyManagedMemory @args - */
 "coreMemorySettings.summaryText1" = "由 JVM 自动决定";
 
-/* @symbol CoreMemorySettings.summaryText2 @args text,text,text */
+/* @symbol CoreMemorySettings.memorySummary @args text,text,text */
 "coreMemorySettings.summaryText2" = "堆上限 %1$@ · 初始 %2$@ · %3$@";
 
-/* @symbol CoreCurseForgePack.warningsText1 @args integer */
+/* @symbol CoreCurseForgePack.curseForgeFilesNeedDownload @args integer */
 "coreCurseForgePack.warningsText1" = "需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。";
 
-/* @symbol CoreCurseForgePack.authorText1 @args text */
+/* @symbol CoreCurseForgePack.packAuthor @args text */
 "coreCurseForgePack.authorText1" = "整合包作者：%1$@";
 
-/* @symbol CoreHMCLPack.warningsText1 @args - */
+/* @symbol CoreHMCLPack.reinstallDependenciesForMac @args - */
 "coreHMCLPack.warningsText1" = "游戏与加载器依赖会重新安装，以匹配当前 Mac。";
 
-/* @symbol CoreHMCLPack.authorText1 @args text */
+/* @symbol CoreHMCLPack.packAuthor @args text */
 "coreHMCLPack.authorText1" = "整合包作者：%1$@";
 
-/* @symbol CoreMCBBSPack.authorText1 @args text */
+/* @symbol CoreMCBBSPack.packAuthor @args text */
 "coreMCBBSPack.authorText1" = "整合包作者：%1$@";
 
-/* @symbol CoreMCBBSPack.authorText2 @args - */
+/* @symbol CoreMCBBSPack.packJvmArgumentsNotice @args - */
 "coreMCBBSPack.authorText2" = "此整合包提供了 JVM 参数，可在下方查看并选择保留。";
 
-/* @symbol CoreMCBBSPack.authorText3 @args - */
+/* @symbol CoreMCBBSPack.packMissingFilesNotice @args - */
 "coreMCBBSPack.authorText3" = "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。";
 
-/* @symbol CoreMCBBSPack.authorText4 @args integer */
+/* @symbol CoreMCBBSPack.curseForgeFilesToResolve @args integer */
 "coreMCBBSPack.authorText4" = "需要解析 %1$lld 个 CurseForge 文件。";
 
-/* @symbol CoreMRPack.warningsText1 @args text */
+/* @symbol CoreMRPack.packVersion @args text */
 "coreMRPack.warningsText1" = "整合包版本：%1$@";
 
-/* @symbol CoreModpackUpdatePlan.titleText1 @args - */
+/* @symbol CoreModpackUpdatePlan.newFile @args - */
 "coreModpackUpdatePlan.titleText1" = "新增";
 
-/* @symbol CoreModpackUpdatePlan.titleText2 @args - */
+/* @symbol CoreModpackUpdatePlan.replacedFile @args - */
 "coreModpackUpdatePlan.titleText2" = "替换";
 
-/* @symbol CoreModpackUpdatePlan.titleText3 @args - */
+/* @symbol CoreModpackUpdatePlan.removedFile @args - */
 "coreModpackUpdatePlan.titleText3" = "移除";
 
-/* @symbol CoreModpackUpdatePlan.titleText4 @args - */
+/* @symbol CoreModpackUpdatePlan.keepLocalFile @args - */
 "coreModpackUpdatePlan.titleText4" = "保留本地";
 
-/* @symbol CoreModpackUpdatePlan.incomingText1 @args - */
+/* @symbol CoreModpackUpdatePlan.packRequiresReadd @args - */
 "coreModpackUpdatePlan.incomingText1" = "此文件已在本地移除，整合包要求重新添加";
 
-/* @symbol CoreModpackUpdatePlan.incomingText2 @args - */
+/* @symbol CoreModpackUpdatePlan.locallyRemoved @args - */
 "coreModpackUpdatePlan.incomingText2" = "此文件已在本地移除";
 
-/* @symbol CoreModpackUpdatePlan.incomingText3 @args - */
+/* @symbol CoreModpackUpdatePlan.removedUpstreamLocallyModified @args - */
 "coreModpackUpdatePlan.incomingText3" = "新版不再包含此文件，但本地内容已修改";
 
-/* @symbol CoreModpackUpdatePlan.incomingText4 @args - */
+/* @symbol CoreModpackUpdatePlan.replacementRequiredLocalModified @args - */
 "coreModpackUpdatePlan.incomingText4" = "整合包要求替换；本地文件已有修改";
 
-/* @symbol CoreModpackUpdatePlan.incomingText5 @args - */
+/* @symbol CoreModpackUpdatePlan.localModificationConflict @args - */
 "coreModpackUpdatePlan.incomingText5" = "本地文件已有修改或与个人文件同名";
 
-/* @symbol CoreGameExit.summaryText1 @args - */
+/* @symbol CoreGameExit.requestedExit @args - */
 "coreGameExit.summaryText1" = "游戏已按要求结束";
 
-/* @symbol CoreGameExit.summaryText2 @args - */
+/* @symbol CoreGameExit.normalExit @args - */
 "coreGameExit.summaryText2" = "游戏已正常退出";
 
-/* @symbol CoreGameExit.summaryText3 @args text */
+/* @symbol CoreGameExit.processExitReason @args text */
 "coreGameExit.summaryText3" = "游戏进程因 %1$@ 退出";
 
-/* @symbol CoreGameExit.summaryText4 @args text */
+/* @symbol CoreGameExit.crashExit @args text */
 "coreGameExit.summaryText4" = "游戏异常退出（退出码 %1$@）";
 
-/* @symbol CoreGameExit.explanationText1 @args - */
+/* @symbol CoreGameExit.ruriRequestedExit @args - */
 "coreGameExit.explanationText1" = "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。";
 
-/* @symbol CoreGameExit.explanationText2 @args - */
+/* @symbol CoreGameExit.normalExitSucceeded @args - */
 "coreGameExit.explanationText2" = "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。";
 
-/* @symbol CoreGameExit.explanationText3 @args - */
+/* @symbol CoreGameExit.processExitedSuccessfully @args - */
 "coreGameExit.explanationText3" = "游戏进程返回成功状态。";
 
-/* @symbol CoreGameExit.explanationText4 @args - */
+/* @symbol CoreGameExit.terminationSignalReceived @args - */
 "coreGameExit.explanationText4" = "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。";
 
-/* @symbol CoreGameExit.explanationText5 @args - */
+/* @symbol CoreGameExit.javaTerminationSignal @args - */
 "coreGameExit.explanationText5" = "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。";
 
-/* @symbol CoreGameExit.explanationText6 @args - */
+/* @symbol CoreGameExit.exitStatusNeedsLogs @args - */
 "coreGameExit.explanationText6" = "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。";
 
-/* @symbol CoreGameExit.logDescriptionText1 @args - */
+/* @symbol CoreGameExit.signalLabel @args - */
 "coreGameExit.logDescriptionText1" = "信号";
 
-/* @symbol CoreGameExit.logDescriptionText2 @args - */
+/* @symbol CoreGameExit.exitCodeLabel @args - */
 "coreGameExit.logDescriptionText2" = "退出码";
 
-/* @symbol CoreGameExit.logDescriptionText3 @args - */
+/* @symbol CoreGameExit.yesLabel @args - */
 "coreGameExit.logDescriptionText3" = "是";
 
-/* @symbol CoreGameExit.logDescriptionText4 @args - */
+/* @symbol CoreGameExit.noLabel @args - */
 "coreGameExit.logDescriptionText4" = "否";
 
-/* @symbol CoreGameExit.logDescriptionText5 @args text,text,text,text,text,text,text,text */
+/* @symbol CoreGameExit.exitLogLine @args text,text,text,text,text,text,text,text */
 "coreGameExit.logDescriptionText5" = "[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@";
 
-/* @symbol CoreGameExit.signalNameText1 @args text */
+/* @symbol CoreGameExit.signalValue @args text */
 "coreGameExit.signalNameText1" = "信号 %1$@";
 
-/* @symbol CoreGameExit.titleText1 @args - */
+/* @symbol CoreGameExit.javaVirtualMachine @args - */
 "coreGameExit.titleText1" = "Java 虚拟机";
 
-/* @symbol CoreGameMonitor.pidText1 @args text */
+/* @symbol CoreGameMonitor.gameProcessInfoSaveFailed @args text */
 "coreGameMonitor.pidText1" = "[Ruri] 无法保存游戏进程信息：%1$@";
 
-/* @symbol CoreGameMonitor.handleText1 @args - */
+/* @symbol CoreGameMonitor.monitorStartFailed @args - */
 "coreGameMonitor.handleText1" = "监控启动失败";
 
-/* @symbol CoreGameNormalQuit.explanationText1 @args - */
+/* @symbol CoreGameNormalQuit.normalExitRequestPending @args - */
 "coreGameNormalQuit.explanationText1" = "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。";
 
-/* @symbol CoreGameNormalQuit.explanationText2 @args - */
+/* @symbol CoreGameNormalQuit.normalExitRequestFailed @args - */
 "coreGameNormalQuit.explanationText2" = "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。";
 
-/* @symbol CoreGamePlaytime.newlineText1 @args - */
+/* @symbol CoreGamePlaytime.longLogLineOmitted @args - */
 "coreGamePlaytime.newlineText1" = "[Ruri] 预览中的超长日志行已省略；完整内容可导出。";
 
-/* @symbol CoreGameSession.titleText1 @args - */
+/* @symbol CoreGameSession.preparingLaunch @args - */
 "coreGameSession.titleText1" = "准备启动";
 
-/* @symbol CoreGameSession.titleText2 @args - */
+/* @symbol CoreGameSession.installingGame @args - */
 "coreGameSession.titleText2" = "安装游戏";
 
-/* @symbol CoreGameSession.titleText3 @args - */
+/* @symbol CoreGameSession.checkingInstance @args - */
 "coreGameSession.titleText3" = "检查实例";
 
-/* @symbol CoreGameSession.titleText4 @args - */
+/* @symbol CoreGameSession.validatingAccount @args - */
 "coreGameSession.titleText4" = "验证账号";
 
-/* @symbol CoreGameSession.titleText5 @args - */
+/* @symbol CoreGameSession.readingVersion @args - */
 "coreGameSession.titleText5" = "读取版本";
 
-/* @symbol CoreGameSession.titleText6 @args - */
+/* @symbol CoreGameSession.preparingJava @args - */
 "coreGameSession.titleText6" = "准备 Java";
 
-/* @symbol CoreGameSession.titleText7 @args - */
+/* @symbol CoreGameSession.buildingLaunchArguments @args - */
 "coreGameSession.titleText7" = "构建启动参数";
 
-/* @symbol CoreGameSession.titleText8 @args - */
+/* @symbol CoreGameSession.runningBeforeCommand @args - */
 "coreGameSession.titleText8" = "执行启动前命令";
 
-/* @symbol CoreGameSession.titleText9 @args - */
+/* @symbol CoreGameSession.runningAfterCommand @args - */
 "coreGameSession.titleText9" = "执行退出后命令";
 
-/* @symbol CoreGameSession.titleText10 @args - */
+/* @symbol CoreGameSession.startingGameProcess @args - */
 "coreGameSession.titleText10" = "创建游戏进程";
 
-/* @symbol CoreGameSession.titleText11 @args - */
+/* @symbol CoreGameSession.gameProcessRunning @args - */
 "coreGameSession.titleText11" = "游戏进程运行";
 
-/* @symbol CoreGameSession.titleText12 @args - */
+/* @symbol CoreGameSession.requestingGameExit @args - */
 "coreGameSession.titleText12" = "请求结束游戏";
 
-/* @symbol CoreGameSession.titleText13 @args - */
+/* @symbol CoreGameSession.waitingForGameExit @args - */
 "coreGameSession.titleText13" = "等待游戏处理退出请求";
 
-/* @symbol CoreGameSession.titleText14 @args - */
+/* @symbol CoreGameSession.gameExited @args - */
 "coreGameSession.titleText14" = "游戏已退出";
 
-/* @symbol CoreGameSession.titleText15 @args - */
+/* @symbol CoreGameSession.recoveringInterruptedRecord @args - */
 "coreGameSession.titleText15" = "恢复中断记录";
 
-/* @symbol CoreGameSession.titleText16 @args - */
+/* @symbol CoreGameSession.runningAfterCommandAfterExit @args - */
 "coreGameSession.titleText16" = "游戏已退出 · 正在执行退出后命令";
 
-/* @symbol CoreGameSession.exitText1 @args text */
+/* @symbol CoreGameSession.startedWithoutCompletion @args text */
 "coreGameSession.exitText1" = "%1$@ · 尚无完成记录";
 
-/* @symbol CoreGameSession.exitText2 @args - */
+/* @symbol CoreGameSession.startedWithoutExitRecord @args - */
 "coreGameSession.exitText2" = "游戏已启动 · 尚无退出记录";
 
-/* @symbol CoreGameSession.exitText3 @args - */
+/* @symbol CoreGameSession.launchCancelled @args - */
 "coreGameSession.exitText3" = "启动已取消";
 
-/* @symbol CoreGameSession.exitText4 @args text */
+/* @symbol CoreGameSession.phaseFailed @args text */
 "coreGameSession.exitText4" = "%1$@失败";
 
-/* @symbol CoreGameSession.exitText5 @args - */
+/* @symbol CoreGameSession.monitoringFinishedUnknownExit @args - */
 "coreGameSession.exitText5" = "监控记录已收尾 · 退出结果未知";
 
-/* @symbol CoreGameSession.exitText6 @args - */
+/* @symbol CoreGameSession.runFinished @args - */
 "coreGameSession.exitText6" = "运行已结束";
 
-/* @symbol CoreGameSession.textText1 @args - */
+/* @symbol CoreGameSession.truncatedLogNotice @args - */
 "coreGameSession.textText1" = "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n";
 
-/* @symbol CoreGameSession.finishText1 @args text */
+/* @symbol CoreGameSession.playtimeSaveFailed @args text */
 "coreGameSession.finishText1" = "[Ruri] 未能保存游玩时长：%1$@";
 
-/* @symbol CoreGameSession.finishText2 @args text */
+/* @symbol CoreGameSession.reportCopySaveFailed @args text */
 "coreGameSession.finishText2" = "[Ruri] 未能保存报告副本：%1$@";
 
-/* @symbol CoreGameSession.failText1 @args - */
+/* @symbol CoreGameSession.launchFailed @args - */
 "coreGameSession.failText1" = "启动失败";
 
-/* @symbol CoreGameSession.destinationText1 @args - */
+/* @symbol CoreGameSession.reportTooLargeNotice @args - */
 "coreGameSession.destinationText1" = "\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n";
 
-/* @symbol CoreGameSession.destinationText2 @args text,text */
+/* @symbol CoreGameSession.reportCopyFailed @args text,text */
 "coreGameSession.destinationText2" = "[Ruri] 未能保存报告副本 %1$@：%2$@";
 
-/* @symbol CoreGameSessionRecovery.titleText1 @args - */
+/* @symbol CoreGameSessionRecovery.recordAlreadyFinished @args - */
 "coreGameSessionRecovery.titleText1" = "运行记录已经结束";
 
-/* @symbol CoreGameSessionRecovery.titleText2 @args - */
+/* @symbol CoreGameSessionRecovery.monitorStillRunning @args - */
 "coreGameSessionRecovery.titleText2" = "监控组件仍在运行";
 
-/* @symbol CoreGameSessionRecovery.titleText3 @args - */
+/* @symbol CoreGameSessionRecovery.cannotCheckMonitorProcess @args - */
 "coreGameSessionRecovery.titleText3" = "暂时无法核对监控进程";
 
-/* @symbol CoreGameSessionRecovery.titleText4 @args - */
+/* @symbol CoreGameSessionRecovery.gameRunningMonitorDisconnected @args - */
 "coreGameSessionRecovery.titleText4" = "游戏仍在运行，监控已断开";
 
-/* @symbol CoreGameSessionRecovery.titleText5 @args - */
+/* @symbol CoreGameSessionRecovery.launchCommandRunningMonitorDisconnected @args - */
 "coreGameSessionRecovery.titleText5" = "启动命令仍在运行，监控已断开";
 
-/* @symbol CoreGameSessionRecovery.titleText6 @args - */
+/* @symbol CoreGameSessionRecovery.gameProcessGoneWithoutExit @args - */
 "coreGameSessionRecovery.titleText6" = "游戏进程已消失，缺少退出结果";
 
-/* @symbol CoreGameSessionRecovery.titleText7 @args - */
+/* @symbol CoreGameSessionRecovery.monitorInterruptedUnknownGameState @args - */
 "coreGameSessionRecovery.titleText7" = "监控已中断，无法确认游戏状态";
 
-/* @symbol CoreGameSessionRecovery.explanationText1 @args - */
+/* @symbol CoreGameSessionRecovery.noRecoveryNeeded @args - */
 "coreGameSessionRecovery.explanationText1" = "无需再恢复这条记录。";
 
-/* @symbol CoreGameSessionRecovery.explanationText2 @args - */
+/* @symbol CoreGameSessionRecovery.waitForMonitorOrCheckGame @args - */
 "coreGameSessionRecovery.explanationText2" = "请等待监控完成收尾，或返回游戏查看当前状态。";
 
-/* @symbol CoreGameSessionRecovery.explanationText3 @args - */
+/* @symbol CoreGameSessionRecovery.insufficientProcessInformation @args - */
 "coreGameSessionRecovery.explanationText3" = "系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。";
 
-/* @symbol CoreGameSessionRecovery.explanationText4 @args - */
+/* @symbol CoreGameSessionRecovery.matchingProcessIdentity @args - */
 "coreGameSessionRecovery.explanationText4" = "进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。";
 
-/* @symbol CoreGameSessionRecovery.explanationText5 @args - */
+/* @symbol CoreGameSessionRecovery.launchCommandStillExists @args - */
 "coreGameSessionRecovery.explanationText5" = "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。";
 
-/* @symbol CoreGameSessionRecovery.explanationText6 @args - */
+/* @symbol CoreGameSessionRecovery.originalProcessGone @args - */
 "coreGameSessionRecovery.explanationText6" = "已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。";
 
-/* @symbol CoreGameSessionRecovery.explanationText7 @args - */
+/* @symbol CoreGameSessionRecovery.unverifiedGameExit @args - */
 "coreGameSessionRecovery.explanationText7" = "监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。";
 
-/* @symbol CoreGameSessionRecovery.explanationText8 @args - */
+/* @symbol CoreGameSessionRecovery.monitorInterruptedAfterExit @args - */
 "coreGameSessionRecovery.explanationText8" = "监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。";
 
-/* @symbol CoreGameSessionRecovery.explanationText9 @args - */
+/* @symbol CoreGameSessionRecovery.interruptedUnknownCommandResult @args - */
 "coreGameSessionRecovery.explanationText9" = "监控中断，命令结果未知";
 
-/* @symbol CoreGameSessionRecovery.explanationText10 @args - */
+/* @symbol CoreGameSessionRecovery.interruptedGameProcessGone @args - */
 "coreGameSessionRecovery.explanationText10" = "监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。";
 
-/* @symbol CoreGameSessionRecovery.explanationText11 @args - */
+/* @symbol CoreGameSessionRecovery.interruptedUnverifiedGameExit @args - */
 "coreGameSessionRecovery.explanationText11" = "监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。";
 
-/* @symbol CoreWorldManager.backupText1 @args - */
+/* @symbol CoreWorldManager.manualBackup @args - */
 "coreWorldManager.backupText1" = "手动备份";
 
-/* @symbol CoreWorldManager.lockText1 @args - */
+/* @symbol CoreWorldManager.automaticBackup @args - */
 "coreWorldManager.lockText1" = "恢复前自动备份";
 
-/* @symbol CoreWorldManager.baseText1 @args - */
+/* @symbol CoreWorldManager.importedWorld @args - */
 "coreWorldManager.baseText1" = "导入的世界";
 
-/* @symbol CoreWorldManager.readerText1 @args - */
+/* @symbol CoreWorldManager.worldInfoReadFailed @args - */
 "coreWorldManager.readerText1" = "无法读取存档信息，仍可备份文件。";
 
-/* @symbol CoreWorldManager.modesText1 @args - */
+/* @symbol CoreWorldManager.survivalMode @args - */
 "coreWorldManager.modesText1" = "生存";
 
-/* @symbol CoreWorldManager.modesText2 @args - */
+/* @symbol CoreWorldManager.creativeMode @args - */
 "coreWorldManager.modesText2" = "创造";
 
-/* @symbol CoreWorldManager.modesText3 @args - */
+/* @symbol CoreWorldManager.adventureMode @args - */
 "coreWorldManager.modesText3" = "冒险";
 
-/* @symbol CoreWorldManager.modesText4 @args - */
+/* @symbol CoreWorldManager.spectatorMode @args - */
 "coreWorldManager.modesText4" = "旁观";
 
-/* @symbol CoreWorldManager.modeText1 @args - */
+/* @symbol CoreWorldManager.hardcoreMode @args - */
 "coreWorldManager.modeText1" = "极限";
 
 /* @symbol CoreAccount.externalServer @args text */

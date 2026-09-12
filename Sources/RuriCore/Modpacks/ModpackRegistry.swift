@@ -44,24 +44,24 @@ public enum ModpackRegistry {
     }
     static func read(_ file: URL, game: URL) throws -> InstalledModpack {
         let info = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreModpackRegistry.infoText1) }
+        guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? 0) <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreModpackRegistry.invalidPackVersion) }
         let record = try JSONDecoder().decode(InstalledModpack.self, from: Data(contentsOf: file))
         try validate(record, game: game); return record
     }
     static func validate(_ record: InstalledModpack, game: URL) throws {
         guard record.schemaVersion == 1, ["Modrinth", "CurseForge", "MCBBS", "HMCL"].contains(record.format), record.files.count <= 150_000,
-              Set(record.files.map { $0.path.lowercased() }).count == record.files.count else { throw RuriError.message(Messages.CoreModpackRegistry.validateText1) }
+              Set(record.files.map { $0.path.lowercased() }).count == record.files.count else { throw RuriError.message(Messages.CoreModpackRegistry.unsupportedOrDuplicatePackVersion) }
         try InstanceTransfer.validate(record.settings)
         for file in record.files {
             _ = try LauncherPaths.safePath(file.path, within: game)
-            guard file.sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil, file.size >= 0 else { throw RuriError.message(Messages.CoreModpackRegistry.validateText2) }
+            guard file.sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil, file.size >= 0 else { throw RuriError.message(Messages.CoreModpackRegistry.invalidInitialChecksums) }
         }
         if let origin = record.origin {
             for id in [origin.projectID, origin.versionID].compactMap({ $0 }) {
-                guard id.range(of: "^[A-Za-z0-9_-]{1,128}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreModpackRegistry.originText1) }
+                guard id.range(of: "^[A-Za-z0-9_-]{1,128}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreModpackRegistry.invalidPackOrigin) }
             }
             if let url = origin.fileAPI {
-                guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else { throw RuriError.message(Messages.CoreModpackRegistry.urlText1) }
+                guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else { throw RuriError.message(Messages.CoreModpackRegistry.invalidUpdateURL) }
             }
         }
     }

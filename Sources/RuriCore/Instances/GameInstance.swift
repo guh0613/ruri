@@ -53,18 +53,18 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     }
     public func preferredJavaMajor(default minimum: Int) throws -> Int {
         if let selected = javaMajor {
-            guard (6...99).contains(selected), selected >= minimum else { throw RuriError.message(Messages.CoreGameInstance.selectedText1(String(describing: selected), String(describing: minimum))) }
-            guard supportedJavaMajors?.isEmpty != false || supportedJavaMajors!.contains(selected) else { throw RuriError.message(Messages.CoreGameInstance.selectedText2(String(describing: selected))) }
+            guard (6...99).contains(selected), selected >= minimum else { throw RuriError.message(Messages.CoreGameInstance.javaBelowRequiredVersion(String(describing: selected), String(describing: minimum))) }
+            guard supportedJavaMajors?.isEmpty != false || supportedJavaMajors!.contains(selected) else { throw RuriError.message(Messages.CoreGameInstance.javaUnsupportedByPack(String(describing: selected))) }
             return selected
         }
         guard let supported = supportedJavaMajors, !supported.isEmpty else { return minimum }
-        guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message(Messages.CoreGameInstance.selectedText3(String(describing: minimum))) }
+        guard let selected = supported.filter({ $0 >= minimum }).min() else { throw RuriError.message(Messages.CoreGameInstance.packJavaVersionMismatch(String(describing: minimum))) }
         return selected
     }
     public var subtitle: String {
         if let details = repositoryComponents ?? importedInstallation?.components {
             let components = details.map { $0.name + " " + $0.version }
-            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? [Messages.CoreGameInstance.componentsText1.localized] : components)).joined(separator: " · ")
+            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? [Messages.CoreGameInstance.localVersion.localized] : components)).joined(separator: " · ")
         }
         return loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")"
     }

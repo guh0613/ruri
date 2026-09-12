@@ -3,139 +3,274 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceContentView {
-        public static var bodyText1: LocalizedMessage {
+        /// 管理游戏内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText1`.
+        public static var manageGameContent: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText1", table: "Interface", fallback: "管理游戏内容")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText2`.
+        public static var content: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText2", table: "Interface", fallback: "内容")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 检查更新
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText3`.
+        public static var checkForUpdates: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText3", table: "Interface", fallback: "检查更新")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 批量更新…
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText4`.
+        public static var batchUpdate: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText4", table: "Interface", fallback: "批量更新…")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 更新所选内容…
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText5`.
+        public static var updateSelectedContent: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText5", table: "Interface", fallback: "更新所选内容…")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 更新当前结果…
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText6`.
+        public static var updateCurrentResults: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText6", table: "Interface", fallback: "更新当前结果…")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 导入…
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText7`.
+        public static var importContent: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText7", table: "Interface", fallback: "导入…")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 在 Finder 中打开内容文件夹
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText8`.
+        public static var openContentFolder: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText8", table: "Interface", fallback: "在 Finder 中打开内容文件夹")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 搜索已安装内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText9`.
+        public static var searchInstalledContent: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText9", table: "Interface", fallback: "搜索已安装内容")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 状态
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText10`.
+        public static var status: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText10", table: "Interface", fallback: "状态")
         }
-        public static func bodyText11(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// %1$@ / %2$lld 已启用
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText11`.
+        public static func enabledCount(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText11", table: "Interface", fallback: "%1$@ / %2$lld 已启用", arguments: [.text(value0), .integer(value1)])
         }
-        public static var bodyText12: LocalizedMessage {
+        /// 全选当前结果
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText12`.
+        public static var selectAllCurrentResults: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText12", table: "Interface", fallback: "全选当前结果")
         }
-        public static var bodyText13: LocalizedMessage {
+        /// 按住 ⌘ 多选，⇧ 连续选择
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText13`.
+        public static var multiSelectHint: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText13", table: "Interface", fallback: "按住 ⌘ 多选，⇧ 连续选择")
         }
-        public static var bodyText14: LocalizedMessage {
+        /// 取消选择
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText14`.
+        public static var deselect: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText14", table: "Interface", fallback: "取消选择")
         }
-        public static func bodyText15(_ value0: Int64) -> LocalizedMessage {
+        /// 已选 %1$lld 项
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText15`.
+        public static func selectedCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText15", table: "Interface", fallback: "已选 %1$lld 项", arguments: [.integer(value0)])
         }
-        public static var bodyText16: LocalizedMessage {
+        /// 启用所选
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText16`.
+        public static var enableSelected: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText16", table: "Interface", fallback: "启用所选")
         }
-        public static var bodyText17: LocalizedMessage {
+        /// 停用所选
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText17`.
+        public static var disableSelected: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText17", table: "Interface", fallback: "停用所选")
         }
-        public static var bodyText18: LocalizedMessage {
+        /// 移除所选…
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText18`.
+        public static var removeSelected: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText18", table: "Interface", fallback: "移除所选…")
         }
-        public static var bodyText19: LocalizedMessage {
+        /// 游戏运行期间，内容修改暂不可用。
+        ///
+        /// Resource: `Interface.appInstanceContentView.bodyText19`.
+        public static var contentChangesUnavailableWhileRunning: LocalizedMessage {
             .init(key: "appInstanceContentView.bodyText19", table: "Interface", fallback: "游戏运行期间，内容修改暂不可用。")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 正在检查兼容的正式版本…
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText1`.
+        public static var checkingCompatibleReleases: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText1", table: "Interface", fallback: "正在检查兼容的正式版本…")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 已是最新兼容正式版
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText2`.
+        public static var latestCompatibleRelease: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText2", table: "Interface", fallback: "已是最新兼容正式版")
         }
-        public static func errorText3(_ value0: String) -> LocalizedMessage {
+        /// 还没有安装%1$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText3`.
+        public static func contentNotInstalled(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.errorText3", table: "Interface", fallback: "还没有安装%1$@", arguments: [.text(value0)])
         }
-        public static var errorText4: LocalizedMessage {
+        /// 没有匹配内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText4`.
+        public static var noMatchingContent: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText4", table: "Interface", fallback: "没有匹配内容")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 从本地导入文件，或到“发现内容”安装兼容版本。
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText5`.
+        public static var importOrDiscoverContent: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText5", table: "Interface", fallback: "从本地导入文件，或到“发现内容”安装兼容版本。")
         }
-        public static func errorText6(_ value0: String) -> LocalizedMessage {
+        /// 启用 %1$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText6`.
+        public static func enableContent(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.errorText6", table: "Interface", fallback: "启用 %1$@", arguments: [.text(value0)])
         }
-        public static var errorText7: LocalizedMessage {
+        /// 启用
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText7`.
+        public static var enable: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText7", table: "Interface", fallback: "启用")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 停用
+        ///
+        /// Resource: `Interface.appInstanceContentView.errorText8`.
+        public static var disable: LocalizedMessage {
             .init(key: "appInstanceContentView.errorText8", table: "Interface", fallback: "停用")
         }
-        public static var updateText1: LocalizedMessage {
+        /// 更新
+        ///
+        /// Resource: `Interface.appInstanceContentView.updateText1`.
+        public static var update: LocalizedMessage {
             .init(key: "appInstanceContentView.updateText1", table: "Interface", fallback: "更新")
         }
-        public static func updateText2(_ value0: String) -> LocalizedMessage {
+        /// 更新至 %1$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.updateText2`.
+        public static func updateTo(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.updateText2", table: "Interface", fallback: "更新至 %1$@", arguments: [.text(value0)])
         }
-        public static var recordText1: LocalizedMessage {
+        /// 更换版本…
+        ///
+        /// Resource: `Interface.appInstanceContentView.recordText1`.
+        public static var changeVersion: LocalizedMessage {
             .init(key: "appInstanceContentView.recordText1", table: "Interface", fallback: "更换版本…")
         }
-        public static var recordText2: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appInstanceContentView.recordText2`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appInstanceContentView.recordText2", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var pageText1: LocalizedMessage {
+        /// 在 Modrinth 查看
+        ///
+        /// Resource: `Interface.appInstanceContentView.pageText1`.
+        public static var viewOnModrinth: LocalizedMessage {
             .init(key: "appInstanceContentView.pageText1", table: "Interface", fallback: "在 Modrinth 查看")
         }
-        public static var pageText2: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appInstanceContentView.pageText2`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appInstanceContentView.pageText2", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var pageText3: LocalizedMessage {
+        /// 停用会保留文件；更新前自动备份，失败可恢复。
+        ///
+        /// Resource: `Interface.appInstanceContentView.pageText3`.
+        public static var contentUpdateNotes: LocalizedMessage {
             .init(key: "appInstanceContentView.pageText3", table: "Interface", fallback: "停用会保留文件；更新前自动备份，失败可恢复。")
         }
-        public static var pageText4: LocalizedMessage {
+        /// 取消任务
+        ///
+        /// Resource: `Interface.appInstanceContentView.pageText4`.
+        public static var cancelTask: LocalizedMessage {
             .init(key: "appInstanceContentView.pageText4", table: "Interface", fallback: "取消任务")
         }
-        public static var pageText5: LocalizedMessage {
+        /// 发现更多内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.pageText5`.
+        public static var discoverMoreContent: LocalizedMessage {
             .init(key: "appInstanceContentView.pageText5", table: "Interface", fallback: "发现更多内容")
         }
-        public static func recordText3(_ value0: Int64) -> LocalizedMessage {
+        /// 移除 %1$lld 项内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.recordText3`.
+        public static func removeContentCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appInstanceContentView.recordText3", table: "Interface", fallback: "移除 %1$lld 项内容", arguments: [.integer(value0)])
         }
-        public static func recordText4(_ value0: Int64) -> LocalizedMessage {
+        /// 已将 %1$lld 项内容移到废纸篓
+        ///
+        /// Resource: `Interface.appInstanceContentView.recordText4`.
+        public static func contentMovedToTrash(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appInstanceContentView.recordText4", table: "Interface", fallback: "已将 %1$lld 项内容移到废纸篓", arguments: [.integer(value0)])
         }
-        public static func urlsText1(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+        /// 导入 %1$lld 个%2$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.urlsText1`.
+        public static func importContentCount(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.urlsText1", table: "Interface", fallback: "导入 %1$lld 个%2$@", arguments: [.integer(value0), .text(value1)])
         }
-        public static var scopedText1: LocalizedMessage {
+        /// 将此内容移到废纸篓？
+        ///
+        /// Resource: `Interface.appInstanceContentView.scopedText1`.
+        public static var moveContentToTrashConfirmation: LocalizedMessage {
             .init(key: "appInstanceContentView.scopedText1", table: "Interface", fallback: "将此内容移到废纸篓？")
         }
-        public static func fileText1(_ value0: String) -> LocalizedMessage {
+        /// 移除 %1$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.fileText1`.
+        public static func removeContent(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.fileText1", table: "Interface", fallback: "移除 %1$@", arguments: [.text(value0)])
         }
-        public static func selectedText1(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// %1$@ %2$lld 项内容
+        ///
+        /// Resource: `Interface.appInstanceContentView.selectedText1`.
+        public static func selectedContentCount(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appInstanceContentView.selectedText1", table: "Interface", fallback: "%1$@ %2$lld 项内容", arguments: [.text(value0), .integer(value1)])
         }
-        public static func prepareText1(_ value0: String) -> LocalizedMessage {
+        /// 解析 %1$@ 更新
+        ///
+        /// Resource: `Interface.appInstanceContentView.prepareText1`.
+        public static func prepareContentUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.prepareText1", table: "Interface", fallback: "解析 %1$@ 更新", arguments: [.text(value0)])
         }
-        public static var curseSelectedText1: LocalizedMessage {
+        /// 准备批量更新
+        ///
+        /// Resource: `Interface.appInstanceContentView.curseSelectedText1`.
+        public static var prepareBatchUpdate: LocalizedMessage {
             .init(key: "appInstanceContentView.curseSelectedText1", table: "Interface", fallback: "准备批量更新")
         }
-        public static func applyText1(_ value0: String) -> LocalizedMessage {
+        /// 更新 %1$@
+        ///
+        /// Resource: `Interface.appInstanceContentView.applyText1`.
+        public static func applyContentUpdate(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceContentView.applyText1", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

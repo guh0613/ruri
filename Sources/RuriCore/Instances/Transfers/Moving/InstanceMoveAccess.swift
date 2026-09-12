@@ -21,7 +21,7 @@ final class InstanceMoveAccess {
             try lock.acquire(directory: paths.gameDataState(instance.id), name: name); result.operations.append(lock)
         }
         for name in ["content-transaction", "world-restore"] where FileManager.default.fileExists(atPath: paths.gameDataState(instance.id).appendingPathComponent(name).path) {
-            throw RuriError.message(Messages.CoreInstanceMoveAccess.lockText1)
+            throw RuriError.message(Messages.CoreInstanceMoveAccess.unfinishedFileOperations)
         }
         result.worlds = try InstanceTransfer.lockWorlds(paths.game(instance.id))
         try requireFinishedSessions(paths: paths, instanceID: instance.id)
@@ -32,18 +32,18 @@ final class InstanceMoveAccess {
         let root = try LauncherPaths.safePath("sessions", within: paths.instance(instanceID))
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let entries = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard entries.count <= 100_000 else { throw RuriError.message(Messages.CoreInstanceMoveAccess.entriesText1) }
+        guard entries.count <= 100_000 else { throw RuriError.message(Messages.CoreInstanceMoveAccess.tooManyRunRecords) }
         for url in entries where url.lastPathComponent != ".DS_Store" {
             try Task.checkCancellation()
             let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard info.isDirectory == true, info.isSymbolicLink != true, let id = UUID(uuidString: url.lastPathComponent) else {
-                throw RuriError.message(Messages.CoreInstanceMoveAccess.idText1(String(describing: url.lastPathComponent)))
+                throw RuriError.message(Messages.CoreInstanceMoveAccess.unknownRunRecordEntry(url.lastPathComponent))
             }
             let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: id)
             guard record.state.isFinished,
                   record.monitorIdentity.map({ $0.liveness == .exited }) ?? true,
                   record.gameIdentity.map({ $0.liveness == .exited }) ?? true else {
-                throw RuriError.message(Messages.CoreInstanceMoveAccess.recordText1)
+                throw RuriError.message(Messages.CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession)
             }
         }
     }

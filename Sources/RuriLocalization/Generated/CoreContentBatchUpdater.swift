@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreContentBatchUpdater {
-        public static var selectedText1: LocalizedMessage {
+        /// 请选择可更新的内容，同一项目只能选择一个版本。
+        ///
+        /// Resource: `Errors.coreContentBatchUpdater.selectedText1`.
+        public static var selectionInvalid: LocalizedMessage {
             .init(key: "coreContentBatchUpdater.selectedText1", table: "Errors", fallback: "请选择可更新的内容，同一项目只能选择一个版本。")
         }
-        public static func managerText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已发生变化，请重新检查更新。
+        ///
+        /// Resource: `Errors.coreContentBatchUpdater.managerText1`.
+        public static func contentChanged(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentBatchUpdater.managerText1", table: "Errors", fallback: "%1$@ 已发生变化，请重新检查更新。", arguments: [.text(value0)])
         }
-        public static var managerText2: LocalizedMessage {
+        /// 更新版本与已安装项目不匹配。
+        ///
+        /// Resource: `Errors.coreContentBatchUpdater.managerText2`.
+        public static var installedProjectMismatch: LocalizedMessage {
             .init(key: "coreContentBatchUpdater.managerText2", table: "Errors", fallback: "更新版本与已安装项目不匹配。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 实例的游戏版本或加载器已改变，请重新检查更新。
+        ///
+        /// Resource: `Errors.coreContentBatchUpdater.currentText1`.
+        public static var instanceVersionChanged: LocalizedMessage {
             .init(key: "coreContentBatchUpdater.currentText1", table: "Errors", fallback: "实例的游戏版本或加载器已改变，请重新检查更新。")
         }
-        public static func modFilesText1(_ value0: Int64) -> LocalizedMessage {
+        /// 正在应用 %1$lld 项内容更新
+        ///
+        /// Resource: `Progress.coreContentBatchUpdater.modFilesText1`.
+        public static func applyingContentUpdates(_ value0: Int64) -> LocalizedMessage {
             .init(key: "coreContentBatchUpdater.modFilesText1", table: "Progress", fallback: "正在应用 %1$lld 项内容更新", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

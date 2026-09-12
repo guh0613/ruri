@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum CoreSharedGameDirectoryLease {
-        public static var fdText1: LocalizedMessage {
+        /// 无法锁定共享运行目录。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.fdText1`.
+        public static var lockFailed: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.fdText1", table: "Errors", fallback: "无法锁定共享运行目录。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.infoText1`.
+        public static var directoryInUse: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.infoText1", table: "Errors", fallback: "此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。")
         }
-        public static var valuesText1: LocalizedMessage {
+        /// 共享目录运行记录无效。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.valuesText1`.
+        public static var sharedRunRecordInvalid: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.valuesText1", table: "Errors", fallback: "共享目录运行记录无效。")
         }
-        public static var sessionText1: LocalizedMessage {
+        /// 共享目录的上次运行尚未确认结束，无法移动其历史。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.sessionText1`.
+        public static var unconfirmedPreviousRun: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.sessionText1", table: "Errors", fallback: "共享目录的上次运行尚未确认结束，无法移动其历史。")
         }
-        public static var valuesText2: LocalizedMessage {
+        /// 共享目录的运行记录无效，请检查运行历史。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.valuesText2`.
+        public static var invalidRunHistory: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.valuesText2", table: "Errors", fallback: "共享目录的运行记录无效，请检查运行历史。")
         }
-        public static var reservationText1: LocalizedMessage {
+        /// 共享运行目录与上次运行记录不一致，请检查原实例。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.reservationText1`.
+        public static var reservationMismatch: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.reservationText1", table: "Errors", fallback: "共享运行目录与上次运行记录不一致，请检查原实例。")
         }
-        public static var reservationText2: LocalizedMessage {
+        /// 自定义运行目录的占用记录版本无效。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.reservationText2`.
+        public static var reservationVersionInvalid: LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.reservationText2", table: "Errors", fallback: "自定义运行目录的占用记录版本无效。")
         }
-        public static func recordText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。
+        ///
+        /// Resource: `Errors.coreSharedGameDirectoryLease.recordText1`.
+        public static func activeReservation(_ value0: String) -> LocalizedMessage {
             .init(key: "coreSharedGameDirectoryLease.recordText1", table: "Errors", fallback: "“%1$@”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,100 +3,196 @@ import Foundation
 
 extension Messages {
     public enum CoreStateStore {
-        public static var baselineText1: LocalizedMessage {
+        /// 数据已由另一个 Ruri 更新
+        ///
+        /// Resource: `Core.coreStateStore.baselineText1`.
+        public static var dataUpdatedElsewhere: LocalizedMessage {
             .init(key: "coreStateStore.baselineText1", table: "Core", fallback: "数据已由另一个 Ruri 更新")
         }
-        public static var labelsText1: LocalizedMessage {
+        /// 同一实例
+        ///
+        /// Resource: `Core.coreStateStore.labelsText1`.
+        public static var sameInstance: LocalizedMessage {
             .init(key: "coreStateStore.labelsText1", table: "Core", fallback: "同一实例")
         }
-        public static var labelsText2: LocalizedMessage {
+        /// 同一账号
+        ///
+        /// Resource: `Core.coreStateStore.labelsText2`.
+        public static var sameAccount: LocalizedMessage {
             .init(key: "coreStateStore.labelsText2", table: "Core", fallback: "同一账号")
         }
-        public static var labelsText3: LocalizedMessage {
+        /// 同一实例文件夹
+        ///
+        /// Resource: `Core.coreStateStore.labelsText3`.
+        public static var sameInstanceDirectory: LocalizedMessage {
             .init(key: "coreStateStore.labelsText3", table: "Core", fallback: "同一实例文件夹")
         }
-        public static var labelsText4: LocalizedMessage {
+        /// 保留的文件夹记录
+        ///
+        /// Resource: `Core.coreStateStore.labelsText4`.
+        public static var retainedFolderRecord: LocalizedMessage {
             .init(key: "coreStateStore.labelsText4", table: "Core", fallback: "保留的文件夹记录")
         }
-        public static var labelsText5: LocalizedMessage {
+        /// 启动器设置
+        ///
+        /// Resource: `Core.coreStateStore.labelsText5`.
+        public static var launcherSettings: LocalizedMessage {
             .init(key: "coreStateStore.labelsText5", table: "Core", fallback: "启动器设置")
         }
-        public static var labelsText6: LocalizedMessage {
+        /// 名称
+        ///
+        /// Resource: `Core.coreStateStore.labelsText6`.
+        public static var name: LocalizedMessage {
             .init(key: "coreStateStore.labelsText6", table: "Core", fallback: "名称")
         }
-        public static var labelsText7: LocalizedMessage {
+        /// 收藏状态
+        ///
+        /// Resource: `Core.coreStateStore.labelsText7`.
+        public static var favoriteStatus: LocalizedMessage {
             .init(key: "coreStateStore.labelsText7", table: "Core", fallback: "收藏状态")
         }
-        public static var labelsText8: LocalizedMessage {
+        /// 内存
+        ///
+        /// Resource: `Core.coreStateStore.labelsText8`.
+        public static var memory: LocalizedMessage {
             .init(key: "coreStateStore.labelsText8", table: "Core", fallback: "内存")
         }
-        public static var labelsText9: LocalizedMessage {
+        /// 默认内存
+        ///
+        /// Resource: `Core.coreStateStore.labelsText9`.
+        public static var defaultMemory: LocalizedMessage {
             .init(key: "coreStateStore.labelsText9", table: "Core", fallback: "默认内存")
         }
-        public static var labelsText10: LocalizedMessage {
+        /// Java 选择
+        ///
+        /// Resource: `Core.coreStateStore.labelsText10`.
+        public static var javaSelection: LocalizedMessage {
             .init(key: "coreStateStore.labelsText10", table: "Core", fallback: "Java 选择")
         }
-        public static var labelsText11: LocalizedMessage {
+        /// 窗口宽度
+        ///
+        /// Resource: `Core.coreStateStore.labelsText11`.
+        public static var windowWidth: LocalizedMessage {
             .init(key: "coreStateStore.labelsText11", table: "Core", fallback: "窗口宽度")
         }
-        public static var labelsText12: LocalizedMessage {
+        /// 窗口高度
+        ///
+        /// Resource: `Core.coreStateStore.labelsText12`.
+        public static var windowHeight: LocalizedMessage {
             .init(key: "coreStateStore.labelsText12", table: "Core", fallback: "窗口高度")
         }
-        public static var labelsText13: LocalizedMessage {
+        /// 外观
+        ///
+        /// Resource: `Core.coreStateStore.labelsText13`.
+        public static var appearance: LocalizedMessage {
             .init(key: "coreStateStore.labelsText13", table: "Core", fallback: "外观")
         }
-        public static var labelsText14: LocalizedMessage {
+        /// 下载源
+        ///
+        /// Resource: `Core.coreStateStore.labelsText14`.
+        public static var downloadSource: LocalizedMessage {
             .init(key: "coreStateStore.labelsText14", table: "Core", fallback: "下载源")
         }
-        public static var labelsText15: LocalizedMessage {
+        /// JVM 参数
+        ///
+        /// Resource: `Core.coreStateStore.labelsText15`.
+        public static var jvmArguments: LocalizedMessage {
             .init(key: "coreStateStore.labelsText15", table: "Core", fallback: "JVM 参数")
         }
-        public static var labelsText16: LocalizedMessage {
+        /// 游戏参数
+        ///
+        /// Resource: `Core.coreStateStore.labelsText16`.
+        public static var gameArguments: LocalizedMessage {
             .init(key: "coreStateStore.labelsText16", table: "Core", fallback: "游戏参数")
         }
-        public static var labelsText17: LocalizedMessage {
+        /// 所属文件夹
+        ///
+        /// Resource: `Core.coreStateStore.labelsText17`.
+        public static var owningFolder: LocalizedMessage {
             .init(key: "coreStateStore.labelsText17", table: "Core", fallback: "所属文件夹")
         }
-        public static var labelsText18: LocalizedMessage {
+        /// 内存策略
+        ///
+        /// Resource: `Core.coreStateStore.labelsText18`.
+        public static var memoryPolicy: LocalizedMessage {
             .init(key: "coreStateStore.labelsText18", table: "Core", fallback: "内存策略")
         }
-        public static var labelsText19: LocalizedMessage {
+        /// 默认内存策略
+        ///
+        /// Resource: `Core.coreStateStore.labelsText19`.
+        public static var defaultMemoryPolicy: LocalizedMessage {
             .init(key: "coreStateStore.labelsText19", table: "Core", fallback: "默认内存策略")
         }
-        public static var subjectText3: LocalizedMessage {
+        /// 当前实例、文件夹或账号的选择已在另一窗口改变
+        ///
+        /// Resource: `Core.coreStateStore.subjectText3`.
+        public static var selectionChangedElsewhere: LocalizedMessage {
             .init(key: "coreStateStore.subjectText3", table: "Core", fallback: "当前实例、文件夹或账号的选择已在另一窗口改变")
         }
-        public static func subjectText4(_ value0: String) -> LocalizedMessage {
+        /// 保存冲突：%1$@。原文件已保留，请重新载入后再修改。
+        ///
+        /// Resource: `Core.coreStateStore.subjectText4`.
+        public static func saveConflictPreservingOriginal(_ value0: String) -> LocalizedMessage {
             .init(key: "coreStateStore.subjectText4", table: "Core", fallback: "保存冲突：%1$@。原文件已保留，请重新载入后再修改。", arguments: [.text(value0)])
         }
-        public static var resultText2: LocalizedMessage {
+        /// 数据格式无效
+        ///
+        /// Resource: `Core.coreStateStore.resultText2`.
+        public static var invalidDataFormat: LocalizedMessage {
             .init(key: "coreStateStore.resultText2", table: "Core", fallback: "数据格式无效")
         }
+        /// %1$@的修改与另一窗口冲突（%2$@）
+        ///
+        /// Resource: `Core.coreStateStore.fieldConflict`.
         public static func fieldConflict(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreStateStore.fieldConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突（%2$@）", arguments: [.text(value0), .text(value1)])
         }
+        /// %1$@与另一窗口冲突
+        ///
+        /// Resource: `Core.coreStateStore.subjectConflict`.
         public static func subjectConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreStateStore.subjectConflict", table: "Core", fallback: "%1$@与另一窗口冲突", arguments: [.text(value0)])
         }
+        /// %1$@的修改与另一窗口冲突
+        ///
+        /// Resource: `Core.coreStateStore.subjectChangeConflict`.
         public static func subjectChangeConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreStateStore.subjectChangeConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突", arguments: [.text(value0)])
         }
-        public static var resultText1: LocalizedMessage {
+        /// 此数据由更新版本的 Ruri 创建，请升级启动器。
+        ///
+        /// Resource: `Errors.coreStateStore.resultText1`.
+        public static var newerDataVersion: LocalizedMessage {
             .init(key: "coreStateStore.resultText1", table: "Errors", fallback: "此数据由更新版本的 Ruri 创建，请升级启动器。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 启动快照不能覆盖实例设置，请保存原实例的覆盖项。
+        ///
+        /// Resource: `Errors.coreStateStore.validateText1`.
+        public static var snapshotCannotOverwriteSettings: LocalizedMessage {
             .init(key: "coreStateStore.validateText1", table: "Errors", fallback: "启动快照不能覆盖实例设置，请保存原实例的覆盖项。")
         }
-        public static var validateText2: LocalizedMessage {
+        /// 数据包含重复实例或账号，已暂停写入。
+        ///
+        /// Resource: `Errors.coreStateStore.validateText2`.
+        public static var duplicateInstancesOrAccounts: LocalizedMessage {
             .init(key: "coreStateStore.validateText2", table: "Errors", fallback: "数据包含重复实例或账号，已暂停写入。")
         }
-        public static var instancesText1: LocalizedMessage {
+        /// 文件夹登记与保留记录包含重复身份，已暂停写入。
+        ///
+        /// Resource: `Errors.coreStateStore.instancesText1`.
+        public static var duplicateDirectoryIdentities: LocalizedMessage {
             .init(key: "coreStateStore.instancesText1", table: "Errors", fallback: "文件夹登记与保留记录包含重复身份，已暂停写入。")
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法锁定 Ruri 设置文件。
+        ///
+        /// Resource: `Errors.coreStateStore.fdText1`.
+        public static var settingsLockFailed: LocalizedMessage {
             .init(key: "coreStateStore.fdText1", table: "Errors", fallback: "无法锁定 Ruri 设置文件。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 另一个 Ruri 正在保存数据，请稍后重试。
+        ///
+        /// Resource: `Errors.coreStateStore.infoText1`.
+        public static var saveInProgress: LocalizedMessage {
             .init(key: "coreStateStore.infoText1", table: "Errors", fallback: "另一个 Ruri 正在保存数据，请稍后重试。")
         }
         static let definitions: [String: MessageDefinition] = [

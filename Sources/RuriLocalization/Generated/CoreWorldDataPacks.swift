@@ -3,79 +3,154 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldDataPacks {
-        public static var disabledText1: LocalizedMessage {
+        /// 无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.disabledText1`.
+        public static var levelDataReadFailed: LocalizedMessage {
             .init(key: "coreWorldDataPacks.disabledText1", table: "Errors", fallback: "无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。")
         }
-        public static var rootText1: LocalizedMessage {
+        /// 存档缺少 Data 标签
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.rootText1`.
+        public static var missingDataTag: LocalizedMessage {
             .init(key: "coreWorldDataPacks.rootText1", table: "Errors", fallback: "存档缺少 Data 标签")
         }
-        public static var packsText1: LocalizedMessage {
+        /// 存档数据包配置无效
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.packsText1`.
+        public static var invalidPackConfiguration: LocalizedMessage {
             .init(key: "coreWorldDataPacks.packsText1", table: "Errors", fallback: "存档数据包配置无效")
         }
-        public static var itemsText1: LocalizedMessage {
+        /// 存档数据包列表无效
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.itemsText1`.
+        public static var invalidPackList: LocalizedMessage {
             .init(key: "coreWorldDataPacks.itemsText1", table: "Errors", fallback: "存档数据包列表无效")
         }
-        public static var updatedText1: LocalizedMessage {
+        /// 存档信息已改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.updatedText1`.
+        public static var worldInfoChanged: LocalizedMessage {
             .init(key: "coreWorldDataPacks.updatedText1", table: "Errors", fallback: "存档信息已改变，请刷新后重试。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 数据包列表已改变，请刷新后重新调整顺序。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.currentText1`.
+        public static var packListChanged: LocalizedMessage {
             .init(key: "coreWorldDataPacks.currentText1", table: "Errors", fallback: "数据包列表已改变，请刷新后重新调整顺序。")
         }
-        public static var currentText2: LocalizedMessage {
+        /// 调整优先级不能添加、移除或重复数据包。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.currentText2`.
+        public static var invalidPriorityChange: LocalizedMessage {
             .init(key: "coreWorldDataPacks.currentText2", table: "Errors", fallback: "调整优先级不能添加、移除或重复数据包。")
         }
-        public static var currentText3: LocalizedMessage {
+        /// 内置、模组与缺失数据包的相对顺序必须保留。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.currentText3`.
+        public static var invalidRelativeOrder: LocalizedMessage {
             .init(key: "coreWorldDataPacks.currentText3", table: "Errors", fallback: "内置、模组与缺失数据包的相对顺序必须保留。")
         }
-        public static func isDirectoryText1(_ value0: String) -> LocalizedMessage {
+        /// 启用与停用文件同时存在，请先移除其中一份：%1$@
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText1`.
+        public static func duplicateEnabledDisabledPack(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPacks.isDirectoryText1", table: "Errors", fallback: "启用与停用文件同时存在，请先移除其中一份：%1$@", arguments: [.text(value0)])
         }
-        public static func needsRenameText1(_ value0: String) -> LocalizedMessage {
+        /// 启用后的文件名已存在：%1$@
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.needsRenameText1`.
+        public static func existingEnabledName(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPacks.needsRenameText1", table: "Errors", fallback: "启用后的文件名已存在：%1$@", arguments: [.text(value0)])
         }
-        public static var importDataPacksText1: LocalizedMessage {
+        /// 请选择 1–200 个数据包。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.importDataPacksText1`.
+        public static var invalidPackCount: LocalizedMessage {
             .init(key: "coreWorldDataPacks.importDataPacksText1", table: "Errors", fallback: "请选择 1–200 个数据包。")
         }
-        public static var isDirectoryText2: LocalizedMessage {
+        /// 请选择 ZIP 格式的数据包。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText2`.
+        public static var zipRequired: LocalizedMessage {
             .init(key: "coreWorldDataPacks.isDirectoryText2", table: "Errors", fallback: "请选择 ZIP 格式的数据包。")
         }
-        public static var isDirectoryText3: LocalizedMessage {
+        /// 请先启用数据包再导入。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText3`.
+        public static var enableBeforeImport: LocalizedMessage {
             .init(key: "coreWorldDataPacks.isDirectoryText3", table: "Errors", fallback: "请先启用数据包再导入。")
         }
-        public static func targetText1(_ value0: String) -> LocalizedMessage {
+        /// 同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.targetText1`.
+        public static func duplicatePackName(_ value0: String) -> LocalizedMessage {
             .init(key: "coreWorldDataPacks.targetText1", table: "Errors", fallback: "同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", arguments: [.text(value0)])
         }
-        public static var targetText2: LocalizedMessage {
+        /// 数据包已不存在，请刷新列表。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.targetText2`.
+        public static var packRemoved: LocalizedMessage {
             .init(key: "coreWorldDataPacks.targetText2", table: "Errors", fallback: "数据包已不存在，请刷新列表。")
         }
-        public static var directoryText1: LocalizedMessage {
+        /// 数据包目录不能是符号链接。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.directoryText1`.
+        public static var symlinkDirectoryDisallowed: LocalizedMessage {
             .init(key: "coreWorldDataPacks.directoryText1", table: "Errors", fallback: "数据包目录不能是符号链接。")
         }
-        public static var packURLText1: LocalizedMessage {
+        /// 无效的数据包文件名
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.packURLText1`.
+        public static var invalidPackFilename: LocalizedMessage {
             .init(key: "coreWorldDataPacks.packURLText1", table: "Errors", fallback: "无效的数据包文件名")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 不修改符号链接数据包。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.urlText1`.
+        public static var symlinkPackUnmodified: LocalizedMessage {
             .init(key: "coreWorldDataPacks.urlText1", table: "Errors", fallback: "不修改符号链接数据包。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 请选择实际数据包文件。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.infoText1`.
+        public static var packFileRequired: LocalizedMessage {
             .init(key: "coreWorldDataPacks.infoText1", table: "Errors", fallback: "请选择实际数据包文件。")
         }
-        public static var metadataText1: LocalizedMessage {
+        /// 无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.metadataText1`.
+        public static var packMetadataReadFailed: LocalizedMessage {
             .init(key: "coreWorldDataPacks.metadataText1", table: "Errors", fallback: "无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。")
         }
-        public static var metadataText2: LocalizedMessage {
+        /// 数据包文件无效或大于 512 MB
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.metadataText2`.
+        public static var packFileTooLarge: LocalizedMessage {
             .init(key: "coreWorldDataPacks.metadataText2", table: "Errors", fallback: "数据包文件无效或大于 512 MB")
         }
-        public static var entryText1: LocalizedMessage {
+        /// 数据包根目录缺少 pack.mcmeta
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.entryText1`.
+        public static var missingPackMetadata: LocalizedMessage {
             .init(key: "coreWorldDataPacks.entryText1", table: "Errors", fallback: "数据包根目录缺少 pack.mcmeta")
         }
-        public static var checksumText1: LocalizedMessage {
+        /// 数据包说明过大
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.checksumText1`.
+        public static var packDescriptionTooLarge: LocalizedMessage {
             .init(key: "coreWorldDataPacks.checksumText1", table: "Errors", fallback: "数据包说明过大")
         }
-        public static var checksumText2: LocalizedMessage {
+        /// 数据包说明校验失败
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.checksumText2`.
+        public static var packDescriptionChecksumFailed: LocalizedMessage {
             .init(key: "coreWorldDataPacks.checksumText2", table: "Errors", fallback: "数据包说明校验失败")
         }
-        public static var packText1: LocalizedMessage {
+        /// 数据包说明缺少 pack 或 description
+        ///
+        /// Resource: `Errors.coreWorldDataPacks.packText1`.
+        public static var packDescriptionMissingFields: LocalizedMessage {
             .init(key: "coreWorldDataPacks.packText1", table: "Errors", fallback: "数据包说明缺少 pack 或 description")
         }
         static let definitions: [String: MessageDefinition] = [

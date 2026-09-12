@@ -3,67 +3,130 @@ import Foundation
 
 extension Messages {
     public enum CLIContentCommands {
-        public static func selectedText5(_ value0: String, _ value1: Int64, _ value2: String) -> LocalizedMessage {
+        /// %1$@：%2$lld 项%3$@
+        ///
+        /// Resource: `CLI.cLIContentCommands.selectedText5`.
+        public static func selectedCount(_ value0: String, _ value1: Int64, _ value2: String) -> LocalizedMessage {
             .init(key: "cLIContentCommands.selectedText5", table: "CLI", fallback: "%1$@：%2$lld 项%3$@", arguments: [.text(value0), .integer(value1), .text(value2)])
         }
-        public static func trashedText1(_ value0: String) -> LocalizedMessage {
+        /// 已移到废纸篓：%1$@
+        ///
+        /// Resource: `CLI.cLIContentCommands.trashedText1`.
+        public static func movedToTrash(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIContentCommands.trashedText1", table: "CLI", fallback: "已移到废纸篓：%1$@", arguments: [.text(value0)])
         }
-        public static var trashedText2: LocalizedMessage {
+        /// 批量操作已完成
+        ///
+        /// Resource: `CLI.cLIContentCommands.trashedText2`.
+        public static var bulkOperationCompleted: LocalizedMessage {
             .init(key: "cLIContentCommands.trashedText2", table: "CLI", fallback: "批量操作已完成")
         }
-        public static var curseUpdatesText1: LocalizedMessage {
+        /// 没有可用的兼容正式版更新。
+        ///
+        /// Resource: `CLI.cLIContentCommands.curseUpdatesText1`.
+        public static var noCompatibleContentUpdates: LocalizedMessage {
             .init(key: "cLIContentCommands.curseUpdatesText1", table: "CLI", fallback: "没有可用的兼容正式版更新。")
         }
-        public static func planText1(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+        /// 更新 %1$lld 项内容，含依赖共 %2$lld 个文件
+        ///
+        /// Resource: `CLI.cLIContentCommands.planText1`.
+        public static func contentUpdatePlan(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
             .init(key: "cLIContentCommands.planText1", table: "CLI", fallback: "更新 %1$lld 项内容，含依赖共 %2$lld 个文件", arguments: [.integer(value0), .integer(value1)])
         }
-        public static var previousText1: LocalizedMessage {
+        /// （保持停用）
+        ///
+        /// Resource: `CLI.cLIContentCommands.previousText1`.
+        public static var keptDisabled: LocalizedMessage {
             .init(key: "cLIContentCommands.previousText1", table: "CLI", fallback: "（保持停用）")
         }
-        public static var previousText2: LocalizedMessage {
+        /// 新增
+        ///
+        /// Resource: `CLI.cLIContentCommands.previousText2`.
+        public static var newlyAdded: LocalizedMessage {
             .init(key: "cLIContentCommands.previousText2", table: "CLI", fallback: "新增")
         }
-        public static func previousText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 手动下载 %1$@：%2$@
+        ///
+        /// Resource: `CLI.cLIContentCommands.previousText3`.
+        public static func manualDownload(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "cLIContentCommands.previousText3", table: "CLI", fallback: "手动下载 %1$@：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var previousText4: LocalizedMessage {
+        /// 批量更新完成
+        ///
+        /// Resource: `CLI.cLIContentCommands.previousText4`.
+        public static var bulkUpdateCompleted: LocalizedMessage {
             .init(key: "cLIContentCommands.previousText4", table: "CLI", fallback: "批量更新完成")
         }
-        public static var idText1: LocalizedMessage {
+        /// 请指定已有实例的 UUID。
+        ///
+        /// Resource: `Errors.cLIContentCommands.idText1`.
+        public static var instanceIDRequired: LocalizedMessage {
             .init(key: "cLIContentCommands.idText1", table: "Errors", fallback: "请指定已有实例的 UUID。")
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 内容类型为 mod、resourcepack 或 shader。
+        ///
+        /// Resource: `Errors.cLIContentCommands.selectedText1`.
+        public static var contentKind: LocalizedMessage {
             .init(key: "cLIContentCommands.selectedText1", table: "Errors", fallback: "内容类型为 mod、resourcepack 或 shader。")
         }
-        public static var selectedText2: LocalizedMessage {
+        /// 用法：content <instance-uuid> [mod|resourcepack|shader]
+        ///
+        /// Resource: `Errors.cLIContentCommands.selectedText2`.
+        public static var contentUsage: LocalizedMessage {
             .init(key: "cLIContentCommands.selectedText2", table: "Errors", fallback: "用法：content <instance-uuid> [mod|resourcepack|shader]")
         }
-        public static var selectedText3: LocalizedMessage {
+        /// 用法：content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]
+        ///
+        /// Resource: `Errors.cLIContentCommands.selectedText3`.
+        public static var contentActionUsage: LocalizedMessage {
             .init(key: "cLIContentCommands.selectedText3", table: "Errors", fallback: "用法：content-action <instance-uuid> <kind> <enable|disable|remove> <filename ... | --all> [--apply]")
         }
-        public static var namesText1: LocalizedMessage {
+        /// 请选择具体文件名，或仅使用 --all。
+        ///
+        /// Resource: `Errors.cLIContentCommands.namesText1`.
+        public static var filenamesRequired: LocalizedMessage {
             .init(key: "cLIContentCommands.namesText1", table: "Errors", fallback: "请选择具体文件名，或仅使用 --all。")
         }
-        public static var selectedText4: LocalizedMessage {
+        /// 部分文件不在当前列表中。请用 content 命令查看准确文件名，停用文件包含 .disabled 后缀。
+        ///
+        /// Resource: `Errors.cLIContentCommands.selectedText4`.
+        public static var selectionMismatch: LocalizedMessage {
             .init(key: "cLIContentCommands.selectedText4", table: "Errors", fallback: "部分文件不在当前列表中。请用 content 命令查看准确文件名，停用文件包含 .disabled 后缀。")
         }
-        public static var updateContentText1: LocalizedMessage {
+        /// 用法：update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]
+        ///
+        /// Resource: `Errors.cLIContentCommands.updateContentText1`.
+        public static var updateContentUsage: LocalizedMessage {
             .init(key: "cLIContentCommands.updateContentText1", table: "Errors", fallback: "用法：update-content <instance-uuid> <kind> [filename ... | --all] [--apply] [--manual <file-id> <path>]")
         }
-        public static var fileIDText1: LocalizedMessage {
+        /// --manual 后需要 CurseForge 文件 ID 和本地路径。
+        ///
+        /// Resource: `Errors.cLIContentCommands.fileIDText1`.
+        public static var manualFileRequired: LocalizedMessage {
             .init(key: "cLIContentCommands.fileIDText1", table: "Errors", fallback: "--manual 后需要 CurseForge 文件 ID 和本地路径。")
         }
-        public static func fileIDText2(_ value0: String) -> LocalizedMessage {
+        /// 无法识别的选项：%1$@
+        ///
+        /// Resource: `Errors.cLIContentCommands.fileIDText2`.
+        public static func unknownOption(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIContentCommands.fileIDText2", table: "Errors", fallback: "无法识别的选项：%1$@", arguments: [.text(value0)])
         }
-        public static var fileIDText3: LocalizedMessage {
+        /// 应用更新时请选择具体文件名，或使用 --all。
+        ///
+        /// Resource: `Errors.cLIContentCommands.fileIDText3`.
+        public static var filesRequiredForApply: LocalizedMessage {
             .init(key: "cLIContentCommands.fileIDText3", table: "Errors", fallback: "应用更新时请选择具体文件名，或使用 --all。")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 实例已移除。
+        ///
+        /// Resource: `Errors.cLIContentCommands.instanceText1`.
+        public static var removedInstance: LocalizedMessage {
             .init(key: "cLIContentCommands.instanceText1", table: "Errors", fallback: "实例已移除。")
         }
-        public static var chosenText1: LocalizedMessage {
+        /// 部分文件不在当前内容列表中。
+        ///
+        /// Resource: `Errors.cLIContentCommands.chosenText1`.
+        public static var partialContentSelection: LocalizedMessage {
             .init(key: "cLIContentCommands.chosenText1", table: "Errors", fallback: "部分文件不在当前内容列表中。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -7,7 +7,7 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         save(); guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelDirectories.baseText1) { [self] _ in
+        perform(Messages.AppAppModelDirectories.switchGameDirectory) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) { try GameDirectoryStore.select(id, paths: base) }.value
             acceptState(result); page = .library
             await refreshDirectoryAvailability()
@@ -45,16 +45,16 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         if state != persistedState { save() }
         guard !readOnly else { return }
-        perform(Messages.AppAppModelDirectories.relocateCustomDirectoryText1) { [self] _ in
+        perform(Messages.AppAppModelDirectories.relocateCustomDirectory) { [self] _ in
             _ = try await CustomRunDirectoryRelocation(paths: basePaths).apply(preview)
             acceptState(try StateStore.load(basePaths))
             await refreshDirectoryAvailability()
-            notice = Messages.AppAppModelDirectories.relocateCustomDirectoryText2(Int64(preview.instances.count)).localized
+            notice = Messages.AppAppModelDirectories.relocatedInstances(Int64(preview.instances.count)).localized
             completed()
         }
     }
     func changeGameRunDirectory(_ preview: GameRunDirectoryChangePreview, copyFiles: Bool = false) {
-        perform(Messages.AppAppModelDirectories.changeGameRunDirectoryText3(String(describing: copyFiles ? Messages.AppAppModelDirectories.changeGameRunDirectoryText1.localized : Messages.AppAppModelDirectories.changeGameRunDirectoryText2.localized), String(describing: preview.instanceName))) { [self] activity in
+        perform(Messages.AppAppModelDirectories.runDirectoryForInstance(String(describing: copyFiles ? Messages.AppAppModelDirectories.copyAndSwitch.localized : Messages.AppAppModelDirectories.switchDirectory.localized), preview.instanceName)) { [self] activity in
             let service = GameRunDirectoryChange(paths: paths)
             do {
                 let result: RunDirectoryCopyResult?
@@ -62,7 +62,7 @@ extension AppModel {
                     result = try await service.copyToEmpty(preview) { [weak self] value in Task { @MainActor in self?.progress(activity, value.progress) } }
                 } else { _ = try await service.useExisting(preview); result = nil }
                 acceptState(try StateStore.load(basePaths))
-                notice = result?.warning ?? Messages.AppAppModelDirectories.resultText2(String(describing: preview.instanceName), String(describing: copyFiles ? Messages.AppAppModelDirectories.changeGameRunDirectoryText1.localized : Messages.AppAppModelDirectories.resultText1.localized)).localized
+                notice = result?.warning ?? Messages.AppAppModelDirectories.directorySwitchCompleted(preview.instanceName, String(describing: copyFiles ? Messages.AppAppModelDirectories.copyAndSwitch.localized : Messages.AppAppModelDirectories.useTargetContents.localized)).localized
                 noticeFileURL = result?.preservedCopy
             } catch let failure as RunDirectoryCopyFailure {
                 notice = failure.localizedDescription; noticeFileURL = failure.preservedCopy
@@ -71,10 +71,10 @@ extension AppModel {
         }
     }
     func recoverGameRunDirectory(_ pending: RunDirectoryCopyRecovery) {
-        perform(Messages.AppAppModelDirectories.recoverGameRunDirectoryText1(String(describing: pending.owner.instanceName))) { [self] _ in
+        perform(Messages.AppAppModelDirectories.recoverDirectoryCopy(pending.owner.instanceName)) { [self] _ in
             let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
             acceptState(try StateStore.load(basePaths))
-            notice = result.warning ?? (pending.committed ? Messages.AppAppModelDirectories.resultText3.localized : Messages.AppAppModelDirectories.resultText4.localized)
+            notice = result.warning ?? (pending.committed ? Messages.AppAppModelDirectories.cleanedCopyRecord.localized : Messages.AppAppModelDirectories.directorySwitchRecovered.localized)
             noticeFileURL = result.preservedCopy
         }
     }

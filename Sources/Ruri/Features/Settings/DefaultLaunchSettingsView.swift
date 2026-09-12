@@ -16,7 +16,7 @@ struct DefaultLaunchSettingsView: View {
     }
     var body: some View {
         VStack(spacing: 0) {
-            SettingsLayout(title: Messages.AppDefaultLaunchSettingsView.bodyText1.localized, subtitle: Messages.AppDefaultLaunchSettingsView.bodyText2.localized, panes: [.runtime, .launch, .advanced], selection: $pane) {
+            SettingsLayout(title: Messages.AppDefaultLaunchSettingsView.defaultLaunchSettings.localized, subtitle: Messages.AppDefaultLaunchSettingsView.followsDefaultHelp.localized, panes: [.runtime, .launch, .advanced], selection: $pane) {
                 LaunchSettingsEditor(overrides: $overrides, defaults: original, runtimes: model.runtimes, showsInheritance: false, keys: pane.launchKeys)
             }
             Divider()
@@ -25,10 +25,10 @@ struct DefaultLaunchSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack {
-                Text(hasChanges ? Messages.AppDefaultLaunchSettingsView.issueText1.localized : Messages.AppDefaultLaunchSettingsView.issueText2.localized).font(.caption).foregroundStyle(.secondary)
+                Text(hasChanges ? Messages.AppDefaultLaunchSettingsView.unsavedChanges.localized : Messages.AppDefaultLaunchSettingsView.runningGameSettings.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.AppDefaultLaunchSettingsView.issueText3.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)
+                Button(Messages.AppDefaultLaunchSettingsView.saveDefaultSettings.localized, action: save).buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(!hasChanges || model.readOnly)
             }.padding(.horizontal, 20).padding(.vertical, 14)
         }.frame(width: 860, height: 670)
         .interactiveDismissDisabled(hasChanges)
@@ -39,6 +39,6 @@ struct DefaultLaunchSettingsView: View {
         let values = overrides.resolve(defaults: original)
         if let failure = SettingsValidation.issue(in: values) { pane = .containing(failure.key); issue = failure.message; return }
         if model.updateDefaultLaunchSettings(values, basedOn: original) { dismiss() }
-        else { issue = model.error ?? Messages.AppDefaultLaunchSettingsView.failureText1.localized }
+        else { issue = model.error ?? Messages.AppDefaultLaunchSettingsView.saveDefaultFailure.localized }
     }
 }

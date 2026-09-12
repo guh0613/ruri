@@ -4,9 +4,9 @@ import Darwin
 
 extension InstanceMover {
     func moveRepository(_ preview: InstanceMovePreview, progress: @Sendable (InstanceMoveProgress) -> Void) async throws -> InstanceMoveResult {
-        guard let snapshot = preview.repository else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.snapshotText1) }
+        guard let snapshot = preview.repository else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.missingInstallationFiles) }
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.stateText1) }
+        guard state.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.changedSettingsAfterPreview) }
         let access = try await InstanceMoveAccess.acquire(instance: preview.source, paths: current)
         defer { withExtendedLifetime(access) {} }
         try requireIndependentVersion(preview.source, paths: current)
@@ -26,20 +26,20 @@ extension InstanceMover {
         try record.validateLocations(paths: current)
         for part in destinationParts(record) { try Self.requireAbsent(record.destination(part, paths: current)) }
         try StateStore.update(paths) { latest in
-            guard latest.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText1) }
+            guard latest.instances.first(where: { $0.id == preview.source.id }) == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.instanceSettingsChanged) }
         }
         try record.save(paths: current, at: preparing)
         try RunDirectoryFileCopy.moveWithoutReplacing(preparing, to: root)
         do {
             let workspace = try record.workspace(paths: current)
             try FileManager.default.createDirectory(at: workspace.deletingLastPathComponent(), withIntermediateDirectories: true)
-            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.workspaceText1) }
+            guard mkdir(workspace.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.existingMoveWorkspace) }
             record.workspaceIdentity = try .read(workspace); try record.save(paths: current)
             try record.reserveVersions()
             let location = record
             @Sendable func validate() throws {
                 try location.validateLocations(paths: current)
-                guard location.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.validateText1) }
+                guard location.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.changedWorkspaceIdentity) }
             }
             var copied: Int64 = 0, lastUpdate = Date.distantPast
             progress(.init(phase: .copying, totalBytes: preview.bytes))
@@ -85,7 +85,7 @@ extension InstanceMover {
             try verifyRepositoryDestination(record, paths: current)
             try access.lease.clearFinishedReservation(paths: current, instanceID: preview.source.id)
             let saved = try StateStore.update(paths) { latest in
-                guard let index = latest.instances.firstIndex(where: { $0.id == preview.source.id }), latest.instances[index] == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.indexText1) }
+                guard let index = latest.instances.firstIndex(where: { $0.id == preview.source.id }), latest.instances[index] == preview.source else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.settingsChangedDuringMove) }
                 try record.validateLocations(paths: current)
                 latest.instances[index] = record.moved; latest.selectedDirectoryID = record.moved.directoryID; latest.selectedInstanceID = record.moved.id
             }
@@ -94,13 +94,13 @@ extension InstanceMover {
             return try finishRepository(record, state: saved, preservingSource: false, progress: progress)
         } catch {
             let saved = try StateStore.load(paths)
-            if try record.isCommitted(saved) { return .init(state: saved, preservedFiles: [root], warning: Messages.CoreRepositoryInstanceMover.savedText1(String(describing: error.localizedDescription)).localized) }
+            if try record.isCommitted(saved) { return .init(state: saved, preservedFiles: [root], warning: Messages.CoreRepositoryInstanceMover.moveCommittedNeedsRecovery(error.localizedDescription).localized) }
             let reason = error.localizedDescription
             do {
                 let kept = try abandonRepository(record, paths: current)
-                throw InstanceMoveFailure(message: Task.isCancelled || error is CancellationError ? Messages.CoreRepositoryInstanceMover.keptText1.localized : Messages.CoreRepositoryInstanceMover.keptText2(String(describing: reason)).localized, preservedFiles: kept, cancelled: Task.isCancelled || error is CancellationError)
+                throw InstanceMoveFailure(message: Task.isCancelled || error is CancellationError ? Messages.CoreRepositoryInstanceMover.moveCancelledWithBackup.localized : Messages.CoreRepositoryInstanceMover.moveIncompleteOriginalRetained(String(describing: reason)).localized, preservedFiles: kept, cancelled: Task.isCancelled || error is CancellationError)
             } catch let failure as InstanceMoveFailure { throw failure }
-            catch { throw InstanceMoveFailure(message: Messages.CoreRepositoryInstanceMover.failureText1(String(describing: reason), String(describing: error.localizedDescription)).localized, preservedFiles: [root], cancelled: Task.isCancelled) }
+            catch { throw InstanceMoveFailure(message: Messages.CoreRepositoryInstanceMover.moveRecoveryRequired(String(describing: reason), error.localizedDescription).localized, preservedFiles: [root], cancelled: Task.isCancelled) }
         }
     }
 
@@ -113,10 +113,10 @@ extension InstanceMover {
     }
     func recoverRepository(_ instanceID: UUID, transactionID: UUID, state: PersistentState, preservingSource: Bool, progress: @Sendable (InstanceMoveProgress) -> Void) throws -> InstanceMoveResult {
         let record = try RepositoryMoveJournal.load(paths: paths, instanceID: instanceID)
-        guard record.id == transactionID else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText2) }
+        guard record.id == transactionID else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.pendingMoveChanged) }
         try record.validateLocations(paths: paths)
         if try record.isCommitted(state) { return try finishRepository(record, state: state, preservingSource: preservingSource, progress: progress) }
-        return .init(state: state, preservedFiles: try abandonRepository(record, paths: paths), warning: Messages.CoreRepositoryInstanceMover.recordText3.localized)
+        return .init(state: state, preservedFiles: try abandonRepository(record, paths: paths), warning: Messages.CoreRepositoryInstanceMover.moveRecoveredWithFiles.localized)
     }
     private func destinationParts(_ record: RepositoryMoveJournal) -> [RepositoryMoveJournal.Part] { record.moved.repositoryVersionID == nil ? [.metadata] : [.metadata, .version] }
     private func rebindRepositoryMovePack(_ metadata: URL, moved: GameInstance, game: URL) throws {
@@ -128,11 +128,11 @@ extension InstanceMover {
         try FileExtendedAttributes.rewrite(JSONEncoder().encode(pack), at: file)
     }
     private func verifyRepositoryDestination(_ record: RepositoryMoveJournal, paths: LauncherPaths, contents: Bool = true) throws {
-        guard record.publications.map(\.part) == destinationParts(record) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.verifyRepositoryDestinationText1) }
+        guard record.publications.map(\.part) == destinationParts(record) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.incompleteDestinationPublication) }
         let root = try InstanceMoveJournal.root(paths: paths, instanceID: record.original.id)
         for publication in record.publications {
             let target = try record.destination(publication.part, paths: paths)
-            guard (publication.published ?? publication.staged).matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText1) }
+            guard (publication.published ?? publication.staged).matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.changedDestinationIdentity) }
             if contents { try FileTreeManifest.load(from: root.appendingPathComponent("target-" + publication.part.rawValue + ".json"), expectedDigest: publication.digest).requireMatch(in: target) }
         }
         if contents, let directory = record.targetCollection, record.moved.repositoryVersionID != nil {
@@ -142,7 +142,7 @@ extension InstanceMover {
     private func finishRepository(_ input: RepositoryMoveJournal, state: PersistentState, preservingSource: Bool, progress: @Sendable (InstanceMoveProgress) -> Void) throws -> InstanceMoveResult {
         var record = input
         try record.validateLocations(paths: paths)
-        guard try record.isCommitted(state) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText4) }
+        guard try record.isCommitted(state) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.moveNotCommitted) }
         progress(.init(phase: .verifying))
         try verifyRepositoryDestination(record, paths: paths, contents: !preservingSource)
         let root = try InstanceMoveJournal.root(paths: paths, instanceID: record.original.id), retired = try record.retirement(paths: paths)
@@ -156,25 +156,25 @@ extension InstanceMover {
             if record.retirementIdentity == nil {
                 for source in record.sources {
                     let location = try record.source(source.part, paths: paths)
-                    guard source.identity.matches(location) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText1) }
+                    guard source.identity.matches(location) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.sourceFolderIdentityChanged) }
                     try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest).requireMatch(in: location)
                 }
                 try FileManager.default.createDirectory(at: retired.deletingLastPathComponent(), withIntermediateDirectories: true)
-                guard mkdir(retired.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText2) }
+                guard mkdir(retired.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.cannotCreateCleanupDirectory) }
                 record.retirementIdentity = try .read(retired); record.phase = .retiring; try record.save(paths: paths)
             }
-            guard record.retirementIdentity?.matches(retired) == true || (record.phase == .deleting && !FileManager.default.fileExists(atPath: retired.path)) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.locationText3) }
+            guard record.retirementIdentity?.matches(retired) == true || (record.phase == .deleting && !FileManager.default.fileExists(atPath: retired.path)) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged) }
             if record.phase != .deleting {
                 progress(.init(phase: .retiring))
                 for source in record.sources {
                     let location = try record.source(source.part, paths: paths), target = retired.appendingPathComponent(source.part.rawValue)
                     let receipt = try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest)
                     if FileManager.default.fileExists(atPath: location.path) {
-                        guard source.identity.matches(location), !FileManager.default.fileExists(atPath: target.path) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText1) }
+                        guard source.identity.matches(location), !FileManager.default.fileExists(atPath: target.path) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.unexpectedOriginalFiles) }
                         try receipt.requireMatch(in: location)
-                        guard rename(location.path, target.path) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText2) }
+                        guard rename(location.path, target.path) == 0 else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.cleanupOriginalFilesFailed) }
                     }
-                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.receiptText3) }
+                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.cleanupLocationUnknown) }
                     try receipt.requireMatch(in: target)
                 }
                 try verifyRepositoryDestination(record, paths: paths)
@@ -184,7 +184,7 @@ extension InstanceMover {
             for source in record.sources {
                 let target = retired.appendingPathComponent(source.part.rawValue)
                 if FileManager.default.fileExists(atPath: target.path) {
-                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText2) }
+                    guard source.identity.matches(target) else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.changedRemainingFiles) }
                     try FileTreeManifest.load(from: root.appendingPathComponent("source-" + source.part.rawValue + ".json"), expectedDigest: source.digest).requireRemainingMatch(in: target)
                     try FileManager.default.removeItem(at: target)
                 }
@@ -196,18 +196,18 @@ extension InstanceMover {
         if record.workspaceIdentity?.matches(workspace) == true { do { try FileManager.default.removeItem(at: workspace) } catch { kept.append(workspace) } }
         let recordLocation = try retireRepositoryRecord(record)
         if kept.isEmpty { try? FileManager.default.removeItem(at: recordLocation) }
-        return .init(state: state, preservedFiles: kept, warning: kept.isEmpty ? nil : Messages.CoreRepositoryInstanceMover.recordLocationText1.localized)
+        return .init(state: state, preservedFiles: kept, warning: kept.isEmpty ? nil : Messages.CoreRepositoryInstanceMover.movedWithRetainedFiles.localized)
     }
     private func abandonRepository(_ input: RepositoryMoveJournal, paths: LauncherPaths) throws -> [URL] {
         var record = input; try record.validateLocations(paths: paths)
-        guard record.retirementIdentity == nil else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.recordText5) }
+        guard record.retirementIdentity == nil else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck) }
         record.phase = .recovering; try record.save(paths: paths)
         let workspace = try record.workspace(paths: paths)
         var kept: [URL] = []
         for publication in record.publications {
             let target = try record.destination(publication.part, paths: paths)
             if (publication.published ?? publication.staged).matches(target) {
-                guard record.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.targetText3) }
+                guard record.workspaceIdentity?.matches(workspace) == true else { throw RuriError.message(Messages.CoreRepositoryInstanceMover.workspaceIdentityChanged) }
                 try RunDirectoryFileCopy.returnToWorkspace(target, workspace: workspace)
             } else if FileManager.default.fileExists(atPath: target.path) { kept.append(target) }
         }

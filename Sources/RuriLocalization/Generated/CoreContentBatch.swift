@@ -3,25 +3,46 @@ import Foundation
 
 extension Messages {
     public enum CoreContentBatch {
+        /// Ruri 已移除的内容 %1$@
+        ///
+        /// Resource: `Core.coreContentBatch.removalFolder`.
         public static func removalFolder(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.removalFolder", table: "Core", fallback: "Ruri 已移除的内容 %1$@", arguments: [.text(value0)])
         }
-        public static func sourceText1(_ value0: String) -> LocalizedMessage {
+        /// 目标文件已存在，整批操作尚未执行：%1$@
+        ///
+        /// Resource: `Errors.coreContentBatch.sourceText1`.
+        public static func batchDestinationExists(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.sourceText1", table: "Errors", fallback: "目标文件已存在，整批操作尚未执行：%1$@", arguments: [.text(value0)])
         }
-        public static var validateSelectionText1: LocalizedMessage {
+        /// 选择中包含重复文件。
+        ///
+        /// Resource: `Errors.coreContentBatch.validateSelectionText1`.
+        public static var duplicateSelection: LocalizedMessage {
             .init(key: "coreContentBatch.validateSelectionText1", table: "Errors", fallback: "选择中包含重复文件。")
         }
-        public static func infoText1(_ value0: String) -> LocalizedMessage {
+        /// 内容列表已改变，请刷新后重新选择：%1$@
+        ///
+        /// Resource: `Errors.coreContentBatch.infoText1`.
+        public static func contentListChanged(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.infoText1", table: "Errors", fallback: "内容列表已改变，请刷新后重新选择：%1$@", arguments: [.text(value0)])
         }
-        public static func dependencyText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// “%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。
+        ///
+        /// Resource: `Errors.coreContentBatch.dependencyText1`.
+        public static func dependencySelectionRequired(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.dependencyText1", table: "Errors", fallback: "“%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。", arguments: [.text(value0), .text(value1)])
         }
-        public static func attributesText1(_ value0: String) -> LocalizedMessage {
+        /// 内容目录中存在不支持的文件类型：%1$@
+        ///
+        /// Resource: `Errors.coreContentBatch.attributesText1`.
+        public static func unsupportedContentFileType(_ value0: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.attributesText1", table: "Errors", fallback: "内容目录中存在不支持的文件类型：%1$@", arguments: [.text(value0)])
         }
-        public static func journalText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 内容操作恢复失败，备份保留在 %1$@。%2$@
+        ///
+        /// Resource: `Errors.coreContentBatch.journalText1`.
+        public static func contentRecoveryFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreContentBatch.journalText1", table: "Errors", fallback: "内容操作恢复失败，备份保留在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
         }
         static let definitions: [String: MessageDefinition] = [

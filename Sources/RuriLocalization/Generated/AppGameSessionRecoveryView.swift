@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppGameSessionRecoveryView {
-        public static var bodyText1: LocalizedMessage {
+        /// 我已确认这个实例的游戏已退出
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.bodyText1`.
+        public static var gameExitConfirmed: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.bodyText1", table: "Interface", fallback: "我已确认这个实例的游戏已退出")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.bodyText2`.
+        public static var recoveryDetails: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.bodyText2", table: "Interface", fallback: "恢复会保留现有日志，并注明这是用户确认；不会结束任何进程。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 这个实例仍被某项操作占用，请等待该操作完成。
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.bodyText3`.
+        public static var instanceBusy: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.bodyText3", table: "Interface", fallback: "这个实例仍被某项操作占用，请等待该操作完成。")
         }
-        public static var messageText1: LocalizedMessage {
+        /// 刷新状态
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.messageText1`.
+        public static var refreshStatus: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.messageText1", table: "Interface", fallback: "刷新状态")
         }
-        public static var messageText2: LocalizedMessage {
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.messageText2`.
+        public static var returnToGame: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.messageText2", table: "Interface", fallback: "返回游戏")
         }
-        public static var messageText3: LocalizedMessage {
+        /// 收尾记录并恢复启动
+        ///
+        /// Resource: `Interface.appGameSessionRecoveryView.messageText3`.
+        public static var finalizeAndResume: LocalizedMessage {
             .init(key: "appGameSessionRecoveryView.messageText3", table: "Interface", fallback: "收尾记录并恢复启动")
         }
         static let definitions: [String: MessageDefinition] = [

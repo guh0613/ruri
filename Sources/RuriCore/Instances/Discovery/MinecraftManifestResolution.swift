@@ -33,21 +33,21 @@ extension MinecraftDirectoryReader {
         var reader = MinecraftDirectoryScan(root: catalog.directory)
         let graph = try reader.manifestGraph(version.id)
         let manifest = try JSONDecoder().decode(VersionManifest.self, from: JSONSerialization.data(withJSONObject: graph.value))
-        guard let main = manifest.mainClass, !main.isEmpty else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.mainText1) }
-        guard let jarID = manifest.jar else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.jarIDText1) }
+        guard let main = manifest.mainClass, !main.isEmpty else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.mainClassMissing) }
+        guard let jarID = manifest.jar else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.gameJarMissing) }
         let rawLibraries = graph.value["libraries"] as? [[String: Any]] ?? []
-        guard rawLibraries.count == manifest.libraries.count else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.rawLibrariesText1) }
+        guard rawLibraries.count == manifest.libraries.count else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.invalidLibraries) }
         let libraries = try rawLibraries.map { raw -> MinecraftLibraryDeclaration in
             try Task.checkCancellation()
             let declaration = try MinecraftLibraryDeclaration.readMetadata(raw), library = declaration.library
             let mavenPath = try Library.mavenPath(library.name)
             let hint = raw["hint"] ?? raw["MMC-hint"]
-            if let hint, !(hint is NSNull), !(hint is String) { throw RuriError.message(Messages.CoreMinecraftManifestResolution.hintText1(String(describing: library.name))) }
+            if let hint, !(hint is NSNull), !(hint is String) { throw RuriError.message(Messages.CoreMinecraftManifestResolution.invalidLibraryHint(library.name)) }
             guard (hint as? String) == "local" else { return declaration }
             let filename = raw["filename"] ?? raw["MMC-filename"]
             let name: String
             if let filename, !(filename is NSNull) {
-                guard let value = filename as? String else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.valueText1(String(describing: library.name))) }
+                guard let value = filename as? String else { throw RuriError.message(Messages.CoreMinecraftManifestResolution.invalidLibraryFilename(library.name)) }
                 name = value
             } else { name = URL(fileURLWithPath: mavenPath).lastPathComponent }
             let folder = try reader.path("versions/\(version.id)/libraries")

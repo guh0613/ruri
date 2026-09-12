@@ -3,61 +3,118 @@ import Foundation
 
 extension Messages {
     public enum AppExportInstanceView {
-        public static func bodyText1(_ value0: String) -> LocalizedMessage {
+        /// 导出 %1$@
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText1`.
+        public static func exportInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText1", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText2`.
+        public static var fullExportDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText2", table: "Interface", fallback: "将当前客户端、依赖、资源、模组和配置一起保存为 ZIP。导入时直接还原这些文件，保留本地修改；Java 运行时另行选择。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText3`.
+        public static var lightExportDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText3", table: "Interface", fallback: "将模组、配置与游戏设置保存为可迁移的 ZIP。设置按导出时的生效值保存；导入后不依赖这台 Mac 的默认值，游戏依赖会重新下载。")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 导出格式
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText4`.
+        public static var exportFormat: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText4", table: "Interface", fallback: "导出格式")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 版本
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText5`.
+        public static var version: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText5", table: "Interface", fallback: "版本")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 整合包版本
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText6`.
+        public static var packVersion: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText6", table: "Interface", fallback: "整合包版本")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 作者
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText7`.
+        public static var author: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText7", table: "Interface", fallback: "作者")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 描述
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText8`.
+        public static var description: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText8", table: "Interface", fallback: "描述")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 从 Modrinth 引用可下载文件
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText9`.
+        public static var modrinthFiles: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText9", table: "Interface", fallback: "从 Modrinth 引用可下载文件")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 包含存档
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText10`.
+        public static var includeWorlds: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText10", table: "Interface", fallback: "包含存档")
         }
-        public static var bodyText11: LocalizedMessage {
+        /// 启动命令会包含在导出文件中，导入后保持停用。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText11`.
+        public static var commandsDisabled: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText11", table: "Interface", fallback: "启动命令会包含在导出文件中，导入后保持停用。")
         }
-        public static var bodyText12: LocalizedMessage {
+        /// 本机环境变量不包含在导出文件中。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText12`.
+        public static var excludeEnvironment: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText12", table: "Interface", fallback: "本机环境变量不包含在导出文件中。")
         }
-        public static var bodyText13: LocalizedMessage {
+        /// 指定的 Java 主版本仅在 Ruri 格式中保留。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText13`.
+        public static var javaMajorVersion: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText13", table: "Interface", fallback: "指定的 Java 主版本仅在 Ruri 格式中保留。")
         }
-        public static var bodyText14: LocalizedMessage {
+        /// 完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText14`.
+        public static var fullBackupDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText14", table: "Interface", fallback: "完整副本保留模组来源、组件信息与当前 macOS 安装文件，适合备份和迁移到相同游戏架构的 Mac。日志、账号、Java 和游玩历史不包含在内。")
         }
-        public static var bodyText15: LocalizedMessage {
+        /// Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText15`.
+        public static var ruriFormatDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText15", table: "Interface", fallback: "Ruri 格式还会保留模组来源与版本记录，方便继续检查更新。")
         }
-        public static var bodyText16: LocalizedMessage {
+        /// 可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText16`.
+        public static var hmclFormatDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText16", table: "Interface", fallback: "可在 HMCL 中导入，包含文件校验、游戏版本、加载器、内存要求和启动参数。")
         }
-        public static var bodyText17: LocalizedMessage {
+        /// 已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText17`.
+        public static var mrpackFormatDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText17", table: "Interface", fallback: "已识别的 Modrinth 文件写入下载清单；其他文件内附。mrpack 不保存启动器的内存与窗口设置，附加启动参数请使用 MCBBS 或 Ruri 格式。")
         }
-        public static var bodyText18: LocalizedMessage {
+        /// 可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText18`.
+        public static var prismFormatDescription: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText18", table: "Interface", fallback: "可通过 Prism 或 MultiMC 的实例导入功能打开。跨平台迁移后，部分模组可能需要重新配置。")
         }
-        public static var bodyText19: LocalizedMessage {
+        /// 选择保存位置…
+        ///
+        /// Resource: `Interface.appExportInstanceView.bodyText19`.
+        public static var chooseSaveLocation: LocalizedMessage {
             .init(key: "appExportInstanceView.bodyText19", table: "Interface", fallback: "选择保存位置…")
         }
         static let definitions: [String: MessageDefinition] = [

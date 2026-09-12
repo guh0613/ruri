@@ -25,15 +25,15 @@ struct WorldManagerView: View {
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.bodyText1.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
+            HStack(spacing: 14) { Image(systemName: "globe.europe.africa.fill").font(.system(size: 38)).foregroundStyle(Theme.accent); SectionHeading(title: Messages.AppWorldManagerView.keepAdventure.localized, subtitle: instance.name); Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
             HStack {
-                Picker(Messages.AppWorldManagerView.bodyText2.localized, selection: $tab) { Text(Messages.AppWorldManagerView.bodyText3(Int64(worlds.count)).localized).tag("worlds"); Text(Messages.AppWorldManagerView.bodyText4(Int64(backups.count)).localized).tag("backups") }.pickerStyle(.segmented).frame(width: 270)
+                Picker(Messages.AppWorldManagerView.content.localized, selection: $tab) { Text(Messages.AppWorldManagerView.worldCount(Int64(worlds.count)).localized).tag("worlds"); Text(Messages.AppWorldManagerView.backupCount(Int64(backups.count)).localized).tag("backups") }.pickerStyle(.segmented).frame(width: 270)
                 Spacer()
-                Button(Messages.AppWorldManagerView.bodyText5.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help(Messages.AppWorldManagerView.bodyText6.localized)
+                Button(Messages.AppWorldManagerView.importWorld.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
+                Button { model.reveal(instance, folder: "saves") } label: { Image(systemName: "folder") }.help(Messages.AppWorldManagerView.openWorldFolder.localized)
             }
-            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldManagerView.bodyText7.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
-            if !loading && !quickPlaySupported { Text(Messages.AppWorldManagerView.bodyText8.localized).font(.caption).foregroundStyle(.secondary) }
+            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldManagerView.worldEditNotice.localized, systemImage: "play.circle").font(.callout).foregroundStyle(.secondary) }
+            if !loading && !quickPlaySupported { Text(Messages.AppWorldManagerView.directWorldLaunchUnsupported.localized).font(.caption).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let status { Text(status).font(.callout).foregroundStyle(Theme.accent) }
             if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -41,10 +41,10 @@ struct WorldManagerView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         if tab == "worlds" {
-                            if worlds.isEmpty { EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.statusText1.localized, detail: Messages.AppWorldManagerView.statusText2.localized) }
+                            if worlds.isEmpty { EmptyPanel(symbol: "globe", title: Messages.AppWorldManagerView.noWorlds.localized, detail: Messages.AppWorldManagerView.worldDescription.localized) }
                             ForEach(worlds) { world in worldRow(world) }
                         } else {
-                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.statusText3.localized, detail: Messages.AppWorldManagerView.statusText4.localized) }
+                            if backups.isEmpty { EmptyPanel(symbol: "clock.arrow.circlepath", title: Messages.AppWorldManagerView.backupYourAdventure.localized, detail: Messages.AppWorldManagerView.backupDescription.localized) }
                             ForEach(backups) { backup in backupRow(backup) }
                         }
                     }
@@ -52,9 +52,9 @@ struct WorldManagerView: View {
             }
             Divider()
             HStack {
-                Text(Messages.AppWorldManagerView.statusText5.localized).font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppWorldManagerView.backupRetention.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppWorldManagerView.statusText6.localized) { model.operation?.cancel() } }
+                if model.busy { ProgressView().controlSize(.small); Button(Messages.AppWorldManagerView.cancelTask.localized) { model.operation?.cancel() } }
             }
         }.padding(24).frame(width: 820, height: 650)
         .task { await reload() }
@@ -65,20 +65,20 @@ struct WorldManagerView: View {
         .fileImporter(isPresented: $importing, allowedContentTypes: [.folder, .zip]) { result in
             do {
                 let url = try result.get()
-                mutate(Messages.AppWorldManagerView.urlText1.localized) { id in
+                mutate(Messages.AppWorldManagerView.importWorldTitle.localized) { id in
                     let access = url.startAccessingSecurityScopedResource(); defer { if access { url.stopAccessingSecurityScopedResource() } }
                     let folder = try await manager.importWorld(from: url, progress: progress(id))
-                    status = Messages.AppWorldManagerView.folderText1(String(describing: folder)).localized; tab = "worlds"
+                    status = Messages.AppWorldManagerView.worldImported(String(describing: folder)).localized; tab = "worlds"
                 }
             } catch { self.error = error.localizedDescription }
         }
-        .confirmationDialog(Messages.AppWorldManagerView.folderText2.localized, isPresented: Binding(get: { restoreTarget != nil }, set: { if !$0 { restoreTarget = nil } }), titleVisibility: .visible) {
-            Button(Messages.AppWorldManagerView.folderText3.localized, role: .destructive) { if let backup = restoreTarget { restore(backup, replace: true) }; restoreTarget = nil }
-        } message: { Text(Messages.AppWorldManagerView.backupText1(String(describing: restoreTarget?.metadata?.worldFolder ?? "")).localized) }
-        .confirmationDialog(Messages.AppWorldManagerView.backupText2.localized, isPresented: Binding(get: { deletingWorld != nil || deletingBackup != nil }, set: { if !$0 { deletingWorld = nil; deletingBackup = nil } }), titleVisibility: .visible) {
-            Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) {
-                if let world = deletingWorld { mutate(Messages.AppWorldManagerView.worldText1.localized) { _ in try await manager.removeWorld(folder: world.folder) } }
-                if let backup = deletingBackup { mutate(Messages.AppWorldManagerView.backupText4.localized) { _ in try await manager.removeBackup(backup) } }
+        .confirmationDialog(Messages.AppWorldManagerView.replaceWorldPrompt.localized, isPresented: Binding(get: { restoreTarget != nil }, set: { if !$0 { restoreTarget = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppWorldManagerView.backupAndRestore.localized, role: .destructive) { if let backup = restoreTarget { restore(backup, replace: true) }; restoreTarget = nil }
+        } message: { Text(Messages.AppWorldManagerView.restoreBackupNotice(String(describing: restoreTarget?.metadata?.worldFolder ?? "")).localized) }
+        .confirmationDialog(Messages.AppWorldManagerView.trashWorldPrompt.localized, isPresented: Binding(get: { deletingWorld != nil || deletingBackup != nil }, set: { if !$0 { deletingWorld = nil; deletingBackup = nil } }), titleVisibility: .visible) {
+            Button(Messages.AppWorldManagerView.moveToTrash.localized, role: .destructive) {
+                if let world = deletingWorld { mutate(Messages.AppWorldManagerView.removeWorld.localized) { _ in try await manager.removeWorld(folder: world.folder) } }
+                if let backup = deletingBackup { mutate(Messages.AppWorldManagerView.removeBackup.localized) { _ in try await manager.removeBackup(backup) } }
                 deletingWorld = nil; deletingBackup = nil
             }
         } message: { Text(deletingWorld?.name ?? deletingBackup?.title ?? "") }
@@ -96,19 +96,19 @@ struct WorldManagerView: View {
                 if let error = world.metadataError { Text(error).font(.caption).foregroundStyle(.orange) }
             }
             Spacer()
-            Button(Messages.AppWorldManagerView.errorText1.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }
+            Button(Messages.AppWorldManagerView.enterWorld.localized, systemImage: "play.fill") { launchingWorld = world; dismiss() }
                 .disabled(!canModify || !quickPlaySupported || world.metadataError != nil)
-                .help(quickPlaySupported ? Messages.AppWorldManagerView.errorText2.localized : Messages.AppWorldManagerView.errorText3.localized)
-            Button(Messages.AppWorldManagerView.errorText4.localized, systemImage: "clock.arrow.circlepath") {
-                mutate(Messages.AppWorldManagerView.errorText5(String(describing: world.name)).localized) { id in
-                    _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = Messages.AppWorldManagerView.errorText6(String(describing: world.name)).localized
+                .help(quickPlaySupported ? Messages.AppWorldManagerView.launchWorldNotice.localized : Messages.AppWorldManagerView.worldLaunchUnsupported.localized)
+            Button(Messages.AppWorldManagerView.createBackup.localized, systemImage: "clock.arrow.circlepath") {
+                mutate(Messages.AppWorldManagerView.backupWorld(world.name).localized) { id in
+                    _ = try await manager.backup(folder: world.folder, progress: progress(id)); status = Messages.AppWorldManagerView.worldBackedUp(world.name).localized
                 }
             }.disabled(!canModify)
             Menu {
-                Button(Messages.AppWorldManagerView.errorText7.localized) { dataPackWorld = world }.disabled(world.metadataError != nil)
-                Button(Messages.AppWorldManagerView.errorText8.localized) { export(world) }.disabled(!canModify)
-                Button(Messages.AppWorldManagerView.errorText9.localized) { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
-                Divider(); Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) { deletingWorld = world }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.manageDatapacks.localized) { dataPackWorld = world }.disabled(world.metadataError != nil)
+                Button(Messages.AppWorldManagerView.exportZip.localized) { export(world) }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([world.url]) }
+                Divider(); Button(Messages.AppWorldManagerView.moveToTrash.localized, role: .destructive) { deletingWorld = world }.disabled(!canModify)
             } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
         }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
     }
@@ -118,14 +118,14 @@ struct WorldManagerView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(backup.title).font(.headline).lineLimit(1)
                 Text(LocalizedFormat.date(backup.createdAt, date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
-                HStack { Text(LocalizedFormat.bytes(backup.size)); Text(backup.metadata?.displayReason ?? Messages.AppWorldManagerView.backupRowText1.localized) }.font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
+                HStack { Text(LocalizedFormat.bytes(backup.size)); Text(backup.metadata?.displayReason ?? Messages.AppWorldManagerView.backupInfoUnavailable.localized) }.font(.caption).foregroundStyle(backup.metadata == nil ? .orange : .secondary)
             }
             Spacer()
-            Button(Messages.AppWorldManagerView.backupRowText2.localized) { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
+            Button(Messages.AppWorldManagerView.restoreAsCopy.localized) { restore(backup, replace: false) }.disabled(!canModify || backup.metadata == nil)
             Menu {
-                Button(Messages.AppWorldManagerView.backupRowText3.localized) { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
-                Button(Messages.AppWorldManagerView.errorText9.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
-                Divider(); Button(Messages.AppWorldManagerView.backupText3.localized, role: .destructive) { deletingBackup = backup }.disabled(!canModify)
+                Button(Messages.AppWorldManagerView.replaceOriginal.localized) { restoreTarget = backup }.disabled(!canModify || backup.metadata == nil)
+                Button(Messages.AppWorldManagerView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup.url]) }
+                Divider(); Button(Messages.AppWorldManagerView.moveToTrash.localized, role: .destructive) { deletingBackup = backup }.disabled(!canModify)
             } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
         }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 14))
     }
@@ -141,7 +141,7 @@ struct WorldManagerView: View {
         loading = false
     }
     private func progress(_ id: UUID) -> @Sendable (Int, Int) -> Void {
-        { done, total in if done % 25 == 0 || done == total { Task { @MainActor in model.progress(id, InstallProgress(Messages.AppWorldManagerView.progressText1, completed: done, total: total)) } } }
+        { done, total in if done % 25 == 0 || done == total { Task { @MainActor in model.progress(id, InstallProgress(Messages.AppWorldManagerView.processingWorldFiles, completed: done, total: total)) } } }
     }
     private func mutate(_ title: String, action: @MainActor @Sendable @escaping (UUID) async throws -> Void) {
         guard canModify else { return }; error = nil; status = nil
@@ -151,12 +151,12 @@ struct WorldManagerView: View {
         }
     }
     private func restore(_ backup: WorldBackup, replace: Bool) {
-        mutate(Messages.AppWorldManagerView.restoreText1(String(describing: backup.title)).localized) { id in
-            let folder = try await manager.restore(backup, replaceExisting: replace, progress: progress(id)); status = Messages.AppWorldManagerView.folderText4(String(describing: folder)).localized; tab = "worlds"
+        mutate(Messages.AppWorldManagerView.restoreWorld(backup.title).localized) { id in
+            let folder = try await manager.restore(backup, replaceExisting: replace, progress: progress(id)); status = Messages.AppWorldManagerView.worldRestored(String(describing: folder)).localized; tab = "worlds"
         }
     }
     private func export(_ world: WorldSnapshot) {
         let panel = NSSavePanel(); panel.allowedContentTypes = [.zip]; panel.nameFieldStringValue = world.folder + ".zip"
-        if panel.runModal() == .OK, let url = panel.url { mutate(Messages.AppWorldManagerView.urlText2(String(describing: world.name)).localized) { id in try await manager.exportWorld(folder: world.folder, to: url, progress: progress(id)); status = Messages.AppWorldManagerView.urlText3.localized } }
+        if panel.runModal() == .OK, let url = panel.url { mutate(Messages.AppWorldManagerView.exportWorld(world.name).localized) { id in try await manager.exportWorld(folder: world.folder, to: url, progress: progress(id)); status = Messages.AppWorldManagerView.worldZipExported.localized } }
     }
 }

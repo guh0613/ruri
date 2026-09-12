@@ -3,46 +3,88 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackUpdatePlan {
-        public static var titleText1: LocalizedMessage {
+        /// 新增
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.titleText1`.
+        public static var newFile: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.titleText1", table: "Core", fallback: "新增")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 替换
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.titleText2`.
+        public static var replacedFile: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.titleText2", table: "Core", fallback: "替换")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 移除
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.titleText3`.
+        public static var removedFile: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.titleText3", table: "Core", fallback: "移除")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 保留本地
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.titleText4`.
+        public static var keepLocalFile: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.titleText4", table: "Core", fallback: "保留本地")
         }
-        public static var incomingText1: LocalizedMessage {
+        /// 此文件已在本地移除，整合包要求重新添加
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.incomingText1`.
+        public static var packRequiresReadd: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.incomingText1", table: "Core", fallback: "此文件已在本地移除，整合包要求重新添加")
         }
-        public static var incomingText2: LocalizedMessage {
+        /// 此文件已在本地移除
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.incomingText2`.
+        public static var locallyRemoved: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.incomingText2", table: "Core", fallback: "此文件已在本地移除")
         }
-        public static var incomingText3: LocalizedMessage {
+        /// 新版不再包含此文件，但本地内容已修改
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.incomingText3`.
+        public static var removedUpstreamLocallyModified: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.incomingText3", table: "Core", fallback: "新版不再包含此文件，但本地内容已修改")
         }
-        public static var incomingText4: LocalizedMessage {
+        /// 整合包要求替换；本地文件已有修改
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.incomingText4`.
+        public static var replacementRequiredLocalModified: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.incomingText4", table: "Core", fallback: "整合包要求替换；本地文件已有修改")
         }
-        public static var incomingText5: LocalizedMessage {
+        /// 本地文件已有修改或与个人文件同名
+        ///
+        /// Resource: `Core.coreModpackUpdatePlan.incomingText5`.
+        public static var localModificationConflict: LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.incomingText5", table: "Core", fallback: "本地文件已有修改或与个人文件同名")
         }
-        public static func digestText1(_ value0: String) -> LocalizedMessage {
+        /// 更新不修改符号链接：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdatePlan.digestText1`.
+        public static func symlinkUpdateSkipped(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.digestText1", table: "Errors", fallback: "更新不修改符号链接：%1$@", arguments: [.text(value0)])
         }
-        public static func infoText1(_ value0: String) -> LocalizedMessage {
+        /// 待更新文件的位置已有文件夹：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdatePlan.infoText1`.
+        public static func destinationFolderExists(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.infoText1", table: "Errors", fallback: "待更新文件的位置已有文件夹：%1$@", arguments: [.text(value0)])
         }
-        public static func foundText1(_ value0: String) -> LocalizedMessage {
+        /// 此整合包文件对应多个本地版本，请先处理重复内容：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdatePlan.foundText1`.
+        public static func duplicateLocalMatches(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.foundText1", table: "Errors", fallback: "此整合包文件对应多个本地版本，请先处理重复内容：%1$@", arguments: [.text(value0)])
         }
-        public static func matchesText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包包含重复项目，无法确定要替换的文件：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdatePlan.matchesText1`.
+        public static func multipleFilesForProject(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.matchesText1", table: "Errors", fallback: "整合包包含重复项目，无法确定要替换的文件：%1$@", arguments: [.text(value0)])
         }
-        public static func previousText1(_ value0: String) -> LocalizedMessage {
+        /// 新版整合包为同一项目提供了多个文件：%1$@
+        ///
+        /// Resource: `Errors.coreModpackUpdatePlan.previousText1`.
+        public static func duplicatePackFiles(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModpackUpdatePlan.previousText1", table: "Errors", fallback: "新版整合包为同一项目提供了多个文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

@@ -12,7 +12,7 @@ enum MinecraftEndpoints {
     private static let assets = URL(string: "https://resources.download.minecraft.net")!
 
     static func asset(hash: String) throws -> URL {
-        guard hash.utf8.count == 40, hash.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else { throw RuriError.message(Messages.CoreMinecraftEndpoints.assetText1) }
+        guard hash.utf8.count == 40, hash.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else { throw RuriError.message(Messages.CoreMinecraftEndpoints.invalidAssetHash) }
         return try EndpointURL.build(base: assets, path: [String(hash.prefix(2)), hash])
     }
 }

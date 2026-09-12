@@ -32,16 +32,16 @@ public struct MemorySettings: Codable, Equatable, Sendable {
     }
     public func resolve(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
         guard (512...131_072).contains(maximumMB), initialMB == nil || (16...131_072).contains(initialMB!),
-              metaspaceMB == nil || (16...131_072).contains(metaspaceMB!) else { throw RuriError.message(Messages.CoreMemorySettings.resolveText1) }
+              metaspaceMB == nil || (16...131_072).contains(metaspaceMB!) else { throw RuriError.message(Messages.CoreMemorySettings.invalidMemoryLimits) }
         let maximum: Int
         if mode == .automatic {
-            guard availability.physicalMB >= 512 else { throw RuriError.message(Messages.CoreMemorySettings.maximumText1) }
+            guard availability.physicalMB >= 512 else { throw RuriError.message(Messages.CoreMemorySettings.physicalMemoryUnreadable) }
             var candidate = min(8192, availability.physicalMB / 4)
             if let available = availability.availableMB { candidate = min(candidate, max(0, available) / 2) }
             maximum = max(512, candidate / 256 * 256)
         } else { maximum = maximumMB }
         let initial = initialMB ?? min(512, maximum)
-        guard initial <= maximum else { throw RuriError.message(Messages.CoreMemorySettings.initialText1(String(describing: initial), String(describing: maximum))) }
+        guard initial <= maximum else { throw RuriError.message(Messages.CoreMemorySettings.initialHeapTooLarge(String(describing: initial), String(describing: maximum))) }
         return .init(maximumBytes: Int64(maximum) * 1_048_576, minimumBytes: Int64(initial) * 1_048_576, initialBytes: Int64(initial) * 1_048_576,
                      metaspaceBytes: metaspaceMB.map { Int64($0) * 1_048_576 }, maximumSource: mode == .automatic ? .automatic : .settings,
                      initialSource: .settings, metaspaceSource: .settings, availability: mode == .automatic ? availability : nil)
@@ -51,7 +51,7 @@ public struct MemorySettings: Codable, Equatable, Sendable {
 public struct LaunchMemory: Codable, Equatable, Sendable {
     public enum Source: String, Codable, Sendable {
         case automatic, settings, jvmArguments
-        public var title: String { switch self { case .automatic: Messages.CoreMemorySettings.titleText1.localized; case .settings: Messages.CoreMemorySettings.titleText2.localized; case .jvmArguments: Messages.CoreMemorySettings.titleText3.localized } }
+        public var title: String { switch self { case .automatic: Messages.CoreMemorySettings.automaticEstimation.localized; case .settings: Messages.CoreMemorySettings.memorySettings.localized; case .jvmArguments: Messages.CoreMemorySettings.jvmOverride.localized } }
     }
     public var maximumBytes: Int64
     public var minimumBytes: Int64
@@ -62,7 +62,7 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     public var metaspaceSource: Source
     public var availability: MemoryAvailability?
     public var maximumMB: Int { Int((maximumBytes + 1_048_575) / 1_048_576) }
-    public var summary: String { Messages.CoreMemorySettings.summaryText2(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.summaryText1.localized : Self.size(initialBytes)), String(describing: maximumSource.title)).localized + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
+    public var summary: String { Messages.CoreMemorySettings.memorySummary(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.automaticallyManagedMemory.localized : Self.size(initialBytes)), maximumSource.title).localized + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
     public var arguments: [String] {
         func size(_ value: Int64) -> String { value % 1_048_576 == 0 ? "\(value / 1_048_576)M" : String(value) }
         var values = ["-Xms\(size(minimumBytes))", "-Xmx\(size(maximumBytes))"]
@@ -97,7 +97,7 @@ public enum JVMHeapArguments {
         // allocation. Preserve that choice without pretending to know its size.
         guard result.maximumBytes > 1_048_576, result.minimumBytes <= result.maximumBytes,
               result.initialBytes == 0 || (result.minimumBytes <= result.initialBytes && result.initialBytes <= result.maximumBytes) else {
-            throw RuriError.message(Messages.CoreMemorySettings.valueText1)
+            throw RuriError.message(Messages.CoreMemorySettings.heapSettingsMismatch)
         }
         return result
     }
@@ -106,9 +106,9 @@ public enum JVMHeapArguments {
         if let last = digits.last, let unit = ["k": Int64(1024), "m": Int64(1_048_576), "g": Int64(1_073_741_824)][String(last).lowercased()] {
             multiplier = unit; digits.removeLast()
         }
-        guard !digits.isEmpty, digits.utf8.allSatisfy({ (48...57).contains($0) }), let number = Int64(digits) else { throw RuriError.message(Messages.CoreMemorySettings.numberText1(String(describing: text))) }
+        guard !digits.isEmpty, digits.utf8.allSatisfy({ (48...57).contains($0) }), let number = Int64(digits) else { throw RuriError.message(Messages.CoreMemorySettings.invalidMemorySize(String(describing: text))) }
         let (value, overflow) = number.multipliedReportingOverflow(by: multiplier)
-        guard !overflow, value >= 0, value <= Int64.max - 1_048_575 else { throw RuriError.message(Messages.CoreMemorySettings.numberText2) }
+        guard !overflow, value >= 0, value <= Int64.max - 1_048_575 else { throw RuriError.message(Messages.CoreMemorySettings.memorySizeOutOfRange) }
         return value
     }
 }

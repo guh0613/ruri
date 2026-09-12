@@ -3,103 +3,202 @@ import Foundation
 
 extension Messages {
     public enum AppLibraryView {
-        public static var issueText1: LocalizedMessage {
+        /// 实例文件夹无法访问
+        ///
+        /// Resource: `Interface.appLibraryView.issueText1`.
+        public static var instanceFolderUnavailable: LocalizedMessage {
             .init(key: "appLibraryView.issueText1", table: "Interface", fallback: "实例文件夹无法访问")
         }
-        public static var issueText2: LocalizedMessage {
+        /// 重新检查
+        ///
+        /// Resource: `Interface.appLibraryView.issueText2`.
+        public static var recheck: LocalizedMessage {
             .init(key: "appLibraryView.issueText2", table: "Interface", fallback: "重新检查")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 管理文件夹…
+        ///
+        /// Resource: `Interface.appLibraryView.issueText3`.
+        public static var manageFolders: LocalizedMessage {
             .init(key: "appLibraryView.issueText3", table: "Interface", fallback: "管理文件夹…")
         }
-        public static var issueText4: LocalizedMessage {
+        /// 没有匹配的实例
+        ///
+        /// Resource: `Interface.appLibraryView.issueText4`.
+        public static var noMatchingInstances: LocalizedMessage {
             .init(key: "appLibraryView.issueText4", table: "Interface", fallback: "没有匹配的实例")
         }
-        public static var issueText5: LocalizedMessage {
+        /// 换个名称或版本号试试。
+        ///
+        /// Resource: `Interface.appLibraryView.issueText5`.
+        public static var tryAnotherNameOrVersion: LocalizedMessage {
             .init(key: "appLibraryView.issueText5", table: "Interface", fallback: "换个名称或版本号试试。")
         }
-        public static var issueText6: LocalizedMessage {
+        /// 搜索实例或版本
+        ///
+        /// Resource: `Interface.appLibraryView.issueText6`.
+        public static var searchInstancesOrVersions: LocalizedMessage {
             .init(key: "appLibraryView.issueText6", table: "Interface", fallback: "搜索实例或版本")
         }
-        public static var issueText7: LocalizedMessage {
+        /// 布局
+        ///
+        /// Resource: `Interface.appLibraryView.issueText7`.
+        public static var layout: LocalizedMessage {
             .init(key: "appLibraryView.issueText7", table: "Interface", fallback: "布局")
         }
-        public static var issueText8: LocalizedMessage {
+        /// 网格
+        ///
+        /// Resource: `Interface.appLibraryView.issueText8`.
+        public static var grid: LocalizedMessage {
             .init(key: "appLibraryView.issueText8", table: "Interface", fallback: "网格")
         }
-        public static var issueText9: LocalizedMessage {
+        /// 列表
+        ///
+        /// Resource: `Interface.appLibraryView.issueText9`.
+        public static var list: LocalizedMessage {
             .init(key: "appLibraryView.issueText9", table: "Interface", fallback: "列表")
         }
-        public static var issueText10: LocalizedMessage {
+        /// 网格或列表
+        ///
+        /// Resource: `Interface.appLibraryView.issueText10`.
+        public static var gridOrList: LocalizedMessage {
             .init(key: "appLibraryView.issueText10", table: "Interface", fallback: "网格或列表")
         }
-        public static var issueText11: LocalizedMessage {
+        /// 导入实例或整合包…
+        ///
+        /// Resource: `Interface.appLibraryView.issueText11`.
+        public static var importInstanceOrModpack: LocalizedMessage {
             .init(key: "appLibraryView.issueText11", table: "Interface", fallback: "导入实例或整合包…")
         }
-        public static var issueText12: LocalizedMessage {
+        /// 添加游戏文件夹…
+        ///
+        /// Resource: `Interface.appLibraryView.issueText12`.
+        public static var addGameFolder: LocalizedMessage {
             .init(key: "appLibraryView.issueText12", table: "Interface", fallback: "添加游戏文件夹…")
         }
-        public static var issueText13: LocalizedMessage {
+        /// 导入
+        ///
+        /// Resource: `Interface.appLibraryView.issueText13`.
+        public static var importContentAction: LocalizedMessage {
             .init(key: "appLibraryView.issueText13", table: "Interface", fallback: "导入")
         }
-        public static var issueText14: LocalizedMessage {
+        /// 导入实例、整合包或游戏文件夹
+        ///
+        /// Resource: `Interface.appLibraryView.issueText14`.
+        public static var importInstanceModpackOrGameFolder: LocalizedMessage {
             .init(key: "appLibraryView.issueText14", table: "Interface", fallback: "导入实例、整合包或游戏文件夹")
         }
-        public static var issueText15: LocalizedMessage {
+        /// 新建实例
+        ///
+        /// Resource: `Interface.appLibraryView.issueText15`.
+        public static var newInstance: LocalizedMessage {
             .init(key: "appLibraryView.issueText15", table: "Interface", fallback: "新建实例")
         }
-        public static var issueText16: LocalizedMessage {
+        /// 新建实例 ⌘N
+        ///
+        /// Resource: `Interface.appLibraryView.issueText16`.
+        public static var newInstanceShortcut: LocalizedMessage {
             .init(key: "appLibraryView.issueText16", table: "Interface", fallback: "新建实例 ⌘N")
         }
-        public static var issueText17: LocalizedMessage {
+        /// 将实例移到废纸篓？
+        ///
+        /// Resource: `Interface.appLibraryView.issueText17`.
+        public static var moveInstanceToTrashConfirmation: LocalizedMessage {
             .init(key: "appLibraryView.issueText17", table: "Interface", fallback: "将实例移到废纸篓？")
         }
-        public static var issueText18: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appLibraryView.issueText18`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appLibraryView.issueText18", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var targetText1: LocalizedMessage {
+        /// 此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。
+        ///
+        /// Resource: `Interface.appLibraryView.targetText1`.
+        public static var managedVersionFolderTrashDetails: LocalizedMessage {
             .init(key: "appLibraryView.targetText1", table: "Interface", fallback: "此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。")
         }
-        public static var targetText2: LocalizedMessage {
+        /// 此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。
+        ///
+        /// Resource: `Interface.appLibraryView.targetText2`.
+        public static var instanceTrashDetails: LocalizedMessage {
             .init(key: "appLibraryView.targetText2", table: "Interface", fallback: "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。")
         }
-        public static var targetText3: LocalizedMessage {
+        /// 实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。
+        ///
+        /// Resource: `Interface.appLibraryView.targetText3`.
+        public static var instanceAndSharedFilesTrashDetails: LocalizedMessage {
             .init(key: "appLibraryView.targetText3", table: "Interface", fallback: "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。")
         }
-        public static func totalText1(_ value0: Int64) -> LocalizedMessage {
+        /// %1$lld 个实例
+        ///
+        /// Resource: `Interface.appLibraryView.totalText1`.
+        public static func instanceCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appLibraryView.totalText1", table: "Interface", fallback: "%1$lld 个实例", arguments: [.integer(value0)])
         }
-        public static func totalText2(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+        /// %1$lld / %2$lld 个实例
+        ///
+        /// Resource: `Interface.appLibraryView.totalText2`.
+        public static func filteredInstanceCount(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
             .init(key: "appLibraryView.totalText2", table: "Interface", fallback: "%1$lld / %2$lld 个实例", arguments: [.integer(value0), .integer(value1)])
         }
-        public static var emptyFolderText1: LocalizedMessage {
+        /// 这个文件夹还没有实例
+        ///
+        /// Resource: `Interface.appLibraryView.emptyFolderText1`.
+        public static var folderHasNoInstances: LocalizedMessage {
             .init(key: "appLibraryView.emptyFolderText1", table: "Interface", fallback: "这个文件夹还没有实例")
         }
-        public static var emptyFolderText2: LocalizedMessage {
+        /// 新建一个实例，或导入整合包。
+        ///
+        /// Resource: `Interface.appLibraryView.emptyFolderText2`.
+        public static var createOrImportInstance: LocalizedMessage {
             .init(key: "appLibraryView.emptyFolderText2", table: "Interface", fallback: "新建一个实例，或导入整合包。")
         }
-        public static var emptyFolderText3: LocalizedMessage {
+        /// 导入整合包…
+        ///
+        /// Resource: `Interface.appLibraryView.emptyFolderText3`.
+        public static var importModpack: LocalizedMessage {
             .init(key: "appLibraryView.emptyFolderText3", table: "Interface", fallback: "导入整合包…")
         }
-        public static var gridText1: LocalizedMessage {
+        /// 或从工具栏导入整合包
+        ///
+        /// Resource: `Interface.appLibraryView.gridText1`.
+        public static var importModpackFromToolbar: LocalizedMessage {
             .init(key: "appLibraryView.gridText1", table: "Interface", fallback: "或从工具栏导入整合包")
         }
-        public static var iconButtonText1: LocalizedMessage {
+        /// 更换图标或编辑实例设置
+        ///
+        /// Resource: `Interface.appLibraryView.iconButtonText1`.
+        public static var changeIconOrEditSettings: LocalizedMessage {
             .init(key: "appLibraryView.iconButtonText1", table: "Interface", fallback: "更换图标或编辑实例设置")
         }
-        public static func iconButtonText2(_ value0: String) -> LocalizedMessage {
+        /// 编辑 %1$@ 的图标和设置
+        ///
+        /// Resource: `Interface.appLibraryView.iconButtonText2`.
+        public static func editIconAndSettings(_ value0: String) -> LocalizedMessage {
             .init(key: "appLibraryView.iconButtonText2", table: "Interface", fallback: "编辑 %1$@ 的图标和设置", arguments: [.text(value0)])
         }
-        public static var contextActionsText1: LocalizedMessage {
+        /// 在主页中显示
+        ///
+        /// Resource: `Interface.appLibraryView.contextActionsText1`.
+        public static var showOnHome: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText1", table: "Interface", fallback: "在主页中显示")
         }
-        public static var contextActionsText2: LocalizedMessage {
+        /// 实例设置
+        ///
+        /// Resource: `Interface.appLibraryView.contextActionsText2`.
+        public static var instanceSettings: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText2", table: "Interface", fallback: "实例设置")
         }
-        public static var contextActionsText3: LocalizedMessage {
+        /// 管理模组与资源包
+        ///
+        /// Resource: `Interface.appLibraryView.contextActionsText3`.
+        public static var manageModsAndResourcePacks: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText3", table: "Interface", fallback: "管理模组与资源包")
         }
-        public static var contextActionsText4: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appLibraryView.contextActionsText4`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText4", table: "Interface", fallback: "在 Finder 中显示")
         }
         static let definitions: [String: MessageDefinition] = [

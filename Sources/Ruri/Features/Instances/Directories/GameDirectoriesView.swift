@@ -8,21 +8,21 @@ struct DirectoryMenu: View {
     @Environment(AppModel.self) private var model
     var body: some View {
         Menu {
-            Picker(Messages.AppGameDirectoriesView.bodyText1.localized, selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
-                Text(Messages.AppGameDirectoriesView.bodyText2.localized).tag(GameDirectory.defaultID)
+            Picker(Messages.AppGameDirectoriesView.instanceFolders.localized, selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
+                Text(Messages.AppGameDirectoriesView.defaultInstanceFolder.localized).tag(GameDirectory.defaultID)
                 ForEach(model.state.gameDirectories ?? []) { directory in Text(directory.name).tag(directory.id) }
             }.pickerStyle(.inline)
             Divider()
             if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
-                Button(Messages.AppGameDirectoriesView.bodyText3.localized, systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
+                Button(Messages.AppGameDirectoriesView.refreshVersions.localized, systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
             }
-            Button(Messages.AppGameDirectoriesView.bodyText4.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-            Button(Messages.AppGameDirectoriesView.bodyText5.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
+            Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+            Button(Messages.AppGameDirectoriesView.manageFolders.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
         } label: {
-            Label(Messages.AppGameDirectoriesView.bodyText1.localized, systemImage: "folder")
+            Label(Messages.AppGameDirectoriesView.instanceFolders.localized, systemImage: "folder")
         }
         .disabled(model.busy)
-        .help(Messages.AppGameDirectoriesView.bodyText6(String(describing: model.selectedDirectoryName)).localized)
+        .help(Messages.AppGameDirectoriesView.currentFolder(String(describing: model.selectedDirectoryName)).localized)
     }
 }
 
@@ -32,13 +32,13 @@ struct GameDirectoriesView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                SectionHeading(title: Messages.AppGameDirectoriesView.bodyText1.localized, subtitle: Messages.AppGameDirectoriesView.bodyText7.localized)
+                SectionHeading(title: Messages.AppGameDirectoriesView.instanceFolders.localized, subtitle: Messages.AppGameDirectoriesView.organizeInstances.localized)
                 Spacer()
-                Button(Messages.AppGameDirectoriesView.bodyText4.localized, systemImage: "plus") { model.chooseMinecraftDirectory() }.disabled(model.busy)
+                Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "plus") { model.chooseMinecraftDirectory() }.disabled(model.busy)
             }
-            Text(Messages.AppGameDirectoriesView.bodyText8.localized)
+            Text(Messages.AppGameDirectoriesView.folderUsage.localized)
                 .font(.callout).foregroundStyle(.secondary)
-            Text(Messages.AppGameDirectoriesView.bodyText9.localized)
+            Text(Messages.AppGameDirectoriesView.removedFolderRecovery.localized)
                 .font(.caption).foregroundStyle(.secondary)
             ScrollView {
                 VStack(spacing: 12) {
@@ -46,24 +46,24 @@ struct GameDirectoriesView: View {
                         HStack(alignment: .top) {
                             Image(systemName: "internaldrive").font(.title2)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(Messages.AppGameDirectoriesView.bodyText2.localized).font(.headline)
+                                Text(Messages.AppGameDirectoriesView.defaultInstanceFolder.localized).font(.headline)
                                 Text(model.basePaths.instances.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                                Text(Messages.AppGameDirectoriesView.bodyText10(Int64(model.state.instances.filter { $0.directoryID == nil || $0.directoryID == GameDirectory.defaultID }.count)).localized).font(.caption)
+                                Text(Messages.AppGameDirectoriesView.instanceCount(Int64(model.state.instances.filter { $0.directoryID == nil || $0.directoryID == GameDirectory.defaultID }.count)).localized).font(.caption)
                             }
                             Spacer()
-                            Button(model.selectedDirectoryID == GameDirectory.defaultID ? Messages.AppGameDirectoriesView.bodyText11.localized : Messages.AppGameDirectoriesView.bodyText12.localized) { model.selectDirectory(GameDirectory.defaultID) }
+                            Button(model.selectedDirectoryID == GameDirectory.defaultID ? Messages.AppGameDirectoriesView.selected.localized : Messages.AppGameDirectoriesView.select.localized) { model.selectDirectory(GameDirectory.defaultID) }
                                 .disabled(model.busy || model.selectedDirectoryID == GameDirectory.defaultID)
                         }
                     }
                     ForEach(model.state.gameDirectories ?? []) { directory in GameDirectoryRow(directory: directory) }
                     if let detached = model.state.detachedMinecraftFolders, !detached.isEmpty {
-                        Text(Messages.AppGameDirectoriesView.detachedText1.localized).font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                        Text(Messages.AppGameDirectoriesView.removedFolders.localized).font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
                         ForEach(detached) { folder in DetachedMinecraftFolderRow(folder: folder) }
                     }
                 }.padding(2)
             }
             HStack {
-                Button(Messages.AppGameDirectoriesView.detachedText2.localized, systemImage: "arrow.clockwise") { Task { await model.refreshDirectoryAvailability() } }
+                Button(Messages.AppGameDirectoriesView.checkAvailability.localized, systemImage: "arrow.clockwise") { Task { await model.refreshDirectoryAvailability() } }
                 Spacer()
                 Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
@@ -82,17 +82,17 @@ private struct DetachedMinecraftFolderRow: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(folder.directory.name).font(.headline)
                     Text(folder.directory.url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    Text(Messages.AppGameDirectoriesView.bodyText13(Int64(folder.instances.count)).localized).font(.caption).foregroundStyle(.secondary)
+                    Text(Messages.AppGameDirectoriesView.preserveDetachedSettings(Int64(folder.instances.count)).localized).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button(Messages.AppGameDirectoriesView.bodyText14.localized) {
+                Button(Messages.AppGameDirectoriesView.readdFolder.localized) {
                     model.restoreMinecraftDirectory(folder, at: folder.directory.resolvingBookmark().url)
                 }.disabled(model.busy)
                 Menu {
-                    Button(Messages.AppGameDirectoriesView.bodyText15.localized) {
+                    Button(Messages.AppGameDirectoriesView.chooseNewLocation.localized) {
                         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true
-                        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppGameDirectoriesView.bodyText14.localized
-                        panel.message = Messages.AppGameDirectoriesView.panelText1(String(describing: folder.directory.name)).localized
+                        panel.allowsMultipleSelection = false; panel.prompt = Messages.AppGameDirectoriesView.readdFolder.localized
+                        panel.message = Messages.AppGameDirectoriesView.relocateFolder(folder.directory.name).localized
                         guard panel.runModal() == .OK, let url = panel.url else { return }
                         model.restoreMinecraftDirectory(folder, at: url)
                     }
@@ -113,21 +113,21 @@ private struct GameDirectoryRow: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Image(systemName: "folder").font(.title2)
-                    TextField(Messages.AppGameDirectoriesView.bodyText16.localized, text: $name).textFieldStyle(.roundedBorder).onSubmit(rename)
-                    if name != directory.name { Button(Messages.AppGameDirectoriesView.bodyText17.localized, action: rename).disabled(model.busy) }
+                    TextField(Messages.AppGameDirectoriesView.folderName.localized, text: $name).textFieldStyle(.roundedBorder).onSubmit(rename)
+                    if name != directory.name { Button(Messages.AppGameDirectoriesView.saveName.localized, action: rename).disabled(model.busy) }
                     Spacer()
-                    Button(model.selectedDirectoryID == directory.id ? Messages.AppGameDirectoriesView.bodyText11.localized : Messages.AppGameDirectoriesView.bodyText12.localized) { model.selectDirectory(directory.id) }
+                    Button(model.selectedDirectoryID == directory.id ? Messages.AppGameDirectoriesView.selected.localized : Messages.AppGameDirectoriesView.select.localized) { model.selectDirectory(directory.id) }
                         .disabled(model.busy || model.selectedDirectoryID == directory.id)
                 }
                 Text(directory.url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 HStack {
-                    Label(model.directoryErrors[directory.id] == nil ? Messages.AppGameDirectoriesView.bodyText18(Int64(count)).localized : Messages.AppGameDirectoriesView.bodyText19(Int64(count)).localized, systemImage: model.directoryErrors[directory.id] == nil ? "checkmark.circle" : "exclamationmark.triangle")
+                    Label(model.directoryErrors[directory.id] == nil ? Messages.AppGameDirectoriesView.availableInstanceCount(Int64(count)).localized : Messages.AppGameDirectoriesView.unavailableInstanceCount(Int64(count)).localized, systemImage: model.directoryErrors[directory.id] == nil ? "checkmark.circle" : "exclamationmark.triangle")
                         .font(.caption).foregroundStyle(model.directoryErrors[directory.id] == nil ? Color.secondary : .orange)
                     Spacer()
-                    Button(Messages.AppGameDirectoriesView.bodyText20.localized) { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
+                    Button(Messages.AppGameDirectoriesView.showInFinder.localized) { do { try directory.validateAvailability(); NSWorkspace.shared.open(directory.url) } catch { model.error = error.localizedDescription } }
                     Menu {
-                        Button(Messages.AppGameDirectoriesView.bodyText21.localized) { relocate() }
-                        Button(Messages.AppGameDirectoriesView.bodyText22.localized) { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
+                        Button(Messages.AppGameDirectoriesView.relocateOriginal.localized) { relocate() }
+                        Button(Messages.AppGameDirectoriesView.removeFromList.localized) { model.changeDirectory { try GameDirectoryStore.remove(directory.id, paths: $0) } }.disabled(count > 0 && !directory.isMinecraft)
                     } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().disabled(model.busy)
                 }
                 if let issue = model.directoryErrors[directory.id] { Text(issue).font(.caption).foregroundStyle(.secondary) }
@@ -138,7 +138,7 @@ private struct GameDirectoryRow: View {
     private func rename() { model.changeDirectory { try GameDirectoryStore.rename(directory.id, name: name, paths: $0) } }
     private func relocate() {
         let panel = NSOpenPanel(); panel.canChooseFiles = false; panel.canChooseDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppGameDirectoriesView.panelText2(String(describing: directory.name)).localized; panel.prompt = Messages.AppGameDirectoriesView.panelText3.localized
+        panel.message = Messages.AppGameDirectoriesView.chooseOriginalLocation(directory.name).localized; panel.prompt = Messages.AppGameDirectoriesView.relocate.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         model.changeDirectory { try GameDirectoryStore.relocate(directory.id, to: url, paths: $0) }
     }

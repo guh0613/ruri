@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDataOperationLock {
-        public static var fdText1: LocalizedMessage {
+        /// 无法锁定游戏文件操作。
+        ///
+        /// Resource: `Errors.coreGameDataOperationLock.fdText1`.
+        public static var lockFailed: LocalizedMessage {
             .init(key: "coreGameDataOperationLock.fdText1", table: "Errors", fallback: "无法锁定游戏文件操作。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。
+        ///
+        /// Resource: `Errors.coreGameDataOperationLock.infoText1`.
+        public static var operationInProgress: LocalizedMessage {
             .init(key: "coreGameDataOperationLock.infoText1", table: "Errors", fallback: "另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。")
         }
         static let definitions: [String: MessageDefinition] = [

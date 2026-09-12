@@ -22,10 +22,10 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         try FileManager.default.createDirectory(at: metadata, withIntermediateDirectories: true)
         let url = try LauncherPaths.safePath("run.lock", within: metadata)
         let fd = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.lockFailed) }
         var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
         guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw RuriError.message(Messages.CoreSharedGameDirectoryLease.infoText1)
+            close(fd); throw RuriError.message(Messages.CoreSharedGameDirectoryLease.directoryInUse)
         }
         let result = SharedGameDirectoryLease(fd, root: root)
         try RunDirectoryCopyGuard.requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
@@ -50,7 +50,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-        guard values.isRegularFile == true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.valuesText1) }
+        guard values.isRegularFile == true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.sharedRunRecordInvalid) }
         let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
         guard reservation.instanceID == session.instanceID, reservation.sessionID == session.id else { return }
         try FileManager.default.removeItem(at: file)
@@ -63,21 +63,21 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         let session = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: reservation.sessionID)
         guard session.state.isFinished,
               session.monitorIdentity.map({ $0.liveness == .exited }) ?? true,
-              session.gameIdentity.map({ $0.liveness == .exited }) ?? true else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.sessionText1) }
+              session.gameIdentity.map({ $0.liveness == .exited }) ?? true else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.unconfirmedPreviousRun) }
         try clearReservation(session: session)
     }
     private func checkReservation(instanceID: UUID, ignoringSession: UUID?, paths: LauncherPaths) throws {
         let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-        guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.valuesText2) }
+        guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.invalidRunHistory) }
         let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
         guard (1...2).contains(reservation.version), reservation.paths.instanceDirectories.count == 1,
               reservation.paths.instanceDirectories[reservation.instanceID] != nil,
               reservation.paths.runDirectory(for: reservation.instanceID) != .isolated else {
-            throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationText1)
+            throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationMismatch)
         }
-        if reservation.paths.runDirectory(for: reservation.instanceID) == .custom, reservation.version < 2 { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationText2) }
+        if reservation.paths.runDirectory(for: reservation.instanceID) == .custom, reservation.version < 2 { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationVersionInvalid) }
         try reservation.paths.validateDirectoryConfiguration()
         var checked = reservation.paths
         if let collection = paths.directories.first(where: { $0.id == reservation.paths.directoryID(for: reservation.instanceID) }) {
@@ -94,14 +94,14 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
                                     instanceDirectories: checked.instanceDirectories, newInstanceDirectoryID: checked.newInstanceDirectoryID,
                                     instanceRunDirectories: checked.instanceRunDirectories, instanceCustomDirectories: locations, instanceRepositoryVersions: checked.instanceRepositoryVersions)
         } else {
-            guard checked.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath().path == root.standardizedFileURL.resolvingSymlinksInPath().path else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationText1) }
+            guard checked.game(reservation.instanceID).standardizedFileURL.resolvingSymlinksInPath().path == root.standardizedFileURL.resolvingSymlinksInPath().path else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationMismatch) }
         }
         try checked.validateDirectoryConfiguration()
         try checked.validateInstanceLocation(reservation.instanceID)
         if reservation.instanceID == instanceID && reservation.sessionID == ignoringSession { return }
         let record = try GameSessionStore.load(paths: checked, instanceID: reservation.instanceID, sessionID: reservation.sessionID)
         guard record.state.isFinished || (record.monitorIdentity != nil && GameMonitorClient.activity(record) == .inactive) else {
-            throw RuriError.message(Messages.CoreSharedGameDirectoryLease.recordText1(String(describing: record.instanceName)))
+            throw RuriError.message(Messages.CoreSharedGameDirectoryLease.activeReservation(record.instanceName))
         }
     }
 }

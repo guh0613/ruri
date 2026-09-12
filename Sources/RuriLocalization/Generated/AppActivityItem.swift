@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum AppActivityItem {
-        public static var progressText1: LocalizedMessage {
+        /// 准备中
+        ///
+        /// Resource: `Progress.appActivityItem.progressText1`.
+        public static var preparing: LocalizedMessage {
             .init(key: "appActivityItem.progressText1", table: "Progress", fallback: "准备中")
         }
         static let definitions: [String: MessageDefinition] = [

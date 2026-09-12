@@ -3,90 +3,177 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceCopyView {
-        public static var bodyText1: LocalizedMessage {
+        /// 复制实例
+        ///
+        /// Resource: `Interface.appInstanceCopyView.bodyText1`.
+        public static var copyInstance: LocalizedMessage {
             .init(key: "appInstanceCopyView.bodyText1", table: "Interface", fallback: "复制实例")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 恢复实例复制
+        ///
+        /// Resource: `Interface.appInstanceCopyView.bodyText2`.
+        public static var recoverCopy: LocalizedMessage {
             .init(key: "appInstanceCopyView.bodyText2", table: "Interface", fallback: "恢复实例复制")
         }
-        public static var recoveryText1: LocalizedMessage {
+        /// 副本已创建，等待清理
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText1`.
+        public static var copyCreated: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText1", table: "Interface", fallback: "副本已创建，等待清理")
         }
-        public static var recoveryText2: LocalizedMessage {
+        /// 复制尚未完成，原实例及其文件保留
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText2`.
+        public static var copyIncomplete: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText2", table: "Interface", fallback: "复制尚未完成，原实例及其文件保留")
         }
-        public static func recoveryText3(_ value0: String) -> LocalizedMessage {
+        /// 目标：%1$@
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText3`.
+        public static func targetLabel(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText3", table: "Interface", fallback: "目标：%1$@", arguments: [.text(value0)])
         }
-        public static var recoveryText4: LocalizedMessage {
+        /// 核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText4`.
+        public static var copyValidationHelp: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText4", table: "Interface", fallback: "核对副本后清理工作记录；发现文件缺失或变化时会保留工作副本，便于检查。")
         }
-        public static var recoveryText5: LocalizedMessage {
+        /// 恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText5`.
+        public static var recoverCopyHelp: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText5", table: "Interface", fallback: "恢复会收回本次发布的文件并保留工作副本，随后可以重新复制。")
         }
-        public static var recoveryText6: LocalizedMessage {
+        /// 在 Finder 中查看工作区
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText6`.
+        public static var showWorkspace: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText6", table: "Interface", fallback: "在 Finder 中查看工作区")
         }
-        public static var recoveryText7: LocalizedMessage {
+        /// 副本名称
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText7`.
+        public static var copyNameField: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText7", table: "Interface", fallback: "副本名称")
         }
-        public static var recoveryText8: LocalizedMessage {
+        /// 保存到
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText8`.
+        public static var saveTo: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText8", table: "Interface", fallback: "保存到")
         }
-        public static var recoveryText9: LocalizedMessage {
+        /// 默认实例文件夹
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText9`.
+        public static var defaultInstanceDirectory: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText9", table: "Interface", fallback: "默认实例文件夹")
         }
-        public static var recoveryText10: LocalizedMessage {
+        /// 添加目标文件夹…
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText10`.
+        public static var addTargetFolder: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText10", table: "Interface", fallback: "添加目标文件夹…")
         }
-        public static var recoveryText11: LocalizedMessage {
+        /// 复制存档
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText11`.
+        public static var copyWorlds: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText11", table: "Interface", fallback: "复制存档")
         }
-        public static var recoveryText12: LocalizedMessage {
+        /// 复制存档备份
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText12`.
+        public static var copyBackups: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText12", table: "Interface", fallback: "复制存档备份")
         }
-        public static var recoveryText13: LocalizedMessage {
+        /// 副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText13`.
+        public static var copyManagedDescription: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText13", table: "Interface", fallback: "副本使用独立游戏目录，保留版本、模组与启动设置。Java 和公共游戏资源继续共用；游玩时长与运行历史从零开始。")
         }
-        public static var recoveryText14: LocalizedMessage {
+        /// 副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText14`.
+        public static var copyPortableDescription: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText14", table: "Interface", fallback: "副本使用独立游戏目录，保留本地游戏文件、依赖、模组与启动设置。Java 继续共用；游玩时长与运行历史从零开始。")
         }
-        public static var previewText1: LocalizedMessage {
+        /// 文件
+        ///
+        /// Resource: `Interface.appInstanceCopyView.previewText1`.
+        public static var files: LocalizedMessage {
             .init(key: "appInstanceCopyView.previewText1", table: "Interface", fallback: "文件")
         }
-        public static var previewText3: LocalizedMessage {
+        /// 源实例尚未安装，副本也会保持待安装状态。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.previewText3`.
+        public static var pendingInstallDescription: LocalizedMessage {
             .init(key: "appInstanceCopyView.previewText3", table: "Interface", fallback: "源实例尚未安装，副本也会保持待安装状态。")
         }
-        public static var previewText4: LocalizedMessage {
+        /// 正在检查实例与文件…
+        ///
+        /// Resource: `Interface.appInstanceCopyView.previewText4`.
+        public static var checkingInstance: LocalizedMessage {
             .init(key: "appInstanceCopyView.previewText4", table: "Interface", fallback: "正在检查实例与文件…")
         }
-        public static var issueText1: LocalizedMessage {
+        /// 正在取消并保留工作副本…
+        ///
+        /// Resource: `Interface.appInstanceCopyView.issueText1`.
+        public static var cancelingCopy: LocalizedMessage {
             .init(key: "appInstanceCopyView.issueText1", table: "Interface", fallback: "正在取消并保留工作副本…")
         }
-        public static var issueText2: LocalizedMessage {
+        /// 正在处理实例…
+        ///
+        /// Resource: `Interface.appInstanceCopyView.issueText2`.
+        public static var processingInstance: LocalizedMessage {
             .init(key: "appInstanceCopyView.issueText2", table: "Interface", fallback: "正在处理实例…")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 刷新预览
+        ///
+        /// Resource: `Interface.appInstanceCopyView.issueText3`.
+        public static var refreshPreview: LocalizedMessage {
             .init(key: "appInstanceCopyView.issueText3", table: "Interface", fallback: "刷新预览")
         }
-        public static var issueText4: LocalizedMessage {
+        /// 取消复制
+        ///
+        /// Resource: `Interface.appInstanceCopyView.issueText4`.
+        public static var cancelCopy: LocalizedMessage {
             .init(key: "appInstanceCopyView.issueText4", table: "Interface", fallback: "取消复制")
         }
-        public static var issueText5: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appInstanceCopyView.issueText5`.
+        public static var close: LocalizedMessage {
             .init(key: "appInstanceCopyView.issueText5", table: "Interface", fallback: "关闭")
         }
-        public static var recoveryText15: LocalizedMessage {
+        /// 校验并完成复制
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText15`.
+        public static var validateAndComplete: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText15", table: "Interface", fallback: "校验并完成复制")
         }
-        public static var recoveryText16: LocalizedMessage {
+        /// 恢复并保留副本
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText16`.
+        public static var recoverAndKeepCopy: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText16", table: "Interface", fallback: "恢复并保留副本")
         }
-        public static var recoveryText17: LocalizedMessage {
+        /// 创建副本
+        ///
+        /// Resource: `Interface.appInstanceCopyView.recoveryText17`.
+        public static var createCopy: LocalizedMessage {
             .init(key: "appInstanceCopyView.recoveryText17", table: "Interface", fallback: "创建副本")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 选择 Minecraft 文件夹保存副本，也可以新建空文件夹。
+        ///
+        /// Resource: `Interface.appInstanceCopyView.panelText1`.
+        public static var minecraftFolderDescription: LocalizedMessage {
             .init(key: "appInstanceCopyView.panelText1", table: "Interface", fallback: "选择 Minecraft 文件夹保存副本，也可以新建空文件夹。")
         }
+        /// %1$@ 副本
+        ///
+        /// Resource: `Interface.appInstanceCopyView.copyName`.
         public static func copyName(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstanceCopyView.copyName", table: "Interface", fallback: "%1$@ 副本", arguments: [.text(value0)])
         }

@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum CLIModpackCommands {
-        public static var serviceText2: LocalizedMessage {
+        /// 更新需要恢复
+        ///
+        /// Resource: `CLI.cLIModpackCommands.serviceText2`.
+        public static var packRecoveryRequired: LocalizedMessage {
             .init(key: "cLIModpackCommands.serviceText2", table: "CLI", fallback: "更新需要恢复")
         }
-        public static var serviceText3: LocalizedMessage {
+        /// 没有待恢复的更新
+        ///
+        /// Resource: `CLI.cLIModpackCommands.serviceText3`.
+        public static var noPendingPackUpdate: LocalizedMessage {
             .init(key: "cLIModpackCommands.serviceText3", table: "CLI", fallback: "没有待恢复的更新")
         }
-        public static var serviceText4: LocalizedMessage {
+        /// 可回退上次更新；更新后的本地文件修改会保留
+        ///
+        /// Resource: `CLI.cLIModpackCommands.serviceText4`.
+        public static var packRollbackAvailable: LocalizedMessage {
             .init(key: "cLIModpackCommands.serviceText4", table: "CLI", fallback: "可回退上次更新；更新后的本地文件修改会保留")
         }
-        public static var serviceText5: LocalizedMessage {
+        /// 没有更新备份
+        ///
+        /// Resource: `CLI.cLIModpackCommands.serviceText5`.
+        public static var noPackBackup: LocalizedMessage {
             .init(key: "cLIModpackCommands.serviceText5", table: "CLI", fallback: "没有更新备份")
         }
-        public static func resultText1(_ value0: Int64) -> LocalizedMessage {
+        /// 已回退，保留 %1$lld 项后续修改
+        ///
+        /// Resource: `CLI.cLIModpackCommands.resultText1`.
+        public static func packRolledBack(_ value0: Int64) -> LocalizedMessage {
             .init(key: "cLIModpackCommands.resultText1", table: "CLI", fallback: "已回退，保留 %1$lld 项后续修改", arguments: [.integer(value0)])
         }
-        public static func previewText1(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// Minecraft %1$@ → %2$@，%3$@
+        ///
+        /// Resource: `CLI.cLIModpackCommands.previewText1`.
+        public static func packUpdatePreview(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "cLIModpackCommands.previewText1", table: "CLI", fallback: "Minecraft %1$@ → %2$@，%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var keptText1: LocalizedMessage {
+        /// 整合包已更新
+        ///
+        /// Resource: `CLI.cLIModpackCommands.keptText1`.
+        public static var packUpdated: LocalizedMessage {
             .init(key: "cLIModpackCommands.keptText1", table: "CLI", fallback: "整合包已更新")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]；rollback-pack/recover-pack-update <instance-uuid> [--apply]
+        ///
+        /// Resource: `Errors.cLIModpackCommands.instanceText1`.
+        public static var packUpdateUsage: LocalizedMessage {
             .init(key: "cLIModpackCommands.instanceText1", table: "Errors", fallback: "用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]；rollback-pack/recover-pack-update <instance-uuid> [--apply]")
         }
-        public static var serviceText1: LocalizedMessage {
+        /// 仅支持 --apply 参数。
+        ///
+        /// Resource: `Errors.cLIModpackCommands.serviceText1`.
+        public static var applyOnly: LocalizedMessage {
             .init(key: "cLIModpackCommands.serviceText1", table: "Errors", fallback: "仅支持 --apply 参数。")
         }
-        public static var resultText2: LocalizedMessage {
+        /// 用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]
+        ///
+        /// Resource: `Errors.cLIModpackCommands.resultText2`.
+        public static var updatePackUsage: LocalizedMessage {
             .init(key: "cLIModpackCommands.resultText2", table: "Errors", fallback: "用法：update-pack <instance-uuid> <archive> [--apply] [--replace-local]")
         }
         static let definitions: [String: MessageDefinition] = [

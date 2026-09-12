@@ -1,128 +1,128 @@
-/* @symbol AppAppModel.iText1 @args - */
+/* @symbol AppAppModel.taskCompleted @args - */
 "appAppModel.iText1" = "已完成";
 
-/* @symbol AppAppModelContent.archiveText1 @args - */
+/* @symbol AppAppModelContent.downloadManifest @args - */
 "appAppModelContent.archiveText1" = "下载整合包清单";
 
-/* @symbol AppActivityItem.progressText1 @args - */
+/* @symbol AppActivityItem.preparing @args - */
 "appActivityItem.progressText1" = "准备中";
 
-/* @symbol AppAppModelLaunching.installedText1 @args - */
+/* @symbol AppAppModelLaunching.checkingAccountAndJava @args - */
 "appAppModelLaunching.installedText1" = "正在检查账号和 Java";
 
-/* @symbol AppAppModelLaunching.serverText2 @args - */
+/* @symbol AppAppModelLaunching.preparingAuthComponent @args - */
 "appAppModelLaunching.serverText2" = "正在准备外置认证组件";
 
-/* @symbol AppAppModelLaunching.serviceText1 @args text */
+/* @symbol AppAppModelLaunching.preparingJava @args text */
 "appAppModelLaunching.serviceText1" = "正在准备所需的 Java %1$@";
 
-/* @symbol AppWorldManagerView.progressText1 @args - */
+/* @symbol AppWorldManagerView.processingWorldFiles @args - */
 "appWorldManagerView.progressText1" = "处理存档文件";
 
-/* @symbol CoreContentBatchUpdater.modFilesText1 @args integer */
+/* @symbol CoreContentBatchUpdater.applyingContentUpdates @args integer */
 "coreContentBatchUpdater.modFilesText1" = "正在应用 %1$lld 项内容更新";
 
-/* @symbol CoreCurseForge.cacheText1 @args text */
+/* @symbol CoreCurseForge.downloadFile @args text */
 "coreCurseForge.cacheText1" = "下载 %1$@";
 
-/* @symbol CoreModrinth.filesText1 @args - */
+/* @symbol CoreModrinth.applyingContentUpdate @args - */
 "coreModrinth.filesText1" = "正在应用内容更新";
 
-/* @symbol CoreModrinthContentPlan.destinationText1 @args text */
+/* @symbol CoreModrinthContentPlan.downloadingContent @args text */
 "coreModrinthContentPlan.destinationText1" = "下载 %1$@";
 
-/* @symbol CoreForgeInstaller.jarText1 @args text */
+/* @symbol CoreForgeInstaller.downloadInstaller @args text */
 "coreForgeInstaller.jarText1" = "下载 %1$@ 安装程序";
 
-/* @symbol CoreForgeInstaller.crcText2 @args - */
+/* @symbol CoreForgeInstaller.prepareDependencies @args - */
 "coreForgeInstaller.crcText2" = "准备加载器依赖";
 
-/* @symbol CoreForgeInstaller.runtimeText2 @args text */
+/* @symbol CoreForgeInstaller.runInstaller @args text */
 "coreForgeInstaller.runtimeText2" = "运行 %1$@ 安装程序";
 
-/* @symbol CoreForgeInstaller.targetText1 @args - */
+/* @symbol CoreForgeInstaller.verifyGeneratedFiles @args - */
 "coreForgeInstaller.targetText1" = "校验加载器生成文件";
 
-/* @symbol CoreInstaller.locationText1 @args - */
+/* @symbol CoreInstaller.fetchingVersionManifest @args - */
 "coreInstaller.locationText1" = "正在获取版本清单";
 
-/* @symbol CoreInstaller.instanceText1 @args text */
+/* @symbol CoreInstaller.installingInstance @args text */
 "coreInstaller.instanceText1" = "正在安装 %1$@";
 
-/* @symbol CoreInstaller.encoderText1 @args - */
+/* @symbol CoreInstaller.installationCompleted @args - */
 "coreInstaller.encoderText1" = "安装完成";
 
-/* @symbol CoreInstaller.targetText1 @args - */
+/* @symbol CoreInstaller.downloadingGameAndDependencies @args - */
 "coreInstaller.targetText1" = "正在下载游戏与依赖库";
 
-/* @symbol CoreInstaller.subpathText1 @args - */
+/* @symbol CoreInstaller.downloadingGameResources @args - */
 "coreInstaller.subpathText1" = "正在下载游戏资源";
 
-/* @symbol CoreInstaller.subpathText2 @args - */
+/* @symbol CoreInstaller.preparingMacOSNativeLibraries @args - */
 "coreInstaller.subpathText2" = "正在准备 macOS 原生库";
 
-/* @symbol CoreInstanceComponents.importedText1 @args - */
+/* @symbol CoreInstanceComponents.applyingLoaderSettings @args - */
 "coreInstanceComponents.importedText1" = "正在应用加载器设置";
 
-/* @symbol CoreOptiFineInstaller.fileText1 @args - */
+/* @symbol CoreOptiFineInstaller.downloadInstallPackage @args - */
 "coreOptiFineInstaller.fileText1" = "下载 OptiFine 安装包（BMCLAPI）";
 
-/* @symbol CoreOptiFineInstaller.runtimeText2 @args - */
+/* @symbol CoreOptiFineInstaller.generatePatchLibrary @args - */
 "coreOptiFineInstaller.runtimeText2" = "生成 OptiFine 补丁库";
 
-/* @symbol CoreCompleteInstancePack.completedText1 @args - */
+/* @symbol CoreCompleteInstancePack.copyingInstallationFiles @args - */
 "coreCompleteInstancePack.completedText1" = "正在复制安装文件";
 
-/* @symbol CoreCompleteInstancePack.workspaceText1 @args - */
+/* @symbol CoreCompleteInstancePack.readingCompleteInstallation @args - */
 "coreCompleteInstancePack.workspaceText1" = "正在读取完整安装";
 
-/* @symbol CoreCompleteInstancePack.sourceText1 @args - */
+/* @symbol CoreCompleteInstancePack.compressingCompleteCopy @args - */
 "coreCompleteInstancePack.sourceText1" = "正在压缩完整副本";
 
-/* @symbol CoreInstanceTransfer.workspaceText1 @args - */
+/* @symbol CoreInstanceTransfer.identifyingInstance @args - */
 "coreInstanceTransfer.workspaceText1" = "正在识别实例";
 
-/* @symbol CoreInstanceTransfer.excludedText1 @args - */
+/* @symbol CoreInstanceTransfer.copyingInstanceContents @args - */
 "coreInstanceTransfer.excludedText1" = "正在复制实例内容";
 
-/* @symbol CoreInstanceTransfer.failureText2 @args - */
+/* @symbol CoreInstanceTransfer.completingPackFiles @args - */
 "coreInstanceTransfer.failureText2" = "补齐整合包文件";
 
-/* @symbol CoreInstanceTransfer.cfgText1 @args - */
+/* @symbol CoreInstanceTransfer.exportingInstance @args - */
 "coreInstanceTransfer.cfgText1" = "正在导出实例";
 
-/* @symbol CoreJavaInstaller.manifestURLText1 @args text */
+/* @symbol CoreJavaInstaller.readJavaManifest @args text */
 "coreJavaInstaller.manifestURLText1" = "读取 Java %1$@ 文件清单";
 
-/* @symbol CoreJavaInstaller.resolvedText3 @args text */
+/* @symbol CoreJavaInstaller.downloadJava @args text */
 "coreJavaInstaller.resolvedText3" = "下载 Java %1$@";
 
-/* @symbol CoreMCBBSPack.snapshotText1 @args - */
+/* @symbol CoreMCBBSPack.preparingPack @args - */
 "coreMCBBSPack.snapshotText1" = "正在准备整合包";
 
-/* @symbol CoreMCBBSPack.extrasText1 @args - */
+/* @symbol CoreMCBBSPack.exportingMCBBSPack @args - */
 "coreMCBBSPack.extrasText1" = "正在导出 MCBBS 整合包";
 
-/* @symbol CoreMRPack.snapshotText1 @args - */
+/* @symbol CoreMRPack.preparingPack @args - */
 "coreMRPack.snapshotText1" = "正在准备整合包";
 
-/* @symbol CoreMRPack.versionsText2 @args - */
+/* @symbol CoreMRPack.identifyingFiles @args - */
 "coreMRPack.versionsText2" = "正在识别 Modrinth 文件来源";
 
-/* @symbol CoreMRPack.versionsText3 @args - */
+/* @symbol CoreMRPack.sourceLookupFailed @args - */
 "coreMRPack.versionsText3" = "来源查询失败，文件将内附到整合包";
 
-/* @symbol CoreMRPack.encoderText1 @args - */
+/* @symbol CoreMRPack.exportingPack @args - */
 "coreMRPack.encoderText1" = "正在导出 mrpack";
 
-/* @symbol CoreModpackReleases.itemText2 @args - */
+/* @symbol CoreModpackReleases.downloadingPackRelease @args - */
 "coreModpackReleases.itemText2" = "正在下载整合包版本";
 
-/* @symbol CoreModpackUpdater.sourceMetadataText1 @args - */
+/* @symbol CoreModpackUpdater.applyingUpdate @args - */
 "coreModpackUpdater.sourceMetadataText1" = "正在应用整合包更新";
 
-/* @symbol CoreWorldDataPackDownloads.destinationText1 @args text */
+/* @symbol CoreWorldDataPackDownloads.downloadDataPack @args text */
 "coreWorldDataPackDownloads.destinationText1" = "下载 %1$@";
 
-/* @symbol CoreWorldDataPackDownloads.destinationText2 @args - */
+/* @symbol CoreWorldDataPackDownloads.importingDataPack @args - */
 "coreWorldDataPackDownloads.destinationText2" = "正在导入数据包";

@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreHMCLPack {
-        public static var warningsText1: LocalizedMessage {
+        /// 游戏与加载器依赖会重新安装，以匹配当前 Mac。
+        ///
+        /// Resource: `Core.coreHMCLPack.warningsText1`.
+        public static var reinstallDependenciesForMac: LocalizedMessage {
             .init(key: "coreHMCLPack.warningsText1", table: "Core", fallback: "游戏与加载器依赖会重新安装，以匹配当前 Mac。")
         }
-        public static func authorText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包作者：%1$@
+        ///
+        /// Resource: `Core.coreHMCLPack.authorText1`.
+        public static func packAuthor(_ value0: String) -> LocalizedMessage {
             .init(key: "coreHMCLPack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
         }
-        public static var indexText1: LocalizedMessage {
+        /// HMCL 清单补丁数量超过限制
+        ///
+        /// Resource: `Errors.coreHMCLPack.indexText1`.
+        public static var tooManyManifestPatches: LocalizedMessage {
             .init(key: "coreHMCLPack.indexText1", table: "Errors", fallback: "HMCL 清单补丁数量超过限制")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。
+        ///
+        /// Resource: `Errors.coreHMCLPack.versionText1`.
+        public static var unknownPackGameVersion: LocalizedMessage {
             .init(key: "coreHMCLPack.versionText1", table: "Errors", fallback: "无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。")
         }
-        public static func unsupportedText1(_ value0: String) -> LocalizedMessage {
+        /// HMCL 整合包包含尚未支持的组件：%1$@
+        ///
+        /// Resource: `Errors.coreHMCLPack.unsupportedText1`.
+        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
             .init(key: "coreHMCLPack.unsupportedText1", table: "Errors", fallback: "HMCL 整合包包含尚未支持的组件：%1$@", arguments: [.text(value0)])
         }
-        public static var partsText1: LocalizedMessage {
+        /// HMCL 清单包含无效依赖坐标
+        ///
+        /// Resource: `Errors.coreHMCLPack.partsText1`.
+        public static var invalidDependencyCoordinates: LocalizedMessage {
             .init(key: "coreHMCLPack.partsText1", table: "Errors", fallback: "HMCL 清单包含无效依赖坐标")
         }
-        public static func partsText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// HMCL 整合包需要尚未接入的组件：%1$@:%2$@
+        ///
+        /// Resource: `Errors.coreHMCLPack.partsText2`.
+        public static func unsupportedPackComponent(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreHMCLPack.partsText2", table: "Errors", fallback: "HMCL 整合包需要尚未接入的组件：%1$@:%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var valueText1: LocalizedMessage {
+        /// 检测到 NeoForge，但无法确定其版本。
+        ///
+        /// Resource: `Errors.coreHMCLPack.valueText1`.
+        public static var neoforgeVersionUnknown: LocalizedMessage {
             .init(key: "coreHMCLPack.valueText1", table: "Errors", fallback: "检测到 NeoForge，但无法确定其版本。")
         }
-        public static var valueText2: LocalizedMessage {
+        /// HMCL 整合包同时声明多个加载器，暂时无法迁移。
+        ///
+        /// Resource: `Errors.coreHMCLPack.valueText2`.
+        public static var multiplePackLoaders: LocalizedMessage {
             .init(key: "coreHMCLPack.valueText2", table: "Errors", fallback: "HMCL 整合包同时声明多个加载器，暂时无法迁移。")
         }
-        public static var loaderText1: LocalizedMessage {
+        /// HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。
+        ///
+        /// Resource: `Errors.coreHMCLPack.loaderText1`.
+        public static var unsupportedLiteLoaderArguments: LocalizedMessage {
             .init(key: "coreHMCLPack.loaderText1", table: "Errors", fallback: "HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。")
         }
-        public static var loaderText2: LocalizedMessage {
+        /// HMCL 整合包需要未识别的 LaunchWrapper 组件。
+        ///
+        /// Resource: `Errors.coreHMCLPack.loaderText2`.
+        public static var unknownLaunchWrapper: LocalizedMessage {
             .init(key: "coreHMCLPack.loaderText2", table: "Errors", fallback: "HMCL 整合包需要未识别的 LaunchWrapper 组件。")
         }
-        public static func mainText1(_ value0: String) -> LocalizedMessage {
+        /// HMCL 整合包使用未识别的游戏启动方式：%1$@
+        ///
+        /// Resource: `Errors.coreHMCLPack.mainText1`.
+        public static func unknownLaunchMethod(_ value0: String) -> LocalizedMessage {
             .init(key: "coreHMCLPack.mainText1", table: "Errors", fallback: "HMCL 整合包使用未识别的游戏启动方式：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

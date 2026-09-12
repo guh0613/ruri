@@ -17,27 +17,27 @@ import RuriCore
         .defaultSize(width: 1140, height: 780)
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button(Messages.AppRuriApp.bodyText1.localized) { model.openMainWindow?() }.keyboardShortcut("0")
+                Button(Messages.AppRuriApp.showMainWindow.localized) { model.openMainWindow?() }.keyboardShortcut("0")
                 Divider()
-                Button(Messages.AppRuriApp.bodyText2.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
-                Button(Messages.AppRuriApp.bodyText3.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
-                Button(Messages.AppRuriApp.bodyText4.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
+                Button(Messages.AppRuriApp.newInstance.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
+                Button(Messages.AppRuriApp.importInstance.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
+                Button(Messages.AppRuriApp.addGameFolder.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
             }
             CommandGroup(replacing: .appSettings) {
-                Button(Messages.AppRuriApp.bodyText5.localized) { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
+                Button(Messages.AppRuriApp.settings.localized) { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
             }
-            CommandMenu(Messages.AppRuriApp.bodyText6.localized) {
-                Button(Messages.AppRuriApp.bodyText7.localized) { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.isInstanceInUse(model.selected?.id))
+            CommandMenu(Messages.AppRuriApp.gameMenu.localized) {
+                Button(Messages.AppRuriApp.launchSelectedInstance.localized) { if let instance = model.selected { model.launch(instance) } }.keyboardShortcut("r").disabled(model.selected == nil || model.busy || model.isInstanceInUse(model.selected?.id))
                 ForEach(model.activeSessions.values.sorted { $0.createdAt < $1.createdAt }) { record in
-                    Button(Messages.AppRuriApp.instanceText1(String(describing: record.instanceName)).localized) { model.returnToGame(record.instanceID) }
+                    Button(Messages.AppRuriApp.returnToInstance(record.instanceName).localized) { model.returnToGame(record.instanceID) }
                     if record.nativeQuitSupported == true {
-                        Button(Messages.AppRuriApp.instanceText2(String(describing: record.instanceName)).localized) { model.requestGameQuit(record.instanceID) }.disabled(record.state.isFinished || record.gameIdentity?.isAlive != true || record.monitorIdentity?.isAlive != true)
+                        Button(Messages.AppRuriApp.requestExit(record.instanceName).localized) { model.requestGameQuit(record.instanceID) }.disabled(record.state.isFinished || record.gameIdentity?.isAlive != true || record.monitorIdentity?.isAlive != true)
                     }
-                    Button(Messages.AppRuriApp.instanceText3(String(describing: record.instanceName)).localized) { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
+                    Button(Messages.AppRuriApp.terminateInstance(record.instanceName).localized) { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
                 }
-                Button(Messages.AppRuriApp.instanceText4.localized) { model.showSession() }.keyboardShortcut("l")
+                Button(Messages.AppRuriApp.processLogs.localized) { model.showSession() }.keyboardShortcut("l")
                 Divider()
-                Button(Messages.AppRuriApp.instanceText5.localized) { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
+                Button(Messages.AppRuriApp.revealInstance.localized) { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
             }
         }
     }
@@ -89,10 +89,10 @@ private struct MainWindowContent: View {
     }
     func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
         let menu = NSMenu()
-        let show = NSMenuItem(title: Messages.AppRuriApp.showText1.localized, action: #selector(showMain(_:)), keyEquivalent: "")
+        let show = NSMenuItem(title: Messages.AppRuriApp.showRuri.localized, action: #selector(showMain(_:)), keyEquivalent: "")
         show.target = self; menu.addItem(show)
         for record in model?.activeSessions.values.sorted(by: { $0.createdAt < $1.createdAt }) ?? [] where record.gameIdentity?.isAlive == true {
-            let item = NSMenuItem(title: Messages.AppRuriApp.instanceText1(String(describing: record.instanceName)).localized, action: #selector(returnGame(_:)), keyEquivalent: "")
+            let item = NSMenuItem(title: Messages.AppRuriApp.returnToInstance(record.instanceName).localized, action: #selector(returnGame(_:)), keyEquivalent: "")
             item.target = self; item.representedObject = record.instanceID.uuidString; menu.addItem(item)
         }
         return menu

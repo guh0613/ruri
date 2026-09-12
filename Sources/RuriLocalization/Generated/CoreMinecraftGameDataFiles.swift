@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftGameDataFiles {
-        public static var repositoryPairText1: LocalizedMessage {
+        /// 源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。
+        ///
+        /// Resource: `Core.coreMinecraftGameDataFiles.repositoryPairText1`.
+        public static var nestedSourceAndTargetDirectories: LocalizedMessage {
             .init(key: "coreMinecraftGameDataFiles.repositoryPairText1", table: "Core", fallback: "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。")
         }
-        public static func collisionsText1(_ value0: String) -> LocalizedMessage {
+        /// 当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。
+        ///
+        /// Resource: `Core.coreMinecraftGameDataFiles.collisionsText1`.
+        public static func contentCollisions(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftGameDataFiles.collisionsText1", table: "Core", fallback: "当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

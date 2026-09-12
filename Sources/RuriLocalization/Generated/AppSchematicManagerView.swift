@@ -3,108 +3,213 @@ import Foundation
 
 extension Messages {
     public enum AppSchematicManagerView {
-        public static var bodyText1: LocalizedMessage {
+        /// 原理图
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText1`.
+        public static var schematics: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText1", table: "Interface", fallback: "原理图")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 新建文件夹
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText2`.
+        public static var newFolder: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText2", table: "Interface", fallback: "新建文件夹")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 导入…
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText3`.
+        public static var importSchematics: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText3", table: "Interface", fallback: "导入…")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText4`.
+        public static var schematicHelp: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText4", table: "Interface", fallback: "文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 返回上一级
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText5`.
+        public static var goUp: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText5", table: "Interface", fallback: "返回上一级")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 搜索当前文件夹
+        ///
+        /// Resource: `Interface.appSchematicManagerView.bodyText6`.
+        public static var searchFolder: LocalizedMessage {
             .init(key: "appSchematicManagerView.bodyText6", table: "Interface", fallback: "搜索当前文件夹")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 查看信息
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText1`.
+        public static var viewInfo: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText1", table: "Interface", fallback: "查看信息")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 导出…
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText2`.
+        public static var exportSchematics: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText2", table: "Interface", fallback: "导出…")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText3`.
+        public static var revealInFinder: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText3", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText4`.
+        public static var trashSchematics: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText4", table: "Interface", fallback: "移到废纸篓…")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 将原理图拖到这里，或点击“导入”。
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText5`.
+        public static var dropSchematics: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText5", table: "Interface", fallback: "将原理图拖到这里，或点击“导入”。")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 刷新
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText6`.
+        public static var refresh: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText6", table: "Interface", fallback: "刷新")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 取消任务
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText7`.
+        public static var cancelTask: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText7", table: "Interface", fallback: "取消任务")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 文件夹名称
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText8`.
+        public static var folderName: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText8", table: "Interface", fallback: "文件夹名称")
         }
-        public static var errorText9: LocalizedMessage {
+        /// 创建
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText9`.
+        public static var createFolder: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText9", table: "Interface", fallback: "创建")
         }
-        public static var errorText10: LocalizedMessage {
+        /// 新建原理图文件夹
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText10`.
+        public static var newSchematicFolder: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText10", table: "Interface", fallback: "新建原理图文件夹")
         }
-        public static var errorText11: LocalizedMessage {
+        /// 移到废纸篓？
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText11`.
+        public static var confirmTrash: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText11", table: "Interface", fallback: "移到废纸篓？")
         }
-        public static var errorText12: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText12`.
+        public static var trash: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText12", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var entryText1: LocalizedMessage {
+        /// 移除原理图
+        ///
+        /// Resource: `Interface.appSchematicManagerView.entryText1`.
+        public static var entryRemoval: LocalizedMessage {
             .init(key: "appSchematicManagerView.entryText1", table: "Interface", fallback: "移除原理图")
         }
-        public static var entryText2: LocalizedMessage {
+        ///  及其中的全部文件
+        ///
+        /// Resource: `Interface.appSchematicManagerView.entryText2`.
+        public static var entryFiles: LocalizedMessage {
             .init(key: "appSchematicManagerView.entryText2", table: "Interface", fallback: " 及其中的全部文件")
         }
-        public static var importFilesText1: LocalizedMessage {
+        /// 导入原理图
+        ///
+        /// Resource: `Interface.appSchematicManagerView.importFilesText1`.
+        public static var importSchematicFiles: LocalizedMessage {
             .init(key: "appSchematicManagerView.importFilesText1", table: "Interface", fallback: "导入原理图")
         }
-        public static var destinationText1: LocalizedMessage {
+        /// 导出原理图
+        ///
+        /// Resource: `Interface.appSchematicManagerView.destinationText1`.
+        public static var exportDestination: LocalizedMessage {
             .init(key: "appSchematicManagerView.destinationText1", table: "Interface", fallback: "导出原理图")
         }
-        public static var destinationText2: LocalizedMessage {
+        /// 原理图已导出
+        ///
+        /// Resource: `Interface.appSchematicManagerView.destinationText2`.
+        public static var exportedSchematic: LocalizedMessage {
             .init(key: "appSchematicManagerView.destinationText2", table: "Interface", fallback: "原理图已导出")
         }
-        public static var authorText1: LocalizedMessage {
+        /// 作者
+        ///
+        /// Resource: `Interface.appSchematicManagerView.authorText1`.
+        public static var author: LocalizedMessage {
             .init(key: "appSchematicManagerView.authorText1", table: "Interface", fallback: "作者")
         }
-        public static var authorText2: LocalizedMessage {
+        /// 尺寸
+        ///
+        /// Resource: `Interface.appSchematicManagerView.authorText2`.
+        public static var size: LocalizedMessage {
             .init(key: "appSchematicManagerView.authorText2", table: "Interface", fallback: "尺寸")
         }
-        public static var blocksText1: LocalizedMessage {
+        /// 方块数
+        ///
+        /// Resource: `Interface.appSchematicManagerView.blocksText1`.
+        public static var blocks: LocalizedMessage {
             .init(key: "appSchematicManagerView.blocksText1", table: "Interface", fallback: "方块数")
         }
-        public static var volumeText1: LocalizedMessage {
+        /// 总体积
+        ///
+        /// Resource: `Interface.appSchematicManagerView.volumeText1`.
+        public static var volume: LocalizedMessage {
             .init(key: "appSchematicManagerView.volumeText1", table: "Interface", fallback: "总体积")
         }
-        public static var regionsText1: LocalizedMessage {
+        /// 区域数
+        ///
+        /// Resource: `Interface.appSchematicManagerView.regionsText1`.
+        public static var regions: LocalizedMessage {
             .init(key: "appSchematicManagerView.regionsText1", table: "Interface", fallback: "区域数")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 格式版本
+        ///
+        /// Resource: `Interface.appSchematicManagerView.versionText1`.
+        public static var formatVersion: LocalizedMessage {
             .init(key: "appSchematicManagerView.versionText1", table: "Interface", fallback: "格式版本")
         }
-        public static var versionText2: LocalizedMessage {
+        /// 游戏数据版本
+        ///
+        /// Resource: `Interface.appSchematicManagerView.versionText2`.
+        public static var gameDataVersion: LocalizedMessage {
             .init(key: "appSchematicManagerView.versionText2", table: "Interface", fallback: "游戏数据版本")
         }
-        public static var dateText1: LocalizedMessage {
+        /// 创建时间
+        ///
+        /// Resource: `Interface.appSchematicManagerView.dateText1`.
+        public static var createdAt: LocalizedMessage {
             .init(key: "appSchematicManagerView.dateText1", table: "Interface", fallback: "创建时间")
         }
-        public static var dateText2: LocalizedMessage {
+        /// 修改时间
+        ///
+        /// Resource: `Interface.appSchematicManagerView.dateText2`.
+        public static var modifiedAt: LocalizedMessage {
             .init(key: "appSchematicManagerView.dateText2", table: "Interface", fallback: "修改时间")
         }
-        public static var dateText3: LocalizedMessage {
+        /// 文件大小
+        ///
+        /// Resource: `Interface.appSchematicManagerView.dateText3`.
+        public static var fileSize: LocalizedMessage {
             .init(key: "appSchematicManagerView.dateText3", table: "Interface", fallback: "文件大小")
         }
-        public static var errorText14: LocalizedMessage {
+        /// 读取原理图信息…
+        ///
+        /// Resource: `Interface.appSchematicManagerView.errorText14`.
+        public static var readingSchematic: LocalizedMessage {
             .init(key: "appSchematicManagerView.errorText14", table: "Interface", fallback: "读取原理图信息…")
         }
+        /// 无法预览信息：%1$@
+        ///
+        /// Resource: `Interface.appSchematicManagerView.previewError`.
         public static func previewError(_ value0: String) -> LocalizedMessage {
             .init(key: "appSchematicManagerView.previewError", table: "Interface", fallback: "无法预览信息：%1$@", arguments: [.text(value0)])
         }

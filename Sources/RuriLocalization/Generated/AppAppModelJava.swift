@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelJava {
-        public static var panelText1: LocalizedMessage {
+        /// 选择 java 可执行文件、JDK 包或 Java Home 文件夹。
+        ///
+        /// Resource: `Interface.appAppModelJava.panelText1`.
+        public static var javaPathPurpose: LocalizedMessage {
             .init(key: "appAppModelJava.panelText1", table: "Interface", fallback: "选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
         }
-        public static var panelText2: LocalizedMessage {
+        /// 选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。
+        ///
+        /// Resource: `Interface.appAppModelJava.panelText2`.
+        public static var javaPathReplacementDetails: LocalizedMessage {
             .init(key: "appAppModelJava.panelText2", table: "Interface", fallback: "选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 添加本机 Java
+        ///
+        /// Resource: `Interface.appAppModelJava.urlText1`.
+        public static var addLocalJava: LocalizedMessage {
             .init(key: "appAppModelJava.urlText1", table: "Interface", fallback: "添加本机 Java")
         }
-        public static var urlText2: LocalizedMessage {
+        /// 重新选择 Java
+        ///
+        /// Resource: `Interface.appAppModelJava.urlText2`.
+        public static var chooseJavaAgain: LocalizedMessage {
             .init(key: "appAppModelJava.urlText2", table: "Interface", fallback: "重新选择 Java")
         }
-        public static var savedText1: LocalizedMessage {
+        /// Java 已添加，可在启动设置中选择
+        ///
+        /// Resource: `Interface.appAppModelJava.savedText1`.
+        public static var javaAdded: LocalizedMessage {
             .init(key: "appAppModelJava.savedText1", table: "Interface", fallback: "Java 已添加，可在启动设置中选择")
         }
-        public static var defaultJavaText1: LocalizedMessage {
+        /// 已更新默认 Java，下一次启动生效
+        ///
+        /// Resource: `Interface.appAppModelJava.defaultJavaText1`.
+        public static var defaultJavaUpdated: LocalizedMessage {
             .init(key: "appAppModelJava.defaultJavaText1", table: "Interface", fallback: "已更新默认 Java，下一次启动生效")
         }
-        public static var installJavaText1: LocalizedMessage {
+        /// 修复
+        ///
+        /// Resource: `Interface.appAppModelJava.installJavaText1`.
+        public static var repair: LocalizedMessage {
             .init(key: "appAppModelJava.installJavaText1", table: "Interface", fallback: "修复")
         }
-        public static var installJavaText2: LocalizedMessage {
+        /// 安装
+        ///
+        /// Resource: `Interface.appAppModelJava.installJavaText2`.
+        public static var install: LocalizedMessage {
             .init(key: "appAppModelJava.installJavaText2", table: "Interface", fallback: "安装")
         }
-        public static var installJavaText3: LocalizedMessage {
+        /// Java 已修复
+        ///
+        /// Resource: `Interface.appAppModelJava.installJavaText3`.
+        public static var javaRepaired: LocalizedMessage {
             .init(key: "appAppModelJava.installJavaText3", table: "Interface", fallback: "Java 已修复")
         }
-        public static var installJavaText4: LocalizedMessage {
+        /// Java 已安装
+        ///
+        /// Resource: `Interface.appAppModelJava.installJavaText4`.
+        public static var javaInstalled: LocalizedMessage {
             .init(key: "appAppModelJava.installJavaText4", table: "Interface", fallback: "Java 已安装")
         }
-        public static var removeJavaText1: LocalizedMessage {
+        /// 清理 Java 未完成下载
+        ///
+        /// Resource: `Interface.appAppModelJava.removeJavaText1`.
+        public static var cleanIncompleteJavaDownload: LocalizedMessage {
             .init(key: "appAppModelJava.removeJavaText1", table: "Interface", fallback: "清理 Java 未完成下载")
         }
-        public static var removeJavaText2: LocalizedMessage {
+        /// 移除 Java
+        ///
+        /// Resource: `Interface.appAppModelJava.removeJavaText2`.
+        public static var removeJava: LocalizedMessage {
             .init(key: "appAppModelJava.removeJavaText2", table: "Interface", fallback: "移除 Java")
         }
-        public static var resultText1: LocalizedMessage {
+        /// Java 文件已移到废纸篓
+        ///
+        /// Resource: `Interface.appAppModelJava.resultText1`.
+        public static var javaMovedToTrash: LocalizedMessage {
             .init(key: "appAppModelJava.resultText1", table: "Interface", fallback: "Java 文件已移到废纸篓")
         }
         static let definitions: [String: MessageDefinition] = [

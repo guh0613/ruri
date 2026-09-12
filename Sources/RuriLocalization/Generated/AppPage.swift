@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppPage {
-        public static var titleText1: LocalizedMessage {
+        /// 主页
+        ///
+        /// Resource: `Interface.appPage.titleText1`.
+        public static var home: LocalizedMessage {
             .init(key: "appPage.titleText1", table: "Interface", fallback: "主页")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 实例库
+        ///
+        /// Resource: `Interface.appPage.titleText2`.
+        public static var library: LocalizedMessage {
             .init(key: "appPage.titleText2", table: "Interface", fallback: "实例库")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 发现
+        ///
+        /// Resource: `Interface.appPage.titleText3`.
+        public static var discover: LocalizedMessage {
             .init(key: "appPage.titleText3", table: "Interface", fallback: "发现")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 下载
+        ///
+        /// Resource: `Interface.appPage.titleText4`.
+        public static var downloads: LocalizedMessage {
             .init(key: "appPage.titleText4", table: "Interface", fallback: "下载")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 账号
+        ///
+        /// Resource: `Interface.appPage.titleText5`.
+        public static var accounts: LocalizedMessage {
             .init(key: "appPage.titleText5", table: "Interface", fallback: "账号")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 设置
+        ///
+        /// Resource: `Interface.appPage.titleText6`.
+        public static var settings: LocalizedMessage {
             .init(key: "appPage.titleText6", table: "Interface", fallback: "设置")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum CLISchematicCommands {
-        public static var usageText1: LocalizedMessage {
+        /// 用法：schematics <instance-uuid> [list [文件夹] | info <相对路径> | import <文件> [文件夹] | mkdir <名称> [文件夹] | export <相对路径> <目标文件> | remove <相对路径>] [--apply]
+        ///
+        /// Resource: `CLI.cLISchematicCommands.usageText1`.
+        public static var schematicUsage: LocalizedMessage {
             .init(key: "cLISchematicCommands.usageText1", table: "CLI", fallback: "用法：schematics <instance-uuid> [list [文件夹] | info <相对路径> | import <文件> [文件夹] | mkdir <名称> [文件夹] | export <相对路径> <目标文件> | remove <相对路径>] [--apply]")
         }
-        public static func leaseText1(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// %1$@：%2$@ → schematics/%3$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.leaseText1`.
+        public static func schematicInstalled(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.leaseText1", table: "CLI", fallback: "%1$@：%2$@ → schematics/%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static func authorText1(_ value0: String) -> LocalizedMessage {
+        /// 作者：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.authorText1`.
+        public static func schematicAuthor(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.authorText1", table: "CLI", fallback: "作者：%1$@", arguments: [.text(value0)])
         }
-        public static func descriptionText1(_ value0: String) -> LocalizedMessage {
+        /// 尺寸：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.descriptionText1`.
+        public static func schematicSize(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.descriptionText1", table: "CLI", fallback: "尺寸：%1$@", arguments: [.text(value0)])
         }
-        public static func blocksText1(_ value0: String) -> LocalizedMessage {
+        /// 方块：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.blocksText1`.
+        public static func schematicBlocks(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.blocksText1", table: "CLI", fallback: "方块：%1$@", arguments: [.text(value0)])
         }
-        public static func regionsText1(_ value0: String) -> LocalizedMessage {
+        /// 区域：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.regionsText1`.
+        public static func schematicRegions(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.regionsText1", table: "CLI", fallback: "区域：%1$@", arguments: [.text(value0)])
         }
-        public static func versionText1(_ value0: String) -> LocalizedMessage {
+        /// 格式版本：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.versionText1`.
+        public static func schematicFormatVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.versionText1", table: "CLI", fallback: "格式版本：%1$@", arguments: [.text(value0)])
         }
-        public static func versionText2(_ value0: String) -> LocalizedMessage {
+        /// 游戏数据版本：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.versionText2`.
+        public static func schematicGameDataVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.versionText2", table: "CLI", fallback: "游戏数据版本：%1$@", arguments: [.text(value0)])
         }
-        public static func trashText1(_ value0: String) -> LocalizedMessage {
+        /// 已移到废纸篓：%1$@
+        ///
+        /// Resource: `CLI.cLISchematicCommands.trashText1`.
+        public static func schematicTrashed(_ value0: String) -> LocalizedMessage {
             .init(key: "cLISchematicCommands.trashText1", table: "CLI", fallback: "已移到废纸篓：%1$@", arguments: [.text(value0)])
         }
-        public static var entryText1: LocalizedMessage {
+        /// 找不到对应原理图，请先用 list 查看文件列表。
+        ///
+        /// Resource: `Errors.cLISchematicCommands.entryText1`.
+        public static var schematicNotFound: LocalizedMessage {
             .init(key: "cLISchematicCommands.entryText1", table: "Errors", fallback: "找不到对应原理图，请先用 list 查看文件列表。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,61 +3,118 @@ import Foundation
 
 extension Messages {
     public enum AppLogsView {
-        public static var titleText1: LocalizedMessage {
+        /// 诊断与处理
+        ///
+        /// Resource: `Interface.appLogsView.titleText1`.
+        public static var diagnosticsAndHandling: LocalizedMessage {
             .init(key: "appLogsView.titleText1", table: "Interface", fallback: "诊断与处理")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 运行日志
+        ///
+        /// Resource: `Interface.appLogsView.titleText2`.
+        public static var runLogs: LocalizedMessage {
             .init(key: "appLogsView.titleText2", table: "Interface", fallback: "运行日志")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 收集报告
+        ///
+        /// Resource: `Interface.appLogsView.titleText3`.
+        public static var collectReport: LocalizedMessage {
             .init(key: "appLogsView.titleText3", table: "Interface", fallback: "收集报告")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 运行记录
+        ///
+        /// Resource: `Interface.appLogsView.bodyText1`.
+        public static var runHistory: LocalizedMessage {
             .init(key: "appLogsView.bodyText1", table: "Interface", fallback: "运行记录")
         }
-        public static var sessionText1: LocalizedMessage {
+        /// 运行中
+        ///
+        /// Resource: `Interface.appLogsView.sessionText1`.
+        public static var running: LocalizedMessage {
             .init(key: "appLogsView.sessionText1", table: "Interface", fallback: "运行中")
         }
-        public static var sessionText2: LocalizedMessage {
+        /// 暂无运行记录
+        ///
+        /// Resource: `Interface.appLogsView.sessionText2`.
+        public static var noRunHistory: LocalizedMessage {
             .init(key: "appLogsView.sessionText2", table: "Interface", fallback: "暂无运行记录")
         }
-        public static var sessionText3: LocalizedMessage {
+        /// 启动游戏后，这里会保留每次启动的过程和日志。
+        ///
+        /// Resource: `Interface.appLogsView.sessionText3`.
+        public static var runHistoryDetails: LocalizedMessage {
             .init(key: "appLogsView.sessionText3", table: "Interface", fallback: "启动游戏后，这里会保留每次启动的过程和日志。")
         }
-        public static var sessionText4: LocalizedMessage {
+        /// 选择记录
+        ///
+        /// Resource: `Interface.appLogsView.sessionText4`.
+        public static var selectRecord: LocalizedMessage {
             .init(key: "appLogsView.sessionText4", table: "Interface", fallback: "选择记录")
         }
-        public static var sessionText5: LocalizedMessage {
+        /// 查看内容
+        ///
+        /// Resource: `Interface.appLogsView.sessionText5`.
+        public static var viewContent: LocalizedMessage {
             .init(key: "appLogsView.sessionText5", table: "Interface", fallback: "查看内容")
         }
-        public static var sessionText6: LocalizedMessage {
+        /// 筛选日志
+        ///
+        /// Resource: `Interface.appLogsView.sessionText6`.
+        public static var filterLogs: LocalizedMessage {
             .init(key: "appLogsView.sessionText6", table: "Interface", fallback: "筛选日志")
         }
-        public static var sessionText7: LocalizedMessage {
+        /// 自动滚动
+        ///
+        /// Resource: `Interface.appLogsView.sessionText7`.
+        public static var autoScroll: LocalizedMessage {
             .init(key: "appLogsView.sessionText7", table: "Interface", fallback: "自动滚动")
         }
-        public static var sessionText8: LocalizedMessage {
+        /// 导出完整日志…
+        ///
+        /// Resource: `Interface.appLogsView.sessionText8`.
+        public static var exportFullLog: LocalizedMessage {
             .init(key: "appLogsView.sessionText8", table: "Interface", fallback: "导出完整日志…")
         }
-        public static var sessionText9: LocalizedMessage {
+        /// 预览最近 5,000 行；每次运行的完整日志独立保留。
+        ///
+        /// Resource: `Interface.appLogsView.sessionText9`.
+        public static var recentLogPreview: LocalizedMessage {
             .init(key: "appLogsView.sessionText9", table: "Interface", fallback: "预览最近 5,000 行；每次运行的完整日志独立保留。")
         }
-        public static func summaryText1(_ value0: String) -> LocalizedMessage {
+        /// 最后记录阶段：%1$@
+        ///
+        /// Resource: `Interface.appLogsView.summaryText1`.
+        public static func lastRecordedStage(_ value0: String) -> LocalizedMessage {
             .init(key: "appLogsView.summaryText1", table: "Interface", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
         }
-        public static var failureText1: LocalizedMessage {
+        /// 阶段、环境与报告
+        ///
+        /// Resource: `Interface.appLogsView.failureText1`.
+        public static var stageEnvironmentAndReport: LocalizedMessage {
             .init(key: "appLogsView.failureText1", table: "Interface", fallback: "阶段、环境与报告")
         }
-        public static func failureText2(_ value0: String) -> LocalizedMessage {
+        /// 记录的内存上限：%1$@ MB
+        ///
+        /// Resource: `Interface.appLogsView.failureText2`.
+        public static func recordedMemoryLimit(_ value0: String) -> LocalizedMessage {
             .init(key: "appLogsView.failureText2", table: "Interface", fallback: "记录的内存上限：%1$@ MB", arguments: [.text(value0)])
         }
-        public static var failureText3: LocalizedMessage {
+        /// 尚未选择 Java
+        ///
+        /// Resource: `Interface.appLogsView.failureText3`.
+        public static var javaNotSelected: LocalizedMessage {
             .init(key: "appLogsView.failureText3", table: "Interface", fallback: "尚未选择 Java")
         }
-        public static var failureText4: LocalizedMessage {
+        /// （截断副本）
+        ///
+        /// Resource: `Interface.appLogsView.failureText4`.
+        public static var truncatedCopy: LocalizedMessage {
             .init(key: "appLogsView.failureText4", table: "Interface", fallback: "（截断副本）")
         }
-        public static var failureText5: LocalizedMessage {
+        /// 在 Finder 中显示本次运行记录
+        ///
+        /// Resource: `Interface.appLogsView.failureText5`.
+        public static var showRunRecordInFinder: LocalizedMessage {
             .init(key: "appLogsView.failureText5", table: "Interface", fallback: "在 Finder 中显示本次运行记录")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -10,19 +10,19 @@ public struct LaunchEnvironment: Sendable {
     public let entries: [Entry]
     static let javaKeys: Set<String> = ["JAVA_HOME", "JAVA_TOOL_OPTIONS", "JDK_JAVA_OPTIONS", "_JAVA_OPTIONS", "CLASSPATH"]
     public init(_ text: String) throws {
-        guard text.utf8.count <= 65536, !text.contains("\0") else { throw RuriError.message(Messages.CoreLaunchEnvironment.javaKeysText1) }
+        guard text.utf8.count <= 65536, !text.contains("\0") else { throw RuriError.message(Messages.CoreLaunchEnvironment.javaEnvironmentTooLarge) }
         var entries: [Entry] = [], names = Set<String>()
         let lines = text.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n").split(separator: "\n", omittingEmptySubsequences: false)
         for (index, line) in lines.enumerated() {
             if line.trimmingCharacters(in: .whitespaces).isEmpty { continue }
             let parts = line.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
             let name = String(parts[0]).trimmingCharacters(in: .whitespaces)
-            guard name.range(of: "^[A-Za-z_][A-Za-z0-9_]*$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreLaunchEnvironment.nameText1(String(describing: index + 1))) }
-            guard !Self.javaKeys.contains(name) else { throw RuriError.message(Messages.CoreLaunchEnvironment.nameText2(String(describing: name))) }
-            guard names.insert(name).inserted else { throw RuriError.message(Messages.CoreLaunchEnvironment.nameText3(String(describing: name))) }
+            guard name.range(of: "^[A-Za-z_][A-Za-z0-9_]*$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreLaunchEnvironment.invalidEnvironmentName(String(describing: index + 1))) }
+            guard !Self.javaKeys.contains(name) else { throw RuriError.message(Messages.CoreLaunchEnvironment.managedEnvironmentVariable(name)) }
+            guard names.insert(name).inserted else { throw RuriError.message(Messages.CoreLaunchEnvironment.duplicateEnvironmentVariable(name)) }
             entries.append(.init(name: name, value: parts.count == 2 ? String(parts[1]) : nil))
         }
-        guard entries.count <= 256 else { throw RuriError.message(Messages.CoreLaunchEnvironment.nameText4) }
+        guard entries.count <= 256 else { throw RuriError.message(Messages.CoreLaunchEnvironment.tooManyEnvironmentVariables) }
         self.entries = entries
     }
     public func applying(to inherited: [String: String], java: URL) -> [String: String] {

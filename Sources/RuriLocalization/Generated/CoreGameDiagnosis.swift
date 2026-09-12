@@ -3,297 +3,591 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDiagnosis {
-        public static var titleText1: LocalizedMessage {
+        /// 检查实例设置
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText1`.
+        public static var checkInstanceSettings: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText1", table: "Diagnostics", fallback: "检查实例设置")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 管理模组
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText2`.
+        public static var manageMods: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText2", table: "Diagnostics", fallback: "管理模组")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 检查账号
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText3`.
+        public static var checkAccount: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText3", table: "Diagnostics", fallback: "检查账号")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 修复安装文件
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText4`.
+        public static var repairInstallationFiles: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText4", table: "Diagnostics", fallback: "修复安装文件")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 查看运行文件
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText5`.
+        public static var viewRunFiles: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText5", table: "Diagnostics", fallback: "查看运行文件")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 收集诊断报告
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText6`.
+        public static var collectDiagnosticReports: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText6", table: "Diagnostics", fallback: "收集诊断报告")
         }
-        public static var titleText7: LocalizedMessage {
+        /// 日志明确报告
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText7`.
+        public static var logExplicitReport: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText7", table: "Diagnostics", fallback: "日志明确报告")
         }
-        public static var titleText8: LocalizedMessage {
+        /// 需要验证的线索
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.titleText8`.
+        public static var cluesNeedingVerification: LocalizedMessage {
             .init(key: "coreGameDiagnosis.titleText8", table: "Diagnostics", fallback: "需要验证的线索")
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 证据不是普通文件。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.attributesText1`.
+        public static var evidenceNotRegularFile: LocalizedMessage {
             .init(key: "coreGameDiagnosis.attributesText1", table: "Diagnostics", fallback: "证据不是普通文件。")
         }
-        public static func countText1(_ value0: String) -> LocalizedMessage {
+        /// 分析读取量已达 16 MiB，未读取 %1$@。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.countText1`.
+        public static func analysisReadLimit(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.countText1", table: "Diagnostics", fallback: "分析读取量已达 16 MiB，未读取 %1$@。", arguments: [.text(value0)])
         }
-        public static func tailTextText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.tailTextText2`.
+        public static func boundedTail(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.tailTextText2", table: "Diagnostics", fallback: "%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。", arguments: [.text(value0)])
         }
-        public static var reportsText1: LocalizedMessage {
+        /// 跳过无效证据路径。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.reportsText1`.
+        public static var invalidEvidencePathSkipped: LocalizedMessage {
             .init(key: "coreGameDiagnosis.reportsText1", table: "Diagnostics", fallback: "跳过无效证据路径。")
         }
-        public static func kindText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 未能读取 %1$@：%2$@
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.kindText1`.
+        public static func unreadableReport(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.kindText1", table: "Diagnostics", fallback: "未能读取 %1$@：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static func kindText2(_ value0: Int64) -> LocalizedMessage {
+        /// 本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.kindText2`.
+        public static func reportLimit(_ value0: Int64) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.kindText2", table: "Diagnostics", fallback: "本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。", arguments: [.integer(value0)])
         }
-        public static func kindText3(_ value0: String) -> LocalizedMessage {
+        /// 未能读取会话日志：%1$@
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.kindText3`.
+        public static func sessionLogReadFailure(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.kindText3", table: "Diagnostics", fallback: "未能读取会话日志：%1$@", arguments: [.text(value0)])
         }
-        public static func factsText1(_ value0: String) -> LocalizedMessage {
+        /// 最后记录阶段：%1$@
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.factsText1`.
+        public static func lastRecordedPhase(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.factsText1", table: "Diagnostics", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
         }
-        public static var factsText2: LocalizedMessage {
+        /// 未记录 Java
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.factsText2`.
+        public static var javaNotRecorded: LocalizedMessage {
             .init(key: "coreGameDiagnosis.factsText2", table: "Diagnostics", fallback: "未记录 Java")
         }
-        public static func factsText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ · 内存上限 %2$@ MB
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.factsText3`.
+        public static func memoryLimit(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.factsText3", table: "Diagnostics", fallback: "%1$@ · 内存上限 %2$@ MB", arguments: [.text(value0), .text(value1)])
         }
-        public static var exitText1: LocalizedMessage {
+        /// 终止信号
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText1`.
+        public static var terminationSignal: LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText1", table: "Diagnostics", fallback: "终止信号")
         }
-        public static var exitText2: LocalizedMessage {
+        /// 退出码
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText2`.
+        public static var exitCode: LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText2", table: "Diagnostics", fallback: "退出码")
         }
-        public static var exitText3: LocalizedMessage {
+        /// 有
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText3`.
+        public static var hasExitStatus: LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText3", table: "Diagnostics", fallback: "有")
         }
-        public static var exitText4: LocalizedMessage {
+        /// 无
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText4`.
+        public static var noExitStatus: LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText4", table: "Diagnostics", fallback: "无")
         }
-        public static func exitText5(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// %1$@：%2$@；Ruri 结束请求：%3$@
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText5`.
+        public static func exitSummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText5", table: "Diagnostics", fallback: "%1$@：%2$@；Ruri 结束请求：%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var exitText6: LocalizedMessage {
+        /// 系统曾接收 Ruri 的正常退出请求。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.exitText6`.
+        public static var normalExitRequested: LocalizedMessage {
             .init(key: "coreGameDiagnosis.exitText6", table: "Diagnostics", fallback: "系统曾接收 Ruri 的正常退出请求。")
         }
-        public static func interruptionText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复记录时间：%1$@（不是游戏退出时间）
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.interruptionText1`.
+        public static func recoveryRecordTime(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.interruptionText1", table: "Diagnostics", fallback: "恢复记录时间：%1$@（不是游戏退出时间）", arguments: [.text(value0)])
         }
-        public static var interruptionText2: LocalizedMessage {
+        /// 原进程身份已失效
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.interruptionText2`.
+        public static var processIdentityInvalid: LocalizedMessage {
             .init(key: "coreGameDiagnosis.interruptionText2", table: "Diagnostics", fallback: "原进程身份已失效")
         }
-        public static var interruptionText3: LocalizedMessage {
+        /// 用户确认游戏已退出
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.interruptionText3`.
+        public static var userConfirmedExit: LocalizedMessage {
             .init(key: "coreGameDiagnosis.interruptionText3", table: "Diagnostics", fallback: "用户确认游戏已退出")
         }
-        public static func interruptionText4(_ value0: String) -> LocalizedMessage {
+        /// 恢复依据：%1$@
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.interruptionText4`.
+        public static func recoveryBasis(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.interruptionText4", table: "Diagnostics", fallback: "恢复依据：%1$@", arguments: [.text(value0)])
         }
-        public static var summaryText1: LocalizedMessage {
+        /// 本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText1`.
+        public static var runWithoutExitRecord: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText1", table: "Diagnostics", fallback: "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。")
         }
-        public static var summaryText2: LocalizedMessage {
+        /// 监控记录已中断，未取得游戏的退出结果。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText2`.
+        public static var monitoringInterrupted: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText2", table: "Diagnostics", fallback: "监控记录已中断，未取得游戏的退出结果。")
         }
-        public static var summaryText3: LocalizedMessage {
+        /// 启动已取消，没有证据表明游戏发生了崩溃。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText3`.
+        public static var launchCancelled: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText3", table: "Diagnostics", fallback: "启动已取消，没有证据表明游戏发生了崩溃。")
         }
-        public static var summaryText4: LocalizedMessage {
+        /// 本次运行已经结束，无需进行崩溃处理。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText4`.
+        public static var runCompleted: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText4", table: "Diagnostics", fallback: "本次运行已经结束，无需进行崩溃处理。")
         }
-        public static var summaryText5: LocalizedMessage {
+        /// 记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText5`.
+        public static var processTerminated: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText5", table: "Diagnostics", fallback: "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。")
         }
-        public static func summaryText6(_ value0: String) -> LocalizedMessage {
+        /// 启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText6`.
+        public static func launchPreparationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText6", table: "Diagnostics", fallback: "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。", arguments: [.text(value0)])
         }
-        public static var summaryText7: LocalizedMessage {
+        /// 已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText7`.
+        public static var confirmedAbnormalExit: LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText7", table: "Diagnostics", fallback: "已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。")
         }
-        public static func summaryText8(_ value0: Int64) -> LocalizedMessage {
+        /// 找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.summaryText8`.
+        public static func relatedErrorCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText8", table: "Diagnostics", fallback: "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。", arguments: [.integer(value0)])
         }
-        public static func actionText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@失败
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.actionText1`.
+        public static func actionFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.actionText1", table: "Diagnostics", fallback: "%1$@失败", arguments: [.text(value0)])
         }
-        public static var actionText2: LocalizedMessage {
+        /// 这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.actionText2`.
+        public static var preparationError: LocalizedMessage {
             .init(key: "coreGameDiagnosis.actionText2", table: "Diagnostics", fallback: "这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。")
         }
-        public static var actionText3: LocalizedMessage {
+        /// 核对下方原始错误以及对应设置，处理后重新启动。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.actionText3`.
+        public static var guidanceCheckErrors: LocalizedMessage {
             .init(key: "coreGameDiagnosis.actionText3", table: "Diagnostics", fallback: "核对下方原始错误以及对应设置，处理后重新启动。")
         }
-        public static var actionText4: LocalizedMessage {
+        /// 若仍然失败，收集这次运行记录，以便比较重试前后的错误。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.actionText4`.
+        public static var guidanceCollectRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.actionText4", table: "Diagnostics", fallback: "若仍然失败，收集这次运行记录，以便比较重试前后的错误。")
         }
-        public static var rulesText1: LocalizedMessage {
+        /// Java 无法读取所需的类版本
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText1`.
+        public static var classVersionUnreadable: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText1", table: "Diagnostics", fallback: "Java 无法读取所需的类版本")
         }
-        public static var rulesText2: LocalizedMessage {
+        /// Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText2`.
+        public static var classVersionUnsupported: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText2", table: "Diagnostics", fallback: "Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。")
         }
-        public static var rulesText3: LocalizedMessage {
+        /// 在实例设置核对 Java，按游戏和整合包要求选择版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText3`.
+        public static var classVersionCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText3", table: "Diagnostics", fallback: "在实例设置核对 Java，按游戏和整合包要求选择版本。")
         }
-        public static var rulesText4: LocalizedMessage {
+        /// 如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText4`.
+        public static var classVersionModCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText4", table: "Diagnostics", fallback: "如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。")
         }
-        public static var rulesText5: LocalizedMessage {
+        /// Java 启动参数被拒绝
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText5`.
+        public static var launchArgumentRejected: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText5", table: "Diagnostics", fallback: "Java 启动参数被拒绝")
         }
-        public static var rulesText6: LocalizedMessage {
+        /// 虚拟机报告参数或内存上限无效，游戏尚未正常启动。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText6`.
+        public static var launchArgumentExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText6", table: "Diagnostics", fallback: "虚拟机报告参数或内存上限无效，游戏尚未正常启动。")
         }
-        public static var rulesText7: LocalizedMessage {
+        /// 核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText7`.
+        public static var launchArgumentCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText7", table: "Diagnostics", fallback: "核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。")
         }
-        public static var rulesText8: LocalizedMessage {
+        /// 确认内存上限与所选 Java 匹配，然后重试。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText8`.
+        public static var launchArgumentRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText8", table: "Diagnostics", fallback: "确认内存上限与所选 Java 匹配，然后重试。")
         }
-        public static var rulesText9: LocalizedMessage {
+        /// 找不到游戏启动入口
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText9`.
+        public static var missingLaunchEntry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText9", table: "Diagnostics", fallback: "找不到游戏启动入口")
         }
-        public static var rulesText10: LocalizedMessage {
+        /// Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText10`.
+        public static var missingMainClassExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText10", table: "Diagnostics", fallback: "Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。")
         }
-        public static var rulesText11: LocalizedMessage {
+        /// 找不到或无法加载主类
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText11`.
+        public static var missingMainClass: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText11", table: "Diagnostics", fallback: "找不到或无法加载主类")
         }
-        public static var rulesText12: LocalizedMessage {
+        /// 找不到或無法載入主要類別
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText12`.
+        public static var missingMainClassCjk: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText12", table: "Diagnostics", fallback: "找不到或無法載入主要類別")
         }
-        public static var rulesText13: LocalizedMessage {
+        /// 检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText13`.
+        public static var missingMainClassCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText13", table: "Diagnostics", fallback: "检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。")
         }
-        public static var rulesText14: LocalizedMessage {
+        /// 保留现有配置与存档；若修复后仍失败，附上这次报告。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText14`.
+        public static var missingMainClassReport: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText14", table: "Diagnostics", fallback: "保留现有配置与存档；若修复后仍失败，附上这次报告。")
         }
-        public static var rulesText15: LocalizedMessage {
+        /// 加载器拒绝了模组组合
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText15`.
+        public static var loaderModConflict: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText15", table: "Diagnostics", fallback: "加载器拒绝了模组组合")
         }
-        public static var rulesText16: LocalizedMessage {
+        /// 加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText16`.
+        public static var loaderModConflictExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText16", table: "Diagnostics", fallback: "加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。")
         }
-        public static var rulesText17: LocalizedMessage {
+        /// 按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText17`.
+        public static var loaderModConflictCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText17", table: "Diagnostics", fallback: "按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。")
         }
-        public static var rulesText18: LocalizedMessage {
+        /// 在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText18`.
+        public static var loaderModConflictRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText18", table: "Diagnostics", fallback: "在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。")
         }
-        public static var rulesText19: LocalizedMessage {
+        /// 加载器发现重复模组
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText19`.
+        public static var duplicateMod: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText19", table: "Diagnostics", fallback: "加载器发现重复模组")
         }
-        public static var rulesText20: LocalizedMessage {
+        /// 同一个模组被加载多次，可能存在不同版本或重复来源。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText20`.
+        public static var duplicateModExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText20", table: "Diagnostics", fallback: "同一个模组被加载多次，可能存在不同版本或重复来源。")
         }
-        public static var rulesText21: LocalizedMessage {
+        /// 在模组管理中核对原文列出的文件和版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText21`.
+        public static var duplicateModCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText21", table: "Diagnostics", fallback: "在模组管理中核对原文列出的文件和版本。")
         }
-        public static var rulesText22: LocalizedMessage {
+        /// 停用多余的一份后重试；不要同时删掉所有版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText22`.
+        public static var duplicateModRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText22", table: "Diagnostics", fallback: "停用多余的一份后重试；不要同时删掉所有版本。")
         }
-        public static var rulesText23: LocalizedMessage {
+        /// 模组初始化失败
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText23`.
+        public static var modInitializationFailure: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText23", table: "Diagnostics", fallback: "模组初始化失败")
         }
-        public static var rulesText24: LocalizedMessage {
+        /// 加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText24`.
+        public static var modInitializationExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText24", table: "Diagnostics", fallback: "加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。")
         }
-        public static var rulesText25: LocalizedMessage {
+        /// 核对证据中列出的模组、依赖与加载器版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText25`.
+        public static var modInitializationCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText25", table: "Diagnostics", fallback: "核对证据中列出的模组、依赖与加载器版本。")
         }
-        public static var rulesText26: LocalizedMessage {
+        /// 若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText26`.
+        public static var modInitializationRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText26", table: "Diagnostics", fallback: "若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。")
         }
-        public static var rulesText27: LocalizedMessage {
+        /// Java 报告内存耗尽
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText27`.
+        public static var outOfMemory: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText27", table: "Diagnostics", fallback: "Java 报告内存耗尽")
         }
-        public static var rulesText28: LocalizedMessage {
+        /// 错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText28`.
+        public static var outOfMemoryExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText28", table: "Diagnostics", fallback: "错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。")
         }
-        public static var rulesText29: LocalizedMessage {
+        /// 先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText29`.
+        public static var outOfMemoryTypes: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText29", table: "Diagnostics", fallback: "先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。")
         }
-        public static var rulesText30: LocalizedMessage {
+        /// 仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText30`.
+        public static var outOfMemoryCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText30", table: "Diagnostics", fallback: "仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。")
         }
-        public static var rulesText31: LocalizedMessage {
+        /// 虚拟机无法分配所需内存
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText31`.
+        public static var nativeMemoryAllocationFailure: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText31", table: "Diagnostics", fallback: "虚拟机无法分配所需内存")
         }
-        public static var rulesText32: LocalizedMessage {
+        /// JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText32`.
+        public static var nativeMemoryAllocationExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText32", table: "Diagnostics", fallback: "JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。")
         }
-        public static var rulesText33: LocalizedMessage {
+        /// 检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText33`.
+        public static var nativeMemoryCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText33", table: "Diagnostics", fallback: "检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。")
         }
-        public static var rulesText34: LocalizedMessage {
+        /// 调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText34`.
+        public static var nativeMemoryRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText34", table: "Diagnostics", fallback: "调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。")
         }
-        public static var rulesText35: LocalizedMessage {
+        /// 本地库或 Java 的架构不匹配
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText35`.
+        public static var architectureMismatch: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText35", table: "Diagnostics", fallback: "本地库或 Java 的架构不匹配")
         }
-        public static var rulesText36: LocalizedMessage {
+        /// 系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText36`.
+        public static var architectureMismatchExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText36", table: "Diagnostics", fallback: "系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。")
         }
-        public static var rulesText37: LocalizedMessage {
+        /// 核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText37`.
+        public static var architectureCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText37", table: "Diagnostics", fallback: "核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。")
         }
-        public static var rulesText38: LocalizedMessage {
+        /// 检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText38`.
+        public static var architectureModCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText38", table: "Diagnostics", fallback: "检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。")
         }
-        public static var rulesText39: LocalizedMessage {
+        /// 窗口初始化违反 macOS 主线程要求
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText39`.
+        public static var mainThreadViolation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText39", table: "Diagnostics", fallback: "窗口初始化违反 macOS 主线程要求")
         }
-        public static var rulesText40: LocalizedMessage {
+        /// Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText40`.
+        public static var mainThreadViolationExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText40", table: "Diagnostics", fallback: "Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。")
         }
-        public static var rulesText41: LocalizedMessage {
+        /// 核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText41`.
+        public static var mainThreadCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText41", table: "Diagnostics", fallback: "核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。")
         }
-        public static var rulesText42: LocalizedMessage {
+        /// 保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText42`.
+        public static var mainThreadReport: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText42", table: "Diagnostics", fallback: "保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。")
         }
-        public static var rulesText43: LocalizedMessage {
+        /// 配置文件读取失败
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText43`.
+        public static var configReadFailure: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText43", table: "Diagnostics", fallback: "配置文件读取失败")
         }
-        public static var rulesText44: LocalizedMessage {
+        /// 加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText44`.
+        public static var configReadExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText44", table: "Diagnostics", fallback: "加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。")
         }
-        public static var rulesText45: LocalizedMessage {
+        /// 先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText45`.
+        public static var configBackup: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText45", table: "Diagnostics", fallback: "先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。")
         }
-        public static var rulesText46: LocalizedMessage {
+        /// 按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText46`.
+        public static var configRepair: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText46", table: "Diagnostics", fallback: "按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。")
         }
-        public static var rulesText47: LocalizedMessage {
+        /// 错误上下文中有 Mixin 应用失败
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText47`.
+        public static var mixinApplyFailure: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText47", table: "Diagnostics", fallback: "错误上下文中有 Mixin 应用失败")
         }
-        public static var rulesText48: LocalizedMessage {
+        /// 这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText48`.
+        public static var mixinApplyExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText48", table: "Diagnostics", fallback: "这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。")
         }
-        public static var rulesText49: LocalizedMessage {
+        /// 先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText49`.
+        public static var mixinDependencyCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText49", table: "Diagnostics", fallback: "先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。")
         }
-        public static var rulesText50: LocalizedMessage {
+        /// 通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText50`.
+        public static var mixinModCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText50", table: "Diagnostics", fallback: "通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。")
         }
-        public static var rulesText51: LocalizedMessage {
+        /// JVM 记录了本机崩溃
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText51`.
+        public static var jvmCrash: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText51", table: "Diagnostics", fallback: "JVM 记录了本机崩溃")
         }
-        public static var rulesText52: LocalizedMessage {
+        /// 虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText52`.
+        public static var jvmCrashExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText52", table: "Diagnostics", fallback: "虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。")
         }
-        public static var rulesText53: LocalizedMessage {
+        /// 保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText53`.
+        public static var jvmCrashReport: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText53", table: "Diagnostics", fallback: "保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。")
         }
-        public static var rulesText54: LocalizedMessage {
+        /// 核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText54`.
+        public static var jvmCrashCheck: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText54", table: "Diagnostics", fallback: "核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。")
         }
-        public static var rulesText55: LocalizedMessage {
+        /// 报告注明手动触发调试崩溃
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText55`.
+        public static var debugCrash: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText55", table: "Diagnostics", fallback: "报告注明手动触发调试崩溃")
         }
-        public static var rulesText56: LocalizedMessage {
+        /// Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText56`.
+        public static var debugCrashExplanation: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText56", table: "Diagnostics", fallback: "Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。")
         }
-        public static var rulesText57: LocalizedMessage {
+        /// 若这是有意触发的调试操作，保存所需报告后正常重新启动。
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.rulesText57`.
+        public static var debugCrashRetry: LocalizedMessage {
             .init(key: "coreGameDiagnosis.rulesText57", table: "Diagnostics", fallback: "若这是有意触发的调试操作，保存所需报告后正常重新启动。")
         }
+        /// %1$@（末段）
+        ///
+        /// Resource: `Diagnostics.coreGameDiagnosis.tailTitle`.
         public static func tailTitle(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.tailTitle", table: "Diagnostics", fallback: "%1$@（末段）", arguments: [.text(value0)])
         }

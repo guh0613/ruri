@@ -4,10 +4,10 @@ import ImageIO
 import UniformTypeIdentifiers
 
 public enum PlayerTextureKind: String, CaseIterable, Sendable { case skin, cape
-    public var title: String { self == .skin ? Messages.CorePlayerTextureImage.titleText1.localized : Messages.CorePlayerTextureImage.titleText2.localized }
+    public var title: String { self == .skin ? Messages.CorePlayerTextureImage.skinTitle.localized : Messages.CorePlayerTextureImage.capeTitle.localized }
 }
 public enum PlayerSkinModel: String, CaseIterable, Sendable { case classic, slim
-    public var title: String { self == .classic ? Messages.CorePlayerTextureImage.titleText3.localized : Messages.CorePlayerTextureImage.titleText4.localized }
+    public var title: String { self == .classic ? Messages.CorePlayerTextureImage.classicArmsTitle.localized : Messages.CorePlayerTextureImage.slimArmsTitle.localized }
 }
 
 public struct PlayerTextureImage: Sendable {
@@ -42,14 +42,14 @@ public struct PlayerTextureImage: Sendable {
         case .skin:
             let valid = width.isMultiple(of: 64) && (height == width || height * 2 == width)
             guard valid, accountKind != .microsoft || width == 64 else {
-                throw RuriError.message(accountKind == .microsoft ? Messages.CorePlayerTextureImage.validText1 : Messages.CorePlayerTextureImage.validText2)
+                throw RuriError.message(accountKind == .microsoft ? Messages.CorePlayerTextureImage.invalidMicrosoftSkinSize : Messages.CorePlayerTextureImage.invalidSkinDimensions)
             }
-            guard model != .slim || !isLegacySkin else { throw RuriError.message(Messages.CorePlayerTextureImage.validText3) }
+            guard model != .slim || !isLegacySkin else { throw RuriError.message(Messages.CorePlayerTextureImage.legacySkinArmsRestriction) }
         case .cape:
             guard (width.isMultiple(of: 64) && height * 2 == width) || (width.isMultiple(of: 22) && height * 22 == width * 17) else {
-                throw RuriError.message(Messages.CorePlayerTextureImage.validText4)
+                throw RuriError.message(Messages.CorePlayerTextureImage.invalidCapeDimensions)
             }
         }
     }
-    private static func invalid() -> RuriError { .message(Messages.CorePlayerTextureImage.invalidText1) }
+    private static func invalid() -> RuriError { .message(Messages.CorePlayerTextureImage.invalidSkinImage) }
 }

@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaRuntimeStore {
-        public static var sourceText1: LocalizedMessage {
+        /// Ruri 下载
+        ///
+        /// Resource: `Core.coreJavaRuntimeStore.sourceText1`.
+        public static var downloadedByRuri: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.sourceText1", table: "Core", fallback: "Ruri 下载")
         }
-        public static var sourceText2: LocalizedMessage {
+        /// 手动添加
+        ///
+        /// Resource: `Core.coreJavaRuntimeStore.sourceText2`.
+        public static var addedManually: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.sourceText2", table: "Core", fallback: "手动添加")
         }
-        public static var sourceText3: LocalizedMessage {
+        /// 启动设置
+        ///
+        /// Resource: `Core.coreJavaRuntimeStore.sourceText3`.
+        public static var fromLaunchSettings: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.sourceText3", table: "Core", fallback: "启动设置")
         }
-        public static var sourceText4: LocalizedMessage {
+        /// 自动检测
+        ///
+        /// Resource: `Core.coreJavaRuntimeStore.sourceText4`.
+        public static var detectedAutomatically: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.sourceText4", table: "Core", fallback: "自动检测")
         }
-        public static var pathText1: LocalizedMessage {
+        /// 默认启动设置
+        ///
+        /// Resource: `Core.coreJavaRuntimeStore.pathText1`.
+        public static var defaultLaunchSettings: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.pathText1", table: "Core", fallback: "默认启动设置")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 手动添加的 Java 路径记录无效。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.validateText1`.
+        public static var invalidManualJavaPathRecord: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.validateText1", table: "Errors", fallback: "手动添加的 Java 路径记录无效。")
         }
-        public static var directoryText1: LocalizedMessage {
+        /// Java 运行时名称无效。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.directoryText1`.
+        public static var invalidJavaRuntimeName: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.directoryText1", table: "Errors", fallback: "Java 运行时名称无效。")
         }
-        public static var rawText1: LocalizedMessage {
+        /// 不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.rawText1`.
+        public static var preserveSymlinkedJavaDirectory: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.rawText1", table: "Errors", fallback: "不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。")
         }
-        public static var rootText1: LocalizedMessage {
+        /// 此运行时目录已不存在，请重新检测。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.rootText1`.
+        public static var javaRuntimeDirectoryMissing: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.rootText1", table: "Errors", fallback: "此运行时目录已不存在，请重新检测。")
         }
-        public static func referencesText1(_ value0: String) -> LocalizedMessage {
+        /// 以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.referencesText1`.
+        public static func javaStillReferencedBySettings(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.referencesText1", table: "Errors", fallback: "以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。", arguments: [.text(value0)])
         }
-        public static var trashedText1: LocalizedMessage {
+        /// Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。
+        ///
+        /// Resource: `Errors.coreJavaRuntimeStore.trashedText1`.
+        public static var javaReferenceSaveFailed: LocalizedMessage {
             .init(key: "coreJavaRuntimeStore.trashedText1", table: "Errors", fallback: "Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。")
         }
         static let definitions: [String: MessageDefinition] = [

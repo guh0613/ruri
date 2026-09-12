@@ -19,19 +19,19 @@ public enum WorldQuickPlay {
         return false
     }
     public static func requireSupport(instance: GameInstance, manifest: VersionManifest) throws {
-        guard supports(instance: instance, manifest: manifest) else { throw RuriError.message(Messages.CoreWorldQuickPlay.requireSupportText1) }
+        guard supports(instance: instance, manifest: manifest) else { throw RuriError.message(Messages.CoreWorldQuickPlay.unsupportedVersion) }
     }
     public static func selection(folder: String, instanceID: UUID, paths: LauncherPaths) throws -> WorldSnapshot {
         guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\"),
-              !folder.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreWorldQuickPlay.selectionText1) }
+              !folder.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreWorldQuickPlay.invalidWorldName) }
         try paths.validateInstanceLocation(instanceID)
         let saves = paths.game(instanceID).appendingPathComponent("saves")
         let world = try LauncherPaths.safePath(folder, within: saves)
         let info = try world.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreWorldQuickPlay.infoText1) }
+        guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreWorldQuickPlay.worldDirectoryInvalid) }
         let file = world.appendingPathComponent(FileManager.default.fileExists(atPath: world.appendingPathComponent("level.dat").path) ? "level.dat" : "level.dat_old")
         var reader = try NBTReader(data: RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024))
-        guard let data = try reader.read()["Data"], case .compound = data else { throw RuriError.message(Messages.CoreWorldQuickPlay.dataText1) }
+        guard let data = try reader.read()["Data"], case .compound = data else { throw RuriError.message(Messages.CoreWorldQuickPlay.incompleteWorldData) }
         let lock = try WorldManager.readLock(world); defer { if let lock { close(lock) } }
         return .init(folder: folder, url: world, name: data["LevelName"]?.string ?? folder, version: data["Version"]?["Name"]?.string,
                      gameType: nil, hardcore: false, lastPlayed: nil, size: nil, icon: nil, metadataError: nil)
@@ -40,7 +40,7 @@ public enum WorldQuickPlay {
         try requireSupport(instance: instance, manifest: manifest)
         let current = try selection(folder: world.folder, instanceID: instance.id, paths: paths)
         guard current.url.standardizedFileURL.resolvingSymlinksInPath() == world.url.standardizedFileURL.resolvingSymlinksInPath() else {
-            throw RuriError.message(Messages.CoreWorldQuickPlay.currentText1)
+            throw RuriError.message(Messages.CoreWorldQuickPlay.runDirectoryChanged)
         }
     }
     static func applying(_ world: WorldSnapshot, to arguments: [String], instance: GameInstance, paths: LauncherPaths) -> [String] {

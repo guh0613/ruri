@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreModrinthContentPlan {
-        public static var planText1: LocalizedMessage {
+        /// 模组需要已安装加载器的实例，请先创建相应实例。
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.planText1`.
+        public static var loaderInstanceRequired: LocalizedMessage {
             .init(key: "coreModrinthContentPlan.planText1", table: "Errors", fallback: "模组需要已安装加载器的实例，请先创建相应实例。")
         }
-        public static func otherText1(_ value0: String) -> LocalizedMessage {
+        /// 依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.otherText1`.
+        public static func incompatibleProjectVersions(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.otherText1", table: "Errors", fallback: "依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。", arguments: [.text(value0)])
         }
-        public static var otherText2: LocalizedMessage {
+        /// 模组依赖数量超出限制
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.otherText2`.
+        public static var dependencyLimitExceeded: LocalizedMessage {
             .init(key: "coreModrinthContentPlan.otherText2", table: "Errors", fallback: "模组依赖数量超出限制")
         }
-        public static func otherText3(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 不支持 Minecraft %2$@
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.otherText3`.
+        public static func minecraftVersionUnsupported(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.otherText3", table: "Errors", fallback: "%1$@ 不支持 Minecraft %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static func otherText4(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 不支持此实例的加载器
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.otherText4`.
+        public static func loaderUnsupported(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.otherText4", table: "Errors", fallback: "%1$@ 不支持此实例的加载器", arguments: [.text(value0)])
         }
-        public static func matchText1(_ value0: String) -> LocalizedMessage {
+        /// 找不到兼容的必需依赖：%1$@
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.matchText1`.
+        public static func compatibleDependencyMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.matchText1", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
         }
-        public static var matchText2: LocalizedMessage {
+        /// 必需依赖缺少下载标识
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.matchText2`.
+        public static var missingDependencyDownloadID: LocalizedMessage {
             .init(key: "coreModrinthContentPlan.matchText2", table: "Errors", fallback: "必需依赖缺少下载标识")
         }
-        public static func matchText3(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 与本次选择的其他内容不兼容。
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.matchText3`.
+        public static func selectedContentIncompatible(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.matchText3", table: "Errors", fallback: "%1$@ 与本次选择的其他内容不兼容。", arguments: [.text(value0)])
         }
-        public static func fileText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 没有可下载的文件
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.fileText1`.
+        public static func noDownloadableFile(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.fileText1", table: "Errors", fallback: "%1$@ 没有可下载的文件", arguments: [.text(value0)])
         }
-        public static func fileText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 缺少校验信息
+        ///
+        /// Resource: `Errors.coreModrinthContentPlan.fileText2`.
+        public static func missingFileChecksum(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.fileText2", table: "Errors", fallback: "%1$@ 缺少校验信息", arguments: [.text(value0)])
         }
-        public static func destinationText1(_ value0: String) -> LocalizedMessage {
+        /// 下载 %1$@
+        ///
+        /// Resource: `Progress.coreModrinthContentPlan.destinationText1`.
+        public static func downloadingContent(_ value0: String) -> LocalizedMessage {
             .init(key: "coreModrinthContentPlan.destinationText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

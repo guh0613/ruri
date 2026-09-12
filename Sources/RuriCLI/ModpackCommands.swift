@@ -5,24 +5,24 @@ import RuriCore
 extension CLI {
     static func manageModpackUpdate(_ args: [String], paths: LauncherPaths) async throws {
         guard args.count >= 2, let id = UUID(uuidString: args[1]), let instance = try StateStore.load(paths).instances.first(where: { $0.id == id }) else {
-            throw RuriError.message(Messages.CLIModpackCommands.instanceText1)
+            throw RuriError.message(Messages.CLIModpackCommands.packUpdateUsage)
         }
         let service = ModpackUpdater(paths: paths)
         if args[0] == "recover-pack-update" || args[0] == "rollback-pack" {
-            guard args.count == 2 || (args.count == 3 && args[2] == "--apply") else { throw RuriError.message(Messages.CLIModpackCommands.serviceText1) }
+            guard args.count == 2 || (args.count == 3 && args[2] == "--apply") else { throw RuriError.message(Messages.CLIModpackCommands.applyOnly) }
             if args[0] == "recover-pack-update" {
-                print(ModpackUpdateStore.hasPending(paths: paths, instanceID: id) ? Messages.CLIModpackCommands.serviceText2.localized : Messages.CLIModpackCommands.serviceText3.localized)
+                print(ModpackUpdateStore.hasPending(paths: paths, instanceID: id) ? Messages.CLIModpackCommands.packRecoveryRequired.localized : Messages.CLIModpackCommands.noPendingPackUpdate.localized)
                 if args.count == 3 { _ = try ModpackUpdateStore.recover(instanceID: id, paths: paths) }
             } else {
-                print(ModpackUpdateStore.hasBackup(paths: paths, instanceID: id) ? Messages.CLIModpackCommands.serviceText4.localized : Messages.CLIModpackCommands.serviceText5.localized)
+                print(ModpackUpdateStore.hasBackup(paths: paths, instanceID: id) ? Messages.CLIModpackCommands.packRollbackAvailable.localized : Messages.CLIModpackCommands.noPackBackup.localized)
                 if args.count == 3 {
                     let result = try await service.rollback(instance)
-                    print(Messages.CLIModpackCommands.resultText1(Int64(result.preservedFiles)).localized)
+                    print(Messages.CLIModpackCommands.packRolledBack(Int64(result.preservedFiles)).localized)
                 }
             }
             return
         }
-        guard args.count >= 3, Set(args.dropFirst(3)).isSubset(of: ["--apply", "--replace-local"]) else { throw RuriError.message(Messages.CLIModpackCommands.resultText2) }
+        guard args.count >= 3, Set(args.dropFirst(3)).isSubset(of: ["--apply", "--replace-local"]) else { throw RuriError.message(Messages.CLIModpackCommands.updatePackUsage) }
         let transfer = InstanceTransfer(paths: paths), downloader = DownloadManager()
         let prepared = try await transfer.prepare(URL(fileURLWithPath: args[2]))
         var plan: PreparedModpackUpdate?
@@ -35,14 +35,14 @@ extension CLI {
             let preview = try await service.prepare(prepared, for: instance, content: content)
             plan = preview
             print("\(preview.current.name)：\(preview.current.version) → \(preview.incoming.version)")
-            print(Messages.CLIModpackCommands.previewText1(String(describing: instance.gameVersion), String(describing: preview.incoming.settings.gameVersion), String(describing: preview.incoming.settings.loader.title)).localized)
+            print(Messages.CLIModpackCommands.packUpdatePreview(instance.gameVersion, preview.incoming.settings.gameVersion, preview.incoming.settings.loader.title).localized)
             for item in preview.changes { print("[\(item.action.title)] \(item.id)\(item.explanation.map { " · " + $0 } ?? "")") }
             if args.contains("--apply") {
                 let kept = args.contains("--replace-local") ? Set<String>() : Set(preview.changes.filter { $0.action == .keep }.map(\.id))
                 _ = try await service.apply(preview, keepingLocal: kept) { p in
                     if p.completed % 100 == 0 || p.completed == p.total { print("\(p.stage) \(p.completed)/\(p.total)") }
                 }
-                print(Messages.CLIModpackCommands.keptText1.localized)
+                print(Messages.CLIModpackCommands.packUpdated.localized)
             }
             await service.discard(preview); await transfer.discard(prepared)
         } catch {

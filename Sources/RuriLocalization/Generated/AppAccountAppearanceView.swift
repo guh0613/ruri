@@ -3,108 +3,213 @@ import Foundation
 
 extension Messages {
     public enum AppAccountAppearanceView {
-        public static var bodyText1: LocalizedMessage {
+        /// 皮肤与披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.bodyText1`.
+        public static var skinsAndCapes: LocalizedMessage {
             .init(key: "appAccountAppearanceView.bodyText1", table: "Interface", fallback: "皮肤与披风")
         }
-        public static var clientText1: LocalizedMessage {
+        /// 当前皮肤
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.clientText1`.
+        public static var currentSkin: LocalizedMessage {
             .init(key: "appAccountAppearanceView.clientText1", table: "Interface", fallback: "当前皮肤")
         }
-        public static var skinText1: LocalizedMessage {
+        /// 选择皮肤 PNG…
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText1`.
+        public static var chooseSkinPNG: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText1", table: "Interface", fallback: "选择皮肤 PNG…")
         }
-        public static var skinText2: LocalizedMessage {
+        /// 恢复默认皮肤
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText2`.
+        public static var restoreDefaultSkin: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText2", table: "Interface", fallback: "恢复默认皮肤")
         }
-        public static var skinText3: LocalizedMessage {
+        /// 已恢复默认皮肤
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText3`.
+        public static var defaultSkinRestored: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText3", table: "Interface", fallback: "已恢复默认皮肤")
         }
-        public static var skinText4: LocalizedMessage {
+        /// 此认证站未开放皮肤上传，请在认证站管理。
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText4`.
+        public static var skinUploadUnavailable: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText4", table: "Interface", fallback: "此认证站未开放皮肤上传，请在认证站管理。")
         }
-        public static var skinText5: LocalizedMessage {
+        /// 披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText5`.
+        public static var cape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText5", table: "Interface", fallback: "披风")
         }
-        public static var skinText6: LocalizedMessage {
+        /// 已拥有的披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText6`.
+        public static var ownedCapes: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText6", table: "Interface", fallback: "已拥有的披风")
         }
-        public static var skinText7: LocalizedMessage {
+        /// 不显示披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText7`.
+        public static var hideCape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText7", table: "Interface", fallback: "不显示披风")
         }
-        public static var skinText8: LocalizedMessage {
+        /// 隐藏披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText8`.
+        public static var hiddenCape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText8", table: "Interface", fallback: "隐藏披风")
         }
-        public static var skinText9: LocalizedMessage {
+        /// 使用这件披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.skinText9`.
+        public static var useCape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.skinText9", table: "Interface", fallback: "使用这件披风")
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 已隐藏披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText1`.
+        public static var capeHidden: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText1", table: "Interface", fallback: "已隐藏披风")
         }
-        public static var selectedText2: LocalizedMessage {
+        /// 已更换披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText2`.
+        public static var capeChanged: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText2", table: "Interface", fallback: "已更换披风")
         }
-        public static var selectedText3: LocalizedMessage {
+        /// 当前未使用披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText3`.
+        public static var noCapeInUse: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText3", table: "Interface", fallback: "当前未使用披风")
         }
-        public static var selectedText4: LocalizedMessage {
+        /// 当前正在使用
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText4`.
+        public static var currentlyInUse: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText4", table: "Interface", fallback: "当前正在使用")
         }
-        public static var selectedText5: LocalizedMessage {
+        /// 这个账号尚未拥有披风。
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText5`.
+        public static var noCapeOwned: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText5", table: "Interface", fallback: "这个账号尚未拥有披风。")
         }
-        public static var selectedText6: LocalizedMessage {
+        /// 选择披风 PNG…
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText6`.
+        public static var chooseCapePNG: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText6", table: "Interface", fallback: "选择披风 PNG…")
         }
-        public static var selectedText7: LocalizedMessage {
+        /// 移除当前披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText7`.
+        public static var removeCurrentCape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText7", table: "Interface", fallback: "移除当前披风")
         }
-        public static var selectedText8: LocalizedMessage {
+        /// 已移除披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText8`.
+        public static var capeRemoved: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText8", table: "Interface", fallback: "已移除披风")
         }
-        public static var selectedText9: LocalizedMessage {
+        /// 此认证站未开放披风上传，请在认证站管理。
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText9`.
+        public static var capeUploadUnavailable: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText9", table: "Interface", fallback: "此认证站未开放披风上传，请在认证站管理。")
         }
-        public static var selectedText10: LocalizedMessage {
+        /// 更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.selectedText10`.
+        public static var appearanceChangesSaved: LocalizedMessage {
             .init(key: "appAccountAppearanceView.selectedText10", table: "Interface", fallback: "更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 正在处理…
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.errorText1`.
+        public static var processing: LocalizedMessage {
             .init(key: "appAccountAppearanceView.errorText1", table: "Interface", fallback: "正在处理…")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 刷新
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.errorText2`.
+        public static var refresh: LocalizedMessage {
             .init(key: "appAccountAppearanceView.errorText2", table: "Interface", fallback: "刷新")
         }
-        public static func uploadEditorText1(_ value0: String) -> LocalizedMessage {
+        /// 准备上传%1$@
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText1`.
+        public static func prepareUpload(_ value0: String) -> LocalizedMessage {
             .init(key: "appAccountAppearanceView.uploadEditorText1", table: "Interface", fallback: "准备上传%1$@", arguments: [.text(value0)])
         }
-        public static var uploadEditorText2: LocalizedMessage {
+        /// 皮肤模型
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText2`.
+        public static var skinModel: LocalizedMessage {
             .init(key: "appAccountAppearanceView.uploadEditorText2", table: "Interface", fallback: "皮肤模型")
         }
-        public static var uploadEditorText3: LocalizedMessage {
+        /// 重新选择…
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText3`.
+        public static var chooseAgain: LocalizedMessage {
             .init(key: "appAccountAppearanceView.uploadEditorText3", table: "Interface", fallback: "重新选择…")
         }
-        public static var uploadEditorText4: LocalizedMessage {
+        /// 上传到此账号
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText4`.
+        public static var uploadToAccount: LocalizedMessage {
             .init(key: "appAccountAppearanceView.uploadEditorText4", table: "Interface", fallback: "上传到此账号")
         }
-        public static func kindText1(_ value0: String) -> LocalizedMessage {
+        /// 已上传%1$@
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.kindText1`.
+        public static func uploaded(_ value0: String) -> LocalizedMessage {
             .init(key: "appAccountAppearanceView.kindText1", table: "Interface", fallback: "已上传%1$@", arguments: [.text(value0)])
         }
-        public static var nativeText1: LocalizedMessage {
+        /// 展开的 PNG 纹理
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.nativeText1`.
+        public static var expandedPNGTexture: LocalizedMessage {
             .init(key: "appAccountAppearanceView.nativeText1", table: "Interface", fallback: "展开的 PNG 纹理")
         }
-        public static var imageText1: LocalizedMessage {
+        /// 纹理预览
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.imageText1`.
+        public static var texturePreview: LocalizedMessage {
             .init(key: "appAccountAppearanceView.imageText1", table: "Interface", fallback: "纹理预览")
         }
-        public static var imageText2: LocalizedMessage {
+        /// 保存 PNG…
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.imageText2`.
+        public static var savePNG: LocalizedMessage {
             .init(key: "appAccountAppearanceView.imageText2", table: "Interface", fallback: "保存 PNG…")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 使用默认皮肤
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.errorText3`.
+        public static var useDefaultSkin: LocalizedMessage {
             .init(key: "appAccountAppearanceView.errorText3", table: "Interface", fallback: "使用默认皮肤")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 没有披风
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.errorText4`.
+        public static var noCape: LocalizedMessage {
             .init(key: "appAccountAppearanceView.errorText4", table: "Interface", fallback: "没有披风")
         }
+        /// 更改已提交，但刷新外观失败：%1$@
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.refreshAppearanceError`.
         public static func refreshAppearanceError(_ value0: String) -> LocalizedMessage {
             .init(key: "appAccountAppearanceView.refreshAppearanceError", table: "Interface", fallback: "更改已提交，但刷新外观失败：%1$@", arguments: [.text(value0)])
         }
+        /// 预览未能加载：%1$@
+        ///
+        /// Resource: `Interface.appAccountAppearanceView.appearanceError`.
         public static func appearanceError(_ value0: String) -> LocalizedMessage {
             .init(key: "appAccountAppearanceView.appearanceError", table: "Interface", fallback: "预览未能加载：%1$@", arguments: [.text(value0)])
         }

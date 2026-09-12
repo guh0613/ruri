@@ -3,33 +3,63 @@ import Foundation
 
 extension Messages {
     public enum AppInstancePresentation {
-        public static var statusLabelText1: LocalizedMessage {
+        /// 需要检查
+        ///
+        /// Resource: `Interface.appInstancePresentation.statusLabelText1`.
+        public static var needsCheck: LocalizedMessage {
             .init(key: "appInstancePresentation.statusLabelText1", table: "Interface", fallback: "需要检查")
         }
-        public static var statusLabelText2: LocalizedMessage {
+        /// 就绪
+        ///
+        /// Resource: `Interface.appInstancePresentation.statusLabelText2`.
+        public static var ready: LocalizedMessage {
             .init(key: "appInstancePresentation.statusLabelText2", table: "Interface", fallback: "就绪")
         }
-        public static var statusLabelText3: LocalizedMessage {
+        /// 待安装
+        ///
+        /// Resource: `Interface.appInstancePresentation.statusLabelText3`.
+        public static var pendingInstall: LocalizedMessage {
             .init(key: "appInstancePresentation.statusLabelText3", table: "Interface", fallback: "待安装")
         }
-        public static var memoryText1: LocalizedMessage {
+        /// 内存设置待检查
+        ///
+        /// Resource: `Interface.appInstancePresentation.memoryText1`.
+        public static var memoryNeedsCheck: LocalizedMessage {
             .init(key: "appInstancePresentation.memoryText1", table: "Interface", fallback: "内存设置待检查")
         }
-        public static var memoryText2: LocalizedMessage {
+        ///  · 自动
+        ///
+        /// Resource: `Interface.appInstancePresentation.memoryText2`.
+        public static var automaticMemory: LocalizedMessage {
             .init(key: "appInstancePresentation.memoryText2", table: "Interface", fallback: " · 自动")
         }
-        public static var memoryText3: LocalizedMessage {
+        ///  · 参数
+        ///
+        /// Resource: `Interface.appInstancePresentation.memoryText3`.
+        public static var memoryArguments: LocalizedMessage {
             .init(key: "appInstancePresentation.memoryText3", table: "Interface", fallback: " · 参数")
         }
-        public static var lastPlayedLabelText2: LocalizedMessage {
+        /// 尚未游玩
+        ///
+        /// Resource: `Interface.appInstancePresentation.lastPlayedLabelText2`.
+        public static var neverPlayed: LocalizedMessage {
             .init(key: "appInstancePresentation.lastPlayedLabelText2", table: "Interface", fallback: "尚未游玩")
         }
-        public static var playTimeLabelText1: LocalizedMessage {
+        /// 不到 1 分钟
+        ///
+        /// Resource: `Interface.appInstancePresentation.playTimeLabelText1`.
+        public static var lessThanAMinute: LocalizedMessage {
             .init(key: "appInstancePresentation.playTimeLabelText1", table: "Interface", fallback: "不到 1 分钟")
         }
-        public static var loaderLabelText1: LocalizedMessage {
+        /// 原版
+        ///
+        /// Resource: `Interface.appInstancePresentation.loaderLabelText1`.
+        public static var vanilla: LocalizedMessage {
             .init(key: "appInstancePresentation.loaderLabelText1", table: "Interface", fallback: "原版")
         }
+        /// 上次游玩 %1$@
+        ///
+        /// Resource: `Interface.appInstancePresentation.lastPlayed`.
         public static func lastPlayed(_ value0: String) -> LocalizedMessage {
             .init(key: "appInstancePresentation.lastPlayed", table: "Interface", fallback: "上次游玩 %1$@", arguments: [.text(value0)])
         }

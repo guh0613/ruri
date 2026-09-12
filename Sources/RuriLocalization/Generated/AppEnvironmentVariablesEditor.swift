@@ -3,58 +3,112 @@ import Foundation
 
 extension Messages {
     public enum AppEnvironmentVariablesEditor {
-        public static var bodyText1: LocalizedMessage {
+        /// 没有自定义环境变量
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText1`.
+        public static var noCustomVariables: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText1", table: "Interface", fallback: "没有自定义环境变量")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 仅在模组或工具要求时添加，通常无需填写。
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText2`.
+        public static var variableHint: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText2", table: "Interface", fallback: "仅在模组或工具要求时添加，通常无需填写。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 变量名称
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText3`.
+        public static var variableName: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText3", table: "Interface", fallback: "变量名称")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 值
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText4`.
+        public static var valueColumn: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText4", table: "Interface", fallback: "值")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 操作
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText5`.
+        public static var actions: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText5", table: "Interface", fallback: "操作")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 名称
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText6`.
+        public static var name: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText6", table: "Interface", fallback: "名称")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 变量值
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText7`.
+        public static var variableValue: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText7", table: "Interface", fallback: "变量值")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 移除继承值
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText8`.
+        public static var removeInheritedValue: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText8", table: "Interface", fallback: "移除继承值")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 输入值，可留空
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText9`.
+        public static var enterValue: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText9", table: "Interface", fallback: "输入值，可留空")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 设置
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText10`.
+        public static var setVariable: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText10", table: "Interface", fallback: "设置")
         }
-        public static var bodyText11: LocalizedMessage {
+        /// 移除
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText11`.
+        public static var removeVariable: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText11", table: "Interface", fallback: "移除")
         }
-        public static var bodyText12: LocalizedMessage {
+        /// 环境变量操作
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText12`.
+        public static var variableActions: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText12", table: "Interface", fallback: "环境变量操作")
         }
-        public static var bodyText13: LocalizedMessage {
+        /// 删除此项配置
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText13`.
+        public static var deleteConfiguration: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText13", table: "Interface", fallback: "删除此项配置")
         }
-        public static var bodyText14: LocalizedMessage {
+        /// 删除环境变量
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText14`.
+        public static var deleteVariable: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText14", table: "Interface", fallback: "删除环境变量")
         }
-        public static var bodyText15: LocalizedMessage {
+        /// 添加变量
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText15`.
+        public static var addVariable: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText15", table: "Interface", fallback: "添加变量")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText1`.
+        public static var valuePassthroughNotice: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.errorText1", table: "Interface", fallback: "值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 使用说明
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText2`.
+        public static var usageGuide: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.errorText2", table: "Interface", fallback: "使用说明")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。
+        ///
+        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText3`.
+        public static var nameValidation: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.errorText3", table: "Interface", fallback: "名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。")
         }
         static let definitions: [String: MessageDefinition] = [

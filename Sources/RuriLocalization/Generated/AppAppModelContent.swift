@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelContent {
-        public static var fileText1: LocalizedMessage {
+        /// 该版本没有整合包文件
+        ///
+        /// Resource: `Errors.appAppModelContent.fileText1`.
+        public static var noModpackFile: LocalizedMessage {
             .init(key: "appAppModelContent.fileText1", table: "Errors", fallback: "该版本没有整合包文件")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 请选择游戏实例
+        ///
+        /// Resource: `Errors.appAppModelContent.instanceText1`.
+        public static var selectGameInstance: LocalizedMessage {
             .init(key: "appAppModelContent.instanceText1", table: "Errors", fallback: "请选择游戏实例")
         }
-        public static func installContentText1(_ value0: String) -> LocalizedMessage {
+        /// 安装 %1$@
+        ///
+        /// Resource: `Interface.appAppModelContent.installContentText1`.
+        public static func installContent(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelContent.installContentText1", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
         }
-        public static var archiveText2: LocalizedMessage {
+        /// 整合包清单已读取
+        ///
+        /// Resource: `Interface.appAppModelContent.archiveText2`.
+        public static var manifestRead: LocalizedMessage {
             .init(key: "appAppModelContent.archiveText2", table: "Interface", fallback: "整合包清单已读取")
         }
-        public static func instanceText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已安装
+        ///
+        /// Resource: `Interface.appAppModelContent.instanceText2`.
+        public static func installed(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelContent.instanceText2", table: "Interface", fallback: "%1$@ 已安装", arguments: [.text(value0)])
         }
-        public static var archiveText1: LocalizedMessage {
+        /// 下载整合包清单
+        ///
+        /// Resource: `Progress.appAppModelContent.archiveText1`.
+        public static var downloadManifest: LocalizedMessage {
             .init(key: "appAppModelContent.archiveText1", table: "Progress", fallback: "下载整合包清单")
         }
         static let definitions: [String: MessageDefinition] = [

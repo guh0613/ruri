@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreAuthlibInjector {
-        public static var argumentsText1: LocalizedMessage {
+        /// 外置认证组件尚未准备好。
+        ///
+        /// Resource: `Errors.coreAuthlibInjector.argumentsText1`.
+        public static var externalAuthComponentNotReady: LocalizedMessage {
             .init(key: "coreAuthlibInjector.argumentsText1", table: "Errors", fallback: "外置认证组件尚未准备好。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// authlib-injector 下载信息无效。
+        ///
+        /// Resource: `Errors.coreAuthlibInjector.validateText1`.
+        public static var invalidAuthlibInjectorDownloadInfo: LocalizedMessage {
             .init(key: "coreAuthlibInjector.validateText1", table: "Errors", fallback: "authlib-injector 下载信息无效。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// authlib-injector 文件校验失败，请重试。
+        ///
+        /// Resource: `Errors.coreAuthlibInjector.dataText1`.
+        public static var authlibInjectorChecksumFailed: LocalizedMessage {
             .init(key: "coreAuthlibInjector.dataText1", table: "Errors", fallback: "authlib-injector 文件校验失败，请重试。")
         }
         static let definitions: [String: MessageDefinition] = [

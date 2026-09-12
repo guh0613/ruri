@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackReleases {
-        public static var projectIDText1: LocalizedMessage {
+        /// 整合包来源标识无效。
+        ///
+        /// Resource: `Errors.coreModpackReleases.projectIDText1`.
+        public static var invalidPackProjectID: LocalizedMessage {
             .init(key: "coreModpackReleases.projectIDText1", table: "Errors", fallback: "整合包来源标识无效。")
         }
-        public static var serviceText1: LocalizedMessage {
+        /// 来源项目不是整合包。
+        ///
+        /// Resource: `Errors.coreModpackReleases.serviceText1`.
+        public static var projectIsNotModpack: LocalizedMessage {
             .init(key: "coreModpackReleases.serviceText1", table: "Errors", fallback: "来源项目不是整合包。")
         }
-        public static var prepareText1: LocalizedMessage {
+        /// 整合包版本缺少校验信息。
+        ///
+        /// Resource: `Errors.coreModpackReleases.prepareText1`.
+        public static var missingReleaseChecksum: LocalizedMessage {
             .init(key: "coreModpackReleases.prepareText1", table: "Errors", fallback: "整合包版本缺少校验信息。")
         }
-        public static var itemText1: LocalizedMessage {
+        /// 请先从 CurseForge 下载此整合包，再选择已下载的文件。
+        ///
+        /// Resource: `Errors.coreModpackReleases.itemText1`.
+        public static var curseForgeDownloadRequired: LocalizedMessage {
             .init(key: "coreModpackReleases.itemText1", table: "Errors", fallback: "请先从 CurseForge 下载此整合包，再选择已下载的文件。")
         }
-        public static var itemText3: LocalizedMessage {
+        /// 所选文件与整合包版本不符。
+        ///
+        /// Resource: `Errors.coreModpackReleases.itemText3`.
+        public static var selectedReleaseMismatch: LocalizedMessage {
             .init(key: "coreModpackReleases.itemText3", table: "Errors", fallback: "所选文件与整合包版本不符。")
         }
-        public static var itemText2: LocalizedMessage {
+        /// 正在下载整合包版本
+        ///
+        /// Resource: `Progress.coreModpackReleases.itemText2`.
+        public static var downloadingPackRelease: LocalizedMessage {
             .init(key: "coreModpackReleases.itemText2", table: "Progress", fallback: "正在下载整合包版本")
         }
         static let definitions: [String: MessageDefinition] = [

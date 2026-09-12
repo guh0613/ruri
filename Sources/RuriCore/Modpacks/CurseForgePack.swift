@@ -20,25 +20,25 @@ struct CurseForgeManifest: Decodable {
 extension InstanceTransfer {
     static func describeCurseForge(_ root: URL) throws -> InstanceImportDescription {
         let manifest = try JSONDecoder().decode(CurseForgeManifest.self, from: read(root.appendingPathComponent("manifest.json")))
-        guard manifest.manifestType == "minecraftModpack", manifest.manifestVersion == 1 else { throw RuriError.message(Messages.CoreCurseForgePack.manifestText1) }
-        guard manifest.minecraft.modLoaders.count <= 1 else { throw RuriError.message(Messages.CoreCurseForgePack.manifestText2) }
+        guard manifest.manifestType == "minecraftModpack", manifest.manifestVersion == 1 else { throw RuriError.message(Messages.CoreCurseForgePack.unsupportedManifestFormat) }
+        guard manifest.minecraft.modLoaders.count <= 1 else { throw RuriError.message(Messages.CoreCurseForgePack.multipleLoadersInPack) }
         var loader = LoaderKind.vanilla; var version: String?
         if let entry = manifest.minecraft.modLoaders.first {
-            guard let dash = entry.id.firstIndex(of: "-"), let kind = LoaderKind(rawValue: String(entry.id[..<dash])), kind != .vanilla else { throw RuriError.message(Messages.CoreCurseForgePack.kindText1(String(describing: entry.id))) }
+            guard let dash = entry.id.firstIndex(of: "-"), let kind = LoaderKind(rawValue: String(entry.id[..<dash])), kind != .vanilla else { throw RuriError.message(Messages.CoreCurseForgePack.unsupportedPackLoader(String(describing: entry.id))) }
             loader = kind; version = String(entry.id[entry.id.index(after: dash)...])
         }
         let instance = GameInstance(name: manifest.name, gameVersion: manifest.minecraft.version, loader: loader, loaderVersion: version)
         try validate(instance)
         guard manifest.files.count <= 5000, manifest.files.allSatisfy({ $0.projectID > 0 && $0.fileID > 0 }),
-              Set(manifest.files.map(\.projectID)).count == manifest.files.count else { throw RuriError.message(Messages.CoreCurseForgePack.instanceText1) }
+              Set(manifest.files.map(\.projectID)).count == manifest.files.count else { throw RuriError.message(Messages.CoreCurseForgePack.duplicateOrInvalidPackFile) }
         let game = try LauncherPaths.safePath(manifest.overrides ?? "overrides", within: root)
         if FileManager.default.fileExists(atPath: game.path) {
             let info = try game.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreCurseForgePack.infoText1) }
+            guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreCurseForgePack.invalidOverridesDirectory) }
         }
         var warnings: [String] = []
-        if !manifest.files.isEmpty { warnings.append(Messages.CoreCurseForgePack.warningsText1(Int64(manifest.files.count)).localized) }
-        if let author = manifest.author, !author.isEmpty { warnings.append(Messages.CoreCurseForgePack.authorText1(String(describing: author)).localized) }
+        if !manifest.files.isEmpty { warnings.append(Messages.CoreCurseForgePack.curseForgeFilesNeedDownload(Int64(manifest.files.count)).localized) }
+        if let author = manifest.author, !author.isEmpty { warnings.append(Messages.CoreCurseForgePack.packAuthor(String(describing: author)).localized) }
         return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", warnings: warnings, curseForgeFiles: manifest.files, modpack: ModpackDescriptor(version: manifest.version ?? ""))
     }
 
@@ -47,12 +47,12 @@ extension InstanceTransfer {
         let required = Set(references.filter { $0.required != false }.map { "\($0.projectID):\($0.fileID)" })
         let actual = Set(content.map { "\($0.record.projectID):\($0.record.versionID)" })
         guard required.isSubset(of: actual), actual.isSubset(of: expected), content.allSatisfy({ $0.record.provider == "curseforge" }),
-              actual.count == content.count, Set(content.map { $0.record.relativePath.lowercased() }).count == content.count else { throw RuriError.message(Messages.CoreCurseForgePack.actualText1) }
+              actual.count == content.count, Set(content.map { $0.record.relativePath.lowercased() }).count == content.count else { throw RuriError.message(Messages.CoreCurseForgePack.curseForgeFilesNeedResolution) }
         for item in content {
             let record = item.record
             guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()),
                   record.sha1 != nil || record.md5 != nil,
-                  DownloadManager.valid(item.source, item: DownloadItem(url: nil, destination: item.source, sha1: record.sha1, md5: record.md5, size: record.size)) else { throw RuriError.message(Messages.CoreCurseForgePack.recordText1(String(describing: record.filename))) }
+                  DownloadManager.valid(item.source, item: DownloadItem(url: nil, destination: item.source, sha1: record.sha1, md5: record.md5, size: record.size)) else { throw RuriError.message(Messages.CoreCurseForgePack.packFileChecksumFailed(record.filename)) }
         }
     }
 

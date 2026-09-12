@@ -3,61 +3,118 @@ import Foundation
 
 extension Messages {
     public enum AppExternalAccountForm {
-        public static var profileText1: LocalizedMessage {
+        /// 原来的角色已不可用，请重新添加账号。
+        ///
+        /// Resource: `Errors.appExternalAccountForm.profileText1`.
+        public static var profileUnavailable: LocalizedMessage {
             .init(key: "appExternalAccountForm.profileText1", table: "Errors", fallback: "原来的角色已不可用，请重新添加账号。")
         }
-        public static var serverText1: LocalizedMessage {
+        /// 更换服务器
+        ///
+        /// Resource: `Interface.appExternalAccountForm.serverText1`.
+        public static var changeServer: LocalizedMessage {
             .init(key: "appExternalAccountForm.serverText1", table: "Interface", fallback: "更换服务器")
         }
-        public static var pendingText1: LocalizedMessage {
+        /// 选择本次添加的游戏角色
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText1`.
+        public static var chooseRole: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText1", table: "Interface", fallback: "选择本次添加的游戏角色")
         }
-        public static var pendingText2: LocalizedMessage {
+        /// 游戏角色
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText2`.
+        public static var roleLabel: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText2", table: "Interface", fallback: "游戏角色")
         }
-        public static var pendingText3: LocalizedMessage {
+        /// 添加所选角色
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText3`.
+        public static var addRole: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText3", table: "Interface", fallback: "添加所选角色")
         }
-        public static var pendingText4: LocalizedMessage {
+        /// 认证站账号
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText4`.
+        public static var authServer: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText4", table: "Interface", fallback: "认证站账号")
         }
-        public static var pendingText5: LocalizedMessage {
+        /// 邮箱或账号名
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText5`.
+        public static var accountName: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText5", table: "Interface", fallback: "邮箱或账号名")
         }
-        public static var pendingText6: LocalizedMessage {
+        /// 密码
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText6`.
+        public static var password: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText6", table: "Interface", fallback: "密码")
         }
-        public static var pendingText7: LocalizedMessage {
+        /// 认证站密码
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText7`.
+        public static var authPassword: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText7", table: "Interface", fallback: "认证站密码")
         }
-        public static var pendingText8: LocalizedMessage {
+        /// 使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText8`.
+        public static var credentialsHelp: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText8", table: "Interface", fallback: "使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。")
         }
-        public static var pendingText9: LocalizedMessage {
+        /// 登录
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText9`.
+        public static var login: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText9", table: "Interface", fallback: "登录")
         }
-        public static var pendingText10: LocalizedMessage {
+        /// 重新登录
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText10`.
+        public static var relogin: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText10", table: "Interface", fallback: "重新登录")
         }
-        public static var pendingText11: LocalizedMessage {
+        /// 服务器地址
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText11`.
+        public static var serverAddress: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText11", table: "Interface", fallback: "服务器地址")
         }
-        public static var pendingText12: LocalizedMessage {
+        /// 填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText12`.
+        public static var serverAddressHelp: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText12", table: "Interface", fallback: "填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。")
         }
-        public static var pendingText13: LocalizedMessage {
+        /// 使用已有服务器
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText13`.
+        public static var useExistingServer: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText13", table: "Interface", fallback: "使用已有服务器")
         }
-        public static var pendingText14: LocalizedMessage {
+        /// 识别服务器
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText14`.
+        public static var identifyServer: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText14", table: "Interface", fallback: "识别服务器")
         }
-        public static var pendingText15: LocalizedMessage {
+        /// 正在连接认证服务器…
+        ///
+        /// Resource: `Interface.appExternalAccountForm.pendingText15`.
+        public static var connectingServer: LocalizedMessage {
             .init(key: "appExternalAccountForm.pendingText15", table: "Interface", fallback: "正在连接认证服务器…")
         }
-        public static func bodyText1(_ value0: String) -> LocalizedMessage {
+        /// 重新登录 %1$@
+        ///
+        /// Resource: `Interface.appExternalAccountForm.bodyText1`.
+        public static func reloginAccount(_ value0: String) -> LocalizedMessage {
             .init(key: "appExternalAccountForm.bodyText1", table: "Interface", fallback: "重新登录 %1$@", arguments: [.text(value0)])
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 保留原来的游戏角色和账号选择。
+        ///
+        /// Resource: `Interface.appExternalAccountForm.bodyText2`.
+        public static var reloginHelp: LocalizedMessage {
             .init(key: "appExternalAccountForm.bodyText2", table: "Interface", fallback: "保留原来的游戏角色和账号选择。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,37 +3,71 @@ import Foundation
 
 extension Messages {
     public enum CLIMinecraftDirectory {
-        public static func encoderText1(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// %1$@
+        /// 发现 %2$lld 个版本
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.encoderText1`.
+        public static func discoveredVersions(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.encoderText1", table: "CLI", fallback: "%1$@\n发现 %2$lld 个版本", arguments: [.text(value0), .integer(value1)])
         }
-        public static func issueText1(_ value0: String) -> LocalizedMessage {
+        /// 无法读取：%1$@
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText1`.
+        public static func unreadableDirectory(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText1", table: "CLI", fallback: "无法读取：%1$@", arguments: [.text(value0)])
         }
-        public static func manifestText1(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+        /// 启动入口：%1$@ · %2$lld 条依赖声明
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.manifestText1`.
+        public static func launchManifest(_ value0: String, _ value1: Int64) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.manifestText1", table: "CLI", fallback: "启动入口：%1$@ · %2$lld 条依赖声明", arguments: [.text(value0), .integer(value1)])
         }
-        public static func manifestText2(_ value0: Int64, _ value1: Int64, _ value2: Int64) -> LocalizedMessage {
+        /// 依赖选择：保留 %1$lld 条，其中 %2$lld 条使用本地文件；移除 %3$lld 条重复或旧版本声明
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.manifestText2`.
+        public static func dependencySelection(_ value0: Int64, _ value1: Int64, _ value2: Int64) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.manifestText2", table: "CLI", fallback: "依赖选择：保留 %1$lld 条，其中 %2$lld 条使用本地文件；移除 %3$lld 条重复或旧版本声明", arguments: [.integer(value0), .integer(value1), .integer(value2)])
         }
-        public static func manifestText3(_ value0: String) -> LocalizedMessage {
+        /// 游戏 JAR：%1$@
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.manifestText3`.
+        public static func gameJar(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.manifestText3", table: "CLI", fallback: "游戏 JAR：%1$@", arguments: [.text(value0)])
         }
-        public static func issueText2(_ value0: String) -> LocalizedMessage {
+        /// 清单合并失败：%1$@
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText2`.
+        public static func manifestMergeFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText2", table: "CLI", fallback: "清单合并失败：%1$@", arguments: [.text(value0)])
         }
-        public static var issueText3: LocalizedMessage {
+        /// （原配置）
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText3`.
+        public static var originalConfiguration: LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText3", table: "CLI", fallback: "（原配置）")
         }
-        public static var issueText4: LocalizedMessage {
+        /// 未发现常见游戏数据
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText4`.
+        public static var missingGameData: LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText4", table: "CLI", fallback: "未发现常见游戏数据")
         }
-        public static var issueText5: LocalizedMessage {
+        /// 位置不可用
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText5`.
+        public static var unavailableLocation: LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText5", table: "CLI", fallback: "位置不可用")
         }
-        public static func issueText6(_ value0: String) -> LocalizedMessage {
+        /// 提示：%1$@
+        ///
+        /// Resource: `CLI.cLIMinecraftDirectory.issueText6`.
+        public static func directoryHint(_ value0: String) -> LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.issueText6", table: "CLI", fallback: "提示：%1$@", arguments: [.text(value0)])
         }
-        public static var flagsText1: LocalizedMessage {
+        /// 用法：ruri-cli scan-minecraft <Minecraft目录|版本目录|版本JSON> [--json] [--resolve]。只读取已有版本；--resolve 额外检查继承和补丁合并。
+        ///
+        /// Resource: `Errors.cLIMinecraftDirectory.flagsText1`.
+        public static var scanHint: LocalizedMessage {
             .init(key: "cLIMinecraftDirectory.flagsText1", table: "Errors", fallback: "用法：ruri-cli scan-minecraft <Minecraft目录|版本目录|版本JSON> [--json] [--resolve]。只读取已有版本；--resolve 额外检查继承和补丁合并。")
         }
         static let definitions: [String: MessageDefinition] = [

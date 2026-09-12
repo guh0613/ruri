@@ -12,9 +12,9 @@ public struct WorldSnapshot: Identifiable, Sendable {
     public let gameType: Int?
     public let hardcore: Bool
     public var gameMode: String? {
-        if hardcore { return Messages.CoreWorldManager.modeText1.localized }
-        return gameType.flatMap { [0: Messages.CoreWorldManager.modesText1, 1: Messages.CoreWorldManager.modesText2,
-                                  2: Messages.CoreWorldManager.modesText3, 3: Messages.CoreWorldManager.modesText4][$0]?.localized }
+        if hardcore { return Messages.CoreWorldManager.hardcoreMode.localized }
+        return gameType.flatMap { [0: Messages.CoreWorldManager.survivalMode, 1: Messages.CoreWorldManager.creativeMode,
+                                  2: Messages.CoreWorldManager.adventureMode, 3: Messages.CoreWorldManager.spectatorMode][$0]?.localized }
     }
     public let lastPlayed: Date?
     public let size: Int64?
@@ -64,9 +64,9 @@ public actor WorldManager {
     }
     func unlock() { operationLock.release(); locationLock.release(); Self.diskLock.unlock() }
     func worldURL(_ folder: String) throws -> URL {
-        guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\") else { throw RuriError.message(Messages.CoreWorldManager.worldURLText1) }
+        guard !folder.isEmpty, folder != ".", folder != "..", !folder.contains("/"), !folder.contains("\\") else { throw RuriError.message(Messages.CoreWorldManager.invalidWorldDirectoryName) }
         let target = saves.appendingPathComponent(folder)
-        for url in [saves, target] where (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) != nil { throw RuriError.message(Messages.CoreWorldManager.targetText1) }
+        for url in [saves, target] where (try? FileManager.default.destinationOfSymbolicLink(atPath: url.path)) != nil { throw RuriError.message(Messages.CoreWorldManager.symlinkDirectoryUnmodified) }
         return try LauncherPaths.safePath(folder, within: saves)
     }
     public func worlds() throws -> [WorldSnapshot] {
@@ -95,9 +95,9 @@ public actor WorldManager {
         try lock(); defer { unlock() }
         try recover()
         let world = try worldURL(folder)
-        guard hasLevelData(world) else { throw RuriError.message(Messages.CoreWorldManager.worldText1) }
+        guard hasLevelData(world) else { throw RuriError.message(Messages.CoreWorldManager.levelDataMissing) }
         let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
-        return try writeBackup(world, reason: reason.map(LocalizedMessage.verbatim) ?? Messages.CoreWorldManager.backupText1, progress: progress)
+        return try writeBackup(world, reason: reason.map(LocalizedMessage.verbatim) ?? Messages.CoreWorldManager.manualBackup, progress: progress)
     }
     private func writeBackup(_ world: URL, reason: LocalizedMessage, progress: @Sendable (Int, Int) -> Void) throws -> WorldBackup {
         let info = snapshot(world)
@@ -115,13 +115,13 @@ public actor WorldManager {
         do {
             try SafeArchive.extract(backup.url, to: unpacked, maxBytes: 128 * 1024 * 1024 * 1024)
             let source = unpacked.appendingPathComponent("world")
-            guard hasLevelData(source) else { throw RuriError.message(Messages.CoreWorldManager.sourceText1) }
+            guard hasLevelData(source) else { throw RuriError.message(Messages.CoreWorldManager.backupDataMissing) }
             let folder = replaceExisting ? metadata.worldFolder : try uniqueFolder(Messages.CoreWorldManager.restoredFolder(metadata.worldFolder).localized)
             let destination = try worldURL(folder)
             let exists = FileManager.default.fileExists(atPath: destination.path)
             let lock = exists ? try Self.readLock(destination) : nil
             defer { if let lock { close(lock) } }
-            if exists { _ = try writeBackup(destination, reason: Messages.CoreWorldManager.lockText1, progress: progress) }
+            if exists { _ = try writeBackup(destination, reason: Messages.CoreWorldManager.automaticBackup, progress: progress) }
             try FileManager.default.moveItem(at: source, to: transaction.appendingPathComponent("incoming"))
             let journal = RestoreJournal(folder: folder, hadOriginal: exists)
             try JSONEncoder().encode(journal).write(to: transaction.appendingPathComponent("journal.json"), options: .atomic)
@@ -132,7 +132,7 @@ public actor WorldManager {
             try recover()
             return folder
         } catch {
-            do { try recover() } catch { throw RuriError.message(Messages.CoreWorldManager.journalText1(String(describing: transaction.path), String(describing: error.localizedDescription))) }
+            do { try recover() } catch { throw RuriError.message(Messages.CoreWorldManager.restoreNeedsReview(transaction.path, error.localizedDescription)) }
             throw error
         }
     }
@@ -152,9 +152,9 @@ public actor WorldManager {
             try fm.createDirectory(at: saves, withIntermediateDirectories: true)
             try fm.moveItem(at: previous, to: target)
         } else if hasPrevious && hasTarget && hasIncoming {
-            throw RuriError.message(Messages.CoreWorldManager.hasTargetText1)
+            throw RuriError.message(Messages.CoreWorldManager.restoreDirectoryConflict)
         } else if journal.hadOriginal && !hasPrevious && !hasTarget {
-            throw RuriError.message(Messages.CoreWorldManager.hasTargetText2)
+            throw RuriError.message(Messages.CoreWorldManager.originalWorldMissing)
         }
         // The only write to the saves directory is a complete-directory rename.
         // A present target and absent incoming mean the replacement committed.
@@ -174,7 +174,7 @@ public actor WorldManager {
         if hasLevelData(root) { world = root }
         else {
             let candidates = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter(hasLevelData)
-            guard candidates.count == 1, let candidate = candidates.first else { throw RuriError.message(Messages.CoreWorldManager.candidateText1) }
+            guard candidates.count == 1, let candidate = candidates.first else { throw RuriError.message(Messages.CoreWorldManager.invalidWorldFolder) }
             world = candidate
         }
         let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
@@ -190,7 +190,7 @@ public actor WorldManager {
         try lock(); defer { unlock() }
         try recover()
         let world = try worldURL(folder)
-        guard hasLevelData(world) else { throw RuriError.message(Messages.CoreWorldManager.worldText2) }
+        guard hasLevelData(world) else { throw RuriError.message(Messages.CoreWorldManager.worldMissing) }
         let lock = try Self.readLock(world); defer { if let lock { close(lock) } }
         try SafeArchive.create(from: world, to: destination, excluding: ["session.lock"], progress: progress)
     }
@@ -204,25 +204,25 @@ public actor WorldManager {
     public func removeBackup(_ backup: WorldBackup) throws {
         try lock(); defer { unlock() }
         let file = try LauncherPaths.safePath(backup.url.lastPathComponent, within: backupDirectory)
-        guard file.standardizedFileURL == backup.url.standardizedFileURL else { throw RuriError.message(Messages.CoreWorldManager.fileText1) }
+        guard file.standardizedFileURL == backup.url.standardizedFileURL else { throw RuriError.message(Messages.CoreWorldManager.backupWrongInstance) }
         try FileManager.default.trashItem(at: file, resultingItemURL: nil)
     }
     private func uniqueFolder(_ suggested: String) throws -> String {
         let value = suggested.components(separatedBy: CharacterSet(charactersIn: "/\\:\0")).joined(separator: "-").trimmingCharacters(in: .whitespacesAndNewlines)
-        let base = value.isEmpty || value == "." || value == ".." ? Messages.CoreWorldManager.baseText1.localized : String(value.prefix(80))
+        let base = value.isEmpty || value == "." || value == ".." ? Messages.CoreWorldManager.importedWorld.localized : String(value.prefix(80))
         for index in 0..<10_000 {
             let name = index == 0 ? base : "\(base) \(index + 1)"
             if !FileManager.default.fileExists(atPath: try worldURL(name).path) { return name }
         }
-        throw RuriError.message(Messages.CoreWorldManager.nameText1)
+        throw RuriError.message(Messages.CoreWorldManager.uniqueWorldDirectory)
     }
     private func readMetadata(_ file: URL) throws -> WorldBackupMetadata {
         let archive = try Archive(url: file, accessMode: .read)
-        guard let entry = archive["ruri-world-backup.json"], entry.uncompressedSize < 64 * 1024 else { throw RuriError.message(Messages.CoreWorldManager.entryText1) }
+        guard let entry = archive["ruri-world-backup.json"], entry.uncompressedSize < 64 * 1024 else { throw RuriError.message(Messages.CoreWorldManager.invalidBackup) }
         var data = Data(); let checksum = try archive.extract(entry) { data.append($0) }
-        guard checksum == entry.checksum else { throw RuriError.message(Messages.CoreWorldManager.checksumText1) }
+        guard checksum == entry.checksum else { throw RuriError.message(Messages.CoreWorldManager.checksumFailed) }
         let result = try JSONDecoder().decode(WorldBackupMetadata.self, from: data)
-        guard result.formatVersion == 1 else { throw RuriError.message(Messages.CoreWorldManager.resultText1) }; return result
+        guard result.formatVersion == 1 else { throw RuriError.message(Messages.CoreWorldManager.unsupportedBackupVersion) }; return result
     }
     private func hasLevelData(_ directory: URL) -> Bool {
         ["level.dat", "level.dat_old"].contains {
@@ -234,9 +234,9 @@ public actor WorldManager {
         var data: NBTValue?; var failure: String?
         do {
             let file = FileManager.default.fileExists(atPath: world.appendingPathComponent("level.dat").path) ? world.appendingPathComponent("level.dat") : world.appendingPathComponent("level.dat_old")
-            guard (try file.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max) <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreWorldManager.fileText2) }
+            guard (try file.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max) <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreWorldManager.nbtTooLarge) }
             var reader = try NBTReader(data: Data(contentsOf: file)); data = try reader.read()["Data"]
-        } catch { failure = Messages.CoreWorldManager.readerText1.localized }
+        } catch { failure = Messages.CoreWorldManager.worldInfoReadFailed.localized }
         let lastPlayed = data?["LastPlayed"]?.integer.flatMap { (0..<253402300800000).contains($0) ? Date(timeIntervalSince1970: Double($0) / 1000) : nil }
         let icon = world.appendingPathComponent("icon.png")
         let entries = try? FileTree.entries(in: world)
@@ -246,9 +246,9 @@ public actor WorldManager {
         let file = world.appendingPathComponent("session.lock")
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }
         let fd = open(file.path, O_RDONLY)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreWorldManager.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreWorldManager.lockReadFailed) }
         var lock = flock(); lock.l_type = Int16(F_RDLCK); lock.l_whence = Int16(SEEK_SET); lock.l_start = 0; lock.l_len = 0
-        guard fcntl(fd, F_SETLK, &lock) != -1 else { close(fd); throw RuriError.message(Messages.CoreWorldManager.lockText2) }
+        guard fcntl(fd, F_SETLK, &lock) != -1 else { close(fd); throw RuriError.message(Messages.CoreWorldManager.worldInUse) }
         return fd
     }
 }

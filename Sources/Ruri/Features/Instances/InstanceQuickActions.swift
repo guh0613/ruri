@@ -10,9 +10,9 @@ struct InstanceQuickActions: View {
     let instance: GameInstance
     var body: some View {
         HStack(spacing: 2) {
-            action(Messages.AppInstanceQuickActions.bodyText1.localized, "slider.horizontal.3") { model.editingInstance = instance }
-            action(Messages.AppInstanceQuickActions.bodyText2.localized, "puzzlepiece.extension") { model.contentInstance = instance }
-            action(Messages.AppInstanceQuickActions.bodyText3.localized, "globe") { model.worldInstance = instance }
+            action(Messages.AppInstanceQuickActions.instanceSettings.localized, "slider.horizontal.3") { model.editingInstance = instance }
+            action(Messages.AppInstanceQuickActions.manageModsAndResourcePacks.localized, "puzzlepiece.extension") { model.contentInstance = instance }
+            action(Messages.AppInstanceQuickActions.manageWorldsAndBackups.localized, "globe") { model.worldInstance = instance }
         }
     }
     private func action(_ title: String, _ symbol: String, _ perform: @escaping () -> Void) -> some View {

@@ -19,37 +19,37 @@ struct CreateInstanceView: View {
     var versions: [VersionEntry] { (model.catalog?.versions ?? []).filter { (snapshots || $0.isRelease) && (search.isEmpty || $0.id.localizedCaseInsensitiveContains(search)) } }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            HStack { SectionHeading(title: Messages.AppCreateInstanceView.bodyText1.localized, subtitle: Messages.AppCreateInstanceView.bodyText2.localized); Spacer(); Button { dismiss() } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
-            TextField(Messages.AppCreateInstanceView.bodyText3.localized, text: $name).textFieldStyle(.roundedBorder)
-            Label(Messages.AppCreateInstanceView.bodyText4(String(describing: model.selectedDirectoryName)).localized, systemImage: "folder").font(.callout).foregroundStyle(.secondary)
-            HStack { TextField(Messages.AppCreateInstanceView.bodyText5.localized, text: $search).textFieldStyle(.roundedBorder); Toggle(Messages.AppCreateInstanceView.bodyText6.localized, isOn: $snapshots).toggleStyle(.checkbox) }
-            if model.catalogLoading && model.catalog == nil { ProgressView(Messages.AppCreateInstanceView.bodyText7.localized).frame(maxWidth: .infinity, minHeight: 220) }
+            HStack { SectionHeading(title: Messages.AppCreateInstanceView.createWorld.localized, subtitle: Messages.AppCreateInstanceView.createDescription.localized); Spacer(); Button { dismiss() } label: { Image(systemName: "xmark") }.buttonStyle(.plain) }
+            TextField(Messages.AppCreateInstanceView.instanceNameOptional.localized, text: $name).textFieldStyle(.roundedBorder)
+            Label(Messages.AppCreateInstanceView.saveLocation(String(describing: model.selectedDirectoryName)).localized, systemImage: "folder").font(.callout).foregroundStyle(.secondary)
+            HStack { TextField(Messages.AppCreateInstanceView.searchVersions.localized, text: $search).textFieldStyle(.roundedBorder); Toggle(Messages.AppCreateInstanceView.snapshotsAndOldVersions.localized, isOn: $snapshots).toggleStyle(.checkbox) }
+            if model.catalogLoading && model.catalog == nil { ProgressView(Messages.AppCreateInstanceView.fetchingVersions.localized).frame(maxWidth: .infinity, minHeight: 220) }
             else if let error = model.catalogError, model.catalog == nil {
-                VStack { Text(error).foregroundStyle(.secondary); Button(Messages.AppCreateInstanceView.errorText1.localized) { Task { await model.refreshCatalog() } } }.frame(maxWidth: .infinity, minHeight: 220)
+                VStack { Text(error).foregroundStyle(.secondary); Button(Messages.AppCreateInstanceView.retry.localized) { Task { await model.refreshCatalog() } } }.frame(maxWidth: .infinity, minHeight: 220)
             } else {
                 List(versions, selection: $selectedVersion) { version in
                     HStack {
                         Text(version.id).font(.system(.body, design: .monospaced).weight(.medium))
-                        if version.id == model.catalog?.latest.release { TagPill(text: Messages.AppCreateInstanceView.errorText2.localized) }
+                        if version.id == model.catalog?.latest.release { TagPill(text: Messages.AppCreateInstanceView.latestRelease.localized) }
                         Spacer()
                         Text(LocalizedFormat.publishedDate(version.releaseTime)).font(.caption).foregroundStyle(.secondary)
                     }.padding(.vertical, 4).tag(version.id)
                 }.listStyle(.bordered).frame(height: 230)
             }
             HStack {
-                Picker(Messages.AppCreateInstanceView.errorText3.localized, selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
+                Picker(Messages.AppCreateInstanceView.loader.localized, selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
             }
             if loader != .vanilla {
-                if loader == .optifine { Text(Messages.AppCreateInstanceView.errorText4.localized).font(.caption).foregroundStyle(.secondary) }
-                if loadingLoader { ProgressView(Messages.AppCreateInstanceView.errorText5.localized).controlSize(.small) }
+                if loader == .optifine { Text(Messages.AppCreateInstanceView.optifineSource.localized).font(.caption).foregroundStyle(.secondary) }
+                if loadingLoader { ProgressView(Messages.AppCreateInstanceView.findCompatibleLoaders.localized).controlSize(.small) }
                 else if let loaderError { Text(loaderError).font(.caption).foregroundStyle(.red) }
-                else { Picker(Messages.AppCreateInstanceView.loaderErrorText1.localized, selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }
+                else { Picker(Messages.AppCreateInstanceView.loaderVersion.localized, selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }
             }
             HStack {
                 Text((model.state.settings.isolationPolicy ?? .always).directory(loader: loader).title).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.AppCreateInstanceView.loaderErrorText2.localized) { model.install(name: name, version: selectedVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : loaderVersion) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
+                Button(Messages.AppCreateInstanceView.createAndInstall.localized) { model.install(name: name, version: selectedVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : loaderVersion) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
                     .disabled(selectedVersion.isEmpty || model.busy || (loader != .vanilla && (loaderVersion.isEmpty || loadingLoader)))
             }
         }.padding(28).frame(width: 570)
@@ -61,7 +61,7 @@ struct CreateInstanceView: View {
             do {
                 let result = try await model.installer.loaderVersions(loader, game: selectedVersion)
                 try Task.checkCancellation(); loaders = result; loaderVersion = result.first ?? ""
-                if result.isEmpty { loaderError = Messages.AppCreateInstanceView.resultText1.localized }
+                if result.isEmpty { loaderError = Messages.AppCreateInstanceView.noCompatibleLoader.localized }
             } catch { if !Task.isCancelled { loaderError = error.localizedDescription } }
             loadingLoader = false
         }

@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunDirectory {
-        public static var titleText1: LocalizedMessage {
+        /// 独立运行目录
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText1`.
+        public static var isolatedDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText1", table: "Core", fallback: "独立运行目录")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 共享运行目录
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText2`.
+        public static var sharedDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText2", table: "Core", fallback: "共享运行目录")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 自定义运行目录
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText3`.
+        public static var customDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText3", table: "Core", fallback: "自定义运行目录")
         }
-        public static var explanationText1: LocalizedMessage {
+        /// 此实例单独保存模组、存档和游戏设置。
+        ///
+        /// Resource: `Core.coreGameRunDirectory.explanationText1`.
+        public static var isolatedDirectoryDescription: LocalizedMessage {
             .init(key: "coreGameRunDirectory.explanationText1", table: "Core", fallback: "此实例单独保存模组、存档和游戏设置。")
         }
-        public static var explanationText2: LocalizedMessage {
+        /// 与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。
+        ///
+        /// Resource: `Core.coreGameRunDirectory.explanationText2`.
+        public static var sharedDirectoryDescription: LocalizedMessage {
             .init(key: "coreGameRunDirectory.explanationText2", table: "Core", fallback: "与此实例文件夹中选择共享目录的其他实例共用模组、存档和游戏设置；一次只能运行一个。")
         }
-        public static var explanationText3: LocalizedMessage {
+        /// 在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。
+        ///
+        /// Resource: `Core.coreGameRunDirectory.explanationText3`.
+        public static var customDirectoryDescription: LocalizedMessage {
             .init(key: "coreGameRunDirectory.explanationText3", table: "Core", fallback: "在选定位置保存模组、存档和游戏设置；选用同一位置的 Ruri 实例一次只能运行一个。")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 所有新实例独立
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText4`.
+        public static var allNewInstancesIsolated: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText4", table: "Core", fallback: "所有新实例独立")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 有模组加载器的实例独立
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText5`.
+        public static var loaderInstancesIsolated: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText5", table: "Core", fallback: "有模组加载器的实例独立")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 新实例使用共享目录
+        ///
+        /// Resource: `Core.coreGameRunDirectory.titleText6`.
+        public static var newInstancesShared: LocalizedMessage {
             .init(key: "coreGameRunDirectory.titleText6", table: "Core", fallback: "新实例使用共享目录")
         }
-        public static var validateBindingText1: LocalizedMessage {
+        /// 实例设置与本次操作的目录不一致，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreGameRunDirectory.validateBindingText1`.
+        public static var bindingMismatch: LocalizedMessage {
             .init(key: "coreGameRunDirectory.validateBindingText1", table: "Errors", fallback: "实例设置与本次操作的目录不一致，请刷新后重试。")
         }
-        public static var actualText1: LocalizedMessage {
+        /// 自定义运行目录与本次操作的路径不一致，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreGameRunDirectory.actualText1`.
+        public static var customPathMismatch: LocalizedMessage {
             .init(key: "coreGameRunDirectory.actualText1", table: "Errors", fallback: "自定义运行目录与本次操作的路径不一致，请刷新后重试。")
         }
         static let definitions: [String: MessageDefinition] = [

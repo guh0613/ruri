@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaRuntime {
-        public static var environmentText1: LocalizedMessage {
+        /// Java 检测超时，请检查所选程序是否为可用的 Java。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.environmentText1`.
+        public static var javaProbeTimedOut: LocalizedMessage {
             .init(key: "coreJavaRuntime.environmentText1", table: "Errors", fallback: "Java 检测超时，请检查所选程序是否为可用的 Java。")
         }
-        public static var executableText1: LocalizedMessage {
+        /// 请选择 java 可执行文件、JDK 包或 Java Home 文件夹。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.executableText1`.
+        public static var executableSelectionRequired: LocalizedMessage {
             .init(key: "coreJavaRuntime.executableText1", table: "Errors", fallback: "请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
         }
-        public static func inspectText1(_ value0: String) -> LocalizedMessage {
+        /// Java 不可执行：%1$@
+        ///
+        /// Resource: `Errors.coreJavaRuntime.inspectText1`.
+        public static func javaNotExecutable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.inspectText1", table: "Errors", fallback: "Java 不可执行：%1$@", arguments: [.text(value0)])
         }
-        public static func inspectText2(_ value0: String) -> LocalizedMessage {
+        /// 无法运行 Java：%1$@
+        ///
+        /// Resource: `Errors.coreJavaRuntime.inspectText2`.
+        public static func javaLaunchFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.inspectText2", table: "Errors", fallback: "无法运行 Java：%1$@", arguments: [.text(value0)])
         }
-        public static var archText1: LocalizedMessage {
+        /// 无法识别 Java 版本
+        ///
+        /// Resource: `Errors.coreJavaRuntime.archText1`.
+        public static var javaVersionUnreadable: LocalizedMessage {
             .init(key: "coreJavaRuntime.archText1", table: "Errors", fallback: "无法识别 Java 版本")
         }
-        public static func majorText1(_ value0: String) -> LocalizedMessage {
+        /// 无法识别 Java 主版本：%1$@
+        ///
+        /// Resource: `Errors.coreJavaRuntime.majorText1`.
+        public static func majorVersionUnreadable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.majorText1", table: "Errors", fallback: "无法识别 Java 主版本：%1$@", arguments: [.text(value0)])
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 指定的 Java 不可用，请在实例设置中重新选择。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.selectedText1`.
+        public static var selectedJavaUnavailable: LocalizedMessage {
             .init(key: "coreJavaRuntime.selectedText1", table: "Errors", fallback: "指定的 Java 不可用，请在实例设置中重新选择。")
         }
-        public static func selectedText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 此游戏需要 Java %1$@，当前指定 Java %2$@。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.selectedText2`.
+        public static func requiredJavaMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.selectedText2", table: "Errors", fallback: "此游戏需要 Java %1$@，当前指定 Java %2$@。", arguments: [.text(value0), .text(value1)])
         }
-        public static func architectureText1(_ value0: String) -> LocalizedMessage {
+        /// Java 架构与游戏原生库不匹配，需要 %1$@。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.architectureText1`.
+        public static func architectureMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.architectureText1", table: "Errors", fallback: "Java 架构与游戏原生库不匹配，需要 %1$@。", arguments: [.text(value0)])
         }
-        public static func orderText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。
+        ///
+        /// Resource: `Errors.coreJavaRuntime.orderText1`.
+        public static func javaVersionRequired(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreJavaRuntime.orderText1", table: "Errors", fallback: "需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。", arguments: [.text(value0), .text(value1)])
         }
         static let definitions: [String: MessageDefinition] = [

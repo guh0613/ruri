@@ -15,7 +15,7 @@ extension ContentManager {
         try checkDependencies(original: records, future: future, changedIDs: ids)
         let moves = try selected.map { file -> (String, String) in
             let source = relativePath(file), target = file.kind.folder + "/" + file.filename + (enabled ? "" : ".disabled")
-            guard !FileManager.default.fileExists(atPath: try contentURL(target).path) else { throw RuriError.message(Messages.CoreContentBatch.sourceText1(String(describing: target))) }
+            guard !FileManager.default.fileExists(atPath: try contentURL(target).path) else { throw RuriError.message(Messages.CoreContentBatch.batchDestinationExists(String(describing: target))) }
             return (source, target)
         }
         let affected = Array(Set(moves.flatMap { [$0.0, $0.1] })).sorted()
@@ -62,13 +62,13 @@ extension ContentManager {
 
     private func relativePath(_ file: LocalContentFile) -> String { file.kind.folder + "/" + file.filename + (file.enabled ? "" : ".disabled") }
     private func validateSelection(_ files: [LocalContentFile], records: [ManagedContent]) throws -> [LocalContentFile] {
-        guard Set(files.map(\.id)).count == files.count else { throw RuriError.message(Messages.CoreContentBatch.validateSelectionText1) }
+        guard Set(files.map(\.id)).count == files.count else { throw RuriError.message(Messages.CoreContentBatch.duplicateSelection) }
         for file in files {
             let path = relativePath(file), expected = try contentURL(path)
             let info = try expected.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
             guard expected.standardizedFileURL.resolvingSymlinksInPath() == file.url.standardizedFileURL.resolvingSymlinksInPath(), info.isRegularFile == true, Int64(info.fileSize ?? -1) == file.size,
                   records.first(where: { $0.relativePath == path }) == file.managed else {
-                throw RuriError.message(Messages.CoreContentBatch.infoText1(String(describing: file.filename)))
+                throw RuriError.message(Messages.CoreContentBatch.contentListChanged(file.filename))
             }
         }
         return files
@@ -87,7 +87,7 @@ extension ContentManager {
                 let dependency = key(record, project: project)
                 return !available.contains(dependency) && (changedIDs.contains(record.id) || changed.contains(dependency))
             }
-            guard missing.isEmpty else { throw RuriError.message(Messages.CoreContentBatch.dependencyText1(String(describing: record.title), String(describing: missing.joined(separator: "、")))) }
+            guard missing.isEmpty else { throw RuriError.message(Messages.CoreContentBatch.dependencySelectionRequired(record.title, String(describing: missing.joined(separator: "、")))) }
         }
     }
 
@@ -101,7 +101,7 @@ extension ContentManager {
                 let source = try contentURL(path)
                 if fm.fileExists(atPath: source.path) {
                     let attributes = try fm.attributesOfItem(atPath: source.path)
-                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentBatch.attributesText1(String(describing: path))) }
+                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentBatch.unsupportedContentFileType(path)) }
                     let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
                     try fm.createDirectory(at: backup.deletingLastPathComponent(), withIntermediateDirectories: true)
                     try fm.copyItem(at: source, to: backup); originals.append(path)
@@ -114,7 +114,7 @@ extension ContentManager {
             try action()
             try Data().write(to: transactionURL.appendingPathComponent("committed"), options: .atomic)
         } catch {
-            do { try recover() } catch { throw RuriError.message(Messages.CoreContentBatch.journalText1(String(describing: transactionURL.path), String(describing: error.localizedDescription))) }
+            do { try recover() } catch { throw RuriError.message(Messages.CoreContentBatch.contentRecoveryFailed(transactionURL.path, error.localizedDescription)) }
             throw error
         }
         try? fm.removeItem(at: transactionURL)

@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum CoreNetwork {
-        public static var statusText1: LocalizedMessage {
+        /// 服务
+        ///
+        /// Resource: `Core.coreNetwork.statusText1`.
+        public static var serviceName: LocalizedMessage {
             .init(key: "coreNetwork.statusText1", table: "Core", fallback: "服务")
         }
-        public static var urlText2: LocalizedMessage {
+        /// 未知来源
+        ///
+        /// Resource: `Core.coreNetwork.urlText2`.
+        public static var unknownSource: LocalizedMessage {
             .init(key: "coreNetwork.urlText2", table: "Core", fallback: "未知来源")
         }
-        public static func streamText1(_ value0: String) -> LocalizedMessage {
+        /// 文件校验失败：%1$@
+        ///
+        /// Resource: `Core.coreNetwork.streamText1`.
+        public static func downloadChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNetwork.streamText1", table: "Core", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static var lastErrorText1: LocalizedMessage {
+        /// 请求缺少地址
+        ///
+        /// Resource: `Errors.coreNetwork.lastErrorText1`.
+        public static var missingRequestURL: LocalizedMessage {
             .init(key: "coreNetwork.lastErrorText1", table: "Errors", fallback: "请求缺少地址")
         }
-        public static func statusText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 返回 HTTP %2$@。请检查网络后重试。
+        ///
+        /// Resource: `Errors.coreNetwork.statusText2`.
+        public static func httpError(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreNetwork.statusText2", table: "Errors", fallback: "%1$@ 返回 HTTP %2$@。请检查网络后重试。", arguments: [.text(value0), .text(value1)])
         }
-        public static func urlText1(_ value0: String) -> LocalizedMessage {
+        /// 安装器生成的文件缺失或损坏：%1$@。请修复此实例。
+        ///
+        /// Resource: `Errors.coreNetwork.urlText1`.
+        public static func installerFileMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNetwork.urlText1", table: "Errors", fallback: "安装器生成的文件缺失或损坏：%1$@。请修复此实例。", arguments: [.text(value0)])
         }
-        public static func urlText3(_ value0: String) -> LocalizedMessage {
+        /// 下载仅接受 HTTPS：%1$@
+        ///
+        /// Resource: `Errors.coreNetwork.urlText3`.
+        public static func httpsRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNetwork.urlText3", table: "Errors", fallback: "下载仅接受 HTTPS：%1$@", arguments: [.text(value0)])
         }
-        public static func existingText1(_ value0: String) -> LocalizedMessage {
+        /// 多个下载要求写入同一文件：%1$@
+        ///
+        /// Resource: `Errors.coreNetwork.existingText1`.
+        public static func duplicateDownloadDestination(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNetwork.existingText1", table: "Errors", fallback: "多个下载要求写入同一文件：%1$@", arguments: [.text(value0)])
         }
-        public static var urlText4: LocalizedMessage {
+        /// 无法保存已校验的下载文件
+        ///
+        /// Resource: `Errors.coreNetwork.urlText4`.
+        public static var verifiedDownloadSaveFailed: LocalizedMessage {
             .init(key: "coreNetwork.urlText4", table: "Errors", fallback: "无法保存已校验的下载文件")
         }
-        public static func streamText2(_ value0: String) -> LocalizedMessage {
+        /// 无法保存下载：%1$@
+        ///
+        /// Resource: `Errors.coreNetwork.streamText2`.
+        public static func downloadSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreNetwork.streamText2", table: "Errors", fallback: "无法保存下载：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,52 +3,100 @@ import Foundation
 
 extension Messages {
     public enum AppCustomRunDirectoryRelocationView {
-        public static var bodyText1: LocalizedMessage {
+        /// 找回原游戏目录
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText1`.
+        public static var recoverDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText1", table: "Interface", fallback: "找回原游戏目录")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 文件夹移动或磁盘位置改变后，更新实例引用。
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText2`.
+        public static var relocationHelp: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText2", table: "Interface", fallback: "文件夹移动或磁盘位置改变后，更新实例引用。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText3`.
+        public static var relocationInstructions: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText3", table: "Interface", fallback: "请选择原文件夹现在的位置。使用它的实例会一起更新；当前未使用、但记住此位置的实例也会更新。")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 原位置
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText4`.
+        public static var originalLocation: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText4", table: "Interface", fallback: "原位置")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 未登记自定义目录
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText5`.
+        public static var unregisteredDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText5", table: "Interface", fallback: "未登记自定义目录")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 尚未选择新位置
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText6`.
+        public static var newLocationNotSelected: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText6", table: "Interface", fallback: "尚未选择新位置")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 选择原文件夹…
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText7`.
+        public static var chooseOriginalFolder: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText7", table: "Interface", fallback: "选择原文件夹…")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 正在核对目录身份与运行状态…
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText8`.
+        public static var checkingDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.bodyText8", table: "Interface", fallback: "正在核对目录身份与运行状态…")
         }
-        public static func previewText1(_ value0: Int64) -> LocalizedMessage {
+        /// 将更新 %1$lld 个实例
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText1`.
+        public static func previewInstanceCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.previewText1", table: "Interface", fallback: "将更新 %1$lld 个实例", arguments: [.integer(value0)])
         }
-        public static var previewText2: LocalizedMessage {
+        /// 使用此目录
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText2`.
+        public static var useDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.previewText2", table: "Interface", fallback: "使用此目录")
         }
-        public static var previewText3: LocalizedMessage {
+        /// 记住此位置
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText3`.
+        public static var rememberLocation: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.previewText3", table: "Interface", fallback: "记住此位置")
         }
-        public static var previewText4: LocalizedMessage {
+        /// 确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText4`.
+        public static var locationHelp: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.previewText4", table: "Interface", fallback: "确认后，游戏文件、模组和存档仍保留在所选位置。运行历史留在各自的实例文件夹。")
         }
-        public static var issueText1: LocalizedMessage {
+        /// 重新检查
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText1`.
+        public static var recheck: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.issueText1", table: "Interface", fallback: "重新检查")
         }
-        public static var issueText2: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText2`.
+        public static var close: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.issueText2", table: "Interface", fallback: "关闭")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 更新目录位置
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText3`.
+        public static var updateDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.issueText3", table: "Interface", fallback: "更新目录位置")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。
+        ///
+        /// Resource: `Interface.appCustomRunDirectoryRelocationView.panelText1`.
+        public static var chooseOriginalDirectory: LocalizedMessage {
             .init(key: "appCustomRunDirectoryRelocationView.panelText1", table: "Interface", fallback: "请选择原自定义游戏文件夹现在的位置。只核对身份，不登记新的游戏文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [

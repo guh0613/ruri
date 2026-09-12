@@ -7,7 +7,7 @@ struct ActivityItem: Identifiable {
     let id = UUID()
     var titleMessage: LocalizedMessage
     var title: String { titleMessage.localized }
-    var progress = InstallProgress(Messages.AppActivityItem.progressText1)
+    var progress = InstallProgress(Messages.AppActivityItem.preparing)
     var status = Status.running
     var error: String?
     let startedAt = Date()

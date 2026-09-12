@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreGameNormalQuit {
-        public static var explanationText1: LocalizedMessage {
+        /// 系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。
+        ///
+        /// Resource: `Core.coreGameNormalQuit.explanationText1`.
+        public static var normalExitRequestPending: LocalizedMessage {
             .init(key: "coreGameNormalQuit.explanationText1", table: "Core", fallback: "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。")
         }
-        public static var explanationText2: LocalizedMessage {
+        /// 没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。
+        ///
+        /// Resource: `Core.coreGameNormalQuit.explanationText2`.
+        public static var normalExitRequestFailed: LocalizedMessage {
             .init(key: "coreGameNormalQuit.explanationText2", table: "Core", fallback: "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 游戏或监控状态已经变化，暂时无法请求正常退出。
+        ///
+        /// Resource: `Errors.coreGameNormalQuit.currentText1`.
+        public static var quitStateChanged: LocalizedMessage {
             .init(key: "coreGameNormalQuit.currentText1", table: "Errors", fallback: "游戏或监控状态已经变化，暂时无法请求正常退出。")
         }
-        public static var currentText2: LocalizedMessage {
+        /// 本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。
+        ///
+        /// Resource: `Errors.coreGameNormalQuit.currentText2`.
+        public static var appExitRequestDisabled: LocalizedMessage {
             .init(key: "coreGameNormalQuit.currentText2", table: "Errors", fallback: "本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。")
         }
         static let definitions: [String: MessageDefinition] = [

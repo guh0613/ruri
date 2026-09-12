@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreFileExtendedAttributes {
-        public static func failureText1(_ value0: String) -> LocalizedMessage {
+        /// 无法核对文件附加信息：%1$@
+        ///
+        /// Resource: `Core.coreFileExtendedAttributes.failureText1`.
+        public static func attributeVerificationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.failureText1", table: "Core", fallback: "无法核对文件附加信息：%1$@", arguments: [.text(value0)])
         }
-        public static var namesText1: LocalizedMessage {
+        /// 文件附加信息数量超过限制。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.namesText1`.
+        public static var tooManyAttributes: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.namesText1", table: "Errors", fallback: "文件附加信息数量超过限制。")
         }
-        public static func sizeText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 文件附加信息无法读取或超过大小限制：%1$@ · %2$@
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.sizeText1`.
+        public static func attributesUnreadableOrTooLarge(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.sizeText1", table: "Errors", fallback: "文件附加信息无法读取或超过大小限制：%1$@ · %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var sizeText2: LocalizedMessage {
+        /// 单个文件的附加信息超过大小限制。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.sizeText2`.
+        public static var singleAttributeTooLarge: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.sizeText2", table: "Errors", fallback: "单个文件的附加信息超过大小限制。")
         }
-        public static var countText1: LocalizedMessage {
+        /// 文件附加信息在校验期间改变，请重试。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.countText1`.
+        public static var attributesChangedDuringVerification: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.countText1", table: "Errors", fallback: "文件附加信息在校验期间改变，请重试。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 文件附加信息的校验记录无效。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.validateText1`.
+        public static var invalidAttributeDigest: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.validateText1", table: "Errors", fallback: "文件附加信息的校验记录无效。")
         }
-        public static var copyText1: LocalizedMessage {
+        /// 无法保留文件附加信息，原文件已保留。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.copyText1`.
+        public static var attributesPreservationFailed: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.copyText1", table: "Errors", fallback: "无法保留文件附加信息，原文件已保留。")
         }
-        public static var beforeText1: LocalizedMessage {
+        /// 实例元数据的附加信息在更新期间改变。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.beforeText1`.
+        public static var metadataAttributesChanged: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.beforeText1", table: "Errors", fallback: "实例元数据的附加信息在更新期间改变。")
         }
-        public static var beforeText2: LocalizedMessage {
+        /// 无法更新实例元数据。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.beforeText2`.
+        public static var metadataUpdateFailed: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.beforeText2", table: "Errors", fallback: "无法更新实例元数据。")
         }
-        public static var sizeText3: LocalizedMessage {
+        /// 无法读取文件附加信息列表。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.sizeText3`.
+        public static var attributeListReadFailed: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.sizeText3", table: "Errors", fallback: "无法读取文件附加信息列表。")
         }
-        public static var bufferText1: LocalizedMessage {
+        /// 文件附加信息列表在读取期间改变。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.bufferText1`.
+        public static var attributeListChangedDuringRead: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.bufferText1", table: "Errors", fallback: "文件附加信息列表在读取期间改变。")
         }
-        public static var nameText1: LocalizedMessage {
+        /// 文件附加信息名称无效。
+        ///
+        /// Resource: `Errors.coreFileExtendedAttributes.nameText1`.
+        public static var invalidAttributeName: LocalizedMessage {
             .init(key: "coreFileExtendedAttributes.nameText1", table: "Errors", fallback: "文件附加信息名称无效。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,109 +3,214 @@ import Foundation
 
 extension Messages {
     public enum AppHomeView {
-        public static var emptyStateText1: LocalizedMessage {
+        /// 还没有游戏实例
+        ///
+        /// Resource: `Interface.appHomeView.emptyStateText1`.
+        public static var noInstances: LocalizedMessage {
             .init(key: "appHomeView.emptyStateText1", table: "Interface", fallback: "还没有游戏实例")
         }
-        public static var emptyStateText2: LocalizedMessage {
+        /// 新建一个实例，或导入整合包开始游戏。
+        ///
+        /// Resource: `Interface.appHomeView.emptyStateText2`.
+        public static var emptyStateDescription: LocalizedMessage {
             .init(key: "appHomeView.emptyStateText2", table: "Interface", fallback: "新建一个实例，或导入整合包开始游戏。")
         }
-        public static var emptyStateText3: LocalizedMessage {
+        /// 新建实例
+        ///
+        /// Resource: `Interface.appHomeView.emptyStateText3`.
+        public static var createInstance: LocalizedMessage {
             .init(key: "appHomeView.emptyStateText3", table: "Interface", fallback: "新建实例")
         }
-        public static var emptyStateText4: LocalizedMessage {
+        /// 导入整合包…
+        ///
+        /// Resource: `Interface.appHomeView.emptyStateText4`.
+        public static var importPack: LocalizedMessage {
             .init(key: "appHomeView.emptyStateText4", table: "Interface", fallback: "导入整合包…")
         }
-        public static var featuredSectionText1: LocalizedMessage {
+        /// 继续游戏
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText1`.
+        public static var continuePlaying: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText1", table: "Interface", fallback: "继续游戏")
         }
-        public static var featuredSectionText2: LocalizedMessage {
+        /// 全部实例
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText2`.
+        public static var allInstances: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText2", table: "Interface", fallback: "全部实例")
         }
-        public static var featuredSectionText3: LocalizedMessage {
+        /// 更换图标或编辑实例设置
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText3`.
+        public static var editInstance: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText3", table: "Interface", fallback: "更换图标或编辑实例设置")
         }
-        public static var featuredSectionText4: LocalizedMessage {
+        /// 游玩时长
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText4`.
+        public static var playTime: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText4", table: "Interface", fallback: "游玩时长")
         }
-        public static var featuredSectionText5: LocalizedMessage {
+        /// 上次游玩
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText5`.
+        public static var lastPlayed: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText5", table: "Interface", fallback: "上次游玩")
         }
-        public static var featuredSectionText6: LocalizedMessage {
+        /// 尚未游玩
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText6`.
+        public static var neverPlayed: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText6", table: "Interface", fallback: "尚未游玩")
         }
-        public static var featuredSectionText7: LocalizedMessage {
+        /// 游戏版本
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText7`.
+        public static var gameVersion: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText7", table: "Interface", fallback: "游戏版本")
         }
-        public static var featuredSectionText8: LocalizedMessage {
+        /// 内存
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText8`.
+        public static var memory: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText8", table: "Interface", fallback: "内存")
         }
-        public static var featuredSectionText9: LocalizedMessage {
+        /// 还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText9`.
+        public static var noAccountNotice: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText9", table: "Interface", fallback: "还没有账号。启动前需要添加 Microsoft 账号、外置认证账号或离线账号。")
         }
-        public static var featuredSectionText10: LocalizedMessage {
+        /// 添加账号
+        ///
+        /// Resource: `Interface.appHomeView.featuredSectionText10`.
+        public static var addAccount: LocalizedMessage {
             .init(key: "appHomeView.featuredSectionText10", table: "Interface", fallback: "添加账号")
         }
-        public static var statusLineText1: LocalizedMessage {
+        /// 就绪
+        ///
+        /// Resource: `Interface.appHomeView.statusLineText1`.
+        public static var ready: LocalizedMessage {
             .init(key: "appHomeView.statusLineText1", table: "Interface", fallback: "就绪")
         }
-        public static var statusLineText2: LocalizedMessage {
+        /// 未完成安装
+        ///
+        /// Resource: `Interface.appHomeView.statusLineText2`.
+        public static var installationIncomplete: LocalizedMessage {
             .init(key: "appHomeView.statusLineText2", table: "Interface", fallback: "未完成安装")
         }
-        public static var runningSectionText1: LocalizedMessage {
+        /// 正在运行
+        ///
+        /// Resource: `Interface.appHomeView.runningSectionText1`.
+        public static var running: LocalizedMessage {
             .init(key: "appHomeView.runningSectionText1", table: "Interface", fallback: "正在运行")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 运行记录
+        ///
+        /// Resource: `Interface.appHomeView.instanceText1`.
+        public static var runHistory: LocalizedMessage {
             .init(key: "appHomeView.instanceText1", table: "Interface", fallback: "运行记录")
         }
-        public static var instanceText2: LocalizedMessage {
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.appHomeView.instanceText2`.
+        public static var returnToGame: LocalizedMessage {
             .init(key: "appHomeView.instanceText2", table: "Interface", fallback: "返回游戏")
         }
-        public static var activitySectionText1: LocalizedMessage {
+        /// 正在进行
+        ///
+        /// Resource: `Interface.appHomeView.activitySectionText1`.
+        public static var inProgress: LocalizedMessage {
             .init(key: "appHomeView.activitySectionText1", table: "Interface", fallback: "正在进行")
         }
-        public static var activitySectionText2: LocalizedMessage {
+        /// 全部任务
+        ///
+        /// Resource: `Interface.appHomeView.activitySectionText2`.
+        public static var allTasks: LocalizedMessage {
             .init(key: "appHomeView.activitySectionText2", table: "Interface", fallback: "全部任务")
         }
-        public static var recentSectionText1: LocalizedMessage {
+        /// 最近游玩
+        ///
+        /// Resource: `Interface.appHomeView.recentSectionText1`.
+        public static var recentlyPlayed: LocalizedMessage {
             .init(key: "appHomeView.recentSectionText1", table: "Interface", fallback: "最近游玩")
         }
-        public static var recentRowText1: LocalizedMessage {
+        /// 点按后在“继续游戏”中显示
+        ///
+        /// Resource: `Interface.appHomeView.recentRowText1`.
+        public static var setAsFeaturedHint: LocalizedMessage {
             .init(key: "appHomeView.recentRowText1", table: "Interface", fallback: "点按后在“继续游戏”中显示")
         }
-        public static var recentRowText2: LocalizedMessage {
+        /// 在“继续游戏”中显示
+        ///
+        /// Resource: `Interface.appHomeView.recentRowText2`.
+        public static var setAsFeatured: LocalizedMessage {
             .init(key: "appHomeView.recentRowText2", table: "Interface", fallback: "在“继续游戏”中显示")
         }
-        public static var recentRowText3: LocalizedMessage {
+        /// 实例设置
+        ///
+        /// Resource: `Interface.appHomeView.recentRowText3`.
+        public static var instanceSettings: LocalizedMessage {
             .init(key: "appHomeView.recentRowText3", table: "Interface", fallback: "实例设置")
         }
-        public static var recentRowText4: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appHomeView.recentRowText4`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appHomeView.recentRowText4", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var quickActionsText1: LocalizedMessage {
+        /// 快捷操作
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText1`.
+        public static var quickActions: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText1", table: "Interface", fallback: "快捷操作")
         }
-        public static var quickActionsText2: LocalizedMessage {
+        /// 选择游戏版本和加载器
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText2`.
+        public static var chooseVersionAndLoader: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText2", table: "Interface", fallback: "选择游戏版本和加载器")
         }
-        public static var quickActionsText3: LocalizedMessage {
+        /// 导入整合包
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText3`.
+        public static var importPackAction: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText3", table: "Interface", fallback: "导入整合包")
         }
-        public static var quickActionsText4: LocalizedMessage {
+        /// mrpack、CurseForge、HMCL 等格式
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText4`.
+        public static var supportedPackFormats: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText4", table: "Interface", fallback: "mrpack、CurseForge、HMCL 等格式")
         }
-        public static var quickActionsText5: LocalizedMessage {
+        /// 发现内容
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText5`.
+        public static var discoverContent: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText5", table: "Interface", fallback: "发现内容")
         }
-        public static var quickActionsText6: LocalizedMessage {
+        /// 浏览 Modrinth 与 CurseForge
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText6`.
+        public static var browseContentSources: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText6", table: "Interface", fallback: "浏览 Modrinth 与 CurseForge")
         }
-        public static var quickActionsText7: LocalizedMessage {
+        /// 启动游戏前需要一个账号
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText7`.
+        public static var accountRequired: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText7", table: "Interface", fallback: "启动游戏前需要一个账号")
         }
-        public static var quickActionsText8: LocalizedMessage {
+        /// Java 运行时
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText8`.
+        public static var javaRuntime: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText8", table: "Interface", fallback: "Java 运行时")
         }
-        public static var quickActionsText9: LocalizedMessage {
+        /// 检测本机 Java 或下载官方运行时
+        ///
+        /// Resource: `Interface.appHomeView.quickActionsText9`.
+        public static var detectOrDownloadJava: LocalizedMessage {
             .init(key: "appHomeView.quickActionsText9", table: "Interface", fallback: "检测本机 Java 或下载官方运行时")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -4,7 +4,7 @@ import RuriCore
 
 extension CLI {
     static func manageLaunchSettings(_ args: [String], paths: LauncherPaths) throws {
-        let usage = Messages.CLILaunchSettingsCommands.usageText1.localized
+        let usage = Messages.CLILaunchSettingsCommands.launchSettingsUsage.localized
         guard let scope = args.first, scope == "defaults" || UUID(uuidString: scope) != nil else { throw RuriError.message(usage) }
         let id = UUID(uuidString: scope)
         if args.count > 1 {
@@ -15,7 +15,7 @@ extension CLI {
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
                 let index = id.flatMap { id in state.instances.firstIndex { $0.id == id } }
-                if id != nil && index == nil { throw RuriError.message(Messages.CLILaunchSettingsCommands.indexText1) }
+                if id != nil && index == nil { throw RuriError.message(Messages.CLILaunchSettingsCommands.instanceMissing) }
                 let defaults = state.settings.defaultLaunchSettings
                 var overrides = index.map { state.instances[$0].effectiveLaunchOverrides } ?? .init(fixing: defaults)
                 if args[1] == "inherit" {
@@ -57,7 +57,7 @@ extension CLI {
                         case "commandTimeout":
                             guard let seconds = Int(value) else { throw RuriError.message(usage) }; commands.timeoutSeconds = seconds
                         default:
-                            guard let enabled = Bool(value) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.enabledText1) }; commands.enabled = enabled
+                            guard let enabled = Bool(value) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.commandsValueInvalid) }; commands.enabled = enabled
                         }
                         overrides.commands = commands
                     case .environment:
@@ -65,7 +65,7 @@ extension CLI {
                             let file = URL(fileURLWithPath: value)
                             let handle = try FileHandle(forReadingFrom: file); defer { try? handle.close() }
                             let data = try handle.read(upToCount: 65537) ?? Data()
-                            guard data.count <= 65536, let content = String(data: data, encoding: .utf8) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.contentText1) }
+                            guard data.count <= 65536, let content = String(data: data, encoding: .utf8) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.environmentFileInvalid) }
                             overrides.environment = content
                         } else { overrides.environment = value }
                     }
@@ -78,7 +78,7 @@ extension CLI {
         let state = try StateStore.load(paths)
         let overrides: InstanceLaunchOverrides
         if let id {
-            guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.indexText1) }
+            guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.instanceMissing) }
             overrides = instance.effectiveLaunchOverrides
         } else { overrides = .init(fixing: state.settings.defaultLaunchSettings) }
         let values = overrides.resolve(defaults: state.settings.defaultLaunchSettings)

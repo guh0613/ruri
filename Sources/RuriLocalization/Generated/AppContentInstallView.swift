@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum AppContentInstallView {
-        public static var bodyText1: LocalizedMessage {
+        /// 安装到实例
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText1`.
+        public static var installToInstance: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText1", table: "Interface", fallback: "安装到实例")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 选择一个实例
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText2`.
+        public static var chooseInstance: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText2", table: "Interface", fallback: "选择一个实例")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 查找兼容版本…
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText3`.
+        public static var findCompatibleVersions: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText3", table: "Interface", fallback: "查找兼容版本…")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 内容版本
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText4`.
+        public static var contentVersion: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText4", table: "Interface", fallback: "内容版本")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 没有兼容的版本。
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText5`.
+        public static var noCompatibleVersions: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText5", table: "Interface", fallback: "没有兼容的版本。")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 请先选择已安装的游戏实例。
+        ///
+        /// Resource: `Interface.appContentInstallView.bodyText6`.
+        public static var chooseInstalledInstance: LocalizedMessage {
             .init(key: "appContentInstallView.bodyText6", table: "Interface", fallback: "请先选择已安装的游戏实例。")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。
+        ///
+        /// Resource: `Interface.appContentInstallView.errorText1`.
+        public static var shaderHelp: LocalizedMessage {
             .init(key: "appContentInstallView.errorText1", table: "Interface", fallback: "光影文件会放入 shaderpacks。请确保实例已经安装 Iris 或其他兼容的光影加载模组。")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 会自动解析并安装此版本的必需依赖。
+        ///
+        /// Resource: `Interface.appContentInstallView.errorText2`.
+        public static var dependencyHelp: LocalizedMessage {
             .init(key: "appContentInstallView.errorText2", table: "Interface", fallback: "会自动解析并安装此版本的必需依赖。")
         }
-        public static var pageText1: LocalizedMessage {
+        /// 在 Modrinth 查看
+        ///
+        /// Resource: `Interface.appContentInstallView.pageText1`.
+        public static var viewOnModrinth: LocalizedMessage {
             .init(key: "appContentInstallView.pageText1", table: "Interface", fallback: "在 Modrinth 查看")
         }
-        public static var pageText2: LocalizedMessage {
+        /// 查看整合包
+        ///
+        /// Resource: `Interface.appContentInstallView.pageText2`.
+        public static var viewModpack: LocalizedMessage {
             .init(key: "appContentInstallView.pageText2", table: "Interface", fallback: "查看整合包")
         }
-        public static var pageText3: LocalizedMessage {
+        /// 安装
+        ///
+        /// Resource: `Interface.appContentInstallView.pageText3`.
+        public static var installContent: LocalizedMessage {
             .init(key: "appContentInstallView.pageText3", table: "Interface", fallback: "安装")
         }
         static let definitions: [String: MessageDefinition] = [

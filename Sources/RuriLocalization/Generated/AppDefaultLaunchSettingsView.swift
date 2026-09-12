@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppDefaultLaunchSettingsView {
-        public static var bodyText1: LocalizedMessage {
+        /// 默认启动设置
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.bodyText1`.
+        public static var defaultLaunchSettings: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.bodyText1", table: "Interface", fallback: "默认启动设置")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 供选择“跟随默认”的实例使用
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.bodyText2`.
+        public static var followsDefaultHelp: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.bodyText2", table: "Interface", fallback: "供选择“跟随默认”的实例使用")
         }
-        public static var issueText1: LocalizedMessage {
+        /// 有未保存的更改
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.issueText1`.
+        public static var unsavedChanges: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.issueText1", table: "Interface", fallback: "有未保存的更改")
         }
-        public static var issueText2: LocalizedMessage {
+        /// 已运行的游戏保持当前设置
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.issueText2`.
+        public static var runningGameSettings: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.issueText2", table: "Interface", fallback: "已运行的游戏保持当前设置")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 保存默认设置
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.issueText3`.
+        public static var saveDefaultSettings: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.issueText3", table: "Interface", fallback: "保存默认设置")
         }
-        public static var failureText1: LocalizedMessage {
+        /// 无法保存默认设置。
+        ///
+        /// Resource: `Interface.appDefaultLaunchSettingsView.failureText1`.
+        public static var saveDefaultFailure: LocalizedMessage {
             .init(key: "appDefaultLaunchSettingsView.failureText1", table: "Interface", fallback: "无法保存默认设置。")
         }
         static let definitions: [String: MessageDefinition] = [

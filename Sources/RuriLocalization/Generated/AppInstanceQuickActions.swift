@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceQuickActions {
-        public static var bodyText1: LocalizedMessage {
+        /// 实例设置
+        ///
+        /// Resource: `Interface.appInstanceQuickActions.bodyText1`.
+        public static var instanceSettings: LocalizedMessage {
             .init(key: "appInstanceQuickActions.bodyText1", table: "Interface", fallback: "实例设置")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 管理模组与资源包
+        ///
+        /// Resource: `Interface.appInstanceQuickActions.bodyText2`.
+        public static var manageModsAndResourcePacks: LocalizedMessage {
             .init(key: "appInstanceQuickActions.bodyText2", table: "Interface", fallback: "管理模组与资源包")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 管理存档与备份
+        ///
+        /// Resource: `Interface.appInstanceQuickActions.bodyText3`.
+        public static var manageWorldsAndBackups: LocalizedMessage {
             .init(key: "appInstanceQuickActions.bodyText3", table: "Interface", fallback: "管理存档与备份")
         }
         static let definitions: [String: MessageDefinition] = [

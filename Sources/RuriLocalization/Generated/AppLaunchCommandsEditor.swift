@@ -3,49 +3,99 @@ import Foundation
 
 extension Messages {
     public enum AppLaunchCommandsEditor {
-        public static var bodyText1: LocalizedMessage {
+        /// 运行自定义启动命令
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText1`.
+        public static var customLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText1", table: "Interface", fallback: "运行自定义启动命令")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 启动前命令
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText2`.
+        public static var beforeLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText2", table: "Interface", fallback: "启动前命令")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 在这里输入 shell 命令；留空跳过
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText3`.
+        public static var beforeLaunchPlaceholder: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText3", table: "Interface", fallback: "在这里输入 shell 命令；留空跳过")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 游戏准备完成后运行。命令成功结束才会启动游戏，失败或超时会停止本次启动。
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText4`.
+        public static var beforeLaunchHelp: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText4", table: "Interface", fallback: "游戏准备完成后运行。命令成功结束才会启动游戏，失败或超时会停止本次启动。")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 退出后命令
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText5`.
+        public static var afterLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText5", table: "Interface", fallback: "退出后命令")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 游戏自行退出后运行，包括崩溃退出。手动终止游戏时跳过；命令结果单独显示在日志中。
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText6`.
+        public static var afterLaunchHelp: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText6", table: "Interface", fallback: "游戏自行退出后运行，包括崩溃退出。手动终止游戏时跳过；命令结果单独显示在日志中。")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 每条命令最长运行时间
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText7`.
+        public static var commandTimeout: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText7", table: "Interface", fallback: "每条命令最长运行时间")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 秒
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText8`.
+        public static var seconds: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText8", table: "Interface", fallback: "秒")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 包装命令
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText9`.
+        public static var wrapperCommand: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText9", table: "Interface", fallback: "包装命令")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 可执行文件与参数；留空直接运行 Java
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText10`.
+        public static var wrapperPlaceholder: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText10", table: "Interface", fallback: "可执行文件与参数；留空直接运行 Java")
         }
-        public static var bodyText11: LocalizedMessage {
+        /// Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec "$@" 转交启动。
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText11`.
+        public static var wrapperHelp: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText11", table: "Interface", fallback: "Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec \"$@\" 转交启动。")
         }
-        public static var bodyText12: LocalizedMessage {
+        /// 可用变量与填写示例
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText12`.
+        public static var variablesAndExamples: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText12", table: "Interface", fallback: "可用变量与填写示例")
         }
-        public static var bodyText13: LocalizedMessage {
+        /// 前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText13`.
+        public static var shellExecutionHelp: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText13", table: "Interface", fallback: "前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。")
         }
-        public static var bodyText14: LocalizedMessage {
+        /// RURI_GAME_DIRECTORY：游戏运行目录
+        /// RURI_INSTANCE_DIRECTORY：实例配置目录
+        /// RURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识
+        /// RURI_GAME_VERSION：游戏版本
+        /// RURI_JAVA：Java 可执行文件
+        /// RURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText14`.
+        public static var availableVariables: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText14", table: "Interface", fallback: "RURI_GAME_DIRECTORY：游戏运行目录\nRURI_INSTANCE_DIRECTORY：实例配置目录\nRURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识\nRURI_GAME_VERSION：游戏版本\nRURI_JAVA：Java 可执行文件\nRURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用")
         }
-        public static var bodyText15: LocalizedMessage {
+        /// 包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。
+        ///
+        /// Resource: `Interface.appLaunchCommandsEditor.bodyText15`.
+        public static var wrapperPlaceholderHelp: LocalizedMessage {
             .init(key: "appLaunchCommandsEditor.bodyText15", table: "Interface", fallback: "包装命令可用 ${RURI_GAME_DIRECTORY} 等同名占位符；含空格的参数加引号。只运行自己了解的命令。")
         }
         static let definitions: [String: MessageDefinition] = [

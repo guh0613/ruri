@@ -7,20 +7,20 @@ enum RunDirectoryFileCopy {
     /// fall back to bounded chunks so cancellation can interrupt a large file.
     static func file(_ source: URL, to target: URL, preferClone: Bool = true, stabilizeIdentity: Bool = false, created: () throws -> Void = {}, validate: () throws -> Void = {}, progress: (Int64) -> Void) throws {
         let inputFD = open(source.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard inputFD >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.inputFDText1(String(describing: source.lastPathComponent))) }
+        guard inputFD >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.inputFileReadFailed(source.lastPathComponent)) }
         let input = FileHandle(fileDescriptor: inputFD, closeOnDealloc: true); defer { try? input.close() }
         var info = stat()
-        guard fstat(inputFD, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.infoText1) }
+        guard fstat(inputFD, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.sourceNotRegularFile) }
         try Task.checkCancellation()
         if preferClone, fclonefileat(inputFD, AT_FDCWD, target.path, UInt32(CLONE_NOOWNERCOPY | CLONE_ACL)) == 0 { progress(info.st_size); return }
         let outputFD = open(target.path, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
-        guard outputFD >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.outputFDText1(String(describing: target.lastPathComponent))) }
+        guard outputFD >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.outputFileCreateFailed(target.lastPathComponent)) }
         let output = FileHandle(fileDescriptor: outputFD, closeOnDealloc: true); defer { try? output.close() }
         // ExFAT replaces the temporary inode of an empty file when allocating
         // its first cluster. Reserve that cluster before journaling ownership.
         // The one-byte zero placeholder is overwritten by the normal copy.
         if stabilizeIdentity && info.st_size > 0 {
-            guard ftruncate(outputFD, 1) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.outputText1) }
+            guard ftruncate(outputFD, 1) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.publishSpaceAllocationFailed) }
             try output.synchronize()
         }
         try created()
@@ -29,7 +29,7 @@ enum RunDirectoryFileCopy {
             try Task.checkCancellation()
             try validate()
             let bytes = try input.read(upToCount: Int(min(1_048_576, info.st_size - copied))) ?? Data()
-            guard !bytes.isEmpty else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.bytesText1) }
+            guard !bytes.isEmpty else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.sourceLengthChanged) }
             try output.write(contentsOf: bytes); copied += Int64(bytes.count); progress(Int64(bytes.count))
         }
         try output.synchronize()
@@ -61,7 +61,7 @@ enum RunDirectoryFileCopy {
         }
     }
     static func moveWithoutReplacing(_ source: URL, to target: URL) throws {
-        guard renamex_np(source.path, target.path, UInt32(RENAME_EXCL)) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.moveWithoutReplacingText1(String(describing: target.lastPathComponent))) }
+        guard renamex_np(source.path, target.path, UInt32(RENAME_EXCL)) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.copyProjectMoveFailed(target.lastPathComponent)) }
     }
 
     /// Some removable filesystems (including macOS ExFAT) do not implement
@@ -69,7 +69,7 @@ enum RunDirectoryFileCopy {
     /// then copy into it while retaining the complete staged original.
     static func publish(_ source: URL, to target: URL, directory: Bool, excluding: Set<String> = [], ignoringTransientFiles: Bool = true, created: (RunDirectoryCopyJournal.Identity) throws -> Void, validate: () throws -> Void, progress: (Int64) -> Void) throws {
         if renamex_np(source.path, target.path, UInt32(RENAME_EXCL)) == 0 { return }
-        guard errno == ENOTSUP else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.publishText1(String(describing: target.lastPathComponent))) }
+        guard errno == ENOTSUP else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.copyProjectPublishFailed(target.lastPathComponent)) }
         try copyForPublication(source, to: target, directory: directory, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles, created: created, validate: validate, progress: progress)
     }
 
@@ -81,11 +81,11 @@ enum RunDirectoryFileCopy {
         }
         func check() throws {
             try validate()
-            guard identity?.matches(target) == true else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.checkText1) }
+            guard identity?.matches(target) == true else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.destinationIdentityChanged) }
         }
         try validate(); try Task.checkCancellation()
         if directory {
-            guard mkdir(target.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.checkText2(String(describing: target.lastPathComponent))) }
+            guard mkdir(target.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.publishDirectoryCreateFailed(target.lastPathComponent)) }
             try record()
             try entries(FileTree.entries(in: source, excluding: excluding, ignoringTransientFiles: ignoringTransientFiles), to: target, validate: check) { amount, _ in progress(amount) }
             try check()
@@ -104,7 +104,7 @@ enum RunDirectoryFileCopy {
         let parent = try LauncherPaths.safePath("returned", within: workspace)
         try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
         let unique = parent.appendingPathComponent(UUID().uuidString)
-        guard mkdir(unique.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.uniqueText1) }
-        guard rename(source.path, unique.appendingPathComponent(source.lastPathComponent).path) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.uniqueText2) }
+        guard mkdir(unique.path, S_IRWXU) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.retainedCopyDirectoryCreateFailed) }
+        guard rename(source.path, unique.appendingPathComponent(source.lastPathComponent).path) == 0 else { throw RuriError.message(Messages.CoreRunDirectoryFileCopy.publishedCopyRecoveryFailed) }
     }
 }

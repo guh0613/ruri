@@ -5,7 +5,7 @@ import Darwin
 enum MinecraftInstallationFiles {
     static func requireResource(_ file: URL, sha1: String, size: Int64) throws {
         guard DownloadManager.valid(file, item: .init(url: nil, destination: file, sha1: sha1, size: size)) else {
-            throw RuriError.message(Messages.CoreMinecraftInstallationFiles.requireResourceText1(String(describing: file.path)))
+            throw RuriError.message(Messages.CoreMinecraftInstallationFiles.installationContentsMismatch(file.path))
         }
     }
     static func copyResource(_ resource: MinecraftInstallationCopy.Resource, root: URL, validate: @Sendable () throws -> Void, progress: @Sendable (Int64) -> Void) async throws {

@@ -14,24 +14,24 @@ public enum CurseForgeKeyStore {
         var result: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
         guard status == errSecSuccess, let data = result as? Data, let key = String(data: data, encoding: .utf8), !key.isEmpty else {
-            throw RuriError.message(status == errSecItemNotFound ? Messages.CoreCurseForge.keyText1 : Messages.CoreCurseForge.keyText2(String(describing: status)))
+            throw RuriError.message(status == errSecItemNotFound ? Messages.CoreCurseForge.apiKeyMissing : Messages.CoreCurseForge.apiKeyReadFailed(String(describing: status)))
         }
         return key
     }
     public static func save(_ input: String) throws {
         let key = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !key.isEmpty, !key.contains("\n"), !key.contains("\r") else { throw RuriError.message(Messages.CoreCurseForge.keyText3) }
+        guard !key.isEmpty, !key.contains("\n"), !key.contains("\r") else { throw RuriError.message(Messages.CoreCurseForge.invalidApiKey) }
         let value = [kSecValueData as String: Data(key.utf8)]
         let status = SecItemUpdate(query as CFDictionary, value as CFDictionary)
         if status == errSecItemNotFound {
             var add = query.merging(value) { _, new in new }; add[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             let added = SecItemAdd(add as CFDictionary, nil)
-            guard added == errSecSuccess else { throw RuriError.message(Messages.CoreCurseForge.addedText1(String(describing: added))) }
-        } else if status != errSecSuccess { throw RuriError.message(Messages.CoreCurseForge.addedText1(String(describing: status))) }
+            guard added == errSecSuccess else { throw RuriError.message(Messages.CoreCurseForge.apiKeySaveFailed(String(describing: added))) }
+        } else if status != errSecSuccess { throw RuriError.message(Messages.CoreCurseForge.apiKeySaveFailed(String(describing: status))) }
     }
     public static func remove() throws {
         let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else { throw RuriError.message(Messages.CoreCurseForge.statusText1(String(describing: status))) }
+        guard status == errSecSuccess || status == errSecItemNotFound else { throw RuriError.message(Messages.CoreCurseForge.apiKeyRemoveFailed(String(describing: status))) }
     }
 }
 
@@ -81,8 +81,8 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
         return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength)
     }
     func validateDownloadMetadata() throws {
-        guard id > 0, modId > 0, fileLength >= 0, isAvailable != false, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.validateDownloadMetadataText1(String(describing: fileName))) }
-        guard !fileName.isEmpty, !fileName.contains("/"), !fileName.contains("\\"), !fileName.contains("\0") else { throw RuriError.message(Messages.CoreCurseForge.validateDownloadMetadataText2) }
+        guard id > 0, modId > 0, fileLength >= 0, isAvailable != false, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.invalidDownloadMetadata(fileName)) }
+        guard !fileName.isEmpty, !fileName.contains("/"), !fileName.contains("\\"), !fileName.contains("\0") else { throw RuriError.message(Messages.CoreCurseForge.invalidFileName) }
     }
     public func supports(_ instance: GameInstance, kind: ContentKind) -> Bool {
         guard gameVersions.contains(instance.gameVersion) else { return false }
@@ -157,7 +157,7 @@ public actor CurseForgeService {
         defer { if scoped { source.stopAccessingSecurityScopedResource() } }
         let info = try source.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
         guard info.isRegularFile == true, info.isSymbolicLink != true,
-              DownloadManager.valid(source, item: try file.downloadItem(to: source, permittedURL: nil)) else { throw RuriError.message(Messages.CoreCurseForge.infoText1(String(describing: file.displayName))) }
+              DownloadManager.valid(source, item: try file.downloadItem(to: source, permittedURL: nil)) else { throw RuriError.message(Messages.CoreCurseForge.fileMismatch(String(describing: file.displayName))) }
         let cache = try LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache)
         if source.standardizedFileURL == cache.standardizedFileURL { return cache }
         try FileManager.default.createDirectory(at: cache.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -165,13 +165,13 @@ public actor CurseForgeService {
         defer { try? FileManager.default.removeItem(at: temporary) }
         try FileManager.default.copyItem(at: source, to: temporary)
         try Task.checkCancellation()
-        guard DownloadManager.valid(temporary, item: try file.downloadItem(to: temporary, permittedURL: nil)) else { throw RuriError.message(Messages.CoreCurseForge.temporaryText1) }
-        guard rename(temporary.path, cache.path) == 0 else { throw RuriError.message(Messages.CoreCurseForge.temporaryText2) }
+        guard DownloadManager.valid(temporary, item: try file.downloadItem(to: temporary, permittedURL: nil)) else { throw RuriError.message(Messages.CoreCurseForge.packDownloadChanged) }
+        guard rename(temporary.path, cache.path) == 0 else { throw RuriError.message(Messages.CoreCurseForge.cacheFileFailed) }
         return cache
     }
     private struct Response<Value: Decodable & Sendable>: Decodable, Sendable { let data: Value }
     private func request<Value: Decodable & Sendable>(_ type: Value.Type, route: CurseForgeEndpoints.Route, query: [URLQueryItem] = [], body: Data? = nil) async throws -> Value {
-        guard !apiKey.isEmpty else { throw RuriError.message(Messages.CoreCurseForge.requestText1) }
+        guard !apiKey.isEmpty else { throw RuriError.message(Messages.CoreCurseForge.apiKeyRequired) }
         var request = URLRequest(url: try CurseForgeEndpoints.request(route, query: query)); request.timeoutInterval = 30
         request.setValue(apiKey, forHTTPHeaderField: "x-api-key"); request.setValue("application/json", forHTTPHeaderField: "Accept")
         if let body { request.httpMethod = "POST"; request.httpBody = body; request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
@@ -179,35 +179,35 @@ public actor CurseForgeService {
     }
     public func search(_ query: String, type: String, offset: Int = 0) async throws -> CurseForgePage<CurseForgeProject> {
         let classes = ["mod": 6, "modpack": 4471, "resourcepack": 12, "shader": 6552]
-        guard let category = classes[type] else { throw RuriError.message(Messages.CoreCurseForge.categoryText1) }
+        guard let category = classes[type] else { throw RuriError.message(Messages.CoreCurseForge.unsupportedContentType) }
         return try await request(CurseForgePage<CurseForgeProject>.self, route: .search, query: [
             .init(name: "gameId", value: "432"), .init(name: "classId", value: String(category)), .init(name: "searchFilter", value: query),
             .init(name: "pageSize", value: "20"), .init(name: "index", value: String(max(0, offset))), .init(name: "sortField", value: "6"), .init(name: "sortOrder", value: "desc")])
     }
     public func project(_ id: Int) async throws -> CurseForgeProject {
-        guard id > 0 else { throw RuriError.message(Messages.CoreCurseForge.projectText1) }
+        guard id > 0 else { throw RuriError.message(Messages.CoreCurseForge.invalidProjectID) }
         let result = try await request(Response<CurseForgeProject>.self, route: .project(id)).data
-        guard result.id == id, result.gameId == 432 else { throw RuriError.message(Messages.CoreCurseForge.resultText1) }
+        guard result.id == id, result.gameId == 432 else { throw RuriError.message(Messages.CoreCurseForge.projectMismatch) }
         return result
     }
     public func file(project id: Int, file fileID: Int) async throws -> CurseForgeFile {
-        guard id > 0, fileID > 0 else { throw RuriError.message(Messages.CoreCurseForge.fileText1) }
+        guard id > 0, fileID > 0 else { throw RuriError.message(Messages.CoreCurseForge.invalidFileID) }
         let result = try await request(Response<CurseForgeFile>.self, route: .file(project: id, file: fileID)).data
-        guard result.id == fileID, result.modId == id else { throw RuriError.message(Messages.CoreCurseForge.resultText2) }
+        guard result.id == fileID, result.modId == id else { throw RuriError.message(Messages.CoreCurseForge.fileMismatchRequest) }
         return result
     }
     public func files(project id: Int, game: String? = nil, loader: LoaderKind? = nil, offset: Int = 0) async throws -> CurseForgePage<CurseForgeFile> {
-        guard id > 0 else { throw RuriError.message(Messages.CoreCurseForge.projectText1) }
+        guard id > 0 else { throw RuriError.message(Messages.CoreCurseForge.invalidProjectID) }
         var query: [URLQueryItem] = [.init(name: "pageSize", value: "50"), .init(name: "index", value: String(max(0, offset)))]
         if let game { query.append(.init(name: "gameVersion", value: game)) }
         let loaders: [LoaderKind: Int] = [.forge: 1, .liteloader: 3, .fabric: 4, .legacyfabric: 4, .quilt: 5, .neoforge: 6]
         if let loader, let value = loaders[loader] { query.append(.init(name: "modLoaderType", value: String(value))) }
         let result = try await request(CurseForgePage<CurseForgeFile>.self, route: .projectFiles(id), query: query)
-        guard result.data.allSatisfy({ $0.modId == id }) else { throw RuriError.message(Messages.CoreCurseForge.resultText3) }
+        guard result.data.allSatisfy({ $0.modId == id }) else { throw RuriError.message(Messages.CoreCurseForge.versionListMismatch) }
         return result
     }
     public func resolve(_ references: [CurseForgeReference]) async throws -> [PlannedCurseFile] {
-        guard references.count <= 5000, references.allSatisfy({ $0.projectID > 0 && $0.fileID > 0 }) else { throw RuriError.message(Messages.CoreCurseForge.resolveText1) }
+        guard references.count <= 5000, references.allSatisfy({ $0.projectID > 0 && $0.fileID > 0 }) else { throw RuriError.message(Messages.CoreCurseForge.invalidPackFiles) }
         var files: [Int: CurseForgeFile] = [:]; var projects: [Int: CurseForgeProject] = [:]
         let fileIDs = Array(Set(references.map(\.fileID))).sorted(); let projectIDs = Array(Set(references.map(\.projectID))).sorted()
         for start in stride(from: 0, to: fileIDs.count, by: 50) {
@@ -222,7 +222,7 @@ public actor CurseForgeService {
         }
         return try references.map { ref in
             guard let file = files[ref.fileID], file.modId == ref.projectID, let project = projects[ref.projectID], project.gameId == 432,
-                  let raw = project.contentType, let kind = ContentKind(rawValue: raw) else { throw RuriError.message(Messages.CoreCurseForge.kindText1(String(describing: ref.projectID), String(describing: ref.fileID))) }
+                  let raw = project.contentType, let kind = ContentKind(rawValue: raw) else { throw RuriError.message(Messages.CoreCurseForge.packFileMissing(String(describing: ref.projectID), String(describing: ref.fileID))) }
             try file.validateDownloadMetadata()
             return PlannedCurseFile(project: project, file: file, kind: kind)
         }
@@ -235,10 +235,10 @@ public actor CurseForgeService {
         let installed = try await ContentManager(paths: paths, instanceID: instance.id).records()
         while !queue.isEmpty {
             try Task.checkCancellation(); let file = queue.removeFirst()
-            if let prior = seen[file.modId] { guard prior == file.id else { throw RuriError.message(Messages.CoreCurseForge.priorText1) }; continue }
-            seen[file.modId] = file.id; guard seen.count <= 200 else { throw RuriError.message(Messages.CoreCurseForge.priorText2) }
+            if let prior = seen[file.modId] { guard prior == file.id else { throw RuriError.message(Messages.CoreCurseForge.requiredDependencyVersionConflict) }; continue }
+            seen[file.modId] = file.id; guard seen.count <= 200 else { throw RuriError.message(Messages.CoreCurseForge.tooManyRequiredDependencies) }
             let project = try await project(file.modId)
-            guard let kind = project.contentType.flatMap(ContentKind.init(rawValue:)), file.supports(instance, kind: kind) else { throw RuriError.message(Messages.CoreCurseForge.kindText2(String(describing: file.displayName))) }
+            guard let kind = project.contentType.flatMap(ContentKind.init(rawValue:)), file.supports(instance, kind: kind) else { throw RuriError.message(Messages.CoreCurseForge.incompatibleGameOrLoader(String(describing: file.displayName))) }
             _ = try file.downloadItem(to: paths.cache.appendingPathComponent("validation"), permittedURL: nil)
             resolved.append(PlannedCurseFile(project: project, file: file, kind: kind))
             if kind == .mod {
@@ -246,17 +246,17 @@ public actor CurseForgeService {
                     if seen[dependency.modId] != nil { continue }
                     if let selected = roots.first(where: { $0.modId == dependency.modId }) { queue.append(selected); continue }
                     let options = try await files(project: dependency.modId, game: instance.gameVersion, loader: instance.loader).data.filter { $0.supports(instance, kind: .mod) && $0.isAvailable != false }
-                    guard let match = options.first(where: { $0.releaseType == 1 }) ?? options.first else { throw RuriError.message(Messages.CoreCurseForge.matchText1(String(describing: dependency.modId))) }
+                    guard let match = options.first(where: { $0.releaseType == 1 }) ?? options.first else { throw RuriError.message(Messages.CoreCurseForge.missingRequiredDependency(String(describing: dependency.modId))) }
                     queue.append(match)
                 }
                 for dependency in file.dependencies where dependency.relationType == 5 {
-                    guard !installed.contains(where: { $0.provider == "curseforge" && $0.projectID == String(dependency.modId) && $0.enabled }), !seen.keys.contains(dependency.modId) else { throw RuriError.message(Messages.CoreCurseForge.matchText2(String(describing: project.name), String(describing: dependency.modId))) }
+                    guard !installed.contains(where: { $0.provider == "curseforge" && $0.projectID == String(dependency.modId) && $0.enabled }), !seen.keys.contains(dependency.modId) else { throw RuriError.message(Messages.CoreCurseForge.projectDependencyMismatch(project.name, String(describing: dependency.modId))) }
                 }
             }
         }
         let ids = Set(resolved.map { $0.project.id })
-        guard !resolved.contains(where: { $0.file.dependencies.contains(where: { $0.relationType == 5 && ids.contains($0.modId) }) }) else { throw RuriError.message(Messages.CoreCurseForge.idsText1) }
-        return CurseForgeContentPlan(instance: instance, title: roots.count == 1 ? (resolved.first?.project.name ?? roots[0].displayName) : Messages.CoreCurseForge.idsText2.localized, files: resolved)
+        guard !resolved.contains(where: { $0.file.dependencies.contains(where: { $0.relationType == 5 && ids.contains($0.modId) }) }) else { throw RuriError.message(Messages.CoreCurseForge.incompatibleDependencies) }
+        return CurseForgeContentPlan(instance: instance, title: roots.count == 1 ? (resolved.first?.project.name ?? roots[0].displayName) : Messages.CoreCurseForge.bulkContentUpdate.localized, files: resolved)
     }
     public func install(_ plan: CurseForgeContentPlan, paths: LauncherPaths, downloader: DownloadManager, manualFiles: [Int: URL] = [:], progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let files = try await materialize(plan.files, paths: paths, downloader: downloader, manualFiles: manualFiles, progress: progress)
@@ -265,18 +265,18 @@ public actor CurseForgeService {
     }
     public func materialize(_ items: [PlannedCurseFile], paths: LauncherPaths, downloader: DownloadManager, manualFiles: [Int: URL] = [:], progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> [ContentInstallation] {
         for item in items where item.requiresManualDownload {
-            guard let file = manualFiles[item.id] else { throw RuriError.message(Messages.CoreCurseForge.fileText2(String(describing: item.file.fileName))) }
+            guard let file = manualFiles[item.id] else { throw RuriError.message(Messages.CoreCurseForge.manualDownloadRequired(item.file.fileName)) }
             let check = try item.file.downloadItem(to: file, permittedURL: nil)
-            guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.checkText1(String(describing: item.file.displayName))) }
+            guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.checksumMismatch(String(describing: item.file.displayName))) }
         }
         var installations: [ContentInstallation] = []
         for item in items {
             try Task.checkCancellation()
             let cache = try LauncherPaths.safePath("curseforge/\(item.id)/\(item.file.fileName)", within: paths.cache)
-            await progress(InstallProgress(Messages.CoreCurseForge.cacheText1(String(describing: item.project.name)), completed: installations.count, total: items.count))
+            await progress(InstallProgress(Messages.CoreCurseForge.downloadFile(item.project.name), completed: installations.count, total: items.count))
             if let file = manualFiles[item.id] {
                 let check = try item.file.downloadItem(to: file, permittedURL: nil)
-                guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.checkText2(String(describing: item.file.fileName))) }
+                guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.fileChecksumFailed(item.file.fileName)) }
                 installations.append(ContentInstallation(record: item.record, source: file))
             } else {
                 try await downloader.fetch(item.file.downloadItem(to: cache, permittedURL: item.downloadURL))

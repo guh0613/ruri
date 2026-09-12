@@ -9,17 +9,17 @@ enum EndpointURL {
         for component in path {
             guard !component.isEmpty, component != ".", component != "..",
                   !component.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else {
-                throw RuriError.message(Messages.CoreEndpointURL.resultText1)
+                throw RuriError.message(Messages.CoreEndpointURL.invalidPathParameter)
             }
             result = result.appending(component: component, directoryHint: .notDirectory)
         }
         guard !query.isEmpty else { return result }
-        guard var parts = URLComponents(url: result, resolvingAgainstBaseURL: false) else { throw RuriError.message(Messages.CoreEndpointURL.partsText1) }
+        guard var parts = URLComponents(url: result, resolvingAgainstBaseURL: false) else { throw RuriError.message(Messages.CoreEndpointURL.serviceURLConstructionFailed) }
         parts.queryItems = (parts.queryItems ?? []) + query
         // Form-style query decoders treat a literal + as a space. Preserve the
         // caller's plus signs without double-encoding existing percent escapes.
         parts.percentEncodedQuery = parts.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
-        guard let url = parts.url else { throw RuriError.message(Messages.CoreEndpointURL.urlText1) }
+        guard let url = parts.url else { throw RuriError.message(Messages.CoreEndpointURL.queryEncodingFailed) }
         return url
     }
 

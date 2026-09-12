@@ -29,7 +29,7 @@ struct InstanceMoveJournal: Codable, Sendable {
     static func load(paths: LauncherPaths, instanceID: UUID, at parent: URL? = nil) throws -> Self {
         let root = try parent ?? Self.root(paths: paths, instanceID: instanceID)
         let result: Self = try RunDirectoryCopyGuard.decode(root.appendingPathComponent("transaction.json"), limit: 8_388_608)
-        guard result.original.id == instanceID else { throw RuriError.message(Messages.CoreInstanceMoveJournal.resultText1) }
+        guard result.original.id == instanceID else { throw RuriError.message(Messages.CoreInstanceMoveJournal.moveRecordWrongInstance) }
         try result.validate(); return result
     }
     func validate() throws {
@@ -39,24 +39,24 @@ struct InstanceMoveJournal: Codable, Sendable {
               (original.directoryID ?? GameDirectory.defaultID) == (sourceCollection?.id ?? GameDirectory.defaultID),
               (original.directoryID ?? GameDirectory.defaultID) != moved.directoryID,
               !original.name.isEmpty, original.name.count <= 1024, FileTreeManifest.validDigest(sourceDigest) else {
-            throw RuriError.message(Messages.CoreInstanceMoveJournal.expectedText1)
+            throw RuriError.message(Messages.CoreInstanceMoveJournal.invalidMoveRecord)
         }
         if stagedIdentity != nil || publishedIdentity != nil || [.publishing, .committed, .retiring, .deleting].contains(phase) {
-            guard destinationDigest != nil, workspaceIdentity != nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.expectedText2) }
+            guard destinationDigest != nil, workspaceIdentity != nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.missingDestinationVerification) }
         }
-        if let destinationDigest, !FileTreeManifest.validDigest(destinationDigest) { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText1) }
-        if [.retiring, .deleting].contains(phase), retirement == nil { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText2) }
+        if let destinationDigest, !FileTreeManifest.validDigest(destinationDigest) { throw RuriError.message(Messages.CoreInstanceMoveJournal.invalidDestinationDigest) }
+        if [.retiring, .deleting].contains(phase), retirement == nil { throw RuriError.message(Messages.CoreInstanceMoveJournal.missingSourceRetirement) }
         for collection in [sourceCollection, targetCollection].compactMap({ $0 }) {
-            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), collection.bookmark == nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText3) }
+            guard collection.id != GameDirectory.defaultID, collection.url.isFileURL, collection.url.path.hasPrefix("/"), collection.bookmark == nil else { throw RuriError.message(Messages.CoreInstanceMoveJournal.invalidInstanceDirectory) }
         }
         for identity in [sourceIdentity, workspaceIdentity, stagedIdentity, publishedIdentity, retirement?.identity].compactMap({ $0 }) {
-            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreInstanceMoveJournal.destinationDigestText4) }
+            guard identity.directory, identity.inode > 0, identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreInstanceMoveJournal.invalidFileIdentity) }
         }
     }
     func validateLocations(paths: LauncherPaths) throws {
         for collection in [sourceCollection, targetCollection].compactMap({ $0 }) {
             guard paths.directories.contains(where: { $0.id == collection.id && $0.url.standardizedFileURL == collection.url.standardizedFileURL }) else {
-                throw RuriError.message(Messages.CoreInstanceMoveJournal.validateLocationsText1)
+                throw RuriError.message(Messages.CoreInstanceMoveJournal.changedMoveLocations)
             }
             try collection.validateAvailability()
         }
@@ -78,19 +78,19 @@ struct InstanceMoveJournal: Codable, Sendable {
     }
     func retiredSource(paths: LauncherPaths) throws -> URL? { try retirementParent(paths: paths)?.appendingPathComponent("instance") }
     func isCommitted(in state: PersistentState) throws -> Bool {
-        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText1) }
+        guard let instance = state.instances.first(where: { $0.id == original.id }) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.removedMovingInstance) }
         if instance.lastInstanceMoveID != id {
-            guard (instance.directoryID ?? GameDirectory.defaultID) == (original.directoryID ?? GameDirectory.defaultID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText2) }
+            guard (instance.directoryID ?? GameDirectory.defaultID) == (original.directoryID ?? GameDirectory.defaultID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.changedInstanceLocation) }
             return false
         }
         guard instance.directoryID == moved.directoryID, instance.runDirectory == moved.runDirectory,
-              instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message(Messages.CoreInstanceMoveJournal.instanceText3) }
+              instance.customRunDirectory == moved.customRunDirectory else { throw RuriError.message(Messages.CoreInstanceMoveJournal.mismatchedDirectoryBinding) }
         return true
     }
     func save(paths: LauncherPaths, at directory: URL? = nil) throws {
         try validate()
         let data = try JSONEncoder().encode(self)
-        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.dataText1) }
+        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.moveRecordTooLarge) }
         let root = try directory ?? Self.root(paths: paths, instanceID: original.id)
         try data.write(to: root.appendingPathComponent("transaction.json"), options: .atomic)
     }
@@ -117,25 +117,25 @@ public enum InstanceMoveGuard {
         return FileManager.default.fileExists(atPath: root.path)
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID) throws {
-        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.requireAvailableText1) }
+        guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.unfinishedMoveExists) }
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
         let root = try LauncherPaths.safePath("instance-move-transactions", within: paths.root)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let records = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
-        guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.recordsText1) }
+        guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.tooManyPendingMoves) }
         for record in records {
             guard let instanceID = UUID(uuidString: record.lastPathComponent) else { continue }
             if RepositoryMoveJournal.exists(paths: paths, instanceID: instanceID) {
                 let journal = try RepositoryMoveJournal.load(paths: paths, instanceID: instanceID)
                 guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
-                    throw RuriError.message(Messages.CoreInstanceMoveJournal.journalText1)
+                    throw RuriError.message(Messages.CoreInstanceMoveJournal.unfinishedFolderMoves)
                 }
                 continue
             }
             let journal = try InstanceMoveJournal.load(paths: paths, instanceID: instanceID)
             guard (journal.original.directoryID ?? GameDirectory.defaultID) != id, journal.moved.directoryID != id else {
-                throw RuriError.message(Messages.CoreInstanceMoveJournal.journalText1)
+                throw RuriError.message(Messages.CoreInstanceMoveJournal.unfinishedFolderMoves)
             }
         }
     }

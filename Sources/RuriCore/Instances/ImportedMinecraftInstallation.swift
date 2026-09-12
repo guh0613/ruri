@@ -19,7 +19,7 @@ public struct ImportedMinecraftInstallation: Codable, Equatable, Sendable {
         guard version == 1, validLabel(sourceVersionID, limit: 255),
               components.count <= 64, Set(components.map(\.id)).count == components.count,
               components.allSatisfy({ validLabel($0.name, limit: 128) && validLabel($0.version, limit: 128) }) else {
-            throw RuriError.message(Messages.CoreImportedMinecraftInstallation.validLabelText1)
+            throw RuriError.message(Messages.CoreImportedMinecraftInstallation.invalidInstallationMetadata)
         }
     }
 }

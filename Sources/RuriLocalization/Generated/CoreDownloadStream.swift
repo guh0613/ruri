@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadStream {
-        public static var piecesText1: LocalizedMessage {
+        /// 服务器返回了无效的下载范围
+        ///
+        /// Resource: `Core.coreDownloadStream.piecesText1`.
+        public static var invalidDownloadRange: LocalizedMessage {
             .init(key: "coreDownloadStream.piecesText1", table: "Core", fallback: "服务器返回了无效的下载范围")
         }
-        public static var urlSessionText1: LocalizedMessage {
+        /// 下载服务重定向到了非 HTTPS 地址
+        ///
+        /// Resource: `Core.coreDownloadStream.urlSessionText1`.
+        public static var insecureDownloadRedirect: LocalizedMessage {
             .init(key: "coreDownloadStream.urlSessionText1", table: "Core", fallback: "下载服务重定向到了非 HTTPS 地址")
         }
-        public static var httpText1: LocalizedMessage {
+        /// 下载服务响应无效
+        ///
+        /// Resource: `Core.coreDownloadStream.httpText1`.
+        public static var invalidDownloadResponse: LocalizedMessage {
             .init(key: "coreDownloadStream.httpText1", table: "Core", fallback: "下载服务响应无效")
         }
-        public static func httpText2(_ value0: String) -> LocalizedMessage {
+        /// 下载服务返回 HTTP %1$@
+        ///
+        /// Resource: `Core.coreDownloadStream.httpText2`.
+        public static func downloadHTTPError(_ value0: String) -> LocalizedMessage {
             .init(key: "coreDownloadStream.httpText2", table: "Core", fallback: "下载服务返回 HTTP %1$@", arguments: [.text(value0)])
         }
-        public static var encodingText1: LocalizedMessage {
+        /// 下载服务未提供可校验的原始文件
+        ///
+        /// Resource: `Core.coreDownloadStream.encodingText1`.
+        public static var missingDownloadHash: LocalizedMessage {
             .init(key: "coreDownloadStream.encodingText1", table: "Core", fallback: "下载服务未提供可校验的原始文件")
         }
-        public static var rangeText1: LocalizedMessage {
+        /// 服务器续传范围与本地文件不一致
+        ///
+        /// Resource: `Core.coreDownloadStream.rangeText1`.
+        public static var resumeRangeMismatch: LocalizedMessage {
             .init(key: "coreDownloadStream.rangeText1", table: "Core", fallback: "服务器续传范围与本地文件不一致")
         }
-        public static var expectedEndText1: LocalizedMessage {
+        /// 服务器文件大小与清单不一致
+        ///
+        /// Resource: `Core.coreDownloadStream.expectedEndText1`.
+        public static var downloadSizeMismatch: LocalizedMessage {
             .init(key: "coreDownloadStream.expectedEndText1", table: "Core", fallback: "服务器文件大小与清单不一致")
         }
-        public static var expectedEndText2: LocalizedMessage {
+        /// 无法保存下载文件
+        ///
+        /// Resource: `Core.coreDownloadStream.expectedEndText2`.
+        public static var downloadSaveFailed: LocalizedMessage {
             .init(key: "coreDownloadStream.expectedEndText2", table: "Core", fallback: "无法保存下载文件")
         }
-        public static var lengthText1: LocalizedMessage {
+        /// 本地续传文件在下载期间发生变化
+        ///
+        /// Resource: `Core.coreDownloadStream.lengthText1`.
+        public static var resumeFileChanged: LocalizedMessage {
             .init(key: "coreDownloadStream.lengthText1", table: "Core", fallback: "本地续传文件在下载期间发生变化")
         }
-        public static var totalText1: LocalizedMessage {
+        /// 下载数据超过清单大小
+        ///
+        /// Resource: `Core.coreDownloadStream.totalText1`.
+        public static var downloadExceedsExpectedSize: LocalizedMessage {
             .init(key: "coreDownloadStream.totalText1", table: "Core", fallback: "下载数据超过清单大小")
         }
-        public static var handleText1: LocalizedMessage {
+        /// 下载数据缺少有效响应
+        ///
+        /// Resource: `Core.coreDownloadStream.handleText1`.
+        public static var missingDownloadResponse: LocalizedMessage {
             .init(key: "coreDownloadStream.handleText1", table: "Core", fallback: "下载数据缺少有效响应")
         }
-        public static var expectedEndText3: LocalizedMessage {
+        /// 下载提前结束，可以继续重试
+        ///
+        /// Resource: `Core.coreDownloadStream.expectedEndText3`.
+        public static var downloadEndedEarly: LocalizedMessage {
             .init(key: "coreDownloadStream.expectedEndText3", table: "Core", fallback: "下载提前结束，可以继续重试")
         }
         static let definitions: [String: MessageDefinition] = [

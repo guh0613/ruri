@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelAccounts {
-        public static var accountText1: LocalizedMessage {
+        /// 这个离线账号已存在。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.accountText1`.
+        public static var offlineAccountExists: LocalizedMessage {
             .init(key: "appAppModelAccounts.accountText1", table: "Errors", fallback: "这个离线账号已存在。")
         }
-        public static var addMicrosoftText1: LocalizedMessage {
+        /// 当前窗口已暂停写入，请重新打开 Ruri。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.addMicrosoftText1`.
+        public static var accountWritePaused: LocalizedMessage {
             .init(key: "appAppModelAccounts.addMicrosoftText1", table: "Errors", fallback: "当前窗口已暂停写入，请重新打开 Ruri。")
         }
-        public static var addMicrosoftText2: LocalizedMessage {
+        /// 此账号已被移除或发生变化。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.addMicrosoftText2`.
+        public static var accountChanged: LocalizedMessage {
             .init(key: "appAppModelAccounts.addMicrosoftText2", table: "Errors", fallback: "此账号已被移除或发生变化。")
         }
-        public static var existingText1: LocalizedMessage {
+        /// 账号信息未能保存，请重新打开 Ruri。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.existingText1`.
+        public static var accountSaveFailed: LocalizedMessage {
             .init(key: "appAppModelAccounts.existingText1", table: "Errors", fallback: "账号信息未能保存，请重新打开 Ruri。")
         }
-        public static var addExternalText1: LocalizedMessage {
+        /// 此账号已被移除。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.addExternalText1`.
+        public static var externalAccountRemoved: LocalizedMessage {
             .init(key: "appAppModelAccounts.addExternalText1", table: "Errors", fallback: "此账号已被移除。")
         }
-        public static var accountText2: LocalizedMessage {
+        /// 账号已变化，请重新打开外观管理。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.accountText2`.
+        public static var appearanceAccountChanged: LocalizedMessage {
             .init(key: "appAppModelAccounts.accountText2", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
         }
-        public static var accountText3: LocalizedMessage {
+        /// 离线账号没有在线外观资料。
+        ///
+        /// Resource: `Errors.appAppModelAccounts.accountText3`.
+        public static var offlineAppearanceUnavailable: LocalizedMessage {
             .init(key: "appAppModelAccounts.accountText3", table: "Errors", fallback: "离线账号没有在线外观资料。")
         }
-        public static func credentialsText1(_ value0: String) -> LocalizedMessage {
+        /// 已刷新 %1$@ 的登录状态。
+        ///
+        /// Resource: `Interface.appAppModelAccounts.credentialsText1`.
+        public static func credentialsRefreshed(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelAccounts.credentialsText1", table: "Interface", fallback: "已刷新 %1$@ 的登录状态。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

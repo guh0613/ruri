@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreDetachedMinecraftFolder {
-        public static var validateText1: LocalizedMessage {
+        /// 已移除的 Minecraft 文件夹记录无效。
+        ///
+        /// Resource: `Errors.coreDetachedMinecraftFolder.validateText1`.
+        public static var detachedFolderInvalid: LocalizedMessage {
             .init(key: "coreDetachedMinecraftFolder.validateText1", table: "Errors", fallback: "已移除的 Minecraft 文件夹记录无效。")
         }
         static let definitions: [String: MessageDefinition] = [

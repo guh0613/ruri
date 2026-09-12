@@ -65,9 +65,9 @@ struct RepositoryMoveSnapshot: Sendable {
 
 extension InstanceMover {
     func repositoryPreview(source: GameInstance, directoryID: UUID, paths: LauncherPaths) async throws -> InstanceMovePreview {
-        guard source.installed else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText1) }
-        guard paths.directoryID(for: source.id) != directoryID else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText2) }
-        guard directoryID == GameDirectory.defaultID || paths.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryPreviewText3) }
+        guard source.installed else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.instanceNotInstalled) }
+        guard paths.directoryID(for: source.id) != directoryID else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.instanceAlreadyInTargetFolder) }
+        guard directoryID == GameDirectory.defaultID || paths.directories.contains(where: { $0.id == directoryID }) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.missingTargetFolder) }
         let access = try await InstanceMoveAccess.acquire(instance: source, paths: paths)
         defer { withExtendedLifetime(access) {} }
         try requireIndependentVersion(source, paths: paths)
@@ -91,7 +91,7 @@ extension InstanceMover {
         let targetRoot = target.directoryRoot(directoryID).standardizedFileURL.resolvingSymlinksInPath().path
         for sourceRoot in [paths.instance(source.id), paths.game(source.id)] {
             let root = sourceRoot.standardizedFileURL.resolvingSymlinksInPath().path
-            guard !targetRoot.hasPrefix(root + "/"), targetRoot != root else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.rootText1) }
+            guard !targetRoot.hasPrefix(root + "/"), targetRoot != root else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.targetFolderNestedInSource) }
         }
         let installation = try MinecraftInstallationCopy.read(instance: source, copy: moved, paths: paths, portable: true)
         func rewrite(_ value: String) throws -> String {
@@ -112,12 +112,12 @@ extension InstanceMover {
     }
 
     func requireRepositoryUnchanged(_ preview: InstanceMovePreview, paths: LauncherPaths) throws {
-        guard let repository = preview.repository, preview.sourceIdentity.matches(paths.instance(preview.source.id)) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.repositoryText1) }
-        if let identity = repository.sourceVersionIdentity, !identity.matches(paths.versionDirectory(preview.source.id)) { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.identityText1) }
+        guard let repository = preview.repository, preview.sourceIdentity.matches(paths.instance(preview.source.id)) else { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.sourceDirectoryChanged) }
+        if let identity = repository.sourceVersionIdentity, !identity.matches(paths.versionDirectory(preview.source.id)) { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.sourceVersionReplaced) }
         let (snapshot, current) = try RepositoryMoveSnapshot.capture(source: preview.source, moved: preview.moved, paths: paths, id: preview.id, installation: repository.installation)
         guard snapshot.original == preview.snapshot.original, snapshot.destination == preview.snapshot.destination, snapshot.entries == preview.snapshot.entries,
               current.sourceVersion == repository.sourceVersion, current.installationReceipt == repository.installationReceipt else {
-            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.identityText2)
+            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.changedSourceFiles)
         }
     }
 
@@ -127,7 +127,7 @@ extension InstanceMover {
         func inside(_ url: URL) -> Bool { let path = url.standardizedFileURL.resolvingSymlinksInPath().path; return path == versionRoot || path.hasPrefix(versionRoot + "/") }
         let state = try StateStore.load(paths)
         for other in state.instances where other.id != source.id && inside(paths.game(other.id)) {
-            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.stateText1(String(describing: other.name)))
+            throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.stillUsesRunDirectory(other.name))
         }
         let reader = MinecraftDirectoryReader(), root = paths.directoryRoot(paths.directoryID(for: source.id))
         let catalog = try reader.scanNow(root, allowEmpty: true)
@@ -140,11 +140,11 @@ extension InstanceMover {
                         if let file = try? resources.libraryFile(artifact, fallback: Library.mavenPath(library.name)), inside(file) { dependent = true }
                     }
                 }
-                if dependent { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.fileText1(String(describing: other.id))) }
+                if dependent { throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.stillHasDependentFiles(String(describing: other.id))) }
             } else if let data = try? RunDirectoryCopyGuard.read(other.directory.appendingPathComponent(other.id + ".json"), limit: 8_388_608),
                       let raw = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                       [try? MinecraftDirectoryScan.identifier(raw["inheritsFrom"]), try? MinecraftDirectoryScan.identifier(raw["jar"])].contains(version) {
-                throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.rawText1(String(describing: other.id)))
+                throw RuriError.message(Messages.CoreRepositoryMoveSnapshot.stillReferencedVersion(String(describing: other.id)))
             }
         }
     }

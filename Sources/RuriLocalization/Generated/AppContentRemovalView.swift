@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppContentRemovalView {
-        public static var titleText1: LocalizedMessage {
+        /// 全部状态
+        ///
+        /// Resource: `Interface.appContentRemovalView.titleText1`.
+        public static var allStatus: LocalizedMessage {
             .init(key: "appContentRemovalView.titleText1", table: "Interface", fallback: "全部状态")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 已启用
+        ///
+        /// Resource: `Interface.appContentRemovalView.titleText2`.
+        public static var enabledStatus: LocalizedMessage {
             .init(key: "appContentRemovalView.titleText2", table: "Interface", fallback: "已启用")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 已停用
+        ///
+        /// Resource: `Interface.appContentRemovalView.titleText3`.
+        public static var disabledStatus: LocalizedMessage {
             .init(key: "appContentRemovalView.titleText3", table: "Interface", fallback: "已停用")
         }
-        public static func bodyText1(_ value0: Int64) -> LocalizedMessage {
+        /// 移除 %1$lld 项游戏内容
+        ///
+        /// Resource: `Interface.appContentRemovalView.bodyText1`.
+        public static func removeContent(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appContentRemovalView.bodyText1", table: "Interface", fallback: "移除 %1$lld 项游戏内容", arguments: [.integer(value0)])
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。
+        ///
+        /// Resource: `Interface.appContentRemovalView.bodyText2`.
+        public static var removeContentHelp: LocalizedMessage {
             .init(key: "appContentRemovalView.bodyText2", table: "Interface", fallback: "所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appContentRemovalView.bodyText3`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appContentRemovalView.bodyText3", table: "Interface", fallback: "移到废纸篓")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -9,23 +9,23 @@ struct CurseForgeSettingsSection: View {
     @State private var error: String?
     var body: some View {
         Section("CurseForge") {
-            LabeledContent("API Key", value: model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.bodyText1.localized : Messages.AppCurseForgeSettingsSection.bodyText2.localized)
-            SecureField(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.bodyText3.localized : Messages.AppCurseForgeSettingsSection.bodyText4.localized, text: $key)
+            LabeledContent("API Key", value: model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.keychainSaved.localized : Messages.AppCurseForgeSettingsSection.notConfigured.localized)
+            SecureField(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized, text: $key)
             HStack {
-                Button(Messages.AppCurseForgeSettingsSection.bodyText5.localized) {
+                Button(Messages.AppCurseForgeSettingsSection.saveToKeychain.localized) {
                     do { try CurseForgeKeyStore.save(key); key = ""; error = nil; model.curseForgeConfigured = true }
                     catch { self.error = error.localizedDescription }
                 }.disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 if model.curseForgeConfigured {
-                    Button(Messages.AppCurseForgeSettingsSection.bodyText6.localized) {
+                    Button(Messages.AppCurseForgeSettingsSection.removeApiKey.localized) {
                         do { try CurseForgeKeyStore.remove(); key = ""; error = nil; model.curseForgeConfigured = false }
                         catch { self.error = error.localizedDescription }
                     }
                 }
             }
             if let error { Text(error).foregroundStyle(.red).font(.caption) }
-            Text(Messages.AppCurseForgeSettingsSection.errorText1.localized).font(.caption).foregroundStyle(.secondary)
-            Link(Messages.AppCurseForgeSettingsSection.errorText2.localized, destination: AppLinks.curseForgeAPI)
+            Text(Messages.AppCurseForgeSettingsSection.apiKeyUsage.localized).font(.caption).foregroundStyle(.secondary)
+            Link(Messages.AppCurseForgeSettingsSection.apiApplicationGuide.localized, destination: AppLinks.curseForgeAPI)
         }
     }
 }

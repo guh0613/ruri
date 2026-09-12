@@ -33,7 +33,7 @@ extension LauncherPaths {
 extension GameResourcePaths {
     func libraryFile(_ artifact: Artifact, fallback: String? = nil) throws -> URL {
         if let relative = artifact.repositoryPath { return try LauncherPaths.safePath(relative, within: root) }
-        guard let path = artifact.path ?? fallback else { throw RuriError.message(Messages.CoreGameResourcePaths.pathText1) }
+        guard let path = artifact.path ?? fallback else { throw RuriError.message(Messages.CoreGameResourcePaths.missingLibraryPath) }
         return try LauncherPaths.safePath(path, within: libraries)
     }
 }

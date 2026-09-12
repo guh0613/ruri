@@ -21,22 +21,22 @@ struct ContentInstallView: View {
             SectionHeading(title: project.title, subtitle: "by \(project.author)")
             Text(project.description).font(.callout).foregroundStyle(.secondary).lineLimit(5)
             if !isPack {
-                Picker(Messages.AppContentInstallView.bodyText1.localized, selection: $instanceID) {
-                    Text(Messages.AppContentInstallView.bodyText2.localized).tag(nil as UUID?)
+                Picker(Messages.AppContentInstallView.installToInstance.localized, selection: $instanceID) {
+                    Text(Messages.AppContentInstallView.chooseInstance.localized).tag(nil as UUID?)
                     ForEach(model.state.instances.filter(\.installed)) { Text($0.name + " · " + $0.subtitle).tag(Optional($0.id)) }
                 }
             }
-            if loading { ProgressView(Messages.AppContentInstallView.bodyText3.localized) }
+            if loading { ProgressView(Messages.AppContentInstallView.findCompatibleVersions.localized) }
             else if !versions.isEmpty {
-                Picker(Messages.AppContentInstallView.bodyText4.localized, selection: $selectedVersion) { ForEach(versions) { Text($0.name).tag($0.id) } }
-            } else { Text(isPack || instance != nil ? Messages.AppContentInstallView.bodyText5.localized : Messages.AppContentInstallView.bodyText6.localized).foregroundStyle(.secondary) }
+                Picker(Messages.AppContentInstallView.contentVersion.localized, selection: $selectedVersion) { ForEach(versions) { Text($0.name).tag($0.id) } }
+            } else { Text(isPack || instance != nil ? Messages.AppContentInstallView.noCompatibleVersions.localized : Messages.AppContentInstallView.chooseInstalledInstance.localized).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.red) }
-            if project.project_type == "shader" { Text(Messages.AppContentInstallView.errorText1.localized).font(.caption).foregroundStyle(.secondary) }
-            if project.project_type == "mod" { Text(Messages.AppContentInstallView.errorText2.localized).font(.caption).foregroundStyle(.secondary) }
+            if project.project_type == "shader" { Text(Messages.AppContentInstallView.shaderHelp.localized).font(.caption).foregroundStyle(.secondary) }
+            if project.project_type == "mod" { Text(Messages.AppContentInstallView.dependencyHelp.localized).font(.caption).foregroundStyle(.secondary) }
             HStack {
-                if let page = project.pageURL { Link(Messages.AppContentInstallView.pageText1.localized, destination: page) }
+                if let page = project.pageURL { Link(Messages.AppContentInstallView.viewOnModrinth.localized, destination: page) }
                 Spacer(); Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(isPack ? Messages.AppContentInstallView.pageText2.localized : Messages.AppContentInstallView.pageText3.localized) {
+                Button(isPack ? Messages.AppContentInstallView.viewModpack.localized : Messages.AppContentInstallView.installContent.localized) {
                     guard let version = versions.first(where: { $0.id == selectedVersion }) else { return }
                     model.installContent(project: project, version: version, instance: instance); dismiss()
                 }.buttonStyle(.borderedProminent).disabled(loading || selectedVersion.isEmpty || model.busy || (!isPack && (instance == nil || model.isInstanceInUse(instanceID))))

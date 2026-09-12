@@ -3,46 +3,88 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceCopyJournal {
-        public static var recordText1: LocalizedMessage {
+        /// 实例复制记录不属于所选实例。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.recordText1`.
+        public static var copyRecordWrongInstance: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.recordText1", table: "Errors", fallback: "实例复制记录不属于所选实例。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 实例复制信息无效，请检查源实例和副本设置。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.validateText1`.
+        public static var invalidCopyInfo: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.validateText1", table: "Errors", fallback: "实例复制信息无效，请检查源实例和副本设置。")
         }
-        public static var validateText2: LocalizedMessage {
+        /// 实例副本缺少文件校验记录，工作副本已保留。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.validateText2`.
+        public static var missingCopyChecksums: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.validateText2", table: "Errors", fallback: "实例副本缺少文件校验记录，工作副本已保留。")
         }
-        public static var verificationDigestText1: LocalizedMessage {
+        /// 实例副本的校验记录摘要无效。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.verificationDigestText1`.
+        public static var invalidCopyDigest: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.verificationDigestText1", table: "Errors", fallback: "实例副本的校验记录摘要无效。")
         }
-        public static var collectionText1: LocalizedMessage {
+        /// 复制目标的文件夹记录无效。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.collectionText1`.
+        public static var invalidDestinationFolderRecord: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.collectionText1", table: "Errors", fallback: "复制目标的文件夹记录无效。")
         }
-        public static var collectionText2: LocalizedMessage {
+        /// 实例副本的文件身份记录无效。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.collectionText2`.
+        public static var invalidCopyFileIdentity: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.collectionText2", table: "Errors", fallback: "实例副本的文件身份记录无效。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.dataText1`.
+        public static var copyNameTooLong: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.dataText1", table: "Errors", fallback: "源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。")
         }
-        public static var registeredText1: LocalizedMessage {
+        /// 目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.registeredText1`.
+        public static var destinationRegistrationChanged: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.registeredText1", table: "Errors", fallback: "目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。")
         }
-        public static var dataText2: LocalizedMessage {
+        /// 实例复制记录超过大小限制。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.dataText2`.
+        public static var copyRecordTooLarge: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.dataText2", table: "Errors", fallback: "实例复制记录超过大小限制。")
         }
-        public static var ownerText1: LocalizedMessage {
+        /// 实例复制占用信息无效。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.ownerText1`.
+        public static var invalidCopyOwnerInfo: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.ownerText1", table: "Errors", fallback: "实例复制占用信息无效。")
         }
-        public static func ownerText2(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.ownerText2`.
+        public static func unfinishedCopyExists(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.ownerText2", table: "Errors", fallback: "“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。", arguments: [.text(value0)])
         }
-        public static var markerText1: LocalizedMessage {
+        /// 副本占用记录已经改变，未清除其他操作的记录。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.markerText1`.
+        public static var copyMarkerChanged: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.markerText1", table: "Errors", fallback: "副本占用记录已经改变，未清除其他操作的记录。")
         }
-        public static var recordsText1: LocalizedMessage {
+        /// 待处理的实例复制过多，请先恢复后再调整文件夹。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.recordsText1`.
+        public static var tooManyPendingCopies: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.recordsText1", table: "Errors", fallback: "待处理的实例复制过多，请先恢复后再调整文件夹。")
         }
-        public static var journalText1: LocalizedMessage {
+        /// 此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。
+        ///
+        /// Resource: `Errors.coreInstanceCopyJournal.journalText1`.
+        public static var unfinishedFolderCopy: LocalizedMessage {
             .init(key: "coreInstanceCopyJournal.journalText1", table: "Errors", fallback: "此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。")
         }
         static let definitions: [String: MessageDefinition] = [

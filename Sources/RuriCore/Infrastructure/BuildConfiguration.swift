@@ -8,7 +8,7 @@ public struct BuildConfiguration: Sendable {
 
     public init(info: [String: Any] = Bundle.main.infoDictionary ?? [:]) {
         microsoftClientID = (info["RuriMicrosoftClientID"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        version = info["RuriVersion"] as? String ?? info["CFBundleShortVersionString"] as? String ?? Messages.CoreBuildConfiguration.versionText1.localized
+        version = info["RuriVersion"] as? String ?? info["CFBundleShortVersionString"] as? String ?? Messages.CoreBuildConfiguration.developmentVersion.localized
     }
 
     public func microsoftClientID(override: String) -> String {

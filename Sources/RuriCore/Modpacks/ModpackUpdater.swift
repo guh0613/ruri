@@ -10,12 +10,12 @@ public actor ModpackUpdater {
                         content: [ContentInstallation] = [], concurrency: Int = 8,
                         progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PreparedModpackUpdate {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let instance = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceText1) }
+        guard let instance = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceRemoved) }
         _ = try instance.applyingInstallation(requested, requested: requested)
-        guard let pack = try ModpackRegistry.load(paths: current, instanceID: instance.id) else { throw RuriError.message(Messages.CoreModpackUpdater.packText1) }
-        guard prepared.modpack != nil, !prepared.includesInstallation else { throw RuriError.message(Messages.CoreModpackUpdater.packText2) }
+        guard let pack = try ModpackRegistry.load(paths: current, instanceID: instance.id) else { throw RuriError.message(Messages.CoreModpackUpdater.missingPackSource) }
+        guard prepared.modpack != nil, !prepared.includesInstallation else { throw RuriError.message(Messages.CoreModpackUpdater.invalidPackSelection) }
         if let origin = pack.origin, let incoming = prepared.modpack?.origin, origin.projectID != nil, incoming.projectID != nil {
-            guard origin.provider == incoming.provider, origin.projectID == incoming.projectID else { throw RuriError.message(Messages.CoreModpackUpdater.incomingText1) }
+            guard origin.provider == incoming.provider, origin.projectID == incoming.projectID else { throw RuriError.message(Messages.CoreModpackUpdater.wrongPackProject) }
         }
         let lease = try GameRunLease.acquire(paths: current, instanceID: instance.id)
         defer { withExtendedLifetime(lease) {} }
@@ -33,7 +33,7 @@ public actor ModpackUpdater {
             let staging = LauncherPaths(root: work), transfer = InstanceTransfer(paths: staging)
             try await transfer.completeFiles(prepared, downloader: downloader, concurrency: concurrency, progress: progress)
             let candidate = try await transfer.install(prepared, name: instance.name, importJVMArguments: keepJVMArguments, content: content, installing: { value, _ in value })
-            guard var incoming = try ModpackRegistry.load(paths: staging, instanceID: candidate.id) else { throw RuriError.message(Messages.CoreModpackUpdater.incomingText2) }
+            guard var incoming = try ModpackRegistry.load(paths: staging, instanceID: candidate.id) else { throw RuriError.message(Messages.CoreModpackUpdater.missingFileManifest) }
             if incoming.origin == nil, incoming.format == pack.format, let origin = pack.origin {
                 incoming = .init(format: incoming.format, name: incoming.name, version: incoming.version,
                                  origin: .init(provider: origin.provider, projectID: origin.projectID, fileAPI: origin.fileAPI), settings: incoming.settings, files: incoming.files)
@@ -60,7 +60,7 @@ public actor ModpackUpdater {
     func apply(_ plan: PreparedModpackUpdate, keepingLocal: Set<String>, installing: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance,
                progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PersistentState {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let instance = state.instances.first(where: { $0.id == plan.instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceText1) }
+        guard let instance = state.instances.first(where: { $0.id == plan.instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceRemoved) }
         _ = try instance.applyingInstallation(plan.instance, requested: plan.instance)
         let lease = try GameRunLease.acquire(paths: current, instanceID: instance.id)
         defer { withExtendedLifetime(lease) {} }
@@ -79,7 +79,7 @@ public actor ModpackUpdater {
                             client.path: targetClient.path, client.deletingLastPathComponent().path: targetClient.deletingLastPathComponent().path]
         func rewrite(_ value: String) throws -> String {
             let result = MinecraftInstallationCopy.rewrite(value, replacements: replacements)
-            guard !result.contains(plan.workspace.path) else { throw RuriError.message(Messages.CoreModpackUpdater.resultText1) }
+            guard !result.contains(plan.workspace.path) else { throw RuriError.message(Messages.CoreModpackUpdater.unmigratableTemporaryPath) }
             return result
         }
         func argument(_ value: LaunchArgument) throws -> LaunchArgument {
@@ -88,7 +88,7 @@ public actor ModpackUpdater {
         if var arguments = manifest.arguments { arguments.game = try arguments.game?.map(argument); arguments.jvm = try arguments.jvm?.map(argument); manifest.arguments = arguments }
         if let legacy = manifest.minecraftArguments { manifest.minecraftArguments = try ArgumentTokenizer.join(ArgumentTokenizer.split(legacy).map(rewrite)) }
         let latestState = try StateStore.load(paths)
-        guard let latest = latestState.instances.first(where: { $0.id == instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.latestText1) }
+        guard let latest = latestState.instances.first(where: { $0.id == instance.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceRemovedAfterPreview) }
         _ = try latest.applyingInstallation(instance, requested: instance)
         try validate(plan, instance: latest, paths: current)
         var updated = latest
@@ -114,7 +114,7 @@ public actor ModpackUpdater {
             }
             if let target = change.targetPath, let incoming = change.incoming {
                 let source = try LauncherPaths.safePath(incoming.path, within: staging.game(installed.id))
-                guard try ModpackUpdatePlanner.digest(source) == incoming.sha1 else { throw RuriError.message(Messages.CoreModpackUpdater.sourceText1(String(describing: incoming.path))) }
+                guard try ModpackUpdatePlanner.digest(source) == incoming.sha1 else { throw RuriError.message(Messages.CoreModpackUpdater.updateFilesChangedAfterPreview(incoming.path)) }
                 files.append(.init(target: .init(scope: .game, path: target), group: "game:" + change.id, source: source))
             }
         }
@@ -135,14 +135,14 @@ public actor ModpackUpdater {
         let sourceMetadata = staging.instance(installed.id).appendingPathComponent("source-mcbbs.packmeta")
         try data(FileManager.default.fileExists(atPath: sourceMetadata.path) ? RunDirectoryCopyGuard.read(sourceMetadata, limit: 32 * 1024 * 1024) : nil, path: "source-mcbbs.packmeta")
         try Task.checkCancellation()
-        await progress(InstallProgress(Messages.CoreModpackUpdater.sourceMetadataText1, total: files.count))
+        await progress(InstallProgress(Messages.CoreModpackUpdater.applyingUpdate, total: files.count))
         let saved = try ModpackUpdateStore.commit(id: plan.id, original: latest, updated: updated, replacements: files, paths: current)
         discard(plan)
         return saved
     }
     public func rollback(_ requested: GameInstance) throws -> (state: PersistentState, preservedFiles: Int) {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
-        guard let latest = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.latestText1) }
+        guard let latest = state.instances.first(where: { $0.id == requested.id }) else { throw RuriError.message(Messages.CoreModpackUpdater.instanceRemovedAfterPreview) }
         let lease = try GameRunLease.acquire(paths: current, instanceID: latest.id)
         defer { withExtendedLifetime(lease) {} }
         try lease.excludeLocationOperations()
@@ -153,12 +153,12 @@ public actor ModpackUpdater {
         try requireIndependent(instance, paths: paths)
         guard try RunDirectoryCopyGuard.read(paths.manifest(instance.id), limit: 32 * 1024 * 1024) == plan.manifestData,
               try RunDirectoryCopyGuard.read(paths.instance(instance.id).appendingPathComponent("modpack-state.json"), limit: 64 * 1024 * 1024) == plan.baselineData else {
-            throw RuriError.message(Messages.CoreModpackUpdater.validateText1)
+            throw RuriError.message(Messages.CoreModpackUpdater.previewConfigurationChanged)
         }
         for item in plan.changes {
             for (path, expected) in item.observed {
                 guard try ModpackUpdatePlanner.digest(LauncherPaths.safePath(path, within: paths.game(instance.id))) == expected else {
-                    throw RuriError.message(Messages.CoreModpackUpdater.validateText2(String(describing: path)))
+                    throw RuriError.message(Messages.CoreModpackUpdater.filesChangedAfterPreview(path))
                 }
             }
         }
@@ -169,7 +169,7 @@ public actor ModpackUpdater {
         for other in catalog.versions where other.id != id && other.issue == nil {
             let resolution = try reader.resolveManifestNow(other, in: catalog)
             if resolution.manifest.jar == id || resolution.sourceManifests.contains(where: { $0.url == paths.manifest(instance.id) }) {
-                throw RuriError.message(Messages.CoreModpackUpdater.resolutionText1(String(describing: other.id)))
+                throw RuriError.message(Messages.CoreModpackUpdater.dependencyConflict(String(describing: other.id)))
             }
         }
     }

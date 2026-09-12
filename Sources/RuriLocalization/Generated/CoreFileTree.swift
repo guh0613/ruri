@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum CoreFileTree {
-        public static var entriesText1: LocalizedMessage {
+        /// 请选择实际目录，而不是符号链接。
+        ///
+        /// Resource: `Errors.coreFileTree.entriesText1`.
+        public static var symlinkDirectoryRequired: LocalizedMessage {
             .init(key: "coreFileTree.entriesText1", table: "Errors", fallback: "请选择实际目录，而不是符号链接。")
         }
-        public static func infoText1(_ value0: String) -> LocalizedMessage {
+        /// 目录包含符号链接，无法完整复制：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.infoText1`.
+        public static func symlinkInDirectory(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.infoText1", table: "Errors", fallback: "目录包含符号链接，无法完整复制：%1$@", arguments: [.text(value0)])
         }
-        public static func infoText2(_ value0: String) -> LocalizedMessage {
+        /// 不支持的文件类型：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.infoText2`.
+        public static func unsupportedFileType(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.infoText2", table: "Errors", fallback: "不支持的文件类型：%1$@", arguments: [.text(value0)])
         }
-        public static var infoText3: LocalizedMessage {
+        /// 目录文件数量超过限制
+        ///
+        /// Resource: `Errors.coreFileTree.infoText3`.
+        public static var tooManyFiles: LocalizedMessage {
             .init(key: "coreFileTree.infoText3", table: "Errors", fallback: "目录文件数量超过限制")
         }
-        public static var destinationPathText1: LocalizedMessage {
+        /// 目标目录不能位于源目录内
+        ///
+        /// Resource: `Errors.coreFileTree.destinationPathText1`.
+        public static var destinationInsideSource: LocalizedMessage {
             .init(key: "coreFileTree.destinationPathText1", table: "Errors", fallback: "目标目录不能位于源目录内")
         }
-        public static var targetText1: LocalizedMessage {
+        /// 源目录在复制期间发生了变化，请退出游戏后重试。
+        ///
+        /// Resource: `Errors.coreFileTree.targetText1`.
+        public static var sourceChangedDuringCopy: LocalizedMessage {
             .init(key: "coreFileTree.targetText1", table: "Errors", fallback: "源目录在复制期间发生了变化，请退出游戏后重试。")
         }
-        public static var directoryText1: LocalizedMessage {
+        /// 覆盖文件在复制期间发生了变化
+        ///
+        /// Resource: `Errors.coreFileTree.directoryText1`.
+        public static var overwrittenFileChanged: LocalizedMessage {
             .init(key: "coreFileTree.directoryText1", table: "Errors", fallback: "覆盖文件在复制期间发生了变化")
         }
-        public static var rootText1: LocalizedMessage {
+        /// 压缩包不能保存在源目录内
+        ///
+        /// Resource: `Errors.coreFileTree.rootText1`.
+        public static var archiveInsideSource: LocalizedMessage {
             .init(key: "coreFileTree.rootText1", table: "Errors", fallback: "压缩包不能保存在源目录内")
         }
-        public static func checkText1(_ value0: String) -> LocalizedMessage {
+        /// 无效压缩包路径：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.checkText1`.
+        public static func invalidArchivePath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.checkText1", table: "Errors", fallback: "无效压缩包路径：%1$@", arguments: [.text(value0)])
         }
-        public static func directoryText2(_ value0: String) -> LocalizedMessage {
+        /// 压缩包条目重名：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.directoryText2`.
+        public static func duplicateArchiveEntry(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.directoryText2", table: "Errors", fallback: "压缩包条目重名：%1$@", arguments: [.text(value0)])
         }
-        public static func dataText1(_ value0: String) -> LocalizedMessage {
+        /// 备份期间源文件发生变化：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.dataText1`.
+        public static func sourceChangedDuringBackup(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.dataText1", table: "Errors", fallback: "备份期间源文件发生变化：%1$@", arguments: [.text(value0)])
         }
-        public static var currentText1: LocalizedMessage {
+        /// 源目录在备份期间发生了变化，请退出游戏后重试。
+        ///
+        /// Resource: `Errors.coreFileTree.currentText1`.
+        public static var sourceChangedDuringBackupRetry: LocalizedMessage {
             .init(key: "coreFileTree.currentText1", table: "Errors", fallback: "源目录在备份期间发生了变化，请退出游戏后重试。")
         }
-        public static func currentText2(_ value0: String) -> LocalizedMessage {
+        /// 无法保存压缩包：%1$@
+        ///
+        /// Resource: `Errors.coreFileTree.currentText2`.
+        public static func archiveSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTree.currentText2", table: "Errors", fallback: "无法保存压缩包：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

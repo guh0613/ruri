@@ -18,78 +18,78 @@ struct InstanceMoveView: View {
     private var source: GameInstance { model.state.instances.first { $0.id == instance.id } ?? instance }
     private var choices: [UUID] { ([GameDirectory.defaultID] + (model.state.gameDirectories ?? []).map(\.id)).filter { $0 != (source.directoryID ?? GameDirectory.defaultID) } }
     private func directoryName(_ id: UUID) -> String {
-        id == GameDirectory.defaultID ? Messages.AppInstanceMoveView.directoryNameText1.localized : model.state.gameDirectories?.first(where: { $0.id == id })?.name ?? Messages.AppInstanceMoveView.directoryNameText2.localized
+        id == GameDirectory.defaultID ? Messages.AppInstanceMoveView.defaultInstanceDirectory.localized : model.state.gameDirectories?.first(where: { $0.id == id })?.name ?? Messages.AppInstanceMoveView.inaccessibleDirectory.localized
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeading(title: recovery == nil ? Messages.AppInstanceMoveView.bodyText1.localized : Messages.AppInstanceMoveView.bodyText2.localized, subtitle: source.name)
+            SectionHeading(title: recovery == nil ? Messages.AppInstanceMoveView.moveInstance.localized : Messages.AppInstanceMoveView.recoverMove.localized, subtitle: source.name)
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if let recovery {
-                        Label(recovery.committed ? Messages.AppInstanceMoveView.recoveryText1.localized : Messages.AppInstanceMoveView.recoveryText2.localized, systemImage: "arrow.counterclockwise").font(.headline)
-                        path(Messages.AppInstanceMoveView.recoveryText3.localized, recovery.source)
-                        path(Messages.AppInstanceMoveView.recoveryText4.localized, recovery.destination)
-                        Text(recovery.committed ? Messages.AppInstanceMoveView.recoveryText5.localized : Messages.AppInstanceMoveView.recoveryText6.localized).font(.callout).foregroundStyle(.secondary)
+                        Label(recovery.committed ? Messages.AppInstanceMoveView.targetReady.localized : Messages.AppInstanceMoveView.moveIncomplete.localized, systemImage: "arrow.counterclockwise").font(.headline)
+                        path(Messages.AppInstanceMoveView.sourceLocation.localized, recovery.source)
+                        path(Messages.AppInstanceMoveView.targetLocation.localized, recovery.destination)
+                        Text(recovery.committed ? Messages.AppInstanceMoveView.moveValidationHelp.localized : Messages.AppInstanceMoveView.recoverMoveHelp.localized).font(.callout).foregroundStyle(.secondary)
                         HStack {
-                            Button(Messages.AppInstanceMoveView.recoveryText7.localized, systemImage: "folder") { reveal(recovery.workspace) }
-                            Button(Messages.AppInstanceMoveView.recoveryText8.localized, systemImage: "folder") { reveal(recovery.retiredSource ?? recovery.source) }
-                            Button(Messages.AppInstanceMoveView.recoveryText9.localized, systemImage: "folder") { reveal(recovery.destination) }
+                            Button(Messages.AppInstanceMoveView.showWorkspace.localized, systemImage: "folder") { reveal(recovery.workspace) }
+                            Button(Messages.AppInstanceMoveView.showSource.localized, systemImage: "folder") { reveal(recovery.retiredSource ?? recovery.source) }
+                            Button(Messages.AppInstanceMoveView.showTarget.localized, systemImage: "folder") { reveal(recovery.destination) }
                         }.disabled(model.busy)
                     } else {
-                        LabeledContent(Messages.AppInstanceMoveView.recoveryText10.localized, value: directoryName(source.directoryID ?? GameDirectory.defaultID))
-                        Picker(Messages.AppInstanceMoveView.recoveryText11.localized, selection: $directoryID) {
-                            if directoryID == nil { Text(Messages.AppInstanceMoveView.recoveryText12.localized).tag(UUID?.none) }
+                        LabeledContent(Messages.AppInstanceMoveView.currentFolder.localized, value: directoryName(source.directoryID ?? GameDirectory.defaultID))
+                        Picker(Messages.AppInstanceMoveView.moveTo.localized, selection: $directoryID) {
+                            if directoryID == nil { Text(Messages.AppInstanceMoveView.chooseTargetFolder.localized).tag(UUID?.none) }
                             ForEach(choices, id: \.self) { id in Text(directoryName(id)).tag(Optional(id)) }
                         }.disabled(model.busy)
-                        Button(Messages.AppInstanceMoveView.recoveryText13.localized, systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
+                        Button(Messages.AppInstanceMoveView.addTargetFolder.localized, systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
                         Text(source.importedInstallation == nil && source.repositoryVersionID == nil
-                             ? Messages.AppInstanceMoveView.recoveryText14.localized
-                             : Messages.AppInstanceMoveView.recoveryText15.localized)
+                             ? Messages.AppInstanceMoveView.moveSettingsPreserved.localized
+                             : Messages.AppInstanceMoveView.moveContentPreserved.localized)
                             .font(.callout).foregroundStyle(.secondary)
                         switch source.runDirectory ?? .isolated {
-                        case .isolated: Text(Messages.AppInstanceMoveView.recoveryText16.localized)
-                        case .shared: Text(Messages.AppInstanceMoveView.recoveryText17.localized)
-                        case .custom: Text(Messages.AppInstanceMoveView.recoveryText18.localized)
+                        case .isolated: Text(Messages.AppInstanceMoveView.moveWorldsPreserved.localized)
+                        case .shared: Text(Messages.AppInstanceMoveView.moveSharedContent.localized)
+                        case .custom: Text(Messages.AppInstanceMoveView.moveCustomDirectory.localized)
                         }
                         if let preview {
                             Divider()
-                            LabeledContent(Messages.AppInstanceMoveView.previewText1.localized, value: Messages.Common.filesAndSize(Int64(preview.fileCount), LocalizedFormat.bytes(preview.bytes)).localized)
-                            path(Messages.AppInstanceMoveView.previewText3.localized, preview.destination)
-                            if let kept = preview.retainedGameDirectory { path(Messages.AppInstanceMoveView.keptText1.localized, kept) }
+                            LabeledContent(Messages.AppInstanceMoveView.moveFiles.localized, value: Messages.Common.filesAndSize(Int64(preview.fileCount), LocalizedFormat.bytes(preview.bytes)).localized)
+                            path(Messages.AppInstanceMoveView.moveTargetInstance.localized, preview.destination)
+                            if let kept = preview.retainedGameDirectory { path(Messages.AppInstanceMoveView.keepRunDirectory.localized, kept) }
                             if let prior = preview.preservedPreviousData {
-                                Text(Messages.AppInstanceMoveView.priorText1.localized).font(.caption).foregroundStyle(.secondary)
-                                path(Messages.AppInstanceMoveView.priorText2.localized, prior)
+                                Text(Messages.AppInstanceMoveView.previousDirectoryContent.localized).font(.caption).foregroundStyle(.secondary)
+                                path(Messages.AppInstanceMoveView.oldContent.localized, prior)
                             }
                         }
                     }
-                    if checking { ProgressView(Messages.AppInstanceMoveView.priorText3.localized) }
+                    if checking { ProgressView(Messages.AppInstanceMoveView.checkingInstance.localized) }
                     if let issue { Label(issue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                     if let operationIssue { Label(operationIssue, systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(2)
             }
             if model.busy {
-                ProgressView(model.activeActivity?.progress.stage ?? Messages.AppInstanceMoveView.operationIssueText1.localized, value: model.activeActivity?.progress.fraction).controlSize(.small)
-                if cancelling { Text(Messages.AppInstanceMoveView.operationIssueText2.localized).font(.caption).foregroundStyle(.secondary) }
+                ProgressView(model.activeActivity?.progress.stage ?? Messages.AppInstanceMoveView.operationMoving.localized, value: model.activeActivity?.progress.fraction).controlSize(.small)
+                if cancelling { Text(Messages.AppInstanceMoveView.operationFinishing.localized).font(.caption).foregroundStyle(.secondary) }
             }
             HStack {
-                Button(Messages.AppInstanceMoveView.operationIssueText3.localized, systemImage: "arrow.clockwise") { operationIssue = nil; refresh = UUID() }.disabled(checking || model.busy)
+                Button(Messages.AppInstanceMoveView.refresh.localized, systemImage: "arrow.clockwise") { operationIssue = nil; refresh = UUID() }.disabled(checking || model.busy)
                 Spacer()
-                Button(model.busy ? Messages.Common.cancel.localized : Messages.AppInstanceMoveView.operationIssueText4.localized) {
+                Button(model.busy ? Messages.Common.cancel.localized : Messages.AppInstanceMoveView.close.localized) {
                     if model.busy { cancelling = true; model.operation?.cancel() } else { dismiss() }
                 }.keyboardShortcut(.cancelAction).disabled(cancelling)
                 if let recovery {
                     if recovery.committed {
-                        Menu(Messages.AppInstanceMoveView.recoveryText19.localized) {
-                            Button(Messages.AppInstanceMoveView.recoveryText20.localized) { recover(recovery, preserving: false) }
-                            Button(Messages.AppInstanceMoveView.recoveryText21.localized) { recover(recovery, preserving: true) }
+                        Menu(Messages.AppInstanceMoveView.completeMove.localized) {
+                            Button(Messages.AppInstanceMoveView.validateAndClean.localized) { recover(recovery, preserving: false) }
+                            Button(Messages.AppInstanceMoveView.keepSourceAndComplete.localized) { recover(recovery, preserving: true) }
                         } primaryAction: { recover(recovery, preserving: false) }
                         .menuStyle(.borderedButton).fixedSize().disabled(checking || model.busy)
                     } else {
-                        Button(Messages.AppInstanceMoveView.recoveryText22.localized) { recover(recovery, preserving: false) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
+                        Button(Messages.AppInstanceMoveView.recoverAndKeepCopy.localized) { recover(recovery, preserving: false) }.buttonStyle(.borderedProminent).disabled(checking || model.busy)
                     }
                 } else {
-                    Button(Messages.AppInstanceMoveView.bodyText1.localized) {
+                    Button(Messages.AppInstanceMoveView.moveInstance.localized) {
                         if let preview { operationIssue = nil; model.moveInstance(preview, failed: { operationIssue = $0 }) { dismiss() } }
                     }.buttonStyle(.borderedProminent).disabled(preview == nil || checking || model.busy)
                 }
@@ -106,7 +106,7 @@ struct InstanceMoveView: View {
                 else if let directoryID {
                     let value = try await service.preview(instanceID: instance.id, directoryID: directoryID)
                     try Task.checkCancellation(); preview = value
-                } else { issue = Messages.AppInstanceMoveView.valueText1.localized }
+                } else { issue = Messages.AppInstanceMoveView.anotherFolderRequired.localized }
             } catch { if !Task.isCancelled { issue = error.localizedDescription } }
             if !Task.isCancelled { checking = false }
         }
@@ -116,7 +116,7 @@ struct InstanceMoveView: View {
     private func path(_ label: String, _ url: URL) -> some View { Text("\(label)：\(url.path)").font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
     private func reveal(_ url: URL) {
         if FileManager.default.fileExists(atPath: url.path) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
-        else { issue = Messages.AppInstanceMoveView.revealText1(String(describing: url.path)).localized }
+        else { issue = Messages.AppInstanceMoveView.inaccessibleLocation(url.path).localized }
     }
     private func recover(_ pending: InstanceMoveRecovery, preserving: Bool) {
         operationIssue = nil
@@ -124,7 +124,7 @@ struct InstanceMoveView: View {
     }
     private func addDirectory() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppInstanceMoveView.panelText1.localized
+        panel.message = Messages.AppInstanceMoveView.minecraftFolderDescription.localized
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
             model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }

@@ -13,12 +13,12 @@ public struct ExternalAuthServer: Codable, Equatable, Sendable {
         guard var components = URLComponents(string: text), components.scheme?.lowercased() == "https",
               let host = components.host, !host.isEmpty, components.user == nil, components.password == nil,
               components.query == nil, components.fragment == nil else {
-            throw RuriError.message(Messages.CoreExternalAuthentication.hostText1)
+            throw RuriError.message(Messages.CoreExternalAuthentication.invalidAuthenticationServerURLInput)
         }
         components.scheme = "https"; components.host = host.lowercased()
         if components.port == 443 { components.port = nil }
         if components.path.isEmpty { components.path = "/" }
-        guard let url = components.url else { throw RuriError.message(Messages.CoreExternalAuthentication.urlText1) }
+        guard let url = components.url else { throw RuriError.message(Messages.CoreExternalAuthentication.invalidAuthenticationServerURL) }
         return url
     }
 }
@@ -35,7 +35,7 @@ public struct ExternalAuthProfile: Codable, Identifiable, Equatable, Sendable {
     func validate() throws {
         guard normalizedID.range(of: "^[0-9a-f]{32}$", options: .regularExpression) != nil,
               !name.isEmpty, name.utf8.count <= 256, !name.contains("\0") else {
-            throw RuriError.message(Messages.CoreExternalAuthentication.validateText1)
+            throw RuriError.message(Messages.CoreExternalAuthentication.invalidRoleResponse)
         }
     }
 }
@@ -66,12 +66,12 @@ public struct ExternalAuthSession: Decodable, Sendable {
     public var credentials: ExternalAccountCredentials { .init(accessToken: accessToken, clientToken: clientToken, user: user) }
 
     public func account(server: ExternalAuthServer, username: String, replacing existing: Account? = nil) throws -> Account {
-        guard let profile = selectedProfile else { throw RuriError.message(Messages.CoreExternalAuthentication.profileText1) }
+        guard let profile = selectedProfile else { throw RuriError.message(Messages.CoreExternalAuthentication.roleSelectionRequired) }
         try profile.validate()
         if let existing {
             guard existing.kind == .external, existing.externalLogin?.server.url == server.url,
                   existing.externalLogin?.username == username, existing.uuid == profile.normalizedID else {
-                throw RuriError.message(Messages.CoreExternalAuthentication.existingText1)
+                throw RuriError.message(Messages.CoreExternalAuthentication.previousRoleUnavailable)
             }
         }
         var result = Account(id: existing?.id ?? UUID(), username: profile.name, uuid: profile.normalizedID, kind: .external)
@@ -122,36 +122,36 @@ public struct ExternalAuthentication: Sendable {
         let (data, response) = try await request(url)
         try requireSuccess(response.statusCode)
         // Do not silently migrate a saved identity to a different authentication service.
-        guard response.url == url else { throw RuriError.message(Messages.CoreExternalAuthentication.urlText2) }
+        guard response.url == url else { throw RuriError.message(Messages.CoreExternalAuthentication.authenticationServerChanged) }
         return try metadata(data, url: url)
     }
 
     public func login(server: ExternalAuthServer, username: String, password: String) async throws -> ExternalAuthSession {
-        guard !username.isEmpty, !password.isEmpty else { throw RuriError.message(Messages.CoreExternalAuthentication.loginText1) }
+        guard !username.isEmpty, !password.isEmpty else { throw RuriError.message(Messages.CoreExternalAuthentication.credentialsRequired) }
         let client = UUID().uuidString.replacingOccurrences(of: "-", with: "")
         let result = try await exchange(server, action: "authenticate", body: ["username": username, "password": password,
             "clientToken": client, "requestUser": true, "agent": ["name": "Minecraft", "version": 1]], clientToken: client)
         guard result.selectedProfile != nil || result.availableProfiles?.isEmpty == false else {
-            throw RuriError.message(Messages.CoreExternalAuthentication.resultText1)
+            throw RuriError.message(Messages.CoreExternalAuthentication.noGameRole)
         }
         return result
     }
 
     public func select(_ profile: ExternalAuthProfile, from pending: ExternalAuthSession, server: ExternalAuthServer) async throws -> ExternalAuthSession {
-        guard pending.selectedProfile == nil, pending.availableProfiles?.contains(profile) == true else { throw RuriError.message(Messages.CoreExternalAuthentication.selectText1) }
+        guard pending.selectedProfile == nil, pending.availableProfiles?.contains(profile) == true else { throw RuriError.message(Messages.CoreExternalAuthentication.loginAndSelectRole) }
         let result = try await exchange(server, action: "refresh", body: ["accessToken": pending.accessToken,
             "clientToken": pending.clientToken, "requestUser": true, "selectedProfile": ["id": profile.id, "name": profile.name]], clientToken: pending.clientToken)
-        guard result.selectedProfile?.normalizedID == profile.normalizedID else { throw RuriError.message(Messages.CoreExternalAuthentication.resultText2) }
+        guard result.selectedProfile?.normalizedID == profile.normalizedID else { throw RuriError.message(Messages.CoreExternalAuthentication.selectedRoleMissing) }
         return result
     }
 
     public func refresh(account: Account, credentials: ExternalAccountCredentials, force: Bool = false) async throws -> (Account, ExternalAccountCredentials) {
-        guard let login = account.externalLogin, account.kind == .external else { throw RuriError.message(Messages.CoreExternalAuthentication.loginText2) }
+        guard let login = account.externalLogin, account.kind == .external else { throw RuriError.message(Messages.CoreExternalAuthentication.missingAuthenticationServerInfo) }
         let tokens: [String: Any] = ["accessToken": credentials.accessToken, "clientToken": credentials.clientToken]
         if !force {
             let (_, response) = try await request(endpoint(login.server, "validate"), body: tokens)
             if response.statusCode == 204 { return (account, credentials) }
-            guard [401, 403].contains(response.statusCode) else { try requireSuccess(response.statusCode); throw RuriError.message(Messages.CoreExternalAuthentication.tokensText1) }
+            guard [401, 403].contains(response.statusCode) else { try requireSuccess(response.statusCode); throw RuriError.message(Messages.CoreExternalAuthentication.invalidTokenValidation) }
         }
         var body = tokens; body["requestUser"] = true
         let result = try await exchange(login.server, action: "refresh", body: body, clientToken: credentials.clientToken)
@@ -170,7 +170,7 @@ public struct ExternalAuthentication: Sendable {
         let (data, response) = try await request(endpoint(server, action), body: body)
         try requireSuccess(response.statusCode)
         let value = try JSONDecoder().decode(ExternalAuthSession.self, from: data)
-        guard value.clientToken == clientToken, !value.accessToken.isEmpty, !value.accessToken.contains("\0") else { throw RuriError.message(Messages.CoreExternalAuthentication.valueText1) }
+        guard value.clientToken == clientToken, !value.accessToken.isEmpty, !value.accessToken.contains("\0") else { throw RuriError.message(Messages.CoreExternalAuthentication.invalidLoginCredentials) }
         for profile in (value.availableProfiles ?? []) + [value.selectedProfile].compactMap({ $0 }) { try profile.validate() }
         return value
     }
@@ -179,17 +179,17 @@ public struct ExternalAuthentication: Sendable {
             struct Meta: Decodable { let serverName: String? }
             let meta: Meta?; let skinDomains: [String]; let signaturePublickey: String
         }
-        guard let value = try? JSONDecoder().decode(Metadata.self, from: data) else { throw RuriError.message(Messages.CoreExternalAuthentication.valueText2) }
-        guard value.signaturePublickey.contains("-----BEGIN PUBLIC KEY-----") else { throw RuriError.message(Messages.CoreExternalAuthentication.valueText3) }
+        guard let value = try? JSONDecoder().decode(Metadata.self, from: data) else { throw RuriError.message(Messages.CoreExternalAuthentication.externalAuthInfoMissing) }
+        guard value.signaturePublickey.contains("-----BEGIN PUBLIC KEY-----") else { throw RuriError.message(Messages.CoreExternalAuthentication.externalAuthMetadataMissing) }
         var root = url
         if !root.absoluteString.hasSuffix("/") { root.appendPathComponent("") }
         let name = value.meta?.serverName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return .init(server: .init(url: root, name: name.isEmpty ? (root.host ?? Messages.CoreExternalAuthentication.nameText1.localized) : String(name.prefix(120))), data: data)
+        return .init(server: .init(url: root, name: name.isEmpty ? (root.host ?? Messages.CoreExternalAuthentication.authenticationServerName.localized) : String(name.prefix(120))), data: data)
     }
     private func requireSuccess(_ status: Int) throws {
         guard (200..<300).contains(status) else {
-            if [401, 403].contains(status) { throw RuriError.message(Messages.CoreExternalAuthentication.requireSuccessText1) }
-            throw RuriError.message(Messages.CoreExternalAuthentication.requireSuccessText2(String(describing: status)))
+            if [401, 403].contains(status) { throw RuriError.message(Messages.CoreExternalAuthentication.authenticationFailed) }
+            throw RuriError.message(Messages.CoreExternalAuthentication.authenticationHTTPError(String(describing: status)))
         }
     }
     private func request(_ url: URL, body: [String: Any]? = nil) async throws -> (Data, HTTPURLResponse) {
@@ -202,7 +202,7 @@ public struct ExternalAuthentication: Sendable {
         }
         let (data, response) = try await session.data(for: request, delegate: redirects)
         try Task.checkCancellation()
-        guard let response = response as? HTTPURLResponse, data.count <= 65_536 else { throw RuriError.message(Messages.CoreExternalAuthentication.responseText1) }
+        guard let response = response as? HTTPURLResponse, data.count <= 65_536 else { throw RuriError.message(Messages.CoreExternalAuthentication.invalidAuthenticationResponse) }
         return (data, response)
     }
 }

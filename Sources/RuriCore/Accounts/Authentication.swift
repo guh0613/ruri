@@ -46,7 +46,7 @@ public enum CredentialStore {
         let status = SecItemDelete([kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: id.uuidString] as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else { throw failure(status) }
     }
-    private static func failure(_ status: OSStatus) -> RuriError { .message(Messages.CoreAuthentication.failureText1(String(describing: status))) }
+    private static func failure(_ status: OSStatus) -> RuriError { .message(Messages.CoreAuthentication.keychainAccessFailed(String(describing: status))) }
 }
 
 public struct DeviceCode: Decodable, Sendable {
@@ -62,9 +62,9 @@ public actor MicrosoftAuth {
     private let session: URLSession
     public init(clientID: String, session: URLSession = .shared) { self.clientID = clientID.trimmingCharacters(in: .whitespacesAndNewlines); self.session = session }
     public func begin() async throws -> DeviceCode {
-        guard UUID(uuidString: clientID) != nil else { throw RuriError.message(Messages.CoreAuthentication.beginText1) }
+        guard UUID(uuidString: clientID) != nil else { throw RuriError.message(Messages.CoreAuthentication.microsoftClientIDRequired) }
         let (data, status) = try await form(AuthenticationEndpoints.deviceCode, values: ["client_id": clientID, "scope": AuthenticationEndpoints.scope])
-        guard status == 200 else { throw RuriError.message(Messages.CoreAuthentication.beginText2(String(describing: status))) }
+        guard status == 200 else { throw RuriError.message(Messages.CoreAuthentication.microsoftDeviceLoginRejected(String(describing: status))) }
         return try JSONDecoder().decode(DeviceCode.self, from: data)
     }
     private struct OAuthToken: Decodable, Sendable {
@@ -80,16 +80,16 @@ public actor MicrosoftAuth {
             if token.error == "authorization_pending" { continue }
             if token.error == "slow_down" { interval += 5; continue }
             guard let access = token.access_token, let refresh = token.refresh_token else {
-                throw RuriError.message(token.error == "authorization_declined" ? Messages.CoreAuthentication.refreshText1 : Messages.CoreAuthentication.refreshText2)
+                throw RuriError.message(token.error == "authorization_declined" ? Messages.CoreAuthentication.loginCancelled : Messages.CoreAuthentication.microsoftLoginExpiredOrFailed)
             }
             return try await exchange(access: access, refresh: refresh)
         }
-        throw RuriError.message(Messages.CoreAuthentication.refreshText3)
+        throw RuriError.message(Messages.CoreAuthentication.deviceLoginCodeExpired)
     }
     public func refresh(_ credentials: AccountCredentials, account: Account) async throws -> (Account, AccountCredentials) {
         let (data, status) = try await form(AuthenticationEndpoints.token, values: ["client_id": credentials.clientID, "grant_type": "refresh_token", "refresh_token": credentials.refreshToken, "scope": AuthenticationEndpoints.scope])
         let token = try JSONDecoder().decode(OAuthToken.self, from: data)
-        guard status == 200, let access = token.access_token else { throw RuriError.message(Messages.CoreAuthentication.accessText1) }
+        guard status == 200, let access = token.access_token else { throw RuriError.message(Messages.CoreAuthentication.microsoftLoginInvalid) }
         var (updated, secrets) = try await exchange(access: access, refresh: token.refresh_token ?? credentials.refreshToken)
         updated.id = account.id; secrets.clientID = credentials.clientID
         return (updated, secrets)
@@ -112,15 +112,15 @@ public actor MicrosoftAuth {
         if status == 401, let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let code = json["XErr"] as? Int64 {
             let explanation: LocalizedMessage
             switch code {
-            case 2148916233: explanation = Messages.CoreAuthentication.explanationText1
-            case 2148916235: explanation = Messages.CoreAuthentication.explanationText2
-            case 2148916236, 2148916237: explanation = Messages.CoreAuthentication.explanationText3
-            case 2148916238: explanation = Messages.CoreAuthentication.explanationText4
-            default: explanation = Messages.CoreAuthentication.explanationText5(String(describing: code))
+            case 2148916233: explanation = Messages.CoreAuthentication.xboxProfileMissing
+            case 2148916235: explanation = Messages.CoreAuthentication.xboxLiveUnavailableInRegion
+            case 2148916236, 2148916237: explanation = Messages.CoreAuthentication.xboxAgeVerificationRequired
+            case 2148916238: explanation = Messages.CoreAuthentication.childAccountFamilyApprovalRequired
+            default: explanation = Messages.CoreAuthentication.xboxLoginFailed(String(describing: code))
             }
             throw RuriError.message(explanation)
         }
-        guard (200..<300).contains(status) else { throw RuriError.message(Messages.CoreAuthentication.explanationText7(String(describing: url.host ?? Messages.CoreAuthentication.explanationText6.localized), String(describing: status))) }
+        guard (200..<300).contains(status) else { throw RuriError.message(Messages.CoreAuthentication.minecraftServiceLoginFailed(String(describing: url.host ?? Messages.CoreAuthentication.authenticationService.localized), String(describing: status))) }
         return try JSONDecoder().decode(type, from: data)
     }
     private func exchange(access: String, refresh: String) async throws -> (Account, AccountCredentials) {
@@ -130,12 +130,12 @@ public actor MicrosoftAuth {
         struct Profile: Decodable, Sendable { let id: String; let name: String }
         let xbox = try await post(Xbox.self, url: AuthenticationEndpoints.xboxAuthenticate, body: ["Properties": ["AuthMethod": "RPS", "SiteName": AuthenticationEndpoints.xboxSite, "RpsTicket": "d=\(access)"], "RelyingParty": AuthenticationEndpoints.xboxRelyingParty, "TokenType": "JWT"])
         let xsts = try await post(Xbox.self, url: AuthenticationEndpoints.xstsAuthorize, body: ["Properties": ["SandboxId": "RETAIL", "UserTokens": [xbox.Token]], "RelyingParty": AuthenticationEndpoints.minecraftRelyingParty, "TokenType": "JWT"])
-        guard let uhs = xsts.DisplayClaims.xui.first?["uhs"], uhs == xbox.DisplayClaims.xui.first?["uhs"] else { throw RuriError.message(Messages.CoreAuthentication.uhsText1) }
+        guard let uhs = xsts.DisplayClaims.xui.first?["uhs"], uhs == xbox.DisplayClaims.xui.first?["uhs"] else { throw RuriError.message(Messages.CoreAuthentication.xboxIdentityValidationFailed) }
         let minecraft = try await post(Minecraft.self, url: AuthenticationEndpoints.minecraftLogin, body: ["identityToken": "XBL3.0 x=\(uhs);\(xsts.Token)"])
         var request = URLRequest(url: AuthenticationEndpoints.entitlements)
         request.setValue("Bearer \(minecraft.access_token)", forHTTPHeaderField: "Authorization")
         let entitlements = try JSONDecoder().decode(Entitlements.self, from: await HTTPClient(session: session).data(for: request))
-        guard !entitlements.items.isEmpty else { throw RuriError.message(Messages.CoreAuthentication.entitlementsText1) }
+        guard !entitlements.items.isEmpty else { throw RuriError.message(Messages.CoreAuthentication.minecraftJavaEntitlementMissing) }
         request.url = AuthenticationEndpoints.profile
         let profile = try JSONDecoder().decode(Profile.self, from: await HTTPClient(session: session).data(for: request))
         return (Account(username: profile.name, uuid: profile.id, kind: .microsoft), AccountCredentials(accessToken: minecraft.access_token, refreshToken: refresh, expiresAt: Date().addingTimeInterval(TimeInterval(minecraft.expires_in)), clientID: clientID))

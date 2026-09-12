@@ -3,76 +3,150 @@ import Foundation
 
 extension Messages {
     public enum CoreForgeInstaller {
-        public static var delegateText1: LocalizedMessage {
+        /// 无法读取加载器版本列表
+        ///
+        /// Resource: `Errors.coreForgeInstaller.delegateText1`.
+        public static var loaderVersionsReadFailed: LocalizedMessage {
             .init(key: "coreForgeInstaller.delegateText1", table: "Errors", fallback: "无法读取加载器版本列表")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 请选择加载器版本
+        ///
+        /// Resource: `Errors.coreForgeInstaller.versionText1`.
+        public static var loaderVersionRequired: LocalizedMessage {
             .init(key: "coreForgeInstaller.versionText1", table: "Errors", fallback: "请选择加载器版本")
         }
-        public static var checksumText1: LocalizedMessage {
+        /// 加载器安装包没有有效的 SHA-1 校验值
+        ///
+        /// Resource: `Errors.coreForgeInstaller.checksumText1`.
+        public static var installerChecksumMissing: LocalizedMessage {
             .init(key: "coreForgeInstaller.checksumText1", table: "Errors", fallback: "加载器安装包没有有效的 SHA-1 校验值")
         }
-        public static var profileText1: LocalizedMessage {
+        /// 安装程序对应的 Minecraft 版本不匹配
+        ///
+        /// Resource: `Errors.coreForgeInstaller.profileText1`.
+        public static var minecraftVersionMismatch: LocalizedMessage {
             .init(key: "coreForgeInstaller.profileText1", table: "Errors", fallback: "安装程序对应的 Minecraft 版本不匹配")
         }
-        public static var jsonText1: LocalizedMessage {
+        /// 加载器安装包缺少版本清单
+        ///
+        /// Resource: `Errors.coreForgeInstaller.jsonText1`.
+        public static var versionManifestMissing: LocalizedMessage {
             .init(key: "coreForgeInstaller.jsonText1", table: "Errors", fallback: "加载器安装包缺少版本清单")
         }
-        public static var childText1: LocalizedMessage {
+        /// 加载器清单的父版本不匹配
+        ///
+        /// Resource: `Errors.coreForgeInstaller.childText1`.
+        public static var parentVersionMismatch: LocalizedMessage {
             .init(key: "coreForgeInstaller.childText1", table: "Errors", fallback: "加载器清单的父版本不匹配")
         }
-        public static var clientText1: LocalizedMessage {
+        /// 缺少原版客户端信息
+        ///
+        /// Resource: `Errors.coreForgeInstaller.clientText1`.
+        public static var vanillaClientMissing: LocalizedMessage {
             .init(key: "coreForgeInstaller.clientText1", table: "Errors", fallback: "缺少原版客户端信息")
         }
-        public static func crcText1(_ value0: String) -> LocalizedMessage {
+        /// 安装器内嵌文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.crcText1`.
+        public static func embeddedFileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.crcText1", table: "Errors", fallback: "安装器内嵌文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static func runtimeText1(_ value0: String) -> LocalizedMessage {
+        /// 安装加载器需要 Java %1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.runtimeText1`.
+        public static func javaRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.runtimeText1", table: "Errors", fallback: "安装加载器需要 Java %1$@", arguments: [.text(value0)])
         }
-        public static func tailText1(_ value0: String, _ value1: String, _ value2: String, _ value3: String) -> LocalizedMessage {
+        /// %1$@ 安装程序退出（%2$@）。日志：%3$@
+        /// %4$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.tailText1`.
+        public static func installerExited(_ value0: String, _ value1: String, _ value2: String, _ value3: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.tailText1", table: "Errors", fallback: "%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3)])
         }
-        public static var installedText1: LocalizedMessage {
+        /// 安装器生成的版本清单不一致
+        ///
+        /// Resource: `Errors.coreForgeInstaller.installedText1`.
+        public static var generatedManifestMismatch: LocalizedMessage {
             .init(key: "coreForgeInstaller.installedText1", table: "Errors", fallback: "安装器生成的版本清单不一致")
         }
-        public static func sourceText1(_ value0: String) -> LocalizedMessage {
+        /// 加载器生成文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.sourceText1`.
+        public static func generatedFileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.sourceText1", table: "Errors", fallback: "加载器生成文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static var valuesText1: LocalizedMessage {
+        /// 安装器生成了不支持的符号链接
+        ///
+        /// Resource: `Errors.coreForgeInstaller.valuesText1`.
+        public static var unsupportedSymlink: LocalizedMessage {
             .init(key: "coreForgeInstaller.valuesText1", table: "Errors", fallback: "安装器生成了不支持的符号链接")
         }
-        public static func entryText1(_ value0: String) -> LocalizedMessage {
+        /// 安装包缺少有效的 %1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.entryText1`.
+        public static func embeddedFileMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.entryText1", table: "Errors", fallback: "安装包缺少有效的 %1$@", arguments: [.text(value0)])
         }
-        public static var crcText3: LocalizedMessage {
+        /// 安装包清单校验失败
+        ///
+        /// Resource: `Errors.coreForgeInstaller.crcText3`.
+        public static var manifestChecksumFailed: LocalizedMessage {
             .init(key: "coreForgeInstaller.crcText3", table: "Errors", fallback: "安装包清单校验失败")
         }
-        public static var entryText2: LocalizedMessage {
+        /// 旧版 Forge 安装包缺少内嵌客户端
+        ///
+        /// Resource: `Errors.coreForgeInstaller.entryText2`.
+        public static var legacyClientMissing: LocalizedMessage {
             .init(key: "coreForgeInstaller.entryText2", table: "Errors", fallback: "旧版 Forge 安装包缺少内嵌客户端")
         }
-        public static var crcText4: LocalizedMessage {
+        /// 旧版 Forge 文件校验失败
+        ///
+        /// Resource: `Errors.coreForgeInstaller.crcText4`.
+        public static var legacyFileChecksumFailed: LocalizedMessage {
             .init(key: "coreForgeInstaller.crcText4", table: "Errors", fallback: "旧版 Forge 文件校验失败")
         }
-        public static func copyAtomicallyText1(_ value0: String) -> LocalizedMessage {
+        /// 新组件需要替换正在使用的依赖文件，原安装已保留：%1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.copyAtomicallyText1`.
+        public static func dependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.copyAtomicallyText1", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
         }
-        public static func idText1(_ value0: String) -> LocalizedMessage {
+        /// 已有加载器依赖与整合包所需文件不同，未覆盖：%1$@
+        /// 请先检查此文件，或选择另一个 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreForgeInstaller.idText1`.
+        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.idText1", table: "Errors", fallback: "已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", arguments: [.text(value0)])
         }
-        public static func stagingText1(_ value0: String) -> LocalizedMessage {
+        /// 无法保存加载器文件：%1$@
+        ///
+        /// Resource: `Errors.coreForgeInstaller.stagingText1`.
+        public static func loaderFileSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.stagingText1", table: "Errors", fallback: "无法保存加载器文件：%1$@", arguments: [.text(value0)])
         }
-        public static func jarText1(_ value0: String) -> LocalizedMessage {
+        /// 下载 %1$@ 安装程序
+        ///
+        /// Resource: `Progress.coreForgeInstaller.jarText1`.
+        public static func downloadInstaller(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.jarText1", table: "Progress", fallback: "下载 %1$@ 安装程序", arguments: [.text(value0)])
         }
-        public static var crcText2: LocalizedMessage {
+        /// 准备加载器依赖
+        ///
+        /// Resource: `Progress.coreForgeInstaller.crcText2`.
+        public static var prepareDependencies: LocalizedMessage {
             .init(key: "coreForgeInstaller.crcText2", table: "Progress", fallback: "准备加载器依赖")
         }
-        public static func runtimeText2(_ value0: String) -> LocalizedMessage {
+        /// 运行 %1$@ 安装程序
+        ///
+        /// Resource: `Progress.coreForgeInstaller.runtimeText2`.
+        public static func runInstaller(_ value0: String) -> LocalizedMessage {
             .init(key: "coreForgeInstaller.runtimeText2", table: "Progress", fallback: "运行 %1$@ 安装程序", arguments: [.text(value0)])
         }
-        public static var targetText1: LocalizedMessage {
+        /// 校验加载器生成文件
+        ///
+        /// Resource: `Progress.coreForgeInstaller.targetText1`.
+        public static var verifyGeneratedFiles: LocalizedMessage {
             .init(key: "coreForgeInstaller.targetText1", table: "Progress", fallback: "校验加载器生成文件")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreManifest {
-        public static var extPartsText1: LocalizedMessage {
+        /// 无效 Maven 扩展名
+        ///
+        /// Resource: `Errors.coreManifest.extPartsText1`.
+        public static var invalidExtension: LocalizedMessage {
             .init(key: "coreManifest.extPartsText1", table: "Errors", fallback: "无效 Maven 扩展名")
         }
-        public static func partsText1(_ value0: String) -> LocalizedMessage {
+        /// 无效 Maven 坐标：%1$@
+        ///
+        /// Resource: `Errors.coreManifest.partsText1`.
+        public static func invalidCoordinate(_ value0: String) -> LocalizedMessage {
             .init(key: "coreManifest.partsText1", table: "Errors", fallback: "无效 Maven 坐标：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

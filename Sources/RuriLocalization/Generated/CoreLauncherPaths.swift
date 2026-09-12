@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreLauncherPaths {
-        public static func safePathText1(_ value0: String) -> LocalizedMessage {
+        /// 不安全的文件路径：%1$@
+        ///
+        /// Resource: `Errors.coreLauncherPaths.safePathText1`.
+        public static func unsafeFilePath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLauncherPaths.safePathText1", table: "Errors", fallback: "不安全的文件路径：%1$@", arguments: [.text(value0)])
         }
-        public static func resolvedText1(_ value0: String) -> LocalizedMessage {
+        /// 文件路径超出实例目录：%1$@
+        ///
+        /// Resource: `Errors.coreLauncherPaths.resolvedText1`.
+        public static func pathOutsideInstanceDirectory(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLauncherPaths.resolvedText1", table: "Errors", fallback: "文件路径超出实例目录：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

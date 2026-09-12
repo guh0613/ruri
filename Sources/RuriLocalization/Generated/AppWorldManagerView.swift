@@ -3,124 +3,244 @@ import Foundation
 
 extension Messages {
     public enum AppWorldManagerView {
-        public static var bodyText1: LocalizedMessage {
+        /// 留住每一次冒险
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText1`.
+        public static var keepAdventure: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText1", table: "Interface", fallback: "留住每一次冒险")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 内容
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText2`.
+        public static var content: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText2", table: "Interface", fallback: "内容")
         }
-        public static func bodyText3(_ value0: Int64) -> LocalizedMessage {
+        /// 存档 %1$lld
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText3`.
+        public static func worldCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText3", table: "Interface", fallback: "存档 %1$lld", arguments: [.integer(value0)])
         }
-        public static func bodyText4(_ value0: Int64) -> LocalizedMessage {
+        /// 备份 %1$lld
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText4`.
+        public static func backupCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText4", table: "Interface", fallback: "备份 %1$lld", arguments: [.integer(value0)])
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 导入存档…
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText5`.
+        public static var importWorld: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText5", table: "Interface", fallback: "导入存档…")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 打开存档文件夹
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText6`.
+        public static var openWorldFolder: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText6", table: "Interface", fallback: "打开存档文件夹")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 请先结束游戏，再修改或备份存档。
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText7`.
+        public static var worldEditNotice: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText7", table: "Interface", fallback: "请先结束游戏，再修改或备份存档。")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。
+        ///
+        /// Resource: `Interface.appWorldManagerView.bodyText8`.
+        public static var directWorldLaunchUnsupported: LocalizedMessage {
             .init(key: "appWorldManagerView.bodyText8", table: "Interface", fallback: "此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。")
         }
-        public static var statusText1: LocalizedMessage {
+        /// 世界还在等你创造
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText1`.
+        public static var noWorlds: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText1", table: "Interface", fallback: "世界还在等你创造")
         }
-        public static var statusText2: LocalizedMessage {
+        /// 游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText2`.
+        public static var worldDescription: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText2", table: "Interface", fallback: "游戏中创建的世界会显示在这里，也可以导入已有存档的文件夹或 ZIP。")
         }
-        public static var statusText3: LocalizedMessage {
+        /// 给冒险留一份备份
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText3`.
+        public static var backupYourAdventure: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText3", table: "Interface", fallback: "给冒险留一份备份")
         }
-        public static var statusText4: LocalizedMessage {
+        /// 在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText4`.
+        public static var backupDescription: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText4", table: "Interface", fallback: "在存档列表中创建备份。恢复时可以保留原世界，或在自动备份后替换原目录。")
         }
-        public static var statusText5: LocalizedMessage {
+        /// 备份保存在实例内，恢复为副本会保留原存档。
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText5`.
+        public static var backupRetention: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText5", table: "Interface", fallback: "备份保存在实例内，恢复为副本会保留原存档。")
         }
-        public static var statusText6: LocalizedMessage {
+        /// 取消任务
+        ///
+        /// Resource: `Interface.appWorldManagerView.statusText6`.
+        public static var cancelTask: LocalizedMessage {
             .init(key: "appWorldManagerView.statusText6", table: "Interface", fallback: "取消任务")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 导入存档
+        ///
+        /// Resource: `Interface.appWorldManagerView.urlText1`.
+        public static var importWorldTitle: LocalizedMessage {
             .init(key: "appWorldManagerView.urlText1", table: "Interface", fallback: "导入存档")
         }
-        public static func folderText1(_ value0: String) -> LocalizedMessage {
+        /// 已导入到 %1$@
+        ///
+        /// Resource: `Interface.appWorldManagerView.folderText1`.
+        public static func worldImported(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.folderText1", table: "Interface", fallback: "已导入到 %1$@", arguments: [.text(value0)])
         }
-        public static var folderText2: LocalizedMessage {
+        /// 替换原存档？
+        ///
+        /// Resource: `Interface.appWorldManagerView.folderText2`.
+        public static var replaceWorldPrompt: LocalizedMessage {
             .init(key: "appWorldManagerView.folderText2", table: "Interface", fallback: "替换原存档？")
         }
-        public static var folderText3: LocalizedMessage {
+        /// 自动备份并恢复
+        ///
+        /// Resource: `Interface.appWorldManagerView.folderText3`.
+        public static var backupAndRestore: LocalizedMessage {
             .init(key: "appWorldManagerView.folderText3", table: "Interface", fallback: "自动备份并恢复")
         }
-        public static func backupText1(_ value0: String) -> LocalizedMessage {
+        /// 将恢复到“%1$@”。现有存档会先创建一份自动备份。
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupText1`.
+        public static func restoreBackupNotice(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.backupText1", table: "Interface", fallback: "将恢复到“%1$@”。现有存档会先创建一份自动备份。", arguments: [.text(value0)])
         }
-        public static var backupText2: LocalizedMessage {
+        /// 移到废纸篓？
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupText2`.
+        public static var trashWorldPrompt: LocalizedMessage {
             .init(key: "appWorldManagerView.backupText2", table: "Interface", fallback: "移到废纸篓？")
         }
-        public static var backupText3: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupText3`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appWorldManagerView.backupText3", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var worldText1: LocalizedMessage {
+        /// 移除存档
+        ///
+        /// Resource: `Interface.appWorldManagerView.worldText1`.
+        public static var removeWorld: LocalizedMessage {
             .init(key: "appWorldManagerView.worldText1", table: "Interface", fallback: "移除存档")
         }
-        public static var backupText4: LocalizedMessage {
+        /// 移除备份
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupText4`.
+        public static var removeBackup: LocalizedMessage {
             .init(key: "appWorldManagerView.backupText4", table: "Interface", fallback: "移除备份")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 进入存档
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText1`.
+        public static var enterWorld: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText1", table: "Interface", fallback: "进入存档")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 启动并进入这个单人世界
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText2`.
+        public static var launchWorldNotice: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText2", table: "Interface", fallback: "启动并进入这个单人世界")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 此版本不支持直接进入存档
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText3`.
+        public static var worldLaunchUnsupported: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText3", table: "Interface", fallback: "此版本不支持直接进入存档")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 备份
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText4`.
+        public static var createBackup: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText4", table: "Interface", fallback: "备份")
         }
-        public static func errorText5(_ value0: String) -> LocalizedMessage {
+        /// 备份 %1$@
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText5`.
+        public static func backupWorld(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.errorText5", table: "Interface", fallback: "备份 %1$@", arguments: [.text(value0)])
         }
-        public static func errorText6(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已备份
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText6`.
+        public static func worldBackedUp(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.errorText6", table: "Interface", fallback: "%1$@ 已备份", arguments: [.text(value0)])
         }
-        public static var errorText7: LocalizedMessage {
+        /// 管理数据包…
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText7`.
+        public static var manageDatapacks: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText7", table: "Interface", fallback: "管理数据包…")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 导出 ZIP…
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText8`.
+        public static var exportZip: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText8", table: "Interface", fallback: "导出 ZIP…")
         }
-        public static var errorText9: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appWorldManagerView.errorText9`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appWorldManagerView.errorText9", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var backupRowText1: LocalizedMessage {
+        /// 无法读取备份信息
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupRowText1`.
+        public static var backupInfoUnavailable: LocalizedMessage {
             .init(key: "appWorldManagerView.backupRowText1", table: "Interface", fallback: "无法读取备份信息")
         }
-        public static var backupRowText2: LocalizedMessage {
+        /// 恢复为副本
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupRowText2`.
+        public static var restoreAsCopy: LocalizedMessage {
             .init(key: "appWorldManagerView.backupRowText2", table: "Interface", fallback: "恢复为副本")
         }
-        public static var backupRowText3: LocalizedMessage {
+        /// 替换原存档…
+        ///
+        /// Resource: `Interface.appWorldManagerView.backupRowText3`.
+        public static var replaceOriginal: LocalizedMessage {
             .init(key: "appWorldManagerView.backupRowText3", table: "Interface", fallback: "替换原存档…")
         }
-        public static func restoreText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复 %1$@
+        ///
+        /// Resource: `Interface.appWorldManagerView.restoreText1`.
+        public static func restoreWorld(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.restoreText1", table: "Interface", fallback: "恢复 %1$@", arguments: [.text(value0)])
         }
-        public static func folderText4(_ value0: String) -> LocalizedMessage {
+        /// 已恢复到 %1$@
+        ///
+        /// Resource: `Interface.appWorldManagerView.folderText4`.
+        public static func worldRestored(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.folderText4", table: "Interface", fallback: "已恢复到 %1$@", arguments: [.text(value0)])
         }
-        public static func urlText2(_ value0: String) -> LocalizedMessage {
+        /// 导出 %1$@
+        ///
+        /// Resource: `Interface.appWorldManagerView.urlText2`.
+        public static func exportWorld(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldManagerView.urlText2", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
-        public static var urlText3: LocalizedMessage {
+        /// 已导出存档 ZIP
+        ///
+        /// Resource: `Interface.appWorldManagerView.urlText3`.
+        public static var worldZipExported: LocalizedMessage {
             .init(key: "appWorldManagerView.urlText3", table: "Interface", fallback: "已导出存档 ZIP")
         }
-        public static var progressText1: LocalizedMessage {
+        /// 处理存档文件
+        ///
+        /// Resource: `Progress.appWorldManagerView.progressText1`.
+        public static var processingWorldFiles: LocalizedMessage {
             .init(key: "appWorldManagerView.progressText1", table: "Progress", fallback: "处理存档文件")
         }
         static let definitions: [String: MessageDefinition] = [

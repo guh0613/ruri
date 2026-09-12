@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftInstallationFiles {
-        public static func requireResourceText1(_ value0: String) -> LocalizedMessage {
+        /// 安装文件内容不一致，未覆盖现有文件：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationFiles.requireResourceText1`.
+        public static func installationContentsMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftInstallationFiles.requireResourceText1", table: "Errors", fallback: "安装文件内容不一致，未覆盖现有文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

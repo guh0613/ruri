@@ -3,81 +3,159 @@ import Foundation
 
 extension Messages {
     public enum AppImportInstanceView {
-        public static var bodyText1: LocalizedMessage {
+        /// 导入游戏实例
+        ///
+        /// Resource: `Interface.appImportInstanceView.bodyText1`.
+        public static var importGameInstance: LocalizedMessage {
             .init(key: "appImportInstanceView.bodyText1", table: "Interface", fallback: "导入游戏实例")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 准备整合包更新
+        ///
+        /// Resource: `Interface.appImportInstanceView.bodyText2`.
+        public static var prepareModpackUpdate: LocalizedMessage {
             .init(key: "appImportInstanceView.bodyText2", table: "Interface", fallback: "准备整合包更新")
         }
-        public static func updateTargetText3(_ value0: String) -> LocalizedMessage {
+        /// 保存到：%1$@
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText3`.
+        public static func saveTo(_ value0: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText3", table: "Interface", fallback: "保存到：%1$@", arguments: [.text(value0)])
         }
-        public static var updateTargetText4: LocalizedMessage {
+        /// 整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText4`.
+        public static var modpackUsesIndependentDirectory: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText4", table: "Interface", fallback: "整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。")
         }
-        public static var updateTargetText5: LocalizedMessage {
+        /// 已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText5`.
+        public static var recognizedFullCopy: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText5", table: "Interface", fallback: "已识别 Ruri 完整副本。将还原内附的游戏安装文件与本地修改，并使用新的独立目录。")
         }
-        public static func updateTargetText6(_ value0: String) -> LocalizedMessage {
+        /// 已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText6`.
+        public static func recognizedInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText6", table: "Interface", fallback: "已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。", arguments: [.text(value0)])
         }
-        public static var updateTargetText7: LocalizedMessage {
+        /// 实例名称
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText7`.
+        public static var instanceName: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText7", table: "Interface", fallback: "实例名称")
         }
-        public static var updateTargetText8: LocalizedMessage {
+        /// 游戏版本
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText8`.
+        public static var gameVersion: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText8", table: "Interface", fallback: "游戏版本")
         }
-        public static var updateTargetText9: LocalizedMessage {
+        /// 内存
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText9`.
+        public static var memory: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText9", table: "Interface", fallback: "内存")
         }
-        public static var updateTargetText10: LocalizedMessage {
+        /// 窗口
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTargetText10`.
+        public static var window: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText10", table: "Interface", fallback: "窗口")
         }
-        public static var javaText1: LocalizedMessage {
+        /// 支持 Java
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText1`.
+        public static var supportedJava: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText1", table: "Interface", fallback: "支持 Java")
         }
-        public static var javaText2: LocalizedMessage {
+        /// 待下载文件
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText2`.
+        public static var pendingDownloads: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText2", table: "Interface", fallback: "待下载文件")
         }
-        public static func javaText3(_ value0: Int64) -> LocalizedMessage {
+        /// %1$lld 个（整合包下载源）
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText3`.
+        public static func modpackDownloadCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appImportInstanceView.javaText3", table: "Interface", fallback: "%1$lld 个（整合包下载源）", arguments: [.integer(value0)])
         }
-        public static var javaText4: LocalizedMessage {
+        /// 迁移内容
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText4`.
+        public static var migratedContent: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText4", table: "Interface", fallback: "迁移内容")
         }
-        public static func javaText5(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+        /// %1$lld 个文件 · %2$@
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText5`.
+        public static func migratedFileCount(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.javaText5", table: "Interface", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
-        public static var javaText6: LocalizedMessage {
+        /// 可选内容
+        ///
+        /// Resource: `Interface.appImportInstanceView.javaText6`.
+        public static var optionalContent: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText6", table: "Interface", fallback: "可选内容")
         }
-        public static func optionalText1(_ value0: String) -> LocalizedMessage {
+        /// 安装可选内容：%1$@
+        ///
+        /// Resource: `Interface.appImportInstanceView.optionalText1`.
+        public static func installOptionalContent(_ value0: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.optionalText1", table: "Interface", fallback: "安装可选内容：%1$@", arguments: [.text(value0)])
         }
-        public static var optionalText2: LocalizedMessage {
+        /// 正在解析整合包文件…
+        ///
+        /// Resource: `Interface.appImportInstanceView.optionalText2`.
+        public static var resolvingModpackFiles: LocalizedMessage {
             .init(key: "appImportInstanceView.optionalText2", table: "Interface", fallback: "正在解析整合包文件…")
         }
-        public static var optionalText3: LocalizedMessage {
+        /// 继续前需要解析 CurseForge 文件清单。
+        ///
+        /// Resource: `Interface.appImportInstanceView.optionalText3`.
+        public static var curseforgeManifestRequired: LocalizedMessage {
             .init(key: "appImportInstanceView.optionalText3", table: "Interface", fallback: "继续前需要解析 CurseForge 文件清单。")
         }
-        public static var optionalText4: LocalizedMessage {
+        /// 解析文件清单
+        ///
+        /// Resource: `Interface.appImportInstanceView.optionalText4`.
+        public static var resolveFileManifest: LocalizedMessage {
             .init(key: "appImportInstanceView.optionalText4", table: "Interface", fallback: "解析文件清单")
         }
-        public static var optionalText5: LocalizedMessage {
+        /// 可在设置中配置 API Key，再重新导入此整合包。
+        ///
+        /// Resource: `Interface.appImportInstanceView.optionalText5`.
+        public static var configureAPIKeyInstruction: LocalizedMessage {
             .init(key: "appImportInstanceView.optionalText5", table: "Interface", fallback: "可在设置中配置 API Key，再重新导入此整合包。")
         }
-        public static var argumentsText2: LocalizedMessage {
+        /// 保留自定义 JVM 参数
+        ///
+        /// Resource: `Interface.appImportInstanceView.argumentsText2`.
+        public static var preserveCustomJVMArguments: LocalizedMessage {
             .init(key: "appImportInstanceView.argumentsText2", table: "Interface", fallback: "保留自定义 JVM 参数")
         }
-        public static var onCancelText1: LocalizedMessage {
+        /// 导入实例
+        ///
+        /// Resource: `Interface.appImportInstanceView.onCancelText1`.
+        public static var importInstance: LocalizedMessage {
             .init(key: "appImportInstanceView.onCancelText1", table: "Interface", fallback: "导入实例")
         }
-        public static var onCancelText2: LocalizedMessage {
+        /// 查看更新差异
+        ///
+        /// Resource: `Interface.appImportInstanceView.onCancelText2`.
+        public static var viewUpdateDiff: LocalizedMessage {
             .init(key: "appImportInstanceView.onCancelText2", table: "Interface", fallback: "查看更新差异")
         }
+        /// 游戏参数：%1$@
+        ///
+        /// Resource: `Interface.appImportInstanceView.gameArguments`.
         public static func gameArguments(_ value0: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.gameArguments", table: "Interface", fallback: "游戏参数：%1$@", arguments: [.text(value0)])
         }
+        /// 更新：%1$@；下一步查看文件差异。
+        ///
+        /// Resource: `Interface.appImportInstanceView.updateTarget`.
         public static func updateTarget(_ value0: String) -> LocalizedMessage {
             .init(key: "appImportInstanceView.updateTarget", table: "Interface", fallback: "更新：%1$@；下一步查看文件差异。", arguments: [.text(value0)])
         }

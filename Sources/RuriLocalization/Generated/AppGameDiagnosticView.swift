@@ -3,73 +3,142 @@ import Foundation
 
 extension Messages {
     public enum AppGameDiagnosticView {
-        public static var diagnosisText1: LocalizedMessage {
+        /// 读取本次运行的证据…
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.diagnosisText1`.
+        public static var readingEvidence: LocalizedMessage {
             .init(key: "appGameDiagnosticView.diagnosisText1", table: "Interface", fallback: "读取本次运行的证据…")
         }
-        public static var analysisText1: LocalizedMessage {
+        /// 已记录的事实
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.analysisText1`.
+        public static var recordedFacts: LocalizedMessage {
             .init(key: "appGameDiagnosticView.analysisText1", table: "Interface", fallback: "已记录的事实")
         }
-        public static var documentText1: LocalizedMessage {
+        /// 末段
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.documentText1`.
+        public static var lastSection: LocalizedMessage {
             .init(key: "appGameDiagnosticView.documentText1", table: "Interface", fallback: "末段")
         }
-        public static func documentText2(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+        /// %1$@ · 命中%2$@第 %3$@ 行
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.documentText2`.
+        public static func evidenceLine(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
             .init(key: "appGameDiagnosticView.documentText2", table: "Interface", fallback: "%1$@ · 命中%2$@第 %3$@ 行", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        public static var relativeText1: LocalizedMessage {
+        /// 在 Finder 中显示这份证据
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.relativeText1`.
+        public static var showEvidenceInFinder: LocalizedMessage {
             .init(key: "appGameDiagnosticView.relativeText1", table: "Interface", fallback: "在 Finder 中显示这份证据")
         }
-        public static var relativeText2: LocalizedMessage {
+        /// 修复会联网校验并补全游戏与加载器安装文件。
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.relativeText2`.
+        public static var repairNotice: LocalizedMessage {
             .init(key: "appGameDiagnosticView.relativeText2", table: "Interface", fallback: "修复会联网校验并补全游戏与加载器安装文件。")
         }
-        public static var activityText1: LocalizedMessage {
+        /// 证据范围
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.activityText1`.
+        public static var evidenceScope: LocalizedMessage {
             .init(key: "appGameDiagnosticView.activityText1", table: "Interface", fallback: "证据范围")
         }
-        public static var activityText2: LocalizedMessage {
+        /// 查看运行文件
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.activityText2`.
+        public static var viewRunFiles: LocalizedMessage {
             .init(key: "appGameDiagnosticView.activityText2", table: "Interface", fallback: "查看运行文件")
         }
-        public static var activityText3: LocalizedMessage {
+        /// 收集诊断报告…
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.activityText3`.
+        public static var collectReport: LocalizedMessage {
             .init(key: "appGameDiagnosticView.activityText3", table: "Interface", fallback: "收集诊断报告…")
         }
-        public static var collectionText1: LocalizedMessage {
+        /// 选择内容，检查预览，然后保存到本地。
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.collectionText1`.
+        public static var collectionInstructions: LocalizedMessage {
             .init(key: "appGameDiagnosticView.collectionText1", table: "Interface", fallback: "选择内容，检查预览，然后保存到本地。")
         }
-        public static var collectionText2: LocalizedMessage {
+        /// 已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.collectionText2`.
+        public static var redactionNotice: LocalizedMessage {
             .init(key: "appGameDiagnosticView.collectionText2", table: "Interface", fallback: "已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。")
         }
-        public static func bundleText1(_ value0: String) -> LocalizedMessage {
+        /// 包含 %1$@
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText1`.
+        public static func containsFile(_ value0: String) -> LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText1", table: "Interface", fallback: "包含 %1$@", arguments: [.text(value0)])
         }
-        public static var bundleText2: LocalizedMessage {
+        ///  · 已遮盖
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText2`.
+        public static var redacted: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText2", table: "Interface", fallback: " · 已遮盖")
         }
-        public static var bundleText3: LocalizedMessage {
+        /// 选择一项预览
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText3`.
+        public static var choosePreview: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText3", table: "Interface", fallback: "选择一项预览")
         }
-        public static var bundleText4: LocalizedMessage {
+        /// 上一页
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText4`.
+        public static var previousPage: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText4", table: "Interface", fallback: "上一页")
         }
-        public static var bundleText5: LocalizedMessage {
+        /// 下一页
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText5`.
+        public static var nextPage: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText5", table: "Interface", fallback: "下一页")
         }
-        public static var bundleText6: LocalizedMessage {
+        /// 额外隐藏的文字，每行一项
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText6`.
+        public static var extraHiddenText: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText6", table: "Interface", fallback: "额外隐藏的文字，每行一项")
         }
-        public static var bundleText7: LocalizedMessage {
+        /// 更新预览
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText7`.
+        public static var updatePreview: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText7", table: "Interface", fallback: "更新预览")
         }
-        public static var bundleText8: LocalizedMessage {
+        /// 隐藏文字已修改，请更新预览后导出。
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.bundleText8`.
+        public static var previewChanged: LocalizedMessage {
             .init(key: "appGameDiagnosticView.bundleText8", table: "Interface", fallback: "隐藏文字已修改，请更新预览后导出。")
         }
-        public static var exportedText1: LocalizedMessage {
+        /// 显示已导出的诊断包
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.exportedText1`.
+        public static var showExportedBundle: LocalizedMessage {
             .init(key: "appGameDiagnosticView.exportedText1", table: "Interface", fallback: "显示已导出的诊断包")
         }
-        public static var exportedText2: LocalizedMessage {
+        /// 仅保存已勾选的预览内容；没有上传操作。
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.exportedText2`.
+        public static var exportNotice: LocalizedMessage {
             .init(key: "appGameDiagnosticView.exportedText2", table: "Interface", fallback: "仅保存已勾选的预览内容；没有上传操作。")
         }
-        public static var exportedText3: LocalizedMessage {
+        /// 导出诊断包…
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.exportedText3`.
+        public static var exportBundle: LocalizedMessage {
             .init(key: "appGameDiagnosticView.exportedText3", table: "Interface", fallback: "导出诊断包…")
         }
-        public static var exportedText4: LocalizedMessage {
+        /// 准备分享预览…
+        ///
+        /// Resource: `Interface.appGameDiagnosticView.exportedText4`.
+        public static var prepareSharePreview: LocalizedMessage {
             .init(key: "appGameDiagnosticView.exportedText4", table: "Interface", fallback: "准备分享预览…")
         }
         static let definitions: [String: MessageDefinition] = [

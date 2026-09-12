@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreLoaderKind {
-        public static var titleText1: LocalizedMessage {
+        /// 原版
+        ///
+        /// Resource: `Core.coreLoaderKind.titleText1`.
+        public static var vanilla: LocalizedMessage {
             .init(key: "coreLoaderKind.titleText1", table: "Core", fallback: "原版")
         }
         static let definitions: [String: MessageDefinition] = [

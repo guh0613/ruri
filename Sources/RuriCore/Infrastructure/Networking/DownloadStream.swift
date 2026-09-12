@@ -31,11 +31,11 @@ struct HTTPContentRange: Equatable {
     let total: Int64
     init(_ value: String) throws {
         let pieces = value.split(separator: " ")
-        guard pieces.count == 2, pieces[0] == "bytes" else { throw DownloadFailure(message: Messages.CoreDownloadStream.piecesText1.localized, discardPartial: true) }
+        guard pieces.count == 2, pieces[0] == "bytes" else { throw DownloadFailure(message: Messages.CoreDownloadStream.invalidDownloadRange.localized, discardPartial: true) }
         let bounds = pieces[1].split(separator: "/")
         let range = bounds.first?.split(separator: "-", omittingEmptySubsequences: false) ?? []
         guard bounds.count == 2, range.count == 2, let start = Int64(range[0]), let end = Int64(range[1]), let total = Int64(bounds[1]),
-              start >= 0, end >= start, total > end else { throw DownloadFailure(message: Messages.CoreDownloadStream.piecesText1.localized, discardPartial: true) }
+              start >= 0, end >= start, total > end else { throw DownloadFailure(message: Messages.CoreDownloadStream.invalidDownloadRange.localized, discardPartial: true) }
         self.start = start; self.end = end; self.total = total
     }
 }
@@ -118,37 +118,37 @@ final class DownloadStream: @unchecked Sendable {
         task?.cancel()
     }
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
-        guard request.url?.scheme == "https" else { failure = DownloadFailure(message: Messages.CoreDownloadStream.urlSessionText1.localized); completionHandler(nil); return }
+        guard request.url?.scheme == "https" else { failure = DownloadFailure(message: Messages.CoreDownloadStream.insecureDownloadRedirect.localized); completionHandler(nil); return }
         var redirected = request
         for field in ["Range", "If-Range", "Accept-Encoding"] { redirected.setValue(task.originalRequest?.value(forHTTPHeaderField: field), forHTTPHeaderField: field) }
         completionHandler(redirected)
     }
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping @Sendable (URLSession.ResponseDisposition) -> Void) {
         do {
-            guard let http = response as? HTTPURLResponse else { throw DownloadFailure(message: Messages.CoreDownloadStream.httpText1.localized) }
+            guard let http = response as? HTTPURLResponse else { throw DownloadFailure(message: Messages.CoreDownloadStream.invalidDownloadResponse.localized) }
             guard http.statusCode == 200 || http.statusCode == 206 else {
-                throw DownloadFailure(message: Messages.CoreDownloadStream.httpText2(String(describing: http.statusCode)).localized, discardPartial: http.statusCode == 416)
+                throw DownloadFailure(message: Messages.CoreDownloadStream.downloadHTTPError(String(describing: http.statusCode)).localized, discardPartial: http.statusCode == 416)
             }
             let encoding = http.value(forHTTPHeaderField: "Content-Encoding")?.lowercased()
-            guard encoding == nil || encoding == "identity" else { throw DownloadFailure(message: Messages.CoreDownloadStream.encodingText1.localized, discardPartial: true) }
+            guard encoding == nil || encoding == "identity" else { throw DownloadFailure(message: Messages.CoreDownloadStream.missingDownloadHash.localized, discardPartial: true) }
             if http.statusCode == 206 {
                 let range = try HTTPContentRange(http.value(forHTTPHeaderField: "Content-Range") ?? "")
-                guard range.start == offset, expectedSize == nil || expectedSize == range.total else { throw DownloadFailure(message: Messages.CoreDownloadStream.rangeText1.localized, discardPartial: true) }
+                guard range.start == offset, expectedSize == nil || expectedSize == range.total else { throw DownloadFailure(message: Messages.CoreDownloadStream.resumeRangeMismatch.localized, discardPartial: true) }
                 resumed = offset; received = offset; total = range.total; expectedEnd = range.end + 1
             } else {
                 received = 0; resumed = 0
                 total = expectedSize ?? (http.expectedContentLength >= 0 ? http.expectedContentLength : nil)
                 expectedEnd = http.expectedContentLength >= 0 ? http.expectedContentLength : expectedSize
-                if let expectedSize, let expectedEnd, expectedSize != expectedEnd { throw DownloadFailure(message: Messages.CoreDownloadStream.expectedEndText1.localized, discardPartial: true) }
+                if let expectedSize, let expectedEnd, expectedSize != expectedEnd { throw DownloadFailure(message: Messages.CoreDownloadStream.downloadSizeMismatch.localized, discardPartial: true) }
             }
             if !FileManager.default.fileExists(atPath: partial.path) {
-                guard FileManager.default.createFile(atPath: partial.path, contents: nil) else { throw DownloadFailure(message: Messages.CoreDownloadStream.expectedEndText2.localized) }
+                guard FileManager.default.createFile(atPath: partial.path, contents: nil) else { throw DownloadFailure(message: Messages.CoreDownloadStream.downloadSaveFailed.localized) }
             }
             let file = try FileHandle(forWritingTo: partial)
             handle = file
             if resumed == 0 { try file.truncate(atOffset: 0) }
             let length = try file.seekToEnd()
-            guard length == UInt64(received) else { throw DownloadFailure(message: Messages.CoreDownloadStream.lengthText1.localized, discardPartial: true) }
+            guard length == UInt64(received) else { throw DownloadFailure(message: Messages.CoreDownloadStream.resumeFileChanged.localized, discardPartial: true) }
             let state = DownloadResumeState(identity: identity, etag: http.value(forHTTPHeaderField: "ETag"), lastModified: http.value(forHTTPHeaderField: "Last-Modified"), sourceURL: sourceURL)
             try JSONEncoder().encode(state).write(to: metadata, options: .atomic)
             report(force: true)
@@ -158,8 +158,8 @@ final class DownloadStream: @unchecked Sendable {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         guard failure == nil else { return }
         do {
-            if let total, Int64(data.count) > total - received { throw DownloadFailure(message: Messages.CoreDownloadStream.totalText1.localized, discardPartial: true) }
-            guard let handle else { throw DownloadFailure(message: Messages.CoreDownloadStream.handleText1.localized, discardPartial: true) }
+            if let total, Int64(data.count) > total - received { throw DownloadFailure(message: Messages.CoreDownloadStream.downloadExceedsExpectedSize.localized, discardPartial: true) }
+            guard let handle else { throw DownloadFailure(message: Messages.CoreDownloadStream.missingDownloadResponse.localized, discardPartial: true) }
             try handle.write(contentsOf: data); received += Int64(data.count); report()
         } catch { failure = error; dataTask.cancel() }
     }
@@ -170,7 +170,7 @@ final class DownloadStream: @unchecked Sendable {
         taskLock.lock(); self.task = nil; taskLock.unlock()
         if let failure { completion?.resume(throwing: failure) }
         else if let error { completion?.resume(throwing: error) }
-        else if let expectedEnd, received != expectedEnd { completion?.resume(throwing: DownloadFailure(message: Messages.CoreDownloadStream.expectedEndText3.localized)) }
+        else if let expectedEnd, received != expectedEnd { completion?.resume(throwing: DownloadFailure(message: Messages.CoreDownloadStream.downloadEndedEarly.localized)) }
         else { completion?.resume() }
     }
     private func report(force: Bool = false) {

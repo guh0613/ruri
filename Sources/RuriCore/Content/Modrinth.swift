@@ -46,11 +46,11 @@ public actor ModrinthService {
         try await client.get([ModrinthVersion].self, from: ModrinthEndpoints.versions(project: project, game: game, loader: loader))
     }
     public func install(version: ModrinthVersion, type: String, instance: GameInstance, paths: LauncherPaths, downloader: DownloadManager, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
-        guard let kind = ContentKind(rawValue: type) else { throw RuriError.message(Messages.CoreModrinth.kindText1) }
+        guard let kind = ContentKind(rawValue: type) else { throw RuriError.message(Messages.CoreModrinth.unsupportedContentType) }
         let plan = try await plan(versions: [version], kind: kind, instance: instance)
         let files = try await materialize(plan, paths: paths, downloader: downloader, progress: progress)
         try Task.checkCancellation()
-        await progress(InstallProgress(Messages.CoreModrinth.filesText1, completed: files.count, total: files.count))
+        await progress(InstallProgress(Messages.CoreModrinth.applyingContentUpdate, completed: files.count, total: files.count))
         try await ContentManager(paths: paths, instanceID: instance.id).install(files)
     }
     public func updates(for records: [ManagedContent], instance: GameInstance) async throws -> [ContentUpdate] {
@@ -95,7 +95,7 @@ public actor ModpackImporter {
         let transfer = InstanceTransfer(paths: paths)
         let prepared = try await transfer.prepare(archive)
         do {
-            guard prepared.format == "Modrinth" else { throw RuriError.message(Messages.CoreModrinth.preparedText1) }
+            guard prepared.format == "Modrinth" else { throw RuriError.message(Messages.CoreModrinth.notModrinthPack) }
             let result = try await transfer.install(prepared, name: prepared.instance.name, installer: installer, progress: progress)
             await transfer.discard(prepared); return result
         } catch { await transfer.discard(prepared); throw error }

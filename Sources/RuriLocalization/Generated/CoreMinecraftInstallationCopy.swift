@@ -3,25 +3,46 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftInstallationCopy {
-        public static var selectedText1: LocalizedMessage {
+        /// 源版本已移除，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.selectedText1`.
+        public static var sourceVersionRemoved: LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.selectedText1", table: "Errors", fallback: "源版本已移除，请刷新后重试。")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 源版本缺少完整启动清单，请先修复。
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.fileText1`.
+        public static var incompleteLaunchManifest: LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.fileText1", table: "Errors", fallback: "源版本缺少完整启动清单，请先修复。")
         }
-        public static func sizeText1(_ value0: String) -> LocalizedMessage {
+        /// 所需安装文件缺失或不是普通文件：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.sizeText1`.
+        public static func installationFileMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.sizeText1", table: "Errors", fallback: "所需安装文件缺失或不是普通文件：%1$@", arguments: [.text(value0)])
         }
-        public static var afterText1: LocalizedMessage {
+        /// 读取期间安装文件改变，请刷新复制预览。
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.afterText1`.
+        public static var installationFileChanged: LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.afterText1", table: "Errors", fallback: "读取期间安装文件改变，请刷新复制预览。")
         }
-        public static func previousText1(_ value0: String) -> LocalizedMessage {
+        /// 安装文件在同一路径有不同内容：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.previousText1`.
+        public static func contentConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.previousText1", table: "Errors", fallback: "安装文件在同一路径有不同内容：%1$@", arguments: [.text(value0)])
         }
-        public static var decodedText1: LocalizedMessage {
+        /// 资源索引超过复制限制。
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.decodedText1`.
+        public static var resourceIndexTooLarge: LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.decodedText1", table: "Errors", fallback: "资源索引超过复制限制。")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 安装文件缺少复制路径。
+        ///
+        /// Resource: `Errors.coreMinecraftInstallationCopy.valueText1`.
+        public static var copyPathMissing: LocalizedMessage {
             .init(key: "coreMinecraftInstallationCopy.valueText1", table: "Errors", fallback: "安装文件缺少复制路径。")
         }
         static let definitions: [String: MessageDefinition] = [

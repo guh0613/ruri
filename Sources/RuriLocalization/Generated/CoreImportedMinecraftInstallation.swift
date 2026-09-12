@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreImportedMinecraftInstallation {
-        public static var validLabelText1: LocalizedMessage {
+        /// 本地游戏安装记录无效，请检查实例元数据。
+        ///
+        /// Resource: `Errors.coreImportedMinecraftInstallation.validLabelText1`.
+        public static var invalidInstallationMetadata: LocalizedMessage {
             .init(key: "coreImportedMinecraftInstallation.validLabelText1", table: "Errors", fallback: "本地游戏安装记录无效，请检查实例元数据。")
         }
         static let definitions: [String: MessageDefinition] = [

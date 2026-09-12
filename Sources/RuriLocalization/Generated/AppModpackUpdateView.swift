@@ -3,85 +3,166 @@ import Foundation
 
 extension Messages {
     public enum AppModpackUpdateView {
-        public static var bodyText1: LocalizedMessage {
+        /// 整合包更新
+        ///
+        /// Resource: `Interface.appModpackUpdateView.bodyText1`.
+        public static var modpackUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.bodyText1", table: "Interface", fallback: "整合包更新")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 正在处理整合包…
+        ///
+        /// Resource: `Interface.appModpackUpdateView.errorText1`.
+        public static var processingModpack: LocalizedMessage {
             .init(key: "appModpackUpdateView.errorText1", table: "Interface", fallback: "正在处理整合包…")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 上次更新尚未完成。恢复后会保留已成功提交的版本，或还原更新前的文件。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.errorText2`.
+        public static var incompleteUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.errorText2", table: "Interface", fallback: "上次更新尚未完成。恢复后会保留已成功提交的版本，或还原更新前的文件。")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 恢复未完成的更新
+        ///
+        /// Resource: `Interface.appModpackUpdateView.errorText3`.
+        public static var recoverIncompleteUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.errorText3", table: "Interface", fallback: "恢复未完成的更新")
         }
-        public static var planText1: LocalizedMessage {
+        /// 选择更新文件…
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText1`.
+        public static var chooseUpdateFiles: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText1", table: "Interface", fallback: "选择更新文件…")
         }
-        public static var planText2: LocalizedMessage {
+        /// 显示测试版
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText2`.
+        public static var showPrereleases: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText2", table: "Interface", fallback: "显示测试版")
         }
-        public static var planText3: LocalizedMessage {
+        /// 检查版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText3`.
+        public static var checkVersions: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText3", table: "Interface", fallback: "检查版本")
         }
-        public static var planText4: LocalizedMessage {
+        /// 正在获取版本列表…
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText4`.
+        public static var loadingVersions: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText4", table: "Interface", fallback: "正在获取版本列表…")
         }
-        public static var planText5: LocalizedMessage {
+        /// 暂无可显示的在线版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText5`.
+        public static var noOnlineVersions: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText5", table: "Interface", fallback: "暂无可显示的在线版本")
         }
-        public static var planText6: LocalizedMessage {
+        /// 可选择下载好的 Modrinth、CurseForge、HMCL 或 MCBBS 整合包文件。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.planText6`.
+        public static var localPackHelp: LocalizedMessage {
             .init(key: "appModpackUpdateView.planText6", table: "Interface", fallback: "可选择下载好的 Modrinth、CurseForge、HMCL 或 MCBBS 整合包文件。")
         }
-        public static var dateText1: LocalizedMessage {
+        /// 当前版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.dateText1`.
+        public static var currentVersion: LocalizedMessage {
             .init(key: "appModpackUpdateView.dateText1", table: "Interface", fallback: "当前版本")
         }
-        public static var pageText1: LocalizedMessage {
+        /// 下载页面
+        ///
+        /// Resource: `Interface.appModpackUpdateView.pageText1`.
+        public static var downloadsPage: LocalizedMessage {
             .init(key: "appModpackUpdateView.pageText1", table: "Interface", fallback: "下载页面")
         }
-        public static var pageText2: LocalizedMessage {
+        /// 选择已下载文件…
+        ///
+        /// Resource: `Interface.appModpackUpdateView.pageText2`.
+        public static var chooseDownloadedFile: LocalizedMessage {
             .init(key: "appModpackUpdateView.pageText2", table: "Interface", fallback: "选择已下载文件…")
         }
-        public static var pageText3: LocalizedMessage {
+        /// 选择此版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.pageText3`.
+        public static var chooseVersion: LocalizedMessage {
             .init(key: "appModpackUpdateView.pageText3", table: "Interface", fallback: "选择此版本")
         }
-        public static var nextOffsetText1: LocalizedMessage {
+        /// 更多版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.nextOffsetText1`.
+        public static var moreVersions: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText1", table: "Interface", fallback: "更多版本")
         }
-        public static var nextOffsetText2: LocalizedMessage {
+        /// 回退只恢复上次更新改动的文件；更新后再次修改的游戏文件会保留。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.nextOffsetText2`.
+        public static var rollbackHelp: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText2", table: "Interface", fallback: "回退只恢复上次更新改动的文件；更新后再次修改的游戏文件会保留。")
         }
-        public static var nextOffsetText3: LocalizedMessage {
+        /// 回退上次更新
+        ///
+        /// Resource: `Interface.appModpackUpdateView.nextOffsetText3`.
+        public static var rollbackUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText3", table: "Interface", fallback: "回退上次更新")
         }
-        public static var nextOffsetText4: LocalizedMessage {
+        /// 此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.nextOffsetText4`.
+        public static var missingOriginalFiles: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText4", table: "Interface", fallback: "此实例没有整合包原始文件记录，暂时无法安全区分包文件与个人文件。")
         }
-        public static var nextOffsetText5: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appModpackUpdateView.nextOffsetText5`.
+        public static var close: LocalizedMessage {
             .init(key: "appModpackUpdateView.nextOffsetText5", table: "Interface", fallback: "关闭")
         }
-        public static var previewText1: LocalizedMessage {
+        /// 存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.previewText1`.
+        public static var localChangesHelp: LocalizedMessage {
             .init(key: "appModpackUpdateView.previewText1", table: "Interface", fallback: "存档和个人新增文件保留；本地改过的配置默认保留，可逐项选择。成功后可回退上次更新。")
         }
-        public static var previewText2: LocalizedMessage {
+        /// Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。
+        ///
+        /// Resource: `Interface.appModpackUpdateView.previewText2`.
+        public static var minecraftVersionWarning: LocalizedMessage {
             .init(key: "appModpackUpdateView.previewText2", table: "Interface", fallback: "Minecraft 版本将变化；回退更新不会回退存档，请在进入新版世界前按需备份。")
         }
-        public static var explanationText1: LocalizedMessage {
+        /// 保留本地
+        ///
+        /// Resource: `Interface.appModpackUpdateView.explanationText1`.
+        public static var keepLocalChanges: LocalizedMessage {
             .init(key: "appModpackUpdateView.explanationText1", table: "Interface", fallback: "保留本地")
         }
-        public static var explanationText2: LocalizedMessage {
+        /// 重新选择版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.explanationText2`.
+        public static var chooseAnotherVersion: LocalizedMessage {
             .init(key: "appModpackUpdateView.explanationText2", table: "Interface", fallback: "重新选择版本")
         }
-        public static func explanationText3(_ value0: Int64) -> LocalizedMessage {
+        /// 应用 %1$lld 项文件变更
+        ///
+        /// Resource: `Interface.appModpackUpdateView.explanationText3`.
+        public static func applyFileChanges(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appModpackUpdateView.explanationText3", table: "Interface", fallback: "应用 %1$lld 项文件变更", arguments: [.integer(value0)])
         }
-        public static var explanationText4: LocalizedMessage {
+        /// 应用更新
+        ///
+        /// Resource: `Interface.appModpackUpdateView.explanationText4`.
+        public static var applyUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.explanationText4", table: "Interface", fallback: "应用更新")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 读取整合包更新
+        ///
+        /// Resource: `Interface.appModpackUpdateView.urlText1`.
+        public static var readingModpackUpdate: LocalizedMessage {
             .init(key: "appModpackUpdateView.urlText1", table: "Interface", fallback: "读取整合包更新")
         }
-        public static var selectedFileText1: LocalizedMessage {
+        /// 下载整合包版本
+        ///
+        /// Resource: `Interface.appModpackUpdateView.selectedFileText1`.
+        public static var downloadModpackVersion: LocalizedMessage {
             .init(key: "appModpackUpdateView.selectedFileText1", table: "Interface", fallback: "下载整合包版本")
         }
         static let definitions: [String: MessageDefinition] = [

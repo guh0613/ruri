@@ -3,76 +3,148 @@ import Foundation
 
 extension Messages {
     public enum CoreFileTreeManifest {
-        public static var resultText1: LocalizedMessage {
+        /// 校验期间目录内容改变，请重试。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.resultText1`.
+        public static var manifestChangedDuringVerification: LocalizedMessage {
             .init(key: "coreFileTreeManifest.resultText1", table: "Errors", fallback: "校验期间目录内容改变，请重试。")
         }
-        public static var captureText1: LocalizedMessage {
+        /// 待校验文件数量超过限制。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.captureText1`.
+        public static var tooManyFilesToVerify: LocalizedMessage {
             .init(key: "coreFileTreeManifest.captureText1", table: "Errors", fallback: "待校验文件数量超过限制。")
         }
-        public static func resultText2(_ value0: String) -> LocalizedMessage {
+        /// 待校验的文件路径重复：%1$@
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.resultText2`.
+        public static func duplicateVerificationPath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTreeManifest.resultText2", table: "Errors", fallback: "待校验的文件路径重复：%1$@", arguments: [.text(value0)])
         }
-        public static var resultText3: LocalizedMessage {
+        /// 待校验文件大小超过限制。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.resultText3`.
+        public static var verificationFileTooLarge: LocalizedMessage {
             .init(key: "coreFileTreeManifest.resultText3", table: "Errors", fallback: "待校验文件大小超过限制。")
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 校验期间文件附加信息改变，请重试。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText1`.
+        public static var changedFileAttributes: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText1", table: "Errors", fallback: "校验期间文件附加信息改变，请重试。")
         }
-        public static func entryText1(_ value0: String) -> LocalizedMessage {
+        /// 文件与目录路径冲突：%1$@
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.entryText1`.
+        public static func conflictingFilePath(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTreeManifest.entryText1", table: "Errors", fallback: "文件与目录路径冲突：%1$@", arguments: [.text(value0)])
         }
-        public static var requireMatchText1: LocalizedMessage {
+        /// 文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.requireMatchText1`.
+        public static var fileContentMismatch: LocalizedMessage {
             .init(key: "coreFileTreeManifest.requireMatchText1", table: "Errors", fallback: "文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。")
         }
-        public static var remainingText1: LocalizedMessage {
+        /// 原文件清理期间出现新增或改变的内容，剩余文件已保留。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.remainingText1`.
+        public static var newOrChangedCleanupFiles: LocalizedMessage {
             .init(key: "coreFileTreeManifest.remainingText1", table: "Errors", fallback: "原文件清理期间出现新增或改变的内容，剩余文件已保留。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 文件校验记录超过大小限制。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.dataText1`.
+        public static var verificationRecordTooLarge: LocalizedMessage {
             .init(key: "coreFileTreeManifest.dataText1", table: "Errors", fallback: "文件校验记录超过大小限制。")
         }
-        public static var loadText1: LocalizedMessage {
+        /// 文件校验记录摘要无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.loadText1`.
+        public static var invalidVerificationSummary: LocalizedMessage {
             .init(key: "coreFileTreeManifest.loadText1", table: "Errors", fallback: "文件校验记录摘要无效。")
         }
-        public static var dataText2: LocalizedMessage {
+        /// 文件校验记录已经改变，未清理原文件或工作副本。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.dataText2`.
+        public static var changedVerificationRecord: LocalizedMessage {
             .init(key: "coreFileTreeManifest.dataText2", table: "Errors", fallback: "文件校验记录已经改变，未清理原文件或工作副本。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 文件校验记录版本或数量无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.validateText1`.
+        public static var invalidVerificationRecordVersion: LocalizedMessage {
             .init(key: "coreFileTreeManifest.validateText1", table: "Errors", fallback: "文件校验记录版本或数量无效。")
         }
-        public static var rootAttributesText1: LocalizedMessage {
+        /// 文件校验记录版本无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.rootAttributesText1`.
+        public static var invalidVerificationRecordFileVersion: LocalizedMessage {
             .init(key: "coreFileTreeManifest.rootAttributesText1", table: "Errors", fallback: "文件校验记录版本无效。")
         }
-        public static var attributesText2: LocalizedMessage {
+        /// 文件校验记录缺少附加信息。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText2`.
+        public static var missingFileAttributes: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText2", table: "Errors", fallback: "文件校验记录缺少附加信息。")
         }
-        public static var attributesText3: LocalizedMessage {
+        /// 文件校验记录包含重复路径或无效大小。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText3`.
+        public static var duplicatePathsOrInvalidSizes: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText3", table: "Errors", fallback: "文件校验记录包含重复路径或无效大小。")
         }
-        public static var attributesText4: LocalizedMessage {
+        /// 目录校验记录无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText4`.
+        public static var invalidDirectoryRecord: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText4", table: "Errors", fallback: "目录校验记录无效。")
         }
-        public static var attributesText5: LocalizedMessage {
+        /// 文件校验摘要无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText5`.
+        public static var invalidVerificationDigest: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText5", table: "Errors", fallback: "文件校验摘要无效。")
         }
-        public static var attributesText6: LocalizedMessage {
+        /// 文件校验记录缺少父目录或路径冲突。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText6`.
+        public static var missingParentOrConflictingPath: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText6", table: "Errors", fallback: "文件校验记录缺少父目录或路径冲突。")
         }
-        public static var attributesText7: LocalizedMessage {
+        /// 文件校验记录顺序无效。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.attributesText7`.
+        public static var invalidRecordOrder: LocalizedMessage {
             .init(key: "coreFileTreeManifest.attributesText7", table: "Errors", fallback: "文件校验记录顺序无效。")
         }
-        public static var validatePathText1: LocalizedMessage {
+        /// 文件校验记录包含无效路径。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.validatePathText1`.
+        public static var invalidVerificationPath: LocalizedMessage {
             .init(key: "coreFileTreeManifest.validatePathText1", table: "Errors", fallback: "文件校验记录包含无效路径。")
         }
-        public static func fdText1(_ value0: String) -> LocalizedMessage {
+        /// 无法校验文件：%1$@
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.fdText1`.
+        public static func fileVerificationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreFileTreeManifest.fdText1", table: "Errors", fallback: "无法校验文件：%1$@", arguments: [.text(value0)])
         }
-        public static var beforeText1: LocalizedMessage {
+        /// 待校验文件类型或大小改变。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.beforeText1`.
+        public static var changedFileTypeOrSize: LocalizedMessage {
             .init(key: "coreFileTreeManifest.beforeText1", table: "Errors", fallback: "待校验文件类型或大小改变。")
         }
-        public static var dataText3: LocalizedMessage {
+        /// 校验期间文件长度改变。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.dataText3`.
+        public static var changedFileLength: LocalizedMessage {
             .init(key: "coreFileTreeManifest.dataText3", table: "Errors", fallback: "校验期间文件长度改变。")
         }
-        public static var afterText1: LocalizedMessage {
+        /// 校验期间文件被修改或替换。
+        ///
+        /// Resource: `Errors.coreFileTreeManifest.afterText1`.
+        public static var fileModifiedOrReplaced: LocalizedMessage {
             .init(key: "coreFileTreeManifest.afterText1", table: "Errors", fallback: "校验期间文件被修改或替换。")
         }
         static let definitions: [String: MessageDefinition] = [

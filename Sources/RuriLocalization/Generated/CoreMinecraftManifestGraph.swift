@@ -3,52 +3,100 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftManifestGraph {
-        public static var warningText1: LocalizedMessage {
+        /// 补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。
+        ///
+        /// Resource: `Core.coreMinecraftManifestGraph.warningText1`.
+        public static var nestedPatchWarning: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.warningText1", table: "Core", fallback: "补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。")
         }
-        public static var warningText2: LocalizedMessage {
+        /// 依赖库
+        ///
+        /// Resource: `Core.coreMinecraftManifestGraph.warningText2`.
+        public static var libraries: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.warningText2", table: "Core", fallback: "依赖库")
         }
-        public static var compatibilityText1: LocalizedMessage {
+        /// 兼容规则
+        ///
+        /// Resource: `Core.coreMinecraftManifestGraph.compatibilityText1`.
+        public static var compatibilityRules: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.compatibilityText1", table: "Core", fallback: "兼容规则")
         }
-        public static var valuesText1: LocalizedMessage {
+        /// 启动参数
+        ///
+        /// Resource: `Core.coreMinecraftManifestGraph.valuesText1`.
+        public static var launchArguments: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.valuesText1", table: "Core", fallback: "启动参数")
         }
-        public static var resolveManifestText1: LocalizedMessage {
+        /// 版本继承存在循环或层级过深。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.resolveManifestText1`.
+        public static var inheritanceCycle: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.resolveManifestText1", table: "Errors", fallback: "版本继承存在循环或层级过深。")
         }
-        public static var numberText1: LocalizedMessage {
+        /// 版本清单的 root 标记无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.numberText1`.
+        public static var invalidRoot: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.numberText1", table: "Errors", fallback: "版本清单的 root 标记无效。")
         }
-        public static var listText1: LocalizedMessage {
+        /// 版本补丁清单格式无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.listText1`.
+        public static var invalidPatchList: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.listText1", table: "Errors", fallback: "版本补丁清单格式无效。")
         }
-        public static var listText2: LocalizedMessage {
+        /// 版本组件数量超过读取限制。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.listText2`.
+        public static var componentLimit: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.listText2", table: "Errors", fallback: "版本组件数量超过读取限制。")
         }
-        public static var mapText1: LocalizedMessage {
+        /// 版本文件下载信息格式无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.mapText1`.
+        public static var invalidDownloadInfo: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.mapText1", table: "Errors", fallback: "版本文件下载信息格式无效。")
         }
-        public static func canonicalText1(_ value0: String) -> LocalizedMessage {
+        /// 版本文件下载信息包含重复类型：%1$@
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.canonicalText1`.
+        public static func duplicateDownloadType(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.canonicalText1", table: "Errors", fallback: "版本文件下载信息包含重复类型：%1$@", arguments: [.text(value0)])
         }
-        public static var childLibrariesText1: LocalizedMessage {
+        /// 合并后的依赖库数量超过限制。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.childLibrariesText1`.
+        public static var libraryLimit: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.childLibrariesText1", table: "Errors", fallback: "合并后的依赖库数量超过限制。")
         }
-        public static var valuesText2: LocalizedMessage {
+        /// 合并后的启动参数数量超过限制。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.valuesText2`.
+        public static var argumentLimit: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.valuesText2", table: "Errors", fallback: "合并后的启动参数数量超过限制。")
         }
-        public static var numberText2: LocalizedMessage {
+        /// 清单的最低启动器版本无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.numberText2`.
+        public static var invalidLauncherVersion: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.numberText2", table: "Errors", fallback: "清单的最低启动器版本无效。")
         }
-        public static var objectText1: LocalizedMessage {
+        /// 启动参数不是有效对象。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.objectText1`.
+        public static var invalidArgumentObject: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.objectText1", table: "Errors", fallback: "启动参数不是有效对象。")
         }
-        public static func arrayText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@清单格式或数量无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.arrayText1`.
+        public static func invalidManifestArray(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.arrayText1", table: "Errors", fallback: "%1$@清单格式或数量无效。", arguments: [.text(value0)])
         }
-        public static var numberText3: LocalizedMessage {
+        /// 版本补丁优先级无效。
+        ///
+        /// Resource: `Errors.coreMinecraftManifestGraph.numberText3`.
+        public static var invalidPatchPriority: LocalizedMessage {
             .init(key: "coreMinecraftManifestGraph.numberText3", table: "Errors", fallback: "版本补丁优先级无效。")
         }
         static let definitions: [String: MessageDefinition] = [

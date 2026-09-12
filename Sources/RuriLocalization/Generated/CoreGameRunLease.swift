@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunLease {
-        public static var fdText1: LocalizedMessage {
+        /// 无法取得实例运行锁。
+        ///
+        /// Resource: `Errors.coreGameRunLease.fdText1`.
+        public static var runLockUnavailable: LocalizedMessage {
             .init(key: "coreGameRunLease.fdText1", table: "Errors", fallback: "无法取得实例运行锁。")
         }
-        public static var lockText1: LocalizedMessage {
+        /// 这个实例正在运行或准备启动，请先结束当前游戏。
+        ///
+        /// Resource: `Errors.coreGameRunLease.lockText1`.
+        public static var instanceAlreadyRunning: LocalizedMessage {
             .init(key: "coreGameRunLease.lockText1", table: "Errors", fallback: "这个实例正在运行或准备启动，请先结束当前游戏。")
         }
-        public static var recordsText1: LocalizedMessage {
+        /// 这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。
+        ///
+        /// Resource: `Errors.coreGameRunLease.recordsText1`.
+        public static var activeRunSession: LocalizedMessage {
             .init(key: "coreGameRunLease.recordsText1", table: "Errors", fallback: "这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
         }
         static let definitions: [String: MessageDefinition] = [

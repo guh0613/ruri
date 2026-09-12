@@ -8,34 +8,34 @@ extension CLI {
         switch args.first ?? "list" {
         case "list":
             guard args.count <= 1 else { throw usage }
-            print(Messages.CLIDirectories.stateText1(String(describing: state.selectedDirectoryID == nil || state.selectedDirectoryID == GameDirectory.defaultID ? "*" : " "), String(describing: GameDirectory.defaultID), String(describing: paths.root.path)).localized)
+            print(Messages.CLIDirectories.defaultDirectorySummary(String(describing: state.selectedDirectoryID == nil || state.selectedDirectoryID == GameDirectory.defaultID ? "*" : " "), String(describing: GameDirectory.defaultID), paths.root.path).localized)
             for directory in state.gameDirectories ?? [] {
                 let count = state.instances.filter { $0.directoryID == directory.id }.count
-                let availability = (try? directory.validateAvailability()) != nil ? Messages.CLIDirectories.availabilityText1.localized : Messages.CLIDirectories.availabilityText2.localized
-                print(Messages.CLIDirectories.availabilityText3(String(describing: state.selectedDirectoryID == directory.id ? "*" : " "), String(describing: directory.id), String(describing: directory.name), Int64(count), String(describing: availability), String(describing: directory.url.path)).localized)
+                let availability = (try? directory.validateAvailability()) != nil ? Messages.CLIDirectories.directoryAvailable.localized : Messages.CLIDirectories.directoryUnavailable.localized
+                print(Messages.CLIDirectories.directorySummary(String(describing: state.selectedDirectoryID == directory.id ? "*" : " "), String(describing: directory.id), directory.name, Int64(count), String(describing: availability), directory.url.path).localized)
             }
             for folder in state.detachedMinecraftFolders ?? [] {
-                print(Messages.CLIDirectories.availabilityText4(String(describing: folder.id), String(describing: folder.directory.name), Int64(folder.instances.count), String(describing: folder.directory.url.path)).localized)
+                print(Messages.CLIDirectories.removedDirectorySummary(String(describing: folder.id), folder.directory.name, Int64(folder.instances.count), folder.directory.url.path).localized)
             }
             return
         case "add":
             guard args.count == 3 else { throw usage }
             let result = try MinecraftFolderStore.add(name: args[2], url: URL(fileURLWithPath: args[1]), paths: paths)
-            print(Messages.CLIDirectories.resultText1(String(describing: result.selectedDirectoryID!.uuidString)).localized); return
+            print(Messages.CLIDirectories.directoryAdded(String(describing: result.selectedDirectoryID!.uuidString)).localized); return
         case "refresh":
             guard args.count == 1 else { throw usage }
             _ = try MinecraftFolderStore.refresh(state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths)
         case "imports":
             guard args.count == 1 else { throw usage }
             for item in try RepositoryImportStore.pending(directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, paths: paths) {
-                print("\(item.id) \(item.name) · \(item.canFinish ? Messages.CLIDirectories.resultText2.localized : Messages.CLIDirectories.resultText3.localized)\n  \(item.workspace.path)")
+                print("\(item.id) \(item.name) · \(item.canFinish ? Messages.CLIDirectories.importReady.localized : Messages.CLIDirectories.installationIncomplete.localized)\n  \(item.workspace.path)")
             }
             return
         case "recover-import":
             guard args.count == 3, let id = UUID(uuidString: args[1]), ["--finish", "--keep-files"].contains(args[2]) else { throw usage }
             if let kept = try RepositoryImportStore.recover(id, directoryID: state.selectedDirectoryID ?? GameDirectory.defaultID, finish: args[2] == "--finish", paths: paths) {
-                print(Messages.CLIDirectories.keptText1(String(describing: kept.path)).localized)
-            } else { print(Messages.CLIDirectories.keptText2.localized) }
+                print(Messages.CLIDirectories.importFilesRetained(kept.path).localized)
+            } else { print(Messages.CLIDirectories.importCompleted.localized) }
             return
         case "restore":
             guard (2...3).contains(args.count), let id = UUID(uuidString: args[1]),
@@ -53,7 +53,7 @@ extension CLI {
             else { try GameDirectoryStore.remove(id, paths: paths) }
         default: throw usage
         }
-        print(Messages.CLIDirectories.idText1.localized)
+        print(Messages.CLIDirectories.directorySettingsUpdated.localized)
     }
-    private static var usage: RuriError { .message(Messages.CLIDirectories.usageText1.localized) }
+    private static var usage: RuriError { .message(Messages.CLIDirectories.directoriesUsage.localized) }
 }

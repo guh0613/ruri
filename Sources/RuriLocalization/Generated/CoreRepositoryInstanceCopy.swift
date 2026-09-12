@@ -3,40 +3,77 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryInstanceCopy {
-        public static var latestText1: LocalizedMessage {
+        /// 副本已创建，部分工作文件尚未清理，可在实例库完成清理。
+        ///
+        /// Resource: `Core.coreRepositoryInstanceCopy.latestText1`.
+        public static var copyCleanupPending: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.latestText1", table: "Core", fallback: "副本已创建，部分工作文件尚未清理，可在实例库完成清理。")
         }
-        public static var reasonText1: LocalizedMessage {
+        /// 实例复制已取消，原实例及其文件保留。
+        ///
+        /// Resource: `Core.coreRepositoryInstanceCopy.reasonText1`.
+        public static var copyCancelled: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.reasonText1", table: "Core", fallback: "实例复制已取消，原实例及其文件保留。")
         }
-        public static func reasonText2(_ value0: String) -> LocalizedMessage {
+        /// 实例复制未完成：%1$@
+        ///
+        /// Resource: `Core.coreRepositoryInstanceCopy.reasonText2`.
+        public static func copyIncomplete(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.reasonText2", table: "Core", fallback: "实例复制未完成：%1$@", arguments: [.text(value0)])
         }
+        /// %1$@
+        /// 工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@
+        ///
+        /// Resource: `Core.coreRepositoryInstanceCopy.recoveryFailure`.
         public static func recoveryFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.recoveryFailure", table: "Core", fallback: "%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var repositoryPreviewText1: LocalizedMessage {
+        /// 请先安装源实例，再将完整副本保存到 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.repositoryPreviewText1`.
+        public static var sourceInstallationRequired: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.repositoryPreviewText1", table: "Errors", fallback: "请先安装源实例，再将完整副本保存到 Minecraft 文件夹。")
         }
-        public static var manifestText1: LocalizedMessage {
+        /// 源文件在预览期间改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.manifestText1`.
+        public static var sourceManifestChangedDuringPreview: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.manifestText1", table: "Errors", fallback: "源文件在预览期间改变，请重新预览。")
         }
-        public static var installationText1: LocalizedMessage {
+        /// 复制预览缺少安装文件。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.installationText1`.
+        public static var installationFilesMissing: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.installationText1", table: "Errors", fallback: "复制预览缺少安装文件。")
         }
-        public static var actualText1: LocalizedMessage {
+        /// 源实例设置或目标文件夹在预览后改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.actualText1`.
+        public static var sourceOrTargetChanged: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.actualText1", table: "Errors", fallback: "源实例设置或目标文件夹在预览后改变，请重新预览。")
         }
-        public static var entriesText1: LocalizedMessage {
+        /// 源实例文件在预览后改变，请刷新复制预览。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.entriesText1`.
+        public static var sourceFilesChanged: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.entriesText1", table: "Errors", fallback: "源实例文件在预览后改变，请刷新复制预览。")
         }
-        public static var sourcePathText1: LocalizedMessage {
+        /// 目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.sourcePathText1`.
+        public static var targetInsideSourceContent: LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.sourcePathText1", table: "Errors", fallback: "目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。")
         }
-        public static func conflictText1(_ value0: String) -> LocalizedMessage {
+        /// 游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.conflictText1`.
+        public static func installationFilenameConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.conflictText1", table: "Errors", fallback: "游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。", arguments: [.text(value0)])
         }
-        public static func infoText1(_ value0: String) -> LocalizedMessage {
+        /// 实例元数据包含不支持的文件：%1$@
+        ///
+        /// Resource: `Errors.coreRepositoryInstanceCopy.infoText1`.
+        public static func unsupportedInstanceFiles(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryInstanceCopy.infoText1", table: "Errors", fallback: "实例元数据包含不支持的文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

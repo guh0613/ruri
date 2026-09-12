@@ -35,25 +35,25 @@ public actor GameInstaller {
         return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
-        guard input.importedInstallation == nil else { throw RuriError.message(Messages.CoreInstaller.installText1) }
-        if input.repositoryVersionID != nil && (input.installed || FileManager.default.fileExists(atPath: paths.manifest(input.id).path)) { throw RuriError.message(Messages.CoreInstaller.installText2) }
+        guard input.importedInstallation == nil else { throw RuriError.message(Messages.CoreInstaller.localVersionManifestRequiresRepair) }
+        if input.repositoryVersionID != nil && (input.installed || FileManager.default.fileExists(atPath: paths.manifest(input.id).path)) { throw RuriError.message(Messages.CoreInstaller.versionAlreadyInstalled) }
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: input.id)
         defer { withExtendedLifetime(location) {} }
         try paths.validateBinding(input)
         try paths.prepare()
         try paths.prepareInstance(input.id)
-        await progress(InstallProgress(Messages.CoreInstaller.locationText1))
+        await progress(InstallProgress(Messages.CoreInstaller.fetchingVersionManifest))
         let catalog = try await catalog()
-        guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message(Messages.CoreInstaller.versionText1(String(describing: input.gameVersion))) }
+        guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message(Messages.CoreInstaller.minecraftVersionNotFound(input.gameVersion)) }
         let baseFile = try LauncherPaths.safePath("\(version.id)/\(version.id).json", within: paths.versions)
         try await downloader.fetch(DownloadItem(url: version.url, destination: baseFile, sha1: version.sha1))
         var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
         var instance = input
         instance.directoryID = paths.directoryID(for: instance.id)
         if instance.loader != .vanilla {
-            await progress(InstallProgress(Messages.CoreInstaller.instanceText1(String(describing: instance.loader.title))))
+            await progress(InstallProgress(Messages.CoreInstaller.installingInstance(instance.loader.title)))
             if instance.loaderVersion == nil { instance.loaderVersion = try await loaderVersions(instance.loader, game: instance.gameVersion).first }
-            guard let loaderVersion = instance.loaderVersion else { throw RuriError.message(Messages.CoreInstaller.loaderVersionText1(String(describing: instance.loader.title))) }
+            guard let loaderVersion = instance.loaderVersion else { throw RuriError.message(Messages.CoreInstaller.loaderVersionUnavailable(instance.loader.title)) }
             let child: VersionManifest
             if instance.loader.usesInstaller {
                 child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
@@ -79,16 +79,16 @@ public actor GameInstaller {
         try FileManager.default.createDirectory(at: paths.manifest(instance.id).deletingLastPathComponent(), withIntermediateDirectories: true)
         try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: instance.repositoryVersionID == nil ? .atomic : .withoutOverwriting)
         instance.installed = true
-        await progress(InstallProgress(Messages.CoreInstaller.encoderText1, completed: 1, total: 1))
+        await progress(InstallProgress(Messages.CoreInstaller.installationCompleted, completed: 1, total: 1))
         return instance
     }
     static func applyingPackLibraries(_ libraries: [Library], to manifest: VersionManifest) throws -> VersionManifest {
-        guard libraries.count <= 1000 else { throw RuriError.message(Messages.CoreInstaller.applyingPackLibrariesText1) }
+        guard libraries.count <= 1000 else { throw RuriError.message(Messages.CoreInstaller.modpackDependencyCountExceeded) }
         for library in libraries {
             _ = try Library.mavenPath(library.name)
             for artifact in [try library.artifact()].compactMap({ $0 }) + Array(library.downloads?.classifiers?.values ?? [:].values) {
-                guard artifact.repositoryPath == nil else { throw RuriError.message(Messages.CoreInstaller.applyingPackLibrariesText2) }
-                if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message(Messages.CoreInstaller.urlText1) } }
+                guard artifact.repositoryPath == nil else { throw RuriError.message(Messages.CoreInstaller.dependencyTargetsExistingGameFile) }
+                if let url = artifact.url { guard ["http", "https"].contains(url.scheme), url.host != nil, url.user == nil, url.password == nil else { throw RuriError.message(Messages.CoreInstaller.invalidDependencyDownloadURL) } }
             }
         }
         var result = manifest
@@ -112,7 +112,7 @@ public actor GameInstaller {
         if let versionID = instance.repositoryVersionID {
             let reader = MinecraftDirectoryReader()
             let catalog = try reader.scanNow(paths.directoryRoot(paths.directoryID(for: instance.id)))
-            guard let version = catalog.versions.first(where: { $0.id == versionID }) else { throw RuriError.message(Messages.CoreInstaller.versionText2) }
+            guard let version = catalog.versions.first(where: { $0.id == versionID }) else { throw RuriError.message(Messages.CoreInstaller.versionRemovedFromGameFolder) }
             if let issue = version.issue { throw RuriError.message(issue) }
             return try reader.resolveManifestNow(version, in: catalog).selectingLibraries().repositoryManifest(root: catalog.directory)
         }
@@ -130,7 +130,7 @@ public actor GameInstaller {
         try prepareRepositoryNatives(instance, manifest: manifest)
         guard let index = manifest.assetIndex else { return }
         let file = try LauncherPaths.safePath("indexes/\(index.id).json", within: paths.resources(for: instance).assets)
-        guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message(Messages.CoreInstaller.fileText1) }
+        guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message(Messages.CoreInstaller.gameResourceIndexMissing) }
         let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: file))
         try mapLegacyAssets(assets, indexID: index.id, instance: instance)
     }
@@ -141,11 +141,11 @@ public actor GameInstaller {
         let root = assets.map_to_resources == true ? paths.game(instance.id).appendingPathComponent("resources") : try LauncherPaths.safePath("virtual/\(indexID)", within: resourcePaths.assets)
         for (name, object) in assets.objects {
             try Task.checkCancellation()
-            guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreInstaller.rootText1) }
+            guard object.hash.range(of: "^[0-9a-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreInstaller.invalidResourceIndexHash) }
             let target = try LauncherPaths.safePath(name, within: root)
             guard !FileManager.default.fileExists(atPath: target.path) else { continue }
             let source = try LauncherPaths.safePath("objects/\(object.hash.prefix(2))/\(object.hash)", within: resourcePaths.assets)
-            guard DownloadManager.valid(source, item: DownloadItem(url: nil, destination: source, sha1: object.hash, size: object.size)) else { throw RuriError.message(Messages.CoreInstaller.sourceText1(String(describing: name))) }
+            guard DownloadManager.valid(source, item: DownloadItem(url: nil, destination: source, sha1: object.hash, size: object.size)) else { throw RuriError.message(Messages.CoreInstaller.cachedResourceMissingOrCorrupt(name)) }
             try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
             try FileManager.default.copyItem(at: source, to: target)
         }
@@ -166,14 +166,14 @@ public actor GameInstaller {
         let resources = try paths.resources(for: instance)
         let arch = Self.architecture(for: manifest)
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
-            throw RuriError.message(Messages.CoreInstaller.archText1)
+            throw RuriError.message(Messages.CoreInstaller.unsupportedMacOSCompatibility)
         }
         let client = manifest.downloads?["client"] ?? Artifact(url: nil)
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try paths.clientJar(jarID, instance: instance)
         var files = [DownloadItem(client, to: clientFile)]
         for artifact in manifest.generatedLibraries ?? [] {
-            guard let path = artifact.path else { throw RuriError.message(Messages.CoreInstaller.pathText1) }
+            guard let path = artifact.path else { throw RuriError.message(Messages.CoreInstaller.generatedDependencyPathMissing) }
             files.append(DownloadItem(artifact, to: try resources.libraryFile(artifact, fallback: path)))
         }
         var nativeFiles: [(URL, [String])] = []
@@ -183,7 +183,7 @@ public actor GameInstaller {
                 files.append(DownloadItem(artifact, to: target))
             }
             if let artifact = try library.nativeArtifact(architecture: arch) {
-                guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message(Messages.CoreInstaller.nativePathText1) }
+                guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message(Messages.CoreInstaller.nativeLibraryPathMissing) }
                 let target = try resources.libraryFile(artifact, fallback: nativePath)
                 files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
             }
@@ -192,9 +192,9 @@ public actor GameInstaller {
             let target = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: resources.assets)
             files.append(DownloadItem(url: logging.file.url, destination: target, sha1: logging.file.sha1, size: logging.file.size))
         }
-        await progress(InstallProgress(Messages.CoreInstaller.targetText1, total: files.count))
+        await progress(InstallProgress(Messages.CoreInstaller.downloadingGameAndDependencies, total: files.count))
         try protectRepositoryResources(files)
-        try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.targetText1, completed: done, total: total)) }
+        try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.downloadingGameAndDependencies, completed: done, total: total)) }
         if let index = manifest.assetIndex {
             let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
             try protectRepositoryResources([DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size)])
@@ -206,10 +206,10 @@ public actor GameInstaller {
                 return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: resources.assets), sha1: object.hash, size: object.size)
             }
             try protectRepositoryResources(objects)
-            try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.subpathText1, completed: done, total: total)) }
+            try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.downloadingGameResources, completed: done, total: total)) }
             try mapLegacyAssets(assets, indexID: index.id, instance: instance)
         }
-        await progress(InstallProgress(Messages.CoreInstaller.subpathText2))
+        await progress(InstallProgress(Messages.CoreInstaller.preparingMacOSNativeLibraries))
         try paths.validateInstanceLocation(instance.id)
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         try FileManager.default.createDirectory(at: natives, withIntermediateDirectories: true)
@@ -221,7 +221,7 @@ public actor GameInstaller {
             let workspace = paths.root.standardizedFileURL.resolvingSymlinksInPath().path + "/"
             for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) &&
                 FileManager.default.fileExists(atPath: item.destination.path) && !DownloadManager.valid(item.destination, item: item) {
-                throw RuriError.message(Messages.CoreInstaller.workspaceText1(String(describing: item.destination.lastPathComponent)))
+                throw RuriError.message(Messages.CoreInstaller.componentDependencyReplacementRequired(item.destination.lastPathComponent))
             }
             return
         }
@@ -229,7 +229,7 @@ public actor GameInstaller {
         let workspace = paths.repositoryImportWorkspace(id).standardizedFileURL.resolvingSymlinksInPath().path + "/"
         for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) {
             if FileManager.default.fileExists(atPath: item.destination.path), !DownloadManager.valid(item.destination, item: item) {
-                throw RuriError.message(Messages.CoreInstaller.workspaceText2(String(describing: item.destination.path)))
+                throw RuriError.message(Messages.CoreInstaller.existingGameFileConflictsWithModpack(item.destination.path))
             }
         }
     }

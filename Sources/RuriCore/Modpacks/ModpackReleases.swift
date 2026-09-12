@@ -39,9 +39,9 @@ public actor ModpackReleaseService {
             }
             return .init(items: items, nextOffset: nil)
         case .curseforge:
-            guard let projectID = Int(projectID) else { throw RuriError.message(Messages.CoreModpackReleases.projectIDText1) }
+            guard let projectID = Int(projectID) else { throw RuriError.message(Messages.CoreModpackReleases.invalidPackProjectID) }
             let service = CurseForgeService(apiKey: curseForgeKey), project = try await service.project(projectID)
-            guard project.contentType == "modpack" else { throw RuriError.message(Messages.CoreModpackReleases.serviceText1) }
+            guard project.contentType == "modpack" else { throw RuriError.message(Messages.CoreModpackReleases.projectIsNotModpack) }
             let page = try await service.files(project: projectID, offset: offset)
             let items = page.data.filter { $0.isAvailable != false }.map { file in
                 ModpackRelease(id: String(file.id), title: file.displayName, gameVersions: file.gameVersions, publishedAt: file.fileDate,
@@ -56,15 +56,15 @@ public actor ModpackReleaseService {
     }
     public func prepare(_ release: ModpackRelease, manualFile: URL? = nil, paths: LauncherPaths, downloader: DownloadManager,
                         progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> PreparedInstanceImport {
-        guard release.sha1 != nil || release.sha512 != nil || release.md5 != nil else { throw RuriError.message(Messages.CoreModpackReleases.prepareText1) }
+        guard release.sha1 != nil || release.sha512 != nil || release.md5 != nil else { throw RuriError.message(Messages.CoreModpackReleases.missingReleaseChecksum) }
         let archive = try manualFile ?? LauncherPaths.safePath("pack-updates/\(release.origin.provider.rawValue)/\(release.id)/\(release.filename)", within: paths.cache)
         let item = DownloadItem(url: release.url, destination: archive, sha1: release.sha1, sha512: release.sha512, md5: release.md5, size: release.size)
         if manualFile == nil {
-            guard !release.requiresManualDownload, release.url != nil else { throw RuriError.message(Messages.CoreModpackReleases.itemText1) }
-            await progress(InstallProgress(Messages.CoreModpackReleases.itemText2))
+            guard !release.requiresManualDownload, release.url != nil else { throw RuriError.message(Messages.CoreModpackReleases.curseForgeDownloadRequired) }
+            await progress(InstallProgress(Messages.CoreModpackReleases.downloadingPackRelease))
             try await downloader.fetch(item)
         }
-        guard DownloadManager.valid(archive, item: item) else { throw RuriError.message(Messages.CoreModpackReleases.itemText3) }
+        guard DownloadManager.valid(archive, item: item) else { throw RuriError.message(Messages.CoreModpackReleases.selectedReleaseMismatch) }
         return try await InstanceTransfer(paths: paths).prepare(archive, origin: release.origin)
     }
 }

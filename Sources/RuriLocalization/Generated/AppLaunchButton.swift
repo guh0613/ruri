@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum AppLaunchButton {
-        public static var titleText1: LocalizedMessage {
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.appLaunchButton.titleText1`.
+        public static var returnToGame: LocalizedMessage {
             .init(key: "appLaunchButton.titleText1", table: "Interface", fallback: "返回游戏")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 查看运行记录
+        ///
+        /// Resource: `Interface.appLaunchButton.titleText2`.
+        public static var viewRunHistory: LocalizedMessage {
             .init(key: "appLaunchButton.titleText2", table: "Interface", fallback: "查看运行记录")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 启动游戏
+        ///
+        /// Resource: `Interface.appLaunchButton.titleText3`.
+        public static var launchGame: LocalizedMessage {
             .init(key: "appLaunchButton.titleText3", table: "Interface", fallback: "启动游戏")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 继续安装
+        ///
+        /// Resource: `Interface.appLaunchButton.titleText4`.
+        public static var continueInstallation: LocalizedMessage {
             .init(key: "appLaunchButton.titleText4", table: "Interface", fallback: "继续安装")
         }
         static let definitions: [String: MessageDefinition] = [

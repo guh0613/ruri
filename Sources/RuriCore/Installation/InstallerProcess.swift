@@ -13,7 +13,7 @@ actor InstallerProcess {
     private var output: (@Sendable (String) async -> Void)?
     private var tail = Data()
     func run(java: JavaRuntime, arguments: [String], directory: URL, logURL: URL, runtimePaths: LauncherPaths? = nil, output: @Sendable @escaping (String) async -> Void) async throws -> Int32 {
-        guard process == nil else { throw RuriError.message(Messages.CoreInstallerProcess.runText1) }
+        guard process == nil else { throw RuriError.message(Messages.CoreInstallerProcess.installerAlreadyRunning) }
         let javaLease = try runtimePaths.flatMap { try JavaRuntimeLease.shared(binary: URL(fileURLWithPath: java.path), paths: $0) }
         defer { withExtendedLifetime(javaLease) {} }
         try FileManager.default.createDirectory(at: logURL.deletingLastPathComponent(), withIntermediateDirectories: true)

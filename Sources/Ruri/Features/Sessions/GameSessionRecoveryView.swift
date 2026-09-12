@@ -27,18 +27,18 @@ struct GameSessionRecoveryView: View {
                     Text(status.title).font(.headline)
                     Text(status.explanation).font(.callout).fixedSize(horizontal: false, vertical: true)
                     if status == .confirmationRequired {
-                        Toggle(Messages.AppGameSessionRecoveryView.bodyText1.localized, isOn: $confirmedEnded).toggleStyle(.checkbox)
-                        Text(Messages.AppGameSessionRecoveryView.bodyText2.localized).font(.caption).foregroundStyle(.secondary)
+                        Toggle(Messages.AppGameSessionRecoveryView.gameExitConfirmed.localized, isOn: $confirmedEnded).toggleStyle(.checkbox)
+                        Text(Messages.AppGameSessionRecoveryView.recoveryDetails.localized).font(.caption).foregroundStyle(.secondary)
                     }
-                    if instanceLocked { Text(Messages.AppGameSessionRecoveryView.bodyText3.localized).font(.caption).foregroundStyle(.secondary) }
+                    if instanceLocked { Text(Messages.AppGameSessionRecoveryView.instanceBusy.localized).font(.caption).foregroundStyle(.secondary) }
                     if let message = error ?? refreshError { Text(message).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
                     HStack {
-                        Button(Messages.AppGameSessionRecoveryView.messageText1.localized) { Task { await refresh() } }.disabled(working)
-                        if status == .gameRunning { Button(Messages.AppGameSessionRecoveryView.messageText2.localized) { model.returnToGame(session.instanceID) } }
+                        Button(Messages.AppGameSessionRecoveryView.refreshStatus.localized) { Task { await refresh() } }.disabled(working)
+                        if status == .gameRunning { Button(Messages.AppGameSessionRecoveryView.returnToGame.localized) { model.returnToGame(session.instanceID) } }
                         Spacer()
                         if working { ProgressView().controlSize(.small) }
                         if status == .processEnded || status == .confirmationRequired {
-                            Button(Messages.AppGameSessionRecoveryView.messageText3.localized) { recover() }.buttonStyle(.borderedProminent)
+                            Button(Messages.AppGameSessionRecoveryView.finalizeAndResume.localized) { recover() }.buttonStyle(.borderedProminent)
                                 .disabled(working || model.busy || instanceLocked || (status == .confirmationRequired && !confirmedEnded))
                         }
                     }

@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunDirectoryChange {
-        public static func valuesText1(_ value0: String) -> LocalizedMessage {
+        /// 游戏内容记录或备份包含不支持的文件：%1$@
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.valuesText1`.
+        public static func unsupportedRecordedFile(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.valuesText1", table: "Errors", fallback: "游戏内容记录或备份包含不支持的文件：%1$@", arguments: [.text(value0)])
         }
-        public static var changedText1: LocalizedMessage {
+        /// 此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.changedText1`.
+        public static var unfinishedRunRecord: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.changedText1", table: "Errors", fallback: "此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。")
         }
-        public static var lockText1: LocalizedMessage {
+        /// 此目录还有未完成的内容或存档操作，请先恢复这些操作。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.lockText1`.
+        public static var unfinishedContentOperation: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.lockText1", table: "Errors", fallback: "此目录还有未完成的内容或存档操作，请先恢复这些操作。")
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 这个实例已被移除，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.instanceText1`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.instanceText1", table: "Errors", fallback: "这个实例已被移除，请刷新后重试。")
         }
-        public static var validateChangeText1: LocalizedMessage {
+        /// 实例名称过长，请先缩短名称再调整目录。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.validateChangeText1`.
+        public static var nameTooLong: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.validateChangeText1", table: "Errors", fallback: "实例名称过长，请先缩短名称再调整目录。")
         }
-        public static var customDirectoryText1: LocalizedMessage {
+        /// 请先选择自定义运行目录。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.customDirectoryText1`.
+        public static var requireCustomDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.customDirectoryText1", table: "Errors", fallback: "请先选择自定义运行目录。")
         }
-        public static var customDirectoryText2: LocalizedMessage {
+        /// 实例已经使用这个运行目录。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.customDirectoryText2`.
+        public static var alreadyUsesDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.customDirectoryText2", table: "Errors", fallback: "实例已经使用这个运行目录。")
         }
-        public static var changedText2: LocalizedMessage {
+        /// 所选目录就是当前游戏目录，无需切换。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.changedText2`.
+        public static var sameDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.changedText2", table: "Errors", fallback: "所选目录就是当前游戏目录，无需切换。")
         }
-        public static var changedText3: LocalizedMessage {
+        /// 整合包保持独立运行目录，以保留包的配置与更新记录。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.changedText3`.
+        public static var independentPackDirectory: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.changedText3", table: "Errors", fallback: "整合包保持独立运行目录，以保留包的配置与更新记录。")
         }
-        public static var originalText1: LocalizedMessage {
+        /// 自定义目录身份已经变化，请重新预览。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.originalText1`.
+        public static var customIdentityChanged: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.originalText1", table: "Errors", fallback: "自定义目录身份已经变化，请重新预览。")
         }
-        public static var targetText1: LocalizedMessage {
+        /// 实例或目录位置已经变化，请重新预览。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.targetText1`.
+        public static var locationChanged: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.targetText1", table: "Errors", fallback: "实例或目录位置已经变化，请重新预览。")
         }
-        public static var validateSnapshotsText1: LocalizedMessage {
+        /// 预览后游戏文件或备份发生了变化，请刷新预览后再切换。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.validateSnapshotsText1`.
+        public static var snapshotsChanged: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.validateSnapshotsText1", table: "Errors", fallback: "预览后游戏文件或备份发生了变化，请刷新预览后再切换。")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 实例已被移除。
+        ///
+        /// Resource: `Errors.coreGameRunDirectoryChange.indexText1`.
+        public static var instanceRemovedAfterValidation: LocalizedMessage {
             .init(key: "coreGameRunDirectoryChange.indexText1", table: "Errors", fallback: "实例已被移除。")
         }
         static let definitions: [String: MessageDefinition] = [

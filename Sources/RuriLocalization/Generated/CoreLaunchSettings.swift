@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunchSettings {
-        public static var titleText1: LocalizedMessage {
+        /// 内存
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText1`.
+        public static var memory: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText1", table: "Core", fallback: "内存")
         }
-        public static var titleText2: LocalizedMessage {
+        /// Java 运行时
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText2`.
+        public static var javaRuntime: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText2", table: "Core", fallback: "Java 运行时")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 附加 JVM 参数
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText3`.
+        public static var jvmArguments: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText3", table: "Core", fallback: "附加 JVM 参数")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 附加游戏参数
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText4`.
+        public static var gameArguments: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText4", table: "Core", fallback: "附加游戏参数")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 游戏窗口
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText5`.
+        public static var gameWindow: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText5", table: "Core", fallback: "游戏窗口")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 启动器与日志
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText6`.
+        public static var launcherAndLogs: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText6", table: "Core", fallback: "启动器与日志")
         }
-        public static var titleText7: LocalizedMessage {
+        /// 游戏环境变量
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText7`.
+        public static var environmentVariables: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText7", table: "Core", fallback: "游戏环境变量")
         }
-        public static var titleText8: LocalizedMessage {
+        /// 启动命令
+        ///
+        /// Resource: `Core.coreLaunchSettings.titleText8`.
+        public static var launchCommands: LocalizedMessage {
             .init(key: "coreLaunchSettings.titleText8", table: "Core", fallback: "启动命令")
         }
-        public static var baseMemoryText1: LocalizedMessage {
+        /// 窗口宽度应为 320–16384，高度应为 240–16384。
+        ///
+        /// Resource: `Errors.coreLaunchSettings.baseMemoryText1`.
+        public static var invalidWindowSize: LocalizedMessage {
             .init(key: "coreLaunchSettings.baseMemoryText1", table: "Errors", fallback: "窗口宽度应为 320–16384，高度应为 240–16384。")
         }
-        public static var baseMemoryText2: LocalizedMessage {
+        /// 附加启动参数过长。
+        ///
+        /// Resource: `Errors.coreLaunchSettings.baseMemoryText2`.
+        public static var argumentsTooLong: LocalizedMessage {
             .init(key: "coreLaunchSettings.baseMemoryText2", table: "Errors", fallback: "附加启动参数过长。")
         }
-        public static var pathText1: LocalizedMessage {
+        /// 请选择 Java 可执行文件的完整路径。
+        ///
+        /// Resource: `Errors.coreLaunchSettings.pathText1`.
+        public static var javaPath: LocalizedMessage {
             .init(key: "coreLaunchSettings.pathText1", table: "Errors", fallback: "请选择 Java 可执行文件的完整路径。")
         }
-        public static var majorText1: LocalizedMessage {
+        /// Java 主版本应为 6–99。
+        ///
+        /// Resource: `Errors.coreLaunchSettings.majorText1`.
+        public static var majorVersion: LocalizedMessage {
             .init(key: "coreLaunchSettings.majorText1", table: "Errors", fallback: "Java 主版本应为 6–99。")
         }
         static let definitions: [String: MessageDefinition] = [

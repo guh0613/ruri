@@ -3,31 +3,58 @@ import Foundation
 
 extension Messages {
     public enum CoreCurseForgePack {
-        public static func warningsText1(_ value0: Int64) -> LocalizedMessage {
+        /// 需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。
+        ///
+        /// Resource: `Core.coreCurseForgePack.warningsText1`.
+        public static func curseForgeFilesNeedDownload(_ value0: Int64) -> LocalizedMessage {
             .init(key: "coreCurseForgePack.warningsText1", table: "Core", fallback: "需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。", arguments: [.integer(value0)])
         }
-        public static func authorText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包作者：%1$@
+        ///
+        /// Resource: `Core.coreCurseForgePack.authorText1`.
+        public static func packAuthor(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForgePack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
         }
-        public static var manifestText1: LocalizedMessage {
+        /// 不支持的 CurseForge 整合包格式
+        ///
+        /// Resource: `Errors.coreCurseForgePack.manifestText1`.
+        public static var unsupportedManifestFormat: LocalizedMessage {
             .init(key: "coreCurseForgePack.manifestText1", table: "Errors", fallback: "不支持的 CurseForge 整合包格式")
         }
-        public static var manifestText2: LocalizedMessage {
+        /// 此整合包包含多个加载器，暂时无法安装。
+        ///
+        /// Resource: `Errors.coreCurseForgePack.manifestText2`.
+        public static var multipleLoadersInPack: LocalizedMessage {
             .init(key: "coreCurseForgePack.manifestText2", table: "Errors", fallback: "此整合包包含多个加载器，暂时无法安装。")
         }
-        public static func kindText1(_ value0: String) -> LocalizedMessage {
+        /// 尚未支持的整合包加载器：%1$@
+        ///
+        /// Resource: `Errors.coreCurseForgePack.kindText1`.
+        public static func unsupportedPackLoader(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForgePack.kindText1", table: "Errors", fallback: "尚未支持的整合包加载器：%1$@", arguments: [.text(value0)])
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 整合包包含重复项目或无效文件标识
+        ///
+        /// Resource: `Errors.coreCurseForgePack.instanceText1`.
+        public static var duplicateOrInvalidPackFile: LocalizedMessage {
             .init(key: "coreCurseForgePack.instanceText1", table: "Errors", fallback: "整合包包含重复项目或无效文件标识")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 整合包 overrides 必须是实际目录
+        ///
+        /// Resource: `Errors.coreCurseForgePack.infoText1`.
+        public static var invalidOverridesDirectory: LocalizedMessage {
             .init(key: "coreCurseForgePack.infoText1", table: "Errors", fallback: "整合包 overrides 必须是实际目录")
         }
-        public static var actualText1: LocalizedMessage {
+        /// 请先解析并下载整合包清单中的 CurseForge 文件。
+        ///
+        /// Resource: `Errors.coreCurseForgePack.actualText1`.
+        public static var curseForgeFilesNeedResolution: LocalizedMessage {
             .init(key: "coreCurseForgePack.actualText1", table: "Errors", fallback: "请先解析并下载整合包清单中的 CurseForge 文件。")
         }
-        public static func recordText1(_ value0: String) -> LocalizedMessage {
+        /// 整合包文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreCurseForgePack.recordText1`.
+        public static func packFileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForgePack.recordText1", table: "Errors", fallback: "整合包文件校验失败：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

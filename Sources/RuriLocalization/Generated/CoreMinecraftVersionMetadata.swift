@@ -3,40 +3,76 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftVersionMetadata {
-        public static func jarVersionText1(_ value0: String) -> LocalizedMessage {
+        /// 无法从游戏 JAR 读取版本信息：%1$@
+        ///
+        /// Resource: `Core.coreMinecraftVersionMetadata.jarVersionText1`.
+        public static func jarVersionReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.jarVersionText1", table: "Core", fallback: "无法从游戏 JAR 读取版本信息：%1$@", arguments: [.text(value0)])
         }
-        public static var jarVersionText2: LocalizedMessage {
+        /// 本地游戏 JAR 缺失，接入时需要补齐游戏文件。
+        ///
+        /// Resource: `Core.coreMinecraftVersionMetadata.jarVersionText2`.
+        public static var localJarMissing: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.jarVersionText2", table: "Core", fallback: "本地游戏 JAR 缺失，接入时需要补齐游戏文件。")
         }
-        public static var gameVersionText1: LocalizedMessage {
+        /// 无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。
+        ///
+        /// Resource: `Core.coreMinecraftVersionMetadata.gameVersionText1`.
+        public static var actualVersionUnknown: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.gameVersionText1", table: "Core", fallback: "无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。")
         }
-        public static var declaredText1: LocalizedMessage {
+        /// 游戏 JAR 与清单声明的版本不同，需要在接入前核对。
+        ///
+        /// Resource: `Core.coreMinecraftVersionMetadata.declaredText1`.
+        public static var declaredVersionMismatch: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.declaredText1", table: "Core", fallback: "游戏 JAR 与清单声明的版本不同，需要在接入前核对。")
         }
-        public static func mainText1(_ value0: String) -> LocalizedMessage {
+        /// 此版本使用尚未识别的启动入口：%1$@
+        ///
+        /// Resource: `Core.coreMinecraftVersionMetadata.mainText1`.
+        public static func unknownLaunchEntry(_ value0: String) -> LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.mainText1", table: "Core", fallback: "此版本使用尚未识别的启动入口：%1$@", arguments: [.text(value0)])
         }
-        public static var rawLibrariesText1: LocalizedMessage {
+        /// 依赖库清单格式无效。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.rawLibrariesText1`.
+        public static var invalidLibraryManifest: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.rawLibrariesText1", table: "Errors", fallback: "依赖库清单格式无效。")
         }
-        public static var idText1: LocalizedMessage {
+        /// 版本引用格式无效。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.idText1`.
+        public static var invalidVersionReference: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.idText1", table: "Errors", fallback: "版本引用格式无效。")
         }
-        public static var checkIdentifierText1: LocalizedMessage {
+        /// 版本名称或继承路径无效。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.checkIdentifierText1`.
+        public static var invalidInheritancePath: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.checkIdentifierText1", table: "Errors", fallback: "版本名称或继承路径无效。")
         }
-        public static var infoText1: LocalizedMessage {
+        /// 游戏 JAR 不是普通文件。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.infoText1`.
+        public static var jarNotRegularFile: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.infoText1", table: "Errors", fallback: "游戏 JAR 不是普通文件。")
         }
-        public static var entryText1: LocalizedMessage {
+        /// JAR 的版本信息过大或格式无效。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.entryText1`.
+        public static var jarVersionInfoInvalid: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.entryText1", table: "Errors", fallback: "JAR 的版本信息过大或格式无效。")
         }
-        public static var crcText1: LocalizedMessage {
+        /// JAR 的版本信息超过限制。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.crcText1`.
+        public static var jarVersionInfoTooLarge: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.crcText1", table: "Errors", fallback: "JAR 的版本信息超过限制。")
         }
-        public static var crcText2: LocalizedMessage {
+        /// JAR 的版本信息校验失败。
+        ///
+        /// Resource: `Errors.coreMinecraftVersionMetadata.crcText2`.
+        public static var jarVersionInfoChecksumFailed: LocalizedMessage {
             .init(key: "coreMinecraftVersionMetadata.crcText2", table: "Errors", fallback: "JAR 的版本信息校验失败。")
         }
         static let definitions: [String: MessageDefinition] = [

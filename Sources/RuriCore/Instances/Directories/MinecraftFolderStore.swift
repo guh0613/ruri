@@ -17,13 +17,13 @@ public enum MinecraftFolderStore {
         return try StateStore.update(paths) { state in
             if let id {
                 guard let retained = state.detachedMinecraftFolders?.first(where: { $0.id == id }) else {
-                    throw RuriError.message(Messages.CoreMinecraftFolderStore.retainedText1)
+                    throw RuriError.message(Messages.CoreMinecraftFolderStore.folderListChanged)
                 }
                 var candidate = retained.directory; candidate.url = catalog.directory
                 try candidate.validateAvailability()
             }
             if let existing = state.gameDirectories?.first(where: { $0.url.standardizedFileURL.resolvingSymlinksInPath() == catalog.directory }) {
-                guard existing.isMinecraft else { throw RuriError.message(Messages.CoreMinecraftFolderStore.existingText1) }
+                guard existing.isMinecraft else { throw RuriError.message(Messages.CoreMinecraftFolderStore.alreadyAddedFolder) }
                 try existing.validateAvailability()
                 state.selectedDirectoryID = existing.id
                 try synchronize(catalog, directory: existing, state: &state, paths: paths)
@@ -34,10 +34,10 @@ public enum MinecraftFolderStore {
             let markerFile = directory.url.appendingPathComponent(GameDirectory.markerName)
             if FileManager.default.fileExists(atPath: markerFile.path) {
                 let info = try markerFile.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
-                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message(Messages.CoreMinecraftFolderStore.infoText1) }
+                guard info.isRegularFile == true, info.isSymbolicLink != true, (info.fileSize ?? .max) <= 1024 else { throw RuriError.message(Messages.CoreMinecraftFolderStore.invalidRuriMarker) }
                 let marker = try JSONDecoder().decode(GameDirectory.Marker.self, from: Data(contentsOf: markerFile))
                 guard marker.schema == 1, marker.layout == .minecraft, marker.id != GameDirectory.defaultID,
-                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message(Messages.CoreMinecraftFolderStore.markerText1) }
+                      state.gameDirectories?.contains(where: { $0.id == marker.id }) != true else { throw RuriError.message(Messages.CoreMinecraftFolderStore.duplicateFolder) }
                 directory = GameDirectory(id: marker.id, name: directory.name, url: directory.url, bookmark: nil, createdAt: directory.createdAt, layout: .minecraft)
             } else {
                 try JSONEncoder().encode(GameDirectory.Marker(schema: 1, id: directory.id, layout: .minecraft)).write(to: markerFile, options: .withoutOverwriting)
@@ -48,7 +48,7 @@ public enum MinecraftFolderStore {
                 let located = original.resolvingBookmark()
                 if located.url.standardizedFileURL.resolvingSymlinksInPath().path != directory.url.path,
                    (try? located.validateAvailability()) != nil {
-                    throw RuriError.message(Messages.CoreMinecraftFolderStore.locatedText1)
+                    throw RuriError.message(Messages.CoreMinecraftFolderStore.originalFolderAvailable)
                 }
                 directory = GameDirectory(id: original.id, name: id == nil ? directory.name : original.name, url: directory.url, bookmark: nil, createdAt: original.createdAt, layout: .minecraft)
                 state.instances.append(contentsOf: detached.instances)
@@ -68,7 +68,7 @@ public enum MinecraftFolderStore {
         try directory.validateAvailability()
         let catalog = try MinecraftDirectoryReader().scanNow(directory.url, allowEmpty: true)
         return try StateStore.update(paths) { state in
-            guard state.gameDirectories?.first(where: { $0.id == id }) == directory else { throw RuriError.message(Messages.CoreMinecraftFolderStore.catalogText1) }
+            guard state.gameDirectories?.first(where: { $0.id == id }) == directory else { throw RuriError.message(Messages.CoreMinecraftFolderStore.locationChanged) }
             try synchronize(catalog, directory: directory, state: &state, paths: paths)
         }
     }
@@ -99,7 +99,7 @@ public enum MinecraftFolderStore {
                     item.runDirectory = .custom
                     // Failure stays visible instead of silently opening another set of saves.
                     do { item.customRunDirectory = try CustomRunDirectory.register(at: target, paths: paths.configured(with: state)) }
-                    catch { throw RuriError.message(Messages.CoreMinecraftFolderStore.targetText1(String(describing: version.id), String(describing: error.localizedDescription))) }
+                    catch { throw RuriError.message(Messages.CoreMinecraftFolderStore.customDirectoryUnavailable(String(describing: version.id), error.localizedDescription)) }
                 }
             }
             if let index { state.instances[index] = item } else { state.instances.append(item) }
@@ -110,8 +110,8 @@ public enum MinecraftFolderStore {
                !reserved.contains(MinecraftGameDataFiles.key(version)), !InstanceMoveGuard.hasPending(paths: paths, instanceID: state.instances[index].id) {
                 let current = paths.configured(with: state)
                 state.instances[index].repositoryIssue = FileManager.default.fileExists(atPath: current.repositoryImportWorkspace(state.instances[index].id).path)
-                    ? Messages.CoreMinecraftFolderStore.currentText1.localized
-                    : Messages.CoreMinecraftFolderStore.currentText2.localized
+                    ? Messages.CoreMinecraftFolderStore.pendingWorkFiles.localized
+                    : Messages.CoreMinecraftFolderStore.versionDirectoryMissing.localized
             }
         }
         if state.selectedDirectoryID == directory.id, !state.instances.contains(where: { $0.id == state.selectedInstanceID && $0.directoryID == directory.id }) {
@@ -123,7 +123,7 @@ public enum MinecraftFolderStore {
     /// assets and game data remain in place, including other profiles’ base jars.
     @discardableResult public static func trashVersion(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
         try StateStore.update(paths) { state in
-            guard let instance = state.instances.first(where: { $0.id == id }), let versionID = instance.repositoryVersionID else { throw RuriError.message(Messages.CoreMinecraftFolderStore.versionIDText1) }
+            guard let instance = state.instances.first(where: { $0.id == id }), let versionID = instance.repositoryVersionID else { throw RuriError.message(Messages.CoreMinecraftFolderStore.localVersionMissing) }
             let current = paths.configured(with: state)
             let lease = try GameRunLease.acquire(paths: current, instanceID: id)
             defer { withExtendedLifetime(lease) {} }
@@ -132,10 +132,10 @@ public enum MinecraftFolderStore {
                 let root = current.directoryRoot(current.directoryID(for: id)), reader = MinecraftDirectoryReader()
                 let catalog = try reader.scanNow(root, allowEmpty: true)
                 for other in catalog.versions where other.id != versionID {
-                    guard other.issue == nil else { throw RuriError.message(Messages.CoreMinecraftFolderStore.catalogText2(String(describing: other.id))) }
+                    guard other.issue == nil else { throw RuriError.message(Messages.CoreMinecraftFolderStore.dependencyCheckRequired(String(describing: other.id))) }
                     let resolved = try reader.resolveManifestNow(other, in: catalog)
                     if resolved.manifest.jar == versionID || resolved.sourceManifests.contains(where: { $0.url == current.manifest(id) }) {
-                        throw RuriError.message(Messages.CoreMinecraftFolderStore.resolvedText1(String(describing: other.id)))
+                        throw RuriError.message(Messages.CoreMinecraftFolderStore.dependencyExists(String(describing: other.id)))
                     }
                 }
                 try FileManager.default.trashItem(at: folder, resultingItemURL: nil)
@@ -162,7 +162,7 @@ public enum MinecraftFolderStore {
         let state = try StateStore.load(paths)
         guard !FileManager.default.fileExists(atPath: file.path), !state.instances.contains(where: {
             ($0.directoryID ?? GameDirectory.defaultID) == (input.directoryID ?? paths.newInstanceDirectoryID) && $0.repositoryVersionID?.localizedCaseInsensitiveCompare(name) == .orderedSame
-        }) else { throw RuriError.message(Messages.CoreMinecraftFolderStore.stateText1(String(describing: name))) }
+        }) else { throw RuriError.message(Messages.CoreMinecraftFolderStore.duplicateVersion(name)) }
         item.repositoryVersionID = name
         return item
     }

@@ -3,88 +3,172 @@ import Foundation
 
 extension Messages {
     public enum CoreGameSessionRecovery {
-        public static var titleText1: LocalizedMessage {
+        /// 运行记录已经结束
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText1`.
+        public static var recordAlreadyFinished: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText1", table: "Core", fallback: "运行记录已经结束")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 监控组件仍在运行
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText2`.
+        public static var monitorStillRunning: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText2", table: "Core", fallback: "监控组件仍在运行")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 暂时无法核对监控进程
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText3`.
+        public static var cannotCheckMonitorProcess: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText3", table: "Core", fallback: "暂时无法核对监控进程")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 游戏仍在运行，监控已断开
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText4`.
+        public static var gameRunningMonitorDisconnected: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText4", table: "Core", fallback: "游戏仍在运行，监控已断开")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 启动命令仍在运行，监控已断开
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText5`.
+        public static var launchCommandRunningMonitorDisconnected: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText5", table: "Core", fallback: "启动命令仍在运行，监控已断开")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 游戏进程已消失，缺少退出结果
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText6`.
+        public static var gameProcessGoneWithoutExit: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText6", table: "Core", fallback: "游戏进程已消失，缺少退出结果")
         }
-        public static var titleText7: LocalizedMessage {
+        /// 监控已中断，无法确认游戏状态
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.titleText7`.
+        public static var monitorInterruptedUnknownGameState: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.titleText7", table: "Core", fallback: "监控已中断，无法确认游戏状态")
         }
-        public static var explanationText1: LocalizedMessage {
+        /// 无需再恢复这条记录。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText1`.
+        public static var noRecoveryNeeded: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText1", table: "Core", fallback: "无需再恢复这条记录。")
         }
-        public static var explanationText2: LocalizedMessage {
+        /// 请等待监控完成收尾，或返回游戏查看当前状态。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText2`.
+        public static var waitForMonitorOrCheckGame: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText2", table: "Core", fallback: "请等待监控完成收尾，或返回游戏查看当前状态。")
         }
-        public static var explanationText3: LocalizedMessage {
+        /// 系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText3`.
+        public static var insufficientProcessInformation: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText3", table: "Core", fallback: "系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。")
         }
-        public static var explanationText4: LocalizedMessage {
+        /// 进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText4`.
+        public static var matchingProcessIdentity: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText4", table: "Core", fallback: "进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。")
         }
-        public static var explanationText5: LocalizedMessage {
+        /// 命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText5`.
+        public static var launchCommandStillExists: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText5", table: "Core", fallback: "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。")
         }
-        public static var explanationText6: LocalizedMessage {
+        /// 已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText6`.
+        public static var originalProcessGone: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText6", table: "Core", fallback: "已核对记录中的进程身份，原进程不再存在。可以收尾中断记录，恢复这个实例的启动入口；退出码和结束时间将保留为未知。")
         }
-        public static var explanationText7: LocalizedMessage {
+        /// 监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText7`.
+        public static var unverifiedGameExit: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText7", table: "Core", fallback: "监控没能保存可核对的游戏进程身份。请先在游戏、Dock 或活动监视器中确认该实例已退出，再恢复启动入口。Ruri 无法代替你确认这一点。")
         }
-        public static var explanationText8: LocalizedMessage {
+        /// 监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText8`.
+        public static var monitorInterruptedAfterExit: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText8", table: "Core", fallback: "监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。")
         }
-        public static var explanationText9: LocalizedMessage {
+        /// 监控中断，命令结果未知
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText9`.
+        public static var interruptedUnknownCommandResult: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText9", table: "Core", fallback: "监控中断，命令结果未知")
         }
-        public static var explanationText10: LocalizedMessage {
+        /// 监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText10`.
+        public static var interruptedGameProcessGone: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText10", table: "Core", fallback: "监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。")
         }
-        public static var explanationText11: LocalizedMessage {
+        /// 监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。
+        ///
+        /// Resource: `Core.coreGameSessionRecovery.explanationText11`.
+        public static var interruptedUnverifiedGameExit: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.explanationText11", table: "Core", fallback: "监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 运行记录已经变化，请刷新状态后重试。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.recordText1`.
+        public static var recordChanged: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.recordText1", table: "Errors", fallback: "运行记录已经变化，请刷新状态后重试。")
         }
-        public static var resolutionText1: LocalizedMessage {
+        /// 这次运行已经完成，不需要恢复。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText1`.
+        public static var runCompleted: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText1", table: "Errors", fallback: "这次运行已经完成，不需要恢复。")
         }
-        public static var resolutionText2: LocalizedMessage {
+        /// 监控仍在运行，不能收尾它正在写入的记录。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText2`.
+        public static var monitorStillWriting: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText2", table: "Errors", fallback: "监控仍在运行，不能收尾它正在写入的记录。")
         }
-        public static var resolutionText3: LocalizedMessage {
+        /// 无法确认监控已退出，请稍后刷新状态。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText3`.
+        public static var monitorExitUnconfirmed: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText3", table: "Errors", fallback: "无法确认监控已退出，请稍后刷新状态。")
         }
-        public static var resolutionText4: LocalizedMessage {
+        /// 游戏进程仍然存在，请先在游戏中退出。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText4`.
+        public static var gameProcessStillExists: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText4", table: "Errors", fallback: "游戏进程仍然存在，请先在游戏中退出。")
         }
-        public static var resolutionText5: LocalizedMessage {
+        /// 启动命令仍然存在，请先结束该命令。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText5`.
+        public static var launchCommandStillExistsResolution: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText5", table: "Errors", fallback: "启动命令仍然存在，请先结束该命令。")
         }
-        public static var resolutionText6: LocalizedMessage {
+        /// 尚未确认游戏已退出，无法恢复实例启动。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.resolutionText6`.
+        public static var gameExitUnconfirmed: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.resolutionText6", table: "Errors", fallback: "尚未确认游戏已退出，无法恢复实例启动。")
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法追加恢复日志。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.fdText1`.
+        public static var recoveryLogAppendFailed: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.fdText1", table: "Errors", fallback: "无法追加恢复日志。")
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 运行日志不是普通文件。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.attributesText1`.
+        public static var recoveryLogNotRegularFile: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.attributesText1", table: "Errors", fallback: "运行日志不是普通文件。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 无法保存恢复日志。
+        ///
+        /// Resource: `Errors.coreGameSessionRecovery.dataText1`.
+        public static var recoveryLogSaveFailed: LocalizedMessage {
             .init(key: "coreGameSessionRecovery.dataText1", table: "Errors", fallback: "无法保存恢复日志。")
         }
         static let definitions: [String: MessageDefinition] = [

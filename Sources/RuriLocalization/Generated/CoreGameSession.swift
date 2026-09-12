@@ -3,136 +3,269 @@ import Foundation
 
 extension Messages {
     public enum CoreGameSession {
-        public static var titleText1: LocalizedMessage {
+        /// 准备启动
+        ///
+        /// Resource: `Core.coreGameSession.titleText1`.
+        public static var preparingLaunch: LocalizedMessage {
             .init(key: "coreGameSession.titleText1", table: "Core", fallback: "准备启动")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 安装游戏
+        ///
+        /// Resource: `Core.coreGameSession.titleText2`.
+        public static var installingGame: LocalizedMessage {
             .init(key: "coreGameSession.titleText2", table: "Core", fallback: "安装游戏")
         }
-        public static var titleText3: LocalizedMessage {
+        /// 检查实例
+        ///
+        /// Resource: `Core.coreGameSession.titleText3`.
+        public static var checkingInstance: LocalizedMessage {
             .init(key: "coreGameSession.titleText3", table: "Core", fallback: "检查实例")
         }
-        public static var titleText4: LocalizedMessage {
+        /// 验证账号
+        ///
+        /// Resource: `Core.coreGameSession.titleText4`.
+        public static var validatingAccount: LocalizedMessage {
             .init(key: "coreGameSession.titleText4", table: "Core", fallback: "验证账号")
         }
-        public static var titleText5: LocalizedMessage {
+        /// 读取版本
+        ///
+        /// Resource: `Core.coreGameSession.titleText5`.
+        public static var readingVersion: LocalizedMessage {
             .init(key: "coreGameSession.titleText5", table: "Core", fallback: "读取版本")
         }
-        public static var titleText6: LocalizedMessage {
+        /// 准备 Java
+        ///
+        /// Resource: `Core.coreGameSession.titleText6`.
+        public static var preparingJava: LocalizedMessage {
             .init(key: "coreGameSession.titleText6", table: "Core", fallback: "准备 Java")
         }
-        public static var titleText7: LocalizedMessage {
+        /// 构建启动参数
+        ///
+        /// Resource: `Core.coreGameSession.titleText7`.
+        public static var buildingLaunchArguments: LocalizedMessage {
             .init(key: "coreGameSession.titleText7", table: "Core", fallback: "构建启动参数")
         }
-        public static var titleText8: LocalizedMessage {
+        /// 执行启动前命令
+        ///
+        /// Resource: `Core.coreGameSession.titleText8`.
+        public static var runningBeforeCommand: LocalizedMessage {
             .init(key: "coreGameSession.titleText8", table: "Core", fallback: "执行启动前命令")
         }
-        public static var titleText9: LocalizedMessage {
+        /// 执行退出后命令
+        ///
+        /// Resource: `Core.coreGameSession.titleText9`.
+        public static var runningAfterCommand: LocalizedMessage {
             .init(key: "coreGameSession.titleText9", table: "Core", fallback: "执行退出后命令")
         }
-        public static var titleText10: LocalizedMessage {
+        /// 创建游戏进程
+        ///
+        /// Resource: `Core.coreGameSession.titleText10`.
+        public static var startingGameProcess: LocalizedMessage {
             .init(key: "coreGameSession.titleText10", table: "Core", fallback: "创建游戏进程")
         }
-        public static var titleText11: LocalizedMessage {
+        /// 游戏进程运行
+        ///
+        /// Resource: `Core.coreGameSession.titleText11`.
+        public static var gameProcessRunning: LocalizedMessage {
             .init(key: "coreGameSession.titleText11", table: "Core", fallback: "游戏进程运行")
         }
-        public static var titleText12: LocalizedMessage {
+        /// 请求结束游戏
+        ///
+        /// Resource: `Core.coreGameSession.titleText12`.
+        public static var requestingGameExit: LocalizedMessage {
             .init(key: "coreGameSession.titleText12", table: "Core", fallback: "请求结束游戏")
         }
-        public static var titleText13: LocalizedMessage {
+        /// 等待游戏处理退出请求
+        ///
+        /// Resource: `Core.coreGameSession.titleText13`.
+        public static var waitingForGameExit: LocalizedMessage {
             .init(key: "coreGameSession.titleText13", table: "Core", fallback: "等待游戏处理退出请求")
         }
-        public static var titleText14: LocalizedMessage {
+        /// 游戏已退出
+        ///
+        /// Resource: `Core.coreGameSession.titleText14`.
+        public static var gameExited: LocalizedMessage {
             .init(key: "coreGameSession.titleText14", table: "Core", fallback: "游戏已退出")
         }
-        public static var titleText15: LocalizedMessage {
+        /// 恢复中断记录
+        ///
+        /// Resource: `Core.coreGameSession.titleText15`.
+        public static var recoveringInterruptedRecord: LocalizedMessage {
             .init(key: "coreGameSession.titleText15", table: "Core", fallback: "恢复中断记录")
         }
-        public static var titleText16: LocalizedMessage {
+        /// 游戏已退出 · 正在执行退出后命令
+        ///
+        /// Resource: `Core.coreGameSession.titleText16`.
+        public static var runningAfterCommandAfterExit: LocalizedMessage {
             .init(key: "coreGameSession.titleText16", table: "Core", fallback: "游戏已退出 · 正在执行退出后命令")
         }
-        public static func exitText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ · 尚无完成记录
+        ///
+        /// Resource: `Core.coreGameSession.exitText1`.
+        public static func startedWithoutCompletion(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameSession.exitText1", table: "Core", fallback: "%1$@ · 尚无完成记录", arguments: [.text(value0)])
         }
-        public static var exitText2: LocalizedMessage {
+        /// 游戏已启动 · 尚无退出记录
+        ///
+        /// Resource: `Core.coreGameSession.exitText2`.
+        public static var startedWithoutExitRecord: LocalizedMessage {
             .init(key: "coreGameSession.exitText2", table: "Core", fallback: "游戏已启动 · 尚无退出记录")
         }
-        public static var exitText3: LocalizedMessage {
+        /// 启动已取消
+        ///
+        /// Resource: `Core.coreGameSession.exitText3`.
+        public static var launchCancelled: LocalizedMessage {
             .init(key: "coreGameSession.exitText3", table: "Core", fallback: "启动已取消")
         }
-        public static func exitText4(_ value0: String) -> LocalizedMessage {
+        /// %1$@失败
+        ///
+        /// Resource: `Core.coreGameSession.exitText4`.
+        public static func phaseFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameSession.exitText4", table: "Core", fallback: "%1$@失败", arguments: [.text(value0)])
         }
-        public static var exitText5: LocalizedMessage {
+        /// 监控记录已收尾 · 退出结果未知
+        ///
+        /// Resource: `Core.coreGameSession.exitText5`.
+        public static var monitoringFinishedUnknownExit: LocalizedMessage {
             .init(key: "coreGameSession.exitText5", table: "Core", fallback: "监控记录已收尾 · 退出结果未知")
         }
-        public static var exitText6: LocalizedMessage {
+        /// 运行已结束
+        ///
+        /// Resource: `Core.coreGameSession.exitText6`.
+        public static var runFinished: LocalizedMessage {
             .init(key: "coreGameSession.exitText6", table: "Core", fallback: "运行已结束")
         }
-        public static var textText1: LocalizedMessage {
+        /// [Ruri] 此处显示日志末尾，完整内容保存在会话目录。
+        ///
+        /// Resource: `Core.coreGameSession.textText1`.
+        public static var truncatedLogNotice: LocalizedMessage {
             .init(key: "coreGameSession.textText1", table: "Core", fallback: "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n")
         }
-        public static func finishText1(_ value0: String) -> LocalizedMessage {
+        /// [Ruri] 未能保存游玩时长：%1$@
+        ///
+        /// Resource: `Core.coreGameSession.finishText1`.
+        public static func playtimeSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameSession.finishText1", table: "Core", fallback: "[Ruri] 未能保存游玩时长：%1$@", arguments: [.text(value0)])
         }
-        public static func finishText2(_ value0: String) -> LocalizedMessage {
+        /// [Ruri] 未能保存报告副本：%1$@
+        ///
+        /// Resource: `Core.coreGameSession.finishText2`.
+        public static func reportCopySaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameSession.finishText2", table: "Core", fallback: "[Ruri] 未能保存报告副本：%1$@", arguments: [.text(value0)])
         }
-        public static var failText1: LocalizedMessage {
+        /// 启动失败
+        ///
+        /// Resource: `Core.coreGameSession.failText1`.
+        public static var launchFailed: LocalizedMessage {
             .init(key: "coreGameSession.failText1", table: "Core", fallback: "启动失败")
         }
-        public static var destinationText1: LocalizedMessage {
+        ///
+        /// [Ruri] 报告超过 8 MiB，副本仅保留开头。
+        ///
+        /// Resource: `Core.coreGameSession.destinationText1`.
+        public static var reportTooLargeNotice: LocalizedMessage {
             .init(key: "coreGameSession.destinationText1", table: "Core", fallback: "\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n")
         }
-        public static func destinationText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// [Ruri] 未能保存报告副本 %1$@：%2$@
+        ///
+        /// Resource: `Core.coreGameSession.destinationText2`.
+        public static func reportCopyFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreGameSession.destinationText2", table: "Core", fallback: "[Ruri] 未能保存报告副本 %1$@：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 运行记录不是有效文件或超过大小限制。
+        ///
+        /// Resource: `Errors.coreGameSession.attributesText1`.
+        public static var invalidRunRecordFile: LocalizedMessage {
             .init(key: "coreGameSession.attributesText1", table: "Errors", fallback: "运行记录不是有效文件或超过大小限制。")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 运行记录格式无效。
+        ///
+        /// Resource: `Errors.coreGameSession.recordText1`.
+        public static var invalidRunRecordFormat: LocalizedMessage {
             .init(key: "coreGameSession.recordText1", table: "Errors", fallback: "运行记录格式无效。")
         }
-        public static var recordText2: LocalizedMessage {
+        /// 运行报告路径无效。
+        ///
+        /// Resource: `Errors.coreGameSession.recordText2`.
+        public static var invalidRunReportPath: LocalizedMessage {
             .init(key: "coreGameSession.recordText2", table: "Errors", fallback: "运行报告路径无效。")
         }
-        public static var interruptionText1: LocalizedMessage {
+        /// 中断恢复记录无效。
+        ///
+        /// Resource: `Errors.coreGameSession.interruptionText1`.
+        public static var invalidRecoveryRecord: LocalizedMessage {
             .init(key: "coreGameSession.interruptionText1", table: "Errors", fallback: "中断恢复记录无效。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 日志不是普通文件。
+        ///
+        /// Resource: `Errors.coreGameSession.urlText1`.
+        public static var logNotRegularFile: LocalizedMessage {
             .init(key: "coreGameSession.urlText1", table: "Errors", fallback: "日志不是普通文件。")
         }
-        public static var instanceRootText1: LocalizedMessage {
+        /// 请选择运行记录目录以外的导出位置。
+        ///
+        /// Resource: `Errors.coreGameSession.instanceRootText1`.
+        public static var exportOutsideRunDirectory: LocalizedMessage {
             .init(key: "coreGameSession.instanceRootText1", table: "Errors", fallback: "请选择运行记录目录以外的导出位置。")
         }
-        public static var temporaryText1: LocalizedMessage {
+        /// 无法创建导出文件。
+        ///
+        /// Resource: `Errors.coreGameSession.temporaryText1`.
+        public static var exportFileCreationFailed: LocalizedMessage {
             .init(key: "coreGameSession.temporaryText1", table: "Errors", fallback: "无法创建导出文件。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 导出期间日志发生变化，请重试。
+        ///
+        /// Resource: `Errors.coreGameSession.dataText1`.
+        public static var logChangedDuringExport: LocalizedMessage {
             .init(key: "coreGameSession.dataText1", table: "Errors", fallback: "导出期间日志发生变化，请重试。")
         }
-        public static var dataText2: LocalizedMessage {
+        /// 无法保存导出日志。
+        ///
+        /// Resource: `Errors.coreGameSession.dataText2`.
+        public static var exportLogSaveFailed: LocalizedMessage {
             .init(key: "coreGameSession.dataText2", table: "Errors", fallback: "无法保存导出日志。")
         }
-        public static var attributesText2: LocalizedMessage {
+        /// 运行记录已读标记无效。
+        ///
+        /// Resource: `Errors.coreGameSession.attributesText2`.
+        public static var invalidRunRecordReadMarker: LocalizedMessage {
             .init(key: "coreGameSession.attributesText2", table: "Errors", fallback: "运行记录已读标记无效。")
         }
-        public static var logURLText1: LocalizedMessage {
+        /// 无法创建运行日志。
+        ///
+        /// Resource: `Errors.coreGameSession.logURLText1`.
+        public static var runLogCreationFailed: LocalizedMessage {
             .init(key: "coreGameSession.logURLText1", table: "Errors", fallback: "无法创建运行日志。")
         }
-        public static var logURLText2: LocalizedMessage {
+        /// 监控组件不能接管这个运行记录。
+        ///
+        /// Resource: `Errors.coreGameSession.logURLText2`.
+        public static var monitorCannotAdoptRun: LocalizedMessage {
             .init(key: "coreGameSession.logURLText2", table: "Errors", fallback: "监控组件不能接管这个运行记录。")
         }
-        public static var handoffText1: LocalizedMessage {
+        /// 这个运行记录不能交给监控组件。
+        ///
+        /// Resource: `Errors.coreGameSession.handoffText1`.
+        public static var runCannotBeHandedToMonitor: LocalizedMessage {
             .init(key: "coreGameSession.handoffText1", table: "Errors", fallback: "这个运行记录不能交给监控组件。")
         }
-        public static var logText1: LocalizedMessage {
+        /// 运行日志已关闭。
+        ///
+        /// Resource: `Errors.coreGameSession.logText1`.
+        public static var runLogClosed: LocalizedMessage {
             .init(key: "coreGameSession.logText1", table: "Errors", fallback: "运行日志已关闭。")
         }
-        public static var transitionText1: LocalizedMessage {
+        /// 运行会话已经结束。
+        ///
+        /// Resource: `Errors.coreGameSession.transitionText1`.
+        public static var runAlreadyFinished: LocalizedMessage {
             .init(key: "coreGameSession.transitionText1", table: "Errors", fallback: "运行会话已经结束。")
         }
-        public static var setMemoryText1: LocalizedMessage {
+        /// 游戏已启动，不能改写本轮内存设置。
+        ///
+        /// Resource: `Errors.coreGameSession.setMemoryText1`.
+        public static var memoryChangeAfterLaunch: LocalizedMessage {
             .init(key: "coreGameSession.setMemoryText1", table: "Errors", fallback: "游戏已启动，不能改写本轮内存设置。")
         }
         static let definitions: [String: MessageDefinition] = [

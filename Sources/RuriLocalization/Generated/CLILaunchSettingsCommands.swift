@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CLILaunchSettingsCommands {
-        public static var usageText1: LocalizedMessage {
+        /// 用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。
+        ///
+        /// Resource: `CLI.cLILaunchSettingsCommands.usageText1`.
+        public static var launchSettingsUsage: LocalizedMessage {
             .init(key: "cLILaunchSettingsCommands.usageText1", table: "CLI", fallback: "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 实例不存在。
+        ///
+        /// Resource: `Errors.cLILaunchSettingsCommands.indexText1`.
+        public static var instanceMissing: LocalizedMessage {
             .init(key: "cLILaunchSettingsCommands.indexText1", table: "Errors", fallback: "实例不存在。")
         }
-        public static var enabledText1: LocalizedMessage {
+        /// commands 应为 true 或 false。
+        ///
+        /// Resource: `Errors.cLILaunchSettingsCommands.enabledText1`.
+        public static var commandsValueInvalid: LocalizedMessage {
             .init(key: "cLILaunchSettingsCommands.enabledText1", table: "Errors", fallback: "commands 应为 true 或 false。")
         }
-        public static var contentText1: LocalizedMessage {
+        /// 环境变量文件应为不超过 64 KB 的 UTF-8 文本。
+        ///
+        /// Resource: `Errors.cLILaunchSettingsCommands.contentText1`.
+        public static var environmentFileInvalid: LocalizedMessage {
             .init(key: "cLILaunchSettingsCommands.contentText1", table: "Errors", fallback: "环境变量文件应为不超过 64 KB 的 UTF-8 文本。")
         }
         static let definitions: [String: MessageDefinition] = [

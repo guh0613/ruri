@@ -3,79 +3,154 @@ import Foundation
 
 extension Messages {
     public enum CoreOptiFineInstaller {
-        public static var installText1: LocalizedMessage {
+        /// 这个 Minecraft 版本暂不支持 OptiFine 独立安装。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.installText1`.
+        public static var unsupportedStandaloneInstall: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.installText1", table: "Errors", fallback: "这个 Minecraft 版本暂不支持 OptiFine 独立安装。")
         }
-        public static var releaseText1: LocalizedMessage {
+        /// 找不到对应的 OptiFine 版本。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.releaseText1`.
+        public static var matchingOptiFineVersionMissing: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.releaseText1", table: "Errors", fallback: "找不到对应的 OptiFine 版本。")
         }
-        public static var versionText1: LocalizedMessage {
+        /// OptiFine 安装来源缺失，请重新安装此组件。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.versionText1`.
+        public static var missingInstallSource: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.versionText1", table: "Errors", fallback: "OptiFine 安装来源缺失，请重新安装此组件。")
         }
-        public static var gameText1: LocalizedMessage {
+        /// OptiFine 安装包与选择的游戏或组件版本不匹配。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.gameText1`.
+        public static var packageVersionMismatch: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.gameText1", table: "Errors", fallback: "OptiFine 安装包与选择的游戏或组件版本不匹配。")
         }
-        public static var clientText1: LocalizedMessage {
+        /// OptiFine 需要原版 Minecraft 客户端。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.clientText1`.
+        public static var vanillaClientRequired: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.clientText1", table: "Errors", fallback: "OptiFine 需要原版 Minecraft 客户端。")
         }
-        public static func runtimeText1(_ value0: String) -> LocalizedMessage {
+        /// 生成 OptiFine 需要 Java %1$@，请先添加运行时。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.runtimeText1`.
+        public static func javaRequiredForGeneration(_ value0: String) -> LocalizedMessage {
             .init(key: "coreOptiFineInstaller.runtimeText1", table: "Errors", fallback: "生成 OptiFine 需要 Java %1$@，请先添加运行时。", arguments: [.text(value0)])
         }
-        public static func statusText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// OptiFine 补丁生成失败（%1$@），请查看安装日志：%2$@
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.statusText1`.
+        public static func patchGenerationFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreOptiFineInstaller.statusText1", table: "Errors", fallback: "OptiFine 补丁生成失败（%1$@），请查看安装日志：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var wrapperVersionText1: LocalizedMessage {
+        /// OptiFine LaunchWrapper 版本无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.wrapperVersionText1`.
+        public static var invalidLaunchWrapperVersion: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.wrapperVersionText1", table: "Errors", fallback: "OptiFine LaunchWrapper 版本无效。")
         }
-        public static var originalText1: LocalizedMessage {
+        /// 重新生成的 OptiFine 与原安装不一致，未替换游戏文件。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.originalText1`.
+        public static var regeneratedPackageMismatch: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.originalText1", table: "Errors", fallback: "重新生成的 OptiFine 与原安装不一致，未替换游戏文件。")
         }
-        public static var nameText1: LocalizedMessage {
+        /// 所下载的文件不是受支持的 OptiFine 安装包。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.nameText1`.
+        public static var unsupportedInstallPackage: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.nameText1", table: "Errors", fallback: "所下载的文件不是受支持的 OptiFine 安装包。")
         }
-        public static var releaseText2: LocalizedMessage {
+        /// OptiFine 安装包缺少版本字段。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.releaseText2`.
+        public static var missingPackageVersion: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.releaseText2", table: "Errors", fallback: "OptiFine 安装包缺少版本字段。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// OptiFine 补丁文件大小无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.dataText1`.
+        public static var invalidPatchFileSize: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.dataText1", table: "Errors", fallback: "OptiFine 补丁文件大小无效。")
         }
-        public static var numberText1: LocalizedMessage {
+        /// OptiFine ZIP 文件结构无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.numberText1`.
+        public static var invalidZipStructure: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.numberText1", table: "Errors", fallback: "OptiFine ZIP 文件结构无效。")
         }
-        public static var endText1: LocalizedMessage {
+        /// OptiFine ZIP 目录无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.endText1`.
+        public static var invalidZipDirectory: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.endText1", table: "Errors", fallback: "OptiFine ZIP 目录无效。")
         }
-        public static var countText1: LocalizedMessage {
+        /// OptiFine ZIP 目录超出限制。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.countText1`.
+        public static var zipDirectoryTooLarge: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.countText1", table: "Errors", fallback: "OptiFine ZIP 目录超出限制。")
         }
-        public static var offsetText1: LocalizedMessage {
+        /// OptiFine ZIP 条目无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.offsetText1`.
+        public static var invalidZipEntry: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.offsetText1", table: "Errors", fallback: "OptiFine ZIP 条目无效。")
         }
-        public static var localText1: LocalizedMessage {
+        /// OptiFine ZIP 文件头无效。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.localText1`.
+        public static var invalidZipHeader: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.localText1", table: "Errors", fallback: "OptiFine ZIP 文件头无效。")
         }
-        public static var lengthText1: LocalizedMessage {
+        /// OptiFine ZIP 条目超出范围。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.lengthText1`.
+        public static var zipEntryOutOfRange: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.lengthText1", table: "Errors", fallback: "OptiFine ZIP 条目超出范围。")
         }
-        public static var timeText1: LocalizedMessage {
+        /// OptiFine ZIP 条目数量不一致。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.timeText1`.
+        public static var zipEntryCountMismatch: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.timeText1", table: "Errors", fallback: "OptiFine ZIP 条目数量不一致。")
         }
-        public static func entryText1(_ value0: String) -> LocalizedMessage {
+        /// OptiFine 安装包缺少有效的 %1$@。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.entryText1`.
+        public static func missingPackageField(_ value0: String) -> LocalizedMessage {
             .init(key: "coreOptiFineInstaller.entryText1", table: "Errors", fallback: "OptiFine 安装包缺少有效的 %1$@。", arguments: [.text(value0)])
         }
-        public static var crcText1: LocalizedMessage {
+        /// OptiFine 文件校验失败。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.crcText1`.
+        public static var fileChecksumFailed: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.crcText1", table: "Errors", fallback: "OptiFine 文件校验失败。")
         }
-        public static func publishText1(_ value0: String) -> LocalizedMessage {
+        /// OptiFine 需要替换已有依赖，请先检查：%1$@
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.publishText1`.
+        public static func dependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreOptiFineInstaller.publishText1", table: "Errors", fallback: "OptiFine 需要替换已有依赖，请先检查：%1$@", arguments: [.text(value0)])
         }
-        public static var stagingText1: LocalizedMessage {
+        /// 无法保存 OptiFine 依赖。
+        ///
+        /// Resource: `Errors.coreOptiFineInstaller.stagingText1`.
+        public static var dependencySaveFailed: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.stagingText1", table: "Errors", fallback: "无法保存 OptiFine 依赖。")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 下载 OptiFine 安装包（BMCLAPI）
+        ///
+        /// Resource: `Progress.coreOptiFineInstaller.fileText1`.
+        public static var downloadInstallPackage: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.fileText1", table: "Progress", fallback: "下载 OptiFine 安装包（BMCLAPI）")
         }
-        public static var runtimeText2: LocalizedMessage {
+        /// 生成 OptiFine 补丁库
+        ///
+        /// Resource: `Progress.coreOptiFineInstaller.runtimeText2`.
+        public static var generatePatchLibrary: LocalizedMessage {
             .init(key: "coreOptiFineInstaller.runtimeText2", table: "Progress", fallback: "生成 OptiFine 补丁库")
         }
         static let definitions: [String: MessageDefinition] = [

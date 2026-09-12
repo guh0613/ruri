@@ -18,7 +18,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         var volumeUUID: String?
         static func read(_ url: URL) throws -> Identity {
             var value = stat()
-            guard lstat(url.path, &value) == 0, [S_IFREG, S_IFDIR].contains(value.st_mode & S_IFMT) else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.valueText1(String(describing: url.lastPathComponent))) }
+            guard lstat(url.path, &value) == 0, [S_IFREG, S_IFDIR].contains(value.st_mode & S_IFMT) else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.sourceIdentityUnknown(url.lastPathComponent)) }
             return Identity(device: Int64(value.st_dev), inode: UInt64(value.st_ino), directory: value.st_mode & S_IFMT == S_IFDIR,
                             volumeUUID: try? url.resourceValues(forKeys: [.volumeUUIDStringKey]).volumeUUIDString)
         }
@@ -57,13 +57,13 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         var differentLocation = (record.original.runDirectory ?? .isolated) != record.target
         if !differentLocation, record.target == .custom, let source = record.original.customRunDirectory, let target = record.targetCustomDirectory { differentLocation = !source.isSameLocation(as: target) }
         guard (1...4).contains(record.version), record.original.id == instanceID, differentLocation,
-              record.items.count <= 4096, record.emptyDirectories.count <= 150_000, record.original.name.count <= 1024 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.targetText1) }
+              record.items.count <= 4096, record.emptyDirectories.count <= 150_000, record.original.name.count <= 1024 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidRecord) }
         if record.target == .custom {
-            guard let custom = record.targetCustomDirectory ?? record.original.customRunDirectory else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.customText1) }
+            guard let custom = record.targetCustomDirectory ?? record.original.customRunDirectory else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.missingCustomTarget) }
             try custom.validateConfiguration()
         }
         try record.targetPaths(paths).validateDirectoryConfiguration()
-        guard record.stagingOnTarget != true || record.target == .custom else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.customText2) }
+        guard record.stagingOnTarget != true || record.target == .custom else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidWorkspace) }
         let reserved = Set(MinecraftGameDataFiles.reservedNames(paths: record.targetPaths(paths), instanceID: instanceID).map(MinecraftGameDataFiles.key))
         var keys = Set<String>()
         for item in record.items {
@@ -71,21 +71,21 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
                   item.identity.inode > 0, item.identity.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true,
                   keys.insert(item.area.rawValue + "/" + item.name).inserted,
                   item.area != .metadata || ["content.json", "world-backups"].contains(item.name),
-                  item.area != .game || ![".ruri", ".DS_Store", ".ruri-partials"].contains(item.name) else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.keysText1) }
+                  item.area != .game || ![".ruri", ".DS_Store", ".ruri-partials"].contains(item.name) else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidKeys) }
             if let published = item.publishedIdentity {
                 guard record.version >= 3, published.inode > 0, published.directory == item.identity.directory,
-                      published.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.publishedText1) }
+                      published.volumeUUID.map({ !$0.isEmpty && $0.count <= 128 }) ?? true else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidPublishedIdentity) }
             }
             if record.version >= 4, item.area == .game, reserved.contains(MinecraftGameDataFiles.key(item.name)) {
-                throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.publishedText2)
+                throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.installedFilesPreserved)
             }
         }
         for directory in record.emptyDirectories {
-            guard directory.area != .metadata || directory.path == "world-backups" || directory.path.hasPrefix("world-backups/") else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.publishedText3) }
+            guard directory.area != .metadata || directory.path == "world-backups" || directory.path.hasPrefix("world-backups/") else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidBackupPath) }
             _ = try LauncherPaths.safePath(directory.path, within: root)
-            guard directory.path.split(separator: "/").first != ".ruri" else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.publishedText4) }
+            guard directory.path.split(separator: "/").first != ".ruri" else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.retainedPath) }
             if record.version >= 4, directory.area == .game, let first = directory.path.split(separator: "/").first,
-               reserved.contains(MinecraftGameDataFiles.key(String(first))) { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.firstText1) }
+               reserved.contains(MinecraftGameDataFiles.key(String(first))) { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.targetDirectoryPresent) }
         }
         return record
     }
@@ -93,7 +93,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
         try paths.validateInstanceLocation(original.id)
         let directory = try preparedDirectory ?? Self.root(paths: paths, instanceID: original.id)
         let data = try JSONEncoder().encode(self)
-        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.dataText1) }
+        guard data.count <= 8_388_608 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.sizeLimit) }
         try data.write(to: directory.appendingPathComponent("transaction.json"), options: .atomic)
     }
     func incoming(_ item: Item, paths: LauncherPaths) throws -> URL {
@@ -154,19 +154,19 @@ public enum RunDirectoryCopyGuard {
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
         try InstanceCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: id)
         if FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent("run-directory-change").path) {
-            guard let id, try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).id == id else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.idText1) }
+            guard let id, try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).id == id else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.unfinishedCopy) }
         }
         try requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: id)
     }
     static func requireSharedAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
         guard paths.runDirectory(for: instanceID) != .isolated, let marker = try sharedMarker(paths: paths, instanceID: instanceID) else { return }
-        guard marker.transactionID == id, marker.instanceID == instanceID else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.markerText1(String(describing: marker.instanceName))) }
+        guard marker.transactionID == id, marker.instanceID == instanceID else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.copyInProgress(marker.instanceName)) }
     }
     private static func sharedMarker(paths: LauncherPaths, instanceID: UUID) throws -> Marker? {
         let url = try markerURL(paths: paths, instanceID: instanceID)
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
         let marker: Marker = try decode(url, limit: 8192)
-        guard marker.version == 1, marker.instanceName.count <= 1024 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.markerText2) }
+        guard marker.version == 1, marker.instanceName.count <= 1024 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidSharedCopyLock) }
         return marker
     }
     static func mark(_ journal: RunDirectoryCopyJournal, paths: LauncherPaths) throws {
@@ -176,7 +176,7 @@ public enum RunDirectoryCopyGuard {
     }
     static func clear(_ journal: RunDirectoryCopyJournal, paths: LauncherPaths) throws {
         guard paths.runDirectory(for: journal.original.id) != .isolated, let marker = try sharedMarker(paths: paths, instanceID: journal.original.id) else { return }
-        guard marker.transactionID == journal.id, marker.instanceID == journal.original.id else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.markerText3) }
+        guard marker.transactionID == journal.id, marker.instanceID == journal.original.id else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.changedSharedCopyLock) }
         try FileManager.default.removeItem(at: markerURL(paths: paths, instanceID: journal.original.id))
     }
     static func decode<T: Decodable>(_ url: URL, limit: Int) throws -> T {
@@ -184,12 +184,12 @@ public enum RunDirectoryCopyGuard {
     }
     static func read(_ url: URL, limit: Int) throws -> Data {
         let fd = open(url.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.fdText1(String(describing: url.path))) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.recordReadFailed(url.path)) }
         let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true); defer { try? handle.close() }
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.infoText1) }
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidRecordFile) }
         let data = try handle.read(upToCount: limit + 1) ?? Data()
-        guard data.count <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.dataText1) }
+        guard data.count <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.sizeLimit) }
         return data
     }
 }

@@ -19,13 +19,13 @@ public actor InstanceComponents {
     }
 
     public nonisolated static func unavailableReason(_ instance: GameInstance) -> String? {
-        guard instance.installed else { return Messages.CoreInstanceComponents.unavailableReasonText1.localized }
+        guard instance.installed else { return Messages.CoreInstanceComponents.installationRequired.localized }
         if let issue = instance.repositoryIssue { return issue }
         let supported = Set(LoaderKind.allCases.map(\.title))
         let additional = (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter { !supported.contains($0.name) }
         if !additional.isEmpty { return Messages.CoreInstanceComponents.unsupportedComponents(LocalizedFormat.list(additional.map(\.name))).localized }
         if (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter({ supported.contains($0.name) }).count > 1 {
-            return Messages.CoreInstanceComponents.additionalText3.localized
+            return Messages.CoreInstanceComponents.multipleLoadersUnsupported.localized
         }
         return nil
     }
@@ -53,8 +53,8 @@ public actor InstanceComponents {
         let original = try find(requested.id, state: state)
         _ = try original.applyingInstallation(requested, requested: requested)
         if let reason = Self.unavailableReason(original) { throw RuriError.message(reason) }
-        guard loader == .vanilla || version?.isEmpty == false else { throw RuriError.message(Messages.CoreInstanceComponents.reasonText1) }
-        guard loader != original.loader || (loader != .vanilla && version != original.loaderVersion) else { throw RuriError.message(Messages.CoreInstanceComponents.reasonText2) }
+        guard loader == .vanilla || version?.isEmpty == false else { throw RuriError.message(Messages.CoreInstanceComponents.loaderVersionSelectionRequired) }
+        guard loader != original.loader || (loader != .vanilla && version != original.loaderVersion) else { throw RuriError.message(Messages.CoreInstanceComponents.loaderVersionAlreadySelected) }
         let lease = try GameRunLease.acquire(paths: current, instanceID: original.id)
         defer { withExtendedLifetime(lease) {} }
         try current.validateBinding(original)
@@ -64,7 +64,7 @@ public actor InstanceComponents {
         let resources = try current.resources(for: original)
         let clientID = active.jar ?? original.gameVersion
         let client = try current.clientJar(clientID, instance: original)
-        guard FileManager.default.fileExists(atPath: client.path) else { throw RuriError.message(Messages.CoreInstanceComponents.clientText1) }
+        guard FileManager.default.fileExists(atPath: client.path) else { throw RuriError.message(Messages.CoreInstanceComponents.missingGameClient) }
         let work = try LauncherPaths.safePath("component-work/" + UUID().uuidString, within: current.instance(original.id))
         let staging = LauncherPaths(root: work)
         try FileManager.default.createDirectory(at: work, withIntermediateDirectories: true)
@@ -96,7 +96,7 @@ public actor InstanceComponents {
                             stagedClient.path: client.path, stagedClient.deletingLastPathComponent().path: client.deletingLastPathComponent().path]
         func rewrite(_ value: String) throws -> String {
             let result = MinecraftInstallationCopy.rewrite(value, replacements: replacements)
-            guard !result.contains(work.path) else { throw RuriError.message(Messages.CoreInstanceComponents.resultText1) }
+            guard !result.contains(work.path) else { throw RuriError.message(Messages.CoreInstanceComponents.nonportableLoaderPath) }
             return result
         }
         func argument(_ value: LaunchArgument) throws -> LaunchArgument {
@@ -116,7 +116,7 @@ public actor InstanceComponents {
             replacement.importedInstallation = .init(sourceVersionID: imported.sourceVersionID, components: components)
         }
         try Task.checkCancellation()
-        await progress(InstallProgress(Messages.CoreInstanceComponents.importedText1))
+        await progress(InstallProgress(Messages.CoreInstanceComponents.applyingLoaderSettings))
         let backup = ComponentBackup(createdAt: Date(), instance: original, manifest: previous, resourceRoot: resources.root)
         return try publish(replacement, requested: original, manifest: encoded, previous: previous, documents: documents, backup: backup, paths: current)
     }
@@ -129,7 +129,7 @@ public actor InstanceComponents {
         defer { withExtendedLifetime(lease) {} }
         guard let backup = try backup(for: original.id), backup.instance.id == original.id,
               backup.instance.gameVersion == original.gameVersion,
-              backup.resourceRoot == (try current.resources(for: original)).root else { throw RuriError.message(Messages.CoreInstanceComponents.backupText1) }
+              backup.resourceRoot == (try current.resources(for: original)).root else { throw RuriError.message(Messages.CoreInstanceComponents.loaderBackupMissing) }
         let documents = try sourceDocuments(original, paths: current)
         let previous = try RunDirectoryCopyGuard.read(current.manifest(original.id), limit: 32 * 1024 * 1024)
         let reverse = ComponentBackup(createdAt: Date(), instance: original, manifest: previous, resourceRoot: backup.resourceRoot)
@@ -149,12 +149,12 @@ public actor InstanceComponents {
                 let original = try find(requested.id, state: latest)
                 var updated = try original.applyingInstallation(requested, requested: requested)
                 try current.validateBinding(original)
-                guard original.importedInstallation == requested.importedInstallation else { throw RuriError.message(Messages.CoreInstanceComponents.updatedText1) }
+                guard original.importedInstallation == requested.importedInstallation else { throw RuriError.message(Messages.CoreInstanceComponents.componentsChangedDuringOperation) }
                 for document in documents {
                     let actual = FileManager.default.fileExists(atPath: document.url.path) ? try RunDirectoryCopyGuard.read(document.url, limit: 32 * 1024 * 1024) : nil
-                    guard actual == document.data else { throw RuriError.message(Messages.CoreInstanceComponents.actualText1) }
+                    guard actual == document.data else { throw RuriError.message(Messages.CoreInstanceComponents.originalVersionChanged) }
                 }
-                guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == previous else { throw RuriError.message(Messages.CoreInstanceComponents.actualText2) }
+                guard try RunDirectoryCopyGuard.read(file, limit: 32 * 1024 * 1024) == previous else { throw RuriError.message(Messages.CoreInstanceComponents.launchManifestChanged) }
                 updated.loader = replacement.loader; updated.loaderVersion = replacement.loaderVersion
                 updated.repositoryComponents = replacement.repositoryComponents; updated.importedInstallation = replacement.importedInstallation
                 updated.packLibraries = replacement.packLibraries
@@ -165,7 +165,7 @@ public actor InstanceComponents {
         } catch {
             if published {
                 do { try previous.write(to: file, options: .atomic) }
-                catch { throw RuriError.message(Messages.CoreInstanceComponents.actualText3) }
+                catch { throw RuriError.message(Messages.CoreInstanceComponents.loaderSettingsSaveIncomplete) }
             }
             throw error
         }
@@ -174,14 +174,14 @@ public actor InstanceComponents {
     private func sourceDocuments(_ instance: GameInstance, paths: LauncherPaths) throws -> [MinecraftDirectoryDocument] {
         guard let versionID = instance.repositoryVersionID else { return [] }
         let catalog = try MinecraftDirectoryReader().scanNow(paths.directoryRoot(paths.directoryID(for: instance.id)))
-        guard let version = catalog.versions.first(where: { $0.id == versionID }), version.issue == nil else { throw RuriError.message(Messages.CoreInstanceComponents.versionText1) }
+        guard let version = catalog.versions.first(where: { $0.id == versionID }), version.issue == nil else { throw RuriError.message(Messages.CoreInstanceComponents.launchManifestUnavailable) }
         if let dependent = catalog.versions.first(where: { $0.id != versionID && $0.documents.contains(where: { $0.url == paths.manifest(instance.id) }) }) {
-            throw RuriError.message(Messages.CoreInstanceComponents.dependentText1(String(describing: dependent.id)))
+            throw RuriError.message(Messages.CoreInstanceComponents.dependentInstanceWarning(String(describing: dependent.id)))
         }
         return version.documents
     }
     private func find(_ id: UUID, state: PersistentState) throws -> GameInstance {
-        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceComponents.instanceText1) }
+        guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CoreInstanceComponents.instanceRemoved) }
         return instance
     }
     private func backupFile(_ id: UUID, paths: LauncherPaths) throws -> URL { try LauncherPaths.safePath("previous-components.json", within: paths.instance(id)) }

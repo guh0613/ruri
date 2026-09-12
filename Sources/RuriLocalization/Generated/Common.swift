@@ -3,30 +3,57 @@ import Foundation
 
 extension Messages {
     public enum Common {
+        /// 取消
+        ///
+        /// Resource: `Common.common.cancel`.
         public static var cancel: LocalizedMessage {
             .init(key: "common.cancel", table: "Common", fallback: "取消")
         }
+        /// 完成
+        ///
+        /// Resource: `Common.common.done`.
         public static var done: LocalizedMessage {
             .init(key: "common.done", table: "Common", fallback: "完成")
         }
+        /// 语言
+        ///
+        /// Resource: `Common.common.language`.
         public static var language: LocalizedMessage {
             .init(key: "common.language", table: "Common", fallback: "语言")
         }
+        /// 跟随系统
+        ///
+        /// Resource: `Common.common.followSystem`.
         public static var followSystem: LocalizedMessage {
             .init(key: "common.followSystem", table: "Common", fallback: "跟随系统")
         }
+        /// 重新打开 Ruri 后生效。
+        ///
+        /// Resource: `Common.common.languageRestart`.
         public static var languageRestart: LocalizedMessage {
             .init(key: "common.languageRestart", table: "Common", fallback: "重新打开 Ruri 后生效。")
         }
+        /// %1$lld 个文件
+        ///
+        /// Resource: `Common.common.fileCount`.
         public static func fileCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "common.fileCount", table: "Common", fallback: "%1$lld 个文件", arguments: [.integer(value0)])
         }
+        /// %1$lld 个文件 · %2$@
+        ///
+        /// Resource: `Common.common.filesAndSize`.
         public static func filesAndSize(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "common.filesAndSize", table: "Common", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
+        /// 本地化资源读取成功
+        ///
+        /// Resource: `Common.common.localizationCheck`.
         public static var localizationCheck: LocalizedMessage {
             .init(key: "common.localizationCheck", table: "Common", fallback: "本地化资源读取成功")
         }
+        /// --language 后需要填写语言代码。
+        ///
+        /// Resource: `Common.common.invalidLanguageOption`.
         public static var invalidLanguageOption: LocalizedMessage {
             .init(key: "common.invalidLanguageOption", table: "Common", fallback: "--language 后需要填写语言代码。")
         }

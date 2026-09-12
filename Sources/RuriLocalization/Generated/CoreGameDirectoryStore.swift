@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDirectoryStore {
-        public static var resultText1: LocalizedMessage {
+        /// 此实例文件夹已从列表移除。
+        ///
+        /// Resource: `Errors.coreGameDirectoryStore.resultText1`.
+        public static var folderRemoved: LocalizedMessage {
             .init(key: "coreGameDirectoryStore.resultText1", table: "Errors", fallback: "此实例文件夹已从列表移除。")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 找不到实例文件夹。
+        ///
+        /// Resource: `Errors.coreGameDirectoryStore.indexText1`.
+        public static var folderMissing: LocalizedMessage {
             .init(key: "coreGameDirectoryStore.indexText1", table: "Errors", fallback: "找不到实例文件夹。")
         }
-        public static var candidateText1: LocalizedMessage {
+        /// 原实例文件夹仍可访问，请先完成移动，或通过导入处理另一份副本。
+        ///
+        /// Resource: `Errors.coreGameDirectoryStore.candidateText1`.
+        public static var folderStillAccessible: LocalizedMessage {
             .init(key: "coreGameDirectoryStore.candidateText1", table: "Errors", fallback: "原实例文件夹仍可访问，请先完成移动，或通过导入处理另一份副本。")
         }
-        public static var selectedText1: LocalizedMessage {
+        /// 文件夹仍有实例，暂时不能从列表移除。
+        ///
+        /// Resource: `Errors.coreGameDirectoryStore.selectedText1`.
+        public static var folderContainsInstances: LocalizedMessage {
             .init(key: "coreGameDirectoryStore.selectedText1", table: "Errors", fallback: "文件夹仍有实例，暂时不能从列表移除。")
         }
-        public static var instancesText1: LocalizedMessage {
+        /// 文件夹中仍有尚未添加到列表或正在安装的实例，请先处理这些实例，再从列表移除此文件夹。
+        ///
+        /// Resource: `Errors.coreGameDirectoryStore.instancesText1`.
+        public static var folderHasUnlistedInstances: LocalizedMessage {
             .init(key: "coreGameDirectoryStore.instancesText1", table: "Errors", fallback: "文件夹中仍有尚未添加到列表或正在安装的实例，请先处理这些实例，再从列表移除此文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [

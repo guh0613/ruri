@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelMinecraftDirectory {
-        public static var baseText1: LocalizedMessage {
+        /// 恢复游戏文件夹
+        ///
+        /// Resource: `Interface.appAppModelMinecraftDirectory.baseText1`.
+        public static var recoverGameFolder: LocalizedMessage {
             .init(key: "appAppModelMinecraftDirectory.baseText1", table: "Interface", fallback: "恢复游戏文件夹")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 添加文件夹
+        ///
+        /// Resource: `Interface.appAppModelMinecraftDirectory.panelText1`.
+        public static var addGameFolder: LocalizedMessage {
             .init(key: "appAppModelMinecraftDirectory.panelText1", table: "Interface", fallback: "添加文件夹")
         }
-        public static var panelText2: LocalizedMessage {
+        /// 选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。
+        ///
+        /// Resource: `Interface.appAppModelMinecraftDirectory.panelText2`.
+        public static var folderSelectionHelp: LocalizedMessage {
             .init(key: "appAppModelMinecraftDirectory.panelText2", table: "Interface", fallback: "选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。")
         }
-        public static var baseText2: LocalizedMessage {
+        /// 添加游戏文件夹
+        ///
+        /// Resource: `Interface.appAppModelMinecraftDirectory.baseText2`.
+        public static var addGameFolderEntry: LocalizedMessage {
             .init(key: "appAppModelMinecraftDirectory.baseText2", table: "Interface", fallback: "添加游戏文件夹")
         }
         static let definitions: [String: MessageDefinition] = [

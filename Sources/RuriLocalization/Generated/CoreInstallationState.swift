@@ -3,10 +3,16 @@ import Foundation
 
 extension Messages {
     public enum CoreInstallationState {
-        public static var applyingInstallationText1: LocalizedMessage {
+        /// 实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。
+        ///
+        /// Resource: `Errors.coreInstallationState.applyingInstallationText1`.
+        public static var installationChangedBeforeApply: LocalizedMessage {
             .init(key: "coreInstallationState.applyingInstallationText1", table: "Errors", fallback: "实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。")
         }
-        public static var installedText1: LocalizedMessage {
+        /// 自定义运行目录在安装期间改变，未覆盖最新设置。
+        ///
+        /// Resource: `Errors.coreInstallationState.installedText1`.
+        public static var customDirectoryChangedDuringInstall: LocalizedMessage {
             .init(key: "coreInstallationState.installedText1", table: "Errors", fallback: "自定义运行目录在安装期间改变，未覆盖最新设置。")
         }
         static let definitions: [String: MessageDefinition] = [

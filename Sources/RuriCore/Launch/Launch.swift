@@ -39,7 +39,7 @@ public enum ArgumentTokenizer {
             if c.isWhitespace { if started { output.append(token); token = ""; started = false } }
             else { token.append(c); started = true }
         }
-        guard quote == nil, !escape else { throw RuriError.message(Messages.CoreLaunch.qText1) }
+        guard quote == nil, !escape else { throw RuriError.message(Messages.CoreLaunch.unclosedLaunchQuoting) }
         if started { output.append(token) }
         return output
     }
@@ -47,21 +47,21 @@ public enum ArgumentTokenizer {
 
 public enum LaunchBuilder {
     public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, externalAuth: ExternalAuthLaunch? = nil) throws -> LaunchPlan {
-        guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.buildText1) }
-        guard paths.repositoryImportID == nil else { throw RuriError.message(Messages.CoreLaunch.buildText2) }
+        guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.externalAuthRequired) }
+        guard paths.repositoryImportID == nil else { throw RuriError.message(Messages.CoreLaunch.packImportIncomplete) }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
         if let world { try WorldQuickPlay.validate(world, instance: instance, manifest: manifest, paths: paths) }
-        guard let mainClass = manifest.mainClass else { throw RuriError.message(Messages.CoreLaunch.mainClassText1) }
-        guard manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreLaunch.mainClassText2) }
-        guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message(Messages.CoreLaunch.mainClassText3) }
+        guard let mainClass = manifest.mainClass else { throw RuriError.message(Messages.CoreLaunch.mainClassMissing) }
+        guard manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreLaunch.parentManifestUnmerged) }
+        guard (512...131_072).contains(instance.memoryMB), (320...16_384).contains(instance.width), (240...16_384).contains(instance.height) else { throw RuriError.message(Messages.CoreLaunch.invalidMemoryOrWindow) }
         let architecture = GameInstaller.architecture(for: manifest)
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: architecture) else {
-            throw RuriError.message(Messages.CoreLaunch.architectureText1)
+            throw RuriError.message(Messages.CoreLaunch.unsupportedArchitecture)
         }
-        guard java.architecture == architecture else { throw RuriError.message(Messages.CoreLaunch.architectureText2(String(describing: architecture))) }
-        guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message(Messages.CoreLaunch.architectureText3) }
-        if instance.javaMajor != nil, java.major != (try instance.preferredJavaMajor(default: manifest.requiredJava)) { throw RuriError.message(Messages.CoreLaunch.architectureText4) }
+        guard java.architecture == architecture else { throw RuriError.message(Messages.CoreLaunch.nativeArchitectureMismatch(String(describing: architecture))) }
+        guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message(Messages.CoreLaunch.javaVersionIncompatible) }
+        if instance.javaMajor != nil, java.major != (try instance.preferredJavaMajor(default: manifest.requiredJava)) { throw RuriError.message(Messages.CoreLaunch.javaMajorVersionMismatch) }
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         let resources = try paths.resources(for: instance)
         let jarID = manifest.jar ?? instance.gameVersion
@@ -80,9 +80,9 @@ public enum LaunchBuilder {
         var seen = Set<String>()
         classpath = classpath.filter { seen.insert($0).inserted }
         for artifact in manifest.generatedLibraries ?? [] {
-            guard FileManager.default.fileExists(atPath: try resources.libraryFile(artifact).path) else { throw RuriError.message(Messages.CoreLaunch.seenText1) }
+            guard FileManager.default.fileExists(atPath: try resources.libraryFile(artifact).path) else { throw RuriError.message(Messages.CoreLaunch.generatedFilesMissing) }
         }
-        for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message(Messages.CoreLaunch.seenText2(String(describing: URL(fileURLWithPath: file).lastPathComponent))) }
+        for file in classpath where !FileManager.default.fileExists(atPath: file) { throw RuriError.message(Messages.CoreLaunch.gameFilesMissing(String(describing: URL(fileURLWithPath: file).lastPathComponent))) }
         let values: [String: String] = [
             "auth_player_name": account.username, "version_name": manifest.id,
             "game_directory": paths.game(instance.id).path, "assets_root": resources.assets.path,
@@ -102,7 +102,7 @@ public enum LaunchBuilder {
         func expand(_ input: String) throws -> String {
             var result = input
             for (key, value) in values { result = result.replacingOccurrences(of: "${\(key)}", with: value) }
-            guard result.range(of: #"\$\{[^}]+\}"#, options: .regularExpression) == nil else { throw RuriError.message(Messages.CoreLaunch.resultText1(String(describing: input))) }
+            guard result.range(of: #"\$\{[^}]+\}"#, options: .regularExpression) == nil else { throw RuriError.message(Messages.CoreLaunch.unsupportedManifestVariable(String(describing: input))) }
             return result
         }
         let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": world != nil,
@@ -127,7 +127,7 @@ public enum LaunchBuilder {
             jvm.append(try expand(logging.argument.replacingOccurrences(of: "${path}", with: file.path)))
         }
         let extras = try ArgumentTokenizer.split(instance.extraJVMArguments).map(expand)
-        guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message(Messages.CoreLaunch.extrasText1) }
+        guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message(Messages.CoreLaunch.jvmArgumentsOverride) }
         jvm += extras
         if let externalAuth { jvm += try externalAuth.arguments(for: account) }
         memoryArguments += extras
@@ -137,7 +137,7 @@ public enum LaunchBuilder {
         else { game = try (manifest.arguments?.game ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand) }
         let extraGame = try ArgumentTokenizer.split(instance.extraGameArguments ?? "").map(expand)
         let reserved: Set<String> = ["--gameDir", "--assetsDir", "--assetIndex", "--username", "--uuid", "--accessToken", "--session", "--clientId", "--xuid", "--userType", "--userProperties"]
-        guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message(Messages.CoreLaunch.reservedText1) }
+        guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message(Messages.CoreLaunch.gameArgumentsOverride) }
         game += extraGame
         if let world { game = WorldQuickPlay.applying(world, to: game, instance: instance, paths: paths) }
         func hasOption(_ name: String) -> Bool { game.contains { $0 == name || $0.hasPrefix(name + "=") } }
@@ -176,7 +176,7 @@ public final class GameProcess {
     public var processIdentifier: Int32? { process?.processIdentifier }
     public init() {}
     public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
-        guard self.process == nil else { throw RuriError.message(Messages.CoreLaunch.startText1) }
+        guard self.process == nil else { throw RuriError.message(Messages.CoreLaunch.gameAlreadyRunning) }
         self.secrets = (secrets + plan.environmentRedactions).filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         stopRequested = false
         normalQuitRequested = false; nativeQuitSupported = plan.nativeQuitSupported == true; identity = nil
@@ -227,7 +227,7 @@ public final class GameProcess {
         while let newline = pending.firstIndex(of: 10) {
             emit(String(decoding: pending[..<newline], as: UTF8.self)); pending.removeSubrange(...newline)
         }
-        if pending.count > 1024 * 1024 { emit(Messages.CoreLaunch.newlineText1.localized); pending.removeAll() }
+        if pending.count > 1024 * 1024 { emit(Messages.CoreLaunch.longLogLineOmitted.localized); pending.removeAll() }
     }
     private func emit(_ input: String) {
         for line in formatter.consume(input) { redactAndSend(line) }

@@ -22,36 +22,36 @@ enum FileExtendedAttributes {
         let fd = try openFile(url); defer { close(fd) }
         var before = stat(); guard fstat(fd, &before) == 0 else { throw failure(url) }
         let names = try names(fd)
-        guard names.count <= 256 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.namesText1) }
+        guard names.count <= 256 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.tooManyAttributes) }
         var total = 0
         let result = try names.map { name -> Receipt in
             try Task.checkCancellation()
             let size = fgetxattr(fd, name, nil, 0, 0, 0)
-            guard size >= 0, size <= maximumValueBytes else { throw RuriError.message(Messages.CoreFileExtendedAttributes.sizeText1(String(describing: url.lastPathComponent), String(describing: name))) }
+            guard size >= 0, size <= maximumValueBytes else { throw RuriError.message(Messages.CoreFileExtendedAttributes.attributesUnreadableOrTooLarge(url.lastPathComponent, name)) }
             total += size
-            guard total <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.sizeText2) }
+            guard total <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.singleAttributeTooLarge) }
             var bytes = Data(count: max(1, size))
             let count = bytes.withUnsafeMutableBytes { fgetxattr(fd, name, $0.baseAddress, size, 0, 0) }
-            guard count == size else { throw RuriError.message(Messages.CoreFileExtendedAttributes.countText1) }
+            guard count == size else { throw RuriError.message(Messages.CoreFileExtendedAttributes.attributesChangedDuringVerification) }
             bytes.count = size
             return .init(name: name, size: size, sha256: SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined())
         }
         var after = stat()
         guard fstat(fd, &after) == 0, before.st_ino == after.st_ino, before.st_dev == after.st_dev,
               before.st_ctimespec.tv_sec == after.st_ctimespec.tv_sec, before.st_ctimespec.tv_nsec == after.st_ctimespec.tv_nsec,
-              try Self.names(fd) == names else { throw RuriError.message(Messages.CoreFileExtendedAttributes.countText1) }
+              try Self.names(fd) == names else { throw RuriError.message(Messages.CoreFileExtendedAttributes.attributesChangedDuringVerification) }
         try validate(result); return result
     }
 
     static func validate(_ receipts: [Receipt]) throws {
-        guard receipts.count <= 256, receipts.map(\.name) == receipts.map(\.name).sorted(), Set(receipts.map(\.name)).count == receipts.count else { throw RuriError.message(Messages.CoreFileExtendedAttributes.validateText1) }
+        guard receipts.count <= 256, receipts.map(\.name) == receipts.map(\.name).sorted(), Set(receipts.map(\.name)).count == receipts.count else { throw RuriError.message(Messages.CoreFileExtendedAttributes.invalidAttributeDigest) }
         var total = 0
         for entry in receipts {
             guard !entry.name.isEmpty, entry.name.utf8.count <= 255, !entry.name.contains("\0"), !systemLabels.contains(entry.name),
-                  entry.size >= 0, entry.size <= maximumValueBytes, FileTreeManifest.validDigest(entry.sha256) else { throw RuriError.message(Messages.CoreFileExtendedAttributes.validateText1) }
+                  entry.size >= 0, entry.size <= maximumValueBytes, FileTreeManifest.validDigest(entry.sha256) else { throw RuriError.message(Messages.CoreFileExtendedAttributes.invalidAttributeDigest) }
             total += entry.size
         }
-        guard total <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.sizeText2) }
+        guard total <= 64 * 1024 * 1024 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.singleAttributeTooLarge) }
     }
 
     static func copy(from source: URL, to destination: URL) throws {
@@ -63,7 +63,7 @@ enum FileExtendedAttributes {
         try Task.checkCancellation()
         if fcopyfile(source, destination, nil, copyfile_flags_t(COPYFILE_XATTR)) != 0 {
             if errno == EPERM, isAttributeStorageFile(source) { return }
-            throw RuriError.message(Messages.CoreFileExtendedAttributes.copyText1)
+            throw RuriError.message(Messages.CoreFileExtendedAttributes.attributesPreservationFailed)
         }
     }
 
@@ -74,21 +74,21 @@ enum FileExtendedAttributes {
         let before = try capture(file)
         try data.write(to: temporary, options: .withoutOverwriting)
         try copy(from: file, to: temporary)
-        guard try capture(temporary) == before, try capture(file) == before else { throw RuriError.message(Messages.CoreFileExtendedAttributes.beforeText1) }
-        guard rename(temporary.path, file.path) == 0 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.beforeText2) }
+        guard try capture(temporary) == before, try capture(file) == before else { throw RuriError.message(Messages.CoreFileExtendedAttributes.metadataAttributesChanged) }
+        guard rename(temporary.path, file.path) == 0 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.metadataUpdateFailed) }
     }
 
     private static func names(_ fd: Int32) throws -> [String] {
         let size = flistxattr(fd, nil, 0, 0)
         if size < 0, errno == ENOTSUP { return [] }
         if size < 0, errno == EPERM, isAttributeStorageFile(fd) { return [] }
-        guard size >= 0, size <= maximumNamesBytes else { throw RuriError.message(Messages.CoreFileExtendedAttributes.sizeText3) }
+        guard size >= 0, size <= maximumNamesBytes else { throw RuriError.message(Messages.CoreFileExtendedAttributes.attributeListReadFailed) }
         if size == 0 { return [] }
         var buffer = [CChar](repeating: 0, count: size)
-        guard flistxattr(fd, &buffer, size, 0) == size, buffer.last == 0 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.bufferText1) }
+        guard flistxattr(fd, &buffer, size, 0) == size, buffer.last == 0 else { throw RuriError.message(Messages.CoreFileExtendedAttributes.attributeListChangedDuringRead) }
         let bytes = buffer.map { UInt8(bitPattern: $0) }
         let names = try bytes.split(separator: 0).map { value -> String in
-            guard let name = String(bytes: value, encoding: .utf8) else { throw RuriError.message(Messages.CoreFileExtendedAttributes.nameText1) }; return name
+            guard let name = String(bytes: value, encoding: .utf8) else { throw RuriError.message(Messages.CoreFileExtendedAttributes.invalidAttributeName) }; return name
         }
         return names.filter { !systemLabels.contains($0) }.sorted()
     }
@@ -118,5 +118,5 @@ enum FileExtendedAttributes {
         guard fstat(fd, &info) == 0, [S_IFREG, S_IFDIR].contains(info.st_mode & S_IFMT) else { close(fd); throw failure(url) }
         return fd
     }
-    private static func failure(_ url: URL) -> RuriError { .message(Messages.CoreFileExtendedAttributes.failureText1(String(describing: url.lastPathComponent)).localized) }
+    private static func failure(_ url: URL) -> RuriError { .message(Messages.CoreFileExtendedAttributes.attributeVerificationFailed(url.lastPathComponent).localized) }
 }

@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum CoreArchive {
-        public static var countText1: LocalizedMessage {
+        /// 压缩包超出校验大小限制
+        ///
+        /// Resource: `Errors.coreArchive.countText1`.
+        public static var archiveVerificationLimitExceeded: LocalizedMessage {
             .init(key: "coreArchive.countText1", table: "Errors", fallback: "压缩包超出校验大小限制")
         }
-        public static func crcText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 文件 CRC 校验失败：%1$@/%2$@
+        ///
+        /// Resource: `Errors.coreArchive.crcText1`.
+        public static func archiveChecksumFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreArchive.crcText1", table: "Errors", fallback: "文件 CRC 校验失败：%1$@/%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var countText2: LocalizedMessage {
+        /// 压缩包文件数量超出限制
+        ///
+        /// Resource: `Errors.coreArchive.countText2`.
+        public static var archiveEntryLimitExceeded: LocalizedMessage {
             .init(key: "coreArchive.countText2", table: "Errors", fallback: "压缩包文件数量超出限制")
         }
-        public static func targetText1(_ value0: String) -> LocalizedMessage {
+        /// 压缩包不允许符号链接：%1$@
+        ///
+        /// Resource: `Errors.coreArchive.targetText1`.
+        public static func archiveSymlinkNotAllowed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreArchive.targetText1", table: "Errors", fallback: "压缩包不允许符号链接：%1$@", arguments: [.text(value0)])
         }
-        public static var sizeText1: LocalizedMessage {
+        /// 压缩包解压大小超出限制
+        ///
+        /// Resource: `Errors.coreArchive.sizeText1`.
+        public static var archiveExtractionLimitExceeded: LocalizedMessage {
             .init(key: "coreArchive.sizeText1", table: "Errors", fallback: "压缩包解压大小超出限制")
         }
-        public static func tempText1(_ value0: String) -> LocalizedMessage {
+        /// 无法解压文件：%1$@
+        ///
+        /// Resource: `Errors.coreArchive.tempText1`.
+        public static func archiveExtractionFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreArchive.tempText1", table: "Errors", fallback: "无法解压文件：%1$@", arguments: [.text(value0)])
         }
-        public static func checksumText1(_ value0: String) -> LocalizedMessage {
+        /// 压缩包文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreArchive.checksumText1`.
+        public static func archiveFileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreArchive.checksumText1", table: "Errors", fallback: "压缩包文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static func checksumText2(_ value0: String) -> LocalizedMessage {
+        /// 无法保存解压文件：%1$@
+        ///
+        /// Resource: `Errors.coreArchive.checksumText2`.
+        public static func archiveFileSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreArchive.checksumText2", table: "Errors", fallback: "无法保存解压文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreFileAppleDouble {
-        public static var afterText1: LocalizedMessage {
+        /// 文件附加信息在枚举期间改变，请重试。
+        ///
+        /// Resource: `Errors.coreFileAppleDouble.afterText1`.
+        public static var fileChangedDuringEnumeration: LocalizedMessage {
             .init(key: "coreFileAppleDouble.afterText1", table: "Errors", fallback: "文件附加信息在枚举期间改变，请重试。")
         }
         static let definitions: [String: MessageDefinition] = [

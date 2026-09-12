@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum CoreCompleteInstancePack {
-        public static var actualText1: LocalizedMessage {
+        /// 完整副本的安装文件在预览后改变，请重新选择压缩包。
+        ///
+        /// Resource: `Errors.coreCompleteInstancePack.actualText1`.
+        public static var installationFilesChangedDuringPreview: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.actualText1", table: "Errors", fallback: "完整副本的安装文件在预览后改变，请重新选择压缩包。")
         }
-        public static var filesText1: LocalizedMessage {
+        /// 原始版本清单超过导出限制。
+        ///
+        /// Resource: `Errors.coreCompleteInstancePack.filesText1`.
+        public static var sourceManifestExportLimitExceeded: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.filesText1", table: "Errors", fallback: "原始版本清单超过导出限制。")
         }
-        public static var exportCompleteText1: LocalizedMessage {
+        /// 请先安装实例，再导出包含游戏文件的完整副本。
+        ///
+        /// Resource: `Errors.coreCompleteInstancePack.exportCompleteText1`.
+        public static var completeExportRequiresInstalledInstance: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.exportCompleteText1", table: "Errors", fallback: "请先安装实例，再导出包含游戏文件的完整副本。")
         }
-        public static var protectedText1: LocalizedMessage {
+        /// 请将完整副本保存在源实例和游戏资源文件夹之外。
+        ///
+        /// Resource: `Errors.coreCompleteInstancePack.protectedText1`.
+        public static var completeExportLocationInvalid: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.protectedText1", table: "Errors", fallback: "请将完整副本保存在源实例和游戏资源文件夹之外。")
         }
-        public static var resourceRootText1: LocalizedMessage {
+        /// 导出期间安装文件改变，请重新导出。
+        ///
+        /// Resource: `Errors.coreCompleteInstancePack.resourceRootText1`.
+        public static var installationFilesChangedDuringExport: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.resourceRootText1", table: "Errors", fallback: "导出期间安装文件改变，请重新导出。")
         }
-        public static var completedText1: LocalizedMessage {
+        /// 正在复制安装文件
+        ///
+        /// Resource: `Progress.coreCompleteInstancePack.completedText1`.
+        public static var copyingInstallationFiles: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.completedText1", table: "Progress", fallback: "正在复制安装文件")
         }
-        public static var workspaceText1: LocalizedMessage {
+        /// 正在读取完整安装
+        ///
+        /// Resource: `Progress.coreCompleteInstancePack.workspaceText1`.
+        public static var readingCompleteInstallation: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.workspaceText1", table: "Progress", fallback: "正在读取完整安装")
         }
-        public static var sourceText1: LocalizedMessage {
+        /// 正在压缩完整副本
+        ///
+        /// Resource: `Progress.coreCompleteInstancePack.sourceText1`.
+        public static var compressingCompleteCopy: LocalizedMessage {
             .init(key: "coreCompleteInstancePack.sourceText1", table: "Progress", fallback: "正在压缩完整副本")
         }
         static let definitions: [String: MessageDefinition] = [

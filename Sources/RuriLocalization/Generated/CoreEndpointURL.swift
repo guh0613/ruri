@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreEndpointURL {
-        public static var resultText1: LocalizedMessage {
+        /// 服务地址包含无效的路径参数。
+        ///
+        /// Resource: `Errors.coreEndpointURL.resultText1`.
+        public static var invalidPathParameter: LocalizedMessage {
             .init(key: "coreEndpointURL.resultText1", table: "Errors", fallback: "服务地址包含无效的路径参数。")
         }
-        public static var partsText1: LocalizedMessage {
+        /// 无法构造服务地址。
+        ///
+        /// Resource: `Errors.coreEndpointURL.partsText1`.
+        public static var serviceURLConstructionFailed: LocalizedMessage {
             .init(key: "coreEndpointURL.partsText1", table: "Errors", fallback: "无法构造服务地址。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 无法编码服务查询参数。
+        ///
+        /// Resource: `Errors.coreEndpointURL.urlText1`.
+        public static var queryEncodingFailed: LocalizedMessage {
             .init(key: "coreEndpointURL.urlText1", table: "Errors", fallback: "无法编码服务查询参数。")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,76 +3,149 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMover {
-        public static func latestText1(_ value0: String) -> LocalizedMessage {
+        /// 无法确认实例移动是否已经提交，请通过恢复入口检查。%1$@
+        ///
+        /// Resource: `Core.coreInstanceMover.latestText1`.
+        public static func moveCommitUnknown(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceMover.latestText1", table: "Core", fallback: "无法确认实例移动是否已经提交，请通过恢复入口检查。%1$@", arguments: [.text(value0)])
         }
-        public static func latestText2(_ value0: String) -> LocalizedMessage {
+        /// 实例已移动，原文件或工作记录还需检查。请恢复实例移动。%1$@
+        ///
+        /// Resource: `Core.coreInstanceMover.latestText2`.
+        public static func moveCommitted(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceMover.latestText2", table: "Core", fallback: "实例已移动，原文件或工作记录还需检查。请恢复实例移动。%1$@", arguments: [.text(value0)])
         }
-        public static var preservedText1: LocalizedMessage {
+        /// 移动已取消，原实例保留，工作副本已另存。
+        ///
+        /// Resource: `Core.coreInstanceMover.preservedText1`.
+        public static var moveCancelled: LocalizedMessage {
             .init(key: "coreInstanceMover.preservedText1", table: "Core", fallback: "移动已取消，原实例保留，工作副本已另存。")
         }
-        public static func preservedText2(_ value0: String) -> LocalizedMessage {
+        /// 移动未完成，原实例保留。%1$@
+        ///
+        /// Resource: `Core.coreInstanceMover.preservedText2`.
+        public static func moveIncomplete(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceMover.preservedText2", table: "Core", fallback: "移动未完成，原实例保留。%1$@", arguments: [.text(value0)])
         }
-        public static func failureText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 移动未完成，原实例保留。请连接原磁盘并恢复移动。%1$@
+        /// %2$@
+        ///
+        /// Resource: `Core.coreInstanceMover.failureText1`.
+        public static func moveFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreInstanceMover.failureText1", table: "Core", fallback: "移动未完成，原实例保留。请连接原磁盘并恢复移动。%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var recordText2: LocalizedMessage {
+        /// 未完成的移动已恢复，原实例和工作副本保留。
+        ///
+        /// Resource: `Core.coreInstanceMover.recordText2`.
+        public static var moveRecovered: LocalizedMessage {
             .init(key: "coreInstanceMover.recordText2", table: "Core", fallback: "未完成的移动已恢复，原实例和工作副本保留。")
         }
-        public static var retiredRecordText1: LocalizedMessage {
+        /// 实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。
+        ///
+        /// Resource: `Core.coreInstanceMover.retiredRecordText1`.
+        public static var originalOrWorkspaceFilesRetained: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredRecordText1", table: "Core", fallback: "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。")
         }
-        public static var stateText1: LocalizedMessage {
+        /// 实例设置在预览后改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreInstanceMover.stateText1`.
+        public static var settingsChangedAfterPreview: LocalizedMessage {
             .init(key: "coreInstanceMover.stateText1", table: "Errors", fallback: "实例设置在预览后改变，请重新预览。")
         }
-        public static var workspaceText1: LocalizedMessage {
+        /// 无法创建移动工作区，已有文件未覆盖。
+        ///
+        /// Resource: `Errors.coreInstanceMover.workspaceText1`.
+        public static var workspaceCreateFailed: LocalizedMessage {
             .init(key: "coreInstanceMover.workspaceText1", table: "Errors", fallback: "无法创建移动工作区，已有文件未覆盖。")
         }
-        public static var checkLocationsText1: LocalizedMessage {
+        /// 移动来源或工作区身份改变，文件已保留。
+        ///
+        /// Resource: `Errors.coreInstanceMover.checkLocationsText1`.
+        public static var sourceOrWorkspaceIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.checkLocationsText1", table: "Errors", fallback: "移动来源或工作区身份改变，文件已保留。")
         }
-        public static var indexText1: LocalizedMessage {
+        /// 移动中的实例已被移除。
+        ///
+        /// Resource: `Errors.coreInstanceMover.indexText1`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "coreInstanceMover.indexText1", table: "Errors", fallback: "移动中的实例已被移除。")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 待恢复的移动已经改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreInstanceMover.recordText1`.
+        public static var recoveryRecordChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.recordText1", table: "Errors", fallback: "待恢复的移动已经改变，请刷新后重试。")
         }
-        public static var destinationText1: LocalizedMessage {
+        /// 移动目标的身份改变，原文件已保留。
+        ///
+        /// Resource: `Errors.coreInstanceMover.destinationText1`.
+        public static var destinationIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.destinationText1", table: "Errors", fallback: "移动目标的身份改变，原文件已保留。")
         }
-        public static var digestText1: LocalizedMessage {
+        /// 移动尚未提交，不能清理原文件。
+        ///
+        /// Resource: `Errors.coreInstanceMover.digestText1`.
+        public static var uncommittedMove: LocalizedMessage {
             .init(key: "coreInstanceMover.digestText1", table: "Errors", fallback: "移动尚未提交，不能清理原文件。")
         }
-        public static var parentText1: LocalizedMessage {
+        /// 此移动记录未校验文件附加信息，无法自动清理原文件。请选择保留原文件并完成移动。
+        ///
+        /// Resource: `Errors.coreInstanceMover.parentText1`.
+        public static var cannotCleanOriginals: LocalizedMessage {
             .init(key: "coreInstanceMover.parentText1", table: "Errors", fallback: "此移动记录未校验文件附加信息，无法自动清理原文件。请选择保留原文件并完成移动。")
         }
-        public static var parentText2: LocalizedMessage {
+        /// 原实例文件夹的身份改变，已保留，请检查后选择保留原文件完成移动。
+        ///
+        /// Resource: `Errors.coreInstanceMover.parentText2`.
+        public static var originalIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.parentText2", table: "Errors", fallback: "原实例文件夹的身份改变，已保留，请检查后选择保留原文件完成移动。")
         }
-        public static var parentText3: LocalizedMessage {
+        /// 无法准备原文件清理目录。
+        ///
+        /// Resource: `Errors.coreInstanceMover.parentText3`.
+        public static var cleanupDirectoryFailed: LocalizedMessage {
             .init(key: "coreInstanceMover.parentText3", table: "Errors", fallback: "无法准备原文件清理目录。")
         }
-        public static var retiredText1: LocalizedMessage {
+        /// 原文件清理目录的身份改变，文件已保留。
+        ///
+        /// Resource: `Errors.coreInstanceMover.retiredText1`.
+        public static var retiredDirectoryIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredText1", table: "Errors", fallback: "原文件清理目录的身份改变，文件已保留。")
         }
-        public static var retiredText2: LocalizedMessage {
+        /// 原位置出现其他文件，已保留，请检查后继续。
+        ///
+        /// Resource: `Errors.coreInstanceMover.retiredText2`.
+        public static var unexpectedOriginalFiles: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredText2", table: "Errors", fallback: "原位置出现其他文件，已保留，请检查后继续。")
         }
-        public static var retiredText3: LocalizedMessage {
+        /// 无法整理原实例文件，移动记录已保留。
+        ///
+        /// Resource: `Errors.coreInstanceMover.retiredText3`.
+        public static var cleanupOriginalFilesFailed: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredText3", table: "Errors", fallback: "无法整理原实例文件，移动记录已保留。")
         }
-        public static var retiredText4: LocalizedMessage {
+        /// 无法确认原实例文件的退役位置。
+        ///
+        /// Resource: `Errors.coreInstanceMover.retiredText4`.
+        public static var retiredLocationUnknown: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredText4", table: "Errors", fallback: "无法确认原实例文件的退役位置。")
         }
-        public static var retiredText5: LocalizedMessage {
+        /// 剩余原文件的目录身份改变，未继续清理。
+        ///
+        /// Resource: `Errors.coreInstanceMover.retiredText5`.
+        public static var remainingDirectoryIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.retiredText5", table: "Errors", fallback: "剩余原文件的目录身份改变，未继续清理。")
         }
-        public static var recordText3: LocalizedMessage {
+        /// 移动记录包含原文件清理信息，但找不到提交凭据，请先检查实例状态。
+        ///
+        /// Resource: `Errors.coreInstanceMover.recordText3`.
+        public static var cleanupSkippedFiles: LocalizedMessage {
             .init(key: "coreInstanceMover.recordText3", table: "Errors", fallback: "移动记录包含原文件清理信息，但找不到提交凭据，请先检查实例状态。")
         }
-        public static var preservedText3: LocalizedMessage {
+        /// 工作区身份改变，目标文件已原地保留。
+        ///
+        /// Resource: `Errors.coreInstanceMover.preservedText3`.
+        public static var workspaceIdentityChanged: LocalizedMessage {
             .init(key: "coreInstanceMover.preservedText3", table: "Errors", fallback: "工作区身份改变，目标文件已原地保留。")
         }
         static let definitions: [String: MessageDefinition] = [

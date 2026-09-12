@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum AppGameQuitControls {
-        public static var bodyText1: LocalizedMessage {
+        /// 取消命令后将停止本次启动。
+        ///
+        /// Resource: `Interface.appGameQuitControls.bodyText1`.
+        public static var cancelWillStop: LocalizedMessage {
             .init(key: "appGameQuitControls.bodyText1", table: "Interface", fallback: "取消命令后将停止本次启动。")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 游戏已退出，可以取消仍在运行的收尾命令。
+        ///
+        /// Resource: `Interface.appGameQuitControls.bodyText2`.
+        public static var gameExited: LocalizedMessage {
             .init(key: "appGameQuitControls.bodyText2", table: "Interface", fallback: "游戏已退出，可以取消仍在运行的收尾命令。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 取消命令
+        ///
+        /// Resource: `Interface.appGameQuitControls.bodyText3`.
+        public static var cancelCommand: LocalizedMessage {
             .init(key: "appGameQuitControls.bodyText3", table: "Interface", fallback: "取消命令")
         }
-        public static var attemptText1: LocalizedMessage {
+        /// 游戏还未退出。可能正在保存或等待操作，可以返回游戏查看；Ruri 会继续等待。
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText1`.
+        public static var gameStillRunning: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText1", table: "Interface", fallback: "游戏还未退出。可能正在保存或等待操作，可以返回游戏查看；Ruri 会继续等待。")
         }
-        public static var attemptText2: LocalizedMessage {
+        /// 本次启动请通过游戏菜单正常退出。
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText2`.
+        public static var normalExitNotice: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText2", table: "Interface", fallback: "本次启动请通过游戏菜单正常退出。")
         }
-        public static var attemptText3: LocalizedMessage {
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText3`.
+        public static var returnToGame: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText3", table: "Interface", fallback: "返回游戏")
         }
-        public static var attemptText4: LocalizedMessage {
+        /// 再次请求退出
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText4`.
+        public static var requestExitAgain: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText4", table: "Interface", fallback: "再次请求退出")
         }
-        public static var attemptText5: LocalizedMessage {
+        /// 请求正常退出
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText5`.
+        public static var requestNormalExit: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText5", table: "Interface", fallback: "请求正常退出")
         }
-        public static var attemptText6: LocalizedMessage {
+        /// 终止游戏进程…
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText6`.
+        public static var terminateProcess: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText6", table: "Interface", fallback: "终止游戏进程…")
         }
-        public static var attemptText7: LocalizedMessage {
+        /// 游戏没有响应时的操作
+        ///
+        /// Resource: `Interface.appGameQuitControls.attemptText7`.
+        public static var unresponsiveGameAction: LocalizedMessage {
             .init(key: "appGameQuitControls.attemptText7", table: "Interface", fallback: "游戏没有响应时的操作")
         }
         static let definitions: [String: MessageDefinition] = [

@@ -3,16 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMoveSnapshot {
-        public static var priorText1: LocalizedMessage {
+        /// 保留旧目录的位置已经存在，请重新预览。
+        ///
+        /// Resource: `Errors.coreInstanceMoveSnapshot.priorText1`.
+        public static var retainedDirectoryExists: LocalizedMessage {
             .init(key: "coreInstanceMoveSnapshot.priorText1", table: "Errors", fallback: "保留旧目录的位置已经存在，请重新预览。")
         }
-        public static var destinationText1: LocalizedMessage {
+        /// 实例文件在预览期间改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreInstanceMoveSnapshot.destinationText1`.
+        public static var instanceFilesChanged: LocalizedMessage {
             .init(key: "coreInstanceMoveSnapshot.destinationText1", table: "Errors", fallback: "实例文件在预览期间改变，请重新预览。")
         }
-        public static var destinationText2: LocalizedMessage {
+        /// 共享目录在预览期间改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreInstanceMoveSnapshot.destinationText2`.
+        public static var sharedDirectoryChanged: LocalizedMessage {
             .init(key: "coreInstanceMoveSnapshot.destinationText2", table: "Errors", fallback: "共享目录在预览期间改变，请重新预览。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 实例文件内容在预览后改变，请重新预览再移动。
+        ///
+        /// Resource: `Errors.coreInstanceMoveSnapshot.currentText1`.
+        public static var instanceContentsChanged: LocalizedMessage {
             .init(key: "coreInstanceMoveSnapshot.currentText1", table: "Errors", fallback: "实例文件内容在预览后改变，请重新预览再移动。")
         }
         static let definitions: [String: MessageDefinition] = [

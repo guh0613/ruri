@@ -3,198 +3,393 @@ import Foundation
 
 extension Messages {
     public enum AppLaunchSettingsEditor {
-        public static var bodyText1: LocalizedMessage {
+        /// 跟随默认设置
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText1`.
+        public static var followDefault: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText1", table: "Interface", fallback: "跟随默认设置")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 自定义
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText2`.
+        public static var customValue: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText2", table: "Interface", fallback: "自定义")
         }
-        public static func bodyText3(_ value0: String) -> LocalizedMessage {
+        /// 自定义%1$@
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText3`.
+        public static func customValueFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText3", table: "Interface", fallback: "自定义%1$@", arguments: [.text(value0)])
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 恢复默认
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText4`.
+        public static var restoreDefault: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText4", table: "Interface", fallback: "恢复默认")
         }
-        public static func bodyText5(_ value0: String) -> LocalizedMessage {
+        /// %1$@恢复默认
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText5`.
+        public static func restoreDefaultFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText5", table: "Interface", fallback: "%1$@恢复默认", arguments: [.text(value0)])
         }
-        public static func majorText1(_ value0: String) -> LocalizedMessage {
+        /// 自动选择 Java %1$@
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.majorText1`.
+        public static func automaticJava(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText1", table: "Interface", fallback: "自动选择 Java %1$@", arguments: [.text(value0)])
         }
-        public static var pathText1: LocalizedMessage {
+        /// 自动选择游戏所需的 Java
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText1`.
+        public static var automaticGameJava: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText1", table: "Interface", fallback: "自动选择游戏所需的 Java")
         }
-        public static var pathText2: LocalizedMessage {
+        /// 自动分配
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText2`.
+        public static var automaticMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText2", table: "Interface", fallback: "自动分配")
         }
-        public static func pathText3(_ value0: String) -> LocalizedMessage {
+        /// 最大 %1$@ MB
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText3`.
+        public static func maximumMemory(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText3", table: "Interface", fallback: "最大 %1$@ MB", arguments: [.text(value0)])
         }
-        public static func pathText4(_ value0: String) -> LocalizedMessage {
+        ///  · 初始 %1$@ MB
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText4`.
+        public static func initialMemorySuffix(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText4", table: "Interface", fallback: " · 初始 %1$@ MB", arguments: [.text(value0)])
         }
-        public static var pathText5: LocalizedMessage {
+        ///  · 全屏启动
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText5`.
+        public static var fullscreenLaunchLabel: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText5", table: "Interface", fallback: " · 全屏启动")
         }
-        public static var pathText6: LocalizedMessage {
+        ///  · 使用游戏保存的显示模式
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText6`.
+        public static var gameDisplayMode: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText6", table: "Interface", fallback: " · 使用游戏保存的显示模式")
         }
-        public static var pathText7: LocalizedMessage {
+        /// 启动时打开日志
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText7`.
+        public static var openLogs: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText7", table: "Interface", fallback: "启动时打开日志")
         }
-        public static var pathText8: LocalizedMessage {
+        /// 游戏运行时隐藏 Ruri
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText8`.
+        public static var hideLauncher: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText8", table: "Interface", fallback: "游戏运行时隐藏 Ruri")
         }
-        public static var pathText9: LocalizedMessage {
+        /// 保持 Ruri 可见
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText9`.
+        public static var keepLauncher: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText9", table: "Interface", fallback: "保持 Ruri 可见")
         }
-        public static var pathText10: LocalizedMessage {
+        /// 无附加 JVM 参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText10`.
+        public static var noJvmArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText10", table: "Interface", fallback: "无附加 JVM 参数")
         }
-        public static var pathText11: LocalizedMessage {
+        /// 无附加游戏参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText11`.
+        public static var noGameArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText11", table: "Interface", fallback: "无附加游戏参数")
         }
-        public static var pathText12: LocalizedMessage {
+        /// 已启用自定义启动命令
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText12`.
+        public static var customLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText12", table: "Interface", fallback: "已启用自定义启动命令")
         }
-        public static var pathText13: LocalizedMessage {
+        /// 不运行自定义启动命令
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.pathText13`.
+        public static var noCustomLaunchCommand: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.pathText13", table: "Interface", fallback: "不运行自定义启动命令")
         }
-        public static var environmentText1: LocalizedMessage {
+        /// 默认环境配置需要修正
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.environmentText1`.
+        public static var environmentNeedsRepair: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.environmentText1", table: "Interface", fallback: "默认环境配置需要修正")
         }
-        public static var environmentText2: LocalizedMessage {
+        /// 无自定义环境变量
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.environmentText2`.
+        public static var noCustomEnvironment: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.environmentText2", table: "Interface", fallback: "无自定义环境变量")
         }
-        public static func environmentText3(_ value0: Int64) -> LocalizedMessage {
+        /// %1$lld 项自定义环境变量
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.environmentText3`.
+        public static func customEnvironmentCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.environmentText3", table: "Interface", fallback: "%1$lld 项自定义环境变量", arguments: [.integer(value0)])
         }
-        public static var fieldsText1: LocalizedMessage {
+        /// 运行时
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.fieldsText1`.
+        public static var runtime: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.fieldsText1", table: "Interface", fallback: "运行时")
         }
-        public static var fieldsText2: LocalizedMessage {
+        /// 自动选择兼容版本
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.fieldsText2`.
+        public static var autoCompatibleRuntime: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.fieldsText2", table: "Interface", fallback: "自动选择兼容版本")
         }
-        public static var fieldsText3: LocalizedMessage {
+        /// 按主版本选择
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.fieldsText3`.
+        public static var majorVersionRuntime: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.fieldsText3", table: "Interface", fallback: "按主版本选择")
         }
-        public static var fieldsText4: LocalizedMessage {
+        /// 已安装的运行时
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.fieldsText4`.
+        public static var installedRuntime: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.fieldsText4", table: "Interface", fallback: "已安装的运行时")
         }
-        public static var majorText2: LocalizedMessage {
+        /// Java 主版本
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.majorText2`.
+        public static var javaMajorVersion: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText2", table: "Interface", fallback: "Java 主版本")
         }
-        public static var majorText3: LocalizedMessage {
+        /// 缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.majorText3`.
+        public static var javaRuntimeHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText3", table: "Interface", fallback: "缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。")
         }
-        public static var majorText4: LocalizedMessage {
+        /// 本地 Java
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.majorText4`.
+        public static var localJava: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText4", table: "Interface", fallback: "本地 Java")
         }
-        public static var majorText5: LocalizedMessage {
+        /// 选择文件或 JDK…
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.majorText5`.
+        public static var chooseJavaFile: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText5", table: "Interface", fallback: "选择文件或 JDK…")
         }
-        public static var javaIssueText1: LocalizedMessage {
+        /// 附加 JVM 参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText1`.
+        public static var jvmArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText1", table: "Interface", fallback: "附加 JVM 参数")
         }
-        public static var javaIssueText2: LocalizedMessage {
+        /// 在这里输入 JVM 参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText2`.
+        public static var jvmArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "在这里输入 JVM 参数")
         }
-        public static var javaIssueText3: LocalizedMessage {
+        /// 用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText3`.
+        public static var jvmArgumentsHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。")
         }
-        public static var javaIssueText4: LocalizedMessage {
+        /// 填写示例
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText4`.
+        public static var jvmArgumentsExample: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText4", table: "Interface", fallback: "填写示例")
         }
-        public static var javaIssueText5: LocalizedMessage {
+        /// 多个参数用空格分隔，含空格的值加引号。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText5`.
+        public static var jvmArgumentsQuotingHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText5", table: "Interface", fallback: "多个参数用空格分隔，含空格的值加引号。")
         }
-        public static var javaIssueText6: LocalizedMessage {
+        /// 附加游戏参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText6`.
+        public static var gameArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText6", table: "Interface", fallback: "附加游戏参数")
         }
-        public static var javaIssueText7: LocalizedMessage {
+        /// 在这里输入游戏参数
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText7`.
+        public static var gameArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText7", table: "Interface", fallback: "在这里输入游戏参数")
         }
-        public static var javaIssueText8: LocalizedMessage {
+        /// 传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText8`.
+        public static var gameArgumentsHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。")
         }
-        public static var javaIssueText9: LocalizedMessage {
+        /// 含空格的参数加引号；这里填写的窗口尺寸优先。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText9`.
+        public static var gameArgumentsQuotingHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText9", table: "Interface", fallback: "含空格的参数加引号；这里填写的窗口尺寸优先。")
         }
-        public static var javaIssueText10: LocalizedMessage {
+        /// 窗口宽度
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText10`.
+        public static var windowWidth: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText10", table: "Interface", fallback: "窗口宽度")
         }
-        public static var javaIssueText11: LocalizedMessage {
+        /// 窗口高度
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText11`.
+        public static var windowHeight: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText11", table: "Interface", fallback: "窗口高度")
         }
-        public static var javaIssueText12: LocalizedMessage {
+        /// 常用尺寸
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText12`.
+        public static var commonWindowSize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText12", table: "Interface", fallback: "常用尺寸")
         }
-        public static var javaIssueText13: LocalizedMessage {
+        /// 选择尺寸
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText13`.
+        public static var chooseWindowSize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText13", table: "Interface", fallback: "选择尺寸")
         }
-        public static var valueText1: LocalizedMessage {
+        /// 全屏启动
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.valueText1`.
+        public static var fullscreenOption: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText1", table: "Interface", fallback: "全屏启动")
         }
-        public static var valueText2: LocalizedMessage {
+        /// 关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.valueText2`.
+        public static var fullscreenHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText2", table: "Interface", fallback: "关闭后使用游戏内保存的全屏状态。附加游戏参数中指定的尺寸优先。")
         }
-        public static var valueText3: LocalizedMessage {
+        /// 启动时打开游戏日志
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.valueText3`.
+        public static var openGameLogs: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText3", table: "Interface", fallback: "启动时打开游戏日志")
         }
-        public static var valueText4: LocalizedMessage {
+        /// 打开日志时，Ruri 保持可见。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.valueText4`.
+        public static var logsKeepLauncherVisible: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText4", table: "Interface", fallback: "打开日志时，Ruri 保持可见。")
         }
-        public static var valueText5: LocalizedMessage {
+        /// 隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.valueText5`.
+        public static var logsHideLauncherVisible: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText5", table: "Interface", fallback: "隐藏后可点击 Dock 图标返回 Ruri，游戏退出后会自动恢复窗口。")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 选择 java 文件、JDK 包或 Java Home 文件夹。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.panelText1`.
+        public static var chooseJavaPanelHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.panelText1", table: "Interface", fallback: "选择 java 文件、JDK 包或 Java Home 文件夹。")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 分配方式
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText6`.
+        public static var allocationMethod: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText6", table: "Interface", fallback: "分配方式")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 手动设置
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText7`.
+        public static var manualMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText7", table: "Interface", fallback: "手动设置")
         }
-        public static var bodyText8: LocalizedMessage {
+        /// 最大内存
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText8`.
+        public static var maximumMemoryLabel: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText8", table: "Interface", fallback: "最大内存")
         }
-        public static var bodyText9: LocalizedMessage {
+        /// 常用大小
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText9`.
+        public static var commonMemorySize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText9", table: "Interface", fallback: "常用大小")
         }
-        public static var bodyText10: LocalizedMessage {
+        /// 选择内存
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText10`.
+        public static var chooseMemorySize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText10", table: "Interface", fallback: "选择内存")
         }
-        public static var bodyText11: LocalizedMessage {
+        /// 根据当前可用内存估算，为 macOS 保留余量。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText11`.
+        public static var memoryEstimateHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText11", table: "Interface", fallback: "根据当前可用内存估算，为 macOS 保留余量。")
         }
-        public static var bodyText12: LocalizedMessage {
+        /// 重新估算
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.bodyText12`.
+        public static var reestimateMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText12", table: "Interface", fallback: "重新估算")
         }
-        public static var memoryText1: LocalizedMessage {
+        /// 部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryText1`.
+        public static var initialMemoryField: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.memoryText1", table: "Interface", fallback: "部分内存设置被附加 JVM 参数覆盖，请到“参数与环境”查看。")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 高级内存选项
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText1`.
+        public static var advancedMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText1", table: "Interface", fallback: "高级内存选项")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 指定初始内存
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText2`.
+        public static var initialMemoryToggle: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText2", table: "Interface", fallback: "指定初始内存")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 初始内存
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText3`.
+        public static var initialMemory: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText3", table: "Interface", fallback: "初始内存")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 限制类元数据内存
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText4`.
+        public static var metaspaceToggle: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText4", table: "Interface", fallback: "限制类元数据内存")
         }
-        public static var errorText5: LocalizedMessage {
+        /// Metaspace 上限
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText5`.
+        public static var metaspaceLimit: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText5", table: "Interface", fallback: "Metaspace 上限")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText6`.
+        public static var memorySettingsHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText6", table: "Interface", fallback: "初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.errorText7`.
+        public static var heapMemoryExplanation: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.errorText7", table: "Interface", fallback: "1024 MB = 1 GB。这里设置 Java 堆内存，游戏进程还会使用额外的系统内存。")
         }
+        /// 自选：%1$@
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.unavailableJavaPath`.
         public static func unavailableJavaPath(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.unavailableJavaPath", table: "Interface", fallback: "自选：%1$@", arguments: [.text(value0)])
         }

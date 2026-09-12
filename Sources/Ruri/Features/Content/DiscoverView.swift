@@ -13,7 +13,7 @@ private enum CatalogProject: Identifiable {
     case modrinth(ModrinthProject), curseforge(CurseForgeProject)
     var id: String { switch self { case .modrinth(let p): "mr:" + p.id; case .curseforge(let p): "cf:\(p.id)" } }
     var title: String { switch self { case .modrinth(let p): p.title; case .curseforge(let p): p.name } }
-    var author: String { switch self { case .modrinth(let p): p.author; case .curseforge(let p): p.authors?.map(\.name).joined(separator: ", ") ?? Messages.AppDiscoverView.pText1.localized } }
+    var author: String { switch self { case .modrinth(let p): p.author; case .curseforge(let p): p.authors?.map(\.name).joined(separator: ", ") ?? Messages.AppDiscoverView.communityAuthor.localized } }
     var summary: String { switch self { case .modrinth(let p): p.description; case .curseforge(let p): p.summary } }
     var icon: URL? { switch self { case .modrinth(let p): p.icon_url; case .curseforge(let p): p.logo?.thumbnailUrl } }
     var downloads: Double { switch self { case .modrinth(let p): Double(p.downloads); case .curseforge(let p): p.downloadCount } }
@@ -43,15 +43,15 @@ struct DiscoverView: View {
                 if missingKey {
                     Surface {
                         VStack(alignment: .leading, spacing: 14) {
-                            Label(Messages.AppDiscoverView.bodyText1.localized, systemImage: "key").font(.headline)
-                            Text(Messages.AppDiscoverView.bodyText2.localized).foregroundStyle(.secondary)
-                            Button(Messages.AppDiscoverView.bodyText3.localized) { model.page = .settings }
+                            Label(Messages.AppDiscoverView.connectCurseForge.localized, systemImage: "key").font(.headline)
+                            Text(Messages.AppDiscoverView.curseforgeSetupDetails.localized).foregroundStyle(.secondary)
+                            Button(Messages.AppDiscoverView.goToSettings.localized) { model.page = .settings }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } else {
-                    if loading { ProgressView(Messages.AppDiscoverView.bodyText4.localized).frame(maxWidth: .infinity).padding(30) }
-                    if let error { Surface { VStack(alignment: .leading, spacing: 12) { Text(error).foregroundStyle(.secondary); Button(Messages.AppDiscoverView.errorText1.localized) { retry += 1 } }.frame(maxWidth: .infinity, alignment: .leading) } }
-                    if !loading, results.isEmpty, error == nil { EmptyPanel(symbol: "magnifyingglass", title: Messages.AppDiscoverView.errorText2.localized, detail: Messages.AppDiscoverView.errorText3.localized) }
+                    if loading { ProgressView(Messages.AppDiscoverView.discoveringContent.localized).frame(maxWidth: .infinity).padding(30) }
+                    if let error { Surface { VStack(alignment: .leading, spacing: 12) { Text(error).foregroundStyle(.secondary); Button(Messages.AppDiscoverView.retry.localized) { retry += 1 } }.frame(maxWidth: .infinity, alignment: .leading) } }
+                    if !loading, results.isEmpty, error == nil { EmptyPanel(symbol: "magnifyingglass", title: Messages.AppDiscoverView.noMatchingContent.localized, detail: Messages.AppDiscoverView.tryShorterSearch.localized) }
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 16)], spacing: 16) {
                         ForEach(results) { project in
                             Button { selected = project } label: { projectCard(project) }.buttonStyle(.plain)
@@ -61,17 +61,17 @@ struct DiscoverView: View {
                         HStack {
                             Text("\(offset + 1)–\(offset + results.count) / \(total) · \(source.rawValue)").font(.caption).foregroundStyle(.secondary)
                             Spacer()
-                            Button(Messages.AppDiscoverView.errorText4.localized) { offset = max(0, offset - 20) }.disabled(offset == 0 || loading)
-                            Button(Messages.AppDiscoverView.errorText5.localized) { offset += 20 }.disabled(offset + 20 >= total || loading)
+                            Button(Messages.AppDiscoverView.previousPage.localized) { offset = max(0, offset - 20) }.disabled(offset == 0 || loading)
+                            Button(Messages.AppDiscoverView.nextPage.localized) { offset += 20 }.disabled(offset + 20 >= total || loading)
                         }
                     }
                 }
             }.padding(28)
         }
-        .searchable(text: $search, placement: .toolbar, prompt: Messages.AppDiscoverView.errorText6.localized)
+        .searchable(text: $search, placement: .toolbar, prompt: Messages.AppDiscoverView.searchContent.localized)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button { model.chooseInstanceImport() } label: { Label(Messages.AppDiscoverView.errorText7.localized, systemImage: "square.and.arrow.down") }.help(Messages.AppDiscoverView.errorText8.localized).disabled(model.busy)
+                Button { model.chooseInstanceImport() } label: { Label(Messages.AppDiscoverView.importModpack.localized, systemImage: "square.and.arrow.down") }.help(Messages.AppDiscoverView.importLocalModpack.localized).disabled(model.busy)
             }
         }
         .onChange(of: queryID) { offset = 0 }
@@ -107,9 +107,9 @@ struct DiscoverView: View {
         }
     }
     private var sourcePicker: some View {
-        Picker(Messages.AppDiscoverView.sourcePickerText1.localized, selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).labelsHidden().help(Messages.AppDiscoverView.sourcePickerText1.localized)
+        Picker(Messages.AppDiscoverView.contentSource.localized, selection: $source) { ForEach(CatalogSource.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented).labelsHidden().help(Messages.AppDiscoverView.contentSource.localized)
     }
     private var contentPicker: some View {
-        Picker(Messages.AppDiscoverView.contentPickerText1.localized, selection: $type) { Text(Messages.AppDiscoverView.contentPickerText2.localized).tag("modpack"); Text(Messages.AppDiscoverView.contentPickerText3.localized).tag("mod"); Text(Messages.AppDiscoverView.contentPickerText4.localized).tag("resourcepack"); Text(Messages.AppDiscoverView.contentPickerText5.localized).tag("shader") }.pickerStyle(.segmented)
+        Picker(Messages.AppDiscoverView.contentType.localized, selection: $type) { Text(Messages.AppDiscoverView.modpacks.localized).tag("modpack"); Text(Messages.AppDiscoverView.mods.localized).tag("mod"); Text(Messages.AppDiscoverView.resourcePacks.localized).tag("resourcepack"); Text(Messages.AppDiscoverView.shaders.localized).tag("shader") }.pickerStyle(.segmented)
     }
 }

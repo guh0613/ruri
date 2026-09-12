@@ -3,67 +3,130 @@ import Foundation
 
 extension Messages {
     public enum CoreGameMonitor {
-        public static func pidText1(_ value0: String) -> LocalizedMessage {
+        /// [Ruri] 无法保存游戏进程信息：%1$@
+        ///
+        /// Resource: `Core.coreGameMonitor.pidText1`.
+        public static func gameProcessInfoSaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameMonitor.pidText1", table: "Core", fallback: "[Ruri] 无法保存游戏进程信息：%1$@", arguments: [.text(value0)])
         }
-        public static var handleText1: LocalizedMessage {
+        /// 监控启动失败
+        ///
+        /// Resource: `Core.coreGameMonitor.handleText1`.
+        public static var monitorStartFailed: LocalizedMessage {
             .init(key: "coreGameMonitor.handleText1", table: "Core", fallback: "监控启动失败")
         }
+        /// [Ruri] 自定义环境变量：%1$@
+        ///
+        /// Resource: `Core.coreGameMonitor.environmentNames`.
         public static func environmentNames(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameMonitor.environmentNames", table: "Core", fallback: "[Ruri] 自定义环境变量：%1$@", arguments: [.text(value0)])
         }
-        public static var fdText1: LocalizedMessage {
+        /// 无法记录启动器事件。
+        ///
+        /// Resource: `Errors.coreGameMonitor.fdText1`.
+        public static var launcherEventRecordFailed: LocalizedMessage {
             .init(key: "coreGameMonitor.fdText1", table: "Errors", fallback: "无法记录启动器事件。")
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 启动器事件记录不是普通文件。
+        ///
+        /// Resource: `Errors.coreGameMonitor.attributesText1`.
+        public static var launcherEventNotRegularFile: LocalizedMessage {
             .init(key: "coreGameMonitor.attributesText1", table: "Errors", fallback: "启动器事件记录不是普通文件。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 无法保存启动器事件。
+        ///
+        /// Resource: `Errors.coreGameMonitor.dataText1`.
+        public static var launcherEventSaveFailed: LocalizedMessage {
             .init(key: "coreGameMonitor.dataText1", table: "Errors", fallback: "无法保存启动器事件。")
         }
-        public static var executableText1: LocalizedMessage {
+        /// 无法定位游戏监控组件。
+        ///
+        /// Resource: `Errors.coreGameMonitor.executableText1`.
+        public static var monitorComponentMissing: LocalizedMessage {
             .init(key: "coreGameMonitor.executableText1", table: "Errors", fallback: "无法定位游戏监控组件。")
         }
-        public static var helperText1: LocalizedMessage {
+        /// 缺少游戏监控组件，请重新构建或安装 Ruri。
+        ///
+        /// Resource: `Errors.coreGameMonitor.helperText1`.
+        public static var monitorComponentNotFound: LocalizedMessage {
             .init(key: "coreGameMonitor.helperText1", table: "Errors", fallback: "缺少游戏监控组件，请重新构建或安装 Ruri。")
         }
-        public static var identityText1: LocalizedMessage {
+        /// 无法确认游戏监控组件的身份。
+        ///
+        /// Resource: `Errors.coreGameMonitor.identityText1`.
+        public static var monitorIdentityFailed: LocalizedMessage {
             .init(key: "coreGameMonitor.identityText1", table: "Errors", fallback: "无法确认游戏监控组件的身份。")
         }
-        public static var dataText2: LocalizedMessage {
+        /// 游戏启动信息超过监控组件限制。
+        ///
+        /// Resource: `Errors.coreGameMonitor.dataText2`.
+        public static var launchInfoTooLarge: LocalizedMessage {
             .init(key: "coreGameMonitor.dataText2", table: "Errors", fallback: "游戏启动信息超过监控组件限制。")
         }
-        public static var requestStopText1: LocalizedMessage {
+        /// 游戏监控已断开或游戏已结束，无法发送结束请求。
+        ///
+        /// Resource: `Errors.coreGameMonitor.requestStopText1`.
+        public static var monitorDisconnected: LocalizedMessage {
             .init(key: "coreGameMonitor.requestStopText1", table: "Errors", fallback: "游戏监控已断开或游戏已结束，无法发送结束请求。")
         }
-        public static var currentText1: LocalizedMessage {
+        /// 运行会话已经发生变化，请刷新后重试。
+        ///
+        /// Resource: `Errors.coreGameMonitor.currentText1`.
+        public static var sessionChanged: LocalizedMessage {
             .init(key: "coreGameMonitor.currentText1", table: "Errors", fallback: "运行会话已经发生变化，请刷新后重试。")
         }
-        public static var recordText1: LocalizedMessage {
+        /// 游戏仍在运行，但监控组件已经中断。请在游戏中正常退出。
+        ///
+        /// Resource: `Errors.coreGameMonitor.recordText1`.
+        public static var gameStillRunning: LocalizedMessage {
             .init(key: "coreGameMonitor.recordText1", table: "Errors", fallback: "游戏仍在运行，但监控组件已经中断。请在游戏中正常退出。")
         }
-        public static var recordText2: LocalizedMessage {
+        /// 监控组件在启动时中断，无法确认游戏状态，请检查运行记录。
+        ///
+        /// Resource: `Errors.coreGameMonitor.recordText2`.
+        public static var monitorInterruptedAtLaunch: LocalizedMessage {
             .init(key: "coreGameMonitor.recordText2", table: "Errors", fallback: "监控组件在启动时中断，无法确认游戏状态，请检查运行记录。")
         }
-        public static var chunkText1: LocalizedMessage {
+        /// 启动信息超过大小限制。
+        ///
+        /// Resource: `Errors.coreGameMonitor.chunkText1`.
+        public static var requestInfoTooLarge: LocalizedMessage {
             .init(key: "coreGameMonitor.chunkText1", table: "Errors", fallback: "启动信息超过大小限制。")
         }
-        public static var decodedText1: LocalizedMessage {
+        /// 游戏监控请求无效。
+        ///
+        /// Resource: `Errors.coreGameMonitor.decodedText1`.
+        public static var invalidMonitorRequest: LocalizedMessage {
             .init(key: "coreGameMonitor.decodedText1", table: "Errors", fallback: "游戏监控请求无效。")
         }
-        public static var pathsText1: LocalizedMessage {
+        /// 游戏目录与运行会话不一致。
+        ///
+        /// Resource: `Errors.coreGameMonitor.pathsText1`.
+        public static var sessionDirectoryMismatch: LocalizedMessage {
             .init(key: "coreGameMonitor.pathsText1", table: "Errors", fallback: "游戏目录与运行会话不一致。")
         }
-        public static var pathsText2: LocalizedMessage {
+        /// 游戏监控缺少实例文件夹信息。
+        ///
+        /// Resource: `Errors.coreGameMonitor.pathsText2`.
+        public static var instanceFolderMissing: LocalizedMessage {
             .init(key: "coreGameMonitor.pathsText2", table: "Errors", fallback: "游戏监控缺少实例文件夹信息。")
         }
-        public static var pathsText3: LocalizedMessage {
+        /// 共享运行目录需要新版监控协议。
+        ///
+        /// Resource: `Errors.coreGameMonitor.pathsText3`.
+        public static var sharedDirectoryProtocolRequired: LocalizedMessage {
             .init(key: "coreGameMonitor.pathsText3", table: "Errors", fallback: "共享运行目录需要新版监控协议。")
         }
-        public static var pathsText4: LocalizedMessage {
+        /// 游戏监控缺少运行目录策略。
+        ///
+        /// Resource: `Errors.coreGameMonitor.pathsText4`.
+        public static var runDirectoryPolicyMissing: LocalizedMessage {
             .init(key: "coreGameMonitor.pathsText4", table: "Errors", fallback: "游戏监控缺少运行目录策略。")
         }
-        public static var pathsText5: LocalizedMessage {
+        /// 自定义运行目录需要新版监控协议。
+        ///
+        /// Resource: `Errors.coreGameMonitor.pathsText5`.
+        public static var customDirectoryProtocolRequired: LocalizedMessage {
             .init(key: "coreGameMonitor.pathsText5", table: "Errors", fallback: "自定义运行目录需要新版监控协议。")
         }
         static let definitions: [String: MessageDefinition] = [

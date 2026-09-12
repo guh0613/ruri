@@ -3,61 +3,118 @@ import Foundation
 
 extension Messages {
     public enum CoreAccountAppearance {
-        public static var textureText1: LocalizedMessage {
+        /// 披风
+        ///
+        /// Resource: `Core.coreAccountAppearance.textureText1`.
+        public static var cape: LocalizedMessage {
             .init(key: "coreAccountAppearance.textureText1", table: "Core", fallback: "披风")
         }
-        public static var textureText2: LocalizedMessage {
+        /// 当前皮肤
+        ///
+        /// Resource: `Core.coreAccountAppearance.textureText2`.
+        public static var currentSkin: LocalizedMessage {
             .init(key: "coreAccountAppearance.textureText2", table: "Core", fallback: "当前皮肤")
         }
-        public static var textureText3: LocalizedMessage {
+        /// 当前披风
+        ///
+        /// Resource: `Core.coreAccountAppearance.textureText3`.
+        public static var currentCape: LocalizedMessage {
             .init(key: "coreAccountAppearance.textureText3", table: "Core", fallback: "当前披风")
         }
-        public static var loadText1: LocalizedMessage {
+        /// 离线账号没有在线皮肤资料。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.loadText1`.
+        public static var offlineAccountNoSkin: LocalizedMessage {
             .init(key: "coreAccountAppearance.loadText1", table: "Errors", fallback: "离线账号没有在线皮肤资料。")
         }
-        public static var dataText1: LocalizedMessage {
+        /// 认证站返回的外观信息无效。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.dataText1`.
+        public static var invalidAuthAppearance: LocalizedMessage {
             .init(key: "coreAccountAppearance.dataText1", table: "Errors", fallback: "认证站返回的外观信息无效。")
         }
-        public static func uploadText1(_ value0: String) -> LocalizedMessage {
+        /// 此账号不支持直接上传%1$@，请到认证站管理。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.uploadText1`.
+        public static func appearanceUploadUnsupported(_ value0: String) -> LocalizedMessage {
             .init(key: "coreAccountAppearance.uploadText1", table: "Errors", fallback: "此账号不支持直接上传%1$@，请到认证站管理。", arguments: [.text(value0)])
         }
-        public static func resetText1(_ value0: String) -> LocalizedMessage {
+        /// 此认证站不支持直接修改%1$@，请到认证站管理。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.resetText1`.
+        public static func appearanceResetUnsupported(_ value0: String) -> LocalizedMessage {
             .init(key: "coreAccountAppearance.resetText1", table: "Errors", fallback: "此认证站不支持直接修改%1$@，请到认证站管理。", arguments: [.text(value0)])
         }
-        public static var selectCapeText1: LocalizedMessage {
+        /// 请选择此 Microsoft 账号拥有的披风。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.selectCapeText1`.
+        public static var microsoftCapeSelectionRequired: LocalizedMessage {
             .init(key: "coreAccountAppearance.selectCapeText1", table: "Errors", fallback: "请选择此 Microsoft 账号拥有的披风。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 外观图片地址无效。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.urlText1`.
+        public static var invalidAppearanceURL: LocalizedMessage {
             .init(key: "coreAccountAppearance.urlText1", table: "Errors", fallback: "外观图片地址无效。")
         }
-        public static var responseText1: LocalizedMessage {
+        /// 无法下载外观图片，请重试。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.responseText1`.
+        public static var appearanceDownloadFailed: LocalizedMessage {
             .init(key: "coreAccountAppearance.responseText1", table: "Errors", fallback: "无法下载外观图片，请重试。")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 账号已变化，请重新打开外观管理。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.validateText1`.
+        public static var accountChanged: LocalizedMessage {
             .init(key: "coreAccountAppearance.validateText1", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
         }
-        public static var normalizedText1: LocalizedMessage {
+        /// 外观资料与当前角色不匹配，请重新登录。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.normalizedText1`.
+        public static var appearanceRoleMismatch: LocalizedMessage {
             .init(key: "coreAccountAppearance.normalizedText1", table: "Errors", fallback: "外观资料与当前角色不匹配，请重新登录。")
         }
-        public static var serverText1: LocalizedMessage {
+        /// 账号缺少认证服务器，请重新登录。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.serverText1`.
+        public static var missingAuthServer: LocalizedMessage {
             .init(key: "coreAccountAppearance.serverText1", table: "Errors", fallback: "账号缺少认证服务器，请重新登录。")
         }
-        public static var statusText1: LocalizedMessage {
+        /// 外观服务响应无效。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText1`.
+        public static var invalidAppearanceResponse: LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText1", table: "Errors", fallback: "外观服务响应无效。")
         }
-        public static var statusText2: LocalizedMessage {
+        /// 登录已失效，请重新登录账号后再试。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText2`.
+        public static var accountLoginExpired: LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText2", table: "Errors", fallback: "登录已失效，请重新登录账号后再试。")
         }
-        public static var statusText3: LocalizedMessage {
+        /// 服务器未允许此账号执行这项外观操作。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText3`.
+        public static var appearanceOperationForbidden: LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText3", table: "Errors", fallback: "服务器未允许此账号执行这项外观操作。")
         }
-        public static var statusText4: LocalizedMessage {
+        /// 操作过于频繁，请稍后再试。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText4`.
+        public static var appearanceRateLimited: LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText4", table: "Errors", fallback: "操作过于频繁，请稍后再试。")
         }
-        public static func statusText5(_ value0: String) -> LocalizedMessage {
+        /// 外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText5`.
+        public static func appearanceHTTPError(_ value0: String) -> LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText5", table: "Errors", fallback: "外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", arguments: [.text(value0)])
         }
-        public static var statusText6: LocalizedMessage {
+        /// 外观资料过大，无法读取。
+        ///
+        /// Resource: `Errors.coreAccountAppearance.statusText6`.
+        public static var appearanceDataTooLarge: LocalizedMessage {
             .init(key: "coreAccountAppearance.statusText6", table: "Errors", fallback: "外观资料过大，无法读取。")
         }
         static let definitions: [String: MessageDefinition] = [

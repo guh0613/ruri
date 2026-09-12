@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreOptiFineCatalog {
-        public static var invalidText1: LocalizedMessage {
+        /// OptiFine 安装包的版本信息无效。
+        ///
+        /// Resource: `Core.coreOptiFineCatalog.invalidText1`.
+        public static var invalidVersionInfo: LocalizedMessage {
             .init(key: "coreOptiFineCatalog.invalidText1", table: "Core", fallback: "OptiFine 安装包的版本信息无效。")
         }
         static let definitions: [String: MessageDefinition] = [

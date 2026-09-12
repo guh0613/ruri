@@ -3,34 +3,64 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryMoveSnapshot {
-        public static var repositoryPreviewText1: LocalizedMessage {
+        /// 请先安装实例，再移动到 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText1`.
+        public static var instanceNotInstalled: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText1", table: "Errors", fallback: "请先安装实例，再移动到 Minecraft 文件夹。")
         }
-        public static var repositoryPreviewText2: LocalizedMessage {
+        /// 实例已位于所选文件夹中。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText2`.
+        public static var instanceAlreadyInTargetFolder: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText2", table: "Errors", fallback: "实例已位于所选文件夹中。")
         }
-        public static var repositoryPreviewText3: LocalizedMessage {
+        /// 找不到目标文件夹。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText3`.
+        public static var missingTargetFolder: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText3", table: "Errors", fallback: "找不到目标文件夹。")
         }
-        public static var rootText1: LocalizedMessage {
+        /// 目标文件夹不能位于源实例或运行目录里面。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.rootText1`.
+        public static var targetFolderNestedInSource: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.rootText1", table: "Errors", fallback: "目标文件夹不能位于源实例或运行目录里面。")
         }
-        public static var repositoryText1: LocalizedMessage {
+        /// 源实例目录身份改变，请重新预览。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryText1`.
+        public static var sourceDirectoryChanged: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.repositoryText1", table: "Errors", fallback: "源实例目录身份改变，请重新预览。")
         }
-        public static var identityText1: LocalizedMessage {
+        /// 源版本文件夹已被替换，请重新预览。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.identityText1`.
+        public static var sourceVersionReplaced: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.identityText1", table: "Errors", fallback: "源版本文件夹已被替换，请重新预览。")
         }
-        public static var identityText2: LocalizedMessage {
+        /// 源文件在预览后改变，请刷新移动预览。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.identityText2`.
+        public static var changedSourceFiles: LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.identityText2", table: "Errors", fallback: "源文件在预览后改变，请刷新移动预览。")
         }
-        public static func stateText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.stateText1`.
+        public static func stillUsesRunDirectory(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.stateText1", table: "Errors", fallback: "“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。", arguments: [.text(value0)])
         }
-        public static func fileText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.fileText1`.
+        public static func stillHasDependentFiles(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.fileText1", table: "Errors", fallback: "“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", arguments: [.text(value0)])
         }
-        public static func rawText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”仍引用此版本，请先处理该版本。
+        ///
+        /// Resource: `Errors.coreRepositoryMoveSnapshot.rawText1`.
+        public static func stillReferencedVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRepositoryMoveSnapshot.rawText1", table: "Errors", fallback: "“%1$@”仍引用此版本，请先处理该版本。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

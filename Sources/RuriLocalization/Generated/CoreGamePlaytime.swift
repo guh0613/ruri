@@ -3,13 +3,22 @@ import Foundation
 
 extension Messages {
     public enum CoreGamePlaytime {
-        public static var newlineText1: LocalizedMessage {
+        /// [Ruri] 预览中的超长日志行已省略；完整内容可导出。
+        ///
+        /// Resource: `Core.coreGamePlaytime.newlineText1`.
+        public static var longLogLineOmitted: LocalizedMessage {
             .init(key: "coreGamePlaytime.newlineText1", table: "Core", fallback: "[Ruri] 预览中的超长日志行已省略；完整内容可导出。")
         }
-        public static var attributesText1: LocalizedMessage {
+        /// 游玩时长记录无效。
+        ///
+        /// Resource: `Errors.coreGamePlaytime.attributesText1`.
+        public static var invalidPlaytimeRecord: LocalizedMessage {
             .init(key: "coreGamePlaytime.attributesText1", table: "Errors", fallback: "游玩时长记录无效。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 日志不是普通文件。
+        ///
+        /// Resource: `Errors.coreGamePlaytime.urlText1`.
+        public static var logNotRegularFile: LocalizedMessage {
             .init(key: "coreGamePlaytime.urlText1", table: "Errors", fallback: "日志不是普通文件。")
         }
         static let definitions: [String: MessageDefinition] = [

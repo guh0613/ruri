@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceTransfers {
-        public static var panelText1: LocalizedMessage {
+        /// 选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.panelText1`.
+        public static var transferFormats: LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.panelText1", table: "Interface", fallback: "选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。")
         }
-        public static func prepareInstanceImportText1(_ value0: String) -> LocalizedMessage {
+        /// 读取 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.prepareInstanceImportText1`.
+        public static func prepareImport(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.prepareInstanceImportText1", table: "Interface", fallback: "读取 %1$@", arguments: [.text(value0)])
         }
-        public static func finishImportText1(_ value0: String) -> LocalizedMessage {
+        /// 导入 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.finishImportText1`.
+        public static func finishImport(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.finishImportText1", table: "Interface", fallback: "导入 %1$@", arguments: [.text(value0)])
         }
-        public static func instanceText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已导入
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.instanceText1`.
+        public static func instanceImported(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.instanceText1", table: "Interface", fallback: "%1$@ 已导入", arguments: [.text(value0)])
         }
-        public static func exportText1(_ value0: String) -> LocalizedMessage {
+        /// 导出 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.exportText1`.
+        public static func exportInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.exportText1", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
-        public static func scopedText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 已导出
+        ///
+        /// Resource: `Interface.appAppModelInstanceTransfers.scopedText1`.
+        public static func instanceExported(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceTransfers.scopedText1", table: "Interface", fallback: "%1$@ 已导出", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

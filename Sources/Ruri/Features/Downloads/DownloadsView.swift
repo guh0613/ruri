@@ -10,7 +10,7 @@ struct DownloadsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: Messages.AppDownloadsView.bodyText1.localized, detail: Messages.AppDownloadsView.bodyText2.localized) }
+                if model.activities.isEmpty { EmptyPanel(symbol: "arrow.down.circle", title: Messages.AppDownloadsView.noDownloadTasks.localized, detail: Messages.AppDownloadsView.downloadProgressDetails.localized) }
                 ForEach(model.activities) { activity in
                     Surface {
                         VStack(alignment: .leading, spacing: 14) {
@@ -18,7 +18,7 @@ struct DownloadsView: View {
                                 Image(systemName: activity.status == .completed ? "checkmark.circle.fill" : activity.status == .failed ? "exclamationmark.circle" : "arrow.down.circle").foregroundStyle(activity.status == .failed ? Color.orange : Theme.accent)
                                 Text(activity.title).font(.headline); Spacer()
                                 if activity.status == .running { Button(Messages.Common.cancel.localized) { model.operation?.cancel() } }
-                                else { Text(activity.status == .completed ? Messages.AppDownloadsView.bodyText3.localized : activity.status == .cancelled ? Messages.AppDownloadsView.bodyText4.localized : Messages.AppDownloadsView.bodyText5.localized).font(.caption).foregroundStyle(.secondary) }
+                                else { Text(activity.status == .completed ? Messages.AppDownloadsView.completed.localized : activity.status == .cancelled ? Messages.AppDownloadsView.cancelled.localized : Messages.AppDownloadsView.failed.localized).font(.caption).foregroundStyle(.secondary) }
                             }
                             if activity.status == .running {
                                 if activity.progress.total > 0 { ProgressView(value: activity.progress.fraction) }
@@ -30,7 +30,7 @@ struct DownloadsView: View {
                     }
                 }
                 if !transfers.isEmpty {
-                    Text(Messages.AppDownloadsView.errorText1.localized).font(.headline)
+                    Text(Messages.AppDownloadsView.recentFileTransfers.localized).font(.headline)
                     Surface {
                         VStack(spacing: 15) {
                             ForEach(transfers) { transfer in
@@ -65,8 +65,8 @@ struct DownloadsView: View {
     private func sourceInfo(_ transfer: FileTransfer) -> some View {
         HStack {
             Text(transfer.host).lineLimit(1).truncationMode(.middle)
-            if transfer.attempt > 1 { Text(Messages.AppDownloadsView.sourceInfoText1(Int64(transfer.attempt)).localized) }
-            if transfer.resumedBytes > 0 { Text(Messages.AppDownloadsView.sourceInfoText2(String(describing: bytes(transfer.resumedBytes))).localized) }
+            if transfer.attempt > 1 { Text(Messages.AppDownloadsView.attemptNumber(Int64(transfer.attempt)).localized) }
+            if transfer.resumedBytes > 0 { Text(Messages.AppDownloadsView.resumeDownload(String(describing: bytes(transfer.resumedBytes))).localized) }
         }
     }
     private func byteInfo(_ transfer: FileTransfer) -> some View {

@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackRegistry {
-        public static var infoText1: LocalizedMessage {
+        /// 整合包版本记录无效
+        ///
+        /// Resource: `Errors.coreModpackRegistry.infoText1`.
+        public static var invalidPackVersion: LocalizedMessage {
             .init(key: "coreModpackRegistry.infoText1", table: "Errors", fallback: "整合包版本记录无效")
         }
-        public static var validateText1: LocalizedMessage {
+        /// 整合包版本记录不受支持或包含重复文件
+        ///
+        /// Resource: `Errors.coreModpackRegistry.validateText1`.
+        public static var unsupportedOrDuplicatePackVersion: LocalizedMessage {
             .init(key: "coreModpackRegistry.validateText1", table: "Errors", fallback: "整合包版本记录不受支持或包含重复文件")
         }
-        public static var validateText2: LocalizedMessage {
+        /// 整合包初始文件校验信息无效
+        ///
+        /// Resource: `Errors.coreModpackRegistry.validateText2`.
+        public static var invalidInitialChecksums: LocalizedMessage {
             .init(key: "coreModpackRegistry.validateText2", table: "Errors", fallback: "整合包初始文件校验信息无效")
         }
-        public static var originText1: LocalizedMessage {
+        /// 整合包来源标识无效
+        ///
+        /// Resource: `Errors.coreModpackRegistry.originText1`.
+        public static var invalidPackOrigin: LocalizedMessage {
             .init(key: "coreModpackRegistry.originText1", table: "Errors", fallback: "整合包来源标识无效")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 整合包更新地址无效
+        ///
+        /// Resource: `Errors.coreModpackRegistry.urlText1`.
+        public static var invalidUpdateURL: LocalizedMessage {
             .init(key: "coreModpackRegistry.urlText1", table: "Errors", fallback: "整合包更新地址无效")
         }
         static let definitions: [String: MessageDefinition] = [

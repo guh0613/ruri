@@ -29,16 +29,16 @@ public final class InstanceLocationLease: @unchecked Sendable {
         try ModpackUpdateStore.requireAvailable(paths: paths, instanceID: instanceID)
         if paths.repositoryImportID != instanceID, paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
            FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
-            throw RuriError.message(Messages.CoreInstanceLocationLease.requireCurrentDirectoryText1)
+            throw RuriError.message(Messages.CoreInstanceLocationLease.requireCurrentDirectory)
         }
         let state = try StateStore.load(paths)
         guard !(state.detachedMinecraftFolders ?? []).contains(where: { folder in folder.instances.contains(where: { $0.id == instanceID }) }) else {
-            throw RuriError.message(Messages.CoreInstanceLocationLease.stateText1)
+            throw RuriError.message(Messages.CoreInstanceLocationLease.folderRemoved)
         }
         // New installations and import snapshots may not be registered yet.
         guard let instance = state.instances.first(where: { $0.id == instanceID }) else { return }
         guard (instance.directoryID ?? GameDirectory.defaultID) == paths.directoryID(for: instanceID) else {
-            throw RuriError.message(Messages.CoreInstanceLocationLease.instanceText1)
+            throw RuriError.message(Messages.CoreInstanceLocationLease.instanceMoved)
         }
     }
 
@@ -47,17 +47,17 @@ public final class InstanceLocationLease: @unchecked Sendable {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let file = try LauncherPaths.safePath(instanceID.uuidString + ".lock", within: directory)
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.lockFailed) }
         let result = InstanceLocationLease(fd)
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreInstanceLocationLease.infoText1) }
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreInstanceLocationLease.lockNotRegularFile) }
         try lock(fd, exclusive: exclusive)
         return result
     }
 
     private static func lock(_ fd: Int32, exclusive: Bool) throws {
         var lock = flock(); lock.l_type = Int16(exclusive ? F_WRLCK : F_RDLCK); lock.l_whence = Int16(SEEK_SET)
-        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.lockText1) }
+        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else { throw RuriError.message(Messages.CoreInstanceLocationLease.operationInProgress) }
     }
 }
 

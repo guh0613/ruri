@@ -25,15 +25,15 @@ struct ContentVersionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            SectionHeading(title: Messages.AppContentVersionView.bodyText1.localized, subtitle: record.title)
-            Text(Messages.AppContentVersionView.bodyText3(String(describing: record.versionName), String(describing: instance?.name ?? Messages.AppContentVersionView.bodyText2.localized)).localized)
+            SectionHeading(title: Messages.AppContentVersionView.replaceVersion.localized, subtitle: record.title)
+            Text(Messages.AppContentVersionView.currentVersion(record.versionName, String(describing: instance?.name ?? Messages.AppContentVersionView.instanceRemoved.localized)).localized)
                 .font(.callout).foregroundStyle(.secondary)
             if let plan {
-                Text(Messages.AppContentVersionView.planText1(Int64(plan.files.count)).localized).font(.callout)
+                Text(Messages.AppContentVersionView.installPlan(Int64(plan.files.count)).localized).font(.callout)
                 ScrollView { CurseForgePlanFiles(files: plan.files, manualFiles: $manualFiles) }.frame(height: 260)
             } else {
-                Toggle(Messages.AppContentVersionView.planText2.localized, isOn: $includePrereleases).disabled(resolving)
-                if loading { ProgressView(Messages.AppContentVersionView.planText3.localized).frame(maxWidth: .infinity, minHeight: 180) }
+                Toggle(Messages.AppContentVersionView.includePrereleases.localized, isOn: $includePrereleases).disabled(resolving)
+                if loading { ProgressView(Messages.AppContentVersionView.findCompatibleVersion.localized).frame(maxWidth: .infinity, minHeight: 180) }
                 else {
                     List(selection: $selectedID) {
                         ForEach(choices) { choice in
@@ -43,29 +43,29 @@ struct ContentVersionView: View {
                                     Text(LocalizedFormat.publishedDate(choice.date)).font(.caption).foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                if choice.id == record.versionID { TagPill(text: Messages.AppContentVersionView.planText4.localized) }
+                                if choice.id == record.versionID { TagPill(text: Messages.AppContentVersionView.installed.localized) }
                                 TagPill(text: choice.channel)
                             }.padding(.vertical, 4).tag(choice.id)
                         }
                     }.frame(height: 230).disabled(resolving)
-                    if choices.isEmpty { Text(Messages.AppContentVersionView.planText5.localized).font(.caption).foregroundStyle(.secondary) }
+                    if choices.isEmpty { Text(Messages.AppContentVersionView.noMatchingVersion.localized).font(.caption).foregroundStyle(.secondary) }
                 }
                 if record.provider == "curseforge", total > 50 {
                     HStack {
-                        Button(Messages.AppContentVersionView.planText6.localized) { offset = max(0, offset - 50) }.disabled(offset == 0 || loading || resolving)
-                        Text(Messages.AppContentVersionView.planText7(Int64(offset / 50 + 1)).localized).font(.caption)
-                        Button(Messages.AppContentVersionView.planText8.localized) { offset += 50 }.disabled(offset + 50 >= total || loading || resolving)
+                        Button(Messages.AppContentVersionView.previousPage.localized) { offset = max(0, offset - 50) }.disabled(offset == 0 || loading || resolving)
+                        Text(Messages.AppContentVersionView.pageNumber(Int64(offset / 50 + 1)).localized).font(.caption)
+                        Button(Messages.AppContentVersionView.nextPage.localized) { offset += 50 }.disabled(offset + 50 >= total || loading || resolving)
                     }
                 }
-                Text(Messages.AppContentVersionView.planText9.localized).font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppContentVersionView.versionSelectionInfo.localized).font(.caption).foregroundStyle(.secondary)
             }
-            if resolving { ProgressView(Messages.AppContentVersionView.planText10.localized) }
+            if resolving { ProgressView(Messages.AppContentVersionView.resolveDependencies.localized) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             HStack {
-                if plan != nil { Button(Messages.AppContentVersionView.errorText1.localized) { plan = nil; manualFiles = [:] } }
+                if plan != nil { Button(Messages.AppContentVersionView.returnToVersions.localized) { plan = nil; manualFiles = [:] } }
                 Spacer()
                 Button(Messages.Common.cancel.localized) { resolution?.cancel(); dismiss() }.keyboardShortcut(.cancelAction)
-                Button(plan != nil || record.provider == "modrinth" ? Messages.AppContentVersionView.errorText2.localized : Messages.AppContentVersionView.errorText3.localized, action: install)
+                Button(plan != nil || record.provider == "modrinth" ? Messages.AppContentVersionView.installSelectedVersion.localized : Messages.AppContentVersionView.viewInstallPlan.localized, action: install)
                     .buttonStyle(.borderedProminent).disabled(!canInstall)
             }
         }.padding(24).frame(width: 600)
@@ -98,7 +98,7 @@ struct ContentVersionView: View {
                 try Task.checkCancellation()
                 versions = page.data.filter { $0.modId == project && $0.isAvailable != false && $0.supports(instance, kind: record.kind) }.map(Choice.curseforge)
                 total = page.pagination?.totalCount ?? page.data.count
-            } else { throw RuriError.message(Messages.AppContentVersionView.pageText1) }
+            } else { throw RuriError.message(Messages.AppContentVersionView.noVersionSource) }
             var seen = Set<String>(); versions = versions.filter { seen.insert($0.id).inserted }
             if versions.contains(where: { $0.id == record.versionID }) { selectedID = record.versionID }
         } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
@@ -111,9 +111,9 @@ struct ContentVersionView: View {
         guard let selected else { return }
         switch selected {
         case .modrinth(let version):
-            model.perform(Messages.AppContentVersionView.versionText1(String(describing: record.title)), instanceID: instanceID) { id in
+            model.perform(Messages.AppContentVersionView.replaceItemVersion(record.title), instanceID: instanceID) { id in
                 try await ModrinthService().install(version: version, type: record.kind.rawValue, instance: instance, paths: model.paths, downloader: model.installer.downloader) { progress in await model.progress(id, progress) }
-                model.notice = Messages.AppContentVersionView.versionText2(String(describing: record.title), String(describing: version.version_number)).localized
+                model.notice = Messages.AppContentVersionView.versionReplaced(record.title, String(describing: version.version_number)).localized
             }
             dismiss()
         case .curseforge(let file):
@@ -135,8 +135,8 @@ struct ContentVersionView: View {
         var date: String { switch self { case .modrinth(let value): value.date_published ?? ""; case .curseforge(let value): value.fileDate } }
         var channel: String {
             switch self {
-            case .modrinth(let value): value.version_type == "beta" ? "Beta" : value.version_type == "alpha" ? "Alpha" : Messages.AppContentVersionView.valueText1.localized
-            case .curseforge(let value): value.releaseType == 2 ? "Beta" : value.releaseType == 3 ? "Alpha" : Messages.AppContentVersionView.valueText1.localized
+            case .modrinth(let value): value.version_type == "beta" ? "Beta" : value.version_type == "alpha" ? "Alpha" : Messages.AppContentVersionView.stableRelease.localized
+            case .curseforge(let value): value.releaseType == 2 ? "Beta" : value.releaseType == 3 ? "Alpha" : Messages.AppContentVersionView.stableRelease.localized
             }
         }
         var isRelease: Bool {

@@ -3,19 +3,34 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceMoves {
-        public static func moveInstanceText1(_ value0: String) -> LocalizedMessage {
+        /// 移动 %1$@
+        ///
+        /// Resource: `Interface.appAppModelInstanceMoves.moveInstanceText1`.
+        public static func moveInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.moveInstanceText1", table: "Interface", fallback: "移动 %1$@", arguments: [.text(value0)])
         }
-        public static func resultText1(_ value0: String) -> LocalizedMessage {
+        /// 已移动“%1$@”，设置和运行历史已保留。
+        ///
+        /// Resource: `Interface.appAppModelInstanceMoves.resultText1`.
+        public static func instanceMoved(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.resultText1", table: "Interface", fallback: "已移动“%1$@”，设置和运行历史已保留。", arguments: [.text(value0)])
         }
-        public static var resultText2: LocalizedMessage {
+        /// 实例已登记，但移动尚需恢复。
+        ///
+        /// Resource: `Interface.appAppModelInstanceMoves.resultText2`.
+        public static var moveNeedsRecovery: LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.resultText2", table: "Interface", fallback: "实例已登记，但移动尚需恢复。")
         }
-        public static func recoverInstanceMoveText1(_ value0: String) -> LocalizedMessage {
+        /// 恢复 %1$@ 的移动
+        ///
+        /// Resource: `Interface.appAppModelInstanceMoves.recoverInstanceMoveText1`.
+        public static func recoverInstanceMove(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.recoverInstanceMoveText1", table: "Interface", fallback: "恢复 %1$@ 的移动", arguments: [.text(value0)])
         }
-        public static var resultText3: LocalizedMessage {
+        /// 实例移动已完成，原文件与工作记录已清理。
+        ///
+        /// Resource: `Interface.appAppModelInstanceMoves.resultText3`.
+        public static var instanceMoveCompleted: LocalizedMessage {
             .init(key: "appAppModelInstanceMoves.resultText3", table: "Interface", fallback: "实例移动已完成，原文件与工作记录已清理。")
         }
         static let definitions: [String: MessageDefinition] = [

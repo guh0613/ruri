@@ -21,28 +21,28 @@ struct ExportInstanceView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Label(Messages.AppExportInstanceView.bodyText1(String(describing: instance.name)).localized, systemImage: "square.and.arrow.up").font(.title2.bold())
-            Text(complete ? Messages.AppExportInstanceView.bodyText2.localized : Messages.AppExportInstanceView.bodyText3.localized).foregroundStyle(.secondary)
-            Picker(Messages.AppExportInstanceView.bodyText4.localized, selection: $format) { ForEach(formats) { Text($0.title).tag($0) } }.pickerStyle(.menu)
+            Label(Messages.AppExportInstanceView.exportInstance(instance.name).localized, systemImage: "square.and.arrow.up").font(.title2.bold())
+            Text(complete ? Messages.AppExportInstanceView.fullExportDescription.localized : Messages.AppExportInstanceView.lightExportDescription.localized).foregroundStyle(.secondary)
+            Picker(Messages.AppExportInstanceView.exportFormat.localized, selection: $format) { ForEach(formats) { Text($0.title).tag($0) } }.pickerStyle(.menu)
             if format == .mcbbs || format == .mrpack {
-                LabeledContent(Messages.AppExportInstanceView.bodyText5.localized) { TextField(Messages.AppExportInstanceView.bodyText6.localized, text: $details.version).textFieldStyle(.roundedBorder) }
-                if format == .mcbbs { LabeledContent(Messages.AppExportInstanceView.bodyText7.localized) { TextField(Messages.AppExportInstanceView.bodyText7.localized, text: $details.author).textFieldStyle(.roundedBorder) } }
-                TextField(Messages.AppExportInstanceView.bodyText8.localized, text: $details.description, axis: .vertical).lineLimit(2...4).textFieldStyle(.roundedBorder)
+                LabeledContent(Messages.AppExportInstanceView.version.localized) { TextField(Messages.AppExportInstanceView.packVersion.localized, text: $details.version).textFieldStyle(.roundedBorder) }
+                if format == .mcbbs { LabeledContent(Messages.AppExportInstanceView.author.localized) { TextField(Messages.AppExportInstanceView.author.localized, text: $details.author).textFieldStyle(.roundedBorder) } }
+                TextField(Messages.AppExportInstanceView.description.localized, text: $details.description, axis: .vertical).lineLimit(2...4).textFieldStyle(.roundedBorder)
             }
-            if format == .mrpack { Toggle(Messages.AppExportInstanceView.bodyText9.localized, isOn: $details.referenceDownloads) }
-            Toggle(Messages.AppExportInstanceView.bodyText10.localized, isOn: $includeWorlds)
-            if containsCommands { Text(Messages.AppExportInstanceView.bodyText11.localized).font(.caption).foregroundStyle(.secondary) }
+            if format == .mrpack { Toggle(Messages.AppExportInstanceView.modrinthFiles.localized, isOn: $details.referenceDownloads) }
+            Toggle(Messages.AppExportInstanceView.includeWorlds.localized, isOn: $includeWorlds)
+            if containsCommands { Text(Messages.AppExportInstanceView.commandsDisabled.localized).font(.caption).foregroundStyle(.secondary) }
             if !instance.resolvedLaunchSettings(defaults: model.state.settings).environment.isEmpty {
-                Text(Messages.AppExportInstanceView.bodyText12.localized).font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppExportInstanceView.excludeEnvironment.localized).font(.caption).foregroundStyle(.secondary)
             }
             if instance.resolvedLaunchSettings(defaults: model.state.settings).java.major != nil, format != .ruri && format != .complete {
-                Text(Messages.AppExportInstanceView.bodyText13.localized).font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppExportInstanceView.javaMajorVersion.localized).font(.caption).foregroundStyle(.secondary)
             }
-            Text(complete ? Messages.AppExportInstanceView.bodyText14.localized : format == .ruri ? Messages.AppExportInstanceView.bodyText15.localized : format == .mcbbs ? Messages.AppExportInstanceView.bodyText16.localized : format == .mrpack ? Messages.AppExportInstanceView.bodyText17.localized : Messages.AppExportInstanceView.bodyText18.localized).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            Text(complete ? Messages.AppExportInstanceView.fullBackupDescription.localized : format == .ruri ? Messages.AppExportInstanceView.ruriFormatDescription.localized : format == .mcbbs ? Messages.AppExportInstanceView.hmclFormatDescription.localized : format == .mrpack ? Messages.AppExportInstanceView.mrpackFormatDescription.localized : Messages.AppExportInstanceView.prismFormatDescription.localized).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             HStack {
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Spacer()
-                Button(Messages.AppExportInstanceView.bodyText19.localized) { chooseDestination() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || model.isInstanceInUse(instance.id))
+                Button(Messages.AppExportInstanceView.chooseSaveLocation.localized) { chooseDestination() }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction).disabled(model.busy || model.isInstanceInUse(instance.id))
             }
         }.padding(26).frame(width: 510)
     }

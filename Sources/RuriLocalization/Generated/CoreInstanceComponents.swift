@@ -3,52 +3,100 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceComponents {
-        public static var unavailableReasonText1: LocalizedMessage {
+        /// 请先完成此实例的安装。
+        ///
+        /// Resource: `Core.coreInstanceComponents.unavailableReasonText1`.
+        public static var installationRequired: LocalizedMessage {
             .init(key: "coreInstanceComponents.unavailableReasonText1", table: "Core", fallback: "请先完成此实例的安装。")
         }
-        public static var additionalText3: LocalizedMessage {
+        /// 此实例同时使用多个加载器，暂不支持保留组合的更换操作。
+        ///
+        /// Resource: `Core.coreInstanceComponents.additionalText3`.
+        public static var multipleLoadersUnsupported: LocalizedMessage {
             .init(key: "coreInstanceComponents.additionalText3", table: "Core", fallback: "此实例同时使用多个加载器，暂不支持保留组合的更换操作。")
         }
+        /// 此实例还有 %1$@，暂不支持保留这些组件的更换操作。
+        ///
+        /// Resource: `Core.coreInstanceComponents.unsupportedComponents`.
         public static func unsupportedComponents(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceComponents.unsupportedComponents", table: "Core", fallback: "此实例还有 %1$@，暂不支持保留这些组件的更换操作。", arguments: [.text(value0)])
         }
-        public static var reasonText1: LocalizedMessage {
+        /// 请选择加载器版本。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.reasonText1`.
+        public static var loaderVersionSelectionRequired: LocalizedMessage {
             .init(key: "coreInstanceComponents.reasonText1", table: "Errors", fallback: "请选择加载器版本。")
         }
-        public static var reasonText2: LocalizedMessage {
+        /// 当前已经使用这个加载器版本。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.reasonText2`.
+        public static var loaderVersionAlreadySelected: LocalizedMessage {
             .init(key: "coreInstanceComponents.reasonText2", table: "Errors", fallback: "当前已经使用这个加载器版本。")
         }
-        public static var clientText1: LocalizedMessage {
+        /// 游戏客户端缺失，请先修复此实例。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.clientText1`.
+        public static var missingGameClient: LocalizedMessage {
             .init(key: "coreInstanceComponents.clientText1", table: "Errors", fallback: "游戏客户端缺失，请先修复此实例。")
         }
-        public static var resultText1: LocalizedMessage {
+        /// 加载器生成了不能迁移的临时路径，原配置已保留。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.resultText1`.
+        public static var nonportableLoaderPath: LocalizedMessage {
             .init(key: "coreInstanceComponents.resultText1", table: "Errors", fallback: "加载器生成了不能迁移的临时路径，原配置已保留。")
         }
-        public static var backupText1: LocalizedMessage {
+        /// 没有适用于当前位置的加载器备份。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.backupText1`.
+        public static var loaderBackupMissing: LocalizedMessage {
             .init(key: "coreInstanceComponents.backupText1", table: "Errors", fallback: "没有适用于当前位置的加载器备份。")
         }
-        public static var updatedText1: LocalizedMessage {
+        /// 实例组件在操作期间改变，请重新打开组件管理。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.updatedText1`.
+        public static var componentsChangedDuringOperation: LocalizedMessage {
             .init(key: "coreInstanceComponents.updatedText1", table: "Errors", fallback: "实例组件在操作期间改变，请重新打开组件管理。")
         }
-        public static var actualText1: LocalizedMessage {
+        /// 原版本文件在准备期间改变，请重新尝试。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.actualText1`.
+        public static var originalVersionChanged: LocalizedMessage {
             .init(key: "coreInstanceComponents.actualText1", table: "Errors", fallback: "原版本文件在准备期间改变，请重新尝试。")
         }
-        public static var actualText2: LocalizedMessage {
+        /// 启动清单已改变，请重新尝试。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.actualText2`.
+        public static var launchManifestChanged: LocalizedMessage {
             .init(key: "coreInstanceComponents.actualText2", table: "Errors", fallback: "启动清单已改变，请重新尝试。")
         }
-        public static var actualText3: LocalizedMessage {
+        /// 加载器设置未完成保存，请在组件管理中恢复上次配置。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.actualText3`.
+        public static var loaderSettingsSaveIncomplete: LocalizedMessage {
             .init(key: "coreInstanceComponents.actualText3", table: "Errors", fallback: "加载器设置未完成保存，请在组件管理中恢复上次配置。")
         }
-        public static var versionText1: LocalizedMessage {
+        /// 当前版本的启动清单不可用，请先修复。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.versionText1`.
+        public static var launchManifestUnavailable: LocalizedMessage {
             .init(key: "coreInstanceComponents.versionText1", table: "Errors", fallback: "当前版本的启动清单不可用，请先修复。")
         }
-        public static func dependentText1(_ value0: String) -> LocalizedMessage {
+        /// “%1$@”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.dependentText1`.
+        public static func dependentInstanceWarning(_ value0: String) -> LocalizedMessage {
             .init(key: "coreInstanceComponents.dependentText1", table: "Errors", fallback: "“%1$@”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。", arguments: [.text(value0)])
         }
-        public static var instanceText1: LocalizedMessage {
+        /// 实例已从列表移除。
+        ///
+        /// Resource: `Errors.coreInstanceComponents.instanceText1`.
+        public static var instanceRemoved: LocalizedMessage {
             .init(key: "coreInstanceComponents.instanceText1", table: "Errors", fallback: "实例已从列表移除。")
         }
-        public static var importedText1: LocalizedMessage {
+        /// 正在应用加载器设置
+        ///
+        /// Resource: `Progress.coreInstanceComponents.importedText1`.
+        public static var applyingLoaderSettings: LocalizedMessage {
             .init(key: "coreInstanceComponents.importedText1", table: "Progress", fallback: "正在应用加载器设置")
         }
         static let definitions: [String: MessageDefinition] = [

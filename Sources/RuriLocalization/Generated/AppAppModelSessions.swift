@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelSessions {
-        public static func messageText1(_ value0: String) -> LocalizedMessage {
+        /// 部分运行记录暂时无法读取：%1$@
+        ///
+        /// Resource: `Interface.appAppModelSessions.messageText1`.
+        public static func historyReadWarning(_ value0: String) -> LocalizedMessage {
             .init(key: "appAppModelSessions.messageText1", table: "Interface", fallback: "部分运行记录暂时无法读取：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

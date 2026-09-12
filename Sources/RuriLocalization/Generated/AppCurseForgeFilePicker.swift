@@ -3,28 +3,52 @@ import Foundation
 
 extension Messages {
     public enum AppCurseForgeFilePicker {
-        public static var bodyText1: LocalizedMessage {
+        /// 已校验
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText1`.
+        public static var verified: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText1", table: "Interface", fallback: "已校验")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 手动下载
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText2`.
+        public static var manualDownload: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText2", table: "Interface", fallback: "手动下载")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 自动下载
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText3`.
+        public static var automaticDownload: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText3", table: "Interface", fallback: "自动下载")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 打开下载页面
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText4`.
+        public static var openDownloadPage: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText4", table: "Interface", fallback: "打开下载页面")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 选择已下载文件…
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText5`.
+        public static var chooseDownloadedFile: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText5", table: "Interface", fallback: "选择已下载文件…")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 重新选择…
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText6`.
+        public static var chooseAnotherFile: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText6", table: "Interface", fallback: "重新选择…")
         }
-        public static func panelText1(_ value0: String) -> LocalizedMessage {
+        /// 选择 %1$@。Ruri 会核对版本、大小与校验值。
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.panelText1`.
+        public static func selectFile(_ value0: String) -> LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.panelText1", table: "Interface", fallback: "选择 %1$@。Ruri 会核对版本、大小与校验值。", arguments: [.text(value0)])
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。
+        ///
+        /// Resource: `Interface.appCurseForgeFilePicker.bodyText7`.
+        public static var manualDownloadNotice: LocalizedMessage {
             .init(key: "appCurseForgeFilePicker.bodyText7", table: "Interface", fallback: "部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。")
         }
         static let definitions: [String: MessageDefinition] = [

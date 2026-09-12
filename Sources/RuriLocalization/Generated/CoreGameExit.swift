@@ -3,55 +3,106 @@ import Foundation
 
 extension Messages {
     public enum CoreGameExit {
-        public static var summaryText1: LocalizedMessage {
+        /// 游戏已按要求结束
+        ///
+        /// Resource: `Core.coreGameExit.summaryText1`.
+        public static var requestedExit: LocalizedMessage {
             .init(key: "coreGameExit.summaryText1", table: "Core", fallback: "游戏已按要求结束")
         }
-        public static var summaryText2: LocalizedMessage {
+        /// 游戏已正常退出
+        ///
+        /// Resource: `Core.coreGameExit.summaryText2`.
+        public static var normalExit: LocalizedMessage {
             .init(key: "coreGameExit.summaryText2", table: "Core", fallback: "游戏已正常退出")
         }
-        public static func summaryText3(_ value0: String) -> LocalizedMessage {
+        /// 游戏进程因 %1$@ 退出
+        ///
+        /// Resource: `Core.coreGameExit.summaryText3`.
+        public static func processExitReason(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameExit.summaryText3", table: "Core", fallback: "游戏进程因 %1$@ 退出", arguments: [.text(value0)])
         }
-        public static func summaryText4(_ value0: String) -> LocalizedMessage {
+        /// 游戏异常退出（退出码 %1$@）
+        ///
+        /// Resource: `Core.coreGameExit.summaryText4`.
+        public static func crashExit(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameExit.summaryText4", table: "Core", fallback: "游戏异常退出（退出码 %1$@）", arguments: [.text(value0)])
         }
-        public static var explanationText1: LocalizedMessage {
+        /// Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText1`.
+        public static var ruriRequestedExit: LocalizedMessage {
             .init(key: "coreGameExit.explanationText1", table: "Core", fallback: "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。")
         }
-        public static var explanationText2: LocalizedMessage {
+        /// Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText2`.
+        public static var normalExitSucceeded: LocalizedMessage {
             .init(key: "coreGameExit.explanationText2", table: "Core", fallback: "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。")
         }
-        public static var explanationText3: LocalizedMessage {
+        /// 游戏进程返回成功状态。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText3`.
+        public static var processExitedSuccessfully: LocalizedMessage {
             .init(key: "coreGameExit.explanationText3", table: "Core", fallback: "游戏进程返回成功状态。")
         }
-        public static var explanationText4: LocalizedMessage {
+        /// 进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText4`.
+        public static var terminationSignalReceived: LocalizedMessage {
             .init(key: "coreGameExit.explanationText4", table: "Core", fallback: "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。")
         }
-        public static var explanationText5: LocalizedMessage {
+        /// Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText5`.
+        public static var javaTerminationSignal: LocalizedMessage {
             .init(key: "coreGameExit.explanationText5", table: "Core", fallback: "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。")
         }
-        public static var explanationText6: LocalizedMessage {
+        /// 退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。
+        ///
+        /// Resource: `Core.coreGameExit.explanationText6`.
+        public static var exitStatusNeedsLogs: LocalizedMessage {
             .init(key: "coreGameExit.explanationText6", table: "Core", fallback: "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。")
         }
-        public static var logDescriptionText1: LocalizedMessage {
+        /// 信号
+        ///
+        /// Resource: `Core.coreGameExit.logDescriptionText1`.
+        public static var signalLabel: LocalizedMessage {
             .init(key: "coreGameExit.logDescriptionText1", table: "Core", fallback: "信号")
         }
-        public static var logDescriptionText2: LocalizedMessage {
+        /// 退出码
+        ///
+        /// Resource: `Core.coreGameExit.logDescriptionText2`.
+        public static var exitCodeLabel: LocalizedMessage {
             .init(key: "coreGameExit.logDescriptionText2", table: "Core", fallback: "退出码")
         }
-        public static var logDescriptionText3: LocalizedMessage {
+        /// 是
+        ///
+        /// Resource: `Core.coreGameExit.logDescriptionText3`.
+        public static var yesLabel: LocalizedMessage {
             .init(key: "coreGameExit.logDescriptionText3", table: "Core", fallback: "是")
         }
-        public static var logDescriptionText4: LocalizedMessage {
+        /// 否
+        ///
+        /// Resource: `Core.coreGameExit.logDescriptionText4`.
+        public static var noLabel: LocalizedMessage {
             .init(key: "coreGameExit.logDescriptionText4", table: "Core", fallback: "否")
         }
-        public static func logDescriptionText5(_ value0: String, _ value1: String, _ value2: String, _ value3: String, _ value4: String, _ value5: String, _ value6: String, _ value7: String) -> LocalizedMessage {
+        /// [Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@
+        ///
+        /// Resource: `Core.coreGameExit.logDescriptionText5`.
+        public static func exitLogLine(_ value0: String, _ value1: String, _ value2: String, _ value3: String, _ value4: String, _ value5: String, _ value6: String, _ value7: String) -> LocalizedMessage {
             .init(key: "coreGameExit.logDescriptionText5", table: "Core", fallback: "[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3), .text(value4), .text(value5), .text(value6), .text(value7)])
         }
-        public static func signalNameText1(_ value0: String) -> LocalizedMessage {
+        /// 信号 %1$@
+        ///
+        /// Resource: `Core.coreGameExit.signalNameText1`.
+        public static func signalValue(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameExit.signalNameText1", table: "Core", fallback: "信号 %1$@", arguments: [.text(value0)])
         }
-        public static var titleText1: LocalizedMessage {
+        /// Java 虚拟机
+        ///
+        /// Resource: `Core.coreGameExit.titleText1`.
+        public static var javaVirtualMachine: LocalizedMessage {
             .init(key: "coreGameExit.titleText1", table: "Core", fallback: "Java 虚拟机")
         }
         static let definitions: [String: MessageDefinition] = [

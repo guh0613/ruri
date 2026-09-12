@@ -3,70 +3,136 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPacksView {
-        public static var bodyText1: LocalizedMessage {
+        /// 数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.bodyText1`.
+        public static var dataPacks: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText1", table: "Interface", fallback: "数据包")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 查找…
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.bodyText2`.
+        public static var find: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText2", table: "Interface", fallback: "查找…")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 导入…
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.bodyText3`.
+        public static var importDataPackAction: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText3", table: "Interface", fallback: "导入…")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.bodyText4`.
+        public static var dataPackAvailability: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText4", table: "Interface", fallback: "适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 请退出游戏后再修改数据包。
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.bodyText5`.
+        public static var exitGameBeforeEditing: LocalizedMessage {
             .init(key: "appWorldDataPacksView.bodyText5", table: "Interface", fallback: "请退出游戏后再修改数据包。")
         }
-        public static var statusText1: LocalizedMessage {
+        /// 这个世界还没有本地数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.statusText1`.
+        public static var noLocalDataPacks: LocalizedMessage {
             .init(key: "appWorldDataPacksView.statusText1", table: "Interface", fallback: "这个世界还没有本地数据包")
         }
-        public static var statusText2: LocalizedMessage {
+        /// 导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.statusText2`.
+        public static var dataPackImportInstructions: LocalizedMessage {
             .init(key: "appWorldDataPacksView.statusText2", table: "Interface", fallback: "导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。")
         }
-        public static func formatText1(_ value0: String) -> LocalizedMessage {
+        /// 声明格式：%1$@
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.formatText1`.
+        public static func declaredFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldDataPacksView.formatText1", table: "Interface", fallback: "声明格式：%1$@", arguments: [.text(value0)])
         }
-        public static var errorText1: LocalizedMessage {
+        /// 启用
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText1`.
+        public static var enable: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText1", table: "Interface", fallback: "启用")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 启用数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText2`.
+        public static var enableDataPack: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText2", table: "Interface", fallback: "启用数据包")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 停用数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText3`.
+        public static var disableDataPack: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText3", table: "Interface", fallback: "停用数据包")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText4`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText4", table: "Interface", fallback: "在 Finder 中显示")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText5`.
+        public static var moveToTrash: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText5", table: "Interface", fallback: "移到废纸篓…")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 调整优先级…
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText6`.
+        public static var adjustPriority: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText6", table: "Interface", fallback: "调整优先级…")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 修改前会保留上一份世界配置备份。
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.errorText7`.
+        public static var backupBeforeEditing: LocalizedMessage {
             .init(key: "appWorldDataPacksView.errorText7", table: "Interface", fallback: "修改前会保留上一份世界配置备份。")
         }
-        public static var backupText1: LocalizedMessage {
+        /// 显示配置备份
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.backupText1`.
+        public static var showConfigBackup: LocalizedMessage {
             .init(key: "appWorldDataPacksView.backupText1", table: "Interface", fallback: "显示配置备份")
         }
-        public static var backupText2: LocalizedMessage {
+        /// 刷新
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.backupText2`.
+        public static var refresh: LocalizedMessage {
             .init(key: "appWorldDataPacksView.backupText2", table: "Interface", fallback: "刷新")
         }
-        public static var urlsText1: LocalizedMessage {
+        /// 导入数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.urlsText1`.
+        public static var importDataPack: LocalizedMessage {
             .init(key: "appWorldDataPacksView.urlsText1", table: "Interface", fallback: "导入数据包")
         }
-        public static var scopedText1: LocalizedMessage {
+        /// 移除数据包？
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.scopedText1`.
+        public static var removeDataPackConfirmation: LocalizedMessage {
             .init(key: "appWorldDataPacksView.scopedText1", table: "Interface", fallback: "移除数据包？")
         }
-        public static var scopedText2: LocalizedMessage {
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.scopedText2`.
+        public static var confirmMoveToTrash: LocalizedMessage {
             .init(key: "appWorldDataPacksView.scopedText2", table: "Interface", fallback: "移到废纸篓")
         }
-        public static var packText1: LocalizedMessage {
+        /// 移除数据包
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.packText1`.
+        public static var removeDataPack: LocalizedMessage {
             .init(key: "appWorldDataPacksView.packText1", table: "Interface", fallback: "移除数据包")
         }
-        public static func mutateText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@完成，下次进入世界时生效。
+        ///
+        /// Resource: `Interface.appWorldDataPacksView.mutateText1`.
+        public static func dataPackOperationCompleted(_ value0: String) -> LocalizedMessage {
             .init(key: "appWorldDataPacksView.mutateText1", table: "Interface", fallback: "%1$@完成，下次进入世界时生效。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

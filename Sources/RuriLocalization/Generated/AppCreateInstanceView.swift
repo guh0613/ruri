@@ -3,49 +3,94 @@ import Foundation
 
 extension Messages {
     public enum AppCreateInstanceView {
-        public static var bodyText1: LocalizedMessage {
+        /// 创建一个新世界
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText1`.
+        public static var createWorld: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText1", table: "Interface", fallback: "创建一个新世界")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 选择版本，剩下的交给 Ruri。
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText2`.
+        public static var createDescription: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText2", table: "Interface", fallback: "选择版本，剩下的交给 Ruri。 ")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 实例名称（可选）
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText3`.
+        public static var instanceNameOptional: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText3", table: "Interface", fallback: "实例名称（可选）")
         }
-        public static func bodyText4(_ value0: String) -> LocalizedMessage {
+        /// 保存到：%1$@
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText4`.
+        public static func saveLocation(_ value0: String) -> LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText4", table: "Interface", fallback: "保存到：%1$@", arguments: [.text(value0)])
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 搜索 Minecraft 版本
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText5`.
+        public static var searchVersions: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText5", table: "Interface", fallback: "搜索 Minecraft 版本")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 快照与旧版
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText6`.
+        public static var snapshotsAndOldVersions: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText6", table: "Interface", fallback: "快照与旧版")
         }
-        public static var bodyText7: LocalizedMessage {
+        /// 正在获取版本…
+        ///
+        /// Resource: `Interface.appCreateInstanceView.bodyText7`.
+        public static var fetchingVersions: LocalizedMessage {
             .init(key: "appCreateInstanceView.bodyText7", table: "Interface", fallback: "正在获取版本…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 重试
+        ///
+        /// Resource: `Interface.appCreateInstanceView.errorText1`.
+        public static var retry: LocalizedMessage {
             .init(key: "appCreateInstanceView.errorText1", table: "Interface", fallback: "重试")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 最新正式版
+        ///
+        /// Resource: `Interface.appCreateInstanceView.errorText2`.
+        public static var latestRelease: LocalizedMessage {
             .init(key: "appCreateInstanceView.errorText2", table: "Interface", fallback: "最新正式版")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 加载器
+        ///
+        /// Resource: `Interface.appCreateInstanceView.errorText3`.
+        public static var loader: LocalizedMessage {
             .init(key: "appCreateInstanceView.errorText3", table: "Interface", fallback: "加载器")
         }
-        public static var errorText4: LocalizedMessage {
+        /// OptiFine 版本与安装包由 BMCLAPI 提供。
+        ///
+        /// Resource: `Interface.appCreateInstanceView.errorText4`.
+        public static var optifineSource: LocalizedMessage {
             .init(key: "appCreateInstanceView.errorText4", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 查找兼容的加载器…
+        ///
+        /// Resource: `Interface.appCreateInstanceView.errorText5`.
+        public static var findCompatibleLoaders: LocalizedMessage {
             .init(key: "appCreateInstanceView.errorText5", table: "Interface", fallback: "查找兼容的加载器…")
         }
-        public static var loaderErrorText1: LocalizedMessage {
+        /// 加载器版本
+        ///
+        /// Resource: `Interface.appCreateInstanceView.loaderErrorText1`.
+        public static var loaderVersion: LocalizedMessage {
             .init(key: "appCreateInstanceView.loaderErrorText1", table: "Interface", fallback: "加载器版本")
         }
-        public static var loaderErrorText2: LocalizedMessage {
+        /// 创建并安装
+        ///
+        /// Resource: `Interface.appCreateInstanceView.loaderErrorText2`.
+        public static var createAndInstall: LocalizedMessage {
             .init(key: "appCreateInstanceView.loaderErrorText2", table: "Interface", fallback: "创建并安装")
         }
-        public static var resultText1: LocalizedMessage {
+        /// 此 Minecraft 版本暂无兼容加载器。
+        ///
+        /// Resource: `Interface.appCreateInstanceView.resultText1`.
+        public static var noCompatibleLoader: LocalizedMessage {
             .init(key: "appCreateInstanceView.resultText1", table: "Interface", fallback: "此 Minecraft 版本暂无兼容加载器。")
         }
         static let definitions: [String: MessageDefinition] = [

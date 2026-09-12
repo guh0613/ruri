@@ -17,7 +17,7 @@ public struct CustomRunDirectory: Codable, Identifiable, Equatable, Sendable {
         let url = selected.standardizedFileURL.resolvingSymlinksInPath()
         var candidate = Self(id: UUID(), url: url, bookmark: nil, createdAt: Date())
         try paths.checkCustomRunDirectory(candidate, readingIdentity: true)
-        guard try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message(Messages.CoreCustomRunDirectory.candidateText1) }
+        guard try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message(Messages.CoreCustomRunDirectory.existingGameFolderRequired) }
         let marker = try LauncherPaths.safePath(markerPath, within: url)
         try FileManager.default.createDirectory(at: marker.deletingLastPathComponent(), withIntermediateDirectories: true)
         let lock = GameDataOperationLock(); try lock.acquire(directory: marker.deletingLastPathComponent(), name: ".location-registration.lock")
@@ -39,17 +39,17 @@ public struct CustomRunDirectory: Codable, Identifiable, Equatable, Sendable {
     }
     func validateConfiguration() throws {
         guard id != GameDirectory.defaultID, url.isFileURL, url.path.hasPrefix("/"), !url.path.contains("\0"),
-              url.path.count <= 32768, (bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message(Messages.CoreCustomRunDirectory.validateConfigurationText1) }
+              url.path.count <= 32768, (bookmark?.count ?? 0) <= 1_048_576 else { throw RuriError.message(Messages.CoreCustomRunDirectory.invalidConfiguration) }
     }
     public func validateAvailability() throws {
         do {
             try validateConfiguration()
             let values = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard values.isDirectory == true, values.isSymbolicLink != true else { throw RuriError.message(Messages.CoreCustomRunDirectory.valuesText1) }
+            guard values.isDirectory == true, values.isSymbolicLink != true else { throw RuriError.message(Messages.CoreCustomRunDirectory.pathUnlinked) }
             let record = try Self.readMarker(LauncherPaths.safePath(Self.markerPath, within: url))
-            guard record.id == id else { throw RuriError.message(Messages.CoreCustomRunDirectory.recordText1) }
+            guard record.id == id else { throw RuriError.message(Messages.CoreCustomRunDirectory.directoryIdentityChanged) }
         } catch {
-            throw RuriError.message(Messages.CoreCustomRunDirectory.recordText2(String(describing: url.path), String(describing: error.localizedDescription)))
+            throw RuriError.message(Messages.CoreCustomRunDirectory.directoryUnavailable(url.path, error.localizedDescription))
         }
     }
     public func resolvingBookmark() -> Self {
@@ -70,14 +70,14 @@ public struct CustomRunDirectory: Codable, Identifiable, Equatable, Sendable {
     }
     private static func readMarker(_ url: URL) throws -> Marker {
         let fd = open(url.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreCustomRunDirectory.fdText1) }
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreCustomRunDirectory.markerUnreadable) }
         let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true); defer { try? handle.close() }
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= 4096 else { throw RuriError.message(Messages.CoreCustomRunDirectory.infoText1) }
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= 4096 else { throw RuriError.message(Messages.CoreCustomRunDirectory.invalidMarker) }
         let data = try handle.read(upToCount: 4097) ?? Data()
-        guard data.count <= 4096 else { throw RuriError.message(Messages.CoreCustomRunDirectory.dataText1) }
+        guard data.count <= 4096 else { throw RuriError.message(Messages.CoreCustomRunDirectory.oversizedMarker) }
         let marker = try JSONDecoder().decode(Marker.self, from: data)
-        guard marker.version == 1, marker.id != GameDirectory.defaultID else { throw RuriError.message(Messages.CoreCustomRunDirectory.markerText1) }
+        guard marker.version == 1, marker.id != GameDirectory.defaultID else { throw RuriError.message(Messages.CoreCustomRunDirectory.invalidMarkerVersion) }
         return marker
     }
 }
@@ -90,16 +90,16 @@ extension LauncherPaths {
             first == second || first.hasPrefix(second == "/" ? "/" : second + "/") || second.hasPrefix(first == "/" ? "/" : first + "/")
         }
         for managed in [root] + directories.map({ $0.isMinecraft ? $0.url.appendingPathComponent(".ruri") : $0.url }) {
-            guard !overlaps(target, managed.standardizedFileURL.resolvingSymlinksInPath().path) else { throw RuriError.message(Messages.CoreCustomRunDirectory.overlapsText1) }
+            guard !overlaps(target, managed.standardizedFileURL.resolvingSymlinksInPath().path) else { throw RuriError.message(Messages.CoreCustomRunDirectory.overlappingDirectory) }
         }
         for other in (instanceCustomDirectories ?? [:]).values where other.id != relocatingID {
             let existing = other.url.standardizedFileURL.resolvingSymlinksInPath().path
             if existing == target {
-                guard readingIdentity || selected.id == other.id else { throw RuriError.message(Messages.CoreCustomRunDirectory.existingText1) }
+                guard readingIdentity || selected.id == other.id else { throw RuriError.message(Messages.CoreCustomRunDirectory.identityChanged) }
                 continue
             }
-            guard selected.id != other.id else { throw RuriError.message(Messages.CoreCustomRunDirectory.existingText2) }
-            guard !overlaps(target, existing) else { throw RuriError.message(Messages.CoreCustomRunDirectory.existingText3) }
+            guard selected.id != other.id else { throw RuriError.message(Messages.CoreCustomRunDirectory.duplicateDirectory) }
+            guard !overlaps(target, existing) else { throw RuriError.message(Messages.CoreCustomRunDirectory.nestedDirectories) }
         }
     }
 }

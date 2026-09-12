@@ -3,63 +3,123 @@ import Foundation
 
 extension Messages {
     public enum AppDiscoverView {
-        public static var pText1: LocalizedMessage {
+        /// 社区作者
+        ///
+        /// Resource: `Interface.appDiscoverView.pText1`.
+        public static var communityAuthor: LocalizedMessage {
             .init(key: "appDiscoverView.pText1", table: "Interface", fallback: "社区作者")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 连接 CurseForge
+        ///
+        /// Resource: `Interface.appDiscoverView.bodyText1`.
+        public static var connectCurseForge: LocalizedMessage {
             .init(key: "appDiscoverView.bodyText1", table: "Interface", fallback: "连接 CurseForge")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。
+        ///
+        /// Resource: `Interface.appDiscoverView.bodyText2`.
+        public static var curseforgeSetupDetails: LocalizedMessage {
             .init(key: "appDiscoverView.bodyText2", table: "Interface", fallback: "配置 Ruri 的 CurseForge API Key 后，即可搜索内容、解析依赖与安装整合包。")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 前往设置
+        ///
+        /// Resource: `Interface.appDiscoverView.bodyText3`.
+        public static var goToSettings: LocalizedMessage {
             .init(key: "appDiscoverView.bodyText3", table: "Interface", fallback: "前往设置")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 正在发现内容…
+        ///
+        /// Resource: `Interface.appDiscoverView.bodyText4`.
+        public static var discoveringContent: LocalizedMessage {
             .init(key: "appDiscoverView.bodyText4", table: "Interface", fallback: "正在发现内容…")
         }
-        public static var errorText1: LocalizedMessage {
+        /// 重试
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText1`.
+        public static var retry: LocalizedMessage {
             .init(key: "appDiscoverView.errorText1", table: "Interface", fallback: "重试")
         }
-        public static var errorText2: LocalizedMessage {
+        /// 没有找到匹配内容
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText2`.
+        public static var noMatchingContent: LocalizedMessage {
             .init(key: "appDiscoverView.errorText2", table: "Interface", fallback: "没有找到匹配内容")
         }
-        public static var errorText3: LocalizedMessage {
+        /// 试试英文名称，或使用更短的关键词。
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText3`.
+        public static var tryShorterSearch: LocalizedMessage {
             .init(key: "appDiscoverView.errorText3", table: "Interface", fallback: "试试英文名称，或使用更短的关键词。")
         }
-        public static var errorText4: LocalizedMessage {
+        /// 上一页
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText4`.
+        public static var previousPage: LocalizedMessage {
             .init(key: "appDiscoverView.errorText4", table: "Interface", fallback: "上一页")
         }
-        public static var errorText5: LocalizedMessage {
+        /// 下一页
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText5`.
+        public static var nextPage: LocalizedMessage {
             .init(key: "appDiscoverView.errorText5", table: "Interface", fallback: "下一页")
         }
-        public static var errorText6: LocalizedMessage {
+        /// 搜索模组、整合包、光影…
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText6`.
+        public static var searchContent: LocalizedMessage {
             .init(key: "appDiscoverView.errorText6", table: "Interface", fallback: "搜索模组、整合包、光影…")
         }
-        public static var errorText7: LocalizedMessage {
+        /// 导入整合包
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText7`.
+        public static var importModpack: LocalizedMessage {
             .init(key: "appDiscoverView.errorText7", table: "Interface", fallback: "导入整合包")
         }
-        public static var errorText8: LocalizedMessage {
+        /// 导入本地整合包…
+        ///
+        /// Resource: `Interface.appDiscoverView.errorText8`.
+        public static var importLocalModpack: LocalizedMessage {
             .init(key: "appDiscoverView.errorText8", table: "Interface", fallback: "导入本地整合包…")
         }
-        public static var sourcePickerText1: LocalizedMessage {
+        /// 内容来源
+        ///
+        /// Resource: `Interface.appDiscoverView.sourcePickerText1`.
+        public static var contentSource: LocalizedMessage {
             .init(key: "appDiscoverView.sourcePickerText1", table: "Interface", fallback: "内容来源")
         }
-        public static var contentPickerText1: LocalizedMessage {
+        /// 内容类型
+        ///
+        /// Resource: `Interface.appDiscoverView.contentPickerText1`.
+        public static var contentType: LocalizedMessage {
             .init(key: "appDiscoverView.contentPickerText1", table: "Interface", fallback: "内容类型")
         }
-        public static var contentPickerText2: LocalizedMessage {
+        /// 整合包
+        ///
+        /// Resource: `Interface.appDiscoverView.contentPickerText2`.
+        public static var modpacks: LocalizedMessage {
             .init(key: "appDiscoverView.contentPickerText2", table: "Interface", fallback: "整合包")
         }
-        public static var contentPickerText3: LocalizedMessage {
+        /// 模组
+        ///
+        /// Resource: `Interface.appDiscoverView.contentPickerText3`.
+        public static var mods: LocalizedMessage {
             .init(key: "appDiscoverView.contentPickerText3", table: "Interface", fallback: "模组")
         }
-        public static var contentPickerText4: LocalizedMessage {
+        /// 资源包
+        ///
+        /// Resource: `Interface.appDiscoverView.contentPickerText4`.
+        public static var resourcePacks: LocalizedMessage {
             .init(key: "appDiscoverView.contentPickerText4", table: "Interface", fallback: "资源包")
         }
-        public static var contentPickerText5: LocalizedMessage {
+        /// 光影
+        ///
+        /// Resource: `Interface.appDiscoverView.contentPickerText5`.
+        public static var shaders: LocalizedMessage {
             .init(key: "appDiscoverView.contentPickerText5", table: "Interface", fallback: "光影")
         }
+        /// by %1$@
+        ///
+        /// Resource: `Interface.appDiscoverView.authorBy`.
         public static func authorBy(_ value0: String) -> LocalizedMessage {
             .init(key: "appDiscoverView.authorBy", table: "Interface", fallback: "by %1$@", arguments: [.text(value0)])
         }

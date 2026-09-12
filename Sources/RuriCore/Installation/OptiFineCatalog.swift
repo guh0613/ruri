@@ -80,5 +80,5 @@ enum OptiFineClassMetadata {
         }
         return result
     }
-    private static func invalid() -> RuriError { .message(Messages.CoreOptiFineCatalog.invalidText1.localized) }
+    private static func invalid() -> RuriError { .message(Messages.CoreOptiFineCatalog.invalidVersionInfo.localized) }
 }

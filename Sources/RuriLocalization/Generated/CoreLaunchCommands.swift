@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunchCommands {
-        public static var titleText1: LocalizedMessage {
+        /// 启动前命令
+        ///
+        /// Resource: `Core.coreLaunchCommands.titleText1`.
+        public static var beforeLaunchCommand: LocalizedMessage {
             .init(key: "coreLaunchCommands.titleText1", table: "Core", fallback: "启动前命令")
         }
-        public static var titleText2: LocalizedMessage {
+        /// 退出后命令
+        ///
+        /// Resource: `Core.coreLaunchCommands.titleText2`.
+        public static var afterExitCommand: LocalizedMessage {
             .init(key: "coreLaunchCommands.titleText2", table: "Core", fallback: "退出后命令")
         }
-        public static var summaryText5: LocalizedMessage {
+        /// 未知
+        ///
+        /// Resource: `Core.coreLaunchCommands.summaryText5`.
+        public static var unknownResult: LocalizedMessage {
             .init(key: "coreLaunchCommands.summaryText5", table: "Core", fallback: "未知")
         }
+        /// %1$@超时
+        ///
+        /// Resource: `Core.coreLaunchCommands.commandTimedOut`.
         public static func commandTimedOut(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.commandTimedOut", table: "Core", fallback: "%1$@超时", arguments: [.text(value0)])
         }
+        /// %1$@已取消
+        ///
+        /// Resource: `Core.coreLaunchCommands.commandCancelled`.
         public static func commandCancelled(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.commandCancelled", table: "Core", fallback: "%1$@已取消", arguments: [.text(value0)])
         }
+        /// %1$@失败：%2$@
+        ///
+        /// Resource: `Core.coreLaunchCommands.commandFailed`.
         public static func commandFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.commandFailed", table: "Core", fallback: "%1$@失败：%2$@", arguments: [.text(value0), .text(value1)])
         }
+        /// %1$@已完成
+        ///
+        /// Resource: `Core.coreLaunchCommands.commandCompleted`.
         public static func commandCompleted(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.commandCompleted", table: "Core", fallback: "%1$@已完成", arguments: [.text(value0)])
         }
+        /// %1$@失败，退出码 %2$@
+        ///
+        /// Resource: `Core.coreLaunchCommands.commandExitStatus`.
         public static func commandExitStatus(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.commandExitStatus", table: "Core", fallback: "%1$@失败，退出码 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var validateText1: LocalizedMessage {
+        /// 启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。
+        ///
+        /// Resource: `Errors.coreLaunchCommands.validateText1`.
+        public static var invalidCommand: LocalizedMessage {
             .init(key: "coreLaunchCommands.validateText1", table: "Errors", fallback: "启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。")
         }
-        public static func valueText1(_ value0: String) -> LocalizedMessage {
+        /// 包装命令包含未支持的变量：%1$@
+        ///
+        /// Resource: `Errors.coreLaunchCommands.valueText1`.
+        public static func unsupportedVariable(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.valueText1", table: "Errors", fallback: "包装命令包含未支持的变量：%1$@", arguments: [.text(value0)])
         }
-        public static func executableText1(_ value0: String) -> LocalizedMessage {
+        /// 找不到包装命令的可执行文件：%1$@
+        ///
+        /// Resource: `Errors.coreLaunchCommands.executableText1`.
+        public static func executableMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "coreLaunchCommands.executableText1", table: "Errors", fallback: "找不到包装命令的可执行文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

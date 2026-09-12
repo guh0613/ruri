@@ -3,22 +3,40 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMoveProgress {
-        public static var progressText1: LocalizedMessage {
+        /// 正在校验实例文件…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText1`.
+        public static var validatingInstanceFiles: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText1", table: "Core", fallback: "正在校验实例文件…")
         }
-        public static var progressText2: LocalizedMessage {
+        /// 正在复制实例文件…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText2`.
+        public static var copyingInstanceFiles: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText2", table: "Core", fallback: "正在复制实例文件…")
         }
-        public static var progressText3: LocalizedMessage {
+        /// 正在写入目标文件夹…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText3`.
+        public static var writingDestinationFolder: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText3", table: "Core", fallback: "正在写入目标文件夹…")
         }
-        public static var progressText4: LocalizedMessage {
+        /// 实例已移动，正在核对原文件…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText4`.
+        public static var verifyingMovedInstance: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText4", table: "Core", fallback: "实例已移动，正在核对原文件…")
         }
-        public static var progressText5: LocalizedMessage {
+        /// 正在整理原实例文件…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText5`.
+        public static var organizingOriginalFiles: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText5", table: "Core", fallback: "正在整理原实例文件…")
         }
-        public static var progressText6: LocalizedMessage {
+        /// 正在清理已核验的原文件…
+        ///
+        /// Resource: `Core.coreInstanceMoveProgress.progressText6`.
+        public static var cleaningVerifiedOriginalFiles: LocalizedMessage {
             .init(key: "coreInstanceMoveProgress.progressText6", table: "Core", fallback: "正在清理已核验的原文件…")
         }
         static let definitions: [String: MessageDefinition] = [

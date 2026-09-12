@@ -11,14 +11,14 @@ public struct Account: Codable, Identifiable, Equatable, Sendable {
     public var externalLogin: ExternalAccountLogin?
     public var kindLabel: String {
         switch kind {
-        case .offline: Messages.CoreAccount.kindLabelText1.localized
-        case .microsoft: Messages.CoreAccount.kindLabelText2.localized
-        case .external: Messages.CoreAccount.externalServer(externalLogin?.server.name ?? Messages.CoreAccount.kindLabelText4.localized).localized
+        case .offline: Messages.CoreAccount.offlineAccount.localized
+        case .microsoft: Messages.CoreAccount.microsoftAccount.localized
+        case .external: Messages.CoreAccount.externalServer(externalLogin?.server.name ?? Messages.CoreAccount.externalAuth.localized).localized
         }
     }
     public init(username: String) throws {
         guard username.range(of: "^[A-Za-z0-9_]{3,16}$", options: .regularExpression) != nil else {
-            throw RuriError.message(Messages.CoreAccount.kindLabelText5)
+            throw RuriError.message(Messages.CoreAccount.playerNameRule)
         }
         self.id = UUID(); self.kind = .offline; self.username = username
         var bytes = Array(Insecure.MD5.hash(data: Data("OfflinePlayer:\(username)".utf8)))

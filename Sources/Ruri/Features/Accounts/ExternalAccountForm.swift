@@ -31,35 +31,35 @@ struct ExternalAccountForm: View {
                     HStack {
                         Text(server.name).font(.headline)
                         Spacer()
-                        if existing == nil { Button(Messages.AppExternalAccountForm.serverText1.localized) { self.server = nil; pending = nil; password = "" }.disabled(task != nil) }
+                        if existing == nil { Button(Messages.AppExternalAccountForm.changeServer.localized) { self.server = nil; pending = nil; password = "" }.disabled(task != nil) }
                     }
                     Text(server.url.absoluteString).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 }
                 if let pending {
-                    Text(Messages.AppExternalAccountForm.pendingText1.localized).font(.callout)
-                    Picker(Messages.AppExternalAccountForm.pendingText2.localized, selection: $profileID) {
+                    Text(Messages.AppExternalAccountForm.chooseRole.localized).font(.callout)
+                    Picker(Messages.AppExternalAccountForm.roleLabel.localized, selection: $profileID) {
                         ForEach(pending.availableProfiles ?? []) { profile in Text(profile.name).tag(profile.id) }
                     }.disabled(task != nil)
-                    Button(Messages.AppExternalAccountForm.pendingText3.localized) { selectProfile(pending, server: server) }
+                    Button(Messages.AppExternalAccountForm.addRole.localized) { selectProfile(pending, server: server) }
                         .buttonStyle(.borderedProminent).disabled(task != nil || profileID.isEmpty)
                 } else {
-                    LabeledContent(Messages.AppExternalAccountForm.pendingText4.localized) { TextField(Messages.AppExternalAccountForm.pendingText5.localized, text: $username).textFieldStyle(.roundedBorder).disabled(existing != nil || task != nil) }
-                    LabeledContent(Messages.AppExternalAccountForm.pendingText6.localized) { SecureField(Messages.AppExternalAccountForm.pendingText7.localized, text: $password).textFieldStyle(.roundedBorder).disabled(task != nil) }
-                    Text(Messages.AppExternalAccountForm.pendingText8.localized).font(.caption).foregroundStyle(.secondary)
-                    Button(existing == nil ? Messages.AppExternalAccountForm.pendingText9.localized : Messages.AppExternalAccountForm.pendingText10.localized) { login(server) }
+                    LabeledContent(Messages.AppExternalAccountForm.authServer.localized) { TextField(Messages.AppExternalAccountForm.accountName.localized, text: $username).textFieldStyle(.roundedBorder).disabled(existing != nil || task != nil) }
+                    LabeledContent(Messages.AppExternalAccountForm.password.localized) { SecureField(Messages.AppExternalAccountForm.authPassword.localized, text: $password).textFieldStyle(.roundedBorder).disabled(task != nil) }
+                    Text(Messages.AppExternalAccountForm.credentialsHelp.localized).font(.caption).foregroundStyle(.secondary)
+                    Button(existing == nil ? Messages.AppExternalAccountForm.login.localized : Messages.AppExternalAccountForm.relogin.localized) { login(server) }
                         .buttonStyle(.borderedProminent).disabled(task != nil || username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || password.isEmpty)
                 }
             } else {
-                LabeledContent(Messages.AppExternalAccountForm.pendingText11.localized) { TextField("https://…", text: $address).textFieldStyle(.roundedBorder) }
-                Text(Messages.AppExternalAccountForm.pendingText12.localized).font(.caption).foregroundStyle(.secondary)
+                LabeledContent(Messages.AppExternalAccountForm.serverAddress.localized) { TextField("https://…", text: $address).textFieldStyle(.roundedBorder) }
+                Text(Messages.AppExternalAccountForm.serverAddressHelp.localized).font(.caption).foregroundStyle(.secondary)
                 if !knownServers.isEmpty {
-                    Menu(Messages.AppExternalAccountForm.pendingText13.localized) {
+                    Menu(Messages.AppExternalAccountForm.useExistingServer.localized) {
                         ForEach(knownServers, id: \.url) { value in Button(value.name) { address = value.url.absoluteString; discover() } }
                     }.disabled(task != nil)
                 }
-                Button(Messages.AppExternalAccountForm.pendingText14.localized) { discover() }.buttonStyle(.borderedProminent).disabled(address.isEmpty || task != nil)
+                Button(Messages.AppExternalAccountForm.identifyServer.localized) { discover() }.buttonStyle(.borderedProminent).disabled(address.isEmpty || task != nil)
             }
-            if task != nil { ProgressView(Messages.AppExternalAccountForm.pendingText15.localized).controlSize(.small) }
+            if task != nil { ProgressView(Messages.AppExternalAccountForm.connectingServer.localized).controlSize(.small) }
             if let error { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
         }.disabled(model.busy || model.readOnly).onDisappear { task?.cancel(); password = ""; pending = nil }
     }
@@ -85,7 +85,7 @@ struct ExternalAccountForm: View {
             var result = try await ExternalAuthentication().login(server: server, username: loginName, password: secret)
             try Task.checkCancellation()
             if let existing, result.selectedProfile == nil {
-                guard let profile = result.availableProfiles?.first(where: { $0.id.replacingOccurrences(of: "-", with: "").lowercased() == existing.uuid }) else { throw RuriError.message(Messages.AppExternalAccountForm.profileText1) }
+                guard let profile = result.availableProfiles?.first(where: { $0.id.replacingOccurrences(of: "-", with: "").lowercased() == existing.uuid }) else { throw RuriError.message(Messages.AppExternalAccountForm.profileUnavailable) }
                 result = try await ExternalAuthentication().select(profile, from: result, server: server)
             }
             if result.selectedProfile != nil { try finish(result, server: server, username: loginName) }
@@ -112,7 +112,7 @@ struct ExternalAccountReloginView: View {
     let account: Account
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            SectionHeading(title: Messages.AppExternalAccountForm.bodyText1(String(describing: account.username)).localized, subtitle: Messages.AppExternalAccountForm.bodyText2.localized)
+            SectionHeading(title: Messages.AppExternalAccountForm.reloginAccount(String(describing: account.username)).localized, subtitle: Messages.AppExternalAccountForm.reloginHelp.localized)
             ExternalAccountForm(existing: account)
             HStack { Spacer(); Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction) }
         }.padding(30).frame(width: 500)

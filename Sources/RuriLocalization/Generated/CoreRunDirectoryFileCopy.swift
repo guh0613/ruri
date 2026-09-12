@@ -3,37 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreRunDirectoryFileCopy {
-        public static func inputFDText1(_ value0: String) -> LocalizedMessage {
+        /// 无法读取待复制文件：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.inputFDText1`.
+        public static func inputFileReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.inputFDText1", table: "Errors", fallback: "无法读取待复制文件：%1$@", arguments: [.text(value0)])
         }
-        public static var infoText1: LocalizedMessage {
+        /// 复制源不是普通文件。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.infoText1`.
+        public static var sourceNotRegularFile: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.infoText1", table: "Errors", fallback: "复制源不是普通文件。")
         }
-        public static func outputFDText1(_ value0: String) -> LocalizedMessage {
+        /// 无法创建复制副本：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.outputFDText1`.
+        public static func outputFileCreateFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.outputFDText1", table: "Errors", fallback: "无法创建复制副本：%1$@", arguments: [.text(value0)])
         }
-        public static var outputText1: LocalizedMessage {
+        /// 无法为发布副本分配空间。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.outputText1`.
+        public static var publishSpaceAllocationFailed: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.outputText1", table: "Errors", fallback: "无法为发布副本分配空间。")
         }
-        public static var bytesText1: LocalizedMessage {
+        /// 复制期间源文件长度改变。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.bytesText1`.
+        public static var sourceLengthChanged: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.bytesText1", table: "Errors", fallback: "复制期间源文件长度改变。")
         }
-        public static func moveWithoutReplacingText1(_ value0: String) -> LocalizedMessage {
+        /// 无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.moveWithoutReplacingText1`.
+        public static func copyProjectMoveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.moveWithoutReplacingText1", table: "Errors", fallback: "无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
         }
-        public static func publishText1(_ value0: String) -> LocalizedMessage {
+        /// 无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.publishText1`.
+        public static func copyProjectPublishFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.publishText1", table: "Errors", fallback: "无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
         }
-        public static var checkText1: LocalizedMessage {
+        /// 发布目标的文件身份已改变，未继续写入。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.checkText1`.
+        public static var destinationIdentityChanged: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.checkText1", table: "Errors", fallback: "发布目标的文件身份已改变，未继续写入。")
         }
-        public static func checkText2(_ value0: String) -> LocalizedMessage {
+        /// 无法创建发布目录，已有内容未覆盖：%1$@
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.checkText2`.
+        public static func publishDirectoryCreateFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.checkText2", table: "Errors", fallback: "无法创建发布目录，已有内容未覆盖：%1$@", arguments: [.text(value0)])
         }
-        public static var uniqueText1: LocalizedMessage {
+        /// 无法创建用于保留发布副本的目录。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.uniqueText1`.
+        public static var retainedCopyDirectoryCreateFailed: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.uniqueText1", table: "Errors", fallback: "无法创建用于保留发布副本的目录。")
         }
-        public static var uniqueText2: LocalizedMessage {
+        /// 无法收回发布的副本，文件和复制记录已保留。
+        ///
+        /// Resource: `Errors.coreRunDirectoryFileCopy.uniqueText2`.
+        public static var publishedCopyRecoveryFailed: LocalizedMessage {
             .init(key: "coreRunDirectoryFileCopy.uniqueText2", table: "Errors", fallback: "无法收回发布的副本，文件和复制记录已保留。")
         }
         static let definitions: [String: MessageDefinition] = [

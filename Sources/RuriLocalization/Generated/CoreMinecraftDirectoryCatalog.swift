@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftDirectoryCatalog {
-        public static var subtitleText1: LocalizedMessage {
+        /// Minecraft 版本待确认
+        ///
+        /// Resource: `Core.coreMinecraftDirectoryCatalog.subtitleText1`.
+        public static var minecraftVersionPending: LocalizedMessage {
             .init(key: "coreMinecraftDirectoryCatalog.subtitleText1", table: "Core", fallback: "Minecraft 版本待确认")
         }
         static let definitions: [String: MessageDefinition] = [

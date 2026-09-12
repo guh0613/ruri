@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreGameResourcePaths {
-        public static var pathText1: LocalizedMessage {
+        /// 依赖库缺少文件路径。
+        ///
+        /// Resource: `Errors.coreGameResourcePaths.pathText1`.
+        public static var missingLibraryPath: LocalizedMessage {
             .init(key: "coreGameResourcePaths.pathText1", table: "Errors", fallback: "依赖库缺少文件路径。")
         }
         static let definitions: [String: MessageDefinition] = [

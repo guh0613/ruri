@@ -19,7 +19,7 @@ public struct MinecraftDirectoryVersion: Identifiable, Sendable {
     public let warnings: [String]
     public let issue: String?
     public var subtitle: String {
-        ([gameVersion ?? Messages.CoreMinecraftDirectoryCatalog.subtitleText1.localized] + components.map { $0.name + " " + $0.version }).joined(separator: " · ")
+        ([gameVersion ?? Messages.CoreMinecraftDirectoryCatalog.minecraftVersionPending.localized] + components.map { $0.name + " " + $0.version }).joined(separator: " · ")
     }
     let documents: [MinecraftDirectoryDocument]
 }

@@ -3,7 +3,10 @@ import Foundation
 
 extension Messages {
     public enum CoreBuildConfiguration {
-        public static var versionText1: LocalizedMessage {
+        /// 开发版本
+        ///
+        /// Resource: `Core.coreBuildConfiguration.versionText1`.
+        public static var developmentVersion: LocalizedMessage {
             .init(key: "coreBuildConfiguration.versionText1", table: "Core", fallback: "开发版本")
         }
         static let definitions: [String: MessageDefinition] = [

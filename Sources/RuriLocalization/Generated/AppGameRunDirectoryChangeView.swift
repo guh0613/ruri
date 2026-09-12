@@ -3,123 +3,244 @@ import Foundation
 
 extension Messages {
     public enum AppGameRunDirectoryChangeView {
-        public static var bodyText1: LocalizedMessage {
+        /// 切换运行目录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText1`.
+        public static var changeRunDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText1", table: "Interface", fallback: "切换运行目录")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 恢复目录复制
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText2`.
+        public static var recoverDirectoryCopy: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText2", table: "Interface", fallback: "恢复目录复制")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 目标
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText3`.
+        public static var target: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText3", table: "Interface", fallback: "目标")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 尚未选择文件夹
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText4`.
+        public static var noFolderSelected: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText4", table: "Interface", fallback: "尚未选择文件夹")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 选择文件夹…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.bodyText5`.
+        public static var chooseFolder: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.bodyText5", table: "Interface", fallback: "选择文件夹…")
         }
-        public static var panelText1: LocalizedMessage {
+        /// 选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.panelText1`.
+        public static var directoryPurpose: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.panelText1", table: "Interface", fallback: "选择保存模组、存档和游戏设置的位置。Ruri 会保存目录身份信息，用于识别移动和重新连接的磁盘。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 正在准备所选目录…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.urlText1`.
+        public static var preparingSelectedDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.urlText1", table: "Interface", fallback: "正在准备所选目录…")
         }
-        public static var urlText2: LocalizedMessage {
+        /// 正在检查目录与文件…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.urlText2`.
+        public static var checkingDirectoryFiles: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.urlText2", table: "Interface", fallback: "正在检查目录与文件…")
         }
-        public static var recoveryText1: LocalizedMessage {
+        /// 复制已提交，等待清理记录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText1`.
+        public static var copySubmittedAwaitingCleanup: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText1", table: "Interface", fallback: "复制已提交，等待清理记录")
         }
-        public static var recoveryText2: LocalizedMessage {
+        /// 上次复制尚未完成
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText2`.
+        public static var copyIncomplete: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText2", table: "Interface", fallback: "上次复制尚未完成")
         }
-        public static var recoveryText3: LocalizedMessage {
+        /// 目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText3`.
+        public static var recoveryCleanupDetails: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText3", table: "Interface", fallback: "目标内容和目录设置已生效。恢复只清理本次复制的占用记录，保留已经复制的文件。")
         }
-        public static var recoveryText4: LocalizedMessage {
+        /// 原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText4`.
+        public static var recoveryPreservationDetails: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText4", table: "Interface", fallback: "原目录和原设置仍保留。恢复会收回本次发布的文件，并将工作副本另存，供你检查或删除；外部替换的文件不会被覆盖。")
         }
-        public static func recoveryText5(_ value0: String) -> LocalizedMessage {
+        /// 开始于 %1$@
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText5`.
+        public static func copyStartedAt(_ value0: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText5", table: "Interface", fallback: "开始于 %1$@", arguments: [.text(value0)])
         }
-        public static func recoveryText6(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 原目录：%1$@
+        /// 目标目录：%2$@
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText6`.
+        public static func sourceAndTargetDirectories(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText6", table: "Interface", fallback: "原目录：%1$@\n目标目录：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var recoveryText7: LocalizedMessage {
+        /// 在 Finder 中查看工作区
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText7`.
+        public static var viewWorkspaceInFinder: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText7", table: "Interface", fallback: "在 Finder 中查看工作区")
         }
-        public static var previewText1: LocalizedMessage {
+        /// 内容处理
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.previewText1`.
+        public static var contentHandling: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText1", table: "Interface", fallback: "内容处理")
         }
-        public static var previewText2: LocalizedMessage {
+        /// 使用目标已有的内容
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.previewText2`.
+        public static var useExistingContent: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText2", table: "Interface", fallback: "使用目标已有的内容")
         }
-        public static var previewText3: LocalizedMessage {
+        /// 复制当前内容到空目标
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.previewText3`.
+        public static var copyCurrentContentToEmptyTarget: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText3", table: "Interface", fallback: "复制当前内容到空目标")
         }
-        public static var issueText1: LocalizedMessage {
+        /// 目标已有文件或备份，不能用复制覆盖。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText1`.
+        public static var targetContainsFiles: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText1", table: "Interface", fallback: "目标已有文件或备份，不能用复制覆盖。")
         }
-        public static var issueText2: LocalizedMessage {
+        /// 原目录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText2`.
+        public static var sourceDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText2", table: "Interface", fallback: "原目录")
         }
-        public static var issueText3: LocalizedMessage {
+        /// 目标目录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText3`.
+        public static var targetDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText3", table: "Interface", fallback: "目标目录")
         }
-        public static var issueText5: LocalizedMessage {
+        /// 先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText5`.
+        public static var copyBeforeSwitching: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText5", table: "Interface", fallback: "先复制游戏文件、模组来源记录和世界备份，再切换目录。原目录仍保留；取消或中断时可恢复并保留工作副本。")
         }
-        public static var issueText6: LocalizedMessage {
+        /// 目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText6`.
+        public static var emptyTargetDetails: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText6", table: "Interface", fallback: "目标当前为空，游戏会在这里创建新的存档和配置。原目录中的文件和备份会保留，可再次切回。")
         }
-        public static var issueText7: LocalizedMessage {
+        /// 切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText7`.
+        public static var useExistingTargetDetails: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText7", table: "Interface", fallback: "切换后使用目标目录已有的模组、存档、游戏设置和备份。原目录中的文件会保留，可再次切回。")
         }
-        public static var issueText8: LocalizedMessage {
+        /// 文件统计包含该目录对应的内容来源记录和世界备份。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText8`.
+        public static var fileStatistics: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText8", table: "Interface", fallback: "文件统计包含该目录对应的内容来源记录和世界备份。")
         }
-        public static var issueText9: LocalizedMessage {
+        /// 游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText9`.
+        public static var gameFilesStayInPlace: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText9", table: "Interface", fallback: "游戏本体、依赖库和启动器配置留在原位置，不随运行目录复制。")
         }
-        public static var issueText10: LocalizedMessage {
+        /// 暂时无法切换
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText10`.
+        public static var switchUnavailable: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText10", table: "Interface", fallback: "暂时无法切换")
         }
-        public static var issueText11: LocalizedMessage {
+        /// 重新检查
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText11`.
+        public static var recheck: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText11", table: "Interface", fallback: "重新检查")
         }
-        public static var issueText12: LocalizedMessage {
+        /// 刷新预览
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText12`.
+        public static var refreshPreview: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText12", table: "Interface", fallback: "刷新预览")
         }
-        public static var issueText13: LocalizedMessage {
+        /// 取消操作
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText13`.
+        public static var cancelOperation: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText13", table: "Interface", fallback: "取消操作")
         }
-        public static var issueText14: LocalizedMessage {
+        /// 关闭
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.issueText14`.
+        public static var close: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.issueText14", table: "Interface", fallback: "关闭")
         }
-        public static var recoveryText8: LocalizedMessage {
+        /// 清理已完成记录
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText8`.
+        public static var cleanCompletedRecord: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText8", table: "Interface", fallback: "清理已完成记录")
         }
-        public static var recoveryText9: LocalizedMessage {
+        /// 恢复并保留副本
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText9`.
+        public static var recoverAndKeepCopy: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText9", table: "Interface", fallback: "恢复并保留副本")
         }
-        public static var recoveryText10: LocalizedMessage {
+        /// 复制并切换
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText10`.
+        public static var copyAndSwitch: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText10", table: "Interface", fallback: "复制并切换")
         }
-        public static var recoveryText11: LocalizedMessage {
+        /// 使用目标现有内容
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.recoveryText11`.
+        public static var useExistingTargetContent: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.recoveryText11", table: "Interface", fallback: "使用目标现有内容")
         }
-        public static var previewText4: LocalizedMessage {
+        /// 正在取消并保留工作副本…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.previewText4`.
+        public static var cancellingAndKeepingWorkCopy: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText4", table: "Interface", fallback: "正在取消并保留工作副本…")
         }
-        public static var previewText5: LocalizedMessage {
+        /// 正在处理目录…
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.previewText5`.
+        public static var processingDirectory: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.previewText5", table: "Interface", fallback: "正在处理目录…")
         }
-        public static func locationText1(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+        /// %1$lld 个文件 · %2$@
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.locationText1`.
+        public static func fileCountAndSize(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.locationText1", table: "Interface", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
-        public static var locationText2: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.locationText2`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.locationText2", table: "Interface", fallback: "在 Finder 中显示")
         }
+        /// 共用目标目录：%1$@
+        ///
+        /// Resource: `Interface.appGameRunDirectoryChangeView.sharedInstances`.
         public static func sharedInstances(_ value0: String) -> LocalizedMessage {
             .init(key: "appGameRunDirectoryChangeView.sharedInstances", table: "Interface", fallback: "共用目标目录：%1$@", arguments: [.text(value0)])
         }

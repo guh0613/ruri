@@ -8,7 +8,7 @@ struct LogsView: View {
     @Environment(\.dismiss) private var dismiss
     private enum Mode: String, CaseIterable {
         case analysis, logs, share
-        var title: String { switch self { case .analysis: Messages.AppLogsView.titleText1.localized; case .logs: Messages.AppLogsView.titleText2.localized; case .share: Messages.AppLogsView.titleText3.localized } }
+        var title: String { switch self { case .analysis: Messages.AppLogsView.diagnosticsAndHandling.localized; case .logs: Messages.AppLogsView.runLogs.localized; case .share: Messages.AppLogsView.collectReport.localized } }
     }
     private enum Destination: String, Identifiable { case settings, mods; var id: String { rawValue } }
     @State private var mode = Mode.logs
@@ -27,19 +27,19 @@ struct LogsView: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                Text(Messages.AppLogsView.bodyText1.localized).font(.title2.bold()); Spacer()
-                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? Messages.AppLogsView.sessionText1.localized) }
+                Text(Messages.AppLogsView.runHistory.localized).font(.title2.bold()); Spacer()
+                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? Messages.AppLogsView.running.localized) }
                 Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
             if model.sessions.isEmpty {
-                ContentUnavailableView(Messages.AppLogsView.sessionText2.localized, systemImage: "text.document", description: Text(Messages.AppLogsView.sessionText3.localized))
+                ContentUnavailableView(Messages.AppLogsView.noRunHistory.localized, systemImage: "text.document", description: Text(Messages.AppLogsView.runHistoryDetails.localized))
             } else {
-                Picker(Messages.AppLogsView.sessionText4.localized, selection: $selectedID) {
+                Picker(Messages.AppLogsView.selectRecord.localized, selection: $selectedID) {
                     ForEach(model.sessions) { record in
                         Text("\(LocalizedFormat.date(record.createdAt, date: .abbreviated, time: .standard)) · \(record.instanceName)").tag(Optional(record.id))
                     }
                 }
-                Picker(Messages.AppLogsView.sessionText5.localized, selection: $mode) {
+                Picker(Messages.AppLogsView.viewContent.localized, selection: $mode) {
                     ForEach(Mode.allCases, id: \.self) { Text($0.title).tag($0) }
                 }.pickerStyle(.segmented)
                 if let session, !session.state.isFinished, session.monitorIdentity != nil || !model.busy {
@@ -50,9 +50,9 @@ struct LogsView: View {
                 } else {
                     if let session { summary(session) }
                     HStack {
-                        TextField(Messages.AppLogsView.sessionText6.localized, text: $filter).textFieldStyle(.roundedBorder)
-                        Toggle(Messages.AppLogsView.sessionText7.localized, isOn: $follow).toggleStyle(.checkbox)
-                        Button(Messages.AppLogsView.sessionText8.localized) { export() }.disabled(session == nil)
+                        TextField(Messages.AppLogsView.filterLogs.localized, text: $filter).textFieldStyle(.roundedBorder)
+                        Toggle(Messages.AppLogsView.autoScroll.localized, isOn: $follow).toggleStyle(.checkbox)
+                        Button(Messages.AppLogsView.exportFullLog.localized) { export() }.disabled(session == nil)
                     }
                     if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
                     ScrollViewReader { proxy in
@@ -73,7 +73,7 @@ struct LogsView: View {
                         GameQuitControls(session: session)
                     }
                     HStack {
-                        Text(Messages.AppLogsView.sessionText9.localized).font(.caption).foregroundStyle(.secondary)
+                        Text(Messages.AppLogsView.recentLogPreview.localized).font(.caption).foregroundStyle(.secondary)
                         Spacer()
                     }
                 }
@@ -104,7 +104,7 @@ struct LogsView: View {
     }
     @ViewBuilder private func summary(_ record: GameSession) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(isRunning ? Messages.AppLogsView.summaryText1(String(describing: record.stage.title)).localized : record.title).font(.headline)
+            Text(isRunning ? Messages.AppLogsView.lastRecordedStage(record.stage.title).localized : record.title).font(.headline)
             if let exit = record.exit {
                 Text(exit.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             } else if let interruption = record.interruption {
@@ -115,12 +115,12 @@ struct LogsView: View {
             ForEach(Array((record.commandResults ?? []).enumerated()), id: \.offset) { _, result in
                 Text(result.summary).font(.caption).foregroundStyle(result.succeeded ? Color.secondary : .orange).textSelection(.enabled)
             }
-            DisclosureGroup(Messages.AppLogsView.failureText1.localized) {
+            DisclosureGroup(Messages.AppLogsView.stageEnvironmentAndReport.localized) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 7) {
                         Text("Minecraft \(record.gameVersion) · \(record.loader) \(record.loaderVersion ?? "")").font(.caption)
-                        Text(record.memory?.summary ?? Messages.AppLogsView.failureText2(String(describing: record.memoryMB)).localized).font(.caption).textSelection(.enabled)
-                        Text("\(record.operatingSystem) · \(record.java ?? Messages.AppLogsView.failureText3.localized)").font(.caption).foregroundStyle(.secondary)
+                        Text(record.memory?.summary ?? Messages.AppLogsView.recordedMemoryLimit(String(describing: record.memoryMB)).localized).font(.caption).textSelection(.enabled)
+                        Text("\(record.operatingSystem) · \(record.java ?? Messages.AppLogsView.javaNotSelected.localized)").font(.caption).foregroundStyle(.secondary)
                         ForEach(record.events) { event in
                             HStack(alignment: .top) {
                                 Text(LocalizedFormat.date(event.date, date: .omitted, time: .standard)).monospacedDigit().foregroundStyle(.secondary)
@@ -128,9 +128,9 @@ struct LogsView: View {
                             }.font(.caption)
                         }
                         ForEach(record.evidence) { evidence in
-                            Button(evidence.name + (evidence.truncated ? Messages.AppLogsView.failureText4.localized : "")) { reveal(record, relativePath: evidence.relativePath) }
+                            Button(evidence.name + (evidence.truncated ? Messages.AppLogsView.truncatedCopy.localized : "")) { reveal(record, relativePath: evidence.relativePath) }
                         }
-                        Button(Messages.AppLogsView.failureText5.localized) { reveal(record) }
+                        Button(Messages.AppLogsView.showRunRecordInFinder.localized) { reveal(record) }
                     }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 6)
                 }.frame(maxHeight: 125)
             }.font(.caption)

@@ -3,43 +3,82 @@ import Foundation
 
 extension Messages {
     public enum AppRootView {
-        public static var modelText1: LocalizedMessage {
+        /// 管理
+        ///
+        /// Resource: `Interface.appRootView.modelText1`.
+        public static var manage: LocalizedMessage {
             .init(key: "appRootView.modelText1", table: "Interface", fallback: "管理")
         }
-        public static var runningIDText1: LocalizedMessage {
+        /// 运行记录
+        ///
+        /// Resource: `Interface.appRootView.runningIDText1`.
+        public static var runHistory: LocalizedMessage {
             .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "运行记录")
         }
-        public static var runningIDText2: LocalizedMessage {
+        /// 查看正在运行的游戏的记录 ⌘L
+        ///
+        /// Resource: `Interface.appRootView.runningIDText2`.
+        public static var viewRunningGameLogs: LocalizedMessage {
             .init(key: "appRootView.runningIDText2", table: "Interface", fallback: "查看正在运行的游戏的记录 ⌘L")
         }
-        public static var runningIDText3: LocalizedMessage {
+        /// 操作未完成
+        ///
+        /// Resource: `Interface.appRootView.runningIDText3`.
+        public static var operationIncomplete: LocalizedMessage {
             .init(key: "appRootView.runningIDText3", table: "Interface", fallback: "操作未完成")
         }
-        public static var runningIDText4: LocalizedMessage {
+        /// 好
+        ///
+        /// Resource: `Interface.appRootView.runningIDText4`.
+        public static var ok: LocalizedMessage {
             .init(key: "appRootView.runningIDText4", table: "Interface", fallback: "好")
         }
-        public static var bodyText1: LocalizedMessage {
+        /// 添加账号…
+        ///
+        /// Resource: `Interface.appRootView.bodyText1`.
+        public static var addAccount: LocalizedMessage {
             .init(key: "appRootView.bodyText1", table: "Interface", fallback: "添加账号…")
         }
-        public static var bodyText2: LocalizedMessage {
+        /// 管理账号…
+        ///
+        /// Resource: `Interface.appRootView.bodyText2`.
+        public static var manageAccounts: LocalizedMessage {
             .init(key: "appRootView.bodyText2", table: "Interface", fallback: "管理账号…")
         }
-        public static var bodyText3: LocalizedMessage {
+        /// 未登录
+        ///
+        /// Resource: `Interface.appRootView.bodyText3`.
+        public static var notSignedIn: LocalizedMessage {
             .init(key: "appRootView.bodyText3", table: "Interface", fallback: "未登录")
         }
-        public static var bodyText4: LocalizedMessage {
+        /// 添加账号后即可启动游戏
+        ///
+        /// Resource: `Interface.appRootView.bodyText4`.
+        public static var addAccountToLaunch: LocalizedMessage {
             .init(key: "appRootView.bodyText4", table: "Interface", fallback: "添加账号后即可启动游戏")
         }
-        public static var bodyText5: LocalizedMessage {
+        /// 添加账号
+        ///
+        /// Resource: `Interface.appRootView.bodyText5`.
+        public static var addAnotherAccount: LocalizedMessage {
             .init(key: "appRootView.bodyText5", table: "Interface", fallback: "添加账号")
         }
-        public static var bodyText6: LocalizedMessage {
+        /// 切换账号
+        ///
+        /// Resource: `Interface.appRootView.bodyText6`.
+        public static var switchAccount: LocalizedMessage {
             .init(key: "appRootView.bodyText6", table: "Interface", fallback: "切换账号")
         }
-        public static var idText1: LocalizedMessage {
+        /// 查看记录
+        ///
+        /// Resource: `Interface.appRootView.idText1`.
+        public static var viewRecord: LocalizedMessage {
             .init(key: "appRootView.idText1", table: "Interface", fallback: "查看记录")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.appRootView.urlText1`.
+        public static var showInFinder: LocalizedMessage {
             .init(key: "appRootView.urlText1", table: "Interface", fallback: "在 Finder 中显示")
         }
         static let definitions: [String: MessageDefinition] = [

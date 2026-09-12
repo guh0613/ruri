@@ -8,12 +8,12 @@ public struct InstanceMoveProgress: Sendable {
     public var totalBytes: Int64 = 0
     public var progress: InstallProgress {
         switch phase {
-        case .verifying: .init(Messages.CoreInstanceMoveProgress.progressText1)
-        case .copying: .init(Messages.CoreInstanceMoveProgress.progressText2, completed: Int(bytesCopied), total: Int(totalBytes))
-        case .publishing: .init(Messages.CoreInstanceMoveProgress.progressText3, completed: Int(bytesCopied), total: Int(totalBytes))
-        case .committed: .init(Messages.CoreInstanceMoveProgress.progressText4)
-        case .retiring: .init(Messages.CoreInstanceMoveProgress.progressText5)
-        case .deleting: .init(Messages.CoreInstanceMoveProgress.progressText6)
+        case .verifying: .init(Messages.CoreInstanceMoveProgress.validatingInstanceFiles)
+        case .copying: .init(Messages.CoreInstanceMoveProgress.copyingInstanceFiles, completed: Int(bytesCopied), total: Int(totalBytes))
+        case .publishing: .init(Messages.CoreInstanceMoveProgress.writingDestinationFolder, completed: Int(bytesCopied), total: Int(totalBytes))
+        case .committed: .init(Messages.CoreInstanceMoveProgress.verifyingMovedInstance)
+        case .retiring: .init(Messages.CoreInstanceMoveProgress.organizingOriginalFiles)
+        case .deleting: .init(Messages.CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles)
         }
     }
 }

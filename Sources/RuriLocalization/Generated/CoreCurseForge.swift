@@ -3,94 +3,184 @@ import Foundation
 
 extension Messages {
     public enum CoreCurseForge {
-        public static var keyText1: LocalizedMessage {
+        /// 请先在设置中配置 Ruri 的 CurseForge API Key。
+        ///
+        /// Resource: `Core.coreCurseForge.keyText1`.
+        public static var apiKeyMissing: LocalizedMessage {
             .init(key: "coreCurseForge.keyText1", table: "Core", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
         }
-        public static func keyText2(_ value0: String) -> LocalizedMessage {
+        /// 无法读取 CurseForge API Key（钥匙串状态 %1$@）。
+        ///
+        /// Resource: `Core.coreCurseForge.keyText2`.
+        public static func apiKeyReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.keyText2", table: "Core", fallback: "无法读取 CurseForge API Key（钥匙串状态 %1$@）。", arguments: [.text(value0)])
         }
-        public static var idsText2: LocalizedMessage {
+        /// 批量内容更新
+        ///
+        /// Resource: `Core.coreCurseForge.idsText2`.
+        public static var bulkContentUpdate: LocalizedMessage {
             .init(key: "coreCurseForge.idsText2", table: "Core", fallback: "批量内容更新")
         }
-        public static var keyText3: LocalizedMessage {
+        /// 请输入有效的 CurseForge API Key
+        ///
+        /// Resource: `Errors.coreCurseForge.keyText3`.
+        public static var invalidApiKey: LocalizedMessage {
             .init(key: "coreCurseForge.keyText3", table: "Errors", fallback: "请输入有效的 CurseForge API Key")
         }
-        public static func addedText1(_ value0: String) -> LocalizedMessage {
+        /// 保存 API Key 失败（钥匙串状态 %1$@）
+        ///
+        /// Resource: `Errors.coreCurseForge.addedText1`.
+        public static func apiKeySaveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.addedText1", table: "Errors", fallback: "保存 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
         }
-        public static func statusText1(_ value0: String) -> LocalizedMessage {
+        /// 移除 API Key 失败（钥匙串状态 %1$@）
+        ///
+        /// Resource: `Errors.coreCurseForge.statusText1`.
+        public static func apiKeyRemoveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.statusText1", table: "Errors", fallback: "移除 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
         }
-        public static func validateDownloadMetadataText1(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 不可用或缺少有效的文件校验信息。
+        ///
+        /// Resource: `Errors.coreCurseForge.validateDownloadMetadataText1`.
+        public static func invalidDownloadMetadata(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.validateDownloadMetadataText1", table: "Errors", fallback: "%1$@ 不可用或缺少有效的文件校验信息。", arguments: [.text(value0)])
         }
-        public static var validateDownloadMetadataText2: LocalizedMessage {
+        /// CurseForge 返回了无效文件名
+        ///
+        /// Resource: `Errors.coreCurseForge.validateDownloadMetadataText2`.
+        public static var invalidFileName: LocalizedMessage {
             .init(key: "coreCurseForge.validateDownloadMetadataText2", table: "Errors", fallback: "CurseForge 返回了无效文件名")
         }
-        public static func infoText1(_ value0: String) -> LocalizedMessage {
+        /// 所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。
+        ///
+        /// Resource: `Errors.coreCurseForge.infoText1`.
+        public static func fileMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.infoText1", table: "Errors", fallback: "所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", arguments: [.text(value0)])
         }
-        public static var temporaryText1: LocalizedMessage {
+        /// 复制期间文件发生变化，请重新选择。
+        ///
+        /// Resource: `Errors.coreCurseForge.temporaryText1`.
+        public static var packDownloadChanged: LocalizedMessage {
             .init(key: "coreCurseForge.temporaryText1", table: "Errors", fallback: "复制期间文件发生变化，请重新选择。")
         }
-        public static var temporaryText2: LocalizedMessage {
+        /// 无法缓存已下载文件
+        ///
+        /// Resource: `Errors.coreCurseForge.temporaryText2`.
+        public static var cacheFileFailed: LocalizedMessage {
             .init(key: "coreCurseForge.temporaryText2", table: "Errors", fallback: "无法缓存已下载文件")
         }
-        public static var requestText1: LocalizedMessage {
+        /// 请先在设置中配置 Ruri 的 CurseForge API Key。
+        ///
+        /// Resource: `Errors.coreCurseForge.requestText1`.
+        public static var apiKeyRequired: LocalizedMessage {
             .init(key: "coreCurseForge.requestText1", table: "Errors", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
         }
-        public static var categoryText1: LocalizedMessage {
+        /// 不支持的 CurseForge 内容类型
+        ///
+        /// Resource: `Errors.coreCurseForge.categoryText1`.
+        public static var unsupportedContentType: LocalizedMessage {
             .init(key: "coreCurseForge.categoryText1", table: "Errors", fallback: "不支持的 CurseForge 内容类型")
         }
-        public static var projectText1: LocalizedMessage {
+        /// 无效的 CurseForge 项目标识
+        ///
+        /// Resource: `Errors.coreCurseForge.projectText1`.
+        public static var invalidProjectID: LocalizedMessage {
             .init(key: "coreCurseForge.projectText1", table: "Errors", fallback: "无效的 CurseForge 项目标识")
         }
-        public static var resultText1: LocalizedMessage {
+        /// CurseForge 项目与请求不一致
+        ///
+        /// Resource: `Errors.coreCurseForge.resultText1`.
+        public static var projectMismatch: LocalizedMessage {
             .init(key: "coreCurseForge.resultText1", table: "Errors", fallback: "CurseForge 项目与请求不一致")
         }
-        public static var fileText1: LocalizedMessage {
+        /// 无效的 CurseForge 文件标识
+        ///
+        /// Resource: `Errors.coreCurseForge.fileText1`.
+        public static var invalidFileID: LocalizedMessage {
             .init(key: "coreCurseForge.fileText1", table: "Errors", fallback: "无效的 CurseForge 文件标识")
         }
-        public static var resultText2: LocalizedMessage {
+        /// CurseForge 文件与请求不一致
+        ///
+        /// Resource: `Errors.coreCurseForge.resultText2`.
+        public static var fileMismatchRequest: LocalizedMessage {
             .init(key: "coreCurseForge.resultText2", table: "Errors", fallback: "CurseForge 文件与请求不一致")
         }
-        public static var resultText3: LocalizedMessage {
+        /// CurseForge 返回的版本列表与项目不一致
+        ///
+        /// Resource: `Errors.coreCurseForge.resultText3`.
+        public static var versionListMismatch: LocalizedMessage {
             .init(key: "coreCurseForge.resultText3", table: "Errors", fallback: "CurseForge 返回的版本列表与项目不一致")
         }
-        public static var resolveText1: LocalizedMessage {
+        /// 整合包文件标识或数量无效
+        ///
+        /// Resource: `Errors.coreCurseForge.resolveText1`.
+        public static var invalidPackFiles: LocalizedMessage {
             .init(key: "coreCurseForge.resolveText1", table: "Errors", fallback: "整合包文件标识或数量无效")
         }
-        public static func kindText1(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// 找不到整合包文件：项目 %1$@，文件 %2$@
+        ///
+        /// Resource: `Errors.coreCurseForge.kindText1`.
+        public static func packFileMissing(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.kindText1", table: "Errors", fallback: "找不到整合包文件：项目 %1$@，文件 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        public static var priorText1: LocalizedMessage {
+        /// 依赖要求同一项目的不同版本
+        ///
+        /// Resource: `Errors.coreCurseForge.priorText1`.
+        public static var requiredDependencyVersionConflict: LocalizedMessage {
             .init(key: "coreCurseForge.priorText1", table: "Errors", fallback: "依赖要求同一项目的不同版本")
         }
-        public static var priorText2: LocalizedMessage {
+        /// 必需依赖数量超过限制
+        ///
+        /// Resource: `Errors.coreCurseForge.priorText2`.
+        public static var tooManyRequiredDependencies: LocalizedMessage {
             .init(key: "coreCurseForge.priorText2", table: "Errors", fallback: "必需依赖数量超过限制")
         }
-        public static func kindText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 与此游戏版本或加载器不兼容
+        ///
+        /// Resource: `Errors.coreCurseForge.kindText2`.
+        public static func incompatibleGameOrLoader(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.kindText2", table: "Errors", fallback: "%1$@ 与此游戏版本或加载器不兼容", arguments: [.text(value0)])
         }
-        public static func matchText1(_ value0: String) -> LocalizedMessage {
+        /// 找不到兼容的必需依赖：%1$@
+        ///
+        /// Resource: `Errors.coreCurseForge.matchText1`.
+        public static func missingRequiredDependency(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.matchText1", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
         }
-        public static func matchText2(_ value0: String, _ value1: String) -> LocalizedMessage {
+        /// %1$@ 与项目 %2$@ 不兼容
+        ///
+        /// Resource: `Errors.coreCurseForge.matchText2`.
+        public static func projectDependencyMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.matchText2", table: "Errors", fallback: "%1$@ 与项目 %2$@ 不兼容", arguments: [.text(value0), .text(value1)])
         }
-        public static var idsText1: LocalizedMessage {
+        /// 必需依赖之间存在不兼容关系
+        ///
+        /// Resource: `Errors.coreCurseForge.idsText1`.
+        public static var incompatibleDependencies: LocalizedMessage {
             .init(key: "coreCurseForge.idsText1", table: "Errors", fallback: "必需依赖之间存在不兼容关系")
         }
-        public static func fileText2(_ value0: String) -> LocalizedMessage {
+        /// %1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。
+        ///
+        /// Resource: `Errors.coreCurseForge.fileText2`.
+        public static func manualDownloadRequired(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.fileText2", table: "Errors", fallback: "%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。", arguments: [.text(value0)])
         }
-        public static func checkText1(_ value0: String) -> LocalizedMessage {
+        /// 所选文件与 %1$@ 的校验信息不符
+        ///
+        /// Resource: `Errors.coreCurseForge.checkText1`.
+        public static func checksumMismatch(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.checkText1", table: "Errors", fallback: "所选文件与 %1$@ 的校验信息不符", arguments: [.text(value0)])
         }
-        public static func checkText2(_ value0: String) -> LocalizedMessage {
+        /// 文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.coreCurseForge.checkText2`.
+        public static func fileChecksumFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.checkText2", table: "Errors", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        public static func cacheText1(_ value0: String) -> LocalizedMessage {
+        /// 下载 %1$@
+        ///
+        /// Resource: `Progress.coreCurseForge.cacheText1`.
+        public static func downloadFile(_ value0: String) -> LocalizedMessage {
             .init(key: "coreCurseForge.cacheText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [

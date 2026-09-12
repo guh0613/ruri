@@ -3,70 +3,136 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftGameLocations {
-        public static var labelsText1: LocalizedMessage {
+        /// 存档
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText1`.
+        public static var worlds: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText1", table: "Core", fallback: "存档")
         }
-        public static var labelsText2: LocalizedMessage {
+        /// 模组
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText2`.
+        public static var mods: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText2", table: "Core", fallback: "模组")
         }
-        public static var labelsText3: LocalizedMessage {
+        /// 模组配置
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText3`.
+        public static var modConfigs: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText3", table: "Core", fallback: "模组配置")
         }
-        public static var labelsText4: LocalizedMessage {
+        /// 资源包
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText4`.
+        public static var resourcePacks: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText4", table: "Core", fallback: "资源包")
         }
-        public static var labelsText5: LocalizedMessage {
+        /// 光影
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText5`.
+        public static var shaders: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText5", table: "Core", fallback: "光影")
         }
-        public static var labelsText6: LocalizedMessage {
+        /// 游戏设置
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.labelsText6`.
+        public static var gameSettings: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.labelsText6", table: "Core", fallback: "游戏设置")
         }
-        public static var contentsText1: LocalizedMessage {
+        /// 共享游戏目录
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.contentsText1`.
+        public static var sharedGameDirectory: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.contentsText1", table: "Core", fallback: "共享游戏目录")
         }
-        public static var contentsText2: LocalizedMessage {
+        /// 此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.contentsText2`.
+        public static var sharedDirectoryContents: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.contentsText2", table: "Core", fallback: "此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。")
         }
-        public static var contentsText3: LocalizedMessage {
+        /// 版本独立目录
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.contentsText3`.
+        public static var versionDirectory: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.contentsText3", table: "Core", fallback: "版本独立目录")
         }
-        public static var contentsText4: LocalizedMessage {
+        /// 启用版本隔离时，游戏数据通常位于这个版本文件夹。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.contentsText4`.
+        public static var versionDirectoryContents: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.contentsText4", table: "Core", fallback: "启用版本隔离时，游戏数据通常位于这个版本文件夹。")
         }
-        public static var urlText1: LocalizedMessage {
+        /// 原启动器为此版本指定的游戏数据位置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText1`.
+        public static var launcherGameData: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText1", table: "Core", fallback: "原启动器为此版本指定的游戏数据位置。")
         }
-        public static var urlText2: LocalizedMessage {
+        /// HMCL 自定义目录
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText2`.
+        public static var hmclCustomDirectory: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText2", table: "Core", fallback: "HMCL 自定义目录")
         }
-        public static var urlText3: LocalizedMessage {
+        /// HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText3`.
+        public static var hmclCustomDirectoryWarning: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText3", table: "Core", fallback: "HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。")
         }
-        public static var urlText4: LocalizedMessage {
+        /// 此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText4`.
+        public static var hmclGlobalDirectoryWarning: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText4", table: "Core", fallback: "此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。")
         }
-        public static var settingsText1: LocalizedMessage {
+        /// 此版本继承旧版 HMCL 的全局设置，请确认游戏数据位置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.settingsText1`.
+        public static var hmclGlobalSettings: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.settingsText1", table: "Core", fallback: "此版本继承旧版 HMCL 的全局设置，请确认游戏数据位置。")
         }
-        public static var urlText5: LocalizedMessage {
+        /// 旧版 HMCL 的自定义目录无法定位，请手动确认。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText5`.
+        public static var hmclCustomDirectoryMissing: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText5", table: "Core", fallback: "旧版 HMCL 的自定义目录无法定位，请手动确认。")
         }
-        public static var urlText6: LocalizedMessage {
+        /// 无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText6`.
+        public static var hmclDirectoryPolicyUnreadable: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText6", table: "Core", fallback: "无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。")
         }
-        public static var urlText7: LocalizedMessage {
+        /// 官方启动器自定义目录
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText7`.
+        public static var officialCustomDirectory: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText7", table: "Core", fallback: "官方启动器自定义目录")
         }
-        public static var urlText8: LocalizedMessage {
+        /// 一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.urlText8`.
+        public static var officialDirectoryMissing: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.urlText8", table: "Core", fallback: "一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。")
         }
-        public static var suggestedText1: LocalizedMessage {
+        /// 此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.suggestedText1`.
+        public static var multipleLauncherProfiles: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.suggestedText1", table: "Core", fallback: "此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。")
         }
-        public static var suggestedText2: LocalizedMessage {
+        /// 没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。
+        ///
+        /// Resource: `Core.coreMinecraftGameLocations.suggestedText2`.
+        public static var noRunDirectory: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.suggestedText2", table: "Core", fallback: "没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。")
         }
-        public static var profilesText1: LocalizedMessage {
+        /// 官方启动器配置数量超过读取限制。
+        ///
+        /// Resource: `Errors.coreMinecraftGameLocations.profilesText1`.
+        public static var profilesLimit: LocalizedMessage {
             .init(key: "coreMinecraftGameLocations.profilesText1", table: "Errors", fallback: "官方启动器配置数量超过读取限制。")
         }
         static let definitions: [String: MessageDefinition] = [

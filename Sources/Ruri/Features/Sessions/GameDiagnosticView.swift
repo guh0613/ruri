@@ -29,7 +29,7 @@ struct GameDiagnosticView: View {
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let diagnosis {
                 if collecting { collection(diagnosis) } else { analysis(diagnosis) }
-            } else { ProgressView(Messages.AppGameDiagnosticView.diagnosisText1.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
+            } else { ProgressView(Messages.AppGameDiagnosticView.readingEvidence.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
         .task(id: key) {
             if collecting && bundle != nil { return }
@@ -52,7 +52,7 @@ struct GameDiagnosticView: View {
                     Text(diagnosis.title).font(.title3.bold())
                     Text(diagnosis.summary).font(.callout).fixedSize(horizontal: false, vertical: true)
                 }
-                DisclosureGroup(Messages.AppGameDiagnosticView.analysisText1.localized) {
+                DisclosureGroup(Messages.AppGameDiagnosticView.recordedFacts.localized) {
                     ForEach(diagnosis.facts, id: \.self) { Text($0).font(.caption).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading) }
                 }
                 ForEach(diagnosis.findings) { finding in
@@ -65,11 +65,11 @@ struct GameDiagnosticView: View {
                         Text(finding.explanation).font(.callout).fixedSize(horizontal: false, vertical: true)
                         ForEach(finding.evidence) { evidence in
                             let document = diagnosis.documents.first { $0.id == evidence.documentID }
-                            DisclosureGroup(Messages.AppGameDiagnosticView.documentText2(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.AppGameDiagnosticView.documentText1.localized : ""), String(describing: evidence.line)).localized) {
+                            DisclosureGroup(Messages.AppGameDiagnosticView.evidenceLine(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.AppGameDiagnosticView.lastSection.localized : ""), String(describing: evidence.line)).localized) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(evidence.excerpt).font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                    if let relative = document?.relativePath { Button(Messages.AppGameDiagnosticView.relativeText1.localized) { reveal(relative) } }
+                                    if let relative = document?.relativePath { Button(Messages.AppGameDiagnosticView.showEvidenceInFinder.localized) { reveal(relative) } }
                                 }.padding(10).background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 8))
                             }.font(.caption)
                         }
@@ -86,7 +86,7 @@ struct GameDiagnosticView: View {
                             }
                         }.controlSize(.small)
                         if finding.actions.contains(.repair) {
-                            Text(Messages.AppGameDiagnosticView.relativeText2.localized).font(.caption).foregroundStyle(.secondary)
+                            Text(Messages.AppGameDiagnosticView.repairNotice.localized).font(.caption).foregroundStyle(.secondary)
                         }
                     }.padding(14).background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12))
                 }
@@ -95,34 +95,34 @@ struct GameDiagnosticView: View {
                 }
                 if !diagnosis.limitations.isEmpty {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text(Messages.AppGameDiagnosticView.activityText1.localized).font(.headline)
+                        Text(Messages.AppGameDiagnosticView.evidenceScope.localized).font(.headline)
                         ForEach(diagnosis.limitations, id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
                     }
                 }
                 HStack {
-                    Button(Messages.AppGameDiagnosticView.activityText2.localized) { action(.files) }
+                    Button(Messages.AppGameDiagnosticView.viewRunFiles.localized) { action(.files) }
                     Spacer()
-                    Button(Messages.AppGameDiagnosticView.activityText3.localized) { action(.collect) }
+                    Button(Messages.AppGameDiagnosticView.collectReport.localized) { action(.collect) }
                 }
             }.padding(.vertical, 4).padding(.trailing, 5)
         }
     }
     private func collection(_ diagnosis: GameDiagnosis) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(Messages.AppGameDiagnosticView.collectionText1.localized).font(.headline)
-            Text(Messages.AppGameDiagnosticView.collectionText2.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            Text(Messages.AppGameDiagnosticView.collectionInstructions.localized).font(.headline)
+            Text(Messages.AppGameDiagnosticView.redactionNotice.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             if let bundle {
                 HStack(alignment: .top, spacing: 12) {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(bundle.files) { file in
                                 HStack(alignment: .top, spacing: 7) {
-                                    Toggle(Messages.AppGameDiagnosticView.bundleText1(String(describing: file.title)).localized, isOn: Binding(get: { selected.contains(file.id) }, set: { if $0 { selected.insert(file.id) } else { selected.remove(file.id) } }))
+                                    Toggle(Messages.AppGameDiagnosticView.containsFile(file.title).localized, isOn: Binding(get: { selected.contains(file.id) }, set: { if $0 { selected.insert(file.id) } else { selected.remove(file.id) } }))
                                         .toggleStyle(.checkbox).labelsHidden()
                                     Button { previewID = file.id } label: {
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(file.title).font(.callout).multilineTextAlignment(.leading)
-                                            Text("\(LocalizedFormat.bytes(Int64(file.byteCount)))\(file.changedByRedaction ? Messages.AppGameDiagnosticView.bundleText2.localized : "")")
+                                            Text("\(LocalizedFormat.bytes(Int64(file.byteCount)))\(file.changedByRedaction ? Messages.AppGameDiagnosticView.redacted.localized : "")")
                                                 .font(.caption).foregroundStyle(.secondary)
                                         }.frame(maxWidth: .infinity, alignment: .leading)
                                     }.buttonStyle(.plain).foregroundStyle(previewID == file.id ? Color.accentColor : .primary)
@@ -132,11 +132,11 @@ struct GameDiagnosticView: View {
                     }.frame(width: 214)
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
-                            Text(previewFile?.path ?? Messages.AppGameDiagnosticView.bundleText3.localized).font(.caption).lineLimit(1).truncationMode(.middle)
+                            Text(previewFile?.path ?? Messages.AppGameDiagnosticView.choosePreview.localized).font(.caption).lineLimit(1).truncationMode(.middle)
                             Spacer()
-                            Button { page -= 1 } label: { Image(systemName: "chevron.left") }.disabled(page == 0).help(Messages.AppGameDiagnosticView.bundleText4.localized)
+                            Button { page -= 1 } label: { Image(systemName: "chevron.left") }.disabled(page == 0).help(Messages.AppGameDiagnosticView.previousPage.localized)
                             Text("\(page + 1) / \(previewPages)").font(.caption).monospacedDigit()
-                            Button { page += 1 } label: { Image(systemName: "chevron.right") }.disabled(page + 1 >= previewPages).help(Messages.AppGameDiagnosticView.bundleText5.localized)
+                            Button { page += 1 } label: { Image(systemName: "chevron.right") }.disabled(page + 1 >= previewPages).help(Messages.AppGameDiagnosticView.nextPage.localized)
                         }.controlSize(.small)
                         ScrollView {
                             Text(String((previewFile?.text ?? "").dropFirst(page * 12000).prefix(12000)))
@@ -146,20 +146,20 @@ struct GameDiagnosticView: View {
                     }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 }.frame(maxHeight: .infinity)
                 HStack(alignment: .top) {
-                    TextField(Messages.AppGameDiagnosticView.bundleText6.localized, text: $privateText, axis: .vertical).lineLimit(2...3).textFieldStyle(.roundedBorder)
+                    TextField(Messages.AppGameDiagnosticView.extraHiddenText.localized, text: $privateText, axis: .vertical).lineLimit(2...3).textFieldStyle(.roundedBorder)
                         .onChange(of: privateText) { if privateText.count > 8192 { privateText = String(privateText.prefix(8192)) } }
-                    Button(Messages.AppGameDiagnosticView.bundleText7.localized) { Task { await prepareBundle(diagnosis, preserveSelection: true) } }.disabled(preparing || exporting)
+                    Button(Messages.AppGameDiagnosticView.updatePreview.localized) { Task { await prepareBundle(diagnosis, preserveSelection: true) } }.disabled(preparing || exporting)
                 }
-                if privateText != appliedPrivateText { Text(Messages.AppGameDiagnosticView.bundleText8.localized).font(.caption).foregroundStyle(.orange) }
+                if privateText != appliedPrivateText { Text(Messages.AppGameDiagnosticView.previewChanged.localized).font(.caption).foregroundStyle(.orange) }
                 HStack {
                     if preparing || exporting { ProgressView().controlSize(.small) }
-                    else if let exported { Button(Messages.AppGameDiagnosticView.exportedText1.localized) { NSWorkspace.shared.activateFileViewerSelecting([exported]) } }
-                    else { Text(Messages.AppGameDiagnosticView.exportedText2.localized).font(.caption).foregroundStyle(.secondary) }
+                    else if let exported { Button(Messages.AppGameDiagnosticView.showExportedBundle.localized) { NSWorkspace.shared.activateFileViewerSelecting([exported]) } }
+                    else { Text(Messages.AppGameDiagnosticView.exportNotice.localized).font(.caption).foregroundStyle(.secondary) }
                     Spacer()
-                    Button(Messages.AppGameDiagnosticView.exportedText3.localized) { export(bundle) }.buttonStyle(.borderedProminent)
+                    Button(Messages.AppGameDiagnosticView.exportBundle.localized) { export(bundle) }.buttonStyle(.borderedProminent)
                         .disabled(selected.isEmpty || preparing || exporting || privateText != appliedPrivateText)
                 }
-            } else { ProgressView(Messages.AppGameDiagnosticView.exportedText4.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
+            } else { ProgressView(Messages.AppGameDiagnosticView.prepareSharePreview.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
     }
     private func prepareBundle(_ diagnosis: GameDiagnosis, preserveSelection: Bool = false) async {

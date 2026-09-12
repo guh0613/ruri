@@ -8,16 +8,16 @@ public struct PlannedModrinthFile: Sendable {
 
 extension ModrinthService {
     public func plan(versions roots: [ModrinthVersion], kind: ContentKind, instance: GameInstance) async throws -> [PlannedModrinthFile] {
-        if kind == .mod, instance.loader == .vanilla { throw RuriError.message(Messages.CoreModrinthContentPlan.planText1) }
+        if kind == .mod, instance.loader == .vanilla { throw RuriError.message(Messages.CoreModrinthContentPlan.loaderInstanceRequired) }
         var queue = roots, resolved: [ModrinthVersion] = [], seen = Set<String>()
         while !queue.isEmpty {
             try Task.checkCancellation()
             let current = queue.removeFirst()
             if !seen.insert(current.id).inserted { continue }
-            if let other = resolved.first(where: { $0.project_id == current.project_id }), other.id != current.id { throw RuriError.message(Messages.CoreModrinthContentPlan.otherText1(String(describing: current.name))) }
-            guard seen.count <= 200 else { throw RuriError.message(Messages.CoreModrinthContentPlan.otherText2) }
-            guard current.game_versions.contains(instance.gameVersion) else { throw RuriError.message(Messages.CoreModrinthContentPlan.otherText3(String(describing: current.name), String(describing: instance.gameVersion))) }
-            if kind == .mod, !current.loaders.contains(instance.loader.modrinthLoader) { throw RuriError.message(Messages.CoreModrinthContentPlan.otherText4(String(describing: current.name))) }
+            if let other = resolved.first(where: { $0.project_id == current.project_id }), other.id != current.id { throw RuriError.message(Messages.CoreModrinthContentPlan.incompatibleProjectVersions(current.name)) }
+            guard seen.count <= 200 else { throw RuriError.message(Messages.CoreModrinthContentPlan.dependencyLimitExceeded) }
+            guard current.game_versions.contains(instance.gameVersion) else { throw RuriError.message(Messages.CoreModrinthContentPlan.minecraftVersionUnsupported(current.name, instance.gameVersion)) }
+            if kind == .mod, !current.loaders.contains(instance.loader.modrinthLoader) { throw RuriError.message(Messages.CoreModrinthContentPlan.loaderUnsupported(current.name)) }
             resolved.append(current)
             if kind == .mod {
                 for dependency in current.dependencies where dependency.dependency_type == "required" {
@@ -27,22 +27,22 @@ extension ModrinthService {
                     } else if let project = dependency.project_id {
                         if let selected = (roots + resolved + queue).first(where: { $0.project_id == project }) { queue.append(selected); continue }
                         let options = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.modrinthLoader)
-                        guard let match = options.first(where: { $0.version_type == "release" || $0.version_type == nil }) ?? options.first else { throw RuriError.message(Messages.CoreModrinthContentPlan.matchText1(String(describing: project))) }
+                        guard let match = options.first(where: { $0.version_type == "release" || $0.version_type == nil }) ?? options.first else { throw RuriError.message(Messages.CoreModrinthContentPlan.compatibleDependencyMissing(String(describing: project))) }
                         queue.append(match)
-                    } else { throw RuriError.message(Messages.CoreModrinthContentPlan.matchText2) }
+                    } else { throw RuriError.message(Messages.CoreModrinthContentPlan.missingDependencyDownloadID) }
                 }
             }
         }
         for item in resolved {
             for dependency in item.dependencies where dependency.dependency_type == "incompatible" {
                 if resolved.contains(where: { other in dependency.version_id.map { $0 == other.id } ?? (dependency.project_id == other.project_id) }) {
-                    throw RuriError.message(Messages.CoreModrinthContentPlan.matchText3(String(describing: item.name)))
+                    throw RuriError.message(Messages.CoreModrinthContentPlan.selectedContentIncompatible(item.name))
                 }
             }
         }
         return try resolved.map { item in
-            guard let file = item.primaryFile else { throw RuriError.message(Messages.CoreModrinthContentPlan.fileText1(String(describing: item.name))) }
-            guard file.hashes["sha1"] != nil || file.hashes["sha512"] != nil else { throw RuriError.message(Messages.CoreModrinthContentPlan.fileText2(String(describing: file.filename))) }
+            guard let file = item.primaryFile else { throw RuriError.message(Messages.CoreModrinthContentPlan.noDownloadableFile(item.name)) }
+            guard file.hashes["sha1"] != nil || file.hashes["sha512"] != nil else { throw RuriError.message(Messages.CoreModrinthContentPlan.missingFileChecksum(file.filename)) }
             let required = kind == .mod ? item.dependencies.filter { $0.dependency_type == "required" }.compactMap { dependency in
                 dependency.project_id ?? resolved.first(where: { $0.id == dependency.version_id })?.project_id
             } : []
@@ -57,7 +57,7 @@ extension ModrinthService {
         for item in plan {
             try Task.checkCancellation()
             let destination = try LauncherPaths.safePath("modrinth/\(item.record.versionID)/\(item.file.filename)", within: paths.cache)
-            await progress(InstallProgress(Messages.CoreModrinthContentPlan.destinationText1(String(describing: item.file.filename)), completed: result.count, total: plan.count))
+            await progress(InstallProgress(Messages.CoreModrinthContentPlan.downloadingContent(item.file.filename), completed: result.count, total: plan.count))
             try await downloader.fetch(DownloadItem(url: item.file.url, destination: destination, sha1: item.record.sha1, sha512: item.record.sha512, size: item.record.size))
             result.append(ContentInstallation(record: item.record, source: destination))
         }
