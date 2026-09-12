@@ -54,10 +54,10 @@ struct HomeView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ViewThatFits(in: .horizontal) {
                         HStack(spacing: 20) {
-                            featuredIdentity(instance)
+                            featuredIdentity(instance).fixedSize(horizontal: true, vertical: false)
                             Spacer(minLength: 24)
                             featuredActions(instance)
-                        }.fixedSize(horizontal: true, vertical: false)
+                        }
                         VStack(alignment: .leading, spacing: 18) {
                             featuredIdentity(instance)
                             HStack { Spacer(); featuredActions(instance) }
