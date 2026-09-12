@@ -52,18 +52,11 @@ struct PreferencesView: View {
 
     private var launchDefaults: some View {
         Section {
-            Button { showLaunchDefaults = true } label: {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "slider.horizontal.3").foregroundStyle(.tint)
-                        Text(Messages.AppPreferencesView.globalGameSettings.localized).fontWeight(.medium)
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
-                    }
-                    Text(Messages.AppPreferencesView.globalGameSettingsDescription.localized)
-                        .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 6).contentShape(Rectangle())
-            }.buttonStyle(.plain)
+            SettingsActionRow(title: Messages.AppPreferencesView.globalGameSettings.localized,
+                              detail: Messages.AppPreferencesView.globalGameSettingsDescription.localized,
+                              button: Messages.AppPreferencesView.editDefaultLaunchSettings.localized) {
+                showLaunchDefaults = true
+            }
         }
     }
 
