@@ -1388,10 +1388,10 @@
 "appInstanceSettingsView.settingsIssueText1" = "恢复默认";
 
 /* @symbol AppInstanceSettingsView.restoreLaunchSettings @args - */
-"appInstanceSettingsView.settingsIssueText2" = "恢复所有启动设置";
+"appInstanceSettingsView.settingsIssueText2" = "全部使用默认设置";
 
 /* @symbol AppInstanceSettingsView.restoreInheritedSettings @args - */
-"appInstanceSettingsView.settingsIssueText3" = "恢复启动设置的继承关系，保留名称和图标。";
+"appInstanceSettingsView.settingsIssueText3" = "让此实例的所有启动选项跟随默认设置。";
 
 /* @symbol AppInstanceSettingsView.unsavedChanges @args - */
 "appInstanceSettingsView.settingsIssueText4" = "有未保存的更改";
@@ -2627,7 +2627,7 @@
 "appEnvironmentVariablesEditor.bodyText15" = "添加变量";
 
 /* @symbol AppEnvironmentVariablesEditor.valuePassthroughNotice @args - */
-"appEnvironmentVariablesEditor.errorText1" = "值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。";
+"appEnvironmentVariablesEditor.errorText1" = "名称使用字母、数字和下划线，且不能以数字开头。值无需引号；“移除”会取消从系统继承的变量。";
 
 /* @symbol AppEnvironmentVariablesEditor.usageGuide @args - */
 "appEnvironmentVariablesEditor.errorText2" = "使用说明";
@@ -2642,16 +2642,16 @@
 "appLaunchCommandsEditor.bodyText2" = "启动前命令";
 
 /* @symbol AppLaunchCommandsEditor.beforeLaunchPlaceholder @args - */
-"appLaunchCommandsEditor.bodyText3" = "在这里输入 shell 命令；留空跳过";
+"appLaunchCommandsEditor.bodyText3" = "例如：printf '%%s\\n' \"$RURI_GAME_DIRECTORY\"";
 
 /* @symbol AppLaunchCommandsEditor.beforeLaunchHelp @args - */
-"appLaunchCommandsEditor.bodyText4" = "游戏准备完成后运行。命令成功结束才会启动游戏，失败或超时会停止本次启动。";
+"appLaunchCommandsEditor.bodyText4" = "留空跳过。由 /bin/sh 在游戏目录中执行，成功后启动游戏；失败或超时会停止本次启动。";
 
 /* @symbol AppLaunchCommandsEditor.afterLaunchCommand @args - */
 "appLaunchCommandsEditor.bodyText5" = "退出后命令";
 
 /* @symbol AppLaunchCommandsEditor.afterLaunchHelp @args - */
-"appLaunchCommandsEditor.bodyText6" = "游戏自行退出后运行，包括崩溃退出。手动终止游戏时跳过；命令结果单独显示在日志中。";
+"appLaunchCommandsEditor.bodyText6" = "留空跳过。游戏自行退出后由 /bin/sh 执行，包括崩溃退出；手动终止游戏时跳过，结果显示在日志中。";
 
 /* @symbol AppLaunchCommandsEditor.commandTimeout @args - */
 "appLaunchCommandsEditor.bodyText7" = "每条命令最长运行时间";
@@ -2669,7 +2669,7 @@
 "appLaunchCommandsEditor.bodyText11" = "Ruri 会把 Java 路径和游戏启动参数追加在后面。此处不解析 shell 管道；自定义脚本应使用 exec \"$@\" 转交启动。";
 
 /* @symbol AppLaunchCommandsEditor.variablesAndExamples @args - */
-"appLaunchCommandsEditor.bodyText12" = "可用变量与填写示例";
+"appLaunchCommandsEditor.bodyText12" = "可用变量";
 
 /* @symbol AppLaunchCommandsEditor.shellExecutionHelp @args - */
 "appLaunchCommandsEditor.bodyText13" = "前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。";
@@ -2690,10 +2690,10 @@
 "appLaunchSettingsEditor.bodyText3" = "自定义%1$@";
 
 /* @symbol AppLaunchSettingsEditor.restoreDefault @args - */
-"appLaunchSettingsEditor.bodyText4" = "恢复默认";
+"appLaunchSettingsEditor.bodyText4" = "使用默认设置";
 
 /* @symbol AppLaunchSettingsEditor.restoreDefaultFormat @args text */
-"appLaunchSettingsEditor.bodyText5" = "%1$@恢复默认";
+"appLaunchSettingsEditor.bodyText5" = "%1$@使用默认设置";
 
 /* @symbol AppLaunchSettingsEditor.automaticJava @args text */
 "appLaunchSettingsEditor.majorText1" = "自动选择 Java %1$@";
@@ -2774,10 +2774,10 @@
 "appLaunchSettingsEditor.javaIssueText1" = "附加 JVM 参数";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsPlaceholder @args - */
-"appLaunchSettingsEditor.javaIssueText2" = "在这里输入 JVM 参数";
+"appLaunchSettingsEditor.javaIssueText2" = "例如：-Dfile.encoding=UTF-8";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText3" = "用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。";
+"appLaunchSettingsEditor.javaIssueText3" = "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsExample @args - */
 "appLaunchSettingsEditor.javaIssueText4" = "填写示例";
@@ -2789,10 +2789,10 @@
 "appLaunchSettingsEditor.javaIssueText6" = "附加游戏参数";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsPlaceholder @args - */
-"appLaunchSettingsEditor.javaIssueText7" = "在这里输入游戏参数";
+"appLaunchSettingsEditor.javaIssueText7" = "例如：--width 1600 --height 900";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText8" = "传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。";
+"appLaunchSettingsEditor.javaIssueText8" = "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。";
 
 /* @symbol AppLaunchSettingsEditor.gameArgumentsQuotingHelp @args - */
 "appLaunchSettingsEditor.javaIssueText9" = "含空格的参数加引号；这里填写的窗口尺寸优先。";
@@ -3447,3 +3447,6 @@
 
 /* @symbol AppDiscoverView.authorBy @args text */
 "appDiscoverView.authorBy" = "by %1$@";
+
+/* @symbol AppInstanceSettingsView.defaultLaunchSettings @args - */
+"appInstanceSettingsView.defaultLaunchSettings" = "默认启动设置";

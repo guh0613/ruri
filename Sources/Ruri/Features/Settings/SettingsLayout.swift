@@ -96,19 +96,27 @@ struct SettingsTextArea: View {
     let title: String
     let prompt: String
     @Binding var text: String
+    var help: String? = nil
+    var showsTitle = false
+    @FocusState private var isFocused: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            if showsTitle { Text(title).fontWeight(.medium) }
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $text).scrollContentBackground(.hidden)
-                    .font(.system(.body, design: .monospaced)).padding(6)
-                    .accessibilityLabel(title)
+                    .font(.system(.body, design: .monospaced)).multilineTextAlignment(.leading).padding(6)
+                    .autocorrectionDisabled().focused($isFocused).accessibilityLabel(title)
                 if text.isEmpty {
                     Text(prompt).font(.system(.body, design: .monospaced)).foregroundStyle(.tertiary)
                         .padding(.horizontal, 11).padding(.vertical, 8).allowsHitTesting(false).accessibilityHidden(true)
                 }
-            }.frame(height: 82).background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 6))
-                .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(.primary.opacity(0.16)))
-        }.padding(.vertical, 5)
+            }.frame(height: 88).background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 6))
+                .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(isFocused ? Color.accentColor : Color.primary.opacity(0.16), lineWidth: isFocused ? 2 : 1).allowsHitTesting(false))
+            if let help {
+                Text(help).font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }.multilineTextAlignment(.leading).frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 5)
     }
 }
 

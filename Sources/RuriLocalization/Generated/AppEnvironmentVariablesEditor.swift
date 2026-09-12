@@ -93,11 +93,11 @@ extension Messages {
         public static var addVariable: LocalizedMessage {
             .init(key: "appEnvironmentVariablesEditor.bodyText15", table: "Interface", fallback: "添加变量")
         }
-        /// 值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。
+        /// 名称使用字母、数字和下划线，且不能以数字开头。值无需引号；“移除”会取消从系统继承的变量。
         ///
         /// Resource: `Interface.appEnvironmentVariablesEditor.errorText1`.
         public static var valuePassthroughNotice: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.errorText1", table: "Interface", fallback: "值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。")
+            .init(key: "appEnvironmentVariablesEditor.errorText1", table: "Interface", fallback: "名称使用字母、数字和下划线，且不能以数字开头。值无需引号；“移除”会取消从系统继承的变量。")
         }
         /// 使用说明
         ///
@@ -127,7 +127,7 @@ extension Messages {
             "Interface:appEnvironmentVariablesEditor.bodyText13": .init("删除此项配置", []),
             "Interface:appEnvironmentVariablesEditor.bodyText14": .init("删除环境变量", []),
             "Interface:appEnvironmentVariablesEditor.bodyText15": .init("添加变量", []),
-            "Interface:appEnvironmentVariablesEditor.errorText1": .init("值原样传给游戏，无需引号。选择“移除”可取消从系统继承的变量。", []),
+            "Interface:appEnvironmentVariablesEditor.errorText1": .init("名称使用字母、数字和下划线，且不能以数字开头。值无需引号；“移除”会取消从系统继承的变量。", []),
             "Interface:appEnvironmentVariablesEditor.errorText2": .init("使用说明", []),
             "Interface:appEnvironmentVariablesEditor.errorText3": .init("名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。", []),
         ]

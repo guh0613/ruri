@@ -21,17 +21,17 @@ extension Messages {
         public static func customValueFormat(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText3", table: "Interface", fallback: "自定义%1$@", arguments: [.text(value0)])
         }
-        /// 恢复默认
+        /// 使用默认设置
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText4`.
         public static var restoreDefault: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText4", table: "Interface", fallback: "恢复默认")
+            .init(key: "appLaunchSettingsEditor.bodyText4", table: "Interface", fallback: "使用默认设置")
         }
-        /// %1$@恢复默认
+        /// %1$@使用默认设置
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText5`.
         public static func restoreDefaultFormat(_ value0: String) -> LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText5", table: "Interface", fallback: "%1$@恢复默认", arguments: [.text(value0)])
+            .init(key: "appLaunchSettingsEditor.bodyText5", table: "Interface", fallback: "%1$@使用默认设置", arguments: [.text(value0)])
         }
         /// 自动选择 Java %1$@
         ///
@@ -189,17 +189,17 @@ extension Messages {
         public static var jvmArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText1", table: "Interface", fallback: "附加 JVM 参数")
         }
-        /// 在这里输入 JVM 参数
+        /// 例如：-Dfile.encoding=UTF-8
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText2`.
         public static var jvmArgumentsPlaceholder: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "在这里输入 JVM 参数")
+            .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "例如：-Dfile.encoding=UTF-8")
         }
-        /// 用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。
+        /// 用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText3`.
         public static var jvmArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。")
         }
         /// 填写示例
         ///
@@ -219,17 +219,17 @@ extension Messages {
         public static var gameArguments: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText6", table: "Interface", fallback: "附加游戏参数")
         }
-        /// 在这里输入游戏参数
+        /// 例如：--width 1600 --height 900
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText7`.
         public static var gameArgumentsPlaceholder: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText7", table: "Interface", fallback: "在这里输入游戏参数")
+            .init(key: "appLaunchSettingsEditor.javaIssueText7", table: "Interface", fallback: "例如：--width 1600 --height 900")
         }
-        /// 传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。
+        /// 传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText8`.
         public static var gameArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText8", table: "Interface", fallback: "传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。")
         }
         /// 含空格的参数加引号；这里填写的窗口尺寸优先。
         ///
@@ -397,8 +397,8 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.bodyText1": .init("跟随默认设置", []),
             "Interface:appLaunchSettingsEditor.bodyText2": .init("自定义", []),
             "Interface:appLaunchSettingsEditor.bodyText3": .init("自定义%1$@", [.text]),
-            "Interface:appLaunchSettingsEditor.bodyText4": .init("恢复默认", []),
-            "Interface:appLaunchSettingsEditor.bodyText5": .init("%1$@恢复默认", [.text]),
+            "Interface:appLaunchSettingsEditor.bodyText4": .init("使用默认设置", []),
+            "Interface:appLaunchSettingsEditor.bodyText5": .init("%1$@使用默认设置", [.text]),
             "Interface:appLaunchSettingsEditor.majorText1": .init("自动选择 Java %1$@", [.text]),
             "Interface:appLaunchSettingsEditor.pathText1": .init("自动选择游戏所需的 Java", []),
             "Interface:appLaunchSettingsEditor.pathText2": .init("自动分配", []),
@@ -425,13 +425,13 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.majorText4": .init("本地 Java", []),
             "Interface:appLaunchSettingsEditor.majorText5": .init("选择文件或 JDK…", []),
             "Interface:appLaunchSettingsEditor.javaIssueText1": .init("附加 JVM 参数", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText2": .init("在这里输入 JVM 参数", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("用于 Java 虚拟机。通常留空；内存大小请优先在“Java 与内存”中调整。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText2": .init("例如：-Dfile.encoding=UTF-8", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("用于 Java 虚拟机，通常留空。参数用空格分隔，含空格的值加引号；内存大小可在“Java 与内存”中调整。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText4": .init("填写示例", []),
             "Interface:appLaunchSettingsEditor.javaIssueText5": .init("多个参数用空格分隔，含空格的值加引号。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText6": .init("附加游戏参数", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText7": .init("在这里输入游戏参数", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外启动选项。通常留空；窗口尺寸可直接在“窗口与启动”中设置。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText7": .init("例如：--width 1600 --height 900", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText8": .init("传给 Minecraft 的额外选项，通常留空。含空格的参数加引号；此处的窗口尺寸优先于“窗口与启动”中的设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText9": .init("含空格的参数加引号；这里填写的窗口尺寸优先。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText10": .init("窗口宽度", []),
             "Interface:appLaunchSettingsEditor.javaIssueText11": .init("窗口高度", []),

@@ -8,22 +8,23 @@ struct LaunchCommandsEditor: View {
         Toggle(Messages.AppLaunchCommandsEditor.customLaunchCommand.localized, isOn: $commands.enabled)
         if commands.enabled || !commands.isEmpty {
             Group {
-                Text(Messages.AppLaunchCommandsEditor.beforeLaunchCommand.localized).font(.headline)
-                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.beforeLaunchCommand.localized, prompt: Messages.AppLaunchCommandsEditor.beforeLaunchPlaceholder.localized, text: $commands.before)
-                Text(Messages.AppLaunchCommandsEditor.beforeLaunchHelp.localized).font(.caption).foregroundStyle(.secondary)
-                Text(Messages.AppLaunchCommandsEditor.afterLaunchCommand.localized).font(.headline)
-                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.afterLaunchCommand.localized, prompt: Messages.AppLaunchCommandsEditor.beforeLaunchPlaceholder.localized, text: $commands.after)
-                Text(Messages.AppLaunchCommandsEditor.afterLaunchHelp.localized).font(.caption).foregroundStyle(.secondary)
+                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.beforeLaunchCommand.localized,
+                                 prompt: Messages.AppLaunchCommandsEditor.beforeLaunchPlaceholder.localized, text: $commands.before,
+                                 help: Messages.AppLaunchCommandsEditor.beforeLaunchHelp.localized, showsTitle: true)
+                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.afterLaunchCommand.localized,
+                                 prompt: Messages.AppLaunchCommandsEditor.beforeLaunchPlaceholder.localized, text: $commands.after,
+                                 help: Messages.AppLaunchCommandsEditor.afterLaunchHelp.localized, showsTitle: true)
                 SettingsNumberField(title: Messages.AppLaunchCommandsEditor.commandTimeout.localized, value: $commands.timeoutSeconds, unit: Messages.AppLaunchCommandsEditor.seconds.localized)
-                Text(Messages.AppLaunchCommandsEditor.wrapperCommand.localized).font(.headline)
-                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.wrapperCommand.localized, prompt: Messages.AppLaunchCommandsEditor.wrapperPlaceholder.localized, text: $commands.wrapper)
-                Text(Messages.AppLaunchCommandsEditor.wrapperHelp.localized).font(.caption).foregroundStyle(.secondary)
+                SettingsTextArea(title: Messages.AppLaunchCommandsEditor.wrapperCommand.localized,
+                                 prompt: Messages.AppLaunchCommandsEditor.wrapperPlaceholder.localized, text: $commands.wrapper,
+                                 help: Messages.AppLaunchCommandsEditor.wrapperHelp.localized, showsTitle: true)
             }.disabled(!commands.enabled)
             DisclosureGroup(Messages.AppLaunchCommandsEditor.variablesAndExamples.localized) {
-                Text(Messages.AppLaunchCommandsEditor.shellExecutionHelp.localized).font(.caption).foregroundStyle(.secondary)
-                Text(#"printf '%s\n' "$RURI_GAME_DIRECTORY""#).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
-                Text(Messages.AppLaunchCommandsEditor.availableVariables.localized).font(.caption).textSelection(.enabled)
-                Text(Messages.AppLaunchCommandsEditor.wrapperPlaceholderHelp.localized).font(.caption).foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(Messages.AppLaunchCommandsEditor.shellExecutionHelp.localized).foregroundStyle(.secondary)
+                    Text(Messages.AppLaunchCommandsEditor.availableVariables.localized).textSelection(.enabled)
+                    Text(Messages.AppLaunchCommandsEditor.wrapperPlaceholderHelp.localized).foregroundStyle(.secondary)
+                }.font(.caption).fixedSize(horizontal: false, vertical: true).padding(.vertical, 4)
             }
         }
     }

@@ -21,17 +21,17 @@ extension Messages {
         public static var restoreDefaults: LocalizedMessage {
             .init(key: "appInstanceSettingsView.settingsIssueText1", table: "Interface", fallback: "恢复默认")
         }
-        /// 恢复所有启动设置
+        /// 全部使用默认设置
         ///
         /// Resource: `Interface.appInstanceSettingsView.settingsIssueText2`.
         public static var restoreLaunchSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText2", table: "Interface", fallback: "恢复所有启动设置")
+            .init(key: "appInstanceSettingsView.settingsIssueText2", table: "Interface", fallback: "全部使用默认设置")
         }
-        /// 恢复启动设置的继承关系，保留名称和图标。
+        /// 让此实例的所有启动选项跟随默认设置。
         ///
         /// Resource: `Interface.appInstanceSettingsView.settingsIssueText3`.
         public static var restoreInheritedSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "恢复启动设置的继承关系，保留名称和图标。")
+            .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "让此实例的所有启动选项跟随默认设置。")
         }
         /// 有未保存的更改
         ///
@@ -321,12 +321,18 @@ extension Messages {
         public static var chooseIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.panelText1", table: "Interface", fallback: "选择图标")
         }
+        /// 默认启动设置
+        ///
+        /// Resource: `Interface.appInstanceSettingsView.defaultLaunchSettings`.
+        public static var defaultLaunchSettings: LocalizedMessage {
+            .init(key: "appInstanceSettingsView.defaultLaunchSettings", table: "Interface", fallback: "默认启动设置")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appInstanceSettingsView.bodyText1": .init("实例设置", []),
             "Interface:appInstanceSettingsView.versionsText1": .init("整合包支持的 Java", []),
             "Interface:appInstanceSettingsView.settingsIssueText1": .init("恢复默认", []),
-            "Interface:appInstanceSettingsView.settingsIssueText2": .init("恢复所有启动设置", []),
-            "Interface:appInstanceSettingsView.settingsIssueText3": .init("恢复启动设置的继承关系，保留名称和图标。", []),
+            "Interface:appInstanceSettingsView.settingsIssueText2": .init("全部使用默认设置", []),
+            "Interface:appInstanceSettingsView.settingsIssueText3": .init("让此实例的所有启动选项跟随默认设置。", []),
             "Interface:appInstanceSettingsView.settingsIssueText4": .init("有未保存的更改", []),
             "Interface:appInstanceSettingsView.settingsIssueText5": .init("设置用于下一次启动", []),
             "Interface:appInstanceSettingsView.settingsIssueText6": .init("保存", []),
@@ -375,6 +381,7 @@ extension Messages {
             "Interface:appInstanceSettingsView.saveText1": .init("请填写实例名称。", []),
             "Interface:appInstanceSettingsView.issueText1": .init("此实例已不在当前文件夹中，请关闭设置后刷新。", []),
             "Interface:appInstanceSettingsView.panelText1": .init("选择图标", []),
+            "Interface:appInstanceSettingsView.defaultLaunchSettings": .init("默认启动设置", []),
         ]
     }
 }

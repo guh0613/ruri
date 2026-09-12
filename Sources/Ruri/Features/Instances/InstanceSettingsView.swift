@@ -45,8 +45,6 @@ struct InstanceSettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 20).padding(.top, 12)
             }
             HStack(spacing: 12) {
-                Menu(Messages.AppInstanceSettingsView.restoreDefaults.localized) { Button(Messages.AppInstanceSettingsView.restoreLaunchSettings.localized) { launchOverrides = .init(); settingsIssue = nil } }
-                    .fixedSize().help(Messages.AppInstanceSettingsView.restoreInheritedSettings.localized)
                 Text(hasChanges ? Messages.AppInstanceSettingsView.unsavedChanges.localized : Messages.AppInstanceSettingsView.applyNextLaunch.localized).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
@@ -74,9 +72,11 @@ struct InstanceSettingsView: View {
     }
     @ViewBuilder private var overview: some View {
         Section(Messages.AppInstanceSettingsView.instanceInfo.localized) {
-            LabeledContent(Messages.AppInstanceSettingsView.nameLabel.localized) {
+            HStack(spacing: 20) {
+                Text(Messages.AppInstanceSettingsView.nameLabel.localized).fixedSize()
                 TextField(Messages.AppInstanceSettingsView.instanceName.localized, text: $instance.name, prompt: Text(Messages.AppInstanceSettingsView.enterInstanceName.localized))
-                    .labelsHidden().textFieldStyle(.roundedBorder).frame(minWidth: 220).accessibilityLabel(Messages.AppInstanceSettingsView.instanceName.localized)
+                    .labelsHidden().textFieldStyle(.roundedBorder).multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity).accessibilityLabel(Messages.AppInstanceSettingsView.instanceName.localized)
             }
             Toggle(Messages.AppInstanceSettingsView.favoriteInstance.localized, isOn: $instance.favorite)
             HStack(spacing: 14) {
@@ -87,9 +87,12 @@ struct InstanceSettingsView: View {
                 }
                 Spacer()
                 if loadingIcon { ProgressView().controlSize(.small) }
-                Menu(Messages.AppInstanceSettingsView.changeIcon.localized) {
+                VStack(alignment: .trailing, spacing: 6) {
                     Button(Messages.AppInstanceSettingsView.chooseImage.localized, action: chooseIcon)
-                    if instance.iconPNG != nil { Button(Messages.AppInstanceSettingsView.restoreDefaultIcon.localized) { instance.iconPNG = nil } }
+                    if instance.iconPNG != nil {
+                        Button(Messages.AppInstanceSettingsView.restoreDefaultIcon.localized) { instance.iconPNG = nil }
+                            .buttonStyle(.borderless).font(.caption)
+                    }
                 }.fixedSize().disabled(loadingIcon)
             }.padding(.vertical, 5)
         }
@@ -99,6 +102,14 @@ struct InstanceSettingsView: View {
                 .disabled(model.busy || model.isInstanceInUse(instance.id) || !locationInstance.installed)
             SettingsActionRow(title: Messages.AppInstanceSettingsView.packUpdate.localized, detail: Messages.AppInstanceSettingsView.packUpdateDescription.localized, button: Messages.AppInstanceSettingsView.viewPackUpdate.localized) { updatingModpack = true }
                 .disabled(model.busy || (!ModpackUpdateStore.hasPending(paths: model.paths, instanceID: instance.id) && model.isInstanceInUse(instance.id)))
+        }
+        Section {
+            SettingsActionRow(title: Messages.AppInstanceSettingsView.defaultLaunchSettings.localized,
+                              detail: Messages.AppInstanceSettingsView.restoreInheritedSettings.localized,
+                              button: Messages.AppInstanceSettingsView.restoreLaunchSettings.localized) {
+                launchOverrides = .init()
+                settingsIssue = nil
+            }.disabled(LaunchSettingKey.allCases.allSatisfy { launchOverrides.inherits($0) })
         }
     }
     @ViewBuilder private var files: some View {
