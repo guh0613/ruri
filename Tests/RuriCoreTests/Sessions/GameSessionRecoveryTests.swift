@@ -78,9 +78,10 @@ struct GameSessionRecoveryTests {
         var changed = record; changed.failure = "updated elsewhere"; try save(changed, paths: paths)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: true) }
         #expect(try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id) == changed)
+        let beforeExit = changed
         changed.exit = .init(status: 1, reason: .exit, processID: 123, startedAt: record.createdAt, endedAt: Date(), stopRequested: false)
         try save(changed, paths: paths)
-        #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: changed, userConfirmedEnded: true) }
+        #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: beforeExit, userConfirmedEnded: true) }
         #expect(try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id) == changed)
     }
 }

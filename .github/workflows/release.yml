@@ -70,8 +70,8 @@ jobs:
           xcrun swift --version
       - name: Build and test
         run: |
-          scripts/swift-build.sh --force-resolved-versions
-          scripts/swift-build.sh test --force-resolved-versions
+          scripts/swift-build.sh -c release --force-resolved-versions
+          scripts/swift-build.sh test -c release --no-parallel --force-resolved-versions
       - name: Build DMG
         env:
           RURI_VERSION: ${{ needs.metadata.outputs.version }}
@@ -88,6 +88,7 @@ jobs:
             build/dmg/*.dmg
             build/dmg/*.sha256
           if-no-files-found: error
+          overwrite: true
           compression-level: 0
           retention-days: 14
 

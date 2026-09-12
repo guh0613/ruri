@@ -33,6 +33,9 @@ struct HMCLPackTests {
             ("fabric", "1.21.1", ["libraries": [["name": "net.fabricmc:fabric-loader:0.19.5"]]], .fabric, "0.19.5"),
             ("quilt", "1.21.1", ["libraries": [["name": "org.quiltmc:quilt-loader:0.29.3"]]], .quilt, "0.29.3"),
             ("forge", "1.12.2", ["libraries": [["name": "net.minecraftforge:forge:1.12.2-14.23.5.2864:universal"]]], .forge, "14.23.5.2864"),
+            ("optifine", "1.12.2", ["libraries": [["name": "optifine:OptiFine:1.12.2_HD_U_G5"]]], .optifine, "HD_U_G5"),
+            ("liteloader", "1.12.2", ["patches": [["id": "liteloader", "version": "1.12.2"]]], .liteloader, "1.12.2"),
+            ("legacyfabric", "1.8.9", ["libraries": [["name": "net.fabricmc:fabric-loader:0.19.5"], ["name": "net.legacyfabric:intermediary:1.8.9"]]], .legacyfabric, "0.19.5"),
             ("neo", "1.21.1", ["libraries": [["name": "net.neoforged.fancymodloader:loader:4.0.0"], ["name": "net.minecraftforge:fmlloader:1.21.1-52.0.0"]], "arguments": ["game": ["--fml.neoForgeVersion", "21.1.250"]]], .neoforge, "21.1.250"),
             ("patch", "1.21.1", ["patches": [["id": "fabric", "version": "0.19.5", "libraries": [["name": "net.fabricmc:fabric-loader:0.18.0"]]]]], .fabric, "0.19.5")
         ]
@@ -54,9 +57,6 @@ struct HMCLPackTests {
     }
     @Test func unsupportedHMCLComponentsAreNotSilentlyImportedAsVanilla() async throws {
         for version: [String: Any] in [
-            ["libraries": [["name": "optifine:OptiFine:1.12.2_HD_U_G5"]]],
-            ["patches": [["id": "liteloader", "version": "1.12.2"]]],
-            ["libraries": [["name": "net.fabricmc:fabric-loader:0.19.5"], ["name": "net.legacyfabric:intermediary:1.8.9"]]],
             ["patches": [["id": "fabric", "version": "1"], ["id": "forge", "version": "2"]]],
             ["mainClass": "custom.bootstrap.Main", "libraries": []]
         ] {

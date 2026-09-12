@@ -40,4 +40,5 @@ jobs:
       - name: Build all products
         run: scripts/swift-build.sh --force-resolved-versions
       - name: Test
-        run: scripts/swift-build.sh test --force-resolved-versions
+        # Process/timeout fixtures need prompt scheduling on shared runners.
+        run: scripts/swift-build.sh test --no-parallel --force-resolved-versions
