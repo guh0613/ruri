@@ -203,7 +203,7 @@ import RuriCore
                 let instance = try stored.launchSnapshot(defaults: state.settings)
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let runtimes = await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 })
-                let java = try JavaDiscovery.select(from: runtimes, major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
+                let java = try GameJavaRequirement(instance: instance, manifest: manifest).require(from: runtimes)
                 let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "RuriTest"), paths: paths)
                 print(plan.redactedCommand)
                 if let names = plan.customEnvironmentNames, !names.isEmpty { print(Messages.CLICLI.environmentNames(names.joined(separator: ", ")).localized) }
@@ -250,7 +250,7 @@ import RuriCore
                         return try WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths)
                     }
                     try recorder.transition(.java)
-                    let java = try JavaDiscovery.select(from: await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 }), major: instance.preferredJavaMajor(default: manifest.requiredJava), architecture: GameInstaller.architecture(for: manifest), preferredPath: instance.javaPath)
+                    let java = try GameJavaRequirement(instance: instance, manifest: manifest).require(from: await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 }))
                     try recorder.setJava(java.label + " · " + java.version)
                     try recorder.transition(.arguments)
                     try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)

@@ -53,6 +53,7 @@ enum MessageCatalog {
         result.merge(Messages.AppInstancePresentation.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceQuickActions.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceSettingsView.definitions) { first, _ in first }
+        result.merge(Messages.AppJavaSetup.definitions) { first, _ in first }
         result.merge(Messages.AppJavaView.definitions) { first, _ in first }
         result.merge(Messages.AppLaunchButton.definitions) { first, _ in first }
         result.merge(Messages.AppLaunchCommandsEditor.definitions) { first, _ in first }
@@ -115,6 +116,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreGameDirectoryStore.definitions) { first, _ in first }
         result.merge(Messages.CoreGameExit.definitions) { first, _ in first }
         result.merge(Messages.CoreGameInstance.definitions) { first, _ in first }
+        result.merge(Messages.CoreGameJavaRequirement.definitions) { first, _ in first }
         result.merge(Messages.CoreGameMonitor.definitions) { first, _ in first }
         result.merge(Messages.CoreGameNormalQuit.definitions) { first, _ in first }
         result.merge(Messages.CoreGamePlaytime.definitions) { first, _ in first }
@@ -129,6 +131,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreImportedMinecraftInstallation.definitions) { first, _ in first }
         result.merge(Messages.CoreInstallationState.definitions) { first, _ in first }
         result.merge(Messages.CoreInstaller.definitions) { first, _ in first }
+        result.merge(Messages.CoreInstallerJavaRuntime.definitions) { first, _ in first }
         result.merge(Messages.CoreInstallerProcess.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceComponents.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceCopier.definitions) { first, _ in first }
@@ -142,6 +145,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreInstanceMoveSnapshot.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceMover.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceTransfer.definitions) { first, _ in first }
+        result.merge(Messages.CoreJavaBytecode.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaInstaller.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaRuntime.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaRuntimeLease.definitions) { first, _ in first }

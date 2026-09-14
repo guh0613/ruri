@@ -3042,3 +3042,9 @@
 
 /* @symbol CoreWorldQuickPlay.runDirectoryChanged @args - */
 "coreWorldQuickPlay.currentText1" = "实例运行目录在选择存档后改变，请重新选择世界。";
+/* @symbol CoreGameJavaRequirement.missingCompatibleJava @args text,text */
+"coreGameJavaRequirement.missingCompatibleJava" = "没有找到满足要求的 Java（推荐 Java %1$@，%2$@）。请前往 Java 页面安装或选择本地 Java。";
+/* @symbol CoreInstallerJavaRuntime.javaRequired @args text,text */
+"coreInstallerJavaRuntime.javaRequired" = "%1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。";
+/* @symbol CoreJavaBytecode.invalidClass @args text */
+"coreJavaBytecode.invalidClass" = "无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。";

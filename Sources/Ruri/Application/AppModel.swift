@@ -158,7 +158,11 @@ import RuriCore
                 do {
                     if let instanceID { lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID) }
                     await applyNetworkSettings()
-                    try await work(id)
+                    try await InstallerJavaRuntime.$request.withValue({ [self] minimum, component in
+                        return try await self.javaForInstaller(minimumMajor: minimum, component: component, activityID: id)
+                    }) {
+                        try await work(id)
+                    }
                     journal.finish(id, status: .completed)
                 } catch {
                     let cancelled = Task.isCancelled || error is CancellationError

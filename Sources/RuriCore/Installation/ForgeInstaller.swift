@@ -57,6 +57,8 @@ public actor ForgeInstaller {
         let version: String?
         let libraries: [Library]?
         let versionInfo: VersionManifest?
+        struct Processor: Decodable { let jar: String; let classpath: [String]?; let sides: [String]? }
+        let processors: [Processor]?
         struct Legacy: Decodable { let minecraft: String?; let path: String?; let filePath: String? }
         let install: Legacy?
     }
@@ -106,14 +108,11 @@ public actor ForgeInstaller {
             } else if artifact.url?.scheme == "https" { requests.append(DownloadItem(artifact, to: target)) }
         }
         try await downloader.download(requests, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreForgeInstaller.prepareDependencies, completed: done, total: total)) }
-        var runtimes = await JavaDiscovery.scan(paths: paths)
-        let java: JavaRuntime
-        if let runtime = try? JavaDiscovery.select(from: runtimes, major: base.requiredJava, architecture: GameInstaller.architecture(for: base)) { java = runtime }
-        else {
-            let service = JavaInstaller(paths: paths)
-            guard let runtime = try await service.available().first(where: { $0.major == base.requiredJava && $0.architecture == GameInstaller.architecture(for: base) }) else { throw RuriError.message(Messages.CoreForgeInstaller.javaRequired(String(describing: base.requiredJava))) }
-            java = try await service.install(runtime, downloader: downloader, progress: progress); runtimes.append(java)
-        }
+        let processorCoordinates = (profile.processors ?? []).filter { $0.sides == nil || $0.sides!.contains("client") }
+            .flatMap { [$0.jar] + ($0.classpath ?? []) }
+        let processorFiles = try processorCoordinates.map { try LauncherPaths.safePath(Library.mavenPath($0), within: workLibraries) }
+        let minimumJava = try JavaBytecode.minimumMajor(in: [jar] + processorFiles)
+        let java = try await InstallerJavaRuntime.resolve(minimumMajor: minimumJava, component: instance.loader.title, paths: paths)
         await progress(InstallProgress(Messages.CoreForgeInstaller.runInstaller(instance.loader.title)))
         let runner = InstallerProcess()
         let log = paths.instance(instance.id).appendingPathComponent("installer.log")

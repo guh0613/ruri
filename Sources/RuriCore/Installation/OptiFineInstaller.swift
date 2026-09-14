@@ -66,15 +66,8 @@ struct OptiFineInstaller: Sendable {
             let source = try paths.clientJar(base.jar ?? instance.repositoryVersionID ?? instance.gameVersion, instance: instance)
             if DownloadManager.valid(source, item: DownloadItem(client, to: source)) { try FileManager.default.copyItem(at: source, to: vanilla) }
             else { try await downloader.fetch(DownloadItem(client, to: vanilla)) }
-            var runtimes = await JavaDiscovery.scan(paths: paths)
-            let major = max(8, base.requiredJava), architecture = GameInstaller.architecture(for: base)
-            let java: JavaRuntime
-            if let existing = try? JavaDiscovery.select(from: runtimes, major: major, architecture: architecture) { java = existing }
-            else {
-                let service = JavaInstaller(paths: paths)
-                guard let runtime = try await service.available().first(where: { $0.major == major && $0.architecture == architecture }) else { throw RuriError.message(Messages.CoreOptiFineInstaller.javaRequiredForGeneration(String(describing: major))) }
-                java = try await service.install(runtime, downloader: downloader, progress: progress); runtimes.append(java)
-            }
+            let minimumJava = try JavaBytecode.minimumMajor(in: [file])
+            let java = try await InstallerJavaRuntime.resolve(minimumMajor: minimumJava, component: instance.loader.title, paths: paths)
             await progress(InstallProgress(Messages.CoreOptiFineInstaller.generatePatchLibrary))
             let runner = InstallerProcess(), log = paths.instance(instance.id).appendingPathComponent("installer.log")
             let status = try await runner.run(java: java, arguments: ["-Djava.awt.headless=true", "-cp", file.path, "optifine.Patcher", vanilla.path, file.path, patched.path],

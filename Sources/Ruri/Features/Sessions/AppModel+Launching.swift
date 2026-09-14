@@ -67,25 +67,8 @@ extension AppModel {
                     try advanceSession(.manifest)
                     let manifest = try await installer.loadManifest(instance)
                     if world != nil { try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest) }
-                    let architecture = GameInstaller.architecture(for: manifest)
-                    let requiredJava = try instance.preferredJavaMajor(default: manifest.requiredJava)
                     try advanceSession(.java)
-                    let java: JavaRuntime
-                    if instance.javaPath == nil, !runtimes.contains(where: { $0.major == requiredJava && $0.architecture == architecture }) {
-                        let service = JavaInstaller(paths: paths)
-                        progress(id, InstallProgress(Messages.AppAppModelLaunching.preparingJava(String(describing: requiredJava))))
-                        guard let runtime = try await service.available().first(where: { $0.major == requiredJava && $0.architecture == architecture }) else {
-                            throw RuriError.message(Messages.AppAppModelLaunching.javaRuntimeUnavailable)
-                        }
-                        java = try await service.install(runtime, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
-                        await scanJava()
-                    } else {
-                        var available = runtimes
-                        if let path = instance.javaPath, !available.contains(where: { $0.path == path }) {
-                            available.append(try await Task.detached(priority: .utility) { try JavaDiscovery.inspect(path) }.value)
-                        }
-                        java = try JavaDiscovery.select(from: available, major: requiredJava, architecture: architecture, preferredPath: instance.javaPath)
-                    }
+                    let java = try await javaForLaunch(instance: instance, manifest: manifest, activityID: id)
                     try Task.checkCancellation()
                     try recorder.setJava(java.label + " · " + java.version)
                     try advanceSession(.arguments)
@@ -103,11 +86,13 @@ extension AppModel {
                     publishSession(recorder.record)
                 } catch {
                     finishLaunchPresentation(recorder.record.id)
-                    do { try recorder.fail(error, cancelled: Task.isCancelled) } catch { showRecordingError(error) }
+                    let cancelled = Task.isCancelled || error is CancellationError
+                    do { try recorder.fail(error, cancelled: cancelled) } catch { showRecordingError(error) }
                     publishSession(recorder.record)
                     if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }
                     sessionRecorder = nil
-                    if !Task.isCancelled { showLogs = true; report(Messages.AppAppModelLaunching.launchFailureNotice(recorder.record.title), level: .error, sessionID: recorder.record.id) }
+                    if cancelled { throw CancellationError() }
+                    showLogs = true; report(Messages.AppAppModelLaunching.launchFailureNotice(recorder.record.title), level: .error, sessionID: recorder.record.id)
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             }

@@ -2738,7 +2738,7 @@
 "appLaunchSettingsEditor.majorText2" = "Java 主版本";
 
 /* @symbol AppLaunchSettingsEditor.javaRuntimeHelp @args - */
-"appLaunchSettingsEditor.majorText3" = "缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。";
+"appLaunchSettingsEditor.majorText3" = "启动时优先使用本地兼容的 Java；缺少时会询问是否下载，也可选择本地 Java。指定主版本时仅使用该版本。";
 
 /* @symbol AppLaunchSettingsEditor.localJava @args - */
 "appLaunchSettingsEditor.majorText4" = "本地 Java";
@@ -3704,3 +3704,20 @@
 
 /* @symbol LauncherLog.clearSearch @args - */
 "launcherLog.clearSearch" = "清除搜索";
+/* @symbol AppJavaSetup.javaRequired @args - */
+"appJavaSetup.javaRequired" = "需要 Java";
+
+/* @symbol AppJavaSetup.gameRequirement @args text,text,text */
+"appJavaSetup.gameRequirement" = "启动“%1$@”需要兼容的 Java，目前没有找到满足要求的本地版本（推荐 Java %2$@，%3$@）。是否下载并继续？也可以选择已有的 Java。";
+
+/* @symbol AppJavaSetup.installerRequirement @args text,text */
+"appJavaSetup.installerRequirement" = "%1$@ 的安装处理程序需要 Java %2$@ 或更高版本，目前没有找到可用的本地 Java。是否下载并继续安装？这不会更改游戏的 Java 设置。";
+
+/* @symbol AppJavaSetup.downloadAndContinue @args - */
+"appJavaSetup.downloadAndContinue" = "下载并继续";
+
+/* @symbol AppJavaSetup.chooseLocal @args - */
+"appJavaSetup.chooseLocal" = "选择本地 Java…";
+
+/* @symbol AppJavaSetup.waitingForChoice @args - */
+"appJavaSetup.waitingForChoice" = "等待选择 Java";

@@ -16,7 +16,6 @@ struct PreferencesView: View {
             dataAndAbout
         }
         .formStyle(.grouped).scrollContentBackground(.hidden)
-        .frame(maxWidth: 740, maxHeight: .infinity)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .sheet(isPresented: $showLaunchDefaults) { DefaultLaunchSettingsView(settings: model.state.settings) }
         .onChange(of: model.state.settings.appearance) { model.save() }

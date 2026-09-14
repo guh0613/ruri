@@ -165,11 +165,11 @@ extension Messages {
         public static var javaMajorVersion: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.majorText2", table: "Interface", fallback: "Java 主版本")
         }
-        /// 缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。
+        /// 启动时优先使用本地兼容的 Java；缺少时会询问是否下载，也可选择本地 Java。指定主版本时仅使用该版本。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.majorText3`.
         public static var javaRuntimeHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.majorText3", table: "Interface", fallback: "缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。")
+            .init(key: "appLaunchSettingsEditor.majorText3", table: "Interface", fallback: "启动时优先使用本地兼容的 Java；缺少时会询问是否下载，也可选择本地 Java。指定主版本时仅使用该版本。")
         }
         /// 本地 Java
         ///
@@ -427,7 +427,7 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.fieldsText3": .init("按主版本选择", []),
             "Interface:appLaunchSettingsEditor.fieldsText4": .init("已安装的运行时", []),
             "Interface:appLaunchSettingsEditor.majorText2": .init("Java 主版本", []),
-            "Interface:appLaunchSettingsEditor.majorText3": .init("缺少此版本时尝试从 Mojang 下载；不符合游戏或整合包要求时会提示。", []),
+            "Interface:appLaunchSettingsEditor.majorText3": .init("启动时优先使用本地兼容的 Java；缺少时会询问是否下载，也可选择本地 Java。指定主版本时仅使用该版本。", []),
             "Interface:appLaunchSettingsEditor.majorText4": .init("本地 Java", []),
             "Interface:appLaunchSettingsEditor.majorText5": .init("选择文件或 JDK…", []),
             "Interface:appLaunchSettingsEditor.javaIssueText1": .init("附加 JVM 参数", []),

@@ -60,8 +60,7 @@ public enum LaunchBuilder {
             throw RuriError.message(Messages.CoreLaunch.unsupportedArchitecture)
         }
         guard java.architecture == architecture else { throw RuriError.message(Messages.CoreLaunch.nativeArchitectureMismatch(String(describing: architecture))) }
-        guard java.major >= manifest.requiredJava, instance.supportedJavaMajors?.isEmpty != false || instance.supportedJavaMajors!.contains(java.major) else { throw RuriError.message(Messages.CoreLaunch.javaVersionIncompatible) }
-        if instance.javaMajor != nil, java.major != (try instance.preferredJavaMajor(default: manifest.requiredJava)) { throw RuriError.message(Messages.CoreLaunch.javaMajorVersionMismatch) }
+        try GameJavaRequirement(instance: instance, manifest: manifest).validate(java)
         let natives = paths.instance(instance.id).appendingPathComponent("natives")
         let resources = try paths.resources(for: instance)
         let jarID = manifest.jar ?? instance.gameVersion
