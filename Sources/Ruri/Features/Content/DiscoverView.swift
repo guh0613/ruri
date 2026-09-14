@@ -95,7 +95,7 @@ struct DiscoverView: View {
                 HStack(spacing: 16) { contentPicker.fixedSize(); Spacer(minLength: 0); sourcePicker.frame(width: 192) }
                 VStack(alignment: .leading, spacing: 12) { contentPicker; sourcePicker.frame(width: 192) }
             }
-            CatalogWrappingLayout(spacing: 10) {
+            WrappingLayout(spacing: 10) {
                 gameFilter
                 loaderFilter
                 categoryFilter

@@ -20,7 +20,7 @@ struct CatalogReleaseInfo: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(version.name).font(.title2.weight(.semibold))
                     Text(version.filename).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                    CatalogWrappingLayout(spacing: 6) {
+                    WrappingLayout(spacing: 6) {
                         CatalogGameVersionsBadge(versions: version.gameVersions)
                         if !version.loaders.isEmpty { CatalogLoaderBadges(loaders: version.loaders) }
                     }

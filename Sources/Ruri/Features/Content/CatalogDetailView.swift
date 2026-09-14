@@ -67,7 +67,7 @@ struct CatalogDetailView: View {
                     Button(D.getVersions.localized) { tab = "versions" }.buttonStyle(.borderedProminent).controlSize(.large)
                 }
             }
-            CatalogWrappingLayout(spacing: 12) { facts }.frame(maxWidth: .infinity, alignment: .leading)
+            WrappingLayout(spacing: 12) { facts }.frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     @ViewBuilder private var facts: some View {
@@ -153,7 +153,7 @@ struct CatalogVersionsView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 12) {
-                CatalogWrappingLayout(spacing: 10) { filters }.frame(maxWidth: .infinity, alignment: .leading)
+                WrappingLayout(spacing: 10) { filters }.frame(maxWidth: .infinity, alignment: .leading)
                 if let instance = referenceInstance {
                     CatalogInstanceFilterContext(instance: instance) { selectReference(nil) }
                 }
@@ -273,7 +273,7 @@ struct CatalogVersionsView: View {
                 Spacer(minLength: 4)
                 TagPill(text: version.channel == "release" ? D.release.localized : version.channel.capitalized, color: version.channel == "release" ? .green : .orange)
             }
-            CatalogWrappingLayout(spacing: 8) {
+            WrappingLayout(spacing: 8) {
                 CatalogGameVersionsBadge(versions: version.gameVersions)
                 if !version.loaders.isEmpty { CatalogLoaderBadges(loaders: version.loaders) }
             }.frame(maxWidth: .infinity, alignment: .leading)

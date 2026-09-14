@@ -51,7 +51,7 @@ struct CatalogInstallView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(project.title).font(.title2.weight(.semibold))
                     Text(version.name).font(.callout).foregroundStyle(.secondary)
-                    CatalogWrappingLayout(spacing: 6) {
+                    WrappingLayout(spacing: 6) {
                         CatalogGameVersionsBadge(versions: version.gameVersions)
                         if !version.loaders.isEmpty { CatalogLoaderBadges(loaders: version.loaders) }
                     }

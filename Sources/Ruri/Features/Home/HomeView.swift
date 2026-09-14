@@ -70,8 +70,6 @@ struct HomeView: View {
                         Divider().frame(height: 28)
                         StatTile(label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized)
                         Divider().frame(height: 28)
-                        StatTile(label: Messages.AppHomeView.gameVersion.localized, value: "\(instance.gameVersion) · \(instance.loaderLabel)")
-                        Divider().frame(height: 28)
                         StatTile(label: Messages.AppHomeView.memory.localized, value: model.memoryLabel(instance))
                     }
                     .padding(.horizontal, 24).padding(.vertical, 14)
@@ -96,7 +94,7 @@ struct HomeView: View {
             }.buttonStyle(.plain).help(Messages.AppHomeView.editInstance.localized)
             VStack(alignment: .leading, spacing: 6) {
                 Text(instance.name).font(.title2.weight(.semibold)).lineLimit(2)
-                Text(instance.subtitle).foregroundStyle(.secondary).lineLimit(2)
+                InstanceVersionBadges(instance: instance)
                 statusLine(instance).font(.callout).foregroundStyle(.secondary)
             }.fixedSize(horizontal: false, vertical: true)
         }
@@ -131,6 +129,7 @@ struct HomeView: View {
                             InstanceIcon(loader: instance?.loader ?? .vanilla, size: 40, png: instance?.iconPNG)
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(record.instanceName).font(.headline).lineLimit(1)
+                                InstanceVersionBadges(session: record)
                                 Text(model.runningLabel(record.instanceID) ?? record.stage.title).font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
@@ -178,7 +177,7 @@ struct HomeView: View {
             InstanceIcon(loader: instance.loader, size: 40, png: instance.iconPNG)
             VStack(alignment: .leading, spacing: 3) {
                 Text(instance.name).font(.headline).lineLimit(1)
-                Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                InstanceVersionBadges(instance: instance, compact: true)
             }
             Spacer(minLength: 12)
             Text(model.runningLabel(instance.id) ?? instance.lastPlayedLabel).font(.caption).foregroundStyle(.tertiary).lineLimit(1)

@@ -63,7 +63,8 @@ struct InstanceIcon: View {
             if let png, let image = InstanceIconCache.image(png) {
                 Image(nsImage: image).resizable().scaledToFill()
             } else {
-                Image(systemName: loader.symbol).font(.system(size: size * 0.44, weight: .medium))
+                LoaderGlyph.image(for: loader.modrinthLoader).resizable().scaledToFit()
+                    .frame(width: size * 0.52, height: size * 0.52)
                     .foregroundStyle(Theme.accent)
                     .frame(width: size, height: size)
                     .background(Theme.accent.opacity(0.10))

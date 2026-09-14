@@ -99,18 +99,18 @@ struct LibraryView: View {
     private func card(_ instance: GameInstance) -> some View {
         Surface(padding: 16) {
             VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .top, spacing: 12) {
+                HStack(spacing: 12) {
                     iconButton(instance, size: 48)
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 6) {
                             Text(instance.name).font(.headline).lineLimit(1)
                             if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption2) }
                         }
-                        Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(2)
                     }
                     Spacer(minLength: 8)
                     InstanceMenu(instance: instance, onTrash: { deleteTarget = $0 })
                 }
+                InstanceVersionBadges(instance: instance)
                 HStack(spacing: 10) {
                     TagPill(text: model.statusLabel(instance), color: model.statusColor(instance))
                     Text(model.memoryLabel(instance)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
@@ -150,7 +150,7 @@ struct LibraryView: View {
                     Text(instance.name).font(.headline).lineLimit(1)
                     if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption2) }
                 }
-                Text(instance.subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                InstanceVersionBadges(instance: instance, compact: true)
                 if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.orange).lineLimit(1).help(issue) }
             }
             Spacer(minLength: 12)
