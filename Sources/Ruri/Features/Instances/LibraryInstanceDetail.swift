@@ -24,35 +24,38 @@ struct LibraryInstanceDetail<Notices: View>: View {
     private var sessions: [GameSession] { model.sessions.filter { $0.instanceID == instance.id } }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                hero
-                VStack(alignment: .leading, spacing: 32) {
-                    notices
-                    strip
-                    worldsSection
-                    historySection
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    hero(topInset: geometry.safeAreaInsets.top)
+                    VStack(alignment: .leading, spacing: 32) {
+                        notices
+                        strip
+                        worldsSection
+                        historySection
+                    }
+                    .padding(.horizontal, 28).padding(.bottom, 32)
+                    .frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, 28).padding(.bottom, 32)
-                .frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
             }
+            .ignoresSafeArea(.container, edges: .top)
+            .softTopScrollEdge()
         }
-        .softTopScrollEdge()
         .task(id: managerOpen) { if !managerOpen { await load() } }
     }
 
     // MARK: Header
 
-    private var hero: some View {
+    private func hero(topInset: CGFloat) -> some View {
         ViewThatFits(in: .horizontal) {
             HStack(alignment: .bottom, spacing: 24) { identity; Spacer(minLength: 16); actions }
             VStack(alignment: .leading, spacing: 18) { identity; actions }
         }
-        .padding(.horizontal, 28).padding(.top, 64).padding(.bottom, 28)
+        .padding(.horizontal, 28).padding(.top, 64 + topInset).padding(.bottom, 28)
         .frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
-        // Reach up under the toolbar so the wash continues behind it instead
-        // of starting at the content edge.
-        .background { backdrop.padding(.top, -160).clipped().accessibilityHidden(true) }
+        // The scroll view extends into the title bar; only the controls need
+        // its safe-area inset, so the artwork fills the entire header.
+        .background { backdrop.clipped().accessibilityHidden(true) }
     }
 
     /// A soft wash of the instance's own icon, or of the accent colour with

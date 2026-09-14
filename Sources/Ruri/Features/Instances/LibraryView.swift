@@ -39,6 +39,7 @@ struct LibraryView<Sidebar: View>: View {
                 }
         } detail: {
             detailColumn
+                .toolbarBackground(.hidden, for: .windowToolbar)
                 .toolbar { RootToolbar(model: model) }
         }
         .confirmationDialog(Messages.AppLibraryView.moveInstanceToTrashConfirmation.localized, isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
