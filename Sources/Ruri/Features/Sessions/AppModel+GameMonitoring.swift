@@ -155,6 +155,7 @@ extension AppModel {
     }
     private func applyLaunchPresentation(_ record: GameSession) {
         guard let presentation = launchPresentations[record.id], record.gameIdentity?.isAlive == true else { return }
+        if record.host?.backend == .native && record.host?.windowReadyAt == nil { return }
         launchPresentations.removeValue(forKey: record.id)
         guard presentation.hideLauncher, !presentation.showLogs, !showLogs else { return }
         if !NSApp.isHidden {

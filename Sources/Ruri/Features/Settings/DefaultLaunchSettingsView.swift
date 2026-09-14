@@ -29,7 +29,7 @@ import RuriCore
             if draft[keyPath: key] == original[keyPath: key] { draft[keyPath: key] = latest[keyPath: key] }
         }
         rebase(\.memory); rebase(\.java); rebase(\.jvmArguments); rebase(\.gameArguments)
-        rebase(\.window); rebase(\.presentation); rebase(\.environment); rebase(\.commands)
+        rebase(\.window); rebase(\.presentation); rebase(\.environment); rebase(\.commands); rebase(\.macOS)
         original = latest
         overrides = .init(fixing: draft)
     }

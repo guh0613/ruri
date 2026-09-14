@@ -83,6 +83,7 @@ struct PortableInstance: Codable {
     let height: Int
     let fullscreen: Bool?
     let launchPresentation: LaunchPresentation?
+    var macOSGameSettings: MacOSGameSettings?
     let launchCommands: LaunchCommands?
     let iconPNG: Data?
     let installation: ImportedMinecraftInstallation?
@@ -91,7 +92,7 @@ struct PortableInstance: Codable {
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         javaMajor = instance.javaMajor
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
-        fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation
+        fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation; macOSGameSettings = instance.macOSGameSettings
         launchCommands = instance.launchCommands?.isEmpty == false ? instance.launchCommands : nil
         iconPNG = instance.iconPNG; self.installation = installation
         if installation != nil { formatVersion = 2 }
@@ -103,7 +104,7 @@ struct PortableInstance: Codable {
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.javaMajor = javaMajor
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
-        result.fullscreen = fullscreen; result.launchPresentation = launchPresentation
+        result.fullscreen = fullscreen; result.launchPresentation = launchPresentation; result.macOSGameSettings = macOSGameSettings
         result.launchCommands = launchCommands
         result.launchCommands?.enabled = false
         result.iconPNG = iconPNG; result.importedInstallation = installation

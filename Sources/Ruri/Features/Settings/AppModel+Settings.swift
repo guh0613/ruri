@@ -8,7 +8,7 @@ extension AppModel {
         func apply<Value: Equatable>(_ key: WritableKeyPath<LaunchSettingsValues, Value>) {
             if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
         }
-        apply(\.memory); apply(\.java); apply(\.jvmArguments); apply(\.gameArguments); apply(\.window); apply(\.presentation); apply(\.environment); apply(\.commands)
+        apply(\.memory); apply(\.java); apply(\.jvmArguments); apply(\.gameArguments); apply(\.window); apply(\.presentation); apply(\.environment); apply(\.commands); apply(\.macOS)
         state.settings.defaultLaunchSettings = current; save()
         Task { await scanJava() }
         return !readOnly

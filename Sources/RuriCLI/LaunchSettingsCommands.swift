@@ -12,6 +12,7 @@ extension CLI {
             var key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : args[1] == "set" && args[2] == "environment-file" ? .environment : LaunchSettingKey(rawValue: args[2])
             if args[1] == "set", ["preLaunchCommand", "postExitCommand", "commandWrapper", "commandTimeout"].contains(args[2]) { key = .commands }
             if args[1] == "set", args[2] == "debugLogging" { key = .presentation }
+            if args[1] == "set", ["nativeFullscreen", "instanceAppearance"].contains(args[2]) { key = .macOS }
             let memoryDetail = args[1] == "set" && ["initialMemory", "metaspace"].contains(args[2])
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
@@ -67,6 +68,15 @@ extension CLI {
                             guard let enabled = Bool(value) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.commandsValueInvalid) }; commands.enabled = enabled
                         }
                         overrides.commands = commands
+                    case .macOS:
+                        guard let enabled = Bool(value) else { throw RuriError.message(usage) }
+                        var settings = overrides.resolve(defaults: defaults).macOS
+                        switch args[2] {
+                        case "nativeFullscreen": settings.nativeFullscreen = enabled
+                        case "instanceAppearance": settings.instanceAppearance = enabled
+                        default: settings.enabled = enabled
+                        }
+                        overrides.macOS = settings
                     case .environment:
                         if args[2] == "environment-file" {
                             let file = URL(fileURLWithPath: value)

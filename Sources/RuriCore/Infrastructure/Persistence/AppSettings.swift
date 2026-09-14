@@ -22,5 +22,6 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var defaultLaunchPresentation: LaunchPresentation?
     public var defaultEnvironment: String?
     public var defaultLaunchCommands: LaunchCommands?
+    public var defaultMacOSGameSettings: MacOSGameSettings?
     public init() {}
 }

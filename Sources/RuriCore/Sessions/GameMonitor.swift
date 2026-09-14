@@ -3,6 +3,7 @@ import Foundation
 import Darwin
 
 struct MonitorLaunchRequest: Codable {
+    static let currentVersion = 9
     let version: Int
     let root: URL
     let instanceID: UUID
@@ -72,7 +73,7 @@ public enum GameMonitorClient {
         try process.run()
         defer { try? input.fileHandleForWriting.close() }
         guard let identity = ProcessIdentity.read(process.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.monitorIdentityFailed) }
-        let request = MonitorLaunchRequest(version: 8, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
+        let request = MonitorLaunchRequest(version: MonitorLaunchRequest.currentVersion, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
                                            monitor: identity, plan: plan, secrets: secrets, storage: paths.monitorSnapshot(for: recorder.record.instanceID),
                                            language: LocalizationContext.current.language, region: LocalizationContext.current.regionIdentifier)
         let data = try JSONEncoder().encode(request)
@@ -138,8 +139,9 @@ public enum GameMonitorService {
             }
             let decoded = try JSONDecoder().decode(MonitorLaunchRequest.self, from: data)
             request = decoded
-            guard (1...8).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+            guard (1...MonitorLaunchRequest.currentVersion).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
                   (decoded.plan.offlineSkin == nil || decoded.version >= 7),
+                  (decoded.plan.host == nil || decoded.version >= 9),
                   decoded.monitor == ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.invalidMonitorRequest) }
             let context = LocalizationContext(language: decoded.language, region: decoded.region ?? Locale.current.identifier)
             return try await LocalizationContext.$current.withValue(context) {
@@ -194,7 +196,10 @@ public enum GameMonitorService {
         defer { stopTask?.cancel() }
         var result = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
             do {
-                try game.start(plan: plan, capture: capture) { result in
+                try game.start(plan: plan, capture: capture, sessionID: recorder.record.id, hostStatus: { status in
+                    do { try recorder.setHostStatus(status) }
+                    catch { try? recorder.append(Messages.GameHost.statusWriteFailed.localized) }
+                }) { result in
                     continuation.resume(returning: result)
                 }
                 if let pid = game.processIdentifier {
@@ -274,7 +279,7 @@ public enum GameMonitorService {
     }
     static func validatedPaths(_ request: MonitorLaunchRequest) throws -> LauncherPaths {
         if request.version == 1 { return LauncherPaths(root: request.root) }
-        guard (2...8).contains(request.version), let paths = request.storage, paths.root == request.root,
+        guard (2...MonitorLaunchRequest.currentVersion).contains(request.version), let paths = request.storage, paths.root == request.root,
               paths.instanceDirectories.count == 1, paths.instanceDirectories[request.instanceID] != nil else { throw RuriError.message(Messages.CoreGameMonitor.instanceFolderMissing) }
         guard request.version >= 3 || paths.runDirectory(for: request.instanceID) == .isolated else { throw RuriError.message(Messages.CoreGameMonitor.sharedDirectoryProtocolRequired) }
         if request.version >= 3, paths.instanceRunDirectories?[request.instanceID] == nil { throw RuriError.message(Messages.CoreGameMonitor.runDirectoryPolicyMissing) }

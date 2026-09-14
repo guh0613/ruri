@@ -75,6 +75,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var nativeQuitSupported: Bool?
     public var normalQuitAttempt: GameNormalQuitAttempt?
     public var debugLogging: Bool? = nil
+    public var host: GameHostStatus? = nil
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
@@ -282,6 +283,12 @@ public enum GameSessionReviewStore {
     public func setMemory(_ memory: LaunchMemory) throws {
         guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.memoryChangeAfterLaunch) }
         record.memory = memory; record.memoryMB = memory.maximumMB; try save()
+    }
+    func setHostStatus(_ status: GameHostStatus) throws {
+        guard !record.state.isFinished, record.host != status else { return }
+        record.host = status; record.updatedAt = Date()
+        try append("[Ruri] \(status.summary)")
+        try save()
     }
     public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
     func recordNormalQuit(_ request: GameNormalQuitRequest, accepted: Bool) throws {

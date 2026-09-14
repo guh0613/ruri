@@ -933,3 +933,66 @@
 
 /* @symbol CoreStateStore.subjectChangeConflict @args text */
 "coreStateStore.subjectChangeConflict" = "%1$@的修改与另一窗口冲突";
+
+/* @symbol GameHost.settings @args - */
+"gameHost.settings" = "macOS 游戏集成";
+
+/* @symbol GameHost.settingsHelp @args - */
+"gameHost.settingsHelp" = "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会记录原因并使用常规启动方式。";
+
+/* @symbol GameHost.enableIntegration @args - */
+"gameHost.enableIntegration" = "启用 macOS 游戏集成";
+
+/* @symbol GameHost.instanceAppearance @args - */
+"gameHost.instanceAppearance" = "使用实例图标和窗口名称";
+
+/* @symbol GameHost.nativeFullscreen @args - */
+"gameHost.nativeFullscreen" = "全屏启动时使用 macOS 原生全屏";
+
+/* @symbol GameHost.starting @args - */
+"gameHost.starting" = "正在准备 macOS 游戏集成";
+
+/* @symbol GameHost.jvmStarting @args - */
+"gameHost.jvmStarting" = "正在启动游戏 JVM";
+
+/* @symbol GameHost.windowReady @args - */
+"gameHost.windowReady" = "游戏窗口已就绪";
+
+/* @symbol GameHost.fullscreen @args - */
+"gameHost.fullscreen" = "游戏处于 macOS 原生全屏";
+
+/* @symbol GameHost.disabled @args - */
+"gameHost.disabled" = "macOS 游戏集成未启用";
+
+/* @symbol GameHost.wrapper @args - */
+"gameHost.wrapper" = "已配置自定义包装命令";
+
+/* @symbol GameHost.architecture @args - */
+"gameHost.architecture" = "Java 架构不受宿主支持";
+
+/* @symbol GameHost.hostMissing @args - */
+"gameHost.hostMissing" = "当前安装缺少游戏宿主";
+
+/* @symbol GameHost.runtimeUnavailable @args - */
+"gameHost.runtimeUnavailable" = "所选 Java 无法通过游戏宿主加载";
+
+/* @symbol GameHost.directory @args - */
+"gameHost.directory" = "无法进入游戏运行目录";
+
+/* @symbol GameHost.javaExec @args - */
+"gameHost.javaExec" = "无法启动所选 Java";
+
+/* @symbol GameHost.transport @args - */
+"gameHost.transport" = "游戏宿主启动通信失败";
+
+/* @symbol GameHost.invalidRequest @args - */
+"gameHost.invalidRequest" = "游戏宿主无法处理启动请求";
+
+/* @symbol GameHost.statusWriteFailed @args - */
+"gameHost.statusWriteFailed" = "无法保存游戏宿主状态";
+
+/* @symbol GameHost.failed @args text */
+"gameHost.failed" = "游戏宿主启动失败：%@";
+
+/* @symbol GameHost.compatibility @args text */
+"gameHost.compatibility" = "使用常规 Java 启动：%@";

@@ -28,6 +28,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var height: Int
     public var fullscreen: Bool?
     public var launchPresentation: LaunchPresentation?
+    public var macOSGameSettings: MacOSGameSettings?
     public var favorite: Bool
     public var iconPNG: Data?
     public var installed: Bool

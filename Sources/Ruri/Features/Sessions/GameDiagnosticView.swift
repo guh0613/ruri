@@ -27,6 +27,7 @@ struct GameDiagnosticView: View {
     private var key: String { "\(session.id)-\(session.updatedAt.timeIntervalSince1970)-\(session.evidence.count)-\(collecting)-\(collectionRequest)" }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            if let host = session.host { Text(host.summary).font(.callout).foregroundStyle(.secondary) }
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
             if let diagnosis {
                 if collecting { collection(diagnosis) } else { analysis(diagnosis) }

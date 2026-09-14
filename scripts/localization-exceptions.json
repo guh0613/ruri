@@ -618,5 +618,10 @@
     "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
     "literal": "\"An exception was thrown, the game will display an error screen and halt.\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "literal": "\"[Ruri] \\(status.summary)\"",
+    "reason": "Log prefix wrapping an already localized host status."
   }
 ]

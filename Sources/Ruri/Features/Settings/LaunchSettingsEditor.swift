@@ -40,6 +40,7 @@ struct LaunchSettingsEditor: View {
         case .java: effective.java.major == nil ? nil : Messages.AppLaunchSettingsEditor.javaRuntimeHelp.localized
         case .memory: Messages.AppLaunchSettingsEditor.heapMemoryExplanation.localized
         case .window: Messages.AppLaunchSettingsEditor.fullscreenHelp.localized
+        case .macOS: Messages.GameHost.settingsHelp.localized
         case .presentation: effective.presentation.showLogs ? Messages.AppLaunchSettingsEditor.logsKeepLauncherVisible.localized : Messages.AppLaunchSettingsEditor.logsHideLauncherVisible.localized
         default: nil
         }
@@ -100,9 +101,18 @@ struct LaunchSettingsEditor: View {
             Text(Messages.MonitorLogging.debugModeHelp.localized).font(.caption).foregroundStyle(.secondary)
         case .environment:
             EnvironmentVariablesEditor(text: Binding(get: { effective.environment }, set: { overrides.environment = $0 }))
+        case .macOS:
+            Toggle(Messages.GameHost.enableIntegration.localized, isOn: macOSBinding(\.enabled))
+            Toggle(Messages.GameHost.instanceAppearance.localized, isOn: macOSBinding(\.instanceAppearance)).disabled(!effective.macOS.enabled)
+            Toggle(Messages.GameHost.nativeFullscreen.localized, isOn: macOSBinding(\.nativeFullscreen)).disabled(!effective.macOS.enabled)
         case .commands:
             LaunchCommandsEditor(commands: Binding(get: { effective.commands }, set: { overrides.commands = $0 }))
         }
+    }
+    private func macOSBinding(_ key: WritableKeyPath<MacOSGameSettings, Bool>) -> Binding<Bool> {
+        Binding(get: { effective.macOS[keyPath: key] }, set: { value in
+            var settings = effective.macOS; settings[keyPath: key] = value; overrides.macOS = settings
+        })
     }
     private func chooseJava() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = true; panel.allowsMultipleSelection = false

@@ -3,11 +3,11 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-/// A small, portable thumbnail. Original image files and their metadata are
+/// A portable image suitable for both the instance list and the game Dock icon. Original image files and their metadata are
 /// never stored in launcher preferences or required after selection.
 public enum InstanceIconImage {
-    public static let maximumBytes = 96 * 1024
-    private static let maximumDimension = 128
+    public static let maximumBytes = 512 * 1024
+    private static let maximumDimension = 512
 
     public static func load(_ file: URL) throws -> Data {
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])

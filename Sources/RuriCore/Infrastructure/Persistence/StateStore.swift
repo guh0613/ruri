@@ -3,7 +3,7 @@ import Foundation
 import Darwin
 
 public enum StateStore {
-    public static let currentSchemaVersion = 23
+    public static let currentSchemaVersion = 24
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))

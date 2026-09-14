@@ -13,6 +13,10 @@ case "$architecture" in
   *) print -u2 -- "Expected a native arm64 or x86_64 application, got: $architecture"; exit 1 ;;
 esac
 [[ "$(lipo -archs "$app/Contents/Helpers/ruri-monitor")" == "$architecture" ]]
+for host_architecture in arm64 x86_64; do
+  lipo -verify_arch "$host_architecture" "$app/Contents/Helpers/RuriGame.app/Contents/MacOS/ruri-game"
+  lipo -verify_arch "$host_architecture" "$app/Contents/Helpers/RuriGame.app/Contents/Frameworks/libRuriGameSupport.dylib"
+done
 
 mkdir -p build/dmg
 stage_dir="$(mktemp -d "$(pwd)/build/.ruri-dmg.XXXXXX")"

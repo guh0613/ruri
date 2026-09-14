@@ -26,6 +26,7 @@ for bundle in "$binary_dir/"*.bundle(N); do
 done
 xcrun swift scripts/make-icon.swift build/AppIcon.iconset
 iconutil -c icns build/AppIcon.iconset -o "$app/Contents/Resources/AppIcon.icns"
+zsh scripts/build-game-host.sh "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist" "$app/Contents/Resources/AppIcon.icns"
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app"
 codesign --verify --deep --strict "$app"
 python3 scripts/check-localization-bundle.py "$app"

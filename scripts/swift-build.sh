@@ -47,4 +47,10 @@ build_args=(
 if [[ -n "${RURI_BUILD_DIR:-}" ]]; then
   build_args+=(--scratch-path "$RURI_BUILD_DIR")
 fi
+if [[ "$swift_command" == test ]]; then
+  host_app="$(pwd)/${RURI_BUILD_DIR:-.build}/game-host/RuriGame.app"
+  if [[ "${RURI_BUILD_DIR:-}" == /* ]]; then host_app="$RURI_BUILD_DIR/game-host/RuriGame.app"; fi
+  zsh scripts/build-game-host.sh "$host_app"
+  export RURI_TEST_GAME_HOST="$host_app/Contents/MacOS/ruri-game"
+fi
 exec xcrun swift "$swift_command" "${build_args[@]}" "$@"

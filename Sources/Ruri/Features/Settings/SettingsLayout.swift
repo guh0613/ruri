@@ -26,7 +26,7 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     var launchKeys: [LaunchSettingKey] {
         switch self {
         case .runtime: [.java, .memory]
-        case .launch: [.window, .presentation]
+        case .launch: [.window, .macOS, .presentation]
         case .advanced: [.jvmArguments, .gameArguments, .environment, .commands]
         default: []
         }
@@ -150,6 +150,7 @@ enum SettingsValidation {
             case .presentation: field.presentation = values.presentation
             case .environment: field.environment = values.environment
             case .commands: field.commands = values.commands
+            case .macOS: field.macOS = values.macOS
             }
             do { try field.validate() }
             catch { return (key, error.localizedDescription) }

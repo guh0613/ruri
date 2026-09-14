@@ -39,10 +39,10 @@ public struct LaunchPresentation: Codable, Equatable, Sendable {
 }
 
 public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
-    case memory, java, jvmArguments, gameArguments, window, presentation, environment, commands
+    case memory, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS
     public var id: String { rawValue }
     public var title: String {
-        switch self { case .memory: Messages.CoreLaunchSettings.memory.localized; case .java: Messages.CoreLaunchSettings.javaRuntime.localized; case .jvmArguments: Messages.CoreLaunchSettings.jvmArguments.localized; case .gameArguments: Messages.CoreLaunchSettings.gameArguments.localized; case .window: Messages.CoreLaunchSettings.gameWindow.localized; case .presentation: Messages.CoreLaunchSettings.launcherAndLogs.localized; case .environment: Messages.CoreLaunchSettings.environmentVariables.localized; case .commands: Messages.CoreLaunchSettings.launchCommands.localized }
+        switch self { case .macOS: Messages.GameHost.settings.localized; case .memory: Messages.CoreLaunchSettings.memory.localized; case .java: Messages.CoreLaunchSettings.javaRuntime.localized; case .jvmArguments: Messages.CoreLaunchSettings.jvmArguments.localized; case .gameArguments: Messages.CoreLaunchSettings.gameArguments.localized; case .window: Messages.CoreLaunchSettings.gameWindow.localized; case .presentation: Messages.CoreLaunchSettings.launcherAndLogs.localized; case .environment: Messages.CoreLaunchSettings.environmentVariables.localized; case .commands: Messages.CoreLaunchSettings.launchCommands.localized }
     }
 }
 
@@ -60,6 +60,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     public var presentation = LaunchPresentation()
     public var environment: String = ""
     public var commands = LaunchCommands()
+    public var macOS = MacOSGameSettings()
     public init() {}
     public func memoryPreview(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
         try JVMHeapArguments.resolve(base: memory.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments))
@@ -77,7 +78,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         _ = try JVMHeapArguments.resolve(base: baseMemory, arguments: ArgumentTokenizer.split(jvmArguments))
         _ = try ArgumentTokenizer.split(gameArguments)
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands }
+    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? .init(maximumMB: values.decodeIfPresent(Int.self, forKey: .memoryMB) ?? 4096)
@@ -88,6 +89,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         presentation = try values.decodeIfPresent(LaunchPresentation.self, forKey: .presentation) ?? .init()
         environment = try values.decodeIfPresent(String.self, forKey: .environment) ?? ""
         commands = try values.decodeIfPresent(LaunchCommands.self, forKey: .commands) ?? .init()
+        macOS = try values.decodeIfPresent(MacOSGameSettings.self, forKey: .macOS) ?? .init()
     }
     public func encode(to encoder: Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
@@ -96,6 +98,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         try values.encode(gameArguments, forKey: .gameArguments); try values.encode(window, forKey: .window); try values.encode(presentation, forKey: .presentation)
         try values.encode(environment, forKey: .environment)
         try values.encode(commands, forKey: .commands)
+        try values.encode(macOS, forKey: .macOS)
     }
 }
 
@@ -117,21 +120,22 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
     public var presentation: LaunchPresentation?
     public var environment: String?
     public var commands: LaunchCommands?
+    public var macOS: MacOSGameSettings?
     public init() {}
     public init(fixing values: LaunchSettingsValues) {
         memory = values.memory; java = values.java; jvmArguments = values.jvmArguments
-        gameArguments = values.gameArguments; window = values.window; presentation = values.presentation; environment = values.environment; commands = values.commands
+        gameArguments = values.gameArguments; window = values.window; presentation = values.presentation; environment = values.environment; commands = values.commands; macOS = values.macOS
     }
     public func resolve(defaults: LaunchSettingsValues) -> LaunchSettingsValues {
         var result = defaults
         if let memory { result.memory = memory }; if let java { result.java = java }
         if let jvmArguments { result.jvmArguments = jvmArguments }; if let gameArguments { result.gameArguments = gameArguments }
         if let window { result.window = window }; if let presentation { result.presentation = presentation }
-        if let environment { result.environment = environment }; if let commands { result.commands = commands }
+        if let environment { result.environment = environment }; if let commands { result.commands = commands }; if let macOS { result.macOS = macOS }
         return result
     }
     public func inherits(_ key: LaunchSettingKey) -> Bool {
-        switch key { case .memory: memory == nil; case .java: java == nil; case .jvmArguments: jvmArguments == nil; case .gameArguments: gameArguments == nil; case .window: window == nil; case .presentation: presentation == nil; case .environment: environment == nil; case .commands: commands == nil }
+        switch key { case .macOS: macOS == nil; case .memory: memory == nil; case .java: java == nil; case .jvmArguments: jvmArguments == nil; case .gameArguments: gameArguments == nil; case .window: window == nil; case .presentation: presentation == nil; case .environment: environment == nil; case .commands: commands == nil }
     }
     /// Turning inheritance off starts with the currently effective value.
     public mutating func setInheritance(_ inherit: Bool, for key: LaunchSettingKey, defaults: LaunchSettingsValues) {
@@ -145,9 +149,10 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         case .presentation: presentation = inherit ? nil : effective.presentation
         case .environment: environment = inherit ? nil : effective.environment
         case .commands: commands = inherit ? nil : effective.commands
+        case .macOS: macOS = inherit ? nil : effective.macOS
         }
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands }
+    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         if values.contains(.memory) { memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) }
@@ -159,6 +164,7 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         presentation = try values.decodeIfPresent(LaunchPresentation.self, forKey: .presentation)
         environment = try values.decodeIfPresent(String.self, forKey: .environment)
         commands = try values.decodeIfPresent(LaunchCommands.self, forKey: .commands)
+        macOS = try values.decodeIfPresent(MacOSGameSettings.self, forKey: .macOS)
     }
     public func encode(to encoder: Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
@@ -167,6 +173,7 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         try values.encodeIfPresent(window, forKey: .window); try values.encodeIfPresent(presentation, forKey: .presentation)
         try values.encodeIfPresent(environment, forKey: .environment)
         try values.encodeIfPresent(commands, forKey: .commands)
+        try values.encodeIfPresent(macOS, forKey: .macOS)
     }
 }
 
@@ -176,13 +183,13 @@ extension AppSettings {
             var result = LaunchSettingsValues(); result.memory = defaultMemorySettings ?? .init(maximumMB: defaultMemoryMB)
             result.java = defaultJava ?? .automatic; result.jvmArguments = defaultJVMArguments ?? ""
             result.gameArguments = defaultGameArguments ?? ""; result.window = defaultWindow ?? .init(); result.presentation = defaultLaunchPresentation ?? .init()
-            result.environment = defaultEnvironment ?? ""; result.commands = defaultLaunchCommands ?? .init()
+            result.environment = defaultEnvironment ?? ""; result.commands = defaultLaunchCommands ?? .init(); result.macOS = defaultMacOSGameSettings ?? .init()
             return result
         }
         set {
             defaultMemoryMB = newValue.memoryMB; defaultMemorySettings = newValue.memory; defaultJava = newValue.java; defaultJVMArguments = newValue.jvmArguments
             defaultGameArguments = newValue.gameArguments; defaultWindow = newValue.window; defaultLaunchPresentation = newValue.presentation
-            defaultEnvironment = newValue.environment; defaultLaunchCommands = newValue.commands
+            defaultEnvironment = newValue.environment; defaultLaunchCommands = newValue.commands; defaultMacOSGameSettings = newValue.macOS
         }
     }
 }
@@ -195,7 +202,7 @@ extension GameInstance {
         var legacy = LaunchSettingsValues(); legacy.memoryMB = memoryMB; legacy.java = javaPath.map(JavaSelection.path) ?? javaMajor.map(JavaSelection.major) ?? .automatic
         legacy.jvmArguments = extraJVMArguments; legacy.gameArguments = extraGameArguments ?? ""
         legacy.window = .init(width: width, height: height, fullscreen: fullscreen ?? false); legacy.presentation = launchPresentation ?? .init()
-        legacy.environment = environmentVariables ?? ""; legacy.commands = launchCommands ?? .init()
+        legacy.environment = environmentVariables ?? ""; legacy.commands = launchCommands ?? .init(); legacy.macOS = macOSGameSettings ?? .init()
         return .init(fixing: legacy)
     }
     public func resolvedLaunchSettings(defaults: AppSettings) -> LaunchSettingsValues {
@@ -211,7 +218,7 @@ extension GameInstance {
         copy.launchCommands = settings.commands
         copy.extraJVMArguments = settings.jvmArguments; copy.extraGameArguments = settings.gameArguments.isEmpty ? nil : settings.gameArguments
         copy.width = settings.window.width; copy.height = settings.window.height; copy.fullscreen = settings.window.fullscreen
-        copy.launchPresentation = settings.presentation; copy.launchOverrides = nil
+        copy.launchPresentation = settings.presentation; copy.macOSGameSettings = settings.macOS; copy.launchOverrides = nil
         return copy
     }
     func resolvingPersistedLaunchSettings(paths: LauncherPaths) throws -> GameInstance {
