@@ -17,8 +17,6 @@ extension AppModel {
             let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
             sessionRecorder = recorder; logsSessionID = recorder.record.id
             requestedLogSessionID = recorder.record.id
-            let activeIDs = Set(activeSessions.values.map(\.id))
-            liveLogs = liveLogs.filter { activeIDs.contains($0.key) }
             logs.removeAll(); lastGameExit = nil; crashReports = []; recordingErrorShown = false
             publishSession(recorder.record)
             let presentation = stored.resolvedLaunchSettings(defaults: defaults).presentation
@@ -123,7 +121,6 @@ extension AppModel {
     private func appendDisplayedLog(_ line: String) {
         logs.append(line)
         if logs.count > 5000 { logs.removeFirst(logs.count - 5000) }
-        if let id = logsSessionID { liveLogs[id] = logs }
     }
     func appendLog(_ line: String) {
         let line = sessionRecorder?.redacted(line) ?? line

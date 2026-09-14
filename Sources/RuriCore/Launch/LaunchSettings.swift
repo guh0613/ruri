@@ -25,7 +25,17 @@ public struct GameWindowSize: Codable, Equatable, Sendable {
 public struct LaunchPresentation: Codable, Equatable, Sendable {
     public var hideLauncher: Bool
     public var showLogs: Bool
-    public init(hideLauncher: Bool = false, showLogs: Bool = false) { self.hideLauncher = hideLauncher; self.showLogs = showLogs }
+    public var debugLogging: Bool
+    public init(hideLauncher: Bool = false, showLogs: Bool = false, debugLogging: Bool = false) {
+        self.hideLauncher = hideLauncher; self.showLogs = showLogs; self.debugLogging = debugLogging
+    }
+    private enum CodingKeys: String, CodingKey { case hideLauncher, showLogs, debugLogging }
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        hideLauncher = try values.decodeIfPresent(Bool.self, forKey: .hideLauncher) ?? false
+        showLogs = try values.decodeIfPresent(Bool.self, forKey: .showLogs) ?? false
+        debugLogging = try values.decodeIfPresent(Bool.self, forKey: .debugLogging) ?? false
+    }
 }
 
 public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {

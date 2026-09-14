@@ -2528,10 +2528,10 @@
 "appLogsView.sessionText7" = "自动滚动";
 
 /* @symbol AppLogsView.exportFullLog @args - */
-"appLogsView.sessionText8" = "导出完整日志…";
+"appLogsView.sessionText8" = "导出日志…";
 
 /* @symbol AppLogsView.recentLogPreview @args - */
-"appLogsView.sessionText9" = "预览最近 5,000 行；每次运行的完整日志独立保留。";
+"appLogsView.sessionText9" = "仅在此窗口打开时刷新近期日志。";
 
 /* @symbol AppLogsView.lastRecordedStage @args text */
 "appLogsView.summaryText1" = "最后记录阶段：%1$@";
@@ -3757,3 +3757,24 @@
 
 /* @symbol AppJavaSetup.waitingForChoice @args - */
 "appJavaSetup.waitingForChoice" = "等待选择 Java";
+
+/* @symbol MonitorLogging.debugMode @args - */
+"monitorLogging.debugMode" = "调试模式";
+
+/* @symbol MonitorLogging.debugModeHelp @args - */
+"monitorLogging.debugModeHelp" = "记录完整控制台日志以排查问题，会增加资源占用和磁盘写入。连续记录上限为 64 MiB，超出后仅保留近期故障输出。";
+
+/* @symbol MonitorLogging.defaultModeHelp @args - */
+"monitorLogging.defaultModeHelp" = "默认只预览近期输出，异常退出时保存故障日志。需要从启动开始记录日志时，请在启动设置中开启调试模式。";
+
+/* @symbol MonitorLogging.writeFailed @args text */
+"monitorLogging.writeFailed" = "[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。";
+
+/* @symbol MonitorLogging.debugLimit @args - */
+"monitorLogging.debugLimit" = "已达到本次运行的 64 MiB 调试日志上限";
+
+/* @symbol MonitorLogging.reportedFailure @args - */
+"monitorLogging.reportedFailure" = "游戏报告了启动失败或崩溃";
+
+/* @symbol MonitorLogging.showGameLogs @args - */
+"monitorLogging.showGameLogs" = "游戏日志文件夹";

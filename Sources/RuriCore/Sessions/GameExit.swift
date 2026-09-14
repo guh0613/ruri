@@ -11,17 +11,19 @@ public struct GameExit: Codable, Equatable, Sendable {
     public let stopRequested: Bool
     public var durationSeconds: Double?
     public var normalQuitRequested: Bool?
+    public var reportedFailure: Bool? = nil
     public var playTime: TimeInterval { max(0, durationSeconds ?? endedAt.timeIntervalSince(startedAt)) }
 
-    public var succeeded: Bool { reason == .exit && status == 0 }
+    public var succeeded: Bool { reason == .exit && status == 0 && reportedFailure != true }
     public var stoppedByLauncher: Bool {
         stopRequested && (succeeded || (reason == .signal && status == 15) || (reason == .exit && status == 143))
     }
     public var requiresAttention: Bool { !succeeded && !stoppedByLauncher }
-    public var shellStatus: Int32 { reason == .signal ? 128 + status : status }
+    public var shellStatus: Int32 { reportedFailure == true && status == 0 ? 1 : reason == .signal ? 128 + status : status }
     public var summary: String { summaryMessage.localized }
     public var summaryMessage: LocalizedMessage {
         if stoppedByLauncher { return Messages.CoreGameExit.requestedExit }
+        if reportedFailure == true { return Messages.MonitorLogging.reportedFailure }
         if succeeded { return Messages.CoreGameExit.normalExit }
         if reason == .signal { return Messages.CoreGameExit.processExitReason(String(describing: signalName)) }
         return Messages.CoreGameExit.crashExit(String(describing: status))

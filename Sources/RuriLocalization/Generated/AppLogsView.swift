@@ -69,17 +69,17 @@ extension Messages {
         public static var autoScroll: LocalizedMessage {
             .init(key: "appLogsView.sessionText7", table: "Interface", fallback: "自动滚动")
         }
-        /// 导出完整日志…
+        /// 导出日志…
         ///
         /// Resource: `Interface.appLogsView.sessionText8`.
         public static var exportFullLog: LocalizedMessage {
-            .init(key: "appLogsView.sessionText8", table: "Interface", fallback: "导出完整日志…")
+            .init(key: "appLogsView.sessionText8", table: "Interface", fallback: "导出日志…")
         }
-        /// 预览最近 5,000 行；每次运行的完整日志独立保留。
+        /// 仅在此窗口打开时刷新近期日志。
         ///
         /// Resource: `Interface.appLogsView.sessionText9`.
         public static var recentLogPreview: LocalizedMessage {
-            .init(key: "appLogsView.sessionText9", table: "Interface", fallback: "预览最近 5,000 行；每次运行的完整日志独立保留。")
+            .init(key: "appLogsView.sessionText9", table: "Interface", fallback: "仅在此窗口打开时刷新近期日志。")
         }
         /// 最后记录阶段：%1$@
         ///
@@ -129,8 +129,8 @@ extension Messages {
             "Interface:appLogsView.sessionText5": .init("查看内容", []),
             "Interface:appLogsView.sessionText6": .init("筛选日志", []),
             "Interface:appLogsView.sessionText7": .init("自动滚动", []),
-            "Interface:appLogsView.sessionText8": .init("导出完整日志…", []),
-            "Interface:appLogsView.sessionText9": .init("预览最近 5,000 行；每次运行的完整日志独立保留。", []),
+            "Interface:appLogsView.sessionText8": .init("导出日志…", []),
+            "Interface:appLogsView.sessionText9": .init("仅在此窗口打开时刷新近期日志。", []),
             "Interface:appLogsView.summaryText1": .init("最后记录阶段：%1$@", [.text]),
             "Interface:appLogsView.failureText1": .init("阶段、环境与报告", []),
             "Interface:appLogsView.failureText2": .init("记录的内存上限：%1$@ MB", [.text]),

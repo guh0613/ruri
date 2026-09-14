@@ -74,6 +74,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public var interruption: GameSessionInterruption?
     public var nativeQuitSupported: Bool?
     public var normalQuitAttempt: GameNormalQuitAttempt?
+    public var debugLogging: Bool? = nil
     public var events: [Event]
     public var evidence: [Evidence]
     public var title: String {
@@ -135,11 +136,12 @@ public enum GameSessionStore {
         }
         return record
     }
-    public static func list(paths: LauncherPaths, instanceID: UUID) throws -> [GameSession] {
+    public static func list(paths: LauncherPaths, instanceID: UUID, cached: [UUID: GameSession] = [:]) throws -> [GameSession] {
         let root = try LauncherPaths.safePath("sessions", within: paths.instance(instanceID))
         guard FileManager.default.fileExists(atPath: root.path) else { return [] }
         return try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil).compactMap { url in
             guard let id = UUID(uuidString: url.lastPathComponent) else { return nil }
+            if let record = cached[id], record.state.isFinished, record.monitorIdentity?.isAlive != true { return record }
             return try? load(paths: paths, instanceID: instanceID, sessionID: id)
         }.sorted { $0.createdAt > $1.createdAt }
     }
@@ -157,7 +159,7 @@ public enum GameSessionStore {
         return length > limit ? Messages.CoreGameSession.truncatedLogNotice.localized + String(text.drop(while: { $0 != "\n" }).dropFirst()) : text
     }
     public static func exportLog(paths: LauncherPaths, session: GameSession, to destination: URL) throws {
-        let source = try logURL(paths: paths, session: session)
+        let source = try GameMonitorClient.previewURL(paths: paths, session: session) ?? logURL(paths: paths, session: session)
         let instanceRoot = paths.instance(session.instanceID).resolvingSymlinksInPath().path + "/sessions/"
         guard destination.isFileURL, !destination.resolvingSymlinksInPath().path.hasPrefix(instanceRoot) else { throw RuriError.message(Messages.CoreGameSession.exportOutsideRunDirectory) }
         guard try source.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw RuriError.message(Messages.CoreGameSession.logNotRegularFile) }
@@ -205,6 +207,7 @@ public enum GameSessionReviewStore {
     private var log: FileHandle?
     private var redactor = GameLogRedactor()
     private var lease: GameRunLease?
+    private var capturedOutput: [GameOutputCapture] = []
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
         // Invalid preferences must still get a preparation-failure record.
         // Launch validation happens after this record exists; no game process
@@ -220,11 +223,12 @@ public enum GameSessionReviewStore {
                              hostArchitecture: JavaRuntime.hostArchitecture, accountMode: accountMode, ownerPID: ProcessInfo.processInfo.processIdentifier,
                              createdAt: now, updatedAt: now, state: .preparing, stage: .preparing, events: [], evidence: [])
         record.memory = memory
+        record.debugLogging = instance.launchPresentation?.debugLogging == true
         directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: id)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
         let logURL = directory.appendingPathComponent("launcher.log")
         guard FileManager.default.createFile(atPath: logURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw RuriError.message(Messages.CoreGameSession.runLogCreationFailed) }
-        log = try FileHandle(forWritingTo: logURL)
+        log = try Self.openLog(logURL)
         try transition(.preparing)
         try lease?.reserve(paths: paths, session: record)
     }
@@ -235,7 +239,7 @@ public enum GameSessionReviewStore {
         guard !record.state.isFinished, record.processID == nil, record.monitorIdentity == monitor,
               monitor.pid == ProcessInfo.processInfo.processIdentifier, monitor.isAlive else { throw RuriError.message(Messages.CoreGameSession.monitorCannotAdoptRun) }
         directory = try GameSessionStore.directory(paths: paths, instanceID: instanceID, sessionID: sessionID)
-        log = try FileHandle(forWritingTo: GameSessionStore.logURL(paths: paths, session: record)); try log?.seekToEnd()
+        log = try Self.openLog(GameSessionStore.logURL(paths: paths, session: record))
         record.ownerPID = monitor.pid; record.updatedAt = Date(); try save()
     }
     public func handoff(to monitor: ProcessIdentity) throws {
@@ -243,6 +247,21 @@ public enum GameSessionReviewStore {
         record.monitorIdentity = monitor; record.updatedAt = Date(); try save(); try close()
     }
     public func addSecrets(_ values: [String]) { redactor.addSecrets(values) }
+    func configureLogging(debug: Bool) throws {
+        guard record.debugLogging != debug else { return }
+        record.debugLogging = debug; try save()
+    }
+    func makeOutputCapture() throws -> GameOutputCapture {
+        try GameOutputCapture(redactor: redactor, debugLogURL: record.debugLogging == true ? directory.appendingPathComponent("launcher.log") : nil)
+    }
+    func retainOutput(_ output: GameOutputCapture) { capturedOutput.append(output) }
+    private static func openLog(_ url: URL) throws -> FileHandle {
+        let fd = open(url.path, O_WRONLY | O_APPEND | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
+        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameSession.runLogCreationFailed) }
+        var info = stat()
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else { Darwin.close(fd); throw RuriError.message(Messages.CoreGameSession.logNotRegularFile) }
+        return FileHandle(fileDescriptor: fd, closeOnDealloc: true)
+    }
     public func redacted(_ text: String) -> String { redactor.redact(text) }
     public func append(_ text: String) throws {
         guard let log else { throw RuriError.message(Messages.CoreGameSession.runLogClosed) }
@@ -295,13 +314,22 @@ public enum GameSessionReviewStore {
         record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
         record.stage = .finished
         record.events.append(.init(id: UUID(), date: record.updatedAt, stage: .finished, message: exit.summary, localizedMessage: exit.summaryMessage.recorded(redact: redactor.redact)))
-        try save()
         try append(exit.logDescription); try append("[Ruri] \(exit.explanation)")
         do { try GamePlaytimeStore.record(record, paths: paths) }
         catch { try append(Messages.CoreGameSession.playtimeSaveFailed(error.localizedDescription).localized) }
-        do { try captureReports(exit: exit) }
-        catch { try append(Messages.CoreGameSession.reportCopySaveFailed(error.localizedDescription).localized) }
+        let needsDiagnostics = exit.requiresAttention || record.commandResults?.contains(where: { !$0.succeeded && !$0.cancelled }) == true
+        if needsDiagnostics || record.debugLogging == true {
+            try saveCapturedOutput()
+            do { try captureReports(exit: exit) }
+            catch { try append(Messages.CoreGameSession.reportCopySaveFailed(error.localizedDescription).localized) }
+        } else {
+            // Successful runs keep a short result, not a full preparation trace.
+            record.events = Array(record.events.suffix(1))
+            try log?.truncate(atOffset: 0)
+            try append(exit.logDescription)
+        }
         try save(); try close()
+        try? GameSessionRetention.prune(paths: paths, instanceID: record.instanceID, keeping: record.id)
     }
     public func fail(_ error: any Error, cancelled: Bool) throws {
         guard !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
@@ -310,13 +338,24 @@ public enum GameSessionReviewStore {
         record.failureMessage = cancelled ? nil : (error as? RuriError)?.localizedMessage?.recorded(limit: 32768, redact: redactor.redact)
         record.state = cancelled ? .cancelled : .failed; record.updatedAt = Date()
         try save()
+        if !cancelled { try saveCapturedOutput() }
         if log != nil { try append("[Ruri] \(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)") }
         try close()
+        try? GameSessionRetention.prune(paths: paths, instanceID: record.instanceID, keeping: record.id)
     }
     public func close() throws {
-        defer { log = nil; lease = nil }
+        defer { log = nil; lease = nil; capturedOutput = [] }
         try lease?.clearReservation(session: record)
         try log?.synchronize(); try log?.close()
+        for name in ["log-preview.log", "log-request.json"] {
+            if let url = try? LauncherPaths.safePath(name, within: directory) { try? FileManager.default.removeItem(at: url) }
+        }
+    }
+    private func saveCapturedOutput() throws {
+        for output in capturedOutput {
+            if record.debugLogging != true || output.writeFailure != nil { let text = output.snapshot(final: true); if !text.isEmpty { try append(text) } }
+            if let failure = output.writeFailure { try append(Messages.MonitorLogging.writeFailed(failure).localized) }
+        }
     }
     private func save() throws {
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -329,18 +368,27 @@ public enum GameSessionReviewStore {
            let attributes = try? latest.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .contentModificationDateKey]),
            attributes.isRegularFile == true, attributes.isSymbolicLink == false,
            let date = attributes.contentModificationDate, date >= exit.startedAt, date <= exit.endedAt.addingTimeInterval(5) { sources.append(latest) }
+        guard !sources.isEmpty else { return }
         let reports = directory.appendingPathComponent("reports")
         try FileManager.default.createDirectory(at: reports, withIntermediateDirectories: true)
-        for (index, url) in sources.prefix(100).enumerated() {
+        var budget = 8 * 1_048_576
+        // Crash reports take precedence; latest.log contributes only its tail.
+        for (index, url) in sources.prefix(4).enumerated() where budget > 0 {
             do {
                 let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }
-                let data = try handle.read(upToCount: 8_388_609) ?? Data()
-                let truncated = data.count > 8_388_608
-                let content = redactor.redact(String(decoding: data.prefix(8_388_608), as: UTF8.self))
+                let limit = min(budget, 2 * 1_048_576), length = try handle.seekToEnd()
+                let offset = url.lastPathComponent == "latest.log" && length > limit ? length - UInt64(limit) : 0
+                try handle.seek(toOffset: offset)
+                var data = try handle.read(upToCount: limit) ?? Data()
+                let truncated = length > data.count
+                if offset > 0 { if let newline = data.firstIndex(of: 10) { data.removeSubrange(...newline) } else { data.removeAll() } }
+                let content = redactor.redact(String(decoding: data, as: UTF8.self))
                 let relative = "reports/\(index)-\(url.lastPathComponent)"
                 let destination = try LauncherPaths.safePath(relative, within: directory)
-                try (content + (truncated ? Messages.CoreGameSession.reportTooLargeNotice.localized : "")).write(to: destination, atomically: true, encoding: .utf8)
-                record.evidence.append(.init(relativePath: relative, name: url.lastPathComponent, truncated: truncated))
+                let encoded = Data((content + (truncated ? Messages.CoreGameSession.reportTooLargeNotice.localized : "")).utf8)
+                try encoded.prefix(budget).write(to: destination, options: .atomic)
+                record.evidence.append(.init(relativePath: relative, name: url.lastPathComponent, truncated: truncated || encoded.count > budget))
+                budget -= min(encoded.count, budget)
             } catch { try append(Messages.CoreGameSession.reportCopyFailed(url.lastPathComponent, error.localizedDescription).localized) }
         }
     }

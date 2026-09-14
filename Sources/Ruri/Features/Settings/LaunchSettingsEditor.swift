@@ -96,6 +96,8 @@ struct LaunchSettingsEditor: View {
         case .presentation:
             Toggle(Messages.AppLaunchSettingsEditor.openGameLogs.localized, isOn: presentationBinding(\.showLogs))
             Toggle(Messages.AppLaunchSettingsEditor.hideLauncher.localized, isOn: presentationBinding(\.hideLauncher)).disabled(effective.presentation.showLogs)
+            Toggle(Messages.MonitorLogging.debugMode.localized, isOn: presentationBinding(\.debugLogging))
+            Text(Messages.MonitorLogging.debugModeHelp.localized).font(.caption).foregroundStyle(.secondary)
         case .environment:
             EnvironmentVariablesEditor(text: Binding(get: { effective.environment }, set: { overrides.environment = $0 }))
         case .commands:

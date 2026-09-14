@@ -27,6 +27,16 @@ public enum GamePlaytimeStore {
         record.lastPlayed = max(record.lastPlayed, exit.startedAt)
         try JSONEncoder().encode(record).write(to: paths.instance(session.instanceID).appendingPathComponent("playtime.json"), options: .atomic)
     }
+    /// Retired sessions can no longer be recovered/replayed. Fold their credit
+    /// into the base so the ledger does not grow for the lifetime of an instance.
+    static func compact(paths: LauncherPaths, instanceID: UUID, removing sessions: Set<UUID>) throws {
+        guard !sessions.isEmpty, var record = try load(paths: paths, instanceID: instanceID) else { return }
+        var changed = false
+        for id in sessions {
+            if let duration = record.sessions.removeValue(forKey: id.uuidString) { record.base += duration; changed = true }
+        }
+        if changed { try JSONEncoder().encode(record).write(to: paths.instance(instanceID).appendingPathComponent("playtime.json"), options: .atomic) }
+    }
 }
 
 /// Keeps a bounded preview while reading only bytes appended since the previous
@@ -49,6 +59,10 @@ public actor GameSessionLogCursor {
     }
     deinit { try? handle.close() }
     @discardableResult public func refresh(final: Bool = false) throws -> Bool {
+        let offset = try handle.offset(), end = try handle.seekToEnd()
+        if end < offset {
+            try handle.seek(toOffset: 0); pending.removeAll(); lines.removeAll(); updates.removeAll()
+        } else { try handle.seek(toOffset: offset) }
         let data = try handle.read(upToCount: 262_144) ?? Data()
         pending.append(data)
         // A final drain may require several calls; never flush a partial UTF-8

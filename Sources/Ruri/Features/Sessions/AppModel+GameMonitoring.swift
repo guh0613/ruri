@@ -64,8 +64,6 @@ extension AppModel {
     func didRecoverSession(_ record: GameSession) async {
         publishSession(record)
         finishLaunchPresentation(record.id)
-        await readMonitorLog(record, final: true)
-        logCursors.removeValue(forKey: record.id)
         if activeSessions[record.instanceID]?.id == record.id { activeSessions.removeValue(forKey: record.instanceID) }
         handledExits.insert(record.id)
         acknowledgeSession(record)
@@ -85,8 +83,9 @@ extension AppModel {
         (try? GameSessionReviewStore.contains(record, paths: paths)) ?? false
     }
     private func needsReview(_ record: GameSession) -> Bool {
-        guard record.monitorIdentity != nil, !reviewed(record) else { return false }
-        return record.state == .failed || record.commandResults?.contains(where: { !$0.succeeded && !$0.cancelled }) == true || (!record.state.isFinished && GameMonitorClient.activity(record) != .monitoring)
+        guard record.monitorIdentity != nil else { return false }
+        let attention = record.state == .failed || record.commandResults?.contains(where: { !$0.succeeded && !$0.cancelled }) == true || (!record.state.isFinished && GameMonitorClient.activity(record) != .monitoring)
+        return attention && !reviewed(record)
     }
     func recordClientEvent(_ event: GameMonitorClient.ClientEvent) {
         for record in activeSessions.values { try? GameMonitorClient.recordEvent(event, paths: paths, session: record) }
@@ -94,20 +93,21 @@ extension AppModel {
     func startGameObservation() {
         guard monitorTask == nil else { return }
         monitorTask = Task { [weak self] in
-            var tick = 0
             while !Task.isCancelled {
                 guard let self else { return }
-                if activeSessions.isEmpty || tick % 4 == 0 { await refreshSessions() }
-                else {
-                    let records = Array(activeSessions.values), paths = paths
-                    let updated = await Task.detached(priority: .utility) {
-                        records.compactMap { try? GameSessionStore.load(paths: paths, instanceID: $0.instanceID, sessionID: $0.id) }
-                    }.value
-                    for record in updated { publishSession(record) }
-                }
+                let watchedSessions = Set(activeSessions.values.map(\.id)), watchedInstances = state.instances.map(\.id)
+                let directories = [paths.root] + state.instances.flatMap {
+                    [paths.instance($0.id), paths.instance($0.id).appendingPathComponent("sessions")]
+                } + activeSessions.values.compactMap { try? GameSessionStore.directory(paths: paths, instanceID: $0.instanceID, sessionID: $0.id) }
+                let observer = FileChangeObserver(directories: directories, processes: activeSessions.values.compactMap { $0.monitorIdentity?.pid })
+                // Re-arm before reading so writes during refresh queue a wakeup.
+                await refreshSessions(useCache: true)
                 await pollGames()
-                tick += 1
-                do { try await Task.sleep(for: activeSessions.isEmpty ? .seconds(2) : .milliseconds(500)) } catch { return }
+                if watchedSessions != Set(activeSessions.values.map(\.id)) || watchedInstances != state.instances.map(\.id) { observer.cancel(); continue }
+                for await _ in observer.events {
+                    break
+                }
+                observer.cancel()
             }
         }
     }
@@ -116,7 +116,7 @@ extension AppModel {
         let snapshot = sessions, snapshotIDs = Set(sessions.map(\.id))
         var active: [UUID: GameSession] = [:]
         var presentedAttention = false
-        for record in snapshot where record.monitorIdentity != nil {
+        for record in snapshot where record.monitorIdentity != nil && (!record.state.isFinished || previous[record.instanceID]?.id == record.id || (!handledExits.contains(record.id) && (record.state == .failed || record.commandResults?.contains(where: { !$0.succeeded && !$0.cancelled }) == true))) {
             let activity = GameMonitorClient.activity(record)
             if activity == .inactive || record.state.isFinished || record.exit != nil { finishLaunchPresentation(record.id) }
             else { applyLaunchPresentation(record) }
@@ -124,10 +124,7 @@ extension AppModel {
                 if previous[record.instanceID]?.id != record.id { try? GameMonitorClient.recordEvent(.connected, paths: paths, session: record) }
                 if active[record.instanceID] == nil { active[record.instanceID] = record }
                 if logsSessionID == nil { logsSessionID = record.id }
-                await readMonitorLog(record, final: false)
             } else if previous[record.instanceID]?.id == record.id {
-                await readMonitorLog(record, final: true)
-                logCursors.removeValue(forKey: record.id)
                 if let exit = record.exit { lastGameExit = exit }
                 if !needsReview(record) { report(record.title, level: .success, sessionID: record.id) }
             }
@@ -154,7 +151,7 @@ extension AppModel {
             }
         }
         if activeSessions != active { activeSessions = active }
-        restorePlaytime()
+        await restorePlaytime()
     }
     private func applyLaunchPresentation(_ record: GameSession) {
         guard let presentation = launchPresentations[record.id], record.gameIdentity?.isAlive == true else { return }
@@ -173,25 +170,16 @@ extension AppModel {
         NSApp.unhide(nil)
         openMainWindow?()
     }
-    private func readMonitorLog(_ record: GameSession, final: Bool) async {
-        do {
-            let cursor: GameSessionLogCursor
-            if let existing = logCursors[record.id] { cursor = existing }
-            else {
-                let paths = paths
-                cursor = try await Task.detached(priority: .utility) { try GameSessionLogCursor(paths: paths, session: record) }.value
-                logCursors[record.id] = cursor
-            }
-            var changed = try await cursor.refresh(final: final)
-            if final { while try await cursor.refresh(final: true) { changed = true } }
-            if changed || liveLogs[record.id] == nil { liveLogs[record.id] = await cursor.lines }
-        } catch { report(Messages.AppAppModelGameMonitoring.unreadableLog(record.instanceName, error.localizedDescription), level: .error, sessionID: record.id) }
-    }
-    private func restorePlaytime() {
+    private func restorePlaytime() async {
         var changed = false
-        for index in state.instances.indices {
-            let id = state.instances[index].id
-            if let ledger = try? GamePlaytimeStore.load(paths: paths, instanceID: id) {
+        let paths = paths
+        for id in state.instances.map(\.id) {
+            let completed = Set(sessions.filter { $0.instanceID == id && $0.state.isFinished && $0.exit != nil }.map(\.id))
+            guard restoredPlaytimeSessions[id] != completed else { continue }
+            let ledger = await Task.detached(priority: .utility) { try? GamePlaytimeStore.load(paths: paths, instanceID: id) }.value
+            guard let index = state.instances.firstIndex(where: { $0.id == id }) else { continue }
+            restoredPlaytimeSessions[id] = completed
+            if let ledger {
                 if state.instances[index].playTime != ledger.total { state.instances[index].playTime = ledger.total; changed = true }
                 if (state.instances[index].lastPlayed ?? .distantPast) < ledger.lastPlayed { state.instances[index].lastPlayed = ledger.lastPlayed; changed = true }
             }

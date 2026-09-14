@@ -3,6 +3,18 @@ import Testing
 @testable import RuriCore
 
 struct LaunchSettingsTests {
+    @Test func debugLoggingDefaultsOffAndFollowsPresentationInheritance() throws {
+        let legacy = try JSONDecoder().decode(LaunchPresentation.self, from: Data(#"{"hideLauncher":true,"showLogs":true}"#.utf8))
+        #expect(!legacy.debugLogging && legacy.hideLauncher && legacy.showLogs)
+        var defaults = LaunchSettingsValues(); defaults.presentation.debugLogging = true
+        var overrides = InstanceLaunchOverrides()
+        #expect(overrides.resolve(defaults: defaults).presentation.debugLogging)
+        overrides.presentation = legacy
+        #expect(!overrides.resolve(defaults: defaults).presentation.debugLogging)
+        overrides.setInheritance(true, for: .presentation, defaults: defaults)
+        let roundTrip = try JSONDecoder().decode(LaunchSettingsValues.self, from: JSONEncoder().encode(overrides.resolve(defaults: defaults)))
+        #expect(roundTrip.presentation.debugLogging)
+    }
     private func paths() -> LauncherPaths { .init(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-settings-\(UUID())")) }
 
     @Test func oldStatesKeepEveryExistingValueWhileNewInstancesInherit() throws {

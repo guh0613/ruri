@@ -36,14 +36,13 @@ import RuriCore
     var crashReports: [GameCrashReport] = []
     var sessions: [GameSession] = []
     var logsSessionID: UUID?
-    var liveLogs: [UUID: [String]] = [:]
     var requestedLogSessionID: UUID?
     var restoringGames = true
     var isQuitting = false
     var pendingOpenURLs: [URL] = []
     @ObservationIgnored var openMainWindow: (@MainActor () -> Void)?
     @ObservationIgnored var monitorTask: Task<Void, Never>?
-    @ObservationIgnored var logCursors: [UUID: GameSessionLogCursor] = [:]
+    @ObservationIgnored var restoredPlaytimeSessions: [UUID: Set<UUID>] = [:]
     @ObservationIgnored var handledExits: Set<UUID> = []
     @ObservationIgnored var launchPresentations: [UUID: LaunchPresentation] = [:]
     @ObservationIgnored var automaticallyHiddenSessions: Set<UUID> = []

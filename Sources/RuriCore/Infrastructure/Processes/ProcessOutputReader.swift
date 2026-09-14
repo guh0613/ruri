@@ -4,7 +4,7 @@ import Darwin
 /// Serializes pipe reads and the final drain. A mod's helper may inherit stdout,
 /// so finishing the game must not wait for every descendant to close the pipe.
 final class ProcessOutputReader: @unchecked Sendable {
-    private let queue = DispatchQueue(label: "dev.ruri.game-output")
+    private let queue = DispatchQueue(label: "dev.ruri.game-output", qos: .utility, autoreleaseFrequency: .workItem)
     private let descriptor: Int32
     private let source: DispatchSourceRead
     private let receive: @Sendable (Data) -> Void
@@ -41,7 +41,7 @@ final class ProcessOutputReader: @unchecked Sendable {
         var consumed = 0
         while consumed < limit {
             let count = Darwin.read(descriptor, &buffer, buffer.count)
-            if count > 0 { receive(Data(buffer.prefix(count))); consumed += count }
+            if count > 0 { autoreleasepool { receive(Data(buffer.prefix(count))) }; consumed += count }
             else if count == 0 { close(); return }
             else if errno == EINTR { continue }
             else if errno == EAGAIN || errno == EWOULDBLOCK { return }

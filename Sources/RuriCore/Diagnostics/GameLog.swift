@@ -6,7 +6,7 @@ public struct GameLogFormatter: Sendable {
     private var event = ""
     public init() {}
     public mutating func consume(_ input: String) -> [String] {
-        let line = input.replacingOccurrences(of: "\u{001B}\\[[0-?]*[ -/]*[@-~]", with: "", options: .regularExpression)
+        let line = input.utf8.contains(27) ? input.replacingOccurrences(of: "\u{001B}\\[[0-?]*[ -/]*[@-~]", with: "", options: .regularExpression) : input
         if event.isEmpty, !line.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("<log4j:Event ") { return [line] }
         event += line + "\n"
         if event.utf8.count > 1024 * 1024 { let raw = event; event = ""; return [raw] }

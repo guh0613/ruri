@@ -11,6 +11,7 @@ extension CLI {
             guard (args.count == 4 && args[1] == "set") || (args.count == 3 && args[1] == "inherit" && id != nil) else { throw RuriError.message(usage) }
             var key = args[1] == "set" && args[2] == "fullscreen" ? LaunchSettingKey.window : args[1] == "set" && args[2] == "environment-file" ? .environment : LaunchSettingKey(rawValue: args[2])
             if args[1] == "set", ["preLaunchCommand", "postExitCommand", "commandWrapper", "commandTimeout"].contains(args[2]) { key = .commands }
+            if args[1] == "set", args[2] == "debugLogging" { key = .presentation }
             let memoryDetail = args[1] == "set" && ["initialMemory", "metaspace"].contains(args[2])
             guard key != nil || memoryDetail || (args[1] == "inherit" && args[2] == "all") else { throw RuriError.message(usage) }
             try StateStore.update(paths) { state in
@@ -46,8 +47,14 @@ extension CLI {
                         }
                         overrides.window = window
                     case .presentation:
-                        guard ["keep", "hide", "logs"].contains(value) else { throw RuriError.message(usage) }
-                        overrides.presentation = .init(hideLauncher: value == "hide", showLogs: value == "logs")
+                        var presentation = overrides.resolve(defaults: defaults).presentation
+                        if args[2] == "debugLogging" {
+                            guard let enabled = Bool(value) else { throw RuriError.message(usage) }; presentation.debugLogging = enabled
+                        } else {
+                            guard ["keep", "hide", "logs"].contains(value) else { throw RuriError.message(usage) }
+                            presentation.hideLauncher = value == "hide"; presentation.showLogs = value == "logs"
+                        }
+                        overrides.presentation = presentation
                     case .commands:
                         var commands = overrides.resolve(defaults: defaults).commands
                         switch args[2] {

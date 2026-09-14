@@ -52,7 +52,10 @@ struct LaunchCommandsTests {
         let childFile = game.appendingPathComponent("child.pid")
         try await waitFor { FileManager.default.fileExists(atPath: childFile.path) }
         let pid = try #require(Int32(String(contentsOf: childFile, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)))
-        let child = try #require(ProcessIdentity.read(pid))
+        // Other main-actor tests may delay this read until the independent
+        // monitor has already timed out and reaped the fixture child.
+        let child = ProcessIdentity.read(pid)
+        #expect(timeout || child != nil)
         if !timeout {
             let current = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
             try GameMonitorClient.requestStop(paths: paths, record: current)
@@ -62,7 +65,7 @@ struct LaunchCommandsTests {
         #expect(finished.state == (timeout ? .failed : .cancelled))
         #expect(finished.commandResults?.first?.timedOut == timeout)
         #expect(finished.commandResults?.first?.cancelled == !timeout)
-        #expect(!child.isAlive)
+        #expect(child?.isAlive != true)
         #expect(!FileManager.default.fileExists(atPath: game.appendingPathComponent("game-ran").path))
         #expect(!FileManager.default.fileExists(atPath: game.appendingPathComponent("after-ran").path))
     }

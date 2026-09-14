@@ -32,7 +32,7 @@ struct MonitorLifecycleTests {
         let identity = try #require(ProcessIdentity.read(pid))
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"),
                               arguments: ["-c", #"trap 'printf "game-stopped\n"; exit 0' TERM; printf 'fixture-access-secret\n'; while :; do sleep 0.05; done"#],
-                              directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"])
+                              directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
         try recorder.handoff(to: identity)
         let request = MonitorLaunchRequest(version: 1, root: paths.root, instanceID: instance.id, sessionID: recorder.record.id, monitor: identity, plan: plan, secrets: ["fixture-access-secret", "fixture-refresh-secret"])
         try input.fileHandleForWriting.write(contentsOf: JSONEncoder().encode(request)); try input.fileHandleForWriting.close()

@@ -13,6 +13,8 @@ import Darwin
         let commandPlan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", command], directory: plan.directory, environment: environment, customEnvironmentNames: plan.customEnvironmentNames)
         let result: GameCommandResult
         do {
+            let capture = try recorder.makeOutputCapture()
+            recorder.retainOutput(capture)
             try recorder.transition(phase == .before ? .beforeCommand : .afterCommand)
             if shouldStop() {
                 let cancelled = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: true, timedOut: false, error: nil)
@@ -21,7 +23,7 @@ import Darwin
             }
             let status = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Int32, any Error>) in
                 do {
-                    try process.start(plan: commandPlan) { line in try? recorder.append("[\(phase.title)] " + line) } onExit: { result in
+                    try process.start(plan: commandPlan, capture: capture) { result in
                         continuation.resume(returning: result.shellStatus)
                     }
                     if let pid = process.processIdentifier { try? recorder.commandStarted(processID: pid) }

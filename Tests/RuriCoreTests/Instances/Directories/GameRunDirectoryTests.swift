@@ -123,7 +123,7 @@ struct GameRunDirectoryTests {
         let (paths, a, b, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
         let helper = TestPaths.monitorExecutable
-        let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo shared-game-finished"], directory: paths.game(a.id), environment: ["PATH": "/bin:/usr/bin"])
+        let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo shared-game-finished"], directory: paths.game(a.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
         try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }
         let completed = try await GameMonitorClient.wait(paths: paths, instanceID: a.id, sessionID: recorder.record.id)

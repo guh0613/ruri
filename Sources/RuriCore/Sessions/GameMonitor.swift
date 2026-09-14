@@ -18,11 +18,17 @@ struct MonitorStopRequest: Codable {
     let version: Int
     let sessionID: UUID
 }
+struct MonitorLogRequest: Codable {
+    let version: Int
+    let sessionID: UUID
+    let id: UUID
+}
 
 public enum GameMonitorClient {
     public enum Activity: Equatable, Sendable { case inactive, monitoring, orphaned, uncertain }
     public enum ClientEvent: String, Codable, Sendable { case connected, windowClosed, windowReopened, quitRequested, normalQuitRequested, stopRequested, gameActivationRequested }
     public static func recordEvent(_ event: ClientEvent, paths: LauncherPaths, session: GameSession) throws {
+        guard session.debugLogging == true else { return }
         struct Entry: Encodable { let date: Date; let clientPID: Int32; let client: String; let event: ClientEvent }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
         let url = try LauncherPaths.safePath("client-events.jsonl", within: directory)
@@ -54,6 +60,7 @@ public enum GameMonitorClient {
     @MainActor public static func start(plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String], helper: URL? = nil) throws {
         let secrets = secrets + plan.environmentRedactions
         recorder.addSecrets(secrets)
+        try recorder.configureLogging(debug: plan.debugLogging == true)
         if let names = plan.customEnvironmentNames, !names.isEmpty { try recorder.append(Messages.CoreGameMonitor.environmentNames(names.joined(separator: ", ")).localized) }
         if let memory = plan.memory { try recorder.setMemory(memory) }
         let process = Process(), input = Pipe()
@@ -65,7 +72,7 @@ public enum GameMonitorClient {
         try process.run()
         defer { try? input.fileHandleForWriting.close() }
         guard let identity = ProcessIdentity.read(process.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.monitorIdentityFailed) }
-        let request = MonitorLaunchRequest(version: 7, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
+        let request = MonitorLaunchRequest(version: 8, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
                                            monitor: identity, plan: plan, secrets: secrets, storage: paths.monitorSnapshot(for: recorder.record.instanceID),
                                            language: LocalizationContext.current.language, region: LocalizationContext.current.regionIdentifier)
         let data = try JSONEncoder().encode(request)
@@ -94,6 +101,28 @@ public enum GameMonitorClient {
             }
         }
     }
+    /// Only a visible log window requests snapshots. Credentials never leave
+    /// the monitor; it formats and redacts its bounded tail before writing it.
+    public static func requestLogSnapshot(paths: LauncherPaths, session: GameSession) throws {
+        guard !session.state.isFinished, session.debugLogging != true, session.monitorIdentity?.isAlive == true else { return }
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
+        let file = try LauncherPaths.safePath("log-request.json", within: directory)
+        try JSONEncoder().encode(MonitorLogRequest(version: 1, sessionID: session.id, id: UUID())).write(to: file, options: .atomic)
+    }
+    public static func logPreview(paths: LauncherPaths, session: GameSession) throws -> String {
+        if let preview = try previewURL(paths: paths, session: session) { return String(decoding: try Data(contentsOf: preview), as: UTF8.self) }
+        return try GameSessionStore.logTail(paths: paths, session: session)
+    }
+    static func previewURL(paths: LauncherPaths, session: GameSession) throws -> URL? {
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
+        let preview = try LauncherPaths.safePath("log-preview.log", within: directory)
+        if !session.state.isFinished, session.debugLogging != true,
+           let values = try? preview.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey]),
+           values.isRegularFile == true, (values.fileSize ?? .max) <= 2_097_152 {
+            return preview
+        }
+        return nil
+    }
 }
 
 public enum GameMonitorService {
@@ -109,7 +138,7 @@ public enum GameMonitorService {
             }
             let decoded = try JSONDecoder().decode(MonitorLaunchRequest.self, from: data)
             request = decoded
-            guard (1...7).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+            guard (1...8).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
                   (decoded.plan.offlineSkin == nil || decoded.version >= 7),
                   decoded.monitor == ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.invalidMonitorRequest) }
             let context = LocalizationContext(language: decoded.language, region: decoded.region ?? Locale.current.identifier)
@@ -117,7 +146,8 @@ public enum GameMonitorService {
                 let paths = try validatedPaths(decoded)
                 guard decoded.plan.directory.resolvingSymlinksInPath() == paths.game(decoded.instanceID).resolvingSymlinksInPath() else { throw RuriError.message(Messages.CoreGameMonitor.sessionDirectoryMismatch) }
                 let recorder = try GameSessionRecorder(resuming: decoded.sessionID, instanceID: decoded.instanceID, paths: paths, monitor: decoded.monitor)
-                recorder.addSecrets(decoded.secrets)
+                recorder.addSecrets(decoded.secrets + decoded.plan.environmentRedactions)
+                try recorder.configureLogging(debug: decoded.plan.debugLogging == true)
                 return try await run(decoded.plan, recorder: recorder, paths: paths, secrets: decoded.secrets)
             }
         } catch {
@@ -155,14 +185,16 @@ public enum GameMonitorService {
         if stopRequested(recorder) { try recorder.fail(CancellationError(), cancelled: true); return 130 }
         if recorder.record.stage != .starting { try recorder.transition(.starting) }
         let game = GameProcess()
+        let capture = try recorder.makeOutputCapture()
+        recorder.retainOutput(capture)
+        let controls = FileChangeObserver(directories: [recorder.directory], fallbackSeconds: 5)
+        defer { controls.cancel() }
         try recorder.setNativeQuitSupported(plan.nativeQuitSupported == true)
         var stopTask: Task<Void, Never>?
         defer { stopTask?.cancel() }
-        let result = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
+        var result = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
             do {
-                try game.start(plan: plan, secrets: secrets) { line in
-                    try? recorder.append(line)
-                } onExit: { result in
+                try game.start(plan: plan, capture: capture) { result in
                     continuation.resume(returning: result)
                 }
                 if let pid = game.processIdentifier {
@@ -171,23 +203,40 @@ public enum GameMonitorService {
                 }
                 stopTask = Task { @MainActor in
                     var lastNormalQuit = recorder.record.normalQuitAttempt?.requestID
-                    while !Task.isCancelled && game.isRunning {
+                    var lastLogRequest: UUID?
+                    @MainActor func processRequests() -> Bool {
                         if stopRequested(recorder) {
                             try? recorder.transition(.stopping)
                             game.stop()
-                            return
+                            return false
                         }
                         if let request = GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record), request.id != lastNormalQuit {
                             lastNormalQuit = request.id
                             let accepted = game.requestNormalQuit()
                             try? recorder.recordNormalQuit(request, accepted: accepted)
                         }
-                        try? await Task.sleep(for: .milliseconds(200))
+                        if let request = logRequest(recorder), request.id != lastLogRequest {
+                            lastLogRequest = request.id
+                            if let file = try? LauncherPaths.safePath("log-preview.log", within: recorder.directory) {
+                                try? Data(capture.snapshot().utf8).write(to: file, options: .atomic)
+                            }
+                        }
+                        return true
+                    }
+                    guard processRequests() else { return }
+                    for await _ in controls.events {
+                        guard !Task.isCancelled, game.isRunning, processRequests() else { return }
                     }
                 }
             } catch { continuation.resume(throwing: error) }
         }
         stopTask?.cancel()
+        if result.succeeded && !result.stopRequested {
+            // Some legacy loaders swallow a crash and exit with code zero.
+            let markers = ["Crash report saved to", "Could not save crash report to", "This crash report has been saved to:", "Unable to launch", "An exception was thrown, the game will display an error screen and halt."]
+            let tail = capture.snapshot(final: true)
+            if markers.contains(where: tail.contains) || !GameCrashReport.find(in: plan.directory, exit: result).isEmpty { result.reportedFailure = true }
+        }
         try recorder.recordGameExit(result)
         if !result.stopRequested, let commands = plan.commands, commands.enabled, !commands.after.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             _ = await GameCommandRunner.run(commands.after, phase: .after, plan: plan, timeoutSeconds: commands.timeoutSeconds, exit: result, recorder: recorder) { stopRequested(recorder) }
@@ -201,6 +250,14 @@ public enum GameMonitorService {
               (attributes.fileSize ?? .max) <= 1024,
               let data = try? Data(contentsOf: url), let request = try? JSONDecoder().decode(MonitorStopRequest.self, from: data) else { return false }
         return request.version == 1 && request.sessionID == recorder.record.id
+    }
+    @MainActor private static func logRequest(_ recorder: GameSessionRecorder) -> MonitorLogRequest? {
+        guard let file = try? LauncherPaths.safePath("log-request.json", within: recorder.directory),
+              let attributes = try? file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey]),
+              attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 1024,
+              let data = try? Data(contentsOf: file), let request = try? JSONDecoder().decode(MonitorLogRequest.self, from: data),
+              request.version == 1, request.sessionID == recorder.record.id else { return nil }
+        return request
     }
     @MainActor private static func recordUnstartedFailure(_ request: MonitorLaunchRequest, error: any Error) throws {
         guard request.monitor.pid == ProcessInfo.processInfo.processIdentifier, request.monitor.isAlive else { return }
@@ -217,7 +274,7 @@ public enum GameMonitorService {
     }
     static func validatedPaths(_ request: MonitorLaunchRequest) throws -> LauncherPaths {
         if request.version == 1 { return LauncherPaths(root: request.root) }
-        guard (2...7).contains(request.version), let paths = request.storage, paths.root == request.root,
+        guard (2...8).contains(request.version), let paths = request.storage, paths.root == request.root,
               paths.instanceDirectories.count == 1, paths.instanceDirectories[request.instanceID] != nil else { throw RuriError.message(Messages.CoreGameMonitor.instanceFolderMissing) }
         guard request.version >= 3 || paths.runDirectory(for: request.instanceID) == .isolated else { throw RuriError.message(Messages.CoreGameMonitor.sharedDirectoryProtocolRequired) }
         if request.version >= 3, paths.instanceRunDirectories?[request.instanceID] == nil { throw RuriError.message(Messages.CoreGameMonitor.runDirectoryPolicyMissing) }

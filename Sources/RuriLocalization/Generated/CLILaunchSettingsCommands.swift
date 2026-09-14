@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CLILaunchSettingsCommands {
-        /// 用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。
+        /// 用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|debugLogging|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs；debugLogging 为 true/false，默认关闭。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。
         ///
         /// Resource: `CLI.cLILaunchSettingsCommands.usageText1`.
         public static var launchSettingsUsage: LocalizedMessage {
-            .init(key: "cLILaunchSettingsCommands.usageText1", table: "CLI", fallback: "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。")
+            .init(key: "cLILaunchSettingsCommands.usageText1", table: "CLI", fallback: "用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|debugLogging|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs；debugLogging 为 true/false，默认关闭。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。")
         }
         /// 实例不存在。
         ///
@@ -28,7 +28,7 @@ extension Messages {
             .init(key: "cLILaunchSettingsCommands.contentText1", table: "Errors", fallback: "环境变量文件应为不超过 64 KB 的 UTF-8 文本。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "CLI:cLILaunchSettingsCommands.usageText1": .init("用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。", []),
+            "CLI:cLILaunchSettingsCommands.usageText1": .init("用法：launch-settings <defaults|实例UUID> [set <memory|initialMemory|metaspace|java|jvmArguments|gameArguments|window|fullscreen|presentation|debugLogging|environment> <值> | inherit <项目|all>]。memory 为 auto 或 MB；initialMemory 为 default 或 MB；metaspace 为 unlimited 或 MB。Java 为 auto、主版本号或完整路径，窗口为 1600x900；fullscreen 为 true/false；presentation 为 keep、hide 或 logs；debugLogging 为 true/false，默认关闭。environment 为每行一项 NAME=value，只写 NAME 移除继承值；environment-file 可从 UTF-8 文件读取，空值清除本实例配置。commands true/false 控制运行自定义命令；preLaunchCommand、postExitCommand、commandWrapper 设置命令文本，commandTimeout 为秒数。默认只查看生效值与继承来源。", []),
             "Errors:cLILaunchSettingsCommands.indexText1": .init("实例不存在。", []),
             "Errors:cLILaunchSettingsCommands.enabledText1": .init("commands 应为 true 或 false。", []),
             "Errors:cLILaunchSettingsCommands.contentText1": .init("环境变量文件应为不超过 64 KB 的 UTF-8 文本。", []),

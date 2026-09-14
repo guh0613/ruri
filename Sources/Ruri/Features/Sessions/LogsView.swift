@@ -19,10 +19,10 @@ struct LogsView: View {
     @State private var historicalLines: [String] = []
     @State private var readError: String?
     private var session: GameSession? { model.sessions.first { $0.id == selectedID } }
-    private var isCurrent: Bool { selectedID.map { model.liveLogs[$0] != nil } ?? false }
+    private var isCurrent: Bool { session.map { !$0.state.isFinished } ?? false }
     private var isRunning: Bool { session.map { model.activeSessions[$0.instanceID]?.id == $0.id } ?? false }
     private var lines: [String] {
-        (selectedID.flatMap { model.liveLogs[$0] } ?? historicalLines).filter { filter.isEmpty || $0.localizedCaseInsensitiveContains(filter) }
+        historicalLines.filter { filter.isEmpty || $0.localizedCaseInsensitiveContains(filter) }
     }
     var body: some View {
         VStack(spacing: 12) {
@@ -53,6 +53,7 @@ struct LogsView: View {
                         TextField(Messages.AppLogsView.filterLogs.localized, text: $filter).textFieldStyle(.roundedBorder)
                         Toggle(Messages.AppLogsView.autoScroll.localized, isOn: $follow).toggleStyle(.checkbox)
                         Button(Messages.AppLogsView.exportFullLog.localized) { export() }.disabled(session == nil)
+                        Button(Messages.MonitorLogging.showGameLogs.localized) { revealGameLogs() }.disabled(session == nil)
                     }
                     if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
                     ScrollViewReader { proxy in
@@ -76,6 +77,9 @@ struct LogsView: View {
                         Text(Messages.AppLogsView.recentLogPreview.localized).font(.caption).foregroundStyle(.secondary)
                         Spacer()
                     }
+                    if session?.debugLogging != true {
+                        Text(Messages.MonitorLogging.defaultModeHelp.localized).font(.caption).foregroundStyle(.secondary)
+                    }
                 }
             }
         }.padding(22).frame(width: 780, height: 660)
@@ -90,7 +94,28 @@ struct LogsView: View {
             .task {
                 await model.refreshSessions()
                 selectedID = model.requestedLogSessionID ?? model.logsSessionID ?? model.sessions.first?.id
-                loadHistory()
+            }
+            .task(id: selectedID) {
+                guard let id = selectedID else { return }
+                while !Task.isCancelled {
+                    guard let record = model.sessions.first(where: { $0.id == id }) else { return }
+                    if mode == .logs && !NSApp.isHidden {
+                        let paths = model.paths
+                        let result = await Task.detached(priority: .utility) {
+                            Result {
+                                try GameMonitorClient.requestLogSnapshot(paths: paths, session: record)
+                                return Array(try GameMonitorClient.logPreview(paths: paths, session: record).split(separator: "\n", omittingEmptySubsequences: false).suffix(5000).map(String.init))
+                            }
+                        }.value
+                        guard !Task.isCancelled else { return }
+                        switch result {
+                        case .success(let value): if historicalLines != value { historicalLines = value }; readError = nil
+                        case .failure(let error): readError = error.localizedDescription
+                        }
+                        if record.state.isFinished { return }
+                    }
+                    do { try await Task.sleep(for: .seconds(1)) } catch { return }
+                }
             }
             .onChange(of: selectedID) { loadHistory(); mode = session?.state == .failed ? .analysis : .logs }
             .onChange(of: session?.state) {
@@ -99,7 +124,6 @@ struct LogsView: View {
                     if session.state == .failed && mode != .share { mode = .analysis }
                 }
             }
-            .onChange(of: isCurrent) { loadHistory() }
             .onChange(of: model.requestedLogSessionID) { if let id = model.requestedLogSessionID { selectedID = id } }
     }
     @ViewBuilder private func summary(_ record: GameSession) -> some View {
@@ -152,16 +176,20 @@ struct LogsView: View {
         readError = nil; historicalLines = []
         guard let session else { return }
         model.acknowledgeSession(session)
-        guard !isCurrent else { return }
-        do {
-            historicalLines = Array(try GameSessionStore.logTail(paths: model.paths, session: session).split(separator: "\n", omittingEmptySubsequences: false).suffix(5000).map(String.init))
-        } catch { readError = error.localizedDescription }
     }
     private func reveal(_ record: GameSession, relativePath: String? = nil) {
         do {
             let directory = try GameSessionStore.directory(paths: model.paths, instanceID: record.instanceID, sessionID: record.id)
             let url = try relativePath.map { try LauncherPaths.safePath($0, within: directory) } ?? directory
             NSWorkspace.shared.activateFileViewerSelecting([url])
+        } catch { readError = error.localizedDescription }
+    }
+    private func revealGameLogs() {
+        guard let session else { return }
+        do {
+            let game = model.paths.game(session.instanceID)
+            let logs = try LauncherPaths.safePath("logs", within: game)
+            NSWorkspace.shared.activateFileViewerSelecting([FileManager.default.fileExists(atPath: logs.path) ? logs : game])
         } catch { readError = error.localizedDescription }
     }
     private func export() {

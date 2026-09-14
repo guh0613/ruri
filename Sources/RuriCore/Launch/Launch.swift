@@ -12,6 +12,7 @@ public struct LaunchPlan: Codable, Sendable {
     public var commands: LaunchCommands?
     public var wrapper: [String]?
     public var offlineSkin: OfflineSkinLaunch? = nil
+    public var debugLogging: Bool? = nil
     var processExecutable: URL { wrapper?.first.map { URL(fileURLWithPath: $0) } ?? executable }
     var processArguments: [String] { wrapper?.isEmpty == false ? Array(wrapper!.dropFirst()) + [executable.path] + arguments : arguments }
     public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
@@ -160,7 +161,7 @@ public enum LaunchBuilder {
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
         var offlineSkin = offlineSkin
         offlineSkin?.argumentIndex = jvm.count
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin)
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin, debugLogging: instance.launchPresentation?.debugLogging == true)
     }
 }
 
@@ -182,6 +183,12 @@ public final class GameProcess {
     public var processIdentifier: Int32? { process?.processIdentifier }
     public init() {}
     public func start(plan: LaunchPlan, secrets: [String] = [], output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
+        try start(plan: plan, secrets: secrets, capture: nil, output: output, onExit: onExit)
+    }
+    func start(plan: LaunchPlan, capture: GameOutputCapture, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
+        try start(plan: plan, secrets: [], capture: capture, output: { _ in }, onExit: onExit)
+    }
+    private func start(plan: LaunchPlan, secrets: [String], capture: GameOutputCapture?, output: @escaping @MainActor @Sendable (String) -> Void, onExit: @escaping @MainActor @Sendable (GameExit) -> Void) throws {
         guard self.process == nil else { throw RuriError.message(Messages.CoreLaunch.gameAlreadyRunning) }
         self.secrets = (secrets + plan.environmentRedactions).filter { $0.count > 3 }; self.output = output; self.onExit = onExit; pending = Data(); formatter = GameLogFormatter()
         stopRequested = false
@@ -193,7 +200,8 @@ public final class GameProcess {
         process.standardOutput = pipe; process.standardError = pipe
         process.standardInput = FileHandle.nullDevice
         let reader = try ProcessOutputReader(handle: pipe.fileHandleForReading) { [weak self] data in
-            DispatchQueue.main.async { self?.receive(data) }
+            if let capture { capture.receive(data) }
+            else { DispatchQueue.main.async { autoreleasepool { self?.receive(data) } } }
         }
         process.terminationHandler = { [weak self, reader] process in
             let status = process.terminationStatus
@@ -203,13 +211,14 @@ public final class GameProcess {
             let duration = startedClock.duration(to: .now).components
             let elapsed = Double(duration.seconds) + Double(duration.attoseconds) / 1e18
             reader.finish { [weak self] in
+                capture?.finish()
                 DispatchQueue.main.async {
                     guard let self else { return }
                     if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
                     for line in self.formatter.flush() { self.redactAndSend(line) }
                     let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed, normalQuitRequested: self.normalQuitRequested ? true : nil)
                     let callback = self.onExit
-                    self.process = nil; self.pipe = nil; self.reader = nil; self.onExit = nil
+                    self.process = nil; self.pipe = nil; self.reader = nil; self.onExit = nil; self.output = nil; self.secrets = []
                     callback?(result)
                 }
             }
