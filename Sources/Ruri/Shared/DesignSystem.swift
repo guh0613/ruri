@@ -160,6 +160,52 @@ struct ActionRow: View {
     }
 }
 
+/// The same shortcut as `ActionRow`, stacked into a card so a set of them can
+/// spread across the full width of a page instead of crowding a side column.
+struct ActionTile: View {
+    @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.colorScheme) private var colorScheme
+    let symbol: String
+    var tint: Color = Theme.accent
+    let title: String
+    let detail: String
+    let action: () -> Void
+    @State private var hovering = false
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 12) {
+                Image(systemName: symbol)
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(.white)
+                    .frame(width: 32, height: 32)
+                    .background(tint.gradient, in: RoundedRectangle(cornerRadius: 8))
+                    .opacity(isEnabled ? 1 : 0.45)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title).font(.headline)
+                    Text(detail).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .background {
+            let shape = RoundedRectangle(cornerRadius: 16, style: .continuous)
+            shape.fill(Theme.surface(for: colorScheme))
+                .overlay { shape.fill(.primary.opacity(hovering ? 0.045 : 0)) }
+                .shadow(color: .black.opacity(colorScheme == .dark ? 0.12 : 0.04), radius: 8, x: 0, y: 3)
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(.primary.opacity(colorScheme == .dark ? 0.14 : 0.10), lineWidth: 1)
+                .allowsHitTesting(false)
+        }
+        .onHover { hovering = $0 }
+    }
+}
+
 struct EmptyPanel: View {
     let symbol: String
     let title: String

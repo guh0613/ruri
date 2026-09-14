@@ -27,15 +27,8 @@ struct HomeView: View {
                     }
                     if !running.isEmpty { runningSection }
                     if let task = model.activeActivity { activitySection(task) }
-                    if geometry.size.width >= 1040, !recent.isEmpty {
-                        HStack(alignment: .top, spacing: 24) {
-                            recentSection.frame(maxWidth: .infinity)
-                            quickActions.frame(width: 300)
-                        }
-                    } else {
-                        if !recent.isEmpty { recentSection }
-                        quickActions
-                    }
+                    if !recent.isEmpty { recentSection }
+                    quickActions(columns: geometry.size.width >= 1000 ? 4 : geometry.size.width >= 620 ? 2 : 1)
                 }
                 .padding(28)
                 .frame(maxWidth: 1380, alignment: .leading)
@@ -231,24 +224,20 @@ struct HomeView: View {
 
     // MARK: Quick actions
 
-    private var quickActions: some View {
+    /// A shelf of equal tiles across the page, so the shortcuts read as a row
+    /// of peers under the instance lists rather than a narrow side column.
+    private func quickActions(columns: Int) -> some View {
         VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.AppHomeView.quickActions.localized)
-            Surface(padding: 0) {
-                VStack(spacing: 0) {
-                    ActionRow(symbol: "plus", title: Messages.AppHomeView.createInstance.localized, detail: Messages.AppHomeView.chooseVersionAndLoader.localized) { model.showCreate = true }
-                    Divider().padding(.leading, 62)
-                    ActionRow(symbol: "arrow.down", tint: .teal, title: Messages.AppHomeView.importPackAction.localized, detail: Messages.AppHomeView.supportedPackFormats.localized) { model.chooseInstanceImport() }
-                    Divider().padding(.leading, 62)
-                    ActionRow(symbol: "safari", tint: .indigo, title: Messages.AppHomeView.discoverContent.localized, detail: Messages.AppHomeView.browseContentSources.localized) { model.page = .discover }
-                    Divider().padding(.leading, 62)
-                    if model.activeAccount == nil {
-                        ActionRow(symbol: "person.crop.circle.badge.plus", title: Messages.AppHomeView.addAccount.localized, detail: Messages.AppHomeView.accountRequired.localized) { model.showAccount = true }
-                    } else {
-                        ActionRow(symbol: "cup.and.saucer.fill", tint: .orange, title: Messages.AppHomeView.javaRuntime.localized, detail: Messages.AppHomeView.detectOrDownloadJava.localized) { model.page = .java }
-                    }
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: columns), spacing: 16) {
+                ActionTile(symbol: "plus", title: Messages.AppHomeView.createInstance.localized, detail: Messages.AppHomeView.chooseVersionAndLoader.localized) { model.showCreate = true }
+                ActionTile(symbol: "arrow.down", tint: .teal, title: Messages.AppHomeView.importPackAction.localized, detail: Messages.AppHomeView.supportedPackFormats.localized) { model.chooseInstanceImport() }
+                ActionTile(symbol: "safari", tint: .indigo, title: Messages.AppHomeView.discoverContent.localized, detail: Messages.AppHomeView.browseContentSources.localized) { model.page = .discover }
+                if model.activeAccount == nil {
+                    ActionTile(symbol: "person.crop.circle.badge.plus", title: Messages.AppHomeView.addAccount.localized, detail: Messages.AppHomeView.accountRequired.localized) { model.showAccount = true }
+                } else {
+                    ActionTile(symbol: "cup.and.saucer.fill", tint: .orange, title: Messages.AppHomeView.javaRuntime.localized, detail: Messages.AppHomeView.detectOrDownloadJava.localized) { model.page = .java }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .disabled(model.busy)
         }
