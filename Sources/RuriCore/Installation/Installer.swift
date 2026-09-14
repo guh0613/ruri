@@ -162,7 +162,7 @@ public actor GameInstaller {
         }
         return true
     }
-    private func prepareFiles(_ manifest: VersionManifest, instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
+    func prepareFiles(_ manifest: VersionManifest, instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let resources = try paths.resources(for: instance)
         let arch = Self.architecture(for: manifest)
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
@@ -197,7 +197,9 @@ public actor GameInstaller {
         try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.downloadingGameAndDependencies, completed: done, total: total)) }
         if let index = manifest.assetIndex {
             let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
-            try protectRepositoryResources([DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size)])
+            // Mojang reuses asset index IDs when updating resources. Treat indexes as
+            // refreshable cache entries: the downloader verifies the replacement before
+            // atomically publishing it, preserving the old index if the download fails.
             try await downloader.fetch(DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size))
             let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: indexFile))
             let objects = try assets.objects.values.map { object -> DownloadItem in
