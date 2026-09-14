@@ -1,0 +1,64 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Debug Ruri",
+            "target": "Ruri",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug Ruri"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Release Ruri",
+            "target": "Ruri",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release Ruri"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Debug ruri-cli",
+            "target": "ruri-cli",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ruri-cli"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Release ruri-cli",
+            "target": "ruri-cli",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ruri-cli"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Debug ruri-monitor",
+            "target": "ruri-monitor",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ruri-monitor"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Release ruri-monitor",
+            "target": "ruri-monitor",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ruri-monitor"
+        }
+    ]
+}
