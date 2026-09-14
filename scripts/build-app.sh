@@ -13,6 +13,7 @@ app="$stage_dir/Ruri.app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 mkdir -p "$app/Contents/Helpers"
 cp Resources/Info.plist "$app/Contents/Info.plist"
+cp Resources/ThirdPartyNotices.txt "$app/Contents/Resources/ThirdPartyNotices.txt"
 python3 scripts/configure-app.py "$app/Contents/Info.plist"
 scripts/swift-build.sh -c "$configuration" --product Ruri
 scripts/swift-build.sh -c "$configuration" --product ruri-monitor

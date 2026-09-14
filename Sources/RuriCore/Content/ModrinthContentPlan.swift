@@ -7,7 +7,7 @@ public struct PlannedModrinthFile: Sendable {
 }
 
 extension ModrinthService {
-    public func plan(versions roots: [ModrinthVersion], kind: ContentKind, instance: GameInstance) async throws -> [PlannedModrinthFile] {
+    public func plan(versions roots: [ModrinthVersion], kind: ContentKind, instance: GameInstance, installed: [ManagedContent] = []) async throws -> [PlannedModrinthFile] {
         if kind == .mod, instance.loader == .vanilla { throw RuriError.message(Messages.CoreModrinthContentPlan.loaderInstanceRequired) }
         var queue = roots, resolved: [ModrinthVersion] = [], seen = Set<String>()
         while !queue.isEmpty {
@@ -26,6 +26,10 @@ extension ModrinthService {
                         else { queue.append(try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(id))) }
                     } else if let project = dependency.project_id {
                         if let selected = (roots + resolved + queue).first(where: { $0.project_id == project }) { queue.append(selected); continue }
+                        if let record = installed.first(where: { $0.provider == "modrinth" && $0.projectID == project }),
+                           let present = try? await version(record.versionID), present.project_id == project, present.game_versions.contains(instance.gameVersion), present.loaders.contains(instance.loader.modrinthLoader) {
+                            queue.append(present); continue
+                        }
                         let options = try await versions(project: project, game: instance.gameVersion, loader: instance.loader.modrinthLoader)
                         guard let match = options.first(where: { $0.version_type == "release" || $0.version_type == nil }) ?? options.first else { throw RuriError.message(Messages.CoreModrinthContentPlan.compatibleDependencyMissing(String(describing: project))) }
                         queue.append(match)
@@ -35,7 +39,12 @@ extension ModrinthService {
         }
         for item in resolved {
             for dependency in item.dependencies where dependency.dependency_type == "incompatible" {
-                if resolved.contains(where: { other in dependency.version_id.map { $0 == other.id } ?? (dependency.project_id == other.project_id) }) {
+                let selectedConflict = resolved.contains { other in dependency.version_id.map { $0 == other.id } ?? (dependency.project_id == other.project_id) }
+                let installedConflict = installed.contains { record in
+                    record.provider == "modrinth" && record.enabled && !resolved.contains(where: { $0.project_id == record.projectID }) &&
+                    (dependency.version_id.map { $0 == record.versionID } ?? (dependency.project_id == record.projectID))
+                }
+                if selectedConflict || installedConflict {
                     throw RuriError.message(Messages.CoreModrinthContentPlan.selectedContentIncompatible(item.name))
                 }
             }

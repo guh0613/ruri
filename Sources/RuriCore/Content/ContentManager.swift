@@ -145,17 +145,18 @@ public actor ContentManager {
         try writeRecords(journal.oldRecords)
         try fm.removeItem(at: transactionURL)
     }
-    public func install(_ incoming: [ContentInstallation], expecting expectedRecords: [ManagedContent]? = nil) throws {
+    public func install(_ incoming: [ContentInstallation], expecting expectedRecords: [ManagedContent]? = nil, enabling: Set<String> = [], allowingMissing: Set<String> = []) throws {
         try lock(); defer { unlock() }
         try recover(); try Task.checkCancellation()
         let fm = FileManager.default
         let oldRecords = try readRecords()
         if let expectedRecords {
+            guard oldRecords.sorted(by: { $0.id < $1.id }) == expectedRecords.sorted(by: { $0.id < $1.id }) else { throw RuriError.message(Messages.Discovery.contentChanged) }
             for item in incoming {
                 let expected = expectedRecords.first { $0.id == item.record.id }
                 let actual = oldRecords.first { $0.id == item.record.id }
                 let present = try actual.map { FileManager.default.fileExists(atPath: try contentURL($0.relativePath).path) } ?? true
-                guard actual == expected, present else {
+                guard actual == expected, present || allowingMissing.contains(item.record.id) else {
                     throw RuriError.message(Messages.CoreContentManager.contentChangedAfterPreview(item.record.title))
                 }
             }
@@ -165,6 +166,7 @@ public actor ContentManager {
         // Preserve a user's disabled state when updating a project.
         for i in installs.indices {
             if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
+            if enabling.contains(installs[i].record.id) { installs[i].record.enabled = true }
             let record = installs[i].record
             guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.invalidContentFilename(record.filename)) }
             let check = DownloadItem(url: nil, destination: installs[i].source, sha1: record.sha1, sha512: record.sha512, md5: record.md5, size: record.size)

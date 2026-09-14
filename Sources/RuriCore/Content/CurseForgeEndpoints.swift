@@ -6,9 +6,12 @@ enum CurseForgeEndpoints {
     private static let alternateWebsite = URL(string: "https://curseforge.com/minecraft")!
 
     enum Route {
-        case search, project(Int), file(project: Int, file: Int), projectFiles(Int), projects, files
+        case categories, description(Int), changelog(project: Int, file: Int), search, project(Int), file(project: Int, file: Int), projectFiles(Int), projects, files
         var path: [String] {
             switch self {
+            case .categories: ["categories"]
+            case .description(let id): ["mods", String(id), "description"]
+            case .changelog(let project, let file): ["mods", String(project), "files", String(file), "changelog"]
             case .search: ["mods", "search"]
             case .project(let id): ["mods", String(id)]
             case .file(let project, let file): ["mods", String(project), "files", String(file)]

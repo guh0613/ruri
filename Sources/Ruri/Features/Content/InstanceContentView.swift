@@ -109,7 +109,16 @@ struct InstanceContentView: View {
                         .disabled(!canModify || updateTask != nil)
                 }
                 Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
-                Button(Messages.AppInstanceContentView.discoverMoreContent.localized, systemImage: "safari") { model.page = .discover; dismiss() }
+                Button(Messages.AppInstanceContentView.discoverMoreContent.localized, systemImage: "safari") {
+                    model.discovery.switchCollection(type: kind.rawValue)
+                    model.discovery.change { query in
+                        query.text = ""; query.category = ""; query.game = instance.gameVersion
+                        query.loader = kind == .mod ? instance.loader.modrinthLoader : ""
+                    }
+                    model.discovery.preferredInstanceID = instance.id
+                    model.discovery.path = []
+                    model.page = .discover; dismiss()
+                }
                     .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.discoverMoreContent.localized).disabled(model.busy)
                 Button(Messages.AppInstanceContentView.openContentFolder.localized, systemImage: "folder") { model.reveal(instance, folder: kind.folder) }
                     .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.openContentFolder.localized)

@@ -5,14 +5,16 @@ enum ModrinthEndpoints {
     private static let website = URL(string: "https://modrinth.com")!
     static let versionFiles = api.appending(component: "version_files")
 
-    static func search(_ query: String, type: String, offset: Int, game: String? = nil) throws -> URL {
+    static func search(_ query: String, type: String, offset: Int, game: String? = nil, loader: String? = nil, category: String? = nil, sort: CatalogSort? = nil) throws -> URL {
         var filters = [["project_type:\(type)"]]
         if let game { filters.append(["versions:\(game)"]) }
+        if let loader, !loader.isEmpty { filters.append(["categories:\(loader)"]) }
+        if let category, !category.isEmpty { filters.append(["categories:\(category)"]) }
         let facets = String(decoding: try JSONEncoder().encode(filters), as: UTF8.self)
         return try EndpointURL.build(base: api, path: ["search"], query: [
             .init(name: "query", value: query), .init(name: "facets", value: facets),
-            .init(name: "limit", value: "20"), .init(name: "offset", value: String(offset)),
-            .init(name: "index", value: query.isEmpty ? "downloads" : "relevance")
+            .init(name: "limit", value: "20"), .init(name: "offset", value: String(max(0, offset))),
+            .init(name: "index", value: sort?.modrinthIndex ?? (query.isEmpty ? "downloads" : "relevance"))
         ])
     }
     static func versions(project: String, game: String?, loader: String?) throws -> URL {
@@ -22,6 +24,8 @@ enum ModrinthEndpoints {
         }
         return try EndpointURL.build(base: api, path: ["project", project, "version"], query: query)
     }
+    static let categories = api.appending(path: "tag/category")
+    static func project(_ id: String) throws -> URL { try EndpointURL.build(base: api, path: ["project", id]) }
     static func version(_ id: String) throws -> URL { try EndpointURL.build(base: api, path: ["version", id]) }
     static func projectPage(type: String, identifier: String) -> URL? {
         guard ["mod", "modpack", "resourcepack", "shader", "datapack", "plugin"].contains(type) else { return nil }

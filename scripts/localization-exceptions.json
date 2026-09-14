@@ -528,5 +528,35 @@
     "file": "Sources/RuriCore/Sessions/GameSessionRecovery.swift",
     "literal": "\"\\n[Ruri] \\(date.ISO8601Format()) \\(text)\\n\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogDocument.swift",
+    "literal": "\"\"\"\n        <!doctype html><html><head><meta charset=\"utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; img-src https: data:; style-src 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'\">\n        <style>\n        :root { color-scheme: \\(dark ? \"dark\" : \"light\"); }\n        html, body { margin: 0; padding: 0; background: \\(background); color: \\(foreground); }\n        body { font: 14px/1.65 -apple-system, BlinkMacSystemFont, sans-serif; padding: 22px 26px; overflow-wrap: anywhere; }\n        h1,h2,h3,h4 { line-height: 1.3; margin: 1.3em 0 .6em; font-weight: 650; } h1 { font-size: 26px; } h2 { font-size: 21px; } h3 { font-size: 17px; }\n        body > :first-child { margin-top: 0; } p { margin: .7em 0; }\n        a { color: \\(dark ? \"#64a9ff\" : \"#0066cc\"); text-decoration: none; } a:hover { text-decoration: underline; }\n        img, video { max-width: 100% !important; height: auto; border-radius: 6px; } iframe, form, object, embed { display: none; }\n        pre { background: \\(surface); padding: 14px; border-radius: 10px; overflow-x: auto; } code { font: 12px/1.5 ui-monospace, monospace; }\n        blockquote { margin: 16px 0; padding: 0 16px; border-left: 3px solid \\(muted); color: \\(muted); }\n        table { border-collapse: collapse; display: block; overflow: auto; } th,td { padding: 8px 12px; border: 1px solid \\(muted); }\n        hr { border: none; border-top: 1px solid \\(muted); opacity: .3; margin: 24px 0; }\n        </style></head><body>\\(content)</body></html>\n        \"\"\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
+    "literal": "\"<ol start=\\\"\\(orderedList.startIndex)\\\">\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
+    "literal": "\"<a href=\\\"\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
+    "literal": "\"<img loading=\\\"lazy\\\" src=\\\"\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
+    "literal": "\"\\\" alt=\\\"\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
+    "literal": "\"\\\" title=\\\"\"",
+    "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
   }
 ]

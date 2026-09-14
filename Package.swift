@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 import PackageDescription
 
 let package = Package(
@@ -11,11 +11,14 @@ let package = Package(
         .executable(name: "ruri-monitor", targets: ["RuriMonitor"]),
         .library(name: "RuriCore", targets: ["RuriCore"])
     ],
-    dependencies: [.package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20")],
+    dependencies: [
+        .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20"),
+        .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0")
+    ],
     targets: [
         .systemLibrary(name: "CZlib"),
         .target(name: "RuriLocalization", resources: [.process("Resources")]),
-        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "RuriLocalization"]),
+        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown")]),
         .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization"]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),

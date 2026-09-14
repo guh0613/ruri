@@ -1,6 +1,8 @@
 import RuriLocalization
 import Foundation
 
+/// Search hits and project details have different ID and version fields.
+/// Optional presentation metadata must never prevent an entire page from decoding.
 public struct ModrinthProject: Decodable, Identifiable, Sendable {
     public var id: String { project_id }
     public let project_id: String
@@ -12,6 +14,51 @@ public struct ModrinthProject: Decodable, Identifiable, Sendable {
     public let icon_url: URL?
     public let project_type: String
     public let categories: [String]
+    public let gameVersions: [String]
+    public let loaders: [String]
+    public let body: String?
+    public let updated: String?
+    public let published: String?
+    public let license: License?
+    public let source_url: URL?
+    public let issues_url: URL?
+    public let wiki_url: URL?
+    public let discord_url: URL?
+    public let client_side: String?
+    public let server_side: String?
+    public let gallery: [Gallery]
+    public struct License: Decodable, Sendable { public let id: String; public let name: String? }
+    public struct Gallery: Decodable, Sendable { public let url: URL; public let title: String?; public let description: String?; public let featured: Bool? }
+    private enum CodingKeys: String, CodingKey {
+        case id, project_id, slug, title, description, author, downloads, icon_url, project_type, categories, versions, game_versions, loaders
+        case body, updated, published, date_modified, date_created, license, source_url, issues_url, wiki_url, discord_url, client_side, server_side, gallery
+    }
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let searchID = try c.decodeIfPresent(String.self, forKey: .project_id)
+        project_id = try searchID ?? c.decode(String.self, forKey: .id)
+        slug = try c.decodeIfPresent(String.self, forKey: .slug) ?? project_id
+        title = try c.decode(String.self, forKey: .title)
+        description = try c.decodeIfPresent(String.self, forKey: .description) ?? ""
+        author = try c.decodeIfPresent(String.self, forKey: .author) ?? Messages.AppDiscoverView.communityAuthor.localized
+        downloads = try c.decodeIfPresent(Int.self, forKey: .downloads) ?? 0
+        icon_url = (try? c.decodeIfPresent(String.self, forKey: .icon_url)).flatMap(CatalogMetadata.webURL)
+        project_type = try c.decode(String.self, forKey: .project_type)
+        categories = try c.decodeIfPresent([String].self, forKey: .categories) ?? []
+        gameVersions = try c.decodeIfPresent([String].self, forKey: searchID == nil ? .game_versions : .versions) ?? []
+        loaders = try c.decodeIfPresent([String].self, forKey: .loaders) ?? categories.filter { CatalogMetadata.loaderNames.contains($0) }
+        body = try c.decodeIfPresent(String.self, forKey: .body)
+        updated = try c.decodeIfPresent(String.self, forKey: .updated) ?? c.decodeIfPresent(String.self, forKey: .date_modified)
+        published = try c.decodeIfPresent(String.self, forKey: .published) ?? c.decodeIfPresent(String.self, forKey: .date_created)
+        license = try? c.decodeIfPresent(License.self, forKey: .license)
+        source_url = (try? c.decodeIfPresent(String.self, forKey: .source_url)).flatMap(CatalogMetadata.webURL)
+        issues_url = (try? c.decodeIfPresent(String.self, forKey: .issues_url)).flatMap(CatalogMetadata.webURL)
+        wiki_url = (try? c.decodeIfPresent(String.self, forKey: .wiki_url)).flatMap(CatalogMetadata.webURL)
+        discord_url = (try? c.decodeIfPresent(String.self, forKey: .discord_url)).flatMap(CatalogMetadata.webURL)
+        client_side = try c.decodeIfPresent(String.self, forKey: .client_side)
+        server_side = try c.decodeIfPresent(String.self, forKey: .server_side)
+        gallery = (try? c.decodeIfPresent([Gallery].self, forKey: .gallery)) ?? []
+    }
 }
 public struct ModrinthSearch: Decodable, Sendable { public let hits: [ModrinthProject]; public let total_hits: Int }
 public struct ModrinthVersion: Decodable, Identifiable, Sendable {
@@ -23,6 +70,7 @@ public struct ModrinthVersion: Decodable, Identifiable, Sendable {
     public let version_number: String
     public let date_published: String?
     public let version_type: String?
+    public var changelog: String? = nil
     public let files: [File]
     public let dependencies: [Dependency]
     public let game_versions: [String]
@@ -39,8 +87,17 @@ public struct ContentUpdate: Identifiable, Sendable {
 public actor ModrinthService {
     let client: HTTPClient
     public init(client: HTTPClient = .shared) { self.client = client }
-    public func search(_ query: String, type: String, offset: Int = 0, game: String? = nil) async throws -> ModrinthSearch {
-        try await client.get(ModrinthSearch.self, from: ModrinthEndpoints.search(query, type: type, offset: offset, game: game))
+    public func search(_ query: String, type: String, offset: Int = 0, game: String? = nil, loader: String? = nil, category: String? = nil, sort: CatalogSort? = nil) async throws -> ModrinthSearch {
+        try await client.get(ModrinthSearch.self, from: ModrinthEndpoints.search(query, type: type, offset: offset, game: game, loader: loader, category: category, sort: sort))
+    }
+    public func project(_ id: String) async throws -> ModrinthProject {
+        try await client.get(ModrinthProject.self, from: ModrinthEndpoints.project(id))
+    }
+    public func version(_ id: String) async throws -> ModrinthVersion {
+        try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(id))
+    }
+    public func categories() async throws -> [ModrinthCategory] {
+        try await client.get([ModrinthCategory].self, from: ModrinthEndpoints.categories)
     }
     public func versions(project: String, game: String? = nil, loader: String? = nil) async throws -> [ModrinthVersion] {
         try await client.get([ModrinthVersion].self, from: ModrinthEndpoints.versions(project: project, game: game, loader: loader))

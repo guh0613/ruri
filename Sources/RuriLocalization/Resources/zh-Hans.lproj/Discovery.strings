@@ -1,0 +1,380 @@
+/* @symbol Discovery.applyingInstall @args - */
+"discovery.applyingInstall" = "正在安装资源…";
+
+/* @symbol Discovery.versionProjectMismatch @args - */
+"discovery.versionProjectMismatch" = "所选文件不属于当前项目，请重新载入版本列表。";
+
+/* @symbol Discovery.willUpdateAndEnable @args - */
+"discovery.willUpdateAndEnable" = "将更新并启用";
+
+/* @symbol Discovery.showingPreviousResults @args - */
+"discovery.showingPreviousResults" = "当前显示上次成功载入的结果。";
+
+/* @symbol Discovery.relevance @args - */
+"discovery.relevance" = "相关程度";
+
+/* @symbol Discovery.mostDownloads @args - */
+"discovery.mostDownloads" = "下载最多";
+
+/* @symbol Discovery.recentlyUpdated @args - */
+"discovery.recentlyUpdated" = "最近更新";
+
+/* @symbol Discovery.newest @args - */
+"discovery.newest" = "最新发布";
+
+/* @symbol Discovery.versionsUnknown @args - */
+"discovery.versionsUnknown" = "未提供游戏版本";
+
+/* @symbol Discovery.loadersUnknown @args - */
+"discovery.loadersUnknown" = "未提供加载器";
+
+/* @symbol Discovery.sourceCode @args - */
+"discovery.sourceCode" = "源代码";
+
+/* @symbol Discovery.issues @args - */
+"discovery.issues" = "问题反馈";
+
+/* @symbol Discovery.wiki @args - */
+"discovery.wiki" = "使用文档";
+
+/* @symbol Discovery.required @args - */
+"discovery.required" = "必需依赖";
+
+/* @symbol Discovery.optional @args - */
+"discovery.optional" = "可选依赖";
+
+/* @symbol Discovery.incompatible @args - */
+"discovery.incompatible" = "不兼容";
+
+/* @symbol Discovery.embedded @args - */
+"discovery.embedded" = "已内置";
+
+/* @symbol Discovery.tool @args - */
+"discovery.tool" = "工具";
+
+/* @symbol Discovery.downloadGame @args - */
+"discovery.downloadGame" = "下载游戏";
+
+/* @symbol Discovery.refresh @args - */
+"discovery.refresh" = "刷新";
+
+/* @symbol Discovery.categoriesUnavailable @args - */
+"discovery.categoriesUnavailable" = "分类暂时不可用，仍可搜索资源。";
+
+/* @symbol Discovery.loader @args - */
+"discovery.loader" = "加载器";
+
+/* @symbol Discovery.allLoaders @args - */
+"discovery.allLoaders" = "全部加载器";
+
+/* @symbol Discovery.category @args - */
+"discovery.category" = "分类";
+
+/* @symbol Discovery.allCategories @args - */
+"discovery.allCategories" = "全部分类";
+
+/* @symbol Discovery.clearFilters @args - */
+"discovery.clearFilters" = "清除筛选";
+
+/* @symbol Discovery.resultCount @args integer */
+"discovery.resultCount" = "共 %1$lld 个项目";
+
+/* @symbol Discovery.searching @args - */
+"discovery.searching" = "正在搜索…";
+
+/* @symbol Discovery.sort @args - */
+"discovery.sort" = "排序";
+
+/* @symbol Discovery.layout @args - */
+"discovery.layout" = "显示方式";
+
+/* @symbol Discovery.pageRange @args integer,integer,integer */
+"discovery.pageRange" = "%1$lld–%2$lld，共 %3$lld 个";
+
+/* @symbol Discovery.allGameVersions @args - */
+"discovery.allGameVersions" = "全部游戏版本";
+
+/* @symbol Discovery.minecraftVersion @args text */
+"discovery.minecraftVersion" = "Minecraft %1$@";
+
+/* @symbol Discovery.gameVersion @args - */
+"discovery.gameVersion" = "游戏版本";
+
+/* @symbol Discovery.findGameVersion @args - */
+"discovery.findGameVersion" = "搜索或输入游戏版本";
+
+/* @symbol Discovery.customVersionHint @args - */
+"discovery.customVersionHint" = "找不到版本时，可输入完整版本号并按回车。";
+
+/* @symbol Discovery.categoryAdventure @args - */
+"discovery.categoryAdventure" = "冒险";
+
+/* @symbol Discovery.categoryTechnology @args - */
+"discovery.categoryTechnology" = "科技";
+
+/* @symbol Discovery.categoryMagic @args - */
+"discovery.categoryMagic" = "魔法";
+
+/* @symbol Discovery.categoryOptimization @args - */
+"discovery.categoryOptimization" = "性能优化";
+
+/* @symbol Discovery.categoryDecoration @args - */
+"discovery.categoryDecoration" = "装饰";
+
+/* @symbol Discovery.categoryUtility @args - */
+"discovery.categoryUtility" = "实用工具";
+
+/* @symbol Discovery.categoryWorldgen @args - */
+"discovery.categoryWorldgen" = "世界生成";
+
+/* @symbol Discovery.categoryLibrary @args - */
+"discovery.categoryLibrary" = "前置库";
+
+/* @symbol Discovery.categoryStorage @args - */
+"discovery.categoryStorage" = "存储";
+
+/* @symbol Discovery.categoryEquipment @args - */
+"discovery.categoryEquipment" = "装备";
+
+/* @symbol Discovery.categoryQuests @args - */
+"discovery.categoryQuests" = "任务";
+
+/* @symbol Discovery.categoryKitchenSink @args - */
+"discovery.categoryKitchenSink" = "综合整合包";
+
+/* @symbol Discovery.projectSections @args - */
+"discovery.projectSections" = "项目内容";
+
+/* @symbol Discovery.overview @args - */
+"discovery.overview" = "简介";
+
+/* @symbol Discovery.versions @args - */
+"discovery.versions" = "版本";
+
+/* @symbol Discovery.gallery @args - */
+"discovery.gallery" = "图库";
+
+/* @symbol Discovery.openWebsite @args - */
+"discovery.openWebsite" = "在网站查看";
+
+/* @symbol Discovery.loadingDetail @args - */
+"discovery.loadingDetail" = "正在载入项目详情…";
+
+/* @symbol Discovery.getVersions @args - */
+"discovery.getVersions" = "获取";
+
+/* @symbol Discovery.updatedOn @args text */
+"discovery.updatedOn" = "更新于 %1$@";
+
+/* @symbol Discovery.noDescription @args - */
+"discovery.noDescription" = "作者尚未提供详细介绍";
+
+/* @symbol Discovery.noGallery @args - */
+"discovery.noGallery" = "作者尚未上传截图";
+
+/* @symbol Discovery.openImage @args - */
+"discovery.openImage" = "查看原图";
+
+/* @symbol Discovery.searchLoadedVersions @args - */
+"discovery.searchLoadedVersions" = "搜索已载入的文件名称";
+
+/* @symbol Discovery.matchInstance @args - */
+"discovery.matchInstance" = "匹配当前实例";
+
+/* @symbol Discovery.loadingVersions @args - */
+"discovery.loadingVersions" = "正在载入版本…";
+
+/* @symbol Discovery.noVersions @args - */
+"discovery.noVersions" = "没有符合条件的版本";
+
+/* @symbol Discovery.noVersionsHint @args - */
+"discovery.noVersionsHint" = "尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。";
+
+/* @symbol Discovery.loadedVersions @args integer,integer */
+"discovery.loadedVersions" = "已载入 %1$lld / %2$lld 个文件";
+
+/* @symbol Discovery.loadMore @args - */
+"discovery.loadMore" = "载入更多";
+
+/* @symbol Discovery.releaseChannel @args - */
+"discovery.releaseChannel" = "发布类型";
+
+/* @symbol Discovery.allChannels @args - */
+"discovery.allChannels" = "全部发布类型";
+
+/* @symbol Discovery.release @args - */
+"discovery.release" = "正式版";
+
+/* @symbol Discovery.fileDetails @args - */
+"discovery.fileDetails" = "文件详情";
+
+/* @symbol Discovery.installOrSave @args - */
+"discovery.installOrSave" = "安装或下载…";
+
+/* @symbol Discovery.willInstall @args - */
+"discovery.willInstall" = "将安装";
+
+/* @symbol Discovery.willUpdate @args - */
+"discovery.willUpdate" = "将更新";
+
+/* @symbol Discovery.willEnable @args - */
+"discovery.willEnable" = "将重新启用";
+
+/* @symbol Discovery.alreadyInstalled @args - */
+"discovery.alreadyInstalled" = "已安装";
+
+/* @symbol Discovery.incompatibleTarget @args - */
+"discovery.incompatibleTarget" = "游戏版本或加载器不兼容";
+
+/* @symbol Discovery.contentChanged @args - */
+"discovery.contentChanged" = "实例中的资源已更改，请重新检查后再安装。";
+
+/* @symbol Discovery.dependencies @args - */
+"discovery.dependencies" = "依赖关系";
+
+/* @symbol Discovery.changelog @args - */
+"discovery.changelog" = "更新日志";
+
+/* @symbol Discovery.noDependencies @args - */
+"discovery.noDependencies" = "作者未列出此版本的依赖";
+
+/* @symbol Discovery.dependencyVersionNotice @args - */
+"discovery.dependencyVersionNotice" = "以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。";
+
+/* @symbol Discovery.noChangelog @args - */
+"discovery.noChangelog" = "作者尚未提供此版本的更新日志";
+
+/* @symbol Discovery.loadingChangelog @args - */
+"discovery.loadingChangelog" = "正在载入更新日志…";
+
+/* @symbol Discovery.unknownDependency @args - */
+"discovery.unknownDependency" = "未知依赖";
+
+/* @symbol Discovery.pinnedVersion @args - */
+"discovery.pinnedVersion" = "指定版本";
+
+/* @symbol Discovery.viewProject @args - */
+"discovery.viewProject" = "查看项目";
+
+/* @symbol Discovery.done @args - */
+"discovery.done" = "完成";
+
+/* @symbol Discovery.destination @args - */
+"discovery.destination" = "下载到";
+
+/* @symbol Discovery.existingInstance @args - */
+"discovery.existingInstance" = "已有实例";
+
+/* @symbol Discovery.newInstance @args - */
+"discovery.newInstance" = "新建实例";
+
+/* @symbol Discovery.saveFile @args - */
+"discovery.saveFile" = "仅下载文件";
+
+/* @symbol Discovery.saveFileNotice @args - */
+"discovery.saveFileNotice" = "选择文件的保存位置，之后可以手动安装。";
+
+/* @symbol Discovery.fileDependenciesNotice @args - */
+"discovery.fileDependenciesNotice" = "仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。";
+
+/* @symbol Discovery.modpackImportNotice @args - */
+"discovery.modpackImportNotice" = "Ruri 会先读取整合包，再让你确认实例名称和安装内容。";
+
+/* @symbol Discovery.checkingDependencies @args - */
+"discovery.checkingDependencies" = "正在检查依赖…";
+
+/* @symbol Discovery.installSummary @args integer,text */
+"discovery.installSummary" = "%1$lld 个文件 · 需下载 %2$@";
+
+/* @symbol Discovery.chooseSaveLocation @args - */
+"discovery.chooseSaveLocation" = "选择保存位置…";
+
+/* @symbol Discovery.readModpack @args - */
+"discovery.readModpack" = "读取整合包";
+
+/* @symbol Discovery.createAndInstall @args - */
+"discovery.createAndInstall" = "创建并安装";
+
+/* @symbol Discovery.confirmInstall @args - */
+"discovery.confirmInstall" = "安装";
+
+/* @symbol Discovery.verifiedDownload @args - */
+"discovery.verifiedDownload" = "Ruri 会在下载完成后检查文件是否完整。";
+
+/* @symbol Discovery.chooseInstance @args - */
+"discovery.chooseInstance" = "选择安装实例";
+
+/* @symbol Discovery.showIncompatible @args - */
+"discovery.showIncompatible" = "显示不兼容实例";
+
+/* @symbol Discovery.noCompatibleInstance @args - */
+"discovery.noCompatibleInstance" = "没有适合此版本的实例。可以新建实例，或仅下载文件。";
+
+/* @symbol Discovery.instanceInUse @args - */
+"discovery.instanceInUse" = "正在使用";
+
+/* @symbol Discovery.createCompatibleInstance @args - */
+"discovery.createCompatibleInstance" = "创建新实例";
+
+/* @symbol Discovery.newInstanceNotice @args - */
+"discovery.newInstanceNotice" = "Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。";
+
+/* @symbol Discovery.installPreview @args - */
+"discovery.installPreview" = "依赖检查";
+
+/* @symbol Discovery.dependencyPreviewNotice @args - */
+"discovery.dependencyPreviewNotice" = "Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。";
+
+/* @symbol Discovery.replacingVersion @args text */
+"discovery.replacingVersion" = "替换现有版本：%1$@";
+
+/* @symbol Discovery.untrackedNotice @args integer */
+"discovery.untrackedNotice" = "Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。";
+
+/* @symbol Discovery.instanceChanged @args - */
+"discovery.instanceChanged" = "实例的游戏版本或加载器已更改，请重新选择实例。";
+
+/* @symbol Discovery.installingInto @args text */
+"discovery.installingInto" = "正在安装到 %1$@";
+
+/* @symbol Discovery.installComplete @args text */
+"discovery.installComplete" = "已完成 %1$@ 的资源安装。";
+
+/* @symbol Discovery.downloadingFile @args text */
+"discovery.downloadingFile" = "正在下载 %1$@";
+
+/* @symbol Discovery.saveFailed @args - */
+"discovery.saveFailed" = "无法保存文件，请检查目标位置的权限。";
+
+/* @symbol Discovery.savedFile @args text */
+"discovery.savedFile" = "已保存 %1$@。";
+
+/* @symbol Discovery.viewDownloads @args - */
+"discovery.viewDownloads" = "查看下载";
+
+/* @symbol Discovery.unrestricted @args - */
+"discovery.unrestricted" = "不限";
+
+/* @symbol Discovery.supportedGameVersions @args text */
+"discovery.supportedGameVersions" = "支持的游戏版本：%1$@";
+
+/* @symbol Discovery.supportedLoaders @args text */
+"discovery.supportedLoaders" = "支持的加载器：%1$@";
+
+/* @symbol Discovery.filterByInstance @args - */
+"discovery.filterByInstance" = "按实例筛选";
+
+/* @symbol Discovery.noInstanceFilter @args - */
+"discovery.noInstanceFilter" = "不按实例筛选";
+
+/* @symbol Discovery.instanceFilterHint @args - */
+"discovery.instanceFilterHint" = "选择实例后，按它的游戏版本和加载器筛选。";
+
+/* @symbol Discovery.filteringForInstance @args text */
+"discovery.filteringForInstance" = "正在为「%1$@」筛选";
+
+/* @symbol Discovery.clearInstanceFilter @args - */
+"discovery.clearInstanceFilter" = "取消实例筛选";
+
+/* @symbol Discovery.openProviderWebsite @args text */
+"discovery.openProviderWebsite" = "在默认浏览器中打开 %1$@ 项目页面";

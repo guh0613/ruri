@@ -38,7 +38,7 @@ public enum CurseForgeKeyStore {
 public struct CurseForgeProject: Decodable, Identifiable, Sendable {
     public struct Author: Decodable, Sendable { public let name: String }
     public struct Logo: Decodable, Sendable { public let thumbnailUrl: URL? }
-    public struct Links: Decodable, Sendable { public let websiteUrl: URL? }
+    public struct Links: Decodable, Sendable { public let websiteUrl: URL?; public let wikiUrl: URL?; public let issuesUrl: URL?; public let sourceUrl: URL? }
     public let id: Int
     public let gameId: Int
     public let name: String
@@ -50,6 +50,13 @@ public struct CurseForgeProject: Decodable, Identifiable, Sendable {
     public let logo: Logo?
     public let links: Links?
     public let allowModDistribution: Bool?
+    public let categories: [CurseForgeCategory]?
+    public let latestFilesIndexes: [FileIndex]?
+    public let screenshots: [Screenshot]?
+    public let dateModified: String?
+    public let dateCreated: String?
+    public struct FileIndex: Decodable, Sendable { public let gameVersion: String; public let modLoader: Int? }
+    public struct Screenshot: Decodable, Sendable { public let id: Int; public let title: String?; public let description: String?; public let url: URL }
     public var contentType: String? { switch classId { case 6: "mod"; case 4471: "modpack"; case 12: "resourcepack"; case 6552: "shader"; default: nil } }
     public func page(for fileID: Int) -> URL {
         CurseForgeEndpoints.filePage(project: self, fileID: fileID)
@@ -177,12 +184,25 @@ public actor CurseForgeService {
         if let body { request.httpMethod = "POST"; request.httpBody = body; request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
         return try JSONDecoder().decode(type, from: await client.data(for: request))
     }
-    public func search(_ query: String, type: String, offset: Int = 0) async throws -> CurseForgePage<CurseForgeProject> {
+    public func search(_ query: String, type: String, offset: Int = 0, game: String? = nil, loader: String? = nil, category: String? = nil, sort: CatalogSort = .downloads) async throws -> CurseForgePage<CurseForgeProject> {
         let classes = ["mod": 6, "modpack": 4471, "resourcepack": 12, "shader": 6552]
-        guard let category = classes[type] else { throw RuriError.message(Messages.CoreCurseForge.unsupportedContentType) }
-        return try await request(CurseForgePage<CurseForgeProject>.self, route: .search, query: [
-            .init(name: "gameId", value: "432"), .init(name: "classId", value: String(category)), .init(name: "searchFilter", value: query),
-            .init(name: "pageSize", value: "20"), .init(name: "index", value: String(max(0, offset))), .init(name: "sortField", value: "6"), .init(name: "sortOrder", value: "desc")])
+        guard let classID = classes[type] else { throw RuriError.message(Messages.CoreCurseForge.unsupportedContentType) }
+        var parameters: [URLQueryItem] = [
+            .init(name: "gameId", value: "432"), .init(name: "classId", value: String(classID)), .init(name: "searchFilter", value: query),
+            .init(name: "pageSize", value: "20"), .init(name: "index", value: String(max(0, offset))), .init(name: "sortField", value: String(sort.curseForgeField)), .init(name: "sortOrder", value: "desc")]
+        if let game, !game.isEmpty { parameters.append(.init(name: "gameVersion", value: game)) }
+        if let loader, let id = CatalogMetadata.curseForgeLoaderID(loader) { parameters.append(.init(name: "modLoaderType", value: String(id))) }
+        if let category, Int(category) != nil { parameters.append(.init(name: "categoryId", value: category)) }
+        return try await request(CurseForgePage<CurseForgeProject>.self, route: .search, query: parameters)
+    }
+    public func categories() async throws -> [CurseForgeCategory] {
+        try await request(Response<[CurseForgeCategory]>.self, route: .categories, query: [.init(name: "gameId", value: "432")]).data
+    }
+    public func description(project: Int) async throws -> String {
+        try await request(Response<String>.self, route: .description(project)).data
+    }
+    public func changelog(project: Int, file: Int) async throws -> String {
+        try await request(Response<String>.self, route: .changelog(project: project, file: file)).data
     }
     public func project(_ id: Int) async throws -> CurseForgeProject {
         guard id > 0 else { throw RuriError.message(Messages.CoreCurseForge.invalidProjectID) }
@@ -227,12 +247,14 @@ public actor CurseForgeService {
             return PlannedCurseFile(project: project, file: file, kind: kind)
         }
     }
-    public func plan(file: CurseForgeFile, instance: GameInstance, paths: LauncherPaths) async throws -> CurseForgeContentPlan {
-        try await plan(files: [file], instance: instance, paths: paths)
+    public func plan(file: CurseForgeFile, instance: GameInstance, paths: LauncherPaths, installed: [ManagedContent]? = nil) async throws -> CurseForgeContentPlan {
+        try await plan(files: [file], instance: instance, paths: paths, installed: installed)
     }
-    public func plan(files roots: [CurseForgeFile], instance: GameInstance, paths: LauncherPaths) async throws -> CurseForgeContentPlan {
+    public func plan(files roots: [CurseForgeFile], instance: GameInstance, paths: LauncherPaths, installed supplied: [ManagedContent]? = nil) async throws -> CurseForgeContentPlan {
         var queue = roots; var resolved: [PlannedCurseFile] = []; var seen: [Int: Int] = [:]
-        let installed = try await ContentManager(paths: paths, instanceID: instance.id).records()
+        let installed: [ManagedContent]
+        if let supplied { installed = supplied }
+        else { installed = try await ContentManager(paths: paths, instanceID: instance.id).records() }
         while !queue.isEmpty {
             try Task.checkCancellation(); let file = queue.removeFirst()
             if let prior = seen[file.modId] { guard prior == file.id else { throw RuriError.message(Messages.CoreCurseForge.requiredDependencyVersionConflict) }; continue }
@@ -245,6 +267,10 @@ public actor CurseForgeService {
                 for dependency in file.dependencies where dependency.relationType == 3 {
                     if seen[dependency.modId] != nil { continue }
                     if let selected = roots.first(where: { $0.modId == dependency.modId }) { queue.append(selected); continue }
+                    if let record = installed.first(where: { $0.provider == "curseforge" && $0.projectID == String(dependency.modId) }), let id = Int(record.versionID),
+                       let present = try? await self.file(project: dependency.modId, file: id), present.supports(instance, kind: .mod), present.isAvailable != false {
+                        queue.append(present); continue
+                    }
                     let options = try await files(project: dependency.modId, game: instance.gameVersion, loader: instance.loader).data.filter { $0.supports(instance, kind: .mod) && $0.isAvailable != false }
                     guard let match = options.first(where: { $0.releaseType == 1 }) ?? options.first else { throw RuriError.message(Messages.CoreCurseForge.missingRequiredDependency(String(describing: dependency.modId))) }
                     queue.append(match)

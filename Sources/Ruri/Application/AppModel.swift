@@ -10,6 +10,8 @@ import RuriCore
     let downloader = DownloadManager()
     var paths: LauncherPaths { basePaths.configured(with: state) }
     var installer: GameInstaller { GameInstaller(paths: paths, downloader: downloader) }
+    let discovery = CatalogBrowser()
+    let catalogRepository = CatalogRepository()
     var page = Page.home
     var catalog: VersionCatalog?
     var catalogLoading = false
