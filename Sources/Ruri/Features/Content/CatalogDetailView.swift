@@ -242,7 +242,7 @@ struct CatalogVersionsView: View {
         }.frame(width: 160)
         if project.type != "modpack", !installedInstances.isEmpty {
             CatalogMenuFilter(title: D.filterByInstance.localized, value: referenceInstance?.name ?? D.unrestricted.localized, symbol: "desktopcomputer", active: referenceInstance != nil) {
-                Picker(D.filterByInstance.localized, selection: Binding(get: { referenceInstanceID }, set: selectReference)) {
+                Picker(D.filterByInstance.localized, selection: Binding(get: { referenceInstanceID }, set: { selectReference($0) })) {
                     Text(D.noInstanceFilter.localized).tag(nil as UUID?)
                     ForEach(installedInstances) { instance in
                         Label { Text(instance.name + " · " + instance.subtitle) } icon: {
