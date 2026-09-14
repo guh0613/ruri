@@ -14,8 +14,8 @@ case "$architecture" in
 esac
 [[ "$(lipo -archs "$app/Contents/Helpers/ruri-monitor")" == "$architecture" ]]
 for host_architecture in arm64 x86_64; do
-  lipo -verify_arch "$host_architecture" "$app/Contents/Helpers/RuriGame.app/Contents/MacOS/ruri-game"
-  lipo -verify_arch "$host_architecture" "$app/Contents/Helpers/RuriGame.app/Contents/Frameworks/libRuriGameSupport.dylib"
+  lipo "$app/Contents/Helpers/RuriGame.app/Contents/MacOS/ruri-game" -verify_arch "$host_architecture"
+  lipo "$app/Contents/Helpers/RuriGame.app/Contents/Frameworks/libRuriGameSupport.dylib" -verify_arch "$host_architecture"
 done
 
 mkdir -p build/dmg
