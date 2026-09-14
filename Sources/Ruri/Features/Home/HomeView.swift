@@ -144,9 +144,9 @@ struct HomeView: View {
         }
     }
 
-    private func activitySection(_ task: ActivityItem) -> some View {
+    private func activitySection(_ task: LauncherLogEntry) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            SectionTitle(Messages.AppHomeView.inProgress.localized) { seeAll(Messages.AppHomeView.allTasks.localized) { model.page = .downloads } }
+            SectionTitle(Messages.AppHomeView.inProgress.localized) { seeAll(Messages.AppHomeView.allTasks.localized) { model.page = .activity } }
             Surface {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack { Text(task.title).font(.headline).lineLimit(1); Spacer(); Button(Messages.Common.cancel.localized) { model.operation?.cancel() }.controlSize(.small) }

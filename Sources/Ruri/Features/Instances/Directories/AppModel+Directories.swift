@@ -49,7 +49,7 @@ extension AppModel {
             _ = try await CustomRunDirectoryRelocation(paths: basePaths).apply(preview)
             acceptState(try StateStore.load(basePaths))
             await refreshDirectoryAvailability()
-            notice = Messages.AppAppModelDirectories.relocatedInstances(Int64(preview.instances.count)).localized
+            report(Messages.AppAppModelDirectories.relocatedInstances(Int64(preview.instances.count)))
             completed()
         }
     }
@@ -62,10 +62,9 @@ extension AppModel {
                     result = try await service.copyToEmpty(preview) { [weak self] value in Task { @MainActor in self?.progress(activity, value.progress) } }
                 } else { _ = try await service.useExisting(preview); result = nil }
                 acceptState(try StateStore.load(basePaths))
-                notice = result?.warning ?? Messages.AppAppModelDirectories.directorySwitchCompleted(preview.instanceName, String(describing: copyFiles ? Messages.AppAppModelDirectories.copyAndSwitch.localized : Messages.AppAppModelDirectories.useTargetContents.localized)).localized
-                noticeFileURL = result?.preservedCopy
+                report(result?.warning ?? Messages.AppAppModelDirectories.directorySwitchCompleted(preview.instanceName, String(describing: copyFiles ? Messages.AppAppModelDirectories.copyAndSwitch.localized : Messages.AppAppModelDirectories.useTargetContents.localized)).localized, level: result?.warning == nil ? .success : .warning, fileURL: result?.preservedCopy)
             } catch let failure as RunDirectoryCopyFailure {
-                notice = failure.localizedDescription; noticeFileURL = failure.preservedCopy
+                report(failure.localizedDescription, level: .error, fileURL: failure.preservedCopy)
                 throw failure
             }
         }
@@ -74,8 +73,7 @@ extension AppModel {
         perform(Messages.AppAppModelDirectories.recoverDirectoryCopy(pending.owner.instanceName)) { [self] _ in
             let result = try await GameRunDirectoryChange(paths: paths).recoverCopy(instanceID: pending.owner.instanceID, transactionID: pending.owner.transactionID)
             acceptState(try StateStore.load(basePaths))
-            notice = result.warning ?? (pending.committed ? Messages.AppAppModelDirectories.cleanedCopyRecord.localized : Messages.AppAppModelDirectories.directorySwitchRecovered.localized)
-            noticeFileURL = result.preservedCopy
+            report(result.warning ?? (pending.committed ? Messages.AppAppModelDirectories.cleanedCopyRecord.localized : Messages.AppAppModelDirectories.directorySwitchRecovered.localized), level: result.warning == nil ? .success : .warning, fileURL: result.preservedCopy)
         }
     }
 }

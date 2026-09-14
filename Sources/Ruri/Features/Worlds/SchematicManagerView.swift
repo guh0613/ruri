@@ -96,7 +96,7 @@ struct SchematicManagerView: View {
         let panel = NSSavePanel(); panel.nameFieldStringValue = entry.name
         panel.allowedContentTypes = [UTType(filenameExtension: entry.url.pathExtension) ?? .data]
         guard panel.runModal() == .OK, let destination = panel.url else { return }
-        mutate(Messages.AppSchematicManagerView.exportDestination.localized) { try await manager.export(entry, to: destination); model.notice = Messages.AppSchematicManagerView.exportedSchematic.localized; model.noticeFileURL = destination }
+        mutate(Messages.AppSchematicManagerView.exportDestination.localized) { try await manager.export(entry, to: destination); model.report(Messages.AppSchematicManagerView.exportedSchematic, fileURL: destination) }
     }
     private func reload() async {
         loading = true; error = nil

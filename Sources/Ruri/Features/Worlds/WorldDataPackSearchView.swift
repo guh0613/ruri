@@ -116,7 +116,7 @@ private struct WorldDataPackInstallView: View {
             model.perform(Messages.AppWorldDataPackSearchView.installDataPackFormat(project.title), presentErrors: false, instanceID: instance.id) { id in
                 do {
                     try await WorldDataPackDownloads().install(plan, instance: instance, folder: world.folder, paths: model.paths, downloader: model.installer.downloader) { p in await model.progress(id, p) }
-                    model.notice = Messages.AppWorldDataPackSearchView.dataPackInstalled(world.name).localized; dismiss()
+                    model.report(Messages.AppWorldDataPackSearchView.dataPackInstalled(world.name)); dismiss()
                 } catch { self.error = error.localizedDescription; throw error }
             }
         } else if let version = filtered.first(where: { $0.id == selectedID }) {

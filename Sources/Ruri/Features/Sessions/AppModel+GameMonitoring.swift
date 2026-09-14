@@ -35,20 +35,20 @@ extension AppModel {
             showSession(record.id); return
         }
         if application.activate(options: [.activateAllWindows]) { try? GameMonitorClient.recordEvent(.gameActivationRequested, paths: paths, session: record) }
-        else { notice = Messages.AppAppModelGameMonitoring.gameWindowUnavailable.localized }
+        else { report(Messages.AppAppModelGameMonitoring.gameWindowUnavailable, level: .warning) }
     }
     func requestGameQuit(_ instanceID: UUID) {
         guard let record = activeSessions[instanceID] else { return }
         do {
             try GameMonitorClient.requestNormalQuit(paths: paths, record: record)
-            notice = Messages.AppAppModelGameMonitoring.normalExitRequested.localized; noticeSessionID = record.id
-        } catch { notice = error.localizedDescription; noticeSessionID = record.id }
+            report(Messages.AppAppModelGameMonitoring.normalExitRequested, sessionID: record.id)
+        } catch { report(error.localizedDescription, level: .error, sessionID: record.id) }
     }
     func confirmGameTermination(_ instanceID: UUID) {
         guard let record = activeSessions[instanceID], !record.state.isFinished, record.monitorIdentity?.isAlive == true else { return }
         if record.stage == .beforeCommand || record.stage == .afterCommand {
             do { try GameMonitorClient.requestStop(paths: paths, record: record) }
-            catch { notice = error.localizedDescription; noticeSessionID = record.id }
+            catch { report(error.localizedDescription, level: .error, sessionID: record.id) }
             return
         }
         let alert = NSAlert()
@@ -59,7 +59,7 @@ extension AppModel {
         alert.addButton(withTitle: Messages.AppAppModelGameMonitoring.terminateProcess.localized)
         guard alert.runModal() == .alertSecondButtonReturn else { return }
         do { try GameMonitorClient.requestStop(paths: paths, record: record) }
-        catch { notice = error.localizedDescription; noticeSessionID = record.id }
+        catch { report(error.localizedDescription, level: .error, sessionID: record.id) }
     }
     func didRecoverSession(_ record: GameSession) async {
         publishSession(record)
@@ -69,7 +69,7 @@ extension AppModel {
         if activeSessions[record.instanceID]?.id == record.id { activeSessions.removeValue(forKey: record.instanceID) }
         handledExits.insert(record.id)
         acknowledgeSession(record)
-        notice = record.title; noticeSessionID = record.id
+        report(record.title, sessionID: record.id)
     }
     func showSession(_ id: UUID? = nil) {
         requestedLogSessionID = id ?? logsSessionID ?? sessions.first?.id
@@ -79,7 +79,7 @@ extension AppModel {
         do {
             try GameSessionReviewStore.mark(record, paths: paths)
             NSApp.dockTile.badgeLabel = sessions.contains(where: needsReview) ? "!" : nil
-        } catch { notice = Messages.AppAppModelGameMonitoring.acknowledgeSessionFailure(error.localizedDescription).localized }
+        } catch { report(Messages.AppAppModelGameMonitoring.acknowledgeSessionFailure(error.localizedDescription), level: .error) }
     }
     private func reviewed(_ record: GameSession) -> Bool {
         (try? GameSessionReviewStore.contains(record, paths: paths)) ?? false
@@ -129,16 +129,14 @@ extension AppModel {
                 await readMonitorLog(record, final: true)
                 logCursors.removeValue(forKey: record.id)
                 if let exit = record.exit { lastGameExit = exit }
-                notice = record.title
-                noticeSessionID = record.id
+                if !needsReview(record) { report(record.title, level: .success, sessionID: record.id) }
             }
             if needsReview(record) && !handledExits.contains(record.id) {
                 handledExits.insert(record.id)
                 NSApp.dockTile.badgeLabel = "!"
+                let summary = activity == .orphaned ? Messages.AppAppModelGameMonitoring.monitoringStopped.localized : activity == .uncertain ? Messages.AppAppModelGameMonitoring.statusUnconfirmed.localized : record.title
+                report("\(record.instanceName)：\(summary)", level: record.state == .failed ? .error : .warning, sessionID: record.id)
                 if !presentedAttention {
-                    let summary = activity == .orphaned ? Messages.AppAppModelGameMonitoring.monitoringStopped.localized : activity == .uncertain ? Messages.AppAppModelGameMonitoring.statusUnconfirmed.localized : record.title
-                    notice = "\(record.instanceName)：\(summary)"
-                    noticeSessionID = record.id
                     if NSApp.isActive && NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {
                         requestedLogSessionID = record.id; showLogs = true
                     }
@@ -187,7 +185,7 @@ extension AppModel {
             var changed = try await cursor.refresh(final: final)
             if final { while try await cursor.refresh(final: true) { changed = true } }
             if changed || liveLogs[record.id] == nil { liveLogs[record.id] = await cursor.lines }
-        } catch { notice = Messages.AppAppModelGameMonitoring.unreadableLog(record.instanceName, error.localizedDescription).localized; noticeSessionID = record.id }
+        } catch { report(Messages.AppAppModelGameMonitoring.unreadableLog(record.instanceName, error.localizedDescription), level: .error, sessionID: record.id) }
     }
     private func restorePlaytime() {
         var changed = false
@@ -206,5 +204,6 @@ extension AppModel {
         operation?.cancel()
         await operation?.value
         monitorTask?.cancel()
+        await journalWriteTask?.value
     }
 }

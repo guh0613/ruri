@@ -9,7 +9,7 @@ struct RootView: View {
         @Bindable var model = model
         NavigationSplitView {
             List(selection: $model.page) {
-                Section { ForEach([Page.home, .library, .discover, .downloads]) { page in sidebarRow(page) } }
+                Section { ForEach([Page.home, .library, .discover, .activity]) { page in sidebarRow(page) } }
                 Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
             }
             .listStyle(.sidebar)
@@ -18,13 +18,12 @@ struct RootView: View {
             .navigationSplitViewColumnWidth(min: 210, ideal: 236, max: 320)
         } detail: {
             VStack(spacing: 0) {
-                if let notice = model.notice { NoticeBar(notice: notice) }
                 Group {
                     switch model.page {
                     case .home: HomeView()
                     case .library: LibraryView()
                     case .discover: DiscoverView()
-                    case .downloads: DownloadsView()
+                    case .activity: LauncherLogView().id(model.logNavigationID)
                     case .accounts: AccountsView()
                     case .java: JavaView()
                     case .settings: PreferencesView()
@@ -33,6 +32,7 @@ struct RootView: View {
             }
                 .navigationTitle(model.page.title)
                 .toolbar {
+                    ToolbarItem(placement: .primaryAction) { LauncherNotificationButton() }
                     if let runningID = model.runningID {
                         ToolbarItem(placement: .primaryAction) {
                             Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.AppRootView.runHistory.localized, systemImage: "terminal") }
@@ -62,9 +62,11 @@ struct RootView: View {
         HStack {
             Label(page.title, systemImage: page.symbol)
             Spacer()
-            if page == .downloads, let task = model.activeActivity {
+            if page == .activity, let task = model.activeActivity {
                 if task.progress.total > 0 { ProgressView(value: task.progress.fraction).progressViewStyle(.circular).controlSize(.mini) }
                 else { ProgressView().controlSize(.mini) }
+            } else if page == .activity, model.journal.unreadCount > 0 {
+                Text(model.journal.unreadCount, format: .number).font(.caption).foregroundStyle(.secondary)
             }
         }.padding(.vertical, 3).tag(page)
     }
@@ -112,24 +114,5 @@ private struct AccountSidebarFooter: View {
             .padding(.horizontal, 8).padding(.vertical, 8)
             .help(model.activeAccount == nil ? Messages.AppRootView.addAnotherAccount.localized : Messages.AppRootView.switchAccount.localized)
         }
-    }
-}
-
-private struct NoticeBar: View {
-    @Environment(AppModel.self) private var model
-    let notice: String
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "info.circle").foregroundStyle(Theme.accent)
-            Text(notice).font(.callout).lineLimit(2)
-            Spacer()
-            if let id = model.noticeSessionID { Button(Messages.AppRootView.viewRecord.localized) { model.showSession(id) } }
-            if let url = model.noticeFileURL { Button(Messages.AppRootView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([url]) } }
-            Button { model.notice = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain).foregroundStyle(.secondary)
-        }
-        .controlSize(.small)
-        .padding(.horizontal, 16).padding(.vertical, 9)
-        .background(.bar)
-        .overlay(alignment: .bottom) { Divider() }
     }
 }

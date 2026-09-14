@@ -7,7 +7,11 @@ extension AppModel {
         guard !catalogLoading else { return }
         catalogLoading = true; catalogError = nil
         defer { catalogLoading = false }
-        do { catalog = try await installer.catalog() } catch { catalogError = error.localizedDescription }
+        do { catalog = try await installer.catalog() }
+        catch {
+            catalogError = error.localizedDescription
+            if !Task.isCancelled { report(Messages.LauncherLog.catalogFailed(error.localizedDescription), level: .warning) }
+        }
     }
     func install(name: String, version: String, loader: LoaderKind, loaderVersion: String?) {
         guard !busy, !readOnly else { return }
@@ -17,7 +21,7 @@ extension AppModel {
         instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: loader)
         do { instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths) }
         catch { self.error = error.localizedDescription; return }
-        state.instances.append(instance); select(instance); showCreate = false; page = .downloads
+        state.instances.append(instance); select(instance); showCreate = false; page = .activity
         install(instance)
     }
     func install(_ instance: GameInstance) {
@@ -26,7 +30,7 @@ extension AppModel {
             let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
                 await self?.progress(id, progress)
             }
-            try recordInstallation(result, requested: instance); notice = Messages.AppAppModelInstallation.installationResult(result.name).localized
+            try recordInstallation(result, requested: instance); report(Messages.AppAppModelInstallation.installationResult(result.name))
         }
     }
     func recordInstallation(_ result: GameInstance, requested: GameInstance) throws {
@@ -52,7 +56,7 @@ extension AppModel {
             let saved = try await service.change(instance, to: loader, version: version, concurrency: state.settings.concurrentDownloads) { [weak self] p in
                 await self?.progress(id, p)
             }
-            acceptState(saved); notice = Messages.AppAppModelInstallation.loaderConfigurationSaved(instance.name, loader.title).localized
+            acceptState(saved); report(Messages.AppAppModelInstallation.loaderConfigurationSaved(instance.name, loader.title))
         }
     }
     func restoreComponents(_ instance: GameInstance) {
@@ -60,7 +64,7 @@ extension AppModel {
         save()
         perform(Messages.AppAppModelInstallation.restoreLoaderConfiguration(instance.name)) { [self] _ in
             let saved = try await InstanceComponents(paths: paths).restore(instance)
-            acceptState(saved); notice = Messages.AppAppModelInstallation.loaderConfigurationRestored.localized
+            acceptState(saved); report(Messages.AppAppModelInstallation.loaderConfigurationRestored)
         }
     }
 }

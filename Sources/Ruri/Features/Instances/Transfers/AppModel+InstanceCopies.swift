@@ -11,10 +11,9 @@ extension AppModel {
             do {
                 let result = try await InstanceCopier(paths: basePaths).copy(preview) { [weak self] value in Task { @MainActor in self?.progress(activity, value.progress) } }
                 acceptState(try StateStore.load(basePaths))
-                notice = result.warning ?? Messages.AppAppModelInstanceCopies.copyCreated(preview.copy.name).localized
-                noticeFileURL = result.preservedCopy; page = .library; completed()
+                report(result.warning ?? Messages.AppAppModelInstanceCopies.copyCreated(preview.copy.name).localized, level: result.warning == nil ? .success : .warning, fileURL: result.preservedCopy); page = .library; completed()
             } catch let failure as RunDirectoryCopyFailure {
-                notice = failure.localizedDescription; noticeFileURL = failure.preservedCopy; throw failure
+                report(failure.localizedDescription, level: .error, fileURL: failure.preservedCopy); throw failure
             }
         }
     }
@@ -25,8 +24,7 @@ extension AppModel {
         perform(Messages.AppAppModelInstanceCopies.recoverInstanceCopy(String(describing: pending.owner.copyName))) { [self] _ in
             let result = try await InstanceCopier(paths: basePaths).recover(sourceID: pending.owner.sourceID, transactionID: pending.owner.transactionID)
             acceptState(try StateStore.load(basePaths))
-            notice = result.warning ?? (pending.committed ? Messages.AppAppModelInstanceCopies.copyCompleted.localized : Messages.AppAppModelInstanceCopies.copyKept.localized)
-            noticeFileURL = result.preservedCopy
+            report(result.warning ?? (pending.committed ? Messages.AppAppModelInstanceCopies.copyCompleted.localized : Messages.AppAppModelInstanceCopies.copyKept.localized), level: result.warning == nil ? .success : .warning, fileURL: result.preservedCopy)
         }
     }
 }

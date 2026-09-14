@@ -3506,3 +3506,201 @@
 
 /* @symbol AppWorldManagerView.moreActions @args - */
 "appWorldManagerView.moreActions" = "更多操作";
+
+/* @symbol LauncherLog.title @args - */
+"launcherLog.title" = "日志";
+
+/* @symbol LauncherLog.all @args - */
+"launcherLog.all" = "全部";
+
+/* @symbol LauncherLog.tasks @args - */
+"launcherLog.tasks" = "任务";
+
+/* @symbol LauncherLog.attention @args - */
+"launcherLog.attention" = "需关注";
+
+/* @symbol LauncherLog.transfers @args - */
+"launcherLog.transfers" = "文件传输";
+
+/* @symbol LauncherLog.notifications @args - */
+"launcherLog.notifications" = "通知";
+
+/* @symbol LauncherLog.unread @args - */
+"launcherLog.unread" = "未读";
+
+/* @symbol LauncherLog.markAllRead @args - */
+"launcherLog.markAllRead" = "全部标为已读";
+
+/* @symbol LauncherLog.showAll @args - */
+"launcherLog.showAll" = "查看全部日志";
+
+/* @symbol LauncherLog.noNotifications @args - */
+"launcherLog.noNotifications" = "暂无通知";
+
+/* @symbol LauncherLog.notificationHint @args - */
+"launcherLog.notificationHint" = "任务结果和需要关注的消息会出现在这里。";
+
+/* @symbol LauncherLog.noEntries @args - */
+"launcherLog.noEntries" = "暂无日志";
+
+/* @symbol LauncherLog.emptyHint @args - */
+"launcherLog.emptyHint" = "启动器操作、任务进度和运行事件会记录在这里。";
+
+/* @symbol LauncherLog.noMatches @args - */
+"launcherLog.noMatches" = "没有匹配的记录";
+
+/* @symbol LauncherLog.searchHint @args - */
+"launcherLog.searchHint" = "尝试其他关键词或切换筛选条件。";
+
+/* @symbol LauncherLog.search @args - */
+"launcherLog.search" = "搜索日志";
+
+/* @symbol LauncherLog.event @args - */
+"launcherLog.event" = "事件";
+
+/* @symbol LauncherLog.category @args - */
+"launcherLog.category" = "来源";
+
+/* @symbol LauncherLog.time @args - */
+"launcherLog.time" = "时间";
+
+/* @symbol LauncherLog.status @args - */
+"launcherLog.status" = "状态";
+
+/* @symbol LauncherLog.launcher @args - */
+"launcherLog.launcher" = "启动器";
+
+/* @symbol LauncherLog.task @args - */
+"launcherLog.task" = "任务";
+
+/* @symbol LauncherLog.game @args - */
+"launcherLog.game" = "游戏";
+
+/* @symbol LauncherLog.info @args - */
+"launcherLog.info" = "信息";
+
+/* @symbol LauncherLog.success @args - */
+"launcherLog.success" = "成功";
+
+/* @symbol LauncherLog.warning @args - */
+"launcherLog.warning" = "警告";
+
+/* @symbol LauncherLog.error @args - */
+"launcherLog.error" = "错误";
+
+/* @symbol LauncherLog.running @args - */
+"launcherLog.running" = "进行中";
+
+/* @symbol LauncherLog.completed @args - */
+"launcherLog.completed" = "已完成";
+
+/* @symbol LauncherLog.failed @args - */
+"launcherLog.failed" = "失败";
+
+/* @symbol LauncherLog.cancelled @args - */
+"launcherLog.cancelled" = "已取消";
+
+/* @symbol LauncherLog.interrupted @args - */
+"launcherLog.interrupted" = "已中断";
+
+/* @symbol LauncherLog.interruptedDetail @args - */
+"launcherLog.interruptedDetail" = "启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。";
+
+/* @symbol LauncherLog.unsupportedHistory @args - */
+"launcherLog.unsupportedHistory" = "此日志文件的版本暂不受支持。";
+
+/* @symbol LauncherLog.historyUnavailable @args - */
+"launcherLog.historyUnavailable" = "无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。";
+
+/* @symbol LauncherLog.historyWriteFailed @args - */
+"launcherLog.historyWriteFailed" = "日志暂时无法保存到磁盘。";
+
+/* @symbol LauncherLog.started @args - */
+"launcherLog.started" = "开始时间";
+
+/* @symbol LauncherLog.updated @args - */
+"launcherLog.updated" = "更新时间";
+
+/* @symbol LauncherLog.details @args - */
+"launcherLog.details" = "详情";
+
+/* @symbol LauncherLog.stages @args - */
+"launcherLog.stages" = "任务过程";
+
+/* @symbol LauncherLog.selectEntry @args - */
+"launcherLog.selectEntry" = "选择一条记录";
+
+/* @symbol LauncherLog.selectHint @args - */
+"launcherLog.selectHint" = "查看完整信息、任务过程和相关操作。";
+
+/* @symbol LauncherLog.copy @args - */
+"launcherLog.copy" = "复制记录";
+
+/* @symbol LauncherLog.export @args - */
+"launcherLog.export" = "导出日志…";
+
+/* @symbol LauncherLog.clear @args - */
+"launcherLog.clear" = "清除历史…";
+
+/* @symbol LauncherLog.clearTitle @args - */
+"launcherLog.clearTitle" = "清除已结束的日志？";
+
+/* @symbol LauncherLog.clearDetail @args - */
+"launcherLog.clearDetail" = "这会移除已结束的任务、事件及对应通知。进行中的任务会保留。";
+
+/* @symbol LauncherLog.clearConfirm @args - */
+"launcherLog.clearConfirm" = "清除历史";
+
+/* @symbol LauncherLog.retention @args - */
+"launcherLog.retention" = "保留最近 500 条历史记录";
+
+/* @symbol LauncherLog.entryCount @args integer */
+"launcherLog.entryCount" = "%1$lld 条记录";
+
+/* @symbol LauncherLog.unreadCount @args integer */
+"launcherLog.unreadCount" = "%1$lld 条未读通知";
+
+/* @symbol LauncherLog.ready @args - */
+"launcherLog.ready" = "启动器已启动";
+
+/* @symbol LauncherLog.cancelTask @args - */
+"launcherLog.cancelTask" = "取消任务";
+
+/* @symbol LauncherLog.noTransfers @args - */
+"launcherLog.noTransfers" = "暂无文件传输";
+
+/* @symbol LauncherLog.transferHint @args - */
+"launcherLog.transferHint" = "当前运行期间最近的文件传输会显示在这里。";
+
+/* @symbol LauncherLog.filename @args - */
+"launcherLog.filename" = "文件";
+
+/* @symbol LauncherLog.source @args - */
+"launcherLog.source" = "来源";
+
+/* @symbol LauncherLog.transferred @args - */
+"launcherLog.transferred" = "已传输";
+
+/* @symbol LauncherLog.exported @args - */
+"launcherLog.exported" = "日志已导出";
+
+/* @symbol LauncherLog.historyReadError @args text */
+"launcherLog.historyReadError" = "读取日志历史失败：%1$@";
+
+/* @symbol LauncherLog.catalogFailed @args text */
+"launcherLog.catalogFailed" = "无法刷新游戏版本列表：%1$@";
+
+/* @symbol LauncherLog.noAttention @args - */
+"launcherLog.noAttention" = "没有需要关注的记录";
+
+/* @symbol LauncherLog.noAttentionHint @args - */
+"launcherLog.noAttentionHint" = "任务失败、警告和中断信息会集中显示在这里。";
+
+/* @symbol LauncherLog.transferScope @args - */
+"launcherLog.transferScope" = "本次运行 · 最近的文件传输";
+
+/* @symbol LauncherLog.transferProgress @args integer,integer */
+"launcherLog.transferProgress" = "%1$lld / %2$lld";
+
+/* @symbol LauncherLog.clearSearch @args - */
+"launcherLog.clearSearch" = "清除搜索";

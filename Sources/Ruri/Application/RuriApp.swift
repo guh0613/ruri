@@ -22,6 +22,8 @@ import RuriCore
                 Button(Messages.AppRuriApp.newInstance.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
                 Button(Messages.AppRuriApp.importInstance.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
                 Button(Messages.AppRuriApp.addGameFolder.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
+                Divider()
+                Button(Messages.LauncherLog.title.localized) { model.openMainWindow?(); model.showLauncherLog() }.keyboardShortcut("l", modifiers: [.command, .shift])
             }
             CommandGroup(replacing: .appSettings) {
                 Button(Messages.AppRuriApp.settings.localized) { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
@@ -81,7 +83,7 @@ private struct MainWindowContent: View {
     }
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         model?.recordClientEvent(.quitRequested)
-        guard let model, model.operation != nil else { model?.monitorTask?.cancel(); model?.bootTask?.cancel(); return .terminateNow }
+        guard let model else { return .terminateNow }
         if !model.isQuitting {
             Task { await model.prepareToQuit(); sender.reply(toApplicationShouldTerminate: true) }
         }

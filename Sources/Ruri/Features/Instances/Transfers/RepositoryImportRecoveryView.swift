@@ -43,8 +43,7 @@ struct RepositoryImportRecoveryView: View {
                 try RepositoryImportStore.recover(item.id, directoryID: directoryID, finish: finish, paths: base)
             }.value
             model.acceptState(try StateStore.load(base))
-            model.notice = finish ? Messages.AppRepositoryImportRecoveryView.ready(item.name).localized : Messages.AppRepositoryImportRecoveryView.cancelledWorkFilesKept.localized
-            model.noticeFileURL = kept
+            model.report(finish ? Messages.AppRepositoryImportRecoveryView.ready(item.name).localized : Messages.AppRepositoryImportRecoveryView.cancelledWorkFilesKept.localized, fileURL: kept)
             pending.removeAll { $0.id == item.id }
         }
     }

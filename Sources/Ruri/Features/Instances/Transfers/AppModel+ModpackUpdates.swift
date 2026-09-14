@@ -18,7 +18,7 @@ extension AppModel {
         perform(Messages.AppAppModelModpackUpdates.applyingModpackUpdate(plan.instance.name)) { [self] id in
             let service = await ModpackUpdater(paths: paths, downloader: installer.downloader)
             let saved = try await service.apply(plan, keepingLocal: keeping, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
-            acceptState(saved); notice = Messages.AppAppModelModpackUpdates.modpackUpdated(plan.instance.name, String(describing: plan.incoming.version)).localized; completion()
+            acceptState(saved); report(Messages.AppAppModelModpackUpdates.modpackUpdated(plan.instance.name, String(describing: plan.incoming.version))); completion()
         }
     }
     func rollbackModpack(_ instance: GameInstance, completion: @MainActor @Sendable @escaping () -> Void) {
@@ -26,7 +26,7 @@ extension AppModel {
         perform(Messages.AppAppModelModpackUpdates.rollingBackModpackUpdate(instance.name)) { [self] _ in
             let result = try await ModpackUpdater(paths: paths).rollback(instance)
             acceptState(result.state)
-            notice = result.preservedFiles == 0 ? Messages.AppAppModelModpackUpdates.modpackRollbackComplete.localized : Messages.AppAppModelModpackUpdates.modpackRollbackPreservedChanges(Int64(result.preservedFiles)).localized
+            report(result.preservedFiles == 0 ? Messages.AppAppModelModpackUpdates.modpackRollbackComplete : Messages.AppAppModelModpackUpdates.modpackRollbackPreservedChanges(Int64(result.preservedFiles)), level: result.preservedFiles == 0 ? .success : .warning)
             completion()
         }
     }
@@ -34,7 +34,7 @@ extension AppModel {
         perform(Messages.AppAppModelModpackUpdates.recoveringModpackUpdate(instance.name)) { [self] _ in
             let paths = paths
             let saved = try await Task.detached(priority: .userInitiated) { try ModpackUpdateStore.recover(instanceID: instance.id, paths: paths) }.value
-            acceptState(saved); notice = Messages.AppAppModelModpackUpdates.modpackUpdateRecovered.localized; completion()
+            acceptState(saved); report(Messages.AppAppModelModpackUpdates.modpackUpdateRecovered); completion()
         }
     }
 }

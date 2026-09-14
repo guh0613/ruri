@@ -13,14 +13,13 @@ extension AppModel {
                     Task { @MainActor in self?.progress(activity, value.progress) }
                 }
                 acceptState(try StateStore.load(basePaths)); page = .library
-                notice = result.warning ?? Messages.AppAppModelInstanceMoves.instanceMoved(preview.moved.name).localized
-                noticeFileURL = result.preservedFiles.first
+                report(result.warning ?? Messages.AppAppModelInstanceMoves.instanceMoved(preview.moved.name).localized, level: result.warning == nil ? .success : .warning, fileURL: result.preservedFiles.first)
                 if InstanceMoveGuard.hasPending(paths: basePaths, instanceID: preview.moved.id) {
                     throw InstanceMoveFailure(message: result.warning ?? Messages.AppAppModelInstanceMoves.moveNeedsRecovery.localized, preservedFiles: result.preservedFiles, cancelled: Task.isCancelled)
                 }
                 completed()
             } catch {
-                if let failure = error as? InstanceMoveFailure { notice = failure.localizedDescription; noticeFileURL = failure.preservedFiles.first }
+                if let failure = error as? InstanceMoveFailure { report(failure.localizedDescription, level: .error, fileURL: failure.preservedFiles.first) }
                 failed(error.localizedDescription); throw error
             }
         }
@@ -35,8 +34,7 @@ extension AppModel {
                     Task { @MainActor in self?.progress(activity, value.progress) }
                 }
                 acceptState(try StateStore.load(basePaths)); page = .library
-                notice = result.warning ?? Messages.AppAppModelInstanceMoves.instanceMoveCompleted.localized
-                noticeFileURL = result.preservedFiles.first; completed()
+                report(result.warning ?? Messages.AppAppModelInstanceMoves.instanceMoveCompleted.localized, level: result.warning == nil ? .success : .warning, fileURL: result.preservedFiles.first); completed()
             } catch {
                 failed(error.localizedDescription); throw error
             }

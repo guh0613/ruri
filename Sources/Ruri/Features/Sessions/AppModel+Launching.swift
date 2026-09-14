@@ -9,7 +9,7 @@ extension AppModel {
         // have just committed a directory change while this window was idle.
         save()
         guard !readOnly, let stored = state.instances.first(where: { $0.id == requested.id }) else { return }
-        guard !isInstanceInUse(stored.id) else { notice = Messages.AppAppModelLaunching.instanceInUse.localized; return }
+        guard !isInstanceInUse(stored.id) else { report(Messages.AppAppModelLaunching.instanceInUse, level: .warning); return }
         guard var account = activeAccount else { showAccount = true; return }
         do {
             let defaults = state.settings
@@ -25,6 +25,7 @@ extension AppModel {
             launchPresentations[recorder.record.id] = presentation
             if presentation.showLogs { showLogs = true }
             perform(Messages.AppAppModelLaunching.launchingInstance(stored.name), presentErrors: false) { [self] id in
+                journal.linkSession(recorder.record.id, to: id)
                 do {
                     var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability)
                     try Task.checkCancellation()
@@ -106,7 +107,7 @@ extension AppModel {
                     publishSession(recorder.record)
                     if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }
                     sessionRecorder = nil
-                    if !Task.isCancelled { showLogs = true; notice = Messages.AppAppModelLaunching.launchFailureNotice(recorder.record.title).localized }
+                    if !Task.isCancelled { showLogs = true; report(Messages.AppAppModelLaunching.launchFailureNotice(recorder.record.title), level: .error, sessionID: recorder.record.id) }
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             }
@@ -121,7 +122,7 @@ extension AppModel {
         guard !recordingErrorShown else { return }
         recordingErrorShown = true
         let message = Messages.AppAppModelLaunching.runRecordIncomplete(String(describing: sessionRecorder?.redacted(error.localizedDescription) ?? error.localizedDescription)).localized
-        notice = message; appendDisplayedLog("[Ruri] \(message)")
+        report(message, level: .warning, sessionID: sessionRecorder?.record.id); appendDisplayedLog("[Ruri] \(message)")
     }
     private func appendDisplayedLog(_ line: String) {
         logs.append(line)

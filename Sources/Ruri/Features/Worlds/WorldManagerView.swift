@@ -29,7 +29,7 @@ struct WorldManagerView: View {
                 Picker(Messages.AppWorldManagerView.content.localized, selection: $tab) {
                     Text(Messages.AppWorldManagerView.worldsTab.localized).tag("worlds")
                     Text(Messages.AppWorldManagerView.backupsTab.localized).tag("backups")
-                }.pickerStyle(.segmented).labelsHidden().frame(width: 200)
+                }.pickerStyle(.segmented).labelsHidden().fixedSize(horizontal: true, vertical: false)
                 Spacer()
                 Button(Messages.AppWorldManagerView.importWorld.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
                 Button(Messages.AppWorldManagerView.openWorldFolder.localized, systemImage: "folder") { model.reveal(instance, folder: "saves") }

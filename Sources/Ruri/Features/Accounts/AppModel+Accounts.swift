@@ -47,7 +47,7 @@ extension AppModel {
         let (updated, refreshed) = try await ExternalAuthentication().refresh(account: account, credentials: credentials, force: true)
         try Task.checkCancellation()
         try addExternal(updated, credentials: refreshed, requireExisting: true, activate: false)
-        notice = Messages.AppAppModelAccounts.credentialsRefreshed(String(describing: updated.username)).localized
+        report(Messages.AppAppModelAccounts.credentialsRefreshed(String(describing: updated.username)))
     }
     func logoutExternal(_ account: Account) async throws {
         guard let server = account.externalLogin?.server else { return }

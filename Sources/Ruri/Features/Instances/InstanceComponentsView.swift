@@ -73,7 +73,7 @@ struct InstanceComponentsView: View {
         }.padding(24).frame(width: 560)
         .task {
             do { backup = try await InstanceComponents(paths: model.paths).backup(for: instance.id) }
-            catch { model.notice = error.localizedDescription }
+            catch { model.report(error.localizedDescription, level: .error) }
         }
         .task(id: loader.rawValue + String(retry)) {
             guard reason == nil else { return }

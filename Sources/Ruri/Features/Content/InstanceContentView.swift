@@ -66,8 +66,8 @@ struct InstanceContentView: View {
         .sheet(item: $bulkRemoval) { selected in
             ContentRemovalView(files: selected.files, instanceID: instance.id) {
                 mutate(Messages.AppInstanceContentView.removeContentCount(Int64(selected.files.count)).localized) {
-                    model.noticeFileURL = try await manager.remove(selected.files)
-                    model.notice = Messages.AppInstanceContentView.contentMovedToTrash(Int64(selected.files.count)).localized
+                    let trashedURL = try await manager.remove(selected.files)
+                    model.report(Messages.AppInstanceContentView.contentMovedToTrash(Int64(selected.files.count)), level: .success, fileURL: trashedURL)
                 }
             }
         }
@@ -91,7 +91,7 @@ struct InstanceContentView: View {
             HStack(spacing: 10) {
                 Picker(Messages.AppInstanceContentView.content.localized, selection: $kind) {
                     ForEach(ContentKind.allCases) { Text($0.title).tag($0) }
-                }.pickerStyle(.segmented).labelsHidden().frame(width: 250).disabled(model.busy)
+                }.pickerStyle(.segmented).labelsHidden().fixedSize(horizontal: true, vertical: false).disabled(model.busy)
                 Spacer(minLength: 12)
                 Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath", action: checkUpdates)
                     .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.checkForUpdates.localized)

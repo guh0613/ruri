@@ -26,7 +26,7 @@ extension AppModel {
     }
     func finishImport(_ prepared: PreparedInstanceImport, name: String, keepJVMArguments: Bool, curseFiles: [PlannedCurseFile] = [], manualFiles: [Int: URL] = [:]) {
         guard !busy else { return }
-        importingInstance = nil; page = .downloads
+        importingInstance = nil; page = .activity
         perform(Messages.AppAppModelInstanceTransfers.finishImport(name)) { [self] id in
             let service = InstanceTransfer(paths: paths)
             do {
@@ -35,11 +35,11 @@ extension AppModel {
                 let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, content: content, installer: installer, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
                 if instance.repositoryVersionID != nil { acceptState(try StateStore.load(basePaths)) }
                 else { state.instances.append(instance); select(instance) }
-                notice = Messages.AppAppModelInstanceTransfers.instanceImported(instance.name).localized
+                report(Messages.AppAppModelInstanceTransfers.instanceImported(instance.name))
                 await service.discard(prepared)
             } catch {
                 importingInstance = prepared
-                if let failure = error as? RepositoryImportFailure { notice = failure.message; noticeFileURL = failure.preservedFiles }
+                if let failure = error as? RepositoryImportFailure { report(failure.message, level: .error, fileURL: failure.preservedFiles) }
                 throw error
             }
         }
@@ -49,7 +49,7 @@ extension AppModel {
         perform(Messages.AppAppModelInstanceTransfers.exportInstance(instance.name), instanceID: instance.id) { [self] id in
             let scoped = url.startAccessingSecurityScopedResource(); defer { if scoped { url.stopAccessingSecurityScopedResource() } }
             try await InstanceTransfer(paths: paths).export(instance, to: url, format: format, includeWorlds: includeWorlds, details: details) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
-            notice = Messages.AppAppModelInstanceTransfers.instanceExported(instance.name).localized; NSWorkspace.shared.activateFileViewerSelecting([url])
+            report(Messages.AppAppModelInstanceTransfers.instanceExported(instance.name), level: .success, fileURL: url); NSWorkspace.shared.activateFileViewerSelecting([url])
         }
     }
 }

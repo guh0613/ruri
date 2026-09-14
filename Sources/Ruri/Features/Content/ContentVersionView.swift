@@ -113,7 +113,7 @@ struct ContentVersionView: View {
         case .modrinth(let version):
             model.perform(Messages.AppContentVersionView.replaceItemVersion(record.title), instanceID: instanceID) { id in
                 try await ModrinthService().install(version: version, type: record.kind.rawValue, instance: instance, paths: model.paths, downloader: model.installer.downloader) { progress in await model.progress(id, progress) }
-                model.notice = Messages.AppContentVersionView.versionReplaced(record.title, String(describing: version.version_number)).localized
+                model.report(Messages.AppContentVersionView.versionReplaced(record.title, String(describing: version.version_number)))
             }
             dismiss()
         case .curseforge(let file):

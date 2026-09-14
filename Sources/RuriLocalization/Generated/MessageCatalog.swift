@@ -198,6 +198,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreWorldDataPacks.definitions) { first, _ in first }
         result.merge(Messages.CoreWorldManager.definitions) { first, _ in first }
         result.merge(Messages.CoreWorldQuickPlay.definitions) { first, _ in first }
+        result.merge(Messages.LauncherLog.definitions) { first, _ in first }
         return result
     }()
 }

@@ -18,7 +18,13 @@ import RuriCore
     var javaEntries: [JavaRuntimeEntry] = []
     var scanningJava = false
     var javaScanAgain = false
-    var activities: [ActivityItem] = []
+    var journal = LauncherJournal()
+    var journalStorageError: String?
+    var selectedLogID: UUID?
+    var logNavigationID = UUID()
+    var journalPersistenceEnabled = true
+    @ObservationIgnored var journalWriteTask: Task<Void, Never>?
+    @ObservationIgnored var journalCheckpoint = Date.distantPast
     var operation: Task<Void, Never>?
     var activeSessions: [UUID: GameSession] = [:]
     var runningID: UUID? { selected.flatMap { activeSessions[$0.id] }?.instanceID ?? activeSessions.values.max(by: { $0.createdAt < $1.createdAt })?.instanceID }
@@ -30,7 +36,6 @@ import RuriCore
     var logsSessionID: UUID?
     var liveLogs: [UUID: [String]] = [:]
     var requestedLogSessionID: UUID?
-    var noticeSessionID: UUID?
     var restoringGames = true
     var isQuitting = false
     var pendingOpenURLs: [URL] = []
@@ -59,9 +64,13 @@ import RuriCore
     var exportingInstance: GameInstance?
     var copyingInstance: GameInstance?
     var movingInstance: GameInstance?
-    var error: String?
-    var notice: String? { didSet { noticeSessionID = nil; noticeFileURL = nil } }
-    var noticeFileURL: URL?
+    var error: String? {
+        didSet {
+            if let error, !journal.entries.contains(where: { $0.id == LauncherActivityContext.id && $0.status == .failed }) {
+                report(error, level: .error)
+            }
+        }
+    }
     private(set) var readOnly = false
     private(set) var persistedState: PersistentState?
     var sessionRecorder: GameSessionRecorder?
@@ -69,7 +78,7 @@ import RuriCore
     var selected: GameInstance? { directoryInstances.first(where: { $0.id == state.selectedInstanceID }) ?? directoryInstances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil || restoringGames || isQuitting }
-    var activeActivity: ActivityItem? { activities.first { $0.status == .running } }
+    var activeActivity: LauncherLogEntry? { journal.entries.first { $0.status == .running } }
     var selectedDirectoryID: UUID { state.selectedDirectoryID ?? GameDirectory.defaultID }
     var selectedDirectoryName: String { state.gameDirectories?.first(where: { $0.id == selectedDirectoryID })?.name ?? Messages.AppAppModel.defaultInstanceDirectory.localized }
     var directoryInstances: [GameInstance] { state.instances.filter { ($0.directoryID ?? GameDirectory.defaultID) == selectedDirectoryID } }
@@ -84,6 +93,17 @@ import RuriCore
             try basePaths.configured(with: state).validateDirectoryConfiguration()
         }
         catch { state = PersistentState(); self.error = Messages.AppAppModel.unreadableData(error.localizedDescription).localized; readOnly = true }
+        do {
+            journal = try LauncherJournal.load(from: journalURL)
+            journal.recoverInterrupted()
+        } catch {
+            journalPersistenceEnabled = false
+            journalStorageError = Messages.LauncherLog.historyUnavailable.localized
+            journal.record(Messages.LauncherLog.historyReadError(error.localizedDescription), level: .warning)
+        }
+        journal.record(Messages.LauncherLog.ready, notify: false)
+        if let error { journal.record(.verbatim(error), level: .error) }
+        persistJournal()
     }
     func save() {
         guard !readOnly else { return }
@@ -127,27 +147,34 @@ import RuriCore
     }
     func perform(_ title: LocalizedMessage, presentErrors: Bool = true, instanceID: UUID? = nil, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
         guard !busy, !readOnly else { return }
-        let activity = ActivityItem(titleMessage: title); activities.insert(activity, at: 0)
+        let id = journal.begin(title)
+        persistJournal()
         operation = Task {
-            var lease: GameRunLease?
-            defer { withExtendedLifetime(lease) {} }
-            do {
-                if let instanceID { lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID) }
-                await applyNetworkSettings()
-                try await work(activity.id)
-                if let i = activities.firstIndex(where: { $0.id == activity.id }) { activities[i].status = .completed; activities[i].progress = InstallProgress(Messages.AppAppModel.taskCompleted, completed: 1, total: 1) }
-            } catch {
-                if let i = activities.firstIndex(where: { $0.id == activity.id }) {
-                    activities[i].status = Task.isCancelled ? .cancelled : .failed
-                    activities[i].error = error is RunDirectoryCopyFailure || error is InstanceMoveFailure || error is RepositoryImportFailure ? error.localizedDescription : Task.isCancelled ? Messages.AppAppModel.taskCancelled.localized : error.localizedDescription
+            await LauncherActivityContext.$id.withValue(id) {
+                var lease: GameRunLease?
+                defer { withExtendedLifetime(lease) {} }
+                do {
+                    if let instanceID { lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID) }
+                    await applyNetworkSettings()
+                    try await work(id)
+                    journal.finish(id, status: .completed)
+                } catch {
+                    let cancelled = Task.isCancelled || error is CancellationError
+                    let detail = error is RunDirectoryCopyFailure || error is InstanceMoveFailure || error is RepositoryImportFailure ? error.localizedDescription : cancelled ? Messages.AppAppModel.taskCancelled.localized : error.localizedDescription
+                    journal.finish(id, status: cancelled ? .cancelled : .failed, detail: detail)
+                    if !cancelled && (presentErrors || (instanceID != nil && lease == nil)) { self.error = error.localizedDescription }
                 }
-                if !Task.isCancelled && (presentErrors || (instanceID != nil && lease == nil)) { self.error = error.localizedDescription }
+                persistJournal()
+                operation = nil
             }
-            operation = nil
         }
     }
     func progress(_ id: UUID, _ progress: InstallProgress) {
-        if let index = activities.firstIndex(where: { $0.id == id }), activities[index].status == .running { activities[index].progress = progress }
+        journal.progress(id, progress)
+        if Date().timeIntervalSince(journalCheckpoint) >= 5 {
+            journalCheckpoint = Date()
+            persistJournal()
+        }
     }
     func synchronizeExternalState() async {
         guard !readOnly, operation == nil else { return }

@@ -17,12 +17,12 @@ extension AppModel {
                 progress(id, InstallProgress(Messages.AppAppModelContent.downloadManifest))
                 try await installer.downloader.fetch(DownloadItem(url: file.url, destination: archive, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size))
                 importingInstance = try await InstanceTransfer(paths: paths).prepare(archive, origin: ModpackOrigin(provider: .modrinth, projectID: project.id, versionID: version.id)) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
-                notice = Messages.AppAppModelContent.manifestRead.localized; return
+                report(Messages.AppAppModelContent.manifestRead); return
             } else if let instance {
                 try await ModrinthService().install(version: version, type: project.project_type, instance: instance, paths: paths, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
             } else { throw RuriError.message(Messages.AppAppModelContent.selectGameInstance) }
-            notice = Messages.AppAppModelContent.installed(project.title).localized
+            report(Messages.AppAppModelContent.installed(project.title))
         }
-        page = .downloads
+        page = .activity
     }
 }

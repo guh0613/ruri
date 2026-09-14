@@ -40,7 +40,7 @@ struct ContentBatchUpdateView: View {
                 Button(Messages.AppContentBatchUpdateView.updateAll(Int64(plan.selectedIDs.count)).localized) {
                     model.perform(Messages.AppContentBatchUpdateView.batchUpdate(Int64(plan.selectedIDs.count)), instanceID: plan.instance.id) { id in
                         try await ContentBatchUpdater(curseforge: CurseForgeService(apiKey: "")).install(plan, paths: model.paths, downloader: model.installer.downloader, manualFiles: manualFiles) { p in await model.progress(id, p) }
-                        model.notice = Messages.AppContentBatchUpdateView.itemsUpdated(Int64(plan.selectedIDs.count)).localized
+                        model.report(Messages.AppContentBatchUpdateView.itemsUpdated(Int64(plan.selectedIDs.count)))
                     }
                     dismiss()
                 }.buttonStyle(.borderedProminent).disabled(model.busy || model.isInstanceInUse(plan.instance.id) || missingManualFiles)

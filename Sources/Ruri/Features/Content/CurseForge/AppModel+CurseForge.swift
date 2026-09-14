@@ -8,7 +8,7 @@ extension AppModel {
         guard !isInstanceInUse(plan.instance.id) else { return }
         perform(Messages.AppAppModelCurseForge.installPack(plan.title), instanceID: plan.instance.id) { [self] id in
             try await CurseForgeService(apiKey: "").install(plan, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
-            notice = Messages.AppAppModelCurseForge.packInstalled(plan.title).localized
+            report(Messages.AppAppModelCurseForge.packInstalled(plan.title))
         }
     }
     func readCurseForgePack(_ project: CurseForgeProject, file: CurseForgeFile, manual: URL?) {

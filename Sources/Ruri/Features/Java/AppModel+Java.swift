@@ -22,7 +22,7 @@ extension AppModel {
         save()
         perform(path == nil ? Messages.AppAppModelJava.addLocalJava.localized : Messages.AppAppModelJava.chooseJavaAgain.localized) { [self] _ in
             let saved = try await JavaRuntimeStore.add(url, replacing: path, paths: paths)
-            acceptState(saved); await scanJava(); notice = Messages.AppAppModelJava.javaAdded.localized
+            acceptState(saved); await scanJava(); report(Messages.AppAppModelJava.javaAdded)
         }
     }
     func forgetJava(_ path: String) {
@@ -30,14 +30,14 @@ extension AppModel {
         catch { self.error = error.localizedDescription }
     }
     func defaultJava(_ path: String) {
-        do { save(); acceptState(try JavaRuntimeStore.useByDefault(path, paths: paths)); notice = Messages.AppAppModelJava.defaultJavaUpdated.localized }
+        do { save(); acceptState(try JavaRuntimeStore.useByDefault(path, paths: paths)); report(Messages.AppAppModelJava.defaultJavaUpdated) }
         catch { self.error = error.localizedDescription }
     }
     func installJava(_ runtime: RemoteJava, repairing: Bool = false) {
         perform("\(repairing ? Messages.AppAppModelJava.repair.localized : Messages.AppAppModelJava.install.localized) \(runtime.label)") { [self] id in
             do {
                 _ = try await JavaInstaller(paths: paths).install(runtime, downloader: downloader, repairing: repairing) { [weak self] p in await self?.progress(id, p) }
-                await scanJava(); notice = repairing ? Messages.AppAppModelJava.javaRepaired.localized : Messages.AppAppModelJava.javaInstalled.localized
+                await scanJava(); report(repairing ? Messages.AppAppModelJava.javaRepaired.localized : Messages.AppAppModelJava.javaInstalled.localized)
             } catch { await scanJava(); throw error }
         }
     }
@@ -46,7 +46,7 @@ extension AppModel {
         perform(partial ? Messages.AppAppModelJava.cleanIncompleteJavaDownload.localized : Messages.AppAppModelJava.removeJava.localized) { [self] _ in
             let paths = paths
             let result = try await Task.detached(priority: .userInitiated) { try JavaRuntimeStore.trash(id, paths: paths, resetReferences: resetReferences, partial: partial) }.value
-            acceptState(result.state); await scanJava(); notice = Messages.AppAppModelJava.javaMovedToTrash.localized; noticeFileURL = result.trashedURL
+            acceptState(result.state); await scanJava(); report(Messages.AppAppModelJava.javaMovedToTrash, fileURL: result.trashedURL)
         }
     }
 }
