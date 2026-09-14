@@ -10,6 +10,7 @@ public struct GameDiagnosticDocument: Identifiable, Sendable {
     public let text: String
     public var isTail = false
     public var truncated = false
+    public var gameRelativePath: String? = nil
 }
 
 public struct GameDiagnosis: Sendable {
@@ -55,15 +56,24 @@ public struct GameDiagnosis: Sendable {
 }
 
 /// Rules describe what a source actually reports, not which mod is guilty.
-/// Only this session's saved evidence is read; log text never supplies a path.
+/// Analysis defaults to saved evidence. Explicit collection can also snapshot
+/// matching game-native logs; log text never supplies a path.
 public enum GameDiagnosticAnalyzer {
-    public static func load(paths: LauncherPaths, session: GameSession) throws -> GameDiagnosis {
+    public static func load(paths: LauncherPaths, session: GameSession, includeGameLogs: Bool = false) throws -> GameDiagnosis {
         var documents: [GameDiagnosticDocument] = [], limitations: [String] = []
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
         if let failure = session.displayFailure {
             documents.append(.init(id: "preparation", relativePath: nil, title: session.stage.title, kind: .preparation, text: failure))
         }
         var budget = 12 * 1_048_576 // Reserve 4 MiB for the session's own output.
+        var nativeNames: Set<String> = []
+        if includeGameLogs {
+            do {
+                let snapshot = try GameNativeLogCollector.collect(paths: paths, session: session, budget: &budget)
+                documents += snapshot.documents; limitations += snapshot.limitations; nativeNames = snapshot.names
+            } catch is CancellationError { throw CancellationError() }
+            catch { limitations.append(Messages.NativeGameLogs.collectionFailed.localized) }
+        }
         func read(_ relative: String, title: String, kind: GameDiagnosticDocument.Kind, truncated: Bool = false) throws {
             try Task.checkCancellation()
             let url = try LauncherPaths.safePath(relative, within: directory)
@@ -92,6 +102,7 @@ public enum GameDiagnosticAnalyzer {
         // Prioritize a crash report over duplicate copies of standard output.
         let reports = session.evidence.sorted { ($0.name == "latest.log" ? 1 : 0, $0.name) < ($1.name == "latest.log" ? 1 : 0, $1.name) }
         for item in reports.prefix(12) {
+            if nativeNames.contains(item.name) { continue }
             guard item.relativePath.hasPrefix("reports/") else { limitations.append(Messages.CoreGameDiagnosis.invalidEvidencePathSkipped.localized); continue }
             let kind: GameDiagnosticDocument.Kind = item.name.hasPrefix("hs_err_pid") ? .jvmReport : item.name.hasPrefix("crash-") ? .gameReport : .output
             do { try read(item.relativePath, title: item.name, kind: kind, truncated: item.truncated) }

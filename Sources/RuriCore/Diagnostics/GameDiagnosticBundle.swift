@@ -57,9 +57,15 @@ public struct GameDiagnosticBundle: Sendable {
         for (index, document) in diagnosis.documents.enumerated() {
             try Task.checkCancellation()
             let stem = document.kind == .output ? "output" : document.kind == .preparation ? "preparation" : document.kind == .jvmReport ? "jvm-report" : "minecraft-report"
-            let path = "evidence/\(String(format: "%02d", index + 1))-\(stem)\(document.isTail ? "-tail" : "").txt"
+            let path: String
+            if let relative = document.gameRelativePath {
+                guard !relative.isEmpty, !relative.hasPrefix("/"), !relative.contains("\\"), !relative.contains("\0"),
+                      !relative.split(separator: "/").contains("..") else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.invalidReportSelection) }
+                path = "game/" + relative + (document.truncated ? (document.isTail ? ".tail.txt" : ".head.txt") : "")
+            } else { path = "evidence/\(String(format: "%02d", index + 1))-\(stem)\(document.isTail ? "-tail" : "").txt" }
             let heading = Messages.CoreGameDiagnosticBundle.sourceRangeHeading(document.title, String(describing: document.truncated ? Messages.CoreGameDiagnosticBundle.truncatedFileHeading.localized : Messages.CoreGameDiagnosticBundle.completeFileHeading.localized), String(describing: document.isTail ? Messages.CoreGameDiagnosticBundle.tailLineNumberHeading.localized : Messages.CoreGameDiagnosticBundle.bodyLineNumberHeading.localized)).localized
-            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""), text: heading + document.text)
+            let text = document.gameRelativePath != nil && !document.truncated ? document.text : heading + document.text
+            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""), text: text)
         }
         return .init(sessionID: session.id, createdAt: Date(), files: files)
     }

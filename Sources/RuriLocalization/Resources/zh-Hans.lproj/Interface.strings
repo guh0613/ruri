@@ -3778,3 +3778,36 @@
 
 /* @symbol MonitorLogging.showGameLogs @args - */
 "monitorLogging.showGameLogs" = "游戏日志文件夹";
+
+/* @symbol NativeGameLogs.gameNotStarted @args - */
+"nativeGameLogs.gameNotStarted" = "本次运行没有可确认的游戏启动时间，未收集游戏目录中的日志。";
+
+/* @symbol NativeGameLogs.replacedByLaterRun @args - */
+"nativeGameLogs.replacedByLaterRun" = "此游戏目录已有后续运行，日志可能已被覆盖。本次仅使用会话中保存的诊断记录。";
+
+/* @symbol NativeGameLogs.unsafeSource @args text */
+"nativeGameLogs.unsafeSource" = "已跳过 %1$@：日志路径包含符号链接，或文件不是普通文件。";
+
+/* @symbol NativeGameLogs.unreadable @args text */
+"nativeGameLogs.unreadable" = "未能读取游戏日志 %1$@。";
+
+/* @symbol NativeGameLogs.otherRun @args text */
+"nativeGameLogs.otherRun" = "已跳过 %1$@：文件时间不属于本次运行。";
+
+/* @symbol NativeGameLogs.sourceTitle @args text */
+"nativeGameLogs.sourceTitle" = "游戏日志 · %1$@";
+
+/* @symbol NativeGameLogs.changedDuringRead @args text */
+"nativeGameLogs.changedDuringRead" = "读取 %1$@ 时文件发生变化，请重新收集。";
+
+/* @symbol NativeGameLogs.noMatchingLogs @args - */
+"nativeGameLogs.noMatchingLogs" = "游戏目录中没有找到可归属于本次运行的日志，已保留会话中的诊断记录。";
+
+/* @symbol NativeGameLogs.collectionFailed @args - */
+"nativeGameLogs.collectionFailed" = "无法确认游戏日志的归属，已保留会话中的诊断记录。";
+
+/* @symbol NativeGameLogs.collectAgain @args - */
+"nativeGameLogs.collectAgain" = "重新收集";
+
+/* @symbol NativeGameLogs.collectionHelp @args - */
+"nativeGameLogs.collectionHelp" = "按需读取游戏的 latest.log、debug.log 和本次崩溃报告，脱敏后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会为此持续复制日志。";

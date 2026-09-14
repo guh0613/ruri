@@ -20,10 +20,11 @@ struct GameDiagnosticView: View {
     @State private var generation = UUID()
     @State private var preparing = false
     @State private var exporting = false
+    @State private var collectionRequest = UUID()
     @State private var exported: URL?
     private var previewFile: GameDiagnosticBundle.File? { bundle?.files.first { $0.id == previewID } }
     private var previewPages: Int { max(1, ((previewFile?.text.count ?? 0) + 11999) / 12000) }
-    private var key: String { "\(session.id)-\(session.updatedAt.timeIntervalSince1970)-\(session.evidence.count)-\(collecting)" }
+    private var key: String { "\(session.id)-\(session.updatedAt.timeIntervalSince1970)-\(session.evidence.count)-\(collecting)-\(collectionRequest)" }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
@@ -35,12 +36,12 @@ struct GameDiagnosticView: View {
             if collecting && bundle != nil { return }
             generation = UUID()
             diagnosis = nil; bundle = nil; error = nil; exported = nil
-            let paths = model.paths, record = session
-            let work = Task.detached { try GameDiagnosticAnalyzer.load(paths: paths, session: record) }
+            let paths = model.paths, record = session, includeGameLogs = collecting
+            let work = Task.detached(priority: .utility) { try GameDiagnosticAnalyzer.load(paths: paths, session: record, includeGameLogs: includeGameLogs) }
             do {
                 let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
                 try Task.checkCancellation(); diagnosis = value
-                await prepareBundle(value)
+                if collecting { await prepareBundle(value) }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
         }
         .onChange(of: previewID) { page = 0 }
@@ -109,7 +110,12 @@ struct GameDiagnosticView: View {
     }
     private func collection(_ diagnosis: GameDiagnosis) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(Messages.AppGameDiagnosticView.collectionInstructions.localized).font(.headline)
+            HStack {
+                Text(Messages.AppGameDiagnosticView.collectionInstructions.localized).font(.headline)
+                Spacer()
+                Button(Messages.NativeGameLogs.collectAgain.localized) { bundle = nil; collectionRequest = UUID() }.disabled(preparing || exporting)
+            }
+            Text(Messages.NativeGameLogs.collectionHelp.localized).font(.caption).foregroundStyle(.secondary)
             Text(Messages.AppGameDiagnosticView.redactionNotice.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             if let bundle {
                 HStack(alignment: .top, spacing: 12) {
