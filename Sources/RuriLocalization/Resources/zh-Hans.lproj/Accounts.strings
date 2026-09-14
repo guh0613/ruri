@@ -134,7 +134,7 @@
 "accountCenter.importSkin" = "导入皮肤…";
 
 /* @symbol AccountCenter.libraryEmpty @args - */
-"accountCenter.libraryEmpty" = "你的皮肤收藏";
+"accountCenter.libraryEmpty" = "皮肤库为空";
 
 /* @symbol AccountCenter.libraryEmptyHelp @args - */
 "accountCenter.libraryEmptyHelp" = "导入 PNG，或把账号当前皮肤保存到这里。";
@@ -210,3 +210,39 @@
 
 /* @symbol AccountCenter.logoutHelp @args - */
 "accountCenter.logoutHelp" = "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。";
+
+/* @symbol AccountCenter.defaultSkin @args - */
+"accountCenter.defaultSkin" = "默认皮肤";
+
+/* @symbol AccountCenter.defaultSkinHelp @args - */
+"accountCenter.defaultSkinHelp" = "尚未设置皮肤，游戏中会显示默认角色。";
+
+/* @symbol AccountCenter.capeActions @args - */
+"accountCenter.capeActions" = "披风操作";
+
+/* @symbol AccountCenter.confirmAppearanceHelp @args - */
+"accountCenter.confirmAppearanceHelp" = "拖动角色查看各个角度，确认后应用到此账号。";
+
+/* @symbol AccountCenter.skinCount @args integer */
+"accountCenter.skinCount" = "%1$lld 款皮肤";
+
+/* @symbol AccountCenter.accountType @args - */
+"accountCenter.accountType" = "账号类型";
+
+/* @symbol AccountCenter.skinSection @args - */
+"accountCenter.skinSection" = "皮肤";
+
+/* @symbol AccountCenter.capeSection @args - */
+"accountCenter.capeSection" = "披风";
+
+/* @symbol AccountCenter.replaceSkin @args - */
+"accountCenter.replaceSkin" = "更换…";
+
+/* @symbol AccountCenter.chooseCapeHelp @args - */
+"accountCenter.chooseCapeHelp" = "导入一张披风 PNG，或保持不使用披风。";
+
+/* @symbol AccountCenter.applyingAppearance @args - */
+"accountCenter.applyingAppearance" = "正在应用外观…";
+
+/* @symbol AccountCenter.appearanceUnavailableOffline @args - */
+"accountCenter.appearanceUnavailableOffline" = "连接账号后即可管理皮肤和披风。";

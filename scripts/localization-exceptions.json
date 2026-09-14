@@ -1,10 +1,5 @@
 [
   {
-    "file": "Sources/Ruri/Features/Accounts/AccountAppearanceView.swift",
-    "literal": "\"\\(image.width) × \\(image.height) PNG\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
     "file": "Sources/Ruri/Features/Accounts/ExternalAccountForm.swift",
     "literal": "\"https://…\"",
     "reason": "Literal URL scheme input hint."

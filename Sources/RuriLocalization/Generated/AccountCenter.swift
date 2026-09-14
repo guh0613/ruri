@@ -273,11 +273,11 @@ extension Messages {
         public static var importSkin: LocalizedMessage {
             .init(key: "accountCenter.importSkin", table: "Accounts", fallback: "导入皮肤…")
         }
-        /// 你的皮肤收藏
+        /// 皮肤库为空
         ///
         /// Resource: `Accounts.accountCenter.libraryEmpty`.
         public static var libraryEmpty: LocalizedMessage {
-            .init(key: "accountCenter.libraryEmpty", table: "Accounts", fallback: "你的皮肤收藏")
+            .init(key: "accountCenter.libraryEmpty", table: "Accounts", fallback: "皮肤库为空")
         }
         /// 导入 PNG，或把账号当前皮肤保存到这里。
         ///
@@ -399,6 +399,78 @@ extension Messages {
         public static var logoutHelp: LocalizedMessage {
             .init(key: "accountCenter.logoutHelp", table: "Accounts", fallback: "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。")
         }
+        /// 默认皮肤
+        ///
+        /// Resource: `Accounts.accountCenter.defaultSkin`.
+        public static var defaultSkin: LocalizedMessage {
+            .init(key: "accountCenter.defaultSkin", table: "Accounts", fallback: "默认皮肤")
+        }
+        /// 尚未设置皮肤，游戏中会显示默认角色。
+        ///
+        /// Resource: `Accounts.accountCenter.defaultSkinHelp`.
+        public static var defaultSkinHelp: LocalizedMessage {
+            .init(key: "accountCenter.defaultSkinHelp", table: "Accounts", fallback: "尚未设置皮肤，游戏中会显示默认角色。")
+        }
+        /// 披风操作
+        ///
+        /// Resource: `Accounts.accountCenter.capeActions`.
+        public static var capeActions: LocalizedMessage {
+            .init(key: "accountCenter.capeActions", table: "Accounts", fallback: "披风操作")
+        }
+        /// 拖动角色查看各个角度，确认后应用到此账号。
+        ///
+        /// Resource: `Accounts.accountCenter.confirmAppearanceHelp`.
+        public static var confirmAppearanceHelp: LocalizedMessage {
+            .init(key: "accountCenter.confirmAppearanceHelp", table: "Accounts", fallback: "拖动角色查看各个角度，确认后应用到此账号。")
+        }
+        /// %1$lld 款皮肤
+        ///
+        /// Resource: `Accounts.accountCenter.skinCount`.
+        public static func skinCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "accountCenter.skinCount", table: "Accounts", fallback: "%1$lld 款皮肤", arguments: [.integer(value0)])
+        }
+        /// 账号类型
+        ///
+        /// Resource: `Accounts.accountCenter.accountType`.
+        public static var accountType: LocalizedMessage {
+            .init(key: "accountCenter.accountType", table: "Accounts", fallback: "账号类型")
+        }
+        /// 皮肤
+        ///
+        /// Resource: `Accounts.accountCenter.skinSection`.
+        public static var skinSection: LocalizedMessage {
+            .init(key: "accountCenter.skinSection", table: "Accounts", fallback: "皮肤")
+        }
+        /// 披风
+        ///
+        /// Resource: `Accounts.accountCenter.capeSection`.
+        public static var capeSection: LocalizedMessage {
+            .init(key: "accountCenter.capeSection", table: "Accounts", fallback: "披风")
+        }
+        /// 更换…
+        ///
+        /// Resource: `Accounts.accountCenter.replaceSkin`.
+        public static var replaceSkin: LocalizedMessage {
+            .init(key: "accountCenter.replaceSkin", table: "Accounts", fallback: "更换…")
+        }
+        /// 导入一张披风 PNG，或保持不使用披风。
+        ///
+        /// Resource: `Accounts.accountCenter.chooseCapeHelp`.
+        public static var chooseCapeHelp: LocalizedMessage {
+            .init(key: "accountCenter.chooseCapeHelp", table: "Accounts", fallback: "导入一张披风 PNG，或保持不使用披风。")
+        }
+        /// 正在应用外观…
+        ///
+        /// Resource: `Accounts.accountCenter.applyingAppearance`.
+        public static var applyingAppearance: LocalizedMessage {
+            .init(key: "accountCenter.applyingAppearance", table: "Accounts", fallback: "正在应用外观…")
+        }
+        /// 连接账号后即可管理皮肤和披风。
+        ///
+        /// Resource: `Accounts.accountCenter.appearanceUnavailableOffline`.
+        public static var appearanceUnavailableOffline: LocalizedMessage {
+            .init(key: "accountCenter.appearanceUnavailableOffline", table: "Accounts", fallback: "连接账号后即可管理皮肤和披风。")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Accounts:accountCenter.invalidSkinName": .init("皮肤名称需为 1–80 个字符。", []),
             "Accounts:accountCenter.invalidSavedSkin": .init("无法读取保存的皮肤，文件可能已损坏。", []),
@@ -445,7 +517,7 @@ extension Messages {
             "Accounts:accountCenter.useLocalPreview": .init("应用皮肤", []),
             "Accounts:accountCenter.libraryHelp": .init("收藏你喜欢的皮肤，随时预览和使用。", []),
             "Accounts:accountCenter.importSkin": .init("导入皮肤…", []),
-            "Accounts:accountCenter.libraryEmpty": .init("你的皮肤收藏", []),
+            "Accounts:accountCenter.libraryEmpty": .init("皮肤库为空", []),
             "Accounts:accountCenter.libraryEmptyHelp": .init("导入 PNG，或把账号当前皮肤保存到这里。", []),
             "Accounts:accountCenter.previewAndUse": .init("预览与使用", []),
             "Accounts:accountCenter.skinActions": .init("皮肤操作", []),
@@ -466,6 +538,18 @@ extension Messages {
             "Accounts:accountCenter.useLittleSkin": .init("使用 LittleSkin", []),
             "Accounts:accountCenter.logoutTitle": .init("退出此账号？", []),
             "Accounts:accountCenter.logoutHelp": .init("这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。", []),
+            "Accounts:accountCenter.defaultSkin": .init("默认皮肤", []),
+            "Accounts:accountCenter.defaultSkinHelp": .init("尚未设置皮肤，游戏中会显示默认角色。", []),
+            "Accounts:accountCenter.capeActions": .init("披风操作", []),
+            "Accounts:accountCenter.confirmAppearanceHelp": .init("拖动角色查看各个角度，确认后应用到此账号。", []),
+            "Accounts:accountCenter.skinCount": .init("%1$lld 款皮肤", [.integer]),
+            "Accounts:accountCenter.accountType": .init("账号类型", []),
+            "Accounts:accountCenter.skinSection": .init("皮肤", []),
+            "Accounts:accountCenter.capeSection": .init("披风", []),
+            "Accounts:accountCenter.replaceSkin": .init("更换…", []),
+            "Accounts:accountCenter.chooseCapeHelp": .init("导入一张披风 PNG，或保持不使用披风。", []),
+            "Accounts:accountCenter.applyingAppearance": .init("正在应用外观…", []),
+            "Accounts:accountCenter.appearanceUnavailableOffline": .init("连接账号后即可管理皮肤和披风。", []),
         ]
     }
 }
