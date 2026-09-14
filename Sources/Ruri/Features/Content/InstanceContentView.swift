@@ -4,6 +4,14 @@ import AppKit
 import UniformTypeIdentifiers
 import RuriCore
 
+/// Carry the initial tab with the instance so sheet creation reads one value.
+/// Each presentation gets fresh view state, including when reopening an instance.
+struct InstanceContentPresentation: Identifiable {
+    let id = UUID()
+    let instance: GameInstance
+    var kind: ContentKind = .mod
+}
+
 struct InstanceContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss

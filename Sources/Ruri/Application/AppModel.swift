@@ -62,9 +62,7 @@ import RuriCore
     @ObservationIgnored let accountOperations = AccountOperationGate()
     var loadedAccountPreviews: Set<UUID> = []
     var editingInstance: GameInstance?
-    var contentInstance: GameInstance?
-    /// The tab the content manager opens on; reset when it closes.
-    var contentKind = ContentKind.mod
+    var contentPresentation: InstanceContentPresentation?
     var worldInstance: GameInstance?
     var schematicInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()

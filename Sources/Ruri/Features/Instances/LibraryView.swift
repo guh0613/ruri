@@ -240,7 +240,7 @@ private struct LibraryContextActions: View {
     var body: some View {
         Button(Messages.AppLibraryView.showOnHome.localized, systemImage: "house") { model.select(instance) }
         Button(Messages.AppLibraryView.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
-        Button(Messages.AppLibraryView.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentInstance = instance }
+        Button(Messages.AppLibraryView.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
         Button(Messages.AppLibraryView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }
         Divider()
         Button(Messages.AppLibraryView.moveToTrash.localized, systemImage: "trash", role: .destructive) { onTrash(instance) }.disabled(model.busy || model.isInstanceInUse(instance.id))

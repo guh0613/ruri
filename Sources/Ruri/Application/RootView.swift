@@ -39,7 +39,9 @@ struct RootView: View {
         .sheet(isPresented: Bindable(model).showAccount) { AddAccountView() }
         .sheet(isPresented: Bindable(model).showLogs) { LogsView() }
         .sheet(item: Bindable(model).editingInstance) { instance in InstanceSettingsView(instance: instance) }
-        .sheet(item: Bindable(model).contentInstance, onDismiss: { model.contentKind = .mod }) { instance in InstanceContentView(instance: instance, kind: model.contentKind) }
+        .sheet(item: Bindable(model).contentPresentation) { presentation in
+            InstanceContentView(instance: presentation.instance, kind: presentation.kind).id(presentation.id)
+        }
         .sheet(item: Bindable(model).worldInstance) { instance in WorldManagerView(instance: instance) }
         .sheet(item: Bindable(model).schematicInstance) { instance in SchematicManagerView(instance: instance) }
         .sheet(item: Bindable(model).importingInstance) { prepared in ImportInstanceView(prepared: prepared) }

@@ -11,7 +11,7 @@ struct InstanceQuickActions: View {
     var body: some View {
         HStack(spacing: 2) {
             action(Messages.AppInstanceQuickActions.instanceSettings.localized, "slider.horizontal.3") { model.editingInstance = instance }
-            action(Messages.AppInstanceQuickActions.manageModsAndResourcePacks.localized, "puzzlepiece.extension") { model.contentInstance = instance }
+            action(Messages.AppInstanceQuickActions.manageModsAndResourcePacks.localized, "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
             action(Messages.AppInstanceQuickActions.manageWorldsAndBackups.localized, "globe") { model.worldInstance = instance }
         }
     }

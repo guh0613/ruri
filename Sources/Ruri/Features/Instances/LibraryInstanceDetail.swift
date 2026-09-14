@@ -1,7 +1,6 @@
 import RuriLocalization
 import SwiftUI
 import AppKit
-import Charts
 import RuriCore
 
 /// The instance chosen in the library, laid out like a game page in the App
@@ -20,7 +19,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
     @State private var backups = 0
     @State private var loaded = false
     /// Counts are read again when a content or save manager closes.
-    private var managerOpen: Bool { model.contentInstance != nil || model.worldInstance != nil }
+    private var managerOpen: Bool { model.contentPresentation != nil || model.worldInstance != nil }
     private var sessions: [GameSession] { model.sessions.filter { $0.instanceID == instance.id } }
 
     var body: some View {
@@ -128,7 +127,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
             let tally = content[kind]
             items.append(StripItem(id: kind.rawValue, label: kind.title, value: tally.map { LocalizedFormat.number($0.total) } ?? (loaded ? "—" : "…"),
                                    detail: tally.flatMap { $0.disabled > 0 ? Messages.AppLibraryView.disabledCount(Int64($0.disabled)).localized : nil }) {
-                model.contentKind = kind; model.contentInstance = instance
+                model.contentPresentation = .init(instance: instance, kind: kind)
             })
         }
         if let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview() {
@@ -174,10 +173,18 @@ struct LibraryInstanceDetail<Notices: View>: View {
             if !loaded {
                 ProgressView().controlSize(.small).frame(maxWidth: .infinity, minHeight: 68)
             } else if worlds.isEmpty {
-                Surface {
-                    Label(Messages.AppLibraryView.noWorlds.localized, systemImage: "globe")
-                        .font(.callout).foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                Surface(padding: 24) {
+                    VStack(spacing: 10) {
+                        Image(systemName: "globe").font(.system(size: 28))
+                            .foregroundStyle(.tertiary).accessibilityHidden(true)
+                        VStack(spacing: 4) {
+                            Text(Messages.AppLibraryView.noWorlds.localized).font(.headline)
+                            Text(Messages.AppWorldManagerView.worldDescription.localized).font(.callout)
+                        }.foregroundStyle(.secondary)
+                    }
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
                 }
             } else {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 12)], spacing: 12) {
@@ -191,20 +198,20 @@ struct LibraryInstanceDetail<Notices: View>: View {
 
     // MARK: Play history
 
-    private var playDays: [PlayDay] {
+    private var playDays: [InstancePlaytimeChart.Day] {
         let calendar = Calendar.current, today = calendar.startOfDay(for: .now)
         var minutes: [Date: Double] = [:]
         for session in sessions {
             if let exit = session.exit { minutes[calendar.startOfDay(for: exit.startedAt), default: 0] += exit.playTime / 60 }
         }
         return (0..<14).reversed().compactMap { offset in
-            calendar.date(byAdding: .day, value: -offset, to: today).map { PlayDay(date: $0, minutes: minutes[$0] ?? 0) }
+            calendar.date(byAdding: .day, value: -offset, to: today).map { InstancePlaytimeChart.Day(date: $0, minutes: minutes[$0] ?? 0) }
         }
     }
 
     private var historySection: some View {
         let days = playDays, recent = Array(sessions.prefix(3))
-        let total = days.reduce(0) { $0 + $1.minutes }, peak = days.map(\.minutes).max() ?? 0
+        let total = days.reduce(0) { $0 + $1.minutes }
         return VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.AppLibraryView.playHistory.localized) {
                 if let latest = sessions.first { link(Messages.AppLibraryView.allRuns.localized) { model.showSession(latest.id) } }
@@ -220,20 +227,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
                                 Text(Messages.AppLibraryView.noRecentPlay.localized).font(.callout).foregroundStyle(.secondary)
                             }
                         }
-                        Chart(days) { day in
-                            BarMark(x: .value(Messages.AppLibraryView.date.localized, day.date, unit: .day),
-                                    y: .value(Messages.AppHomeView.playTime.localized, day.minutes))
-                                .foregroundStyle(Theme.accent.gradient)
-                                .cornerRadius(3)
-                        }
-                        .chartYScale(domain: 0...max(60, peak))
-                        .chartYAxis {
-                            AxisMarks(values: .automatic(desiredCount: 3)) { value in
-                                AxisGridLine()
-                                AxisValueLabel { if let minutes = value.as(Double.self) { Text(LocalizedFormat.duration(minutes * 60)) } }
-                            }
-                        }
-                        .frame(height: 130)
+                        InstancePlaytimeChart(days: days).frame(height: 130)
                     }
                     .padding(20)
                     Divider()
@@ -281,12 +275,6 @@ struct LibraryInstanceDetail<Notices: View>: View {
         worldIcons = icons.compactMapValues(NSImage.init(data:))
         loaded = true
     }
-}
-
-private struct PlayDay: Identifiable {
-    let date: Date
-    let minutes: Double
-    var id: Date { date }
 }
 
 private struct StripItem: Identifiable {
