@@ -5,58 +5,81 @@ import RuriCore
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
+    @State private var columns = NavigationSplitViewVisibility.automatic
     var body: some View {
-        @Bindable var model = model
-        NavigationSplitView {
-            List(selection: $model.page) {
-                Section { ForEach([Page.home, .library, .discover, .activity]) { page in sidebarRow(page) } }
-                Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
-            }
-            .listStyle(.sidebar)
-            .controlSize(.large)
-            .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
-            .navigationSplitViewColumnWidth(min: 210, ideal: 236, max: 320)
-        } detail: {
-            VStack(spacing: 0) {
-                Group {
-                    switch model.page {
-                    case .home: HomeView()
-                    case .library: LibraryView()
-                    case .discover: DiscoverView()
-                    case .activity: LauncherLogView().id(model.logNavigationID)
-                    case .accounts: AccountsView()
-                    case .java: JavaView()
-                    case .settings: PreferencesView()
-                    }
-                }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-                .navigationTitle(model.page.title)
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) { LauncherNotificationButton() }
-                    if let runningID = model.runningID {
-                        ToolbarItem(placement: .primaryAction) {
-                            Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.AppRootView.runHistory.localized, systemImage: "terminal") }
-                                .help(Messages.AppRootView.viewRunningGameLogs.localized)
+        // The library is a list with a detail beside it, so it adds a content
+        // column like Mail; every other page is a single detail.
+        ZStack {
+            if model.page == .library {
+                LibraryView(columnVisibility: $columns) { RootSidebar() }
+            } else {
+                NavigationSplitView(columnVisibility: $columns) {
+                    RootSidebar()
+                } detail: {
+                    Group {
+                        switch model.page {
+                        case .home, .library: HomeView()
+                        case .discover: DiscoverView()
+                        case .activity: LauncherLogView().id(model.logNavigationID)
+                        case .accounts: AccountsView()
+                        case .java: JavaView()
+                        case .settings: PreferencesView()
                         }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .navigationTitle(model.page.title)
+                    .toolbar { RootToolbar(model: model) }
                 }
+            }
         }
         .frame(minWidth: 760, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
-        .sheet(isPresented: $model.showCreate) { CreateInstanceView() }
-        .sheet(isPresented: $model.showDirectories) { GameDirectoriesView() }
-        .sheet(isPresented: $model.showAccount) { AddAccountView() }
-        .sheet(isPresented: $model.showLogs) { LogsView() }
-        .sheet(item: $model.editingInstance) { instance in InstanceSettingsView(instance: instance) }
-        .sheet(item: $model.contentInstance) { instance in InstanceContentView(instance: instance) }
-        .sheet(item: $model.worldInstance) { instance in WorldManagerView(instance: instance) }
-        .sheet(item: $model.schematicInstance) { instance in SchematicManagerView(instance: instance) }
-        .sheet(item: $model.importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
-        .sheet(item: $model.exportingInstance) { instance in ExportInstanceView(instance: instance) }
-        .sheet(item: $model.copyingInstance) { instance in InstanceCopyView(instance: instance) }
-        .sheet(item: $model.movingInstance) { instance in InstanceMoveView(instance: instance) }
+        .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }
+        .sheet(isPresented: Bindable(model).showDirectories) { GameDirectoriesView() }
+        .sheet(isPresented: Bindable(model).showAccount) { AddAccountView() }
+        .sheet(isPresented: Bindable(model).showLogs) { LogsView() }
+        .sheet(item: Bindable(model).editingInstance) { instance in InstanceSettingsView(instance: instance) }
+        .sheet(item: Bindable(model).contentInstance, onDismiss: { model.contentKind = .mod }) { instance in InstanceContentView(instance: instance, kind: model.contentKind) }
+        .sheet(item: Bindable(model).worldInstance) { instance in WorldManagerView(instance: instance) }
+        .sheet(item: Bindable(model).schematicInstance) { instance in SchematicManagerView(instance: instance) }
+        .sheet(item: Bindable(model).importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
+        .sheet(item: Bindable(model).exportingInstance) { instance in ExportInstanceView(instance: instance) }
+        .sheet(item: Bindable(model).copyingInstance) { instance in InstanceCopyView(instance: instance) }
+        .sheet(item: Bindable(model).movingInstance) { instance in InstanceMoveView(instance: instance) }
         .alert(Messages.AppRootView.operationIncomplete.localized, isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button(Messages.AppRootView.ok.localized, role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
+    }
+}
+
+/// App-wide items at the trailing edge of the detail column's toolbar.
+struct RootToolbar: ToolbarContent {
+    let model: AppModel
+    var body: some ToolbarContent {
+        // In the library's detail column nothing else fills the toolbar, so
+        // without a spacer these items sit at its leading edge.
+        if #available(macOS 26, *) { ToolbarSpacer(.flexible, placement: .primaryAction) }
+        ToolbarItem(placement: .primaryAction) { LauncherNotificationButton() }
+        if let runningID = model.runningID {
+            ToolbarItem(placement: .primaryAction) {
+                Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.AppRootView.runHistory.localized, systemImage: "terminal") }
+                    .help(Messages.AppRootView.viewRunningGameLogs.localized)
+            }
+        }
+    }
+}
+
+private struct RootSidebar: View {
+    @Environment(AppModel.self) private var model
+    var body: some View {
+        @Bindable var model = model
+        List(selection: $model.page) {
+            Section { ForEach([Page.home, .library, .discover, .activity]) { page in sidebarRow(page) } }
+            Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
+        }
+        .listStyle(.sidebar)
+        .controlSize(.large)
+        .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
+        .navigationSplitViewColumnWidth(min: 210, ideal: 236, max: 320)
     }
     private func sidebarRow(_ page: Page) -> some View {
         HStack {

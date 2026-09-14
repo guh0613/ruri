@@ -1546,17 +1546,41 @@
 /* @symbol AppLibraryView.searchInstancesOrVersions @args - */
 "appLibraryView.issueText6" = "搜索实例或版本";
 
-/* @symbol AppLibraryView.layout @args - */
-"appLibraryView.issueText7" = "布局";
+/* @symbol AppLibraryView.worlds @args - */
+"appLibraryView.detailText3" = "存档";
 
-/* @symbol AppLibraryView.grid @args - */
-"appLibraryView.issueText8" = "网格";
+/* @symbol AppLibraryView.noWorlds @args - */
+"appLibraryView.detailText9" = "还没有存档";
 
-/* @symbol AppLibraryView.list @args - */
-"appLibraryView.issueText9" = "列表";
+/* @symbol AppLibraryView.manage @args - */
+"appLibraryView.detailText10" = "管理";
 
-/* @symbol AppLibraryView.gridOrList @args - */
-"appLibraryView.issueText10" = "网格或列表";
+/* @symbol AppLibraryView.playHistory @args - */
+"appLibraryView.detailText11" = "游玩记录";
+
+/* @symbol AppLibraryView.lastTwoWeeks @args - */
+"appLibraryView.detailText12" = "近 14 天";
+
+/* @symbol AppLibraryView.noRecentPlay @args - */
+"appLibraryView.detailText13" = "近 14 天没有游玩";
+
+/* @symbol AppLibraryView.date @args - */
+"appLibraryView.detailText14" = "日期";
+
+/* @symbol AppLibraryView.runCount @args integer */
+"appLibraryView.detailText15" = "%1$lld 次运行";
+
+/* @symbol AppLibraryView.allRuns @args - */
+"appLibraryView.detailText5" = "全部记录";
+
+/* @symbol AppLibraryView.noRuns @args - */
+"appLibraryView.detailText6" = "还没有运行记录";
+
+/* @symbol AppLibraryView.disabledCount @args integer */
+"appLibraryView.detailText7" = "%1$lld 个已停用";
+
+/* @symbol AppLibraryView.backupCount @args integer */
+"appLibraryView.detailText8" = "%1$lld 个备份";
 
 /* @symbol AppLibraryView.importInstanceOrModpack @args - */
 "appLibraryView.issueText11" = "导入实例或整合包…";
@@ -1626,6 +1650,12 @@
 
 /* @symbol AppLibraryView.showInFinder @args - */
 "appLibraryView.contextActionsText4" = "在 Finder 中显示";
+
+/* @symbol AppLibraryView.favorites @args - */
+"appLibraryView.sectionText1" = "收藏";
+
+/* @symbol AppLibraryView.otherInstances @args - */
+"appLibraryView.sectionText2" = "其他实例";
 
 /* @symbol AppAppModelInstanceCopies.copyInstance @args text */
 "appAppModelInstanceCopies.copyInstanceText1" = "复制 %1$@";

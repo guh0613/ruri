@@ -231,6 +231,24 @@ public actor ContentManager {
             return LocalContentFile(url: url, filename: filename, title: info?.name ?? record?.title ?? URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent, version: info?.version ?? record?.versionName, modID: info?.id, kind: kind, enabled: enabled, size: Int64(attributes.fileSize ?? 0), managed: record)
         }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
+    /// How many files of a kind the instance holds, without opening them, for
+    /// summaries that need no titles or versions.
+    public func count(_ kind: ContentKind) throws -> (total: Int, disabled: Int) {
+        try lock(); defer { unlock() }
+        try recover()
+        let directory = root.appendingPathComponent(kind.folder)
+        guard FileManager.default.fileExists(atPath: directory.path) else { return (0, 0) }
+        var total = 0, disabled = 0
+        for url in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) {
+            guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { continue }
+            let enabled = !url.lastPathComponent.hasSuffix(".disabled")
+            let filename = enabled ? url.lastPathComponent : String(url.lastPathComponent.dropLast(9))
+            guard kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) else { continue }
+            total += 1
+            if !enabled { disabled += 1 }
+        }
+        return (total, disabled)
+    }
     public func setEnabled(_ enabled: Bool, file: LocalContentFile) throws {
         try setEnabled(enabled, files: [file])
     }

@@ -8,7 +8,8 @@ struct InstanceContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     let instance: GameInstance
-    @State private var kind = ContentKind.mod
+    @State private var kind: ContentKind
+    init(instance: GameInstance, kind: ContentKind = .mod) { self.instance = instance; _kind = State(initialValue: kind) }
     @State private var files: [LocalContentFile] = []
     @State private var search = ""
     @State private var statusFilter = ContentStatusFilter.all

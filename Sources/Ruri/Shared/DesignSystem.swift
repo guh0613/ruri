@@ -99,7 +99,7 @@ struct InstanceIcon: View {
     }
 }
 
-@MainActor private enum InstanceIconCache {
+@MainActor enum InstanceIconCache {
     static let images: NSCache<NSData, NSImage> = {
         let cache = NSCache<NSData, NSImage>(); cache.countLimit = 256; cache.totalCostLimit = 16 * 1024 * 1024
         return cache
@@ -203,6 +203,24 @@ struct ActionTile: View {
                 .allowsHitTesting(false)
         }
         .onHover { hovering = $0 }
+    }
+}
+
+extension View {
+    /// Content under the toolbar fades out softly instead of ending at a hard
+    /// line, where the system offers the choice.
+    @ViewBuilder func softTopScrollEdge() -> some View {
+        if #available(macOS 26, *) { scrollEdgeEffectStyle(.soft, for: .top) } else { self }
+    }
+
+    /// Pins controls above a scroll view as part of it, so they share the
+    /// toolbar's edge effect rather than splitting the column with a divider.
+    @ViewBuilder func topScrollBar<Bar: View>(@ViewBuilder _ bar: () -> Bar) -> some View {
+        if #available(macOS 26, *) {
+            safeAreaBar(edge: .top, spacing: 0, content: bar).scrollEdgeEffectStyle(.soft, for: .top)
+        } else {
+            safeAreaInset(edge: .top, spacing: 0, content: bar)
+        }
     }
 }
 

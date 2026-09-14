@@ -39,29 +39,77 @@ extension Messages {
         public static var searchInstancesOrVersions: LocalizedMessage {
             .init(key: "appLibraryView.issueText6", table: "Interface", fallback: "搜索实例或版本")
         }
-        /// 布局
+        /// 存档
         ///
-        /// Resource: `Interface.appLibraryView.issueText7`.
-        public static var layout: LocalizedMessage {
-            .init(key: "appLibraryView.issueText7", table: "Interface", fallback: "布局")
+        /// Resource: `Interface.appLibraryView.detailText3`.
+        public static var worlds: LocalizedMessage {
+            .init(key: "appLibraryView.detailText3", table: "Interface", fallback: "存档")
         }
-        /// 网格
+        /// 还没有存档
         ///
-        /// Resource: `Interface.appLibraryView.issueText8`.
-        public static var grid: LocalizedMessage {
-            .init(key: "appLibraryView.issueText8", table: "Interface", fallback: "网格")
+        /// Resource: `Interface.appLibraryView.detailText9`.
+        public static var noWorlds: LocalizedMessage {
+            .init(key: "appLibraryView.detailText9", table: "Interface", fallback: "还没有存档")
         }
-        /// 列表
+        /// 管理
         ///
-        /// Resource: `Interface.appLibraryView.issueText9`.
-        public static var list: LocalizedMessage {
-            .init(key: "appLibraryView.issueText9", table: "Interface", fallback: "列表")
+        /// Resource: `Interface.appLibraryView.detailText10`.
+        public static var manage: LocalizedMessage {
+            .init(key: "appLibraryView.detailText10", table: "Interface", fallback: "管理")
         }
-        /// 网格或列表
+        /// 游玩记录
         ///
-        /// Resource: `Interface.appLibraryView.issueText10`.
-        public static var gridOrList: LocalizedMessage {
-            .init(key: "appLibraryView.issueText10", table: "Interface", fallback: "网格或列表")
+        /// Resource: `Interface.appLibraryView.detailText11`.
+        public static var playHistory: LocalizedMessage {
+            .init(key: "appLibraryView.detailText11", table: "Interface", fallback: "游玩记录")
+        }
+        /// 近 14 天
+        ///
+        /// Resource: `Interface.appLibraryView.detailText12`.
+        public static var lastTwoWeeks: LocalizedMessage {
+            .init(key: "appLibraryView.detailText12", table: "Interface", fallback: "近 14 天")
+        }
+        /// 近 14 天没有游玩
+        ///
+        /// Resource: `Interface.appLibraryView.detailText13`.
+        public static var noRecentPlay: LocalizedMessage {
+            .init(key: "appLibraryView.detailText13", table: "Interface", fallback: "近 14 天没有游玩")
+        }
+        /// 日期
+        ///
+        /// Resource: `Interface.appLibraryView.detailText14`.
+        public static var date: LocalizedMessage {
+            .init(key: "appLibraryView.detailText14", table: "Interface", fallback: "日期")
+        }
+        /// %1$lld 次运行
+        ///
+        /// Resource: `Interface.appLibraryView.detailText15`.
+        public static func runCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "appLibraryView.detailText15", table: "Interface", fallback: "%1$lld 次运行", arguments: [.integer(value0)])
+        }
+        /// 全部记录
+        ///
+        /// Resource: `Interface.appLibraryView.detailText5`.
+        public static var allRuns: LocalizedMessage {
+            .init(key: "appLibraryView.detailText5", table: "Interface", fallback: "全部记录")
+        }
+        /// 还没有运行记录
+        ///
+        /// Resource: `Interface.appLibraryView.detailText6`.
+        public static var noRuns: LocalizedMessage {
+            .init(key: "appLibraryView.detailText6", table: "Interface", fallback: "还没有运行记录")
+        }
+        /// %1$lld 个已停用
+        ///
+        /// Resource: `Interface.appLibraryView.detailText7`.
+        public static func disabledCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "appLibraryView.detailText7", table: "Interface", fallback: "%1$lld 个已停用", arguments: [.integer(value0)])
+        }
+        /// %1$lld 个备份
+        ///
+        /// Resource: `Interface.appLibraryView.detailText8`.
+        public static func backupCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "appLibraryView.detailText8", table: "Interface", fallback: "%1$lld 个备份", arguments: [.integer(value0)])
         }
         /// 导入实例或整合包…
         ///
@@ -201,6 +249,18 @@ extension Messages {
         public static var showInFinder: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText4", table: "Interface", fallback: "在 Finder 中显示")
         }
+        /// 收藏
+        ///
+        /// Resource: `Interface.appLibraryView.sectionText1`.
+        public static var favorites: LocalizedMessage {
+            .init(key: "appLibraryView.sectionText1", table: "Interface", fallback: "收藏")
+        }
+        /// 其他实例
+        ///
+        /// Resource: `Interface.appLibraryView.sectionText2`.
+        public static var otherInstances: LocalizedMessage {
+            .init(key: "appLibraryView.sectionText2", table: "Interface", fallback: "其他实例")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appLibraryView.issueText1": .init("实例文件夹无法访问", []),
             "Interface:appLibraryView.issueText2": .init("重新检查", []),
@@ -208,10 +268,18 @@ extension Messages {
             "Interface:appLibraryView.issueText4": .init("没有匹配的实例", []),
             "Interface:appLibraryView.issueText5": .init("使用其他名称或版本号搜索。", []),
             "Interface:appLibraryView.issueText6": .init("搜索实例或版本", []),
-            "Interface:appLibraryView.issueText7": .init("布局", []),
-            "Interface:appLibraryView.issueText8": .init("网格", []),
-            "Interface:appLibraryView.issueText9": .init("列表", []),
-            "Interface:appLibraryView.issueText10": .init("网格或列表", []),
+            "Interface:appLibraryView.detailText3": .init("存档", []),
+            "Interface:appLibraryView.detailText9": .init("还没有存档", []),
+            "Interface:appLibraryView.detailText10": .init("管理", []),
+            "Interface:appLibraryView.detailText11": .init("游玩记录", []),
+            "Interface:appLibraryView.detailText12": .init("近 14 天", []),
+            "Interface:appLibraryView.detailText13": .init("近 14 天没有游玩", []),
+            "Interface:appLibraryView.detailText14": .init("日期", []),
+            "Interface:appLibraryView.detailText15": .init("%1$lld 次运行", [.integer]),
+            "Interface:appLibraryView.detailText5": .init("全部记录", []),
+            "Interface:appLibraryView.detailText6": .init("还没有运行记录", []),
+            "Interface:appLibraryView.detailText7": .init("%1$lld 个已停用", [.integer]),
+            "Interface:appLibraryView.detailText8": .init("%1$lld 个备份", [.integer]),
             "Interface:appLibraryView.issueText11": .init("导入实例或整合包…", []),
             "Interface:appLibraryView.issueText12": .init("添加游戏文件夹…", []),
             "Interface:appLibraryView.issueText13": .init("导入", []),
@@ -235,6 +303,8 @@ extension Messages {
             "Interface:appLibraryView.contextActionsText2": .init("实例设置", []),
             "Interface:appLibraryView.contextActionsText3": .init("管理模组与资源包", []),
             "Interface:appLibraryView.contextActionsText4": .init("在 Finder 中显示", []),
+            "Interface:appLibraryView.sectionText1": .init("收藏", []),
+            "Interface:appLibraryView.sectionText2": .init("其他实例", []),
         ]
     }
 }

@@ -3,28 +3,35 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-/// Toolbar menu that switches the instance folder shown in the library.
-struct DirectoryMenu: View {
+/// The library's folder menu: pick the instance folder the library shows, or
+/// add and manage folders.
+struct DirectoryMenuItems: View {
     @Environment(AppModel.self) private var model
     var body: some View {
-        Menu {
-            Group {
-                Picker(Messages.AppGameDirectoriesView.instanceFolders.localized, selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
-                    Text(Messages.AppGameDirectoriesView.defaultInstanceFolder.localized).tag(GameDirectory.defaultID)
-                    ForEach(model.state.gameDirectories ?? []) { directory in Text(directory.name).tag(directory.id) }
-                }.pickerStyle(.inline)
-                Divider()
-                if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
-                    Button(Messages.AppGameDirectoriesView.refreshVersions.localized, systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
-                }
-                Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-                Button(Messages.AppGameDirectoriesView.manageFolders.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
-            }.labelStyle(.titleAndIcon)
-        } label: {
-            Label(Messages.AppGameDirectoriesView.instanceFolders.localized, systemImage: "folder").labelStyle(.iconOnly)
+        Picker(Messages.AppGameDirectoriesView.instanceFolders.localized, selection: Binding(get: { model.selectedDirectoryID }, set: { model.selectDirectory($0) })) {
+            Text(Messages.AppGameDirectoriesView.defaultInstanceFolder.localized).tag(GameDirectory.defaultID)
+            ForEach(model.state.gameDirectories ?? []) { directory in Text(directory.name).tag(directory.id) }
         }
-        .disabled(model.busy).labelStyle(.titleAndIcon)
-        .help(Messages.AppGameDirectoriesView.currentFolder(String(describing: model.selectedDirectoryName)).localized)
+        .pickerStyle(.inline)
+        .disabled(model.busy)
+        Divider()
+        DirectoryCommands()
+    }
+}
+
+/// Commands for the instance folders, under the folder list in that menu.
+struct DirectoryCommands: View {
+    @Environment(AppModel.self) private var model
+    var body: some View {
+        Group {
+            if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
+                Button(Messages.AppGameDirectoriesView.refreshVersions.localized, systemImage: "arrow.clockwise") { Task { await model.refreshMinecraftFolder() } }
+            }
+            Button(Messages.AppGameDirectoriesView.addFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+            Button(Messages.AppGameDirectoriesView.manageFolders.localized, systemImage: "folder.badge.gearshape") { model.showDirectories = true }
+        }
+        .labelStyle(.titleAndIcon)
+        .disabled(model.busy)
     }
 }
 

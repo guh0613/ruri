@@ -80,6 +80,24 @@ public actor WorldManager {
             return snapshot(entry)
         }.sorted { ($0.lastPlayed ?? .distantPast) > ($1.lastPlayed ?? .distantPast) }
     }
+    /// The most recently played worlds with world and backup totals, without
+    /// measuring world sizes or reading backup metadata, for summaries.
+    public func overview(limit: Int) throws -> (recent: [WorldSnapshot], worlds: Int, backups: Int) {
+        try paths.validateInstanceLocation(instanceID)
+        try lock(); defer { unlock() }
+        try recover()
+        let manager = FileManager.default
+        let folders = !manager.fileExists(atPath: saves.path) ? [] : try manager.contentsOfDirectory(at: saves, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles]).filter { entry in
+            let values = try? entry.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
+            return values?.isSymbolicLink != true && values?.isDirectory == true && hasLevelData(entry)
+        }
+        let recent = folders.map { snapshot($0, measuringSize: false) }.sorted { ($0.lastPlayed ?? .distantPast) > ($1.lastPlayed ?? .distantPast) }.prefix(limit)
+        let backups = !manager.fileExists(atPath: backupDirectory.path) ? 0 : try manager.contentsOfDirectory(at: backupDirectory, includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles]).filter { url in
+            let values = try? url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            return url.pathExtension == "zip" && values?.isRegularFile == true && values?.isSymbolicLink != true
+        }.count
+        return (Array(recent), folders.count, backups)
+    }
     public func backups() throws -> [WorldBackup] {
         try paths.validateInstanceLocation(instanceID)
         try lock(); defer { unlock() }
@@ -230,7 +248,7 @@ public actor WorldManager {
             return values.isRegularFile == true && values.isSymbolicLink != true
         }
     }
-    private func snapshot(_ world: URL) -> WorldSnapshot {
+    private func snapshot(_ world: URL, measuringSize: Bool = true) -> WorldSnapshot {
         var data: NBTValue?; var failure: String?
         do {
             let file = FileManager.default.fileExists(atPath: world.appendingPathComponent("level.dat").path) ? world.appendingPathComponent("level.dat") : world.appendingPathComponent("level.dat_old")
@@ -239,7 +257,7 @@ public actor WorldManager {
         } catch { failure = Messages.CoreWorldManager.worldInfoReadFailed.localized }
         let lastPlayed = data?["LastPlayed"]?.integer.flatMap { (0..<253402300800000).contains($0) ? Date(timeIntervalSince1970: Double($0) / 1000) : nil }
         let icon = world.appendingPathComponent("icon.png")
-        let entries = try? FileTree.entries(in: world)
+        let entries = measuringSize ? try? FileTree.entries(in: world) : nil
         return WorldSnapshot(folder: world.lastPathComponent, url: world, name: data?["LevelName"]?.string ?? world.lastPathComponent, version: data?["Version"]?["Name"]?.string, gameType: data?["GameType"]?.integer.flatMap(Int.init(exactly:)), hardcore: data?["hardcore"]?.integer == 1, lastPlayed: lastPlayed, size: entries.map { $0.filter { !$0.directory }.reduce(0) { $0 + $1.size } }, icon: FileManager.default.fileExists(atPath: icon.path) ? icon : nil, metadataError: failure)
     }
     nonisolated static func readLock(_ world: URL) throws -> Int32? {
