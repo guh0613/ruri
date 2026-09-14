@@ -558,5 +558,45 @@
     "file": "Sources/RuriCore/Content/CatalogMarkdown.swift",
     "literal": "\"\\\" title=\\\"\"",
     "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"-----BEGIN PUBLIC KEY-----\\n\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"\\n-----END PUBLIC KEY-----\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"application/json; charset=utf-8\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"No Content\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"Bad Request\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"Not Found\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Accounts/OfflineSkinServer.swift",
+    "literal": "\"HTTP/1.1 \\(status) \\(reason)\\r\\nContent-Type: \\(contentType)\\r\\nContent-Length: \\(data.count)\\r\\nConnection: close\\r\\nCache-Control: no-store\\r\\nX-Content-Type-Options: nosniff\\r\\n\\r\\n\"",
+    "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
+    "reason": "Launcher log prefix followed by an already-redacted command line."
   }
 ]

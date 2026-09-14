@@ -6,7 +6,7 @@ import UniformTypeIdentifiers
 public enum PlayerTextureKind: String, CaseIterable, Sendable { case skin, cape
     public var title: String { self == .skin ? Messages.CorePlayerTextureImage.skinTitle.localized : Messages.CorePlayerTextureImage.capeTitle.localized }
 }
-public enum PlayerSkinModel: String, CaseIterable, Sendable { case classic, slim
+public enum PlayerSkinModel: String, Codable, CaseIterable, Sendable { case classic, slim
     public var title: String { self == .classic ? Messages.CorePlayerTextureImage.classicArmsTitle.localized : Messages.CorePlayerTextureImage.slimArmsTitle.localized }
 }
 

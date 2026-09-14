@@ -42,27 +42,38 @@ extension AppModel {
                     progress(id, InstallProgress(Messages.AppAppModelLaunching.checkingAccountAndJava))
                     var token = "0"
                     var externalAuth: ExternalAuthLaunch?
-                    if account.kind == .microsoft {
-                        var credentials = try CredentialStore.load(for: account.id)
-                        recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
-                        if credentials.expiresAt < Date().addingTimeInterval(120) {
-                            (account, credentials) = try await MicrosoftAuth(clientID: credentials.clientID).refresh(credentials, account: account)
+                    var offlineSkin: OfflineSkinLaunch?
+                    try await accountOperations.withLock(for: account.id) {
+                        if account.kind == .microsoft {
+                            var credentials = try CredentialStore.load(for: account.id)
                             recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
-                            try addMicrosoft(account, credentials: credentials)
+                            if credentials.expiresAt < Date().addingTimeInterval(120) {
+                                (account, credentials) = try await MicrosoftAuth(clientID: credentials.clientID).refresh(credentials, account: account)
+                                recorder.addSecrets([credentials.accessToken, credentials.refreshToken])
+                                try addMicrosoft(account, credentials: credentials, activate: false, requireExisting: true)
+                            }
+                            token = credentials.accessToken
+                        } else if account.kind == .external {
+                            var credentials = try CredentialStore.loadExternal(for: account.id)
+                            recorder.addSecrets([credentials.accessToken, credentials.clientToken])
+                            (account, credentials) = try await ExternalAuthentication().refresh(account: account, credentials: credentials)
+                            recorder.addSecrets([credentials.accessToken, credentials.clientToken])
+                            try addExternal(account, credentials: credentials, requireExisting: true, activate: false)
+                            guard let server = account.externalLogin?.server else { throw RuriError.message(Messages.AppAppModelLaunching.externalAuthRequired) }
+                            progress(id, InstallProgress(Messages.AppAppModelLaunching.preparingAuthComponent))
+                            async let metadata = ExternalAuthentication().metadata(for: server)
+                            async let jar = AuthlibInjector().prepare(paths: paths)
+                            externalAuth = try await ExternalAuthLaunch(jar: jar, metadata: metadata, userProperties: credentials.user?.propertiesJSON ?? "{}")
+                            token = credentials.accessToken
                         }
-                        token = credentials.accessToken
-                    } else if account.kind == .external {
-                        var credentials = try CredentialStore.loadExternal(for: account.id)
-                        recorder.addSecrets([credentials.accessToken, credentials.clientToken])
-                        (account, credentials) = try await ExternalAuthentication().refresh(account: account, credentials: credentials)
-                        recorder.addSecrets([credentials.accessToken, credentials.clientToken])
-                        try addExternal(account, credentials: credentials, requireExisting: true, activate: false)
-                        guard let server = account.externalLogin?.server else { throw RuriError.message(Messages.AppAppModelLaunching.externalAuthRequired) }
-                        progress(id, InstallProgress(Messages.AppAppModelLaunching.preparingAuthComponent))
-                        async let metadata = ExternalAuthentication().metadata(for: server)
-                        async let jar = AuthlibInjector().prepare(paths: paths)
-                        externalAuth = try await ExternalAuthLaunch(jar: jar, metadata: metadata, userProperties: credentials.user?.propertiesJSON ?? "{}")
-                        token = credentials.accessToken
+                    }
+                    let savedSkin = account.kind == .offline ? try SkinLibrary(paths: paths).preview(for: account.id) : nil
+                    let savedCape = account.kind == .offline ? try SkinLibrary(paths: paths).cape(for: account.id) : nil
+                    if savedSkin != nil || savedCape != nil {
+                        progress(id, InstallProgress(Messages.OfflineSkin.preparing))
+                        let jar = try await AuthlibInjector().prepare(paths: paths)
+                        offlineSkin = try OfflineSkinLaunch(account: account, skin: savedSkin, cape: savedCape, injector: jar)
+                        token = UUID().uuidString.replacingOccurrences(of: "-", with: "")
                     }
                     try advanceSession(.manifest)
                     let manifest = try await installer.loadManifest(instance)
@@ -73,7 +84,7 @@ extension AppModel {
                     try recorder.setJava(java.label + " · " + java.version)
                     try advanceSession(.arguments)
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
-                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth)
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth, offlineSkin: offlineSkin)
                     recorder.addSecrets(plan.environmentRedactions)
                     if let world { appendLog(Messages.AppAppModelLaunching.worldLaunch(world.name).localized) }
                     appendLog("[Ruri] \(java.label)")

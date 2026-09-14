@@ -29,3 +29,18 @@ public struct Account: Codable, Identifiable, Equatable, Sendable {
         self.id = id; self.username = username; self.uuid = uuid; self.kind = kind
     }
 }
+
+extension Account {
+    public func hasSameIdentity(as other: Account) -> Bool {
+        kind == other.kind && uuid.replacingOccurrences(of: "-", with: "").lowercased() == other.uuid.replacingOccurrences(of: "-", with: "").lowercased()
+            && externalLogin?.server.url == other.externalLogin?.server.url && externalLogin?.username == other.externalLogin?.username
+    }
+    /// A reauthentication must prove the same identity before replacing secrets.
+    public func reauthenticated(with updated: Account) throws -> Account {
+        guard kind != .offline, hasSameIdentity(as: updated) else {
+            throw RuriError.message(Messages.AccountCenter.wrongLoginAccount)
+        }
+        var result = updated; result.id = id; result.uuid = uuid
+        return result
+    }
+}

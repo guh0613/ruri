@@ -57,6 +57,10 @@ import RuriCore
     var pendingInstanceMoveIDs: Set<UUID> = []
     var failedSessionReadIDs: Set<UUID> = []
     var showAccount = false
+    var accountSkins: [UUID: SavedPlayerSkin] = [:]
+    var accountCapes: [UUID: PlayerTextureImage] = [:]
+    @ObservationIgnored let accountOperations = AccountOperationGate()
+    var loadedAccountPreviews: Set<UUID> = []
     var editingInstance: GameInstance?
     var contentInstance: GameInstance?
     var worldInstance: GameInstance?

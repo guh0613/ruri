@@ -200,9 +200,7 @@ public struct ExternalAuthentication: Sendable {
             request.httpMethod = "POST"; request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
         }
-        let (data, response) = try await session.data(for: request, delegate: redirects)
-        try Task.checkCancellation()
-        guard let response = response as? HTTPURLResponse, data.count <= 65_536 else { throw RuriError.message(Messages.CoreExternalAuthentication.invalidAuthenticationResponse) }
+        let (data, response) = try await AccountHTTPData.load(request, session: session, delegate: redirects, limit: 65_536)
         return (data, response)
     }
 }

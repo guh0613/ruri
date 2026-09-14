@@ -112,3 +112,22 @@ struct AccountAppearanceTests {
         await #expect(throws: (any Error).self) { try await AccountAppearanceClient(account: account, accessToken: "external-private-token", session: wrong.session).load() }
     }
 }
+
+extension AccountAppearanceTests {
+    @Test func expiredLoginIsDistinguishableAndOversizedResponsesAreRejected() async throws {
+        let account = Account(username: "Player", uuid: Self.uuid, kind: .microsoft)
+        let expired = EndpointHTTPFixture { _ in .init(status: 401) }; defer { expired.close() }
+        await #expect(throws: AccountAppearanceError.loginExpired) {
+            try await AccountAppearanceClient(account: account, accessToken: "old-token", session: expired.session).load()
+        }
+        let large = EndpointHTTPFixture { _ in .init(data: Data(repeating: 65, count: 262_145)) }; defer { large.close() }
+        await #expect(throws: (any Error).self) {
+            try await AccountAppearanceClient(account: account, accessToken: "token", session: large.session).load()
+        }
+        let png = try Self.png()
+        let image = EndpointHTTPFixture { _ in .init(data: png, headers: ["Content-Length": "999999999", "Content-Type": "image/png"]) }; defer { image.close() }
+        let client = AccountAppearanceClient(account: account, accessToken: "secret", session: image.session)
+        await #expect(throws: (any Error).self) { try await client.image(for: AccountTexture(id: "skin", name: "Skin", url: URL(string: "https://images.test/skin.png?signature=test")!, active: true, model: .classic)) }
+        #expect(image.requests.first?.header("Authorization") == nil)
+    }
+}

@@ -4,6 +4,7 @@ public enum Messages {}
 enum MessageCatalog {
     static let definitions: [String: MessageDefinition] = {
         var result: [String: MessageDefinition] = [:]
+        result.merge(Messages.AccountCenter.definitions) { first, _ in first }
         result.merge(Messages.AppAccountAppearanceView.definitions) { first, _ in first }
         result.merge(Messages.AppAccountsView.definitions) { first, _ in first }
         result.merge(Messages.AppActivityItem.definitions) { first, _ in first }
@@ -204,6 +205,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreWorldQuickPlay.definitions) { first, _ in first }
         result.merge(Messages.Discovery.definitions) { first, _ in first }
         result.merge(Messages.LauncherLog.definitions) { first, _ in first }
+        result.merge(Messages.OfflineSkin.definitions) { first, _ in first }
         return result
     }()
 }

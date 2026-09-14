@@ -1,0 +1,212 @@
+/* @symbol AccountCenter.invalidSkinName @args - */
+"accountCenter.invalidSkinName" = "皮肤名称需为 1–80 个字符。";
+
+/* @symbol AccountCenter.invalidSavedSkin @args - */
+"accountCenter.invalidSavedSkin" = "无法读取保存的皮肤，文件可能已损坏。";
+
+/* @symbol AccountCenter.wrongLoginAccount @args - */
+"accountCenter.wrongLoginAccount" = "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。";
+
+/* @symbol AccountCenter.characterPreview @args - */
+"accountCenter.characterPreview" = "可旋转的角色外观预览";
+
+/* @symbol AccountCenter.rotation @args - */
+"accountCenter.rotation" = "旋转角色";
+
+/* @symbol AccountCenter.resetView @args - */
+"accountCenter.resetView" = "重置视角";
+
+/* @symbol AccountCenter.outerLayer @args - */
+"accountCenter.outerLayer" = "显示外层皮肤";
+
+/* @symbol AccountCenter.welcome @args - */
+"accountCenter.welcome" = "添加你的 Minecraft 账号";
+
+/* @symbol AccountCenter.welcomeHelp @args - */
+"accountCenter.welcomeHelp" = "登录微软账号、连接第三方认证服务器，或创建一个离线角色。";
+
+/* @symbol AccountCenter.selectAccount @args - */
+"accountCenter.selectAccount" = "选择一个账号";
+
+/* @symbol AccountCenter.searchAccounts @args - */
+"accountCenter.searchAccounts" = "搜索账号";
+
+/* @symbol AccountCenter.removeAccountTitle @args text */
+"accountCenter.removeAccountTitle" = "移除“%1$@”？";
+
+/* @symbol AccountCenter.removeAccountHelp @args - */
+"accountCenter.removeAccountHelp" = "这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。";
+
+/* @symbol AccountCenter.accountCount @args integer */
+"accountCenter.accountCount" = "%1$lld 个账号";
+
+/* @symbol AccountCenter.copyUUID @args - */
+"accountCenter.copyUUID" = "复制 UUID";
+
+/* @symbol AccountCenter.accountActions @args - */
+"accountCenter.accountActions" = "账号操作";
+
+/* @symbol AccountCenter.accountDetails @args - */
+"accountCenter.accountDetails" = "账号信息";
+
+/* @symbol AccountCenter.appearanceSection @args - */
+"accountCenter.appearanceSection" = "外观分类";
+
+/* @symbol AccountCenter.skinLibrary @args - */
+"accountCenter.skinLibrary" = "皮肤库";
+
+/* @symbol AccountCenter.offlinePreviewHelp @args - */
+"accountCenter.offlinePreviewHelp" = "重新启动游戏后，所选皮肤将在本机生效。";
+
+/* @symbol AccountCenter.retry @args - */
+"accountCenter.retry" = "重试";
+
+/* @symbol AccountCenter.renameSkin @args - */
+"accountCenter.renameSkin" = "重命名皮肤";
+
+/* @symbol AccountCenter.skinName @args - */
+"accountCenter.skinName" = "皮肤名称";
+
+/* @symbol AccountCenter.save @args - */
+"accountCenter.save" = "保存";
+
+/* @symbol AccountCenter.removeSkinTitle @args - */
+"accountCenter.removeSkinTitle" = "从皮肤库移除这款皮肤？";
+
+/* @symbol AccountCenter.removeSkin @args - */
+"accountCenter.removeSkin" = "移除皮肤";
+
+/* @symbol AccountCenter.removeSkinHelp @args - */
+"accountCenter.removeSkinHelp" = "已应用的账号外观和原始 PNG 文件会保留。";
+
+/* @symbol AccountCenter.resetAppearance @args - */
+"accountCenter.resetAppearance" = "恢复默认外观？";
+
+/* @symbol AccountCenter.confirmReset @args - */
+"accountCenter.confirmReset" = "恢复默认";
+
+/* @symbol AccountCenter.appearanceReset @args - */
+"accountCenter.appearanceReset" = "已恢复默认外观。";
+
+/* @symbol AccountCenter.draftPreview @args - */
+"accountCenter.draftPreview" = "预览 · 尚未应用";
+
+/* @symbol AccountCenter.placeholderPreview @args - */
+"accountCenter.placeholderPreview" = "示意模型 · 未加载皮肤";
+
+/* @symbol AccountCenter.currentAppearance @args - */
+"accountCenter.currentAppearance" = "当前外观";
+
+/* @symbol AccountCenter.chooseSkinHelp @args - */
+"accountCenter.chooseSkinHelp" = "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。";
+
+/* @symbol AccountCenter.saveToLibrary @args - */
+"accountCenter.saveToLibrary" = "保存到皮肤库";
+
+/* @symbol AccountCenter.savedToLibrary @args - */
+"accountCenter.savedToLibrary" = "已保存到皮肤库。";
+
+/* @symbol AccountCenter.clearLocalPreview @args - */
+"accountCenter.clearLocalPreview" = "恢复默认皮肤";
+
+/* @symbol AccountCenter.microsoftSkinHelp @args - */
+"accountCenter.microsoftSkinHelp" = "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。";
+
+/* @symbol AccountCenter.applyCape @args - */
+"accountCenter.applyCape" = "应用披风";
+
+/* @symbol AccountCenter.appearanceNotLoaded @args - */
+"accountCenter.appearanceNotLoaded" = "连接账号后即可管理披风。";
+
+/* @symbol AccountCenter.previewBeforeApply @args - */
+"accountCenter.previewBeforeApply" = "确认你的新外观";
+
+/* @symbol AccountCenter.legacySkinHelp @args - */
+"accountCenter.legacySkinHelp" = "旧版皮肤使用经典手臂，预览会自动补全左右肢体。";
+
+/* @symbol AccountCenter.useLocalPreview @args - */
+"accountCenter.useLocalPreview" = "应用皮肤";
+
+/* @symbol AccountCenter.libraryHelp @args - */
+"accountCenter.libraryHelp" = "收藏你喜欢的皮肤，随时预览和使用。";
+
+/* @symbol AccountCenter.importSkin @args - */
+"accountCenter.importSkin" = "导入皮肤…";
+
+/* @symbol AccountCenter.libraryEmpty @args - */
+"accountCenter.libraryEmpty" = "你的皮肤收藏";
+
+/* @symbol AccountCenter.libraryEmptyHelp @args - */
+"accountCenter.libraryEmptyHelp" = "导入 PNG，或把账号当前皮肤保存到这里。";
+
+/* @symbol AccountCenter.previewAndUse @args - */
+"accountCenter.previewAndUse" = "预览与使用";
+
+/* @symbol AccountCenter.skinActions @args - */
+"accountCenter.skinActions" = "皮肤操作";
+
+/* @symbol AccountCenter.localPreviewSaved @args - */
+"accountCenter.localPreviewSaved" = "皮肤已应用，下次启动游戏时生效。";
+
+/* @symbol AccountCenter.reloginTitle @args - */
+"accountCenter.reloginTitle" = "重新登录";
+
+/* @symbol AccountCenter.reloginHelp @args text */
+"accountCenter.reloginHelp" = "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。";
+
+/* @symbol AccountCenter.addAccountHelp @args - */
+"accountCenter.addAccountHelp" = "选择登录方式，开始你的下一段旅程。";
+
+/* @symbol AccountCenter.offlineLoginHelp @args - */
+"accountCenter.offlineLoginHelp" = "离线账号可用于本地游戏，无法加入要求正版验证的服务器。";
+
+/* @symbol AccountCenter.microsoftLogin @args - */
+"accountCenter.microsoftLogin" = "使用微软账号登录";
+
+/* @symbol AccountCenter.browserLoginHelp @args - */
+"accountCenter.browserLoginHelp" = "Ruri 将在浏览器中打开微软登录页面。完成授权后，会自动回到这里。";
+
+/* @symbol AccountCenter.connected @args - */
+"accountCenter.connected" = "已连接";
+
+/* @symbol AccountCenter.connecting @args - */
+"accountCenter.connecting" = "正在连接账号…";
+
+/* @symbol AccountCenter.unverified @args - */
+"accountCenter.unverified" = "尚未连接";
+
+/* @symbol AccountCenter.localAccount @args - */
+"accountCenter.localAccount" = "本地账号";
+
+/* @symbol AccountCenter.textureSize @args integer,integer */
+"accountCenter.textureSize" = "%1$lld × %2$lld PNG";
+
+/* @symbol OfflineSkin.invalidConfiguration @args - */
+"offlineSkin.invalidConfiguration" = "离线皮肤配置无效，请重新应用皮肤后再启动游戏。";
+
+/* @symbol OfflineSkin.signingFailed @args - */
+"offlineSkin.signingFailed" = "无法为离线皮肤生成签名。";
+
+/* @symbol OfflineSkin.serviceFailed @args - */
+"offlineSkin.serviceFailed" = "本地皮肤服务未能启动，请重试。";
+
+/* @symbol OfflineSkin.preparing @args - */
+"offlineSkin.preparing" = "正在准备离线皮肤…";
+
+/* @symbol OfflineSkin.ready @args - */
+"offlineSkin.ready" = "[Ruri] 离线皮肤服务已就绪。";
+
+/* @symbol AccountCenter.unreadableSkins @args integer */
+"accountCenter.unreadableSkins" = "有 %1$lld 份收藏无法读取，其他收藏仍可使用。";
+
+/* @symbol AccountCenter.showSkinFolder @args - */
+"accountCenter.showSkinFolder" = "查看皮肤文件夹";
+
+/* @symbol AccountCenter.useLittleSkin @args - */
+"accountCenter.useLittleSkin" = "使用 LittleSkin";
+
+/* @symbol AccountCenter.logoutTitle @args - */
+"accountCenter.logoutTitle" = "退出此账号？";
+
+/* @symbol AccountCenter.logoutHelp @args - */
+"accountCenter.logoutHelp" = "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。";

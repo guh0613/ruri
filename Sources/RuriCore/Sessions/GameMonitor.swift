@@ -65,7 +65,7 @@ public enum GameMonitorClient {
         try process.run()
         defer { try? input.fileHandleForWriting.close() }
         guard let identity = ProcessIdentity.read(process.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.monitorIdentityFailed) }
-        let request = MonitorLaunchRequest(version: 6, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
+        let request = MonitorLaunchRequest(version: 7, root: paths.root, instanceID: recorder.record.instanceID, sessionID: recorder.record.id,
                                            monitor: identity, plan: plan, secrets: secrets, storage: paths.monitorSnapshot(for: recorder.record.instanceID),
                                            language: LocalizationContext.current.language, region: LocalizationContext.current.regionIdentifier)
         let data = try JSONEncoder().encode(request)
@@ -109,7 +109,8 @@ public enum GameMonitorService {
             }
             let decoded = try JSONDecoder().decode(MonitorLaunchRequest.self, from: data)
             request = decoded
-            guard (1...6).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+            guard (1...7).contains(decoded.version), decoded.root.isFileURL, decoded.plan.executable.isFileURL,
+                  (decoded.plan.offlineSkin == nil || decoded.version >= 7),
                   decoded.monitor == ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier) else { throw RuriError.message(Messages.CoreGameMonitor.invalidMonitorRequest) }
             let context = LocalizationContext(language: decoded.language, region: decoded.region ?? Locale.current.identifier)
             return try await LocalizationContext.$current.withValue(context) {
@@ -128,7 +129,8 @@ public enum GameMonitorService {
             return 1
         }
     }
-    @MainActor private static func run(_ plan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String]) async throws -> Int32 {
+    @MainActor private static func run(_ inputPlan: LaunchPlan, recorder: GameSessionRecorder, paths: LauncherPaths, secrets: [String]) async throws -> Int32 {
+        var plan = inputPlan
         try plan.commands?.validate()
         let javaLease = try JavaRuntimeLease.shared(binary: plan.executable, paths: paths)
         defer { withExtendedLifetime(javaLease) {} }
@@ -139,6 +141,16 @@ public enum GameMonitorService {
                 try recorder.fail(RuriError.message(result.summaryMessage), cancelled: result.cancelled)
                 return result.cancelled ? 130 : 1
             }
+        }
+        if stopRequested(recorder) { try recorder.fail(CancellationError(), cancelled: true); return 130 }
+        var skinServer: OfflineSkinServer?
+        defer { skinServer?.stop() }
+        if let skin = plan.offlineSkin {
+            let server = try await OfflineSkinServer.start(skin)
+            skinServer = server
+            plan = try server.applying(to: plan)
+            try recorder.append(Messages.OfflineSkin.ready.localized)
+            try recorder.append("[Ruri] \(plan.redactedCommand)")
         }
         if stopRequested(recorder) { try recorder.fail(CancellationError(), cancelled: true); return 130 }
         if recorder.record.stage != .starting { try recorder.transition(.starting) }
@@ -205,7 +217,7 @@ public enum GameMonitorService {
     }
     static func validatedPaths(_ request: MonitorLaunchRequest) throws -> LauncherPaths {
         if request.version == 1 { return LauncherPaths(root: request.root) }
-        guard (2...6).contains(request.version), let paths = request.storage, paths.root == request.root,
+        guard (2...7).contains(request.version), let paths = request.storage, paths.root == request.root,
               paths.instanceDirectories.count == 1, paths.instanceDirectories[request.instanceID] != nil else { throw RuriError.message(Messages.CoreGameMonitor.instanceFolderMissing) }
         guard request.version >= 3 || paths.runDirectory(for: request.instanceID) == .isolated else { throw RuriError.message(Messages.CoreGameMonitor.sharedDirectoryProtocolRequired) }
         if request.version >= 3, paths.instanceRunDirectories?[request.instanceID] == nil { throw RuriError.message(Messages.CoreGameMonitor.runDirectoryPolicyMissing) }

@@ -254,7 +254,17 @@ import RuriCore
                     try recorder.setJava(java.label + " · " + java.version)
                     try recorder.transition(.arguments)
                     try await GameInstaller(paths: paths).prepareRunDirectory(instance, manifest: manifest)
-                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, world: world)
+                    var offlineSkin: OfflineSkinLaunch?
+                    var token = "0"
+                    let savedSkin = account.kind == .offline ? try SkinLibrary(paths: paths).preview(for: account.id) : nil
+                    let savedCape = account.kind == .offline ? try SkinLibrary(paths: paths).cape(for: account.id) : nil
+                    if savedSkin != nil || savedCape != nil {
+                        try recorder.append(Messages.OfflineSkin.preparing.localized)
+                        let jar = try await AuthlibInjector().prepare(paths: paths)
+                        offlineSkin = try OfflineSkinLaunch(account: account, skin: savedSkin, cape: savedCape, injector: jar)
+                        token = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+                    }
+                    let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, offlineSkin: offlineSkin)
                     recorder.addSecrets(plan.environmentRedactions)
                     try recorder.append("[Ruri] \(plan.redactedCommand)")
                     try recorder.transition(.starting)

@@ -84,8 +84,7 @@ private struct AccountSidebarFooter: View {
                     if !model.state.accounts.isEmpty {
                         Picker(Messages.AppRootView.switchAccount.localized, selection: Binding(get: { model.state.activeAccountID }, set: { id in
                             guard id != model.state.activeAccountID else { return }
-                            model.state.activeAccountID = id
-                            model.save()
+                            if let account = model.state.accounts.first(where: { $0.id == id }) { model.activateAccount(account) }
                         })) {
                             ForEach(model.state.accounts) { account in
                                 Text(account.username).tag(Optional(account.id))
@@ -98,8 +97,11 @@ private struct AccountSidebarFooter: View {
                 }.labelStyle(.titleAndIcon)
             } label: {
                 HStack(spacing: 10) {
-                    Image(systemName: model.activeAccount == nil ? "person.crop.circle.badge.plus" : "person.crop.circle.fill")
-                        .font(.system(size: 30)).symbolRenderingMode(.hierarchical).foregroundStyle(model.activeAccount == nil ? AnyShapeStyle(.secondary) : AnyShapeStyle(Theme.accent))
+                    if let account = model.activeAccount { AccountAvatar(account: account, size: 32) }
+                    else {
+                        Image(systemName: "person.crop.circle.badge.plus")
+                            .font(.system(size: 30)).symbolRenderingMode(.hierarchical).foregroundStyle(.secondary)
+                    }
                     VStack(alignment: .leading, spacing: 3) {
                         Text(model.activeAccount?.username ?? Messages.AppRootView.notSignedIn.localized).font(.system(size: 13, weight: .semibold))
                         Text(model.activeAccount?.kindLabel ?? Messages.AppRootView.addAccountToLaunch.localized).font(.system(size: 11)).foregroundStyle(.secondary)

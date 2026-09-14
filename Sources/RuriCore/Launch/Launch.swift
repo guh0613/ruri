@@ -3,7 +3,7 @@ import Foundation
 
 public struct LaunchPlan: Codable, Sendable {
     public let executable: URL
-    public let arguments: [String]
+    public var arguments: [String]
     public let directory: URL
     public let environment: [String: String]
     public var nativeQuitSupported: Bool?
@@ -11,6 +11,7 @@ public struct LaunchPlan: Codable, Sendable {
     public var customEnvironmentNames: [String]?
     public var commands: LaunchCommands?
     public var wrapper: [String]?
+    public var offlineSkin: OfflineSkinLaunch? = nil
     var processExecutable: URL { wrapper?.first.map { URL(fileURLWithPath: $0) } ?? executable }
     var processArguments: [String] { wrapper?.isEmpty == false ? Array(wrapper!.dropFirst()) + [executable.path] + arguments : arguments }
     public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
@@ -46,8 +47,12 @@ public enum ArgumentTokenizer {
 }
 
 public enum LaunchBuilder {
-    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, externalAuth: ExternalAuthLaunch? = nil) throws -> LaunchPlan {
+    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil) throws -> LaunchPlan {
         guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.externalAuthRequired) }
+        if let offlineSkin {
+            guard account.kind == .offline, offlineSkin.account == account else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
+            try offlineSkin.validate()
+        }
         guard paths.repositoryImportID == nil else { throw RuriError.message(Messages.CoreLaunch.packImportIncomplete) }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
@@ -87,8 +92,8 @@ public enum LaunchBuilder {
             "game_directory": paths.game(instance.id).path, "assets_root": resources.assets.path,
             "assets_index_name": manifest.assetIndex?.id ?? manifest.assets ?? "legacy",
             "auth_uuid": account.uuid, "auth_access_token": accessToken,
-            "auth_session": account.kind == .offline ? "0" : (account.kind == .external ? accessToken : "token:\(accessToken):\(account.uuid)"),
-            "clientid": "", "auth_xuid": "", "user_type": account.kind == .microsoft ? "msa" : (account.kind == .external ? "mojang" : "legacy"),
+            "auth_session": account.kind == .offline && offlineSkin == nil ? "0" : (account.kind != .microsoft ? accessToken : "token:\(accessToken):\(account.uuid)"),
+            "clientid": "", "auth_xuid": "", "user_type": account.kind == .microsoft || offlineSkin != nil ? "msa" : (account.kind == .external ? "mojang" : "legacy"),
             "version_type": manifest.type ?? "release", "user_properties": externalAuth?.userProperties ?? "{}",
             "natives_directory": natives.path, "launcher_name": "Ruri", "launcher_version": "0.1.0",
             "classpath": classpath.joined(separator: ":"), "classpath_separator": ":",
@@ -153,7 +158,9 @@ public enum LaunchBuilder {
         }
         let wrapper = try commands.resolveWrapper(environment: env, directory: paths.game(instance.id))
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper)
+        var offlineSkin = offlineSkin
+        offlineSkin?.argumentIndex = jvm.count
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin)
     }
 }
 

@@ -1,6 +1,11 @@
 import RuriLocalization
 import Foundation
 
+public enum AccountAppearanceError: LocalizedError, Sendable {
+    case loginExpired
+    public var errorDescription: String? { Messages.CoreAccountAppearance.accountLoginExpired.localized }
+}
+
 public struct AccountTexture: Sendable, Equatable, Identifiable {
     public let id: String
     public let name: String
@@ -108,8 +113,8 @@ public struct AccountAppearanceClient: Sendable {
         }
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
         request.httpShouldHandleCookies = false
-        let (data, response) = try await session.data(for: request, delegate: redirects)
-        guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode) else { throw RuriError.message(Messages.CoreAccountAppearance.appearanceDownloadFailed) }
+        let (data, response) = try await AccountHTTPData.load(request, session: session, delegate: PlayerTextureRedirects(), limit: PlayerTextureImage.maximumBytes)
+        guard (200..<300).contains(response.statusCode) else { throw RuriError.message(Messages.CoreAccountAppearance.appearanceDownloadFailed) }
         try Task.checkCancellation()
         return try PlayerTextureImage(data: data)
     }
@@ -133,17 +138,16 @@ public struct AccountAppearanceClient: Sendable {
         request.httpMethod = method; request.httpBody = body; request.httpShouldHandleCookies = false
         if authenticated { request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization") }
         if let contentType { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
-        let (data, response) = try await session.data(for: request, delegate: redirects)
-        guard let status = (response as? HTTPURLResponse)?.statusCode else { throw RuriError.message(Messages.CoreAccountAppearance.invalidAppearanceResponse) }
+        let (data, response) = try await AccountHTTPData.load(request, session: session, delegate: redirects, limit: 262_144)
+        let status = response.statusCode
         guard (200..<300).contains(status) else {
             switch status {
-            case 401: throw RuriError.message(Messages.CoreAccountAppearance.accountLoginExpired)
+            case 401: throw AccountAppearanceError.loginExpired
             case 403: throw RuriError.message(Messages.CoreAccountAppearance.appearanceOperationForbidden)
             case 429: throw RuriError.message(Messages.CoreAccountAppearance.appearanceRateLimited)
             default: throw RuriError.message(Messages.CoreAccountAppearance.appearanceHTTPError(String(describing: status)))
             }
         }
-        guard data.count <= 262_144 else { throw RuriError.message(Messages.CoreAccountAppearance.appearanceDataTooLarge) }
         return data
     }
 }

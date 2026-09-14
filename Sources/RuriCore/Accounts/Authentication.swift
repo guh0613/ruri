@@ -91,7 +91,7 @@ public actor MicrosoftAuth {
         let token = try JSONDecoder().decode(OAuthToken.self, from: data)
         guard status == 200, let access = token.access_token else { throw RuriError.message(Messages.CoreAuthentication.microsoftLoginInvalid) }
         var (updated, secrets) = try await exchange(access: access, refresh: token.refresh_token ?? credentials.refreshToken)
-        updated.id = account.id; secrets.clientID = credentials.clientID
+        updated = try account.reauthenticated(with: updated); secrets.clientID = credentials.clientID
         return (updated, secrets)
     }
     private func form(_ endpoint: URL, values: [String: String]) async throws -> (Data, Int) {
