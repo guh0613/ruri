@@ -176,7 +176,7 @@
 "discovery.openImage" = "查看原图";
 
 /* @symbol Discovery.searchLoadedVersions @args - */
-"discovery.searchLoadedVersions" = "搜索已载入的文件名称";
+"discovery.searchLoadedVersions" = "搜索已载入的版本或文件名";
 
 /* @symbol Discovery.matchInstance @args - */
 "discovery.matchInstance" = "匹配当前实例";
@@ -378,3 +378,15 @@
 
 /* @symbol Discovery.openProviderWebsite @args text */
 "discovery.openProviderWebsite" = "在默认浏览器中打开 %1$@ 项目页面";
+
+/* @symbol Discovery.groupExpanded @args - */
+"discovery.groupExpanded" = "已展开";
+
+/* @symbol Discovery.groupCollapsed @args - */
+"discovery.groupCollapsed" = "已折叠";
+
+/* @symbol Discovery.collapseGroup @args - */
+"discovery.collapseGroup" = "折叠此游戏版本";
+
+/* @symbol Discovery.expandGroup @args - */
+"discovery.expandGroup" = "展开此游戏版本";

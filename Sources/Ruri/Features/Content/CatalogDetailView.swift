@@ -6,6 +6,7 @@ private typealias D = Messages.Discovery
 
 struct CatalogDetailView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.openURL) private var openURL
     let project: CatalogProject
     @State private var detail: CatalogDetail?
@@ -16,13 +17,12 @@ struct CatalogDetailView: View {
     private var current: CatalogProject { detail?.project ?? project }
     var body: some View {
         VStack(spacing: 0) {
-            header.padding(24)
-            Picker(D.projectSections.localized, selection: $tab) {
-                Text(D.overview.localized).tag("overview")
-                Text(D.versions.localized).tag("versions")
-                Text(D.gallery.localized).tag("gallery")
-            }.pickerStyle(.segmented).labelsHidden().frame(maxWidth: 400).padding(.horizontal, 24).padding(.bottom, 16)
-            Divider()
+            VStack(alignment: .leading, spacing: 16) {
+                header
+                CatalogProjectTabs(selection: $tab)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 24).padding(.top, 24).padding(.bottom, 16)
             if let error, detail != nil { CatalogErrorBanner(message: error) { retry += 1 }.padding(.horizontal, 24).padding(.vertical, 10) }
             if tab == "versions" {
                 CatalogVersionsView(project: current, refreshToken: retry)
@@ -33,6 +33,7 @@ struct CatalogDetailView: View {
                 VStack { CatalogErrorBanner(message: error) { retry += 1 }; Spacer() }.padding(24)
             } else { ProgressView(D.loadingDetail.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
+        .background(Theme.canvas(for: colorScheme))
         .navigationTitle(project.title)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
@@ -67,14 +68,8 @@ struct CatalogDetailView: View {
                     Button(D.getVersions.localized) { tab = "versions" }.buttonStyle(.borderedProminent).controlSize(.large)
                 }
             }
-            WrappingLayout(spacing: 12) { facts }.frame(maxWidth: .infinity, alignment: .leading)
+            CatalogProjectFacts(project: current).frame(maxWidth: .infinity, alignment: .leading)
         }
-    }
-    @ViewBuilder private var facts: some View {
-        CatalogGameVersionsBadge(versions: current.gameVersions)
-        if !current.loaders.isEmpty { CatalogLoaderBadges(loaders: current.loaders) }
-        Label(LocalizedFormat.compactNumber(current.downloads), systemImage: "arrow.down").font(.caption).foregroundStyle(.secondary)
-        if let updated = current.updated { Text(D.updatedOn(LocalizedFormat.publishedDate(updated)).localized).font(.caption).foregroundStyle(.secondary) }
     }
     private func overview(_ detail: CatalogDetail) -> some View {
         VStack(spacing: 0) {
@@ -117,6 +112,7 @@ struct CatalogDetailView: View {
 
 struct CatalogVersionsView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var colorScheme
     let project: CatalogProject
     var refreshToken = 0
     @State private var consumedRefresh = 0
@@ -139,6 +135,7 @@ struct CatalogVersionsView: View {
     @State private var installVersion: CatalogVersion?
     @State private var infoVersion: CatalogVersion?
     @State private var referenceInstanceID: UUID?
+    @State private var collapsedGroups: Set<String> = []
     private var queryID: String { [project.id, game, loader].joined(separator: "|") }
     private var installedInstances: [GameInstance] { model.state.instances.filter(\.installed) }
     private var referenceInstance: GameInstance? { installedInstances.first { $0.id == referenceInstanceID } }
@@ -149,37 +146,63 @@ struct CatalogVersionsView: View {
         let instanceMatches = referenceInstance.map { version.supports($0, type: project.type) } ?? true
         return instanceMatches && (channel.isEmpty || version.channel == channel) && (search.isEmpty || version.name.localizedCaseInsensitiveContains(search) || version.filename.localizedCaseInsensitiveContains(search))
     } }
-    private var groups: [String] { CatalogMetadata.sortedVersions(visible.map { CatalogMetadata.sortedVersions($0.gameVersions).first ?? D.versionsUnknown.localized }) }
+    private struct VersionGroup: Identifiable {
+        let id: String
+        let versions: [CatalogVersion]
+    }
+    private var groupedVersions: [VersionGroup] {
+        let grouped = Dictionary(grouping: visible) {
+            CatalogMetadata.sortedVersions($0.gameVersions).first ?? D.versionsUnknown.localized
+        }
+        return CatalogMetadata.sortedVersions(Array(grouped.keys)).map {
+            VersionGroup(id: $0, versions: grouped[$0] ?? [])
+        }
+    }
     var body: some View {
+        let groups = groupedVersions
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 12) {
-                WrappingLayout(spacing: 10) { filters }.frame(maxWidth: .infinity, alignment: .leading)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 16) {
+                        HStack(spacing: 10) { filters }.fixedSize()
+                        Spacer(minLength: 0)
+                        versionSearch.frame(width: 260)
+                    }
+                    VStack(alignment: .leading, spacing: 12) {
+                        WrappingLayout(spacing: 10) { filters }.frame(maxWidth: .infinity, alignment: .leading)
+                        versionSearch
+                    }
+                }
                 if let instance = referenceInstance {
                     CatalogInstanceFilterContext(instance: instance) { selectReference(nil) }
                 }
-                HStack(spacing: 8) {
-                    Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
-                    TextField(D.searchLoadedVersions.localized, text: $search).textFieldStyle(.plain)
-                }.padding(.horizontal, 10).padding(.vertical, 7)
-                    .background(.primary.opacity(0.025), in: RoundedRectangle(cornerRadius: 8))
-                    .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(.primary.opacity(0.075)))
-            }.padding(20)
-            Divider()
-            if let error { CatalogErrorBanner(message: error) { retry += 1 }.padding(20) }
+            }.frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 24).padding(.bottom, 16)
+            if let error { CatalogErrorBanner(message: error) { retry += 1 }.padding(.horizontal, 24).padding(.bottom, 16) }
             if loading && versions.isEmpty { ProgressView(D.loadingVersions.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
             else {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 12) {
-                        if visible.isEmpty && !loading {
+                        if groups.isEmpty && !loading {
                             ContentUnavailableView(D.noVersions.localized, systemImage: "line.3.horizontal.decrease", description: Text(D.noVersionsHint.localized)).frame(maxWidth: .infinity)
                         }
-                        ForEach(groups, id: \.self) { group in
-                            Section {
-                                ForEach(visible.filter { (CatalogMetadata.sortedVersions($0.gameVersions).first ?? D.versionsUnknown.localized) == group }) { version in
-                                    releaseRow(version)
+                        if !groups.isEmpty {
+                            Surface(padding: 0, shadow: false) {
+                                LazyVStack(spacing: 0) {
+                                    ForEach(groups) { group in
+                                        CatalogVersionGroup(
+                                            title: D.minecraftVersion(group.id).localized,
+                                            versions: group.versions,
+                                            isExpanded: Binding(get: { !collapsedGroups.contains(group.id) }, set: { expanded in
+                                                if expanded { collapsedGroups.remove(group.id) }
+                                                else { collapsedGroups.insert(group.id) }
+                                            }),
+                                            canAcquire: !model.busy && !model.readOnly,
+                                            onDetails: { infoVersion = $0 }, onAcquire: { installVersion = $0 }
+                                        )
+                                        if group.id != groups.last?.id { Divider() }
+                                    }
                                 }
-                            } header: {
-                                Text(D.minecraftVersion(group).localized).font(.headline).padding(.top, 8)
                             }
                         }
                         HStack {
@@ -190,10 +213,11 @@ struct CatalogVersionsView: View {
                                 Button(D.loadMore.localized) { nextPage += 1 }
                             }
                         }.padding(.vertical, 12)
-                    }.padding(.horizontal, 20).padding(.bottom, 20)
+                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 24).padding(.bottom, 24)
                 }
             }
         }
+        .background(Theme.canvas(for: colorScheme))
         .task(id: queryID) {
             let initialKey = queryID
             if !initialized {
@@ -208,8 +232,12 @@ struct CatalogVersionsView: View {
             if loadedQuery != queryID || versions.isEmpty { await load(reset: true) }
         }
         .onChange(of: queryID) {
+            collapsedGroups.removeAll()
             if let instance = referenceInstance, !matchesFilters(instance) { referenceInstanceID = nil }
         }
+        .onChange(of: search) { collapsedGroups.removeAll() }
+        .onChange(of: channel) { collapsedGroups.removeAll() }
+        .onChange(of: referenceInstanceID) { collapsedGroups.removeAll() }
         .onChange(of: referenceInstance) { before, after in
             guard before?.id == after?.id, let after else { return }
             game = after.gameVersion; loader = project.type == "mod" ? after.loader.modrinthLoader : ""
@@ -226,6 +254,14 @@ struct CatalogVersionsView: View {
                 model.discovery.open(dependency)
             })
         }
+    }
+    private var versionSearch: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+            TextField(D.searchLoadedVersions.localized, text: $search).textFieldStyle(.plain)
+        }.padding(.horizontal, 10).frame(height: 34)
+            .background(.primary.opacity(0.025), in: RoundedRectangle(cornerRadius: 8))
+            .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(.primary.opacity(0.075)))
     }
     @ViewBuilder private var filters: some View {
         CatalogGameFilter(selection: $game, versions: project.gameVersions.isEmpty ? (model.catalog?.versions ?? []).filter(\.isRelease).map(\.id) : project.gameVersions).frame(width: 180)
@@ -263,41 +299,10 @@ struct CatalogVersionsView: View {
             model.discovery.preferredInstanceID = instance.id
         } else { game = ""; loader = "" }
     }
-    private func releaseRow(_ version: CatalogVersion) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(version.name).font(.headline).textSelection(.enabled)
-                    Text(version.filename).font(.caption).foregroundStyle(.secondary).lineLimit(1).help(version.filename)
-                }
-                Spacer(minLength: 4)
-                TagPill(text: version.channel == "release" ? D.release.localized : version.channel.capitalized, color: version.channel == "release" ? .green : .orange)
-            }
-            WrappingLayout(spacing: 8) {
-                CatalogGameVersionsBadge(versions: version.gameVersions)
-                if !version.loaders.isEmpty { CatalogLoaderBadges(loaders: version.loaders) }
-            }.frame(maxWidth: .infinity, alignment: .leading)
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: 12) { releaseFacts(version); Spacer(minLength: 8); releaseActions(version) }
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 12) { releaseFacts(version) }
-                    HStack { Spacer(); releaseActions(version) }
-                }
-            }
-        }.padding(16).background(.background, in: RoundedRectangle(cornerRadius: 12)).overlay(RoundedRectangle(cornerRadius: 12).stroke(.primary.opacity(0.065)))
-    }
-    @ViewBuilder private func releaseFacts(_ version: CatalogVersion) -> some View {
-        Label(LocalizedFormat.publishedDate(version.published), systemImage: "calendar").font(.caption).foregroundStyle(.secondary)
-        Text(LocalizedFormat.bytes(version.size)).font(.caption).foregroundStyle(.secondary)
-    }
-    @ViewBuilder private func releaseActions(_ version: CatalogVersion) -> some View {
-        Button(D.fileDetails.localized) { infoVersion = version }
-        Button(D.installOrSave.localized) { installVersion = version }.buttonStyle(.borderedProminent).disabled(model.busy || model.readOnly)
-    }
     private func load(reset: Bool, refresh: Bool = false) async {
         let key = queryID
         let token = UUID(); requestToken = token
-        if reset { versions = []; loadedCount = 0; total = 0; search = "" }
+        if reset { versions = []; loadedCount = 0; total = 0; search = ""; collapsedGroups.removeAll() }
         let offset = reset ? 0 : loadedCount
         loading = true; error = nil
         defer { if requestToken == token { loading = false } }

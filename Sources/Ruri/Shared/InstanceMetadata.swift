@@ -4,7 +4,7 @@ import RuriLocalization
 
 /// Instance labels retain exact loader versions and all imported components;
 /// catalog compatibility summaries describe a different kind of metadata.
-struct InstanceVersionBadges: View {
+struct InstanceMetadata: View {
     private struct Component: Identifiable {
         let id: String
         let text: String

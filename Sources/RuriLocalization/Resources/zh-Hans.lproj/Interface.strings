@@ -820,6 +820,12 @@
 /* @symbol AppHomeView.importPack @args - */
 "appHomeView.emptyStateText4" = "导入整合包…";
 
+/* @symbol AppHomeView.addExistingGameFolder @args - */
+"appHomeView.addExistingGameFolder" = "添加已有游戏文件夹…";
+
+/* @symbol AppHomeView.existingGameFolderHint @args - */
+"appHomeView.existingGameFolderHint" = "用过其他启动器？";
+
 /* @symbol AppHomeView.continuePlaying @args - */
 "appHomeView.featuredSectionText1" = "继续游戏";
 

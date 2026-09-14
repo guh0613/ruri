@@ -12,24 +12,24 @@ struct CatalogFilterLabel: View {
     var loader: String?
     @State private var hovering = false
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 7) {
             Group {
-                if let loader { LoaderGlyph.image(for: loader).resizable().scaledToFit().frame(width: 19, height: 19) }
-                else { Image(systemName: symbol).font(.system(size: 15, weight: .medium)) }
+                if let loader { LoaderGlyph.image(for: loader).resizable().scaledToFit() }
+                else { Image(systemName: symbol).resizable().scaledToFit() }
             }
-                .foregroundStyle(active ? Theme.accent : Color.secondary)
-                .frame(width: 28, height: 28)
-                .background(active ? Theme.accent.opacity(0.1) : Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 7))
-            VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                Text(value).font(.callout.weight(.medium)).foregroundStyle(.primary).lineLimit(1)
-            }.frame(maxWidth: .infinity, alignment: .leading)
+            .frame(width: 14, height: 14)
+            .foregroundStyle(active ? Theme.accent : Color.secondary)
+            .accessibilityHidden(true)
+            Text(title).foregroundStyle(.secondary).fixedSize()
+            Text(value).foregroundStyle(.primary).lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Image(systemName: "chevron.down").font(.system(size: 9, weight: .semibold)).foregroundStyle(.secondary)
         }
-        .padding(.horizontal, 10).padding(.vertical, 8)
-        .background(hovering ? Color.primary.opacity(0.055) : Color.primary.opacity(0.025), in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(active ? Theme.accent.opacity(0.28) : Color.primary.opacity(0.075)))
-        .contentShape(RoundedRectangle(cornerRadius: 10)).onHover { hovering = $0 }
+        .font(.callout)
+        .padding(.horizontal, 10).frame(height: 34)
+        .background(active ? Theme.accent.opacity(0.07) : Color.primary.opacity(hovering ? 0.06 : 0.035), in: RoundedRectangle(cornerRadius: 8))
+        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(active ? Theme.accent.opacity(0.25) : .clear))
+        .contentShape(RoundedRectangle(cornerRadius: 8)).onHover { hovering = $0 }
         .accessibilityElement(children: .ignore).accessibilityLabel(title).accessibilityValue(value)
     }
 }

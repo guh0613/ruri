@@ -10,6 +10,7 @@ import RuriCore
 struct LibraryView: View {
     enum Layout: String { case grid, list }
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var colorScheme
     @AppStorage("libraryLayout") private var layout = Layout.grid
     @State private var search = ""
     @State private var deleteTarget: GameInstance?
@@ -18,29 +19,34 @@ struct LibraryView: View {
             .sorted { $0.favorite != $1.favorite ? $0.favorite : $0.createdAt > $1.createdAt }
     }
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                if let issue = model.directoryErrors[model.selectedDirectoryID] {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Label(Messages.AppLibraryView.instanceFolderUnavailable.localized, systemImage: "externaldrive.badge.exclamationmark").font(.headline)
-                        Text(issue).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                        HStack { Button(Messages.AppLibraryView.recheck.localized) { Task { await model.refreshDirectoryAvailability() } }; Button(Messages.AppLibraryView.manageFolders.localized) { model.showDirectories = true } }
-                    }.padding().frame(maxWidth: .infinity, alignment: .leading).background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
-                }
-                if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
-                    RepositoryImportRecoveryView(directoryID: model.selectedDirectoryID)
-                }
-                if model.directoryInstances.isEmpty {
-                    emptyFolder
-                } else if filtered.isEmpty {
-                    EmptyPanel(symbol: "magnifyingglass", title: Messages.AppLibraryView.noMatchingInstances.localized, detail: Messages.AppLibraryView.tryAnotherNameOrVersion.localized)
-                } else if layout == .grid {
-                    grid
-                } else {
-                    list
-                }
-            }.padding(28)
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    if let issue = model.directoryErrors[model.selectedDirectoryID] {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Label(Messages.AppLibraryView.instanceFolderUnavailable.localized, systemImage: "externaldrive.badge.exclamationmark").font(.headline)
+                            Text(issue).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                            HStack { Button(Messages.AppLibraryView.recheck.localized) { Task { await model.refreshDirectoryAvailability() } }; Button(Messages.AppLibraryView.manageFolders.localized) { model.showDirectories = true } }
+                        }.padding().frame(maxWidth: .infinity, alignment: .leading).background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
+                    }
+                    if model.paths.isMinecraftDirectory(model.selectedDirectoryID) {
+                        RepositoryImportRecoveryView(directoryID: model.selectedDirectoryID)
+                    }
+                    if model.directoryInstances.isEmpty {
+                        emptyFolder
+                    } else if filtered.isEmpty {
+                        EmptyPanel(symbol: "magnifyingglass", title: Messages.AppLibraryView.noMatchingInstances.localized, detail: Messages.AppLibraryView.tryAnotherNameOrVersion.localized)
+                    } else {
+                        SectionTitle(Messages.AppHomeView.allInstances.localized) {
+                            Text(countLabel).foregroundStyle(.secondary)
+                        }
+                        if layout == .grid { grid(width: geometry.size.width) }
+                        else { list(compact: geometry.size.width < 1000) }
+                    }
+                }.padding(28).frame(maxWidth: 1380, alignment: .leading).frame(maxWidth: .infinity)
+            }
         }
+        .background(Theme.canvas(for: colorScheme))
         .navigationSubtitle("\(model.selectedDirectoryName) · \(countLabel)")
         .searchable(text: $search, placement: .toolbar, prompt: Messages.AppLibraryView.searchInstancesOrVersions.localized)
         .toolbar {
@@ -77,8 +83,18 @@ struct LibraryView: View {
         } description: {
             Text(Messages.AppLibraryView.createOrImportInstance.localized)
         } actions: {
-            Button(Messages.AppLibraryView.newInstance.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
-            Button(Messages.AppLibraryView.importModpack.localized) { model.chooseInstanceImport() }
+            VStack(spacing: 24) {
+                HStack(spacing: 12) {
+                    Button(Messages.AppLibraryView.newInstance.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
+                    Button(Messages.AppLibraryView.importModpack.localized) { model.chooseInstanceImport() }.buttonStyle(.bordered)
+                }.fixedSize()
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(Messages.AppHomeView.existingGameFolderHint.localized).foregroundStyle(.secondary)
+                    Button(Messages.AppHomeView.addExistingGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+                        .buttonStyle(.link).disabled(model.readOnly)
+                        .help(Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized)
+                }.font(.callout).fixedSize()
+            }
         }
         .disabled(model.busy)
         .frame(maxWidth: .infinity, minHeight: 360)
@@ -86,44 +102,39 @@ struct LibraryView: View {
 
     // MARK: Grid
 
-    private var grid: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280, maximum: 400), spacing: 16)], spacing: 16) {
+    private func grid(width: CGFloat) -> some View {
+        let available = min(width, 1380) - 56
+        let columnCount = max(1, min(filtered.count, Int((available + 20) / 320)))
+        return LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20, alignment: .top), count: columnCount), alignment: .leading, spacing: 20) {
             ForEach(filtered) { instance in card(instance) }
-            if search.isEmpty {
-                DashedTile(symbol: "plus", title: Messages.AppLibraryView.newInstance.localized, detail: Messages.AppLibraryView.importModpackFromToolbar.localized) { model.showCreate = true }
-                    .frame(minHeight: 150).disabled(model.busy)
-            }
         }
+        .frame(maxWidth: filtered.count == 1 ? 440 : .infinity, alignment: .leading)
     }
 
     private func card(_ instance: GameInstance) -> some View {
-        Surface(padding: 16) {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 12) {
-                    iconButton(instance, size: 48)
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 6) {
-                            Text(instance.name).font(.headline).lineLimit(1)
-                            if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption2) }
-                        }
+        Surface(padding: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 16) {
+                    HStack(alignment: .top) {
+                        iconButton(instance, size: 64)
+                        Spacer()
+                        if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.secondary).font(.caption).accessibilityLabel(Messages.AppInstanceMenu.favorite.localized) }
+                        InstanceMenu(instance: instance, onTrash: { deleteTarget = $0 })
                     }
-                    Spacer(minLength: 8)
-                    InstanceMenu(instance: instance, onTrash: { deleteTarget = $0 })
-                }
-                InstanceVersionBadges(instance: instance)
-                HStack(spacing: 10) {
-                    TagPill(text: model.statusLabel(instance), color: model.statusColor(instance))
-                    Text(model.memoryLabel(instance)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                    Spacer(minLength: 8)
-                    Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.tertiary).lineLimit(1)
-                }
-                if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.orange).lineLimit(3).help(issue) }
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(instance.name).font(.title3.weight(.semibold)).lineLimit(2, reservesSpace: true).help(instance.name)
+                        InstanceMetadata(instance: instance)
+                    }
+                    Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.secondary)
+                    InstanceStatus(instance: instance)
+                    if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.secondary).lineLimit(3).help(issue) }
+                }.padding(20).frame(maxWidth: .infinity, alignment: .leading)
                 Divider()
                 HStack {
                     InstanceQuickActions(instance: instance)
                     Spacer()
                     LaunchButton(instance: instance)
-                }
+                }.padding(.horizontal, 16).padding(.vertical, 14)
             }
         }
         .contextMenu { contextActions(instance).labelStyle(.titleAndIcon) }
@@ -131,37 +142,40 @@ struct LibraryView: View {
 
     // MARK: List
 
-    private var list: some View {
+    private func list(compact: Bool) -> some View {
         Surface(padding: 0) {
             VStack(spacing: 0) {
                 ForEach(filtered) { instance in
-                    row(instance)
+                    row(instance, compact: compact)
                     if instance.id != filtered.last?.id { Divider().padding(.leading, 74) }
                 }
             }
         }
     }
 
-    private func row(_ instance: GameInstance) -> some View {
+    private func row(_ instance: GameInstance, compact: Bool) -> some View {
         HStack(spacing: 14) {
             iconButton(instance, size: 44)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
-                    Text(instance.name).font(.headline).lineLimit(1)
-                    if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.orange).font(.caption2) }
+                    Text(instance.name).font(.headline).lineLimit(2)
+                    if instance.favorite { Image(systemName: "star.fill").foregroundStyle(.secondary).font(.caption2).accessibilityLabel(Messages.AppInstanceMenu.favorite.localized) }
                 }
-                InstanceVersionBadges(instance: instance, compact: true)
-                if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.orange).lineLimit(1).help(issue) }
+                InstanceMetadata(instance: instance, compact: true)
+                InstanceStatus(instance: instance)
+                if compact { Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.secondary) }
+                if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.secondary).lineLimit(2).help(issue) }
             }
             Spacer(minLength: 12)
-            TagPill(text: model.statusLabel(instance), color: model.statusColor(instance))
-            Text(model.memoryLabel(instance)).font(.caption).foregroundStyle(.secondary).frame(width: 96, alignment: .trailing).lineLimit(1)
-            Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.tertiary).frame(width: 110, alignment: .trailing).lineLimit(1)
-            InstanceQuickActions(instance: instance)
-            LaunchButton(instance: instance)
+            if !compact {
+                Text(model.memoryLabel(instance)).font(.caption).foregroundStyle(.secondary).frame(width: 96, alignment: .trailing).lineLimit(1)
+                Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.secondary).frame(width: 110, alignment: .trailing).lineLimit(2)
+                InstanceQuickActions(instance: instance)
+            }
+            LaunchButton(instance: instance, compact: compact)
             InstanceMenu(instance: instance, onTrash: { deleteTarget = $0 })
         }
-        .padding(.horizontal, 16).padding(.vertical, 12)
+        .padding(.horizontal, 20).padding(.vertical, 16)
         .contextMenu { contextActions(instance).labelStyle(.titleAndIcon) }
     }
 

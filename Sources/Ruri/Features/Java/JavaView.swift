@@ -53,24 +53,26 @@ struct JavaView: View {
         let remote = entry.remote ?? available.first { $0.id == entry.managedID }
         let runtime = entry.runtime ?? entry.addedRuntime
         return HStack(spacing: 12) {
-            Text(runtime.map { String($0.major) } ?? remote.map { String($0.major) } ?? "?")
-                .font(.system(size: 17, weight: .bold, design: .rounded)).foregroundStyle(entry.issue == nil ? Theme.accent : .orange)
-                .frame(width: 40, height: 40).background(Theme.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 6) {
+            JavaDistributionIcon(runtime: runtime, path: entry.path)
+            VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(runtime?.label ?? remote?.label ?? Messages.AppJavaView.unavailableJava.localized).font(.headline)
-                    TagPill(text: entry.source)
-                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) { TagPill(text: Messages.AppJavaView.defaultSelection.localized) }
+                    if let selected = model.state.settings.defaultLaunchSettings.java.path, JavaDiscovery.sameExecutable(selected, entry.path) {
+                        Label(Messages.AppJavaView.defaultSelection.localized, systemImage: "checkmark").font(.caption).foregroundStyle(.secondary)
+                    }
                 }
                 if let issue = entry.issue { Text(issue).font(.caption).foregroundStyle(.orange) }
                 else if let runtime { Text(runtime.version).font(.caption).foregroundStyle(.secondary) }
                 Text(entry.path).font(.system(size: 10, design: .monospaced)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).textSelection(.enabled).help(entry.path)
             }
             Spacer()
-            if let remote { Button(Messages.AppJavaView.repair.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
+            if let remote, entry.issue != nil { Button(Messages.AppJavaView.repair.localized) { model.installJava(remote, repairing: true) }.disabled(model.busy) }
             Menu {
                 Group {
+                    Text(entry.source)
+                    Divider()
                     if entry.runtime != nil { Button(Messages.AppJavaView.setDefaultJava.localized, systemImage: "checkmark.circle") { model.defaultJava(entry.path) } }
+                    if let remote, entry.issue == nil { Button(Messages.AppJavaView.repair.localized, systemImage: "wrench.and.screwdriver") { model.installJava(remote, repairing: true) } }
                     Button(Messages.AppJavaView.relocatePath.localized, systemImage: "folder") { model.chooseJava(replacing: entry.path) }
                     Button(Messages.AppJavaView.showInFinder.localized, systemImage: "finder") { NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: entry.path)]) }
                     if entry.manual { Button(Messages.AppJavaView.removeManualJava.localized, systemImage: "minus.circle") { model.forgetJava(entry.path) } }
@@ -80,7 +82,7 @@ struct JavaView: View {
                 }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis.circle") }.menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize().disabled(model.busy)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 8)
     }
     private func remoteRow(_ runtime: RemoteJava) -> some View {
         let installed = model.javaEntries.contains { $0.managedID == runtime.id && $0.runtime != nil }

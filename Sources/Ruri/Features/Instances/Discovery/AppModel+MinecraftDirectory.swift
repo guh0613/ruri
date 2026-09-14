@@ -22,6 +22,7 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
+        panel.showsHiddenFiles = true
         panel.allowsMultipleSelection = false; panel.prompt = Messages.AppAppModelMinecraftDirectory.addGameFolder.localized
         panel.message = Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }

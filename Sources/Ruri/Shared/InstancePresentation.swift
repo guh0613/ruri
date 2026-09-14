@@ -2,6 +2,29 @@ import RuriLocalization
 import SwiftUI
 import RuriCore
 
+/// Normal availability is implicit in the launch action. Reserve a status
+/// line for work in progress or something that needs the player's attention.
+struct InstanceStatus: View {
+    @Environment(AppModel.self) private var model
+    let instance: GameInstance
+    var body: some View {
+        if !model.statusIsNominal(instance) {
+            Label(model.statusLabel(instance), systemImage: symbol)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(model.statusColor(instance))
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+    private var symbol: String {
+        if instance.repositoryIssue != nil || model.customDirectoryErrors[instance.id] != nil || model.directoryErrors[model.paths.directoryID(for: instance.id)] != nil {
+            return "exclamationmark.triangle"
+        }
+        if model.activeSessions[instance.id] != nil { return "play.circle" }
+        if !instance.installed { return "arrow.down.circle" }
+        return "clock.arrow.circlepath"
+    }
+}
+
 /// Display strings and colours shared by the home page and the library so
 /// both describe an instance the same way.
 extension AppModel {

@@ -8,6 +8,7 @@ import RuriCore
 /// to the things a new player does first.
 struct HomeView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var colorScheme
     private var featured: GameInstance? { model.selected }
     private var recent: [GameInstance] {
         Array(model.directoryInstances.filter { $0.id != featured?.id }
@@ -16,20 +17,32 @@ struct HomeView: View {
     }
     private var running: [GameSession] { model.activeSessions.values.filter { !$0.state.isFinished }.sorted { $0.createdAt < $1.createdAt } }
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 36) {
-                if model.directoryInstances.isEmpty {
-                    emptyState
-                } else {
-                    if let featured { featuredSection(featured) }
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 28) {
+                    if model.directoryInstances.isEmpty {
+                        emptyState
+                    } else if let featured {
+                        featuredSection(featured)
+                    }
                     if !running.isEmpty { runningSection }
                     if let task = model.activeActivity { activitySection(task) }
-                    if !recent.isEmpty { recentSection }
+                    if geometry.size.width >= 1040, !recent.isEmpty {
+                        HStack(alignment: .top, spacing: 24) {
+                            recentSection.frame(maxWidth: .infinity)
+                            quickActions.frame(width: 300)
+                        }
+                    } else {
+                        if !recent.isEmpty { recentSection }
+                        quickActions
+                    }
                 }
-                quickActions
+                .padding(28)
+                .frame(maxWidth: 1380, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .top)
             }
-            .padding(.horizontal, 40).padding(.vertical, 32).frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
         }
+        .background(Theme.canvas(for: colorScheme))
     }
 
     private var emptyState: some View {
@@ -38,8 +51,18 @@ struct HomeView: View {
         } description: {
             Text(Messages.AppHomeView.emptyStateDescription.localized)
         } actions: {
-            Button(Messages.AppHomeView.createInstance.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
-            Button(Messages.AppHomeView.importPack.localized) { model.chooseInstanceImport() }
+            VStack(spacing: 24) {
+                HStack(spacing: 12) {
+                    Button(Messages.AppHomeView.createInstance.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
+                    Button(Messages.AppHomeView.importPack.localized) { model.chooseInstanceImport() }.buttonStyle(.bordered)
+                }.fixedSize()
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(Messages.AppHomeView.existingGameFolderHint.localized).foregroundStyle(.secondary)
+                    Button(Messages.AppHomeView.addExistingGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+                        .buttonStyle(.link).disabled(model.readOnly)
+                        .help(Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized)
+                }.font(.callout).fixedSize()
+            }
         }
         .disabled(model.busy)
         .frame(maxWidth: .infinity, minHeight: 320)
@@ -53,26 +76,31 @@ struct HomeView: View {
             Surface(padding: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     ViewThatFits(in: .horizontal) {
-                        HStack(spacing: 20) {
-                            featuredIdentity(instance).fixedSize(horizontal: true, vertical: false)
+                        HStack(spacing: 28) {
+                            featuredIdentity(instance)
                             Spacer(minLength: 24)
-                            featuredActions(instance)
+                            LaunchButton(instance: instance, size: .large)
                         }
                         VStack(alignment: .leading, spacing: 18) {
                             featuredIdentity(instance)
-                            HStack { Spacer(); featuredActions(instance) }
+                            LaunchButton(instance: instance, size: .large)
                         }
                     }
-                    .padding(24)
+                    .padding(28)
                     Divider()
-                    HStack(spacing: 16) {
-                        StatTile(label: Messages.AppHomeView.playTime.localized, value: instance.playTimeLabel)
-                        Divider().frame(height: 28)
-                        StatTile(label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized)
-                        Divider().frame(height: 28)
-                        StatTile(label: Messages.AppHomeView.memory.localized, value: model.memoryLabel(instance))
+                    ViewThatFits(in: .horizontal) {
+                        HStack(spacing: 28) {
+                            featuredStats(instance)
+                                .fixedSize(horizontal: true, vertical: false)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            featuredActions(instance)
+                        }
+                        VStack(alignment: .leading, spacing: 16) {
+                            featuredStats(instance)
+                            featuredActions(instance)
+                        }
                     }
-                    .padding(.horizontal, 24).padding(.vertical, 14)
+                    .padding(.horizontal, 28).padding(.vertical, 18)
                     if model.activeAccount == nil {
                         Divider()
                         HStack {
@@ -88,31 +116,34 @@ struct HomeView: View {
     }
 
     private func featuredIdentity(_ instance: GameInstance) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 24) {
             Button { model.editingInstance = instance } label: {
-                InstanceIcon(loader: instance.loader, size: 84, png: instance.iconPNG)
+                InstanceIcon(loader: instance.loader, size: 104, png: instance.iconPNG)
             }.buttonStyle(.plain).help(Messages.AppHomeView.editInstance.localized)
-            VStack(alignment: .leading, spacing: 6) {
-                Text(instance.name).font(.title2.weight(.semibold)).lineLimit(2)
-                InstanceVersionBadges(instance: instance)
-                statusLine(instance).font(.callout).foregroundStyle(.secondary)
+                .accessibilityLabel(Messages.AppLibraryView.editIconAndSettings(instance.name).localized)
+            VStack(alignment: .leading, spacing: 10) {
+                Text(instance.name).font(.system(size: 28, weight: .semibold)).fixedSize(horizontal: false, vertical: true)
+                InstanceMetadata(instance: instance)
+                InstanceStatus(instance: instance)
+                if let issue = instance.repositoryIssue {
+                    Text(issue).font(.caption).foregroundStyle(.secondary).lineLimit(2).help(issue)
+                }
             }.fixedSize(horizontal: false, vertical: true)
         }
     }
 
     private func featuredActions(_ instance: GameInstance) -> some View {
         HStack(spacing: 12) {
-            InstanceQuickActions(instance: instance).controlSize(.large)
-            LaunchButton(instance: instance, size: .large)
+            InstanceQuickActions(instance: instance)
             InstanceMenu(instance: instance, showsSelect: false) { Image(systemName: "ellipsis.circle").font(.title3) }
         }.fixedSize()
     }
 
-    private func statusLine(_ instance: GameInstance) -> some View {
-        HStack(spacing: 6) {
-            Circle().fill(model.statusColor(instance)).frame(width: 7, height: 7)
-            Text(model.runningLabel(instance.id) ?? (instance.installed ? Messages.AppHomeView.ready.localized : Messages.AppHomeView.installationIncomplete.localized))
-            if let issue = instance.repositoryIssue { Text("·").foregroundStyle(.tertiary); Text(issue).lineLimit(1).help(issue) }
+    private func featuredStats(_ instance: GameInstance) -> some View {
+        HStack(alignment: .top, spacing: 24) {
+            StatTile(label: Messages.AppHomeView.playTime.localized, value: instance.playTimeLabel)
+            StatTile(label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized)
+            StatTile(label: Messages.AppHomeView.memory.localized, value: model.memoryLabel(instance))
         }
     }
 
@@ -129,7 +160,7 @@ struct HomeView: View {
                             InstanceIcon(loader: instance?.loader ?? .vanilla, size: 40, png: instance?.iconPNG)
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(record.instanceName).font(.headline).lineLimit(1)
-                                InstanceVersionBadges(session: record)
+                                InstanceMetadata(session: record)
                                 Text(model.runningLabel(record.instanceID) ?? record.stage.title).font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
@@ -174,17 +205,18 @@ struct HomeView: View {
 
     private func recentRow(_ instance: GameInstance) -> some View {
         HStack(spacing: 14) {
-            InstanceIcon(loader: instance.loader, size: 40, png: instance.iconPNG)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(instance.name).font(.headline).lineLimit(1)
-                InstanceVersionBadges(instance: instance, compact: true)
+            InstanceIcon(loader: instance.loader, size: 48, png: instance.iconPNG)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(instance.name).font(.headline).lineLimit(2)
+                InstanceMetadata(instance: instance, compact: true)
+                InstanceStatus(instance: instance)
+                Text(instance.lastPlayedLabel).font(.caption).foregroundStyle(.secondary).lineLimit(1)
             }
             Spacer(minLength: 12)
-            Text(model.runningLabel(instance.id) ?? instance.lastPlayedLabel).font(.caption).foregroundStyle(.tertiary).lineLimit(1)
             LaunchButton(instance: instance, compact: true)
             InstanceMenu(instance: instance)
         }
-        .padding(.horizontal, 16).padding(.vertical, 10)
+        .padding(.horizontal, 20).padding(.vertical, 16)
         .contentShape(Rectangle())
         .onTapGesture { model.select(instance) }
         .help(Messages.AppHomeView.setAsFeaturedHint.localized)
@@ -202,15 +234,21 @@ struct HomeView: View {
     private var quickActions: some View {
         VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.AppHomeView.quickActions.localized)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 220, maximum: 320), spacing: 14)], spacing: 14) {
-                ActionTile(symbol: "plus.square", title: Messages.AppHomeView.createInstance.localized, detail: Messages.AppHomeView.chooseVersionAndLoader.localized) { model.showCreate = true }
-                ActionTile(symbol: "square.and.arrow.down", title: Messages.AppHomeView.importPackAction.localized, detail: Messages.AppHomeView.supportedPackFormats.localized) { model.chooseInstanceImport() }
-                ActionTile(symbol: "safari", title: Messages.AppHomeView.discoverContent.localized, detail: Messages.AppHomeView.browseContentSources.localized) { model.page = .discover }
-                if model.activeAccount == nil {
-                    ActionTile(symbol: "person.crop.circle.badge.plus", title: Messages.AppHomeView.addAccount.localized, detail: Messages.AppHomeView.accountRequired.localized) { model.showAccount = true }
-                } else {
-                    ActionTile(symbol: "cup.and.saucer", title: Messages.AppHomeView.javaRuntime.localized, detail: Messages.AppHomeView.detectOrDownloadJava.localized) { model.page = .java }
+            Surface(padding: 0) {
+                VStack(spacing: 0) {
+                    ActionRow(symbol: "plus", title: Messages.AppHomeView.createInstance.localized, detail: Messages.AppHomeView.chooseVersionAndLoader.localized) { model.showCreate = true }
+                    Divider().padding(.leading, 62)
+                    ActionRow(symbol: "arrow.down", tint: .teal, title: Messages.AppHomeView.importPackAction.localized, detail: Messages.AppHomeView.supportedPackFormats.localized) { model.chooseInstanceImport() }
+                    Divider().padding(.leading, 62)
+                    ActionRow(symbol: "safari", tint: .indigo, title: Messages.AppHomeView.discoverContent.localized, detail: Messages.AppHomeView.browseContentSources.localized) { model.page = .discover }
+                    Divider().padding(.leading, 62)
+                    if model.activeAccount == nil {
+                        ActionRow(symbol: "person.crop.circle.badge.plus", title: Messages.AppHomeView.addAccount.localized, detail: Messages.AppHomeView.accountRequired.localized) { model.showAccount = true }
+                    } else {
+                        ActionRow(symbol: "cup.and.saucer.fill", tint: .orange, title: Messages.AppHomeView.javaRuntime.localized, detail: Messages.AppHomeView.detectOrDownloadJava.localized) { model.page = .java }
+                    }
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .disabled(model.busy)
         }

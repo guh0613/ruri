@@ -459,3 +459,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Java distribution identification artwork
+=======================================
+
+Homebrew, Azul/Zulu, GraalVM and Microsoft marks belong to their respective
+owners and are used to identify installed Java distributions or installation
+sources. This does not imply endorsement. Source URLs and artwork details are
+included in Ruri_Ruri.bundle/JavaBrands/SOURCES.md.

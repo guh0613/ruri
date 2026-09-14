@@ -357,11 +357,11 @@ extension Messages {
         public static var openImage: LocalizedMessage {
             .init(key: "discovery.openImage", table: "Discovery", fallback: "查看原图")
         }
-        /// 搜索已载入的文件名称
+        /// 搜索已载入的版本或文件名
         ///
         /// Resource: `Discovery.discovery.searchLoadedVersions`.
         public static var searchLoadedVersions: LocalizedMessage {
-            .init(key: "discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已载入的文件名称")
+            .init(key: "discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已载入的版本或文件名")
         }
         /// 匹配当前实例
         ///
@@ -765,6 +765,30 @@ extension Messages {
         public static func openProviderWebsite(_ value0: String) -> LocalizedMessage {
             .init(key: "discovery.openProviderWebsite", table: "Discovery", fallback: "在默认浏览器中打开 %1$@ 项目页面", arguments: [.text(value0)])
         }
+        /// 已展开
+        ///
+        /// Resource: `Discovery.discovery.groupExpanded`.
+        public static var groupExpanded: LocalizedMessage {
+            .init(key: "discovery.groupExpanded", table: "Discovery", fallback: "已展开")
+        }
+        /// 已折叠
+        ///
+        /// Resource: `Discovery.discovery.groupCollapsed`.
+        public static var groupCollapsed: LocalizedMessage {
+            .init(key: "discovery.groupCollapsed", table: "Discovery", fallback: "已折叠")
+        }
+        /// 折叠此游戏版本
+        ///
+        /// Resource: `Discovery.discovery.collapseGroup`.
+        public static var collapseGroup: LocalizedMessage {
+            .init(key: "discovery.collapseGroup", table: "Discovery", fallback: "折叠此游戏版本")
+        }
+        /// 展开此游戏版本
+        ///
+        /// Resource: `Discovery.discovery.expandGroup`.
+        public static var expandGroup: LocalizedMessage {
+            .init(key: "discovery.expandGroup", table: "Discovery", fallback: "展开此游戏版本")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Discovery:discovery.applyingInstall": .init("正在安装资源…", []),
             "Discovery:discovery.versionProjectMismatch": .init("所选文件不属于当前项目，请重新载入版本列表。", []),
@@ -825,7 +849,7 @@ extension Messages {
             "Discovery:discovery.noDescription": .init("作者尚未提供详细介绍", []),
             "Discovery:discovery.noGallery": .init("作者尚未上传截图", []),
             "Discovery:discovery.openImage": .init("查看原图", []),
-            "Discovery:discovery.searchLoadedVersions": .init("搜索已载入的文件名称", []),
+            "Discovery:discovery.searchLoadedVersions": .init("搜索已载入的版本或文件名", []),
             "Discovery:discovery.matchInstance": .init("匹配当前实例", []),
             "Discovery:discovery.loadingVersions": .init("正在载入版本…", []),
             "Discovery:discovery.noVersions": .init("没有符合条件的版本", []),
@@ -893,6 +917,10 @@ extension Messages {
             "Discovery:discovery.filteringForInstance": .init("正在为「%1$@」筛选", [.text]),
             "Discovery:discovery.clearInstanceFilter": .init("取消实例筛选", []),
             "Discovery:discovery.openProviderWebsite": .init("在默认浏览器中打开 %1$@ 项目页面", [.text]),
+            "Discovery:discovery.groupExpanded": .init("已展开", []),
+            "Discovery:discovery.groupCollapsed": .init("已折叠", []),
+            "Discovery:discovery.collapseGroup": .init("折叠此游戏版本", []),
+            "Discovery:discovery.expandGroup": .init("展开此游戏版本", []),
         ]
     }
 }

@@ -60,11 +60,15 @@ public enum CatalogMetadata {
         Array(Set(values)).sorted { $0.compare($1, options: .numeric) == .orderedDescending }
     }
     public static func versionSummary(_ values: [String]) -> String {
+        let summary = versionSummaryParts(values)
+        return summary.text + (summary.additionalCount > 0 ? " +\(summary.additionalCount)" : "")
+    }
+    public static func versionSummaryParts(_ values: [String]) -> (text: String, additionalCount: Int) {
         let stable = values.filter { $0.range(of: #"^[0-9]+(?:\.[0-9]+)+$"#, options: .regularExpression) != nil }
         let versions = sortedVersions(stable.isEmpty ? values : stable)
-        guard !versions.isEmpty else { return Messages.Discovery.versionsUnknown.localized }
+        guard !versions.isEmpty else { return (Messages.Discovery.versionsUnknown.localized, 0) }
         // Do not imply support for every release between two endpoints.
-        return versions.prefix(3).joined(separator: ", ") + (versions.count > 3 ? " +\(versions.count - 3)" : "")
+        return (versions.prefix(3).joined(separator: ", "), max(0, versions.count - 3))
     }
 }
 public enum CatalogProject: Identifiable, Sendable, Hashable {

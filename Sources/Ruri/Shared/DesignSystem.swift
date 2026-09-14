@@ -5,14 +5,39 @@ enum Theme {
     /// The system accent, so custom views stay in step with sidebar icons,
     /// links and controls, and a user-chosen accent applies everywhere.
     static let accent = Color.accentColor
+    // Recent macOS versions use the same color for window and control
+    // backgrounds. Choose the two semantic levels explicitly in each scheme.
+    static func canvas(for scheme: ColorScheme) -> Color {
+        Color(nsColor: scheme == .dark ? .windowBackgroundColor : .underPageBackgroundColor)
+    }
+    static func surface(for scheme: ColorScheme) -> Color {
+        Color(nsColor: scheme == .dark ? .underPageBackgroundColor : .controlBackgroundColor)
+    }
 }
 
 struct Surface<Content: View>: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorSchemeContrast) private var contrast
     var padding: CGFloat = 20
+    var shadow = true
     @ViewBuilder var content: Content
     var body: some View {
-        content.padding(padding).background(.background, in: RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(.primary.opacity(0.065), lineWidth: 1))
+        let shape = RoundedRectangle(cornerRadius: 16, style: .continuous)
+        content.padding(padding)
+            .clipShape(shape)
+            .background {
+                if shadow {
+                    shape.fill(Theme.surface(for: colorScheme))
+                        .shadow(color: .black.opacity(colorScheme == .dark ? 0.12 : 0.04), radius: 8, x: 0, y: 3)
+                } else {
+                    shape.fill(Theme.surface(for: colorScheme))
+                }
+            }
+            .overlay {
+                shape
+                    .strokeBorder(.primary.opacity(contrast == .increased ? 0.35 : colorScheme == .dark ? 0.14 : 0.10), lineWidth: 1)
+                    .allowsHitTesting(false)
+            }
     }
 }
 
@@ -99,10 +124,12 @@ struct StatTile: View {
     }
 }
 
-/// A large tappable shortcut: icon, title and one line of detail. Used for
-/// the quick actions on the home page.
-struct ActionTile: View {
+/// Compact colored symbols make the shortcuts easy to recognize while
+/// keeping titles and descriptions in the shared grouped-list hierarchy.
+struct ActionRow: View {
+    @Environment(\.isEnabled) private var isEnabled
     let symbol: String
+    var tint: Color = Theme.accent
     let title: String
     let detail: String
     let action: () -> Void
@@ -110,44 +137,25 @@ struct ActionTile: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
-                Image(systemName: symbol).font(.system(size: 17, weight: .medium)).foregroundStyle(Theme.accent)
-                    .frame(width: 38, height: 38).background(Theme.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: 11))
+                Image(systemName: symbol)
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(.white)
+                    .frame(width: 32, height: 32)
+                    .background(tint.gradient, in: RoundedRectangle(cornerRadius: 8))
+                    .opacity(isEnabled ? 1 : 0.45)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(title).font(.headline)
-                    Text(detail).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    Text(detail).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 }
-                Spacer(minLength: 0)
+                Spacer(minLength: 4)
+                Image(systemName: "chevron.right").font(.caption2.weight(.semibold)).foregroundStyle(.secondary)
             }
-            .padding(14).frame(maxWidth: .infinity, alignment: .leading).contentShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal, 18).padding(.vertical, 15)
+            .frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .background(hovering ? AnyShapeStyle(.primary.opacity(0.035)) : AnyShapeStyle(.background), in: RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(.primary.opacity(0.065), lineWidth: 1))
-        .onHover { hovering = $0 }
-    }
-}
-
-/// A dashed placeholder that closes a grid with its creation action, like
-/// the "new" tile in a template chooser.
-struct DashedTile: View {
-    let symbol: String
-    let title: String
-    let detail: String
-    let action: () -> Void
-    @State private var hovering = false
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 8) {
-                Image(systemName: symbol).font(.system(size: 24, weight: .medium))
-                Text(title).font(.headline)
-                Text(detail).font(.caption).foregroundStyle(.tertiary)
-            }
-            .foregroundStyle(hovering ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(.secondary))
-            .frame(maxWidth: .infinity, maxHeight: .infinity).contentShape(RoundedRectangle(cornerRadius: 16))
-        }
-        .buttonStyle(.plain)
-        .background(hovering ? Theme.accent.opacity(0.05) : Color.clear, in: RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6, 5])).foregroundStyle(.primary.opacity(0.18)))
+        .background(.primary.opacity(hovering ? 0.045 : 0))
         .onHover { hovering = $0 }
     }
 }

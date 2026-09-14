@@ -19,14 +19,14 @@ struct LaunchButton: View {
     var body: some View {
         if compact {
             Button(action: activate) {
-                Image(systemName: session != nil ? "arrow.up.forward.circle.fill" : "play.circle.fill")
+                Image(systemName: session != nil ? "arrow.up.forward.circle.fill" : instance.installed ? "play.circle.fill" : "arrow.down.circle.fill")
                     .font(.system(size: 30)).symbolRenderingMode(.hierarchical)
                     .foregroundStyle(disabled ? AnyShapeStyle(.tertiary) : AnyShapeStyle(Theme.accent))
                     .accessibilityLabel(title)
             }.buttonStyle(.plain).help(title).disabled(disabled)
         } else {
             Button(action: activate) {
-                Label(title, systemImage: session != nil ? "arrow.up.forward.app" : "play.fill").padding(.horizontal, 6)
+                Label(title, systemImage: session != nil ? "arrow.up.forward.app" : instance.installed ? "play.fill" : "arrow.down").padding(.horizontal, 6)
             }.buttonStyle(.borderedProminent).controlSize(size).help(title).disabled(disabled)
         }
     }

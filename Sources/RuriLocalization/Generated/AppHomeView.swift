@@ -27,6 +27,18 @@ extension Messages {
         public static var importPack: LocalizedMessage {
             .init(key: "appHomeView.emptyStateText4", table: "Interface", fallback: "导入整合包…")
         }
+        /// 添加已有游戏文件夹…
+        ///
+        /// Resource: `Interface.appHomeView.addExistingGameFolder`.
+        public static var addExistingGameFolder: LocalizedMessage {
+            .init(key: "appHomeView.addExistingGameFolder", table: "Interface", fallback: "添加已有游戏文件夹…")
+        }
+        /// 用过其他启动器？
+        ///
+        /// Resource: `Interface.appHomeView.existingGameFolderHint`.
+        public static var existingGameFolderHint: LocalizedMessage {
+            .init(key: "appHomeView.existingGameFolderHint", table: "Interface", fallback: "用过其他启动器？")
+        }
         /// 继续游戏
         ///
         /// Resource: `Interface.appHomeView.featuredSectionText1`.
@@ -218,6 +230,8 @@ extension Messages {
             "Interface:appHomeView.emptyStateText2": .init("新建一个实例，或导入整合包开始游戏。", []),
             "Interface:appHomeView.emptyStateText3": .init("新建实例", []),
             "Interface:appHomeView.emptyStateText4": .init("导入整合包…", []),
+            "Interface:appHomeView.addExistingGameFolder": .init("添加已有游戏文件夹…", []),
+            "Interface:appHomeView.existingGameFolderHint": .init("用过其他启动器？", []),
             "Interface:appHomeView.featuredSectionText1": .init("继续游戏", []),
             "Interface:appHomeView.featuredSectionText2": .init("全部实例", []),
             "Interface:appHomeView.featuredSectionText3": .init("更换图标或编辑实例设置", []),

@@ -6,6 +6,7 @@ private typealias D = Messages.Discovery
 
 struct DiscoverView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var colorScheme
     @State private var categories: [CatalogCategory] = []
     @State private var categoryError: String?
     @State private var refresh = 0
@@ -43,8 +44,7 @@ struct DiscoverView: View {
     private var browse: some View {
         @Bindable var browser = browser
         return VStack(spacing: 0) {
-            controls.padding(.horizontal, 24).padding(.vertical, 16)
-            Divider()
+            controls.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 24).padding(.top, 20).padding(.bottom, 8)
             if missingKey {
                 ContentUnavailableView {
                     Label(Messages.AppDiscoverView.connectCurseForge.localized, systemImage: "key")
@@ -57,6 +57,7 @@ struct DiscoverView: View {
                 results
             }
         }
+        .background(Theme.canvas(for: colorScheme))
         .navigationTitle(Messages.AppPage.discover.localized)
         .searchable(text: field(\.text), placement: .toolbar, prompt: Messages.AppDiscoverView.searchContent.localized)
         .searchSuggestions {
@@ -92,13 +93,14 @@ struct DiscoverView: View {
     private var controls: some View {
         VStack(alignment: .leading, spacing: 14) {
             ViewThatFits(in: .horizontal) {
-                HStack(spacing: 16) { contentPicker.fixedSize(); Spacer(minLength: 0); sourcePicker.frame(width: 192) }
-                VStack(alignment: .leading, spacing: 12) { contentPicker; sourcePicker.frame(width: 192) }
+                HStack(spacing: 16) { contentPicker.fixedSize(); Spacer(minLength: 0); sourcePicker.fixedSize() }
+                VStack(alignment: .leading, spacing: 12) { contentPicker.fixedSize(); sourcePicker.fixedSize() }
             }
             WrappingLayout(spacing: 10) {
                 gameFilter
                 loaderFilter
                 categoryFilter
+                instanceFilter
                 resetFilters
             }.frame(maxWidth: .infinity, alignment: .leading)
             if let instance = filterInstance {
@@ -148,6 +150,33 @@ struct DiscoverView: View {
             }.pickerStyle(.inline).labelsHidden()
         }.frame(width: 180)
     }
+    @ViewBuilder private var instanceFilter: some View {
+        if browser.query.type != "modpack" {
+            CatalogMenuFilter(title: D.filterByInstance.localized, value: filterInstance?.name ?? D.unrestricted.localized,
+                              symbol: "desktopcomputer", active: filterInstance != nil) {
+                if let selected = model.selected, selected.installed {
+                    Button(D.matchInstance.localized) { selectFilterInstance(selected.id) }
+                    Divider()
+                }
+                Picker(D.filterByInstance.localized, selection: Binding(get: { filterInstance?.id }, set: { selectFilterInstance($0) })) {
+                    Text(D.noInstanceFilter.localized).tag(nil as UUID?)
+                    ForEach(model.state.instances.filter(\.installed)) { instance in
+                        Label { Text(instance.name + " · " + instance.subtitle) } icon: {
+                            LoaderGlyph.image(for: instance.loader.modrinthLoader).resizable().scaledToFit().frame(width: 16, height: 16)
+                        }.tag(Optional(instance.id))
+                    }
+                }.pickerStyle(.inline).labelsHidden().labelStyle(.titleAndIcon)
+            }.frame(width: 240)
+        }
+    }
+    private func selectFilterInstance(_ id: UUID?) {
+        let instance = model.state.instances.first { $0.id == id && $0.installed }
+        browser.change { query in
+            query.game = instance?.gameVersion ?? ""
+            query.loader = query.type == "mod" ? (instance?.loader.modrinthLoader ?? "") : ""
+        }
+        browser.preferredInstanceID = instance?.id
+    }
     @ViewBuilder private var resetFilters: some View {
         if browser.query.hasFilters {
             Button(D.clearFilters.localized) { browser.change { $0.game = ""; $0.loader = ""; $0.category = "" } }.buttonStyle(.link)
@@ -167,7 +196,7 @@ struct DiscoverView: View {
                     Image(systemName: "square.grid.2x2").tag(false)
                     Image(systemName: "list.bullet").tag(true)
                 }.pickerStyle(.segmented).labelsHidden().frame(width: 68)
-            }.padding(.horizontal, 24).padding(.vertical, 12)
+            }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 24).padding(.vertical, 16)
             if let error = browser.error {
                 CatalogErrorBanner(message: error) { refresh += 1 }.padding(.horizontal, 24).padding(.bottom, 12)
             }
@@ -179,17 +208,7 @@ struct DiscoverView: View {
             } else if let page = browser.page, page.projects.isEmpty {
                 ContentUnavailableView.search(text: browser.displayedQuery?.text ?? "").frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                ScrollView {
-                    LazyVGrid(columns: browser.listLayout ? [GridItem(.flexible())] : [GridItem(.adaptive(minimum: 270), spacing: 16)], spacing: 16) {
-                        ForEach(browser.page?.projects ?? []) { project in
-                            Button {
-                                browser.rememberSearch(); browser.open(project)
-                            } label: { CatalogProjectCard(project: project, compact: browser.listLayout) }
-                                .buttonStyle(.plain).id(project.id)
-                        }
-                    }.scrollTargetLayout().padding(.horizontal, 24).padding(.bottom, 24)
-                }
-                .scrollPosition(id: $browser.scrollID, anchor: .top)
+                CatalogProjectResults(browser: browser)
             }
             if let page = browser.page, !page.projects.isEmpty {
                 Divider()
@@ -201,7 +220,8 @@ struct DiscoverView: View {
                         .disabled(offset == 0 || browser.loading || browser.query.normalized != browser.displayedQuery)
                     Button { browser.query.offset = offset + 20; browser.scrollID = nil } label: { Label(Messages.AppDiscoverView.nextPage.localized, systemImage: "chevron.right") }
                         .disabled(offset + page.projects.count >= page.total || browser.loading || browser.query.normalized != browser.displayedQuery)
-                }.padding(.horizontal, 24).padding(.vertical, 12)
+                }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 24).padding(.vertical, 12)
+                    .frame(maxWidth: .infinity).background(Theme.surface(for: colorScheme))
             }
         }
     }
