@@ -87,11 +87,11 @@ extension Messages {
         public static var instanceIcon: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText6", table: "Interface", fallback: "实例图标")
         }
-        /// 选择图片后会自动裁剪为正方形。
+        /// 可选用内置图标，或使用自定义图片（自动裁剪为正方形）。
         ///
         /// Resource: `Interface.appInstanceSettingsView.overviewText7`.
         public static var iconCropNotice: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText7", table: "Interface", fallback: "选择图片后会自动裁剪为正方形。")
+            .init(key: "appInstanceSettingsView.overviewText7", table: "Interface", fallback: "可选用内置图标，或使用自定义图片（自动裁剪为正方形）。")
         }
         /// 更改图标
         ///
@@ -342,7 +342,7 @@ extension Messages {
             "Interface:appInstanceSettingsView.overviewText4": .init("输入实例名称", []),
             "Interface:appInstanceSettingsView.overviewText5": .init("收藏此实例", []),
             "Interface:appInstanceSettingsView.overviewText6": .init("实例图标", []),
-            "Interface:appInstanceSettingsView.overviewText7": .init("选择图片后会自动裁剪为正方形。", []),
+            "Interface:appInstanceSettingsView.overviewText7": .init("可选用内置图标，或使用自定义图片（自动裁剪为正方形）。", []),
             "Interface:appInstanceSettingsView.overviewText8": .init("更改图标", []),
             "Interface:appInstanceSettingsView.overviewText9": .init("选择图片…", []),
             "Interface:appInstanceSettingsView.overviewText10": .init("恢复默认图标", []),

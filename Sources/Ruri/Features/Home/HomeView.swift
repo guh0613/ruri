@@ -111,7 +111,7 @@ struct HomeView: View {
     private func featuredIdentity(_ instance: GameInstance) -> some View {
         HStack(spacing: 24) {
             Button { model.editingInstance = instance } label: {
-                InstanceIcon(loader: instance.loader, size: 104, png: instance.iconPNG)
+                InstanceIcon(instance, size: 104)
             }.buttonStyle(.plain).help(Messages.AppHomeView.editInstance.localized)
                 .accessibilityLabel(Messages.AppLibraryView.editIconAndSettings(instance.name).localized)
             VStack(alignment: .leading, spacing: 10) {
@@ -150,7 +150,7 @@ struct HomeView: View {
                     ForEach(running) { record in
                         HStack(spacing: 14) {
                             let instance = model.state.instances.first { $0.id == record.instanceID }
-                            InstanceIcon(loader: instance?.loader ?? .vanilla, size: 40, png: instance?.iconPNG)
+                            InstanceIcon(instance, size: 40)
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(record.instanceName).font(.headline).lineLimit(1)
                                 InstanceMetadata(session: record)
@@ -198,7 +198,7 @@ struct HomeView: View {
 
     private func recentRow(_ instance: GameInstance) -> some View {
         HStack(spacing: 14) {
-            InstanceIcon(loader: instance.loader, size: 48, png: instance.iconPNG)
+            InstanceIcon(instance, size: 48)
             VStack(alignment: .leading, spacing: 5) {
                 Text(instance.name).font(.headline).lineLimit(2)
                 InstanceMetadata(instance: instance, compact: true)

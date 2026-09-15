@@ -49,6 +49,7 @@ enum MessageCatalog {
         result.merge(Messages.AppInstanceComponentsView.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceContentView.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceCopyView.definitions) { first, _ in first }
+        result.merge(Messages.AppInstanceIconPicker.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceMenu.definitions) { first, _ in first }
         result.merge(Messages.AppInstanceMoveView.definitions) { first, _ in first }
         result.merge(Messages.AppInstancePresentation.definitions) { first, _ in first }

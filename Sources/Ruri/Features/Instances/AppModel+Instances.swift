@@ -13,7 +13,7 @@ extension AppModel {
         func apply<Value: Equatable>(_ key: WritableKeyPath<GameInstance, Value>) {
             if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
         }
-        apply(\.name); apply(\.favorite); apply(\.iconPNG)
+        apply(\.name); apply(\.favorite); apply(\.iconPNG); apply(\.iconStyle)
         var overrides = current.effectiveLaunchOverrides
         let desired = draft.effectiveLaunchOverrides, baseline = original.effectiveLaunchOverrides
         func setting<Value: Equatable>(_ key: WritableKeyPath<InstanceLaunchOverrides, Value>) {

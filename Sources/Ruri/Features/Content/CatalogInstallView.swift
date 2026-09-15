@@ -151,7 +151,7 @@ struct CatalogInstallView: View {
                 let inUse = model.isInstanceInUse(instance.id)
                 Button { instanceID = instance.id } label: {
                     HStack(spacing: 12) {
-                        InstanceIcon(loader: instance.loader, size: 36)
+                        InstanceIcon(instance, size: 36)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(instance.name).font(.headline)
                             Text(instance.subtitle).font(.caption).foregroundStyle(.secondary)

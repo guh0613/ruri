@@ -18,13 +18,15 @@ struct InstanceSettingsView: View {
     @State private var launchOverrides: InstanceLaunchOverrides
     @State private var settingsIssue: String?
     @State private var loadingIcon = false
+    @State private var choosingIcon = false
+    @State private var modpackOrigin: ModpackOrigin?
     @State private var preservedWorkspaces: [URL] = []
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
     private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
     init(instance: GameInstance) { _instance = State(initialValue: instance); _launchOverrides = State(initialValue: instance.effectiveLaunchOverrides); original = instance }
     private var hasChanges: Bool {
-        instance.name != original.name || instance.favorite != original.favorite || instance.iconPNG != original.iconPNG || launchOverrides != original.effectiveLaunchOverrides
+        instance.name != original.name || instance.favorite != original.favorite || instance.iconPNG != original.iconPNG || instance.iconStyle != original.iconStyle || launchOverrides != original.effectiveLaunchOverrides
     }
     var body: some View {
         VStack(spacing: 0) {
@@ -71,6 +73,11 @@ struct InstanceSettingsView: View {
             }.value
             if !Task.isCancelled { preservedWorkspaces = locations }
         }
+        .task {
+            let paths = model.paths, id = instance.id
+            let origin = await Task.detached(priority: .utility) { try? ModpackRegistry.load(paths: paths, instanceID: id)?.origin }.value
+            if let origin, origin.provider != .mcbbs, origin.projectID != nil { modpackOrigin = origin }
+        }
     }
     @ViewBuilder private var overview: some View {
         Section(Messages.AppInstanceSettingsView.instanceInfo.localized) {
@@ -82,7 +89,17 @@ struct InstanceSettingsView: View {
             }
             Toggle(Messages.AppInstanceSettingsView.favoriteInstance.localized, isOn: $instance.favorite)
             HStack(spacing: 14) {
-                InstanceIcon(loader: locationInstance.loader, size: 48, png: instance.iconPNG)
+                Button { choosingIcon = true } label: {
+                    InstanceIcon(loader: locationInstance.loader, size: 52, png: instance.iconPNG, style: instance.iconStyle)
+                }
+                .buttonStyle(.plain).disabled(loadingIcon)
+                .help(Messages.AppInstanceSettingsView.changeIcon.localized)
+                .accessibilityLabel(Messages.AppInstanceSettingsView.changeIcon.localized)
+                .popover(isPresented: $choosingIcon, arrowEdge: .bottom) {
+                    InstanceIconPicker(loader: locationInstance.loader, png: $instance.iconPNG, style: $instance.iconStyle,
+                                       chooseImage: { choosingIcon = false; chooseIcon() },
+                                       useModpackIcon: modpackOrigin.map { origin in { choosingIcon = false; useModpackIcon(origin) } })
+                }
                 VStack(alignment: .leading, spacing: 4) {
                     Text(Messages.AppInstanceSettingsView.instanceIcon.localized)
                     Text(Messages.AppInstanceSettingsView.iconCropNotice.localized).font(.caption).foregroundStyle(.secondary)
@@ -90,9 +107,9 @@ struct InstanceSettingsView: View {
                 Spacer()
                 if loadingIcon { ProgressView().controlSize(.small) }
                 VStack(alignment: .trailing, spacing: 6) {
-                    Button(Messages.AppInstanceSettingsView.chooseImage.localized, action: chooseIcon)
-                    if instance.iconPNG != nil {
-                        Button(Messages.AppInstanceSettingsView.restoreDefaultIcon.localized) { instance.iconPNG = nil }
+                    Button(Messages.AppInstanceSettingsView.changeIcon.localized) { choosingIcon = true }
+                    if instance.iconPNG != nil || instance.iconStyle != nil {
+                        Button(Messages.AppInstanceSettingsView.restoreDefaultIcon.localized) { instance.iconPNG = nil; instance.iconStyle = nil }
                             .buttonStyle(.borderless).font(.caption)
                     }
                 }.fixedSize().disabled(loadingIcon)
@@ -172,8 +189,24 @@ struct InstanceSettingsView: View {
         loadingIcon = true
         Task {
             defer { loadingIcon = false }
-            do { instance.iconPNG = try await Task.detached(priority: .userInitiated) { try InstanceIconImage.load(url) }.value }
+            do {
+                instance.iconPNG = try await Task.detached(priority: .userInitiated) { try InstanceIconImage.load(url) }.value
+                instance.iconStyle = nil
+            }
             catch { settingsIssue = error.localizedDescription }
+        }
+    }
+
+    private func useModpackIcon(_ origin: ModpackOrigin) {
+        guard let projectID = origin.projectID else { return }
+        loadingIcon = true
+        Task {
+            defer { loadingIcon = false }
+            var url: URL?
+            if origin.provider == .modrinth { url = try? await ModrinthService().project(projectID).icon_url }
+            else if let id = Int(projectID) { url = try? await CurseForgeService(apiKey: CurseForgeKeyStore.load()).project(id).logo?.thumbnailUrl }
+            if let png = await InstanceIconImage.download(url) { instance.iconPNG = png; instance.iconStyle = nil }
+            else { settingsIssue = Messages.AppInstanceIconPicker.modpackIconUnavailable.localized }
         }
     }
 }

@@ -10,7 +10,7 @@ public enum InstanceExportFormat: String, CaseIterable, Sendable, Identifiable {
 public struct PreparedInstanceImport: Identifiable, Sendable {
     public let id: UUID
     public let format: String
-    public let instance: GameInstance
+    public private(set) var instance: GameInstance
     public let warnings: [String]
     public let fileCount: Int
     public let byteCount: Int64
@@ -24,6 +24,13 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
         var result = self
         result.omittedOptionalPaths = paths.intersection(Set(optionalFiles.map(\.path)))
         result.remoteFileCount = result.selectedPackFiles.filter { !FileManager.default.fileExists(atPath: game.appendingPathComponent($0.path).path) }.count
+        return result
+    }
+    /// Uses a catalog project's artwork when the imported instance has no icon of its own.
+    public func usingIcon(_ png: Data) -> Self {
+        guard instance.iconPNG == nil, instance.iconStyle == nil else { return self }
+        var result = self
+        result.instance.iconPNG = png
         return result
     }
     let sourceMetadata: Data?
@@ -86,6 +93,7 @@ struct PortableInstance: Codable {
     var macOSGameSettings: MacOSGameSettings?
     let launchCommands: LaunchCommands?
     let iconPNG: Data?
+    let iconStyle: InstanceIconStyle?
     let installation: ImportedMinecraftInstallation?
     init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
@@ -94,7 +102,7 @@ struct PortableInstance: Codable {
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
         fullscreen = instance.fullscreen; launchPresentation = instance.launchPresentation; macOSGameSettings = instance.macOSGameSettings
         launchCommands = instance.launchCommands?.isEmpty == false ? instance.launchCommands : nil
-        iconPNG = instance.iconPNG; self.installation = installation
+        iconPNG = instance.iconPNG; iconStyle = instance.iconStyle; self.installation = installation
         if installation != nil { formatVersion = 2 }
     }
     func instance() throws -> GameInstance {
@@ -107,7 +115,7 @@ struct PortableInstance: Codable {
         result.fullscreen = fullscreen; result.launchPresentation = launchPresentation; result.macOSGameSettings = macOSGameSettings
         result.launchCommands = launchCommands
         result.launchCommands?.enabled = false
-        result.iconPNG = iconPNG; result.importedInstallation = installation
+        result.iconPNG = iconPNG; result.iconStyle = iconStyle; result.importedInstallation = installation
         return result
     }
 }

@@ -57,25 +57,21 @@ struct LibraryInstanceDetail<Notices: View>: View {
         .background { backdrop.clipped().accessibilityHidden(true) }
     }
 
-    /// A soft wash of the instance's own icon, or of the accent colour with
-    /// its loader mark when it has none, fading into the page.
+    /// A soft wash of the instance's icon, custom or built-in, fading into the page.
     private var backdrop: some View {
         let canvas = Theme.canvas(for: colorScheme)
         return ZStack {
             canvas
-            if let png = instance.iconPNG, let image = InstanceIconCache.image(png) {
-                Image(nsImage: image).resizable().scaledToFill()
-                    .blur(radius: 60, opaque: true).saturation(1.4)
-                    .opacity(colorScheme == .dark ? 0.55 : 0.4)
-            } else {
-                LinearGradient(colors: [Theme.accent.opacity(colorScheme == .dark ? 0.28 : 0.16), Theme.accent.opacity(0.03)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                LoaderGlyph.image(for: instance.loader.modrinthLoader).resizable().scaledToFit()
-                    .frame(width: 240, height: 240)
-                    .foregroundStyle(Theme.accent.opacity(colorScheme == .dark ? 0.12 : 0.08))
-                    .rotationEffect(.degrees(-12))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    .offset(x: -48, y: -36)
+            Group {
+                if let png = instance.iconPNG, let image = InstanceIconCache.image(png) {
+                    Image(nsImage: image).resizable()
+                } else if let tile = InstanceIconCache.tile(instance.iconStyle ?? .standard(for: instance.loader), pixels: 128) {
+                    Image(decorative: tile, scale: 1).resizable()
+                }
             }
+            .scaledToFill()
+            .blur(radius: 60, opaque: true).saturation(1.4)
+            .opacity(colorScheme == .dark ? 0.55 : 0.4)
             LinearGradient(colors: [canvas.opacity(0), canvas], startPoint: UnitPoint(x: 0.5, y: 0.3), endPoint: .bottom)
         }
     }
@@ -83,7 +79,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
     private var identity: some View {
         HStack(alignment: .bottom, spacing: 20) {
             Button { model.editingInstance = instance } label: {
-                InstanceIcon(loader: instance.loader, size: 108, png: instance.iconPNG)
+                InstanceIcon(instance, size: 108)
             }
             .buttonStyle(.plain)
             .shadow(color: .black.opacity(0.22), radius: 14, y: 6)

@@ -30,7 +30,10 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var launchPresentation: LaunchPresentation?
     public var macOSGameSettings: MacOSGameSettings?
     public var favorite: Bool
+    /// A custom image; it takes precedence over `iconStyle`.
     public var iconPNG: Data?
+    /// A built-in icon. When both are nil the loader's standard icon is shown.
+    public var iconStyle: InstanceIconStyle?
     public var installed: Bool
     /// Missing in older states: the original Application Support directory.
     public var directoryID: UUID?

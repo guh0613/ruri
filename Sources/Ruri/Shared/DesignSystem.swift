@@ -79,20 +79,26 @@ struct TagPill: View {
     var body: some View { Text(text).font(.system(size: 10, weight: .semibold)).padding(.horizontal, 8).padding(.vertical, 4).background(color.opacity(0.1), in: Capsule()).foregroundStyle(color) }
 }
 
+/// An instance's custom image, its chosen built-in icon, or its loader's
+/// standard icon, in that order.
 struct InstanceIcon: View {
+    @Environment(\.displayScale) private var displayScale
     let loader: LoaderKind
     var size: CGFloat = 48
     var png: Data?
+    var style: InstanceIconStyle?
+    init(loader: LoaderKind, size: CGFloat = 48, png: Data? = nil, style: InstanceIconStyle? = nil) {
+        self.loader = loader; self.size = size; self.png = png; self.style = style
+    }
+    init(_ instance: GameInstance?, size: CGFloat = 48) {
+        self.init(loader: instance?.loader ?? .vanilla, size: size, png: instance?.iconPNG, style: instance?.iconStyle)
+    }
     var body: some View {
         Group {
             if let png, let image = InstanceIconCache.image(png) {
                 Image(nsImage: image).resizable().scaledToFill()
-            } else {
-                LoaderGlyph.image(for: loader.modrinthLoader).resizable().scaledToFit()
-                    .frame(width: size * 0.52, height: size * 0.52)
-                    .foregroundStyle(Theme.accent)
-                    .frame(width: size, height: size)
-                    .background(Theme.accent.opacity(0.10))
+            } else if let tile = InstanceIconCache.tile(style ?? .standard(for: loader), pixels: Int((size * displayScale).rounded())) {
+                Image(decorative: tile, scale: displayScale).resizable()
             }
         }.frame(width: size, height: size).clipShape(RoundedRectangle(cornerRadius: size * 0.26))
             .accessibilityHidden(true)
@@ -104,10 +110,21 @@ struct InstanceIcon: View {
         let cache = NSCache<NSData, NSImage>(); cache.countLimit = 256; cache.totalCostLimit = 16 * 1024 * 1024
         return cache
     }()
+    static let tiles: NSCache<NSString, CGImage> = {
+        let cache = NSCache<NSString, CGImage>(); cache.countLimit = 512; cache.totalCostLimit = 32 * 1024 * 1024
+        return cache
+    }()
     static func image(_ data: Data) -> NSImage? {
         if let cached = images.object(forKey: data as NSData) { return cached }
         guard (try? InstanceIconImage.validate(data)) != nil, let image = NSImage(data: data) else { return nil }
         images.setObject(image, forKey: data as NSData, cost: 128 * 128 * 4)
+        return image
+    }
+    static func tile(_ style: InstanceIconStyle, pixels: Int) -> CGImage? {
+        let key = "\(style.glyph.rawValue)-\(style.tint.rawValue)-\(pixels)" as NSString
+        if let cached = tiles.object(forKey: key) { return cached }
+        guard let image = InstanceIconRenderer.image(style, pixels: pixels) else { return nil }
+        tiles.setObject(image, forKey: key, cost: pixels * pixels * 4)
         return image
     }
 }

@@ -192,7 +192,7 @@ private struct LibraryRow: View {
     let instance: GameInstance
     var body: some View {
         HStack(spacing: 10) {
-            InstanceIcon(loader: instance.loader, size: 32, png: instance.iconPNG)
+            InstanceIcon(instance, size: 32)
             VStack(alignment: .leading, spacing: 2) {
                 Text(instance.name).font(.body.weight(.medium)).lineLimit(1)
                 Text(instance.gameVersion + " · " + instance.loaderLabel).font(.caption).foregroundStyle(.secondary).lineLimit(1)

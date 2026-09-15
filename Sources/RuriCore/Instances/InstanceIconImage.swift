@@ -14,9 +14,19 @@ public enum InstanceIconImage {
         guard values.isRegularFile == true, let size = values.fileSize, size > 0, size <= 20 * 1024 * 1024 else {
             throw RuriError.message(Messages.CoreInstanceIconImage.imageTooLarge)
         }
-        let data = try Data(contentsOf: file, options: .mappedIfSafe)
-        guard data.count <= 20 * 1024 * 1024,
-              let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
+        return try load(data: Data(contentsOf: file, options: .mappedIfSafe))
+    }
+
+    /// Downloads a catalog project's artwork, such as a modpack icon. Returns nil
+    /// when the image is unavailable or unsupported; an icon is never required.
+    public static func download(_ url: URL?) async -> Data? {
+        guard let url, let data = try? await HTTPClient.shared.data(for: URLRequest(url: url, timeoutInterval: 20)) else { return nil }
+        return try? await Task.detached(priority: .utility) { try load(data: data) }.value
+    }
+
+    public static func load(data: Data) throws -> Data {
+        guard !data.isEmpty, data.count <= 20 * 1024 * 1024 else { throw RuriError.message(Messages.CoreInstanceIconImage.imageTooLarge) }
+        guard let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
               let image = CGImageSourceCreateThumbnailAtIndex(source, 0, [
                 kCGImageSourceCreateThumbnailFromImageAlways: true,
                 kCGImageSourceCreateThumbnailWithTransform: true,

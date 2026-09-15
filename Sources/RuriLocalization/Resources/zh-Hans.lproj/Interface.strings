@@ -1412,7 +1412,7 @@
 "appInstanceSettingsView.overviewText6" = "实例图标";
 
 /* @symbol AppInstanceSettingsView.iconCropNotice @args - */
-"appInstanceSettingsView.overviewText7" = "选择图片后会自动裁剪为正方形。";
+"appInstanceSettingsView.overviewText7" = "可选用内置图标，或使用自定义图片（自动裁剪为正方形）。";
 
 /* @symbol AppInstanceSettingsView.changeIcon @args - */
 "appInstanceSettingsView.overviewText8" = "更改图标";
@@ -1527,6 +1527,192 @@
 
 /* @symbol AppInstanceSettingsView.chooseIcon @args - */
 "appInstanceSettingsView.panelText1" = "选择图标";
+
+/* @symbol AppInstanceIconPicker.color @args - */
+"appInstanceIconPicker.color" = "颜色";
+
+/* @symbol AppInstanceIconPicker.loaders @args - */
+"appInstanceIconPicker.loaders" = "加载器";
+
+/* @symbol AppInstanceIconPicker.items @args - */
+"appInstanceIconPicker.items" = "物品";
+
+/* @symbol AppInstanceIconPicker.symbols @args - */
+"appInstanceIconPicker.symbols" = "符号";
+
+/* @symbol AppInstanceIconPicker.useModpackIcon @args - */
+"appInstanceIconPicker.useModpackIcon" = "使用整合包图标";
+
+/* @symbol AppInstanceIconPicker.modpackIconUnavailable @args - */
+"appInstanceIconPicker.modpackIconUnavailable" = "无法获取整合包图标，请检查网络后重试。";
+
+/* @symbol AppInstanceIconPicker.tintBlue @args - */
+"appInstanceIconPicker.tintBlue" = "蓝色";
+
+/* @symbol AppInstanceIconPicker.tintIndigo @args - */
+"appInstanceIconPicker.tintIndigo" = "靛蓝";
+
+/* @symbol AppInstanceIconPicker.tintPurple @args - */
+"appInstanceIconPicker.tintPurple" = "紫色";
+
+/* @symbol AppInstanceIconPicker.tintPink @args - */
+"appInstanceIconPicker.tintPink" = "粉色";
+
+/* @symbol AppInstanceIconPicker.tintRed @args - */
+"appInstanceIconPicker.tintRed" = "红色";
+
+/* @symbol AppInstanceIconPicker.tintOrange @args - */
+"appInstanceIconPicker.tintOrange" = "橙色";
+
+/* @symbol AppInstanceIconPicker.tintSand @args - */
+"appInstanceIconPicker.tintSand" = "沙色";
+
+/* @symbol AppInstanceIconPicker.tintGreen @args - */
+"appInstanceIconPicker.tintGreen" = "绿色";
+
+/* @symbol AppInstanceIconPicker.tintTeal @args - */
+"appInstanceIconPicker.tintTeal" = "青色";
+
+/* @symbol AppInstanceIconPicker.tintSlate @args - */
+"appInstanceIconPicker.tintSlate" = "石板灰";
+
+/* @symbol AppInstanceIconPicker.tintGraphite @args - */
+"appInstanceIconPicker.tintGraphite" = "石墨色";
+
+/* @symbol AppInstanceIconPicker.glyphPickaxe @args - */
+"appInstanceIconPicker.glyphPickaxe" = "镐";
+
+/* @symbol AppInstanceIconPicker.glyphSword @args - */
+"appInstanceIconPicker.glyphSword" = "剑";
+
+/* @symbol AppInstanceIconPicker.glyphHeart @args - */
+"appInstanceIconPicker.glyphHeart" = "生命";
+
+/* @symbol AppInstanceIconPicker.glyphGem @args - */
+"appInstanceIconPicker.glyphGem" = "宝石";
+
+/* @symbol AppInstanceIconPicker.glyphPotion @args - */
+"appInstanceIconPicker.glyphPotion" = "药水";
+
+/* @symbol AppInstanceIconPicker.blocks @args - */
+"appInstanceIconPicker.blocks" = "方块";
+
+/* @symbol AppInstanceIconPicker.glyphGrassBlock @args - */
+"appInstanceIconPicker.glyphGrassBlock" = "草方块";
+
+/* @symbol AppInstanceIconPicker.glyphDirt @args - */
+"appInstanceIconPicker.glyphDirt" = "泥土";
+
+/* @symbol AppInstanceIconPicker.glyphCobblestone @args - */
+"appInstanceIconPicker.glyphCobblestone" = "圆石";
+
+/* @symbol AppInstanceIconPicker.glyphOakLog @args - */
+"appInstanceIconPicker.glyphOakLog" = "橡木原木";
+
+/* @symbol AppInstanceIconPicker.glyphOakPlanks @args - */
+"appInstanceIconPicker.glyphOakPlanks" = "橡木木板";
+
+/* @symbol AppInstanceIconPicker.glyphCraftingTable @args - */
+"appInstanceIconPicker.glyphCraftingTable" = "工作台";
+
+/* @symbol AppInstanceIconPicker.glyphFurnace @args - */
+"appInstanceIconPicker.glyphFurnace" = "熔炉";
+
+/* @symbol AppInstanceIconPicker.glyphBookshelf @args - */
+"appInstanceIconPicker.glyphBookshelf" = "书架";
+
+/* @symbol AppInstanceIconPicker.glyphTnt @args - */
+"appInstanceIconPicker.glyphTnt" = "TNT";
+
+/* @symbol AppInstanceIconPicker.glyphDiamondOre @args - */
+"appInstanceIconPicker.glyphDiamondOre" = "钻石矿石";
+
+/* @symbol AppInstanceIconPicker.glyphBricks @args - */
+"appInstanceIconPicker.glyphBricks" = "砖块";
+
+/* @symbol AppInstanceIconPicker.glyphObsidian @args - */
+"appInstanceIconPicker.glyphObsidian" = "黑曜石";
+
+/* @symbol AppInstanceIconPicker.glyphNetherrack @args - */
+"appInstanceIconPicker.glyphNetherrack" = "下界岩";
+
+/* @symbol AppInstanceIconPicker.glyphGlowstone @args - */
+"appInstanceIconPicker.glyphGlowstone" = "荧石";
+
+/* @symbol AppInstanceIconPicker.glyphJackOLantern @args - */
+"appInstanceIconPicker.glyphJackOLantern" = "南瓜灯";
+
+/* @symbol AppInstanceIconPicker.glyphCommandBlock @args - */
+"appInstanceIconPicker.glyphCommandBlock" = "命令方块";
+
+/* @symbol AppInstanceIconPicker.glyphHouse @args - */
+"appInstanceIconPicker.glyphHouse" = "房屋";
+
+/* @symbol AppInstanceIconPicker.glyphColumns @args - */
+"appInstanceIconPicker.glyphColumns" = "建筑";
+
+/* @symbol AppInstanceIconPicker.glyphMountain @args - */
+"appInstanceIconPicker.glyphMountain" = "山峰";
+
+/* @symbol AppInstanceIconPicker.glyphTree @args - */
+"appInstanceIconPicker.glyphTree" = "树";
+
+/* @symbol AppInstanceIconPicker.glyphLeaf @args - */
+"appInstanceIconPicker.glyphLeaf" = "树叶";
+
+/* @symbol AppInstanceIconPicker.glyphFlame @args - */
+"appInstanceIconPicker.glyphFlame" = "火焰";
+
+/* @symbol AppInstanceIconPicker.glyphDrop @args - */
+"appInstanceIconPicker.glyphDrop" = "水滴";
+
+/* @symbol AppInstanceIconPicker.glyphSnowflake @args - */
+"appInstanceIconPicker.glyphSnowflake" = "雪花";
+
+/* @symbol AppInstanceIconPicker.glyphMoon @args - */
+"appInstanceIconPicker.glyphMoon" = "夜空";
+
+/* @symbol AppInstanceIconPicker.glyphBolt @args - */
+"appInstanceIconPicker.glyphBolt" = "闪电";
+
+/* @symbol AppInstanceIconPicker.glyphSparkles @args - */
+"appInstanceIconPicker.glyphSparkles" = "星光";
+
+/* @symbol AppInstanceIconPicker.glyphWand @args - */
+"appInstanceIconPicker.glyphWand" = "魔法";
+
+/* @symbol AppInstanceIconPicker.glyphShield @args - */
+"appInstanceIconPicker.glyphShield" = "盾牌";
+
+/* @symbol AppInstanceIconPicker.glyphCrown @args - */
+"appInstanceIconPicker.glyphCrown" = "王冠";
+
+/* @symbol AppInstanceIconPicker.glyphMap @args - */
+"appInstanceIconPicker.glyphMap" = "地图";
+
+/* @symbol AppInstanceIconPicker.glyphController @args - */
+"appInstanceIconPicker.glyphController" = "手柄";
+
+/* @symbol AppInstanceIconPicker.glyphWrench @args - */
+"appInstanceIconPicker.glyphWrench" = "工具";
+
+/* @symbol AppInstanceIconPicker.glyphFlask @args - */
+"appInstanceIconPicker.glyphFlask" = "烧瓶";
+
+/* @symbol AppInstanceIconPicker.glyphPaw @args - */
+"appInstanceIconPicker.glyphPaw" = "爪印";
+
+/* @symbol AppInstanceIconPicker.glyphFish @args - */
+"appInstanceIconPicker.glyphFish" = "鱼";
+
+/* @symbol AppInstanceIconPicker.glyphTent @args - */
+"appInstanceIconPicker.glyphTent" = "帐篷";
+
+/* @symbol AppInstanceIconPicker.glyphTrophy @args - */
+"appInstanceIconPicker.glyphTrophy" = "奖杯";
+
+/* @symbol AppInstanceIconPicker.glyphPalette @args - */
+"appInstanceIconPicker.glyphPalette" = "调色板";
 
 /* @symbol AppLibraryView.instanceFolderUnavailable @args - */
 "appLibraryView.issueText1" = "实例文件夹无法访问";
