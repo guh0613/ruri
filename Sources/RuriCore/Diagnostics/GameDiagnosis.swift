@@ -2,7 +2,7 @@ import RuriLocalization
 import Foundation
 
 public struct GameDiagnosticDocument: Identifiable, Sendable {
-    public enum Kind: String, Sendable { case preparation, output, gameReport, jvmReport }
+    public enum Kind: String, Sendable { case preparation, output, gameReport, jvmReport, launcher, systemReport }
     public let id: String
     public let relativePath: String?
     public let title: String
@@ -60,61 +60,8 @@ public struct GameDiagnosis: Sendable {
 /// matching game-native logs; log text never supplies a path.
 public enum GameDiagnosticAnalyzer {
     public static func load(paths: LauncherPaths, session: GameSession, includeGameLogs: Bool = false) throws -> GameDiagnosis {
-        var documents: [GameDiagnosticDocument] = [], limitations: [String] = []
-        let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
-        if let failure = session.displayFailure {
-            documents.append(.init(id: "preparation", relativePath: nil, title: session.stage.title, kind: .preparation, text: failure))
-        }
-        var budget = 12 * 1_048_576 // Reserve 4 MiB for the session's own output.
-        var nativeNames: Set<String> = []
-        if includeGameLogs {
-            do {
-                let snapshot = try GameNativeLogCollector.collect(paths: paths, session: session, budget: &budget)
-                documents += snapshot.documents; limitations += snapshot.limitations; nativeNames = snapshot.names
-            } catch is CancellationError { throw CancellationError() }
-            catch { limitations.append(Messages.NativeGameLogs.collectionFailed.localized) }
-        }
-        func read(_ relative: String, title: String, kind: GameDiagnosticDocument.Kind, truncated: Bool = false) throws {
-            try Task.checkCancellation()
-            let url = try LauncherPaths.safePath(relative, within: directory)
-            let attributes = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-            guard attributes.isRegularFile == true, attributes.isSymbolicLink != true else { throw RuriError.message(Messages.CoreGameDiagnosis.evidenceNotRegularFile) }
-            let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }
-            let size = try handle.seekToEnd(); try handle.seek(toOffset: 0)
-            let count = min(budget, 2 * 1_048_576)
-            guard count > 0 else { limitations.append(Messages.CoreGameDiagnosis.analysisReadLimit(title).localized); return }
-            let head = try handle.read(upToCount: count) ?? Data(); budget -= head.count
-            let partial = size > head.count
-            var text = String(decoding: head, as: UTF8.self)
-            if partial, let end = text.lastIndex(of: "\n") { text = String(text[..<end]) }
-            documents.append(.init(id: relative, relativePath: relative, title: title, kind: kind, text: text, truncated: truncated || partial))
-            if partial && kind == .output && budget > 0 {
-                let tailCount = min(budget, count)
-                try handle.seek(toOffset: max(UInt64(head.count), size - UInt64(tailCount)))
-                let tail = try handle.read(upToCount: tailCount) ?? Data(); budget -= tail.count
-                let tailText = String(decoding: tail, as: UTF8.self)
-                // A tail starts at an arbitrary byte. Discard the incomplete first line.
-                documents.append(.init(id: relative + "#tail", relativePath: relative, title: Messages.CoreGameDiagnosis.tailTitle(title).localized, kind: kind,
-                                       text: String(tailText.drop(while: { $0 != "\n" }).dropFirst()), isTail: true, truncated: true))
-            }
-            if truncated || partial { limitations.append(Messages.CoreGameDiagnosis.boundedTail(title).localized) }
-        }
-        // Prioritize a crash report over duplicate copies of standard output.
-        let reports = session.evidence.sorted { ($0.name == "latest.log" ? 1 : 0, $0.name) < ($1.name == "latest.log" ? 1 : 0, $1.name) }
-        for item in reports.prefix(12) {
-            if nativeNames.contains(item.name) { continue }
-            guard item.relativePath.hasPrefix("reports/") else { limitations.append(Messages.CoreGameDiagnosis.invalidEvidencePathSkipped.localized); continue }
-            let kind: GameDiagnosticDocument.Kind = item.name.hasPrefix("hs_err_pid") ? .jvmReport : item.name.hasPrefix("crash-") ? .gameReport : .output
-            do { try read(item.relativePath, title: item.name, kind: kind, truncated: item.truncated) }
-            catch is CancellationError { throw CancellationError() }
-            catch { limitations.append(Messages.CoreGameDiagnosis.unreadableReport(item.name, error.localizedDescription).localized) }
-        }
-        if reports.count > 12 { limitations.append(Messages.CoreGameDiagnosis.reportLimit(Int64(reports.count)).localized) }
-        budget += 4 * 1_048_576
-        do { try read("launcher.log", title: "launcher.log", kind: .output) }
-        catch is CancellationError { throw CancellationError() }
-        catch { limitations.append(Messages.CoreGameDiagnosis.sessionLogReadFailure(error.localizedDescription).localized) }
-        return try analyze(session: session, documents: documents, limitations: limitations)
+        let evidence = try GameEvidenceCollector.collect(paths: paths, session: session, includeGameLogs: includeGameLogs)
+        return try analyze(session: session, documents: evidence.documents, limitations: evidence.limitations)
     }
 
     public static func analyze(session: GameSession, documents: [GameDiagnosticDocument], limitations: [String] = []) throws -> GameDiagnosis {

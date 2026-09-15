@@ -2671,12 +2671,6 @@
 /* @symbol CoreGameNormalQuit.appExitRequestDisabled @args - */
 "coreGameNormalQuit.currentText2" = "本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。";
 
-/* @symbol CoreGamePlaytime.invalidPlaytimeRecord @args - */
-"coreGamePlaytime.attributesText1" = "游玩时长记录无效。";
-
-/* @symbol CoreGamePlaytime.logNotRegularFile @args - */
-"coreGamePlaytime.urlText1" = "日志不是普通文件。";
-
 /* @symbol CoreGameRunLease.runLockUnavailable @args - */
 "coreGameRunLease.fdText1" = "无法取得实例运行锁。";
 

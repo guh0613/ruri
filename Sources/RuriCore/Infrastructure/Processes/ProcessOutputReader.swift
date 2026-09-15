@@ -11,7 +11,7 @@ final class ProcessOutputReader: @unchecked Sendable {
     private var closed = false // Accessed only on queue.
 
     init(handle: FileHandle, receive: @escaping @Sendable (Data) -> Void) throws {
-        let descriptor = dup(handle.fileDescriptor)
+        let descriptor = fcntl(handle.fileDescriptor, F_DUPFD_CLOEXEC, 3)
         guard descriptor >= 0 else { throw POSIXError(.EMFILE) }
         let flags = fcntl(descriptor, F_GETFL)
         guard flags >= 0, fcntl(descriptor, F_SETFL, flags | O_NONBLOCK) == 0 else {

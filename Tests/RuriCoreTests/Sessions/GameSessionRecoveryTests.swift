@@ -13,12 +13,14 @@ struct GameSessionRecoveryTests {
         record.monitorIdentity = .init(pid: identity.pid, startSeconds: identity.startSeconds + 1, startMicroseconds: identity.startMicroseconds)
         record.gameIdentity = game; record.processID = game?.pid
         try recorder.close()
-        try save(record, paths: paths)
+        try save(&record, paths: paths)
         return (paths, instance, record)
     }
-    private func save(_ record: GameSession, paths: LauncherPaths) throws {
-        let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
-        try JSONEncoder().encode(record).write(to: directory.appendingPathComponent("session.json"), options: .atomic)
+    private func save(_ record: inout GameSession, paths: LauncherPaths) throws {
+        let saved = try GameHistoryStore.load(paths: paths, sessionID: record.id)
+        record.revision = (saved?.revision ?? record.revision) + 1
+        record.updatedAt = Date()
+        try GameHistoryStore.record(record, paths: paths)
     }
     @Test @MainActor func reusedPIDCanRecoverWithoutSignallingOrInventingExit() throws {
         let current = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
@@ -61,11 +63,11 @@ struct GameSessionRecoveryTests {
         #expect(GameSessionRecovery.status(record) == .gameRunning)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: true) }
         var monitored = record; monitored.monitorIdentity = identity
-        try save(monitored, paths: paths)
+        try save(&monitored, paths: paths)
         #expect(GameSessionRecovery.status(monitored) == .monitoring)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: monitored, userConfirmedEnded: true) }
         var unknown = record; unknown.gameIdentity = nil
-        try save(unknown, paths: paths)
+        try save(&unknown, paths: paths)
         let lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id, ignoringSession: record.id)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: unknown, userConfirmedEnded: true) }
         withExtendedLifetime(lease) {}
@@ -75,12 +77,12 @@ struct GameSessionRecoveryTests {
     @Test @MainActor func changedRecordIsNotOverwrittenByAnOldRecoveryView() throws {
         let (paths, _, record) = try fixture(game: nil)
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        var changed = record; changed.failure = "updated elsewhere"; try save(changed, paths: paths)
+        var changed = record; changed.failure = "updated elsewhere"; try save(&changed, paths: paths)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: record, userConfirmedEnded: true) }
         #expect(try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id) == changed)
         let beforeExit = changed
         changed.exit = .init(status: 1, reason: .exit, processID: 123, startedAt: record.createdAt, endedAt: Date(), stopRequested: false)
-        try save(changed, paths: paths)
+        try save(&changed, paths: paths)
         #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: beforeExit, userConfirmedEnded: true) }
         #expect(try GameSessionStore.load(paths: paths, instanceID: record.instanceID, sessionID: record.id) == changed)
     }

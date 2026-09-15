@@ -23,7 +23,7 @@ import RuriCore
                 Button(Messages.AppRuriApp.importInstance.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
                 Button(Messages.AppRuriApp.addGameFolder.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
                 Divider()
-                Button(Messages.LauncherLog.title.localized) { model.openMainWindow?(); model.showLauncherLog() }.keyboardShortcut("l", modifiers: [.command, .shift])
+                Button(Messages.SessionUI.launcherActivity.localized) { model.openMainWindow?(); model.showLauncherLog() }.keyboardShortcut("l", modifiers: [.command, .shift])
             }
             CommandGroup(replacing: .appSettings) {
                 Button(Messages.AppRuriApp.settings.localized) { model.openMainWindow?(); model.page = .settings }.keyboardShortcut(",")
@@ -37,7 +37,8 @@ import RuriCore
                     }
                     Button(Messages.AppRuriApp.terminateInstance(record.instanceName).localized) { model.confirmGameTermination(record.instanceID) }.disabled(record.state.isFinished || record.monitorIdentity?.isAlive != true)
                 }
-                Button(Messages.AppRuriApp.processLogs.localized) { model.showSession() }.keyboardShortcut("l")
+                Button(Messages.SessionUI.session.localized) { model.showSession() }.keyboardShortcut("l")
+                Button(Messages.SessionUI.history.localized) { model.openMainWindow?(); model.showHistory() }.keyboardShortcut("y")
                 Divider()
                 Button(Messages.AppRuriApp.revealInstance.localized) { if let instance = model.selected { model.reveal(instance) } }.keyboardShortcut("o", modifiers: [.command, .shift]).disabled(model.selected == nil)
             }

@@ -279,17 +279,17 @@ extension Messages {
         public static var fullscreenHelp: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText2", table: "Interface", fallback: "关闭“全屏启动”后，使用游戏保存的全屏状态。")
         }
-        /// 启动时打开游戏日志
+        /// 启动时打开游戏详情
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.valueText3`.
         public static var openGameLogs: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.valueText3", table: "Interface", fallback: "启动时打开游戏日志")
+            .init(key: "appLaunchSettingsEditor.valueText3", table: "Interface", fallback: "启动时打开游戏详情")
         }
-        /// 打开日志时，Ruri 保持可见。
+        /// 打开游戏详情时，Ruri 保持可见。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.valueText4`.
         public static var logsKeepLauncherVisible: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.valueText4", table: "Interface", fallback: "打开日志时，Ruri 保持可见。")
+            .init(key: "appLaunchSettingsEditor.valueText4", table: "Interface", fallback: "打开游戏详情时，Ruri 保持可见。")
         }
         /// 游戏退出后自动显示 Ruri 窗口。
         ///
@@ -446,8 +446,8 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.javaIssueText13": .init("选择尺寸", []),
             "Interface:appLaunchSettingsEditor.valueText1": .init("全屏启动", []),
             "Interface:appLaunchSettingsEditor.valueText2": .init("关闭“全屏启动”后，使用游戏保存的全屏状态。", []),
-            "Interface:appLaunchSettingsEditor.valueText3": .init("启动时打开游戏日志", []),
-            "Interface:appLaunchSettingsEditor.valueText4": .init("打开日志时，Ruri 保持可见。", []),
+            "Interface:appLaunchSettingsEditor.valueText3": .init("启动时打开游戏详情", []),
+            "Interface:appLaunchSettingsEditor.valueText4": .init("打开游戏详情时，Ruri 保持可见。", []),
             "Interface:appLaunchSettingsEditor.valueText5": .init("游戏退出后自动显示 Ruri 窗口。", []),
             "Interface:appLaunchSettingsEditor.panelText1": .init("选择 java 文件、JDK 包或 Java Home 文件夹。", []),
             "Interface:appLaunchSettingsEditor.bodyText6": .init("分配方式", []),

@@ -83,15 +83,15 @@ struct LauncherJournalTests {
     @Test func persistedHistoryRestoresReadStateLinksAndInterruptedWork() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: root) }
-        let url = root.appendingPathComponent("launcher-log.json")
+        let paths = LauncherPaths(root: root)
         var journal = LauncherJournal()
         let session = UUID(), file = root.appendingPathComponent("export.zip")
         let done = journal.record(.verbatim("Exported"), sessionID: session, fileURL: file)
         journal.markRead(done)
         let running = journal.begin(.verbatim("Install"))
         journal.progress(running, InstallProgress("Downloading", completed: 2, total: 10))
-        try journal.save(to: url)
-        var loaded = try LauncherJournal.load(from: url)
+        try LauncherJournalStore.save(journal, previous: LauncherJournal(), paths: paths)
+        var loaded = try LauncherJournalStore.load(paths: paths)
         #expect(loaded.entries == journal.entries)
         loaded.recoverInterrupted()
         #expect(loaded.entries.first(where: { $0.id == running })?.status == .interrupted)
@@ -100,16 +100,18 @@ struct LauncherJournalTests {
         loaded.markRead(running)
         loaded.recoverInterrupted()
         #expect(loaded.unreadCount == 0)
-        try loaded.save(to: url)
-        #expect(try LauncherJournal.load(from: url).entries == loaded.entries)
+        try LauncherJournalStore.save(loaded, previous: journal, paths: paths)
+        #expect(try LauncherJournalStore.load(paths: paths).entries == loaded.entries)
     }
 
     @Test func corruptHistoryIsNotOverwrittenByLoading() throws {
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        defer { try? FileManager.default.removeItem(at: url) }
-        let original = Data("not valid json".utf8)
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let paths = LauncherPaths(root: root), url = GameHistoryStore.databaseURL(paths: LauncherPaths(root: root))
+        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let original = Data("not a database".utf8)
         try original.write(to: url)
-        #expect(throws: (any Error).self) { try LauncherJournal.load(from: url) }
+        #expect(throws: (any Error).self) { try LauncherJournalStore.load(paths: paths) }
         #expect(try Data(contentsOf: url) == original)
     }
 

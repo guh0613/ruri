@@ -718,9 +718,6 @@
 /* @symbol CoreGameNormalQuit.normalExitRequestFailed @args - */
 "coreGameNormalQuit.explanationText2" = "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。";
 
-/* @symbol CoreGamePlaytime.longLogLineOmitted @args - */
-"coreGamePlaytime.newlineText1" = "[Ruri] 预览中的超长日志行已省略；完整内容可导出。";
-
 /* @symbol CoreGameSession.preparingLaunch @args - */
 "coreGameSession.titleText1" = "准备启动";
 

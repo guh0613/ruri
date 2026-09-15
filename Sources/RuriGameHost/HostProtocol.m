@@ -4,6 +4,7 @@
 #include <poll.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <dispatch/dispatch.h>
 
 BOOL RuriHostString(id value, NSUInteger maximum) {
     return [value isKindOfClass:NSString.class] && [value lengthOfBytesUsingEncoding:NSUTF8StringEncoding] <= maximum &&
@@ -35,6 +36,7 @@ static BOOL readBytes(int fd, void *buffer, size_t size, double deadline) {
 @implementation RuriHostChannel {
     int _descriptor;
     NSString *_sessionID;
+    dispatch_source_t _parentExit;
 }
 - (instancetype)initFromStandardInput {
     self = [super init];
@@ -66,6 +68,19 @@ static BOOL readBytes(int fd, void *buffer, size_t size, double deadline) {
         [self close]; return nil;
     }
     close(nullInput);
+    // If the supervisor disappears, stop sending output into its abandoned
+    // pipes. No JVM signal handlers or crash hooks are replaced. This source
+    // sleeps in the kernel for the entire normal game lifetime.
+    pid_t parent = getppid();
+    if (parent > 1) {
+        _parentExit = dispatch_source_create(DISPATCH_SOURCE_TYPE_PROC, (uintptr_t)parent, DISPATCH_PROC_EXIT,
+                                             dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
+        dispatch_source_set_event_handler(_parentExit, ^{
+            int sink = open("/dev/null", O_WRONLY | O_CLOEXEC);
+            if (sink >= 0) { dup2(sink, STDOUT_FILENO); dup2(sink, STDERR_FILENO); close(sink); }
+        });
+        dispatch_resume(_parentExit);
+    }
     return self;
 }
 - (void)send:(NSString *)event fields:(NSDictionary *)fields {
@@ -88,5 +103,5 @@ static BOOL readBytes(int fd, void *buffer, size_t size, double deadline) {
 - (void)close {
     @synchronized(self) { if (_descriptor >= 0) { close(_descriptor); _descriptor = -1; } }
 }
-- (void)dealloc { [self close]; }
+- (void)dealloc { if (_parentExit) dispatch_source_cancel(_parentExit); [self close]; }
 @end

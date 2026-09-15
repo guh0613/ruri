@@ -113,16 +113,16 @@ struct CustomRunDirectoryTests {
         #expect(!FileManager.default.fileExists(atPath: paths.instance(b.id).appendingPathComponent("content.json").path))
     }
 
-    @Test @MainActor func monitorSnapshotsStripBookmarksAndOldProtocolsCannotUseCustomPaths() throws {
+    @Test @MainActor func monitorSnapshotsStripBookmarksAndRejectOtherProtocols() throws {
         let (paths, a, _, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let frozen = paths.monitorSnapshot(for: a.id)
         #expect(frozen.game(a.id) == custom.url && frozen.instanceDirectories.count == 1)
         #expect(frozen.instanceCustomDirectories?[a.id]?.bookmark == nil)
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: [], directory: custom.url, environment: [:])
-        let request = MonitorLaunchRequest(version: 5, root: paths.root, instanceID: a.id, sessionID: UUID(), monitor: identity, plan: plan, secrets: [], storage: frozen)
+        let request = MonitorLaunchRequest(version: MonitorLaunchRequest.currentVersion, instanceID: a.id, sessionID: UUID(), monitor: identity, plan: plan, secrets: [], storage: frozen)
         #expect(try GameMonitorService.validatedPaths(request).game(a.id) == custom.url)
-        let old = MonitorLaunchRequest(version: 4, root: paths.root, instanceID: a.id, sessionID: UUID(), monitor: identity, plan: plan, secrets: [], storage: frozen)
+        let old = MonitorLaunchRequest(version: MonitorLaunchRequest.currentVersion + 1, instanceID: a.id, sessionID: UUID(), monitor: identity, plan: plan, secrets: [], storage: frozen)
         #expect(throws: (any Error).self) { try GameMonitorService.validatedPaths(old) }
     }
 
@@ -131,7 +131,7 @@ struct CustomRunDirectoryTests {
         let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
         let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo custom-game-finished"], directory: custom.url, environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         try StateStore.update(paths) { $0.selectedDirectoryID = b.directoryID }
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }
         let completed = try await GameMonitorClient.wait(paths: paths, instanceID: a.id, sessionID: recorder.record.id)
@@ -139,7 +139,7 @@ struct CustomRunDirectoryTests {
         let log = try GameSessionStore.logTail(paths: paths, session: completed)
         #expect(log.contains(custom.url.path) && log.contains("custom-game-finished"))
         #expect(try GameSessionStore.list(paths: paths, instanceID: b.id).isEmpty)
-        #expect(!FileManager.default.fileExists(atPath: custom.url.appendingPathComponent(".ruri/active-session.json").path))
+        #expect(!FileManager.default.fileExists(atPath: custom.url.appendingPathComponent(".ruri/active-run.json").path))
         let next = try GameRunLease.acquire(paths: paths, instanceID: b.id); withExtendedLifetime(next) {}
     }
 }

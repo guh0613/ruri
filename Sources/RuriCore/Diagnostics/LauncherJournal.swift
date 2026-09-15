@@ -36,16 +36,16 @@ public struct LauncherLogEntry: Identifiable, Codable, Equatable, Sendable {
 
 /// One bounded history backs both the launcher log and its notification inbox.
 /// High frequency progress replaces counters; only stage changes add a step.
-public struct LauncherJournal: Codable, Sendable {
+public struct LauncherJournal: Codable, Equatable, Sendable {
     public static let capacity = 500
     public static let stepCapacity = 60
     public private(set) var entries: [LauncherLogEntry] = []
-    private var version = 1
     public var unreadCount: Int { entries.filter { $0.isNotification && !$0.isRead }.count }
     public var notifications: [LauncherLogEntry] {
         entries.filter(\.isNotification).sorted { $0.updatedAt > $1.updatedAt }
     }
     public init() {}
+    init(entries: [LauncherLogEntry]) { self.entries = entries; trim() }
 
     @discardableResult
     public mutating func record(_ title: LocalizedMessage, level: LauncherLogEntry.Level = .info,
@@ -148,15 +148,4 @@ public struct LauncherJournal: Codable, Sendable {
         message.redacted { GameShareRedactor(homeDirectory: "").redact(String($0.prefix(8192))) }.recorded(limit: 8192)
     }
 
-    public static func load(from url: URL) throws -> Self {
-        guard FileManager.default.fileExists(atPath: url.path) else { return Self() }
-        let result = try JSONDecoder().decode(Self.self, from: Data(contentsOf: url))
-        guard result.version == 1 else { throw RuriError.message(Messages.LauncherLog.unsupportedHistory) }
-        return result
-    }
-
-    public func save(to url: URL) throws {
-        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try JSONEncoder().encode(self).write(to: url, options: .atomic)
-    }
 }

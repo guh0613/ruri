@@ -11,11 +11,71 @@ public struct GameDiagnosticBundle: Sendable {
         public let title: String
         public let text: String
         public let changedByRedaction: Bool
-        public var byteCount: Int { text.utf8.count }
+        var snapshot: GameLogSnapshot? = nil
+        public var previewTruncated: Bool { snapshot?.previewTruncated ?? false }
+        public var byteCount: Int { snapshot?.byteCount ?? text.utf8.count }
     }
     public let sessionID: UUID
     public let createdAt: Date
     public let files: [File]
+
+    /// Export remains available even when analysis or a particular log source
+    /// fails. The resulting preview owns exactly the bytes that will be shared.
+    public static func collect(paths: LauncherPaths, session: GameSession, additionalPrivateText: [String] = []) throws -> Self {
+        let evidence: GameEvidenceSnapshot
+        do { evidence = try GameEvidenceCollector.collect(paths: paths, session: session, includeGameLogs: true) }
+        catch is CancellationError { throw CancellationError() }
+        catch { evidence = .init(documents: [], limitations: [error.localizedDescription]) }
+        let diagnosis: GameDiagnosis
+        do { diagnosis = try GameDiagnosticAnalyzer.analyze(session: session, documents: evidence.documents, limitations: evidence.limitations) }
+        catch is CancellationError { throw CancellationError() }
+        catch {
+            diagnosis = .init(sessionID: session.id, title: session.title, summary: Messages.SessionRuntime.collectedWithoutAnalysis.localized,
+                              facts: [], findings: [], documents: evidence.documents, limitations: evidence.limitations)
+        }
+        let base = try preview(session: session, diagnosis: diagnosis, additionalPrivateText: additionalPrivateText)
+        var files = base.files
+        let redactor = GameShareRedactor(additionalPrivateText: additionalPrivateText)
+        var native: [GameLogFile] = []
+        do { native = try GameLogSources.native(paths: paths, session: session) } catch { /* Bounded evidence and events remain exportable. */ }
+        let saved = (try? GameLogSources.saved(paths: paths, session: session)) ?? []
+        for source in native + saved {
+            if source.gameRelativePath == nil,
+               let original = session.evidence.first(where: { $0.relativePath == source.reference.relativePath }), native.contains(where: { $0.title == original.name }) { continue }
+            do {
+                try Task.checkCancellation()
+                let snapshot = try GameLogSnapshot.capture(source, redactor: redactor)
+                // Replace bounded analysis excerpts with the complete stable
+                // file. The preview remains bounded, and is explicitly labelled.
+                files.removeAll { $0.id == source.id || $0.id == source.id + "#tail" }
+                let path = source.gameRelativePath.map { "game/" + $0 } ?? "evidence/" + source.reference.relativePath
+                files.append(.init(id: source.id, path: path + (source.truncated ? ".excerpt.txt" : ""),
+                                   title: source.title + (source.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""),
+                                   text: snapshot.preview, changedByRedaction: snapshot.changedByRedaction, snapshot: snapshot))
+            } catch is CancellationError { throw CancellationError() }
+            catch {
+                let text = Messages.SessionUI.fullExportFailed(source.title, error.localizedDescription).localized
+                files.append(.init(id: "unavailable/" + source.id, path: "evidence/unavailable-\(files.count).txt", title: source.title,
+                                   text: redactor.redact(text), changedByRedaction: false))
+            }
+        }
+        return .init(sessionID: session.id, createdAt: base.createdAt, files: files)
+    }
+
+    public func redacting(_ values: [String]) throws -> Self {
+        guard values.contains(where: { !$0.isEmpty }) else { return self }
+        let redactor = GameShareRedactor(additionalPrivateText: values)
+        let files = try files.map { file -> File in
+            if let source = file.snapshot {
+                let snapshot = try source.redacting(redactor)
+                return .init(id: file.id, path: file.path, title: file.title, text: snapshot.preview,
+                             changedByRedaction: file.changedByRedaction || snapshot.changedByRedaction, snapshot: snapshot)
+            }
+            let text = redactor.redact(file.text)
+            return .init(id: file.id, path: file.path, title: file.title, text: text, changedByRedaction: file.changedByRedaction || text != file.text)
+        }
+        return .init(sessionID: sessionID, createdAt: createdAt, files: files)
+    }
 
     public static func preview(session: GameSession, diagnosis: GameDiagnosis, additionalPrivateText: [String] = [], homeDirectory: String = NSHomeDirectory()) throws -> Self {
         guard session.id == diagnosis.sessionID else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.diagnosticRunMismatch) }
@@ -53,10 +113,24 @@ public struct GameDiagnosticBundle: Sendable {
         if let interruption = session.interruption {
             environment += Messages.CoreGameDiagnosticBundle.recoveryEnvironment(interruption.observedAt.ISO8601Format(), interruption.resolution.rawValue, interruption.displayExplanation).localized
         }
+        if let timing = session.timing {
+            environment += "\n\(Messages.SessionUI.duration.localized): \(LocalizedFormat.duration(timing.awakeSeconds))\n"
+            environment += Messages.SessionRuntime.timingHelp.localized + "\n"
+            if timing.quality != .complete { environment += Messages.SessionRuntime.timingPartial.localized + "\n" }
+        }
+        if let version = session.launcherVersion { environment += "\nRuri: \(version)\n" }
         append(id: "environment", path: "environment.txt", title: Messages.CoreGameDiagnosticBundle.gameJavaSystemEnvironment.localized, text: environment + "\n")
         for (index, document) in diagnosis.documents.enumerated() {
             try Task.checkCancellation()
-            let stem = document.kind == .output ? "output" : document.kind == .preparation ? "preparation" : document.kind == .jvmReport ? "jvm-report" : "minecraft-report"
+            let stem: String
+            switch document.kind {
+            case .output: stem = "output"
+            case .preparation: stem = "preparation"
+            case .jvmReport: stem = "jvm-report"
+            case .gameReport: stem = "minecraft-report"
+            case .launcher: stem = "launcher-events"
+            case .systemReport: stem = "macos-report"
+            }
             let path: String
             if let relative = document.gameRelativePath {
                 guard !relative.isEmpty, !relative.hasPrefix("/"), !relative.contains("\\"), !relative.contains("\0"),
@@ -75,7 +149,7 @@ public struct GameDiagnosticBundle: Sendable {
         guard !selected.isEmpty, selected.count == selectedIDs.count else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.invalidReportSelection) }
         guard destination.isFileURL, destination.pathExtension.lowercased() == "zip" else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.zipSaveLocationSelection) }
         let target = destination.resolvingSymlinksInPath().standardizedFileURL.path
-        for url in [paths.root] + paths.directories.map(\.url) {
+        for url in [paths.root] + paths.directories.map(\.url) + (paths.instanceCustomDirectories?.values.map(\.url) ?? []) {
             let root = url.resolvingSymlinksInPath().standardizedFileURL.path
             guard target != root && !target.hasPrefix(root + "/") else { throw RuriError.message(Messages.CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid) }
         }
@@ -86,10 +160,21 @@ public struct GameDiagnosticBundle: Sendable {
             try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: staging.path)
             for file in selected {
                 try Task.checkCancellation()
-                let data = Data(file.text.utf8)
-                try archive.addEntry(with: file.path, type: .file, uncompressedSize: Int64(data.count), modificationDate: createdAt, compressionMethod: .deflate) { position, count in
-                    try Task.checkCancellation()
-                    return data.subdata(in: Int(position)..<(Int(position) + count))
+                if let snapshot = file.snapshot {
+                    let input = try snapshot.open(); defer { try? input.close() }
+                    try archive.addEntry(with: file.path, type: .file, uncompressedSize: Int64(snapshot.byteCount), modificationDate: createdAt, compressionMethod: .deflate) { position, count in
+                        try Task.checkCancellation()
+                        try input.seek(toOffset: UInt64(position))
+                        let data = try input.read(upToCount: count) ?? Data()
+                        guard data.count == count else { throw POSIXError(.EIO) }
+                        return data
+                    }
+                } else {
+                    let data = Data(file.text.utf8)
+                    try archive.addEntry(with: file.path, type: .file, uncompressedSize: Int64(data.count), modificationDate: createdAt, compressionMethod: .deflate) { position, count in
+                        try Task.checkCancellation()
+                        return data.subdata(in: Int(position)..<(Int(position) + count))
+                    }
                 }
             }
         }
@@ -102,7 +187,7 @@ public struct GameShareRedactor: Sendable {
     private let additionalPrivateText: [String]
     private let homeDirectory: String
     public init(additionalPrivateText: [String] = [], homeDirectory: String = NSHomeDirectory()) {
-        self.additionalPrivateText = additionalPrivateText.filter { !$0.isEmpty }.sorted { $0.count > $1.count }
+        self.additionalPrivateText = Array(Set(additionalPrivateText.flatMap { $0.components(separatedBy: .newlines) }.filter { !$0.isEmpty })).sorted { $0.count > $1.count }
         self.homeDirectory = homeDirectory
     }
     public func redact(_ text: String) -> String {
@@ -125,7 +210,9 @@ public struct GameShareRedactor: Sendable {
         (#"(?i)(--(?:username|uuid|xuid|clientId)(?:=|\s+))(?:"[^"\r\n]*(?:"|(?=\r|\n|$))|'[^'\r\n]*(?:'|(?=\r|\n|$))|[^\s,]+)"#, "$1<玩家>"),
         (#"(?i)((?:Setting user|Username)\s*:\s*)[^\r\n]+"#, "$1<玩家>"),
         (#"(?i)("(?:username|displayName|uuid|xuid)"\s*:\s*")[^"]*"#, "$1<玩家>"),
-        (#"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, "<邮箱>"),
+        // Boundaries prevent retrying a greedy email match at every character
+        // of a long token. Possessive groups avoid quadratic backtracking.
+        (#"(?i)(?<![A-Z0-9._%+-])[A-Z0-9._%+-]++@(?:[A-Z0-9-]++\.)++[A-Z]{2,}+"#, "<邮箱>"),
         (#"(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b"#, "<UUID>"),
         (#"\b(?:\d{1,3}\.){3}\d{1,3}\b"#, "<IP>"),
         (#"\[(?:[0-9a-fA-F]{0,4}:){2,}[0-9a-fA-F]{0,4}\]"#, "<IP>"),

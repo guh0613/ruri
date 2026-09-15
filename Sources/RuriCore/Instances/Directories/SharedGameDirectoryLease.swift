@@ -41,13 +41,13 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         return fstat(fd, &info) != 0 || info.st_mode & S_IFMT != S_IFREG || fcntl(fd, F_OFD_SETLK, &lock) != 0
     }
     func reserve(paths: LauncherPaths, session: GameSession) throws {
-        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
-        let reservation = Reservation(version: 2, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
+        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
+        let reservation = Reservation(version: 1, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
         try JSONEncoder().encode(reservation).write(to: file, options: .atomic)
     }
     func clearReservation(session: GameSession) throws {
         guard session.state.isFinished else { return }
-        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
         guard values.isRegularFile == true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.sharedRunRecordInvalid) }
@@ -56,7 +56,7 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         try FileManager.default.removeItem(at: file)
     }
     func clearFinishedReservation(paths: LauncherPaths, instanceID: UUID) throws {
-        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let reservation: Reservation = try RunDirectoryCopyGuard.decode(file, limit: 131_072)
         guard reservation.instanceID == instanceID else { return }
@@ -67,17 +67,16 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         try clearReservation(session: session)
     }
     private func checkReservation(instanceID: UUID, ignoringSession: UUID?, paths: LauncherPaths) throws {
-        let file = try LauncherPaths.safePath(".ruri/active-session.json", within: root)
+        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
         let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
         guard values.isRegularFile == true, values.isSymbolicLink != true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.invalidRunHistory) }
         let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
-        guard (1...2).contains(reservation.version), reservation.paths.instanceDirectories.count == 1,
+        guard reservation.version == 1, reservation.paths.instanceDirectories.count == 1,
               reservation.paths.instanceDirectories[reservation.instanceID] != nil,
               reservation.paths.runDirectory(for: reservation.instanceID) != .isolated else {
             throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationMismatch)
         }
-        if reservation.paths.runDirectory(for: reservation.instanceID) == .custom, reservation.version < 2 { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationVersionInvalid) }
         try reservation.paths.validateDirectoryConfiguration()
         var checked = reservation.paths
         if let collection = paths.directories.first(where: { $0.id == reservation.paths.directoryID(for: reservation.instanceID) }) {

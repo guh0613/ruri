@@ -91,7 +91,6 @@ struct GameExitTests {
         try FileManager.default.removeItem(at: game.appendingPathComponent("hs_err_pid123.log"))
         try FileManager.default.createSymbolicLink(at: game.appendingPathComponent("hs_err_pid123.log"), withDestinationURL: current)
         #expect(GameCrashReport.find(in: game, exit: result).map { $0.kind } == [.minecraft])
-        try result.save(paths: paths, instanceID: id)
-        #expect(try JSONDecoder().decode(GameExit.self, from: Data(contentsOf: paths.instance(id).appendingPathComponent("last-exit.json"))) == result)
+        #expect(try JSONDecoder().decode(GameExit.self, from: JSONEncoder().encode(result)) == result)
     }
 }

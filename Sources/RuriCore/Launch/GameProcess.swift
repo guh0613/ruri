@@ -17,6 +17,16 @@ public final class GameProcess {
     private var identity: ProcessIdentity?
     private var hostConnection: GameHostConnection?
     private var onHostStatus: (@MainActor @Sendable (GameHostStatus) -> Void)?
+    private var startedContinuous: ContinuousClock.Instant?
+    private var startedAwake: SuspendingClock.Instant?
+    private var timingAccumulator: GameTimingAccumulator?
+    private var finalTiming: GameSessionTiming?
+    var timing: GameSessionTiming? {
+        if let finalTiming { return finalTiming }
+        guard let startedContinuous, let startedAwake else { return nil }
+        return timingAccumulator?.sample(at: Date(), awakeSeconds: startedAwake.duration(to: .now).gameSeconds,
+                                         elapsedSeconds: startedContinuous.duration(to: .now).gameSeconds)
+    }
     public private(set) var hostStatus: GameHostStatus?
     public var isRunning: Bool { process?.isRunning ?? false }
     public var processIdentifier: Int32? { process?.processIdentifier }
@@ -34,6 +44,9 @@ public final class GameProcess {
         normalQuitRequested = false; nativeQuitSupported = plan.nativeQuitSupported == true; identity = nil
         let startedAt = Date()
         let startedClock = ContinuousClock.now
+        let awakeClock = SuspendingClock.now
+        startedContinuous = startedClock; startedAwake = awakeClock
+        timingAccumulator = GameTimingAccumulator(startedAt: startedAt); finalTiming = nil
         let process = Process(); let pipe = Pipe()
         let (host, initialStatus) = GameHostLaunch.prepare(plan, sessionID: sessionID, host: hostExecutable)
         self.onHostStatus = hostStatus
@@ -56,11 +69,11 @@ public final class GameProcess {
             let reason: GameExit.Reason = process.terminationReason == .uncaughtSignal ? .signal : .exit
             let processID = process.processIdentifier
             let endedAt = Date()
-            let duration = startedClock.duration(to: .now).components
-            let elapsed = Double(duration.seconds) + Double(duration.attoseconds) / 1e18
+            let elapsed = startedClock.duration(to: .now).gameSeconds
+            let awake = awakeClock.duration(to: .now).gameSeconds
             let finishOutput: @Sendable () -> Void = { [weak self] in
                 reader.finish { [weak self] in
-                    capture?.finish()
+                    let complete: @Sendable () -> Void = { [weak self] in
                     DispatchQueue.main.async {
                         guard let self else { return }
                         if !self.pending.isEmpty { self.emit(String(decoding: self.pending, as: UTF8.self)); self.pending.removeAll() }
@@ -68,11 +81,14 @@ public final class GameProcess {
                         if var host = self.hostStatus, host.backend == .native, !host.jvmStarted, host.failure == nil, !self.stopRequested {
                             host.failure = "transport"; self.hostStatus = host; self.onHostStatus?(host)
                         }
-                        let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed, normalQuitRequested: self.normalQuitRequested ? true : nil)
+                        self.finalTiming = self.timingAccumulator?.sample(at: endedAt, awakeSeconds: awake, elapsedSeconds: elapsed, final: true)
+                        let result = GameExit(status: status, reason: reason, processID: processID, startedAt: startedAt, endedAt: endedAt, stopRequested: self.stopRequested, durationSeconds: elapsed, normalQuitRequested: self.normalQuitRequested ? true : nil, awakeDurationSeconds: awake)
                         let callback = self.onExit
                         self.process = nil; self.pipe = nil; self.reader = nil; self.hostConnection = nil; self.onHostStatus = nil; self.onExit = nil; self.output = nil; self.secrets = []
                         callback?(result)
                     }
+                    }
+                    if let capture { capture.finish(complete) } else { complete() }
                 }
             }
             if let connection { connection.finish(finishOutput) } else { finishOutput() }

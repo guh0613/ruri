@@ -40,8 +40,7 @@ struct GameDiagnosticBundleTests {
         try recorder.fail(RuriError.message("failed"), cancelled: false)
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record)
         let preview = try GameDiagnosticBundle.preview(session: recorder.record, diagnosis: diagnosis, homeDirectory: root.path)
-        let fullLog = try GameSessionStore.logURL(paths: paths, session: recorder.record)
-        try "new unreviewed secret".write(to: fullLog, atomically: true, encoding: .utf8)
+        try GameSessionEventStore.append("new unreviewed secret", sessionID: recorder.record.id, paths: paths)
         let zip = root.appendingPathComponent("report.zip")
         let ids: Set<String> = ["summary", "launcher.log"]
         try preview.export(selectedIDs: ids, to: zip, paths: paths)
@@ -61,7 +60,7 @@ struct GameDiagnosticBundleTests {
         #expect(throws: (any Error).self) { try preview.export(selectedIDs: [], to: zip, paths: paths) }
         #expect(throws: (any Error).self) { try preview.export(selectedIDs: ["../accounts.json"], to: zip, paths: paths) }
         #expect(throws: (any Error).self) { try preview.export(selectedIDs: ids, to: paths.root.appendingPathComponent("report.zip"), paths: paths) }
-        #expect(try String(contentsOf: fullLog, encoding: .utf8) == "new unreviewed secret")
+        #expect(try GameSessionEventStore.entries(paths: paths, sessionID: recorder.record.id).contains { $0.text == "new unreviewed secret" })
         #expect(try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil).allSatisfy { !$0.lastPathComponent.hasPrefix(".ruri-diagnostic-") })
     }
 }

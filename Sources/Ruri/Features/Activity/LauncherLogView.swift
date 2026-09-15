@@ -76,11 +76,10 @@ struct LauncherLogView: View {
                                 }
                             } else { Text(entry.statusTitle).font(.caption).foregroundStyle(entry.needsAttention ? entry.tint : .secondary) }
                         }.width(80)
-                        TableColumn(Messages.LauncherLog.category.localized) { Text($0.kind.title).foregroundStyle(.secondary) }.width(56)
                         TableColumn(Messages.LauncherLog.time.localized) { entry in
-                            Text(entry.updatedAt, format: .dateTime.hour().minute().second()).monospacedDigit().foregroundStyle(.secondary)
+                            Text(entry.updatedAt, format: .dateTime.month().day().hour().minute()).monospacedDigit().foregroundStyle(.secondary)
                                 .help(entry.updatedAt.formatted(date: .abbreviated, time: .standard))
-                        }.width(78)
+                        }.width(138)
                     }
                     .tableStyle(.inset(alternatesRowBackgrounds: false))
                     .contextMenu(forSelectionType: UUID.self) { ids in
@@ -185,6 +184,7 @@ private struct LauncherLogDetail: View {
                 }
                 if !steps.isEmpty {
                     Divider().padding(.leading, 30)
+                    DisclosureGroup(Messages.SessionUI.technicalDetails.localized) {
                     Grid(alignment: .topLeading, horizontalSpacing: 16, verticalSpacing: 8) {
                         ForEach(steps.reversed()) { step in
                             GridRow(alignment: .firstTextBaseline) {
@@ -196,7 +196,8 @@ private struct LauncherLogDetail: View {
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
-                    }.padding(.leading, 30).frame(maxWidth: 960, alignment: .leading)
+                    }.padding(.top, 10).frame(maxWidth: 960, alignment: .leading)
+                    }.font(.callout).padding(.leading, 30)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -238,7 +239,7 @@ private struct LauncherLogDetail: View {
 
     private var actions: some View {
         HStack(spacing: 12) {
-            LauncherEntryActions(entry: entry).labelStyle(.iconOnly)
+            LauncherEntryActions(entry: entry).labelStyle(.titleAndIcon)
         }.controlSize(.small).buttonStyle(.borderless)
     }
 }

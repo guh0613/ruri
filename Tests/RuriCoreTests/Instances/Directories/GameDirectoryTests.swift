@@ -134,7 +134,7 @@ struct GameDirectoryTests {
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 0.3; echo external-game-finished"], directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         state.selectedDirectoryID = nil
         let reconnected = base.configured(with: state)
         let finished = try await GameMonitorClient.wait(paths: reconnected, instanceID: instance.id, sessionID: recorder.record.id)

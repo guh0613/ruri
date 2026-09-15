@@ -9,17 +9,17 @@ extension Messages {
         public static var debugMode: LocalizedMessage {
             .init(key: "monitorLogging.debugMode", table: "Interface", fallback: "调试模式")
         }
-        /// 记录完整控制台日志以排查问题，会增加资源占用和磁盘写入。连续记录上限为 64 MiB，超出后仅保留近期故障输出。
+        /// 详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。
         ///
         /// Resource: `Interface.monitorLogging.debugModeHelp`.
         public static var debugModeHelp: LocalizedMessage {
-            .init(key: "monitorLogging.debugModeHelp", table: "Interface", fallback: "记录完整控制台日志以排查问题，会增加资源占用和磁盘写入。连续记录上限为 64 MiB，超出后仅保留近期故障输出。")
+            .init(key: "monitorLogging.debugModeHelp", table: "Interface", fallback: "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。")
         }
-        /// 默认只预览近期输出，异常退出时保存故障日志。需要从启动开始记录日志时，请在启动设置中开启调试模式。
+        /// 默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。
         ///
         /// Resource: `Interface.monitorLogging.defaultModeHelp`.
         public static var defaultModeHelp: LocalizedMessage {
-            .init(key: "monitorLogging.defaultModeHelp", table: "Interface", fallback: "默认只预览近期输出，异常退出时保存故障日志。需要从启动开始记录日志时，请在启动设置中开启调试模式。")
+            .init(key: "monitorLogging.defaultModeHelp", table: "Interface", fallback: "默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。")
         }
         /// [Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。
         ///
@@ -47,8 +47,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:monitorLogging.debugMode": .init("调试模式", []),
-            "Interface:monitorLogging.debugModeHelp": .init("记录完整控制台日志以排查问题，会增加资源占用和磁盘写入。连续记录上限为 64 MiB，超出后仅保留近期故障输出。", []),
-            "Interface:monitorLogging.defaultModeHelp": .init("默认只预览近期输出，异常退出时保存故障日志。需要从启动开始记录日志时，请在启动设置中开启调试模式。", []),
+            "Interface:monitorLogging.debugModeHelp": .init("详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。", []),
+            "Interface:monitorLogging.defaultModeHelp": .init("默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。", []),
             "Interface:monitorLogging.writeFailed": .init("[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", [.text]),
             "Interface:monitorLogging.debugLimit": .init("已达到本次运行的 64 MiB 调试日志上限", []),
             "Interface:monitorLogging.reportedFailure": .init("游戏报告了启动失败或崩溃", []),

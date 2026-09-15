@@ -50,7 +50,7 @@ struct GameRunDirectoryTests {
         #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: b.id) }
         let monitor = try GameSessionRecorder(resuming: recorder.record.id, instanceID: a.id, paths: paths, monitor: identity)
         try monitor.fail(RuriError.message("controlled preparation failure"), cancelled: false)
-        #expect(!FileManager.default.fileExists(atPath: paths.game(a.id).appendingPathComponent(".ruri/active-session.json").path))
+        #expect(!FileManager.default.fileExists(atPath: paths.game(a.id).appendingPathComponent(".ruri/active-run.json").path))
         try FileManager.default.removeItem(at: paths.instance(a.id))
         let next = try GameRunLease.acquire(paths: paths, instanceID: b.id)
         withExtendedLifetime(next) {}
@@ -124,7 +124,7 @@ struct GameRunDirectoryTests {
         let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
         let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo shared-game-finished"], directory: paths.game(a.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }
         let completed = try await GameMonitorClient.wait(paths: paths, instanceID: a.id, sessionID: recorder.record.id)
         #expect(completed.exit?.status == 0)

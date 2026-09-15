@@ -14,8 +14,8 @@ struct GameSessionTests {
         #expect(try GameSessionReviewStore.contains(recorder.record, paths: paths))
         var later = recorder.record; later.updatedAt = later.updatedAt.addingTimeInterval(60)
         #expect(try !GameSessionReviewStore.contains(later, paths: paths))
-        try Data(repeating: 1, count: 1025).write(to: recorder.directory.appendingPathComponent("reviewed"))
-        #expect(throws: (any Error).self) { try GameSessionReviewStore.contains(recorder.record, paths: paths) }
+        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
+
     }
     func setup() throws -> (LauncherPaths, GameInstance) {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
@@ -47,22 +47,19 @@ struct GameSessionTests {
         let persisted = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: next.record.id)
         #expect(persisted.exit == exit && persisted.java == "Java 21" && persisted.state == .succeeded)
     }
-    @Test @MainActor func localizedFailuresKeepLegacyTextAndRedactStoredArguments() throws {
+    @Test @MainActor func localizedFailuresRedactStoredArguments() throws {
         let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         recorder.addSecrets(["private-localization-secret"])
         let message = Messages.CoreNetwork.downloadChecksumFailed("private-localization-secret")
         try recorder.fail(RuriError.message(message), cancelled: false)
-        let data = try Data(contentsOf: recorder.directory.appendingPathComponent("session.json"))
+        let data = try JSONEncoder().encode(GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id))
+        #expect(!FileManager.default.fileExists(atPath: recorder.directory.appendingPathComponent("session.json").path))
         #expect(!String(decoding: data, as: UTF8.self).contains("private-localization-secret"))
         let stored = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
         #expect(stored.failureMessage?.key == message.key)
         #expect(stored.displayFailure == stored.failure && stored.failure?.contains("<redacted>") == true)
-        var legacy = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-        legacy.removeValue(forKey: "failureMessage")
-        legacy["events"] = []
-        let old = try JSONDecoder().decode(GameSession.self, from: JSONSerialization.data(withJSONObject: legacy))
-        #expect(old.failureMessage == nil && old.displayFailure == stored.failure)
+
     }
     @Test @MainActor func evidenceCopiesSurviveNextGameLogAndSkipOldReports() throws {
         let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
@@ -101,7 +98,8 @@ struct GameSessionTests {
         #expect(recorder.record.state == .cancelled && recorder.record.failure == nil)
         let tail = try GameSessionStore.logTail(paths: paths, session: recorder.record, byteLimit: 128)
         #expect(tail.contains("日志第 99 行") && !tail.contains("日志第 0 行") && !tail.contains("�"))
-        let exported = paths.cache.appendingPathComponent("exported.log")
+        let exported = paths.root.deletingLastPathComponent().appendingPathComponent("\(UUID().uuidString).log")
+        defer { try? FileManager.default.removeItem(at: exported) }
         try "previous export".write(to: exported, atomically: true, encoding: .utf8)
         try GameSessionStore.exportLog(paths: paths, session: recorder.record, to: exported)
         let full = try String(contentsOf: exported, encoding: .utf8)
@@ -109,7 +107,8 @@ struct GameSessionTests {
         #expect(throws: (any Error).self) { try GameSessionStore.exportLog(paths: paths, session: recorder.record, to: recorder.directory.appendingPathComponent("session.json")) }
         var modified = recorder.record
         modified.evidence = [.init(relativePath: "reports/../../../outside.log", name: "outside", truncated: false)]
-        try JSONEncoder().encode(modified).write(to: recorder.directory.appendingPathComponent("session.json"))
-        #expect(throws: (any Error).self) { try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) }
+        modified.revision = (modified.revision) + 1
+        #expect(throws: (any Error).self) { try GameHistoryStore.record(modified, paths: paths) }
+        #expect(try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) == recorder.record)
     }
 }

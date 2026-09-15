@@ -5,21 +5,6 @@
     "reason": "Literal URL scheme input hint."
   },
   {
-    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
-    "literal": "\"CurseForge · \\(project.authors?.map(\\.name).joined(separator: \", \") ?? Messages.AppCurseForgeInstallView.communityContent.localized)\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
-    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
-    "literal": "\" · Beta\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
-    "file": "Sources/Ruri/Features/Content/CurseForge/CurseForgeInstallView.swift",
-    "literal": "\" · Alpha\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
     "file": "Sources/Ruri/Features/Instances/AppModel+Installation.swift",
     "literal": "\"Minecraft \\(version)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
@@ -60,34 +45,14 @@
     "reason": "Stable log prefix around already localized text or verbatim process output."
   },
   {
-    "file": "Sources/Ruri/Features/Sessions/LogsView.swift",
-    "literal": "\"Minecraft \\(record.gameVersion) · \\(record.loader) \\(record.loaderVersion ?? \"\")\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
     "file": "Sources/Ruri/Features/Settings/CurseForgeSettingsSection.swift",
     "literal": "\"API Key\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/Ruri/Features/Settings/LaunchCommandsEditor.swift",
-    "literal": "#\"printf '%s\\n' \"$RURI_GAME_DIRECTORY\"\"#",
-    "reason": "Literal shell/JVM/game command example, not prose."
-  },
-  {
     "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
     "literal": "\"Java \\(major)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
-    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
-    "literal": "\"-Dfile.encoding=UTF-8\"",
-    "reason": "Literal shell/JVM/game command example, not prose."
-  },
-  {
-    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
-    "literal": "\"--width 1600 --height 900\"",
-    "reason": "Literal shell/JVM/game command example, not prose."
   },
   {
     "file": "Sources/Ruri/Features/Worlds/SchematicManagerView.swift",
@@ -490,41 +455,6 @@
     "reason": "Loader identity or version recognition syntax used by import/launch logic."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
-    "literal": "\"[Ruri] \\(record.failure ?? Messages.CoreGameMonitor.monitorStartFailed.localized)\\n\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \\(record.updatedAt.ISO8601Format()) \\(descriptor.fallback)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \\(attempt.explanation)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \\(exit.explanation)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
-    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameSessionRecovery.swift",
-    "literal": "\"\\n[Ruri] \\(date.ISO8601Format()) \\(text)\\n\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
     "file": "Sources/RuriCore/Content/CatalogDocument.swift",
     "literal": "\"\"\"\n        <!doctype html><html><head><meta charset=\"utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; img-src https: data:; style-src 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'\">\n        <style>\n        :root { color-scheme: \\(dark ? \"dark\" : \"light\"); }\n        html, body { margin: 0; padding: 0; background: \\(background); color: \\(foreground); }\n        body { font: 14px/1.65 -apple-system, BlinkMacSystemFont, sans-serif; padding: 22px 26px; overflow-wrap: anywhere; }\n        h1,h2,h3,h4 { line-height: 1.3; margin: 1.3em 0 .6em; font-weight: 650; } h1 { font-size: 26px; } h2 { font-size: 21px; } h3 { font-size: 17px; }\n        body > :first-child { margin-top: 0; } p { margin: .7em 0; }\n        a { color: \\(dark ? \"#64a9ff\" : \"#0066cc\"); text-decoration: none; } a:hover { text-decoration: underline; }\n        img, video { max-width: 100% !important; height: auto; border-radius: 6px; } iframe, form, object, embed { display: none; }\n        pre { background: \\(surface); padding: 14px; border-radius: 10px; overflow-x: auto; } code { font: 12px/1.5 ui-monospace, monospace; }\n        blockquote { margin: 16px 0; padding: 0 16px; border-left: 3px solid \\(muted); color: \\(muted); }\n        table { border-collapse: collapse; display: block; overflow: auto; } th,td { padding: 8px 12px; border: 1px solid \\(muted); }\n        hr { border: none; border-top: 1px solid \\(muted); opacity: .3; margin: 24px 0; }\n        </style></head><body>\\(content)</body></html>\n        \"\"\"",
     "reason": "HTML/CSS document template and content security policy; all displayed prose comes from the provider."
@@ -590,38 +520,303 @@
     "reason": "HTTP wire format, standard response reason phrase, or PEM public-key framing; not displayed in the interface."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"instance_id = ?\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0)\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"attention = 1\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" WHERE \"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" AND \"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" ORDER BY created DESC, id DESC LIMIT ? OFFSET ?\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" WHERE instance_id = ?\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT coalesce(sum(seconds), 0), coalesce(sum(played), 0), max(CASE WHEN played=1 THEN started END) FROM sessions\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" AND instance_id = ?\"",
+    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
     "reason": "Launcher log prefix followed by an already-redacted command line."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"Crash report saved to\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"Could not save crash report to\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"This crash report has been saved to:\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"Unable to launch\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameMonitor.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionCoordinator.swift",
     "literal": "\"An exception was thrown, the game will display an error screen and halt.\"",
     "reason": "Exact game/loader output signature used for failure detection, not UI copy."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameSession.swift",
+    "file": "Sources/RuriCore/Sessions/GameSessionRecorder.swift",
     "literal": "\"[Ruri] \\(status.summary)\"",
     "reason": "Log prefix wrapping an already localized host status."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionRecorder.swift",
+    "literal": "\"[Ruri] \"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionRecorder.swift",
+    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/GameHistoryView.swift",
+    "literal": "\"Minecraft \\(record.gameVersion) · \\(record.loader)\"",
+    "reason": "Game brand and version identifiers in a history row."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "\"\\nRuri: \\(version)\\n\"",
+    "reason": "Product identifier and version in the export environment header."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"started >= ?\"",
+    "reason": "SQLite statement or query fragment; internal database syntax."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"UPDATE sessions SET payload = ? WHERE id = ?\"",
+    "reason": "SQLite statement or query fragment; internal database syntax."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/LauncherJournalStore.swift",
+    "literal": "\"SELECT payload FROM launcher_events ORDER BY updated DESC LIMIT 1000\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/LauncherJournalStore.swift",
+    "literal": "\"DELETE FROM launcher_events WHERE id=?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/LauncherJournalStore.swift",
+    "literal": "\"DELETE FROM launcher_events WHERE running=0 AND id NOT IN (SELECT id FROM launcher_events WHERE running=0 ORDER BY updated DESC LIMIT ?)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/LauncherJournalStore.swift",
+    "literal": "\"SELECT payload FROM launcher_events WHERE session_id=? ORDER BY updated LIMIT 500\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/LauncherJournalStore.swift",
+    "literal": "\"\"\"\n            INSERT INTO launcher_events(id, session_id, updated, running, payload) VALUES(?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET session_id=excluded.session_id, updated=excluded.updated, running=excluded.running, payload=excluded.payload\n            WHERE launcher_events.payload<>excluded.payload\n            \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "literal": "\"\"\"\n                INSERT OR IGNORE INTO runtime_events(id, session_id, date, payload)\n                SELECT ?, ?, ?, ? WHERE\n                    (SELECT count(*) FROM runtime_events WHERE session_id=?) < 512 AND\n                    (SELECT coalesce(sum(length(payload)), 0) FROM runtime_events WHERE session_id=?) + ? <= 262144\n                \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "literal": "\"SELECT payload FROM runtime_events WHERE session_id=? ORDER BY date, id LIMIT 512\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "literal": "\"[Ruri] \\($0.0.ISO8601Format()) \\($0.1)\"",
+    "reason": "Stable event prefix around an ISO timestamp and already localized text."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionStore.swift",
+    "literal": "\"UPDATE sessions SET reviewed_revision=?, reviewed_at=? WHERE id=? AND revision=? AND updated<=?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameSessionStore.swift",
+    "literal": "\"SELECT count(*) FROM sessions WHERE id=? AND reviewed_revision=? AND reviewed_at>=?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA journal_mode=WAL\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA journal_mode=DELETE\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA synchronous=FULL\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"BEGIN IMMEDIATE\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed)\n            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,\n                started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,\n                attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed\n            WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND\n                excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)\n            \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE id = ?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE updated >= ? AND played=1\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n                UPDATE sessions SET timing=?, seconds=?, started=?, played=1, updated=?, revision=?, observed=?\n                WHERE id=? AND finished=0 AND revision < ?\n                \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE instance_id=? AND finished=0 ORDER BY created DESC\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE id = ?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE instance_id=? AND finished=1 ORDER BY created DESC LIMIT 20\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"\"\"\n                        CREATE TABLE sessions(\n                            id TEXT PRIMARY KEY, instance_id TEXT NOT NULL, name TEXT NOT NULL, game_version TEXT NOT NULL,\n                            created REAL NOT NULL, started REAL NOT NULL, updated REAL NOT NULL, seconds REAL NOT NULL,\n                            played INTEGER NOT NULL, attention INTEGER NOT NULL, finished INTEGER NOT NULL,\n                            revision INTEGER NOT NULL, payload BLOB NOT NULL, timing BLOB, endpoint TEXT, observed REAL NOT NULL,\n                            reviewed_revision INTEGER, reviewed_at REAL)\n                        \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_instance_date ON sessions(instance_id, created DESC)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_date ON sessions(created DESC)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_updated ON sessions(updated)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_credit ON sessions(instance_id, seconds, played, started)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_active ON sessions(instance_id, finished, created DESC)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE TABLE runtime_events(id TEXT PRIMARY KEY, session_id TEXT NOT NULL, date REAL NOT NULL, payload BLOB NOT NULL)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX runtime_events_session ON runtime_events(session_id, date)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE TABLE launcher_events(id TEXT PRIMARY KEY, session_id TEXT, updated REAL NOT NULL, running INTEGER NOT NULL, payload BLOB NOT NULL)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX launcher_events_session ON launcher_events(session_id, updated)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version=1\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
   }
 ]

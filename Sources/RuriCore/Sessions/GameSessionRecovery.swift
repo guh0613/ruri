@@ -70,6 +70,8 @@ public enum GameSessionRecovery {
             resolution = .userConfirmedEnded
         }
         let date = Date()
+        record.controlEndpoint = nil; record.finalSnapshot = true
+        record.revision = (record.revision) + 1
         if let exit = record.exit {
             let explanationMessage = Messages.CoreGameSessionRecovery.monitorInterruptedAfterExit
             let explanation = explanationMessage.localized
@@ -81,11 +83,8 @@ public enum GameSessionRecovery {
             record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
             record.stage = .finished; record.updatedAt = date
             if record.events.count < 512 { record.events.append(.init(id: UUID(), date: date, stage: .monitorRecovery, message: explanation, localizedMessage: explanationMessage.recorded())) }
-            let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
-            try JSONEncoder().encode(record).write(to: directory.appendingPathComponent("session.json"), options: .atomic)
-            try GamePlaytimeStore.record(record, paths: paths)
+            try GameHistoryStore.record(record, paths: paths)
             try? lease.clearReservation(session: record)
-            try? appendRecoveryLog(explanation, date: date, paths: paths, record: record)
             return record
         }
         let explanationMessage = resolution == .knownProcessEnded
@@ -95,25 +94,11 @@ public enum GameSessionRecovery {
         record.interruption = .init(resolution: resolution, observedAt: date, previousStage: record.stage, explanation: explanation, explanationMessage: explanationMessage.recorded())
         record.state = .interrupted; record.stage = .monitorRecovery; record.updatedAt = date
         record.exit = nil
+        if record.timing != nil { record.timing?.quality = .interrupted }
         if record.events.count < 512 { record.events.append(.init(id: UUID(), date: date, stage: .monitorRecovery, message: explanation, localizedMessage: explanationMessage.recorded())) }
-        let directory = try GameSessionStore.directory(paths: paths, instanceID: record.instanceID, sessionID: record.id)
-        let url = try LauncherPaths.safePath("session.json", within: directory)
-        let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try encoder.encode(record).write(to: url, options: .atomic)
+        if record.nativeLogs == nil { record.nativeLogs = GameLogSources.references(paths: paths, session: record) }
+        try GameHistoryStore.record(record, paths: paths)
         try? lease.clearReservation(session: record)
-        // Metadata is authoritative even if a damaged/unwritable output log
-        // cannot accept this additional event.
-        try? appendRecoveryLog(explanation, date: date, paths: paths, record: record)
         return record
-    }
-    private static func appendRecoveryLog(_ text: String, date: Date, paths: LauncherPaths, record: GameSession) throws {
-        let url = try GameSessionStore.logURL(paths: paths, session: record)
-        let fd = open(url.path, O_WRONLY | O_APPEND | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogAppendFailed) }
-        defer { Darwin.close(fd) }
-        var attributes = stat()
-        guard fstat(fd, &attributes) == 0, attributes.st_mode & S_IFMT == S_IFREG else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogNotRegularFile) }
-        let data = Data(("\n[Ruri] \(date.ISO8601Format()) \(text)\n").utf8)
-        guard data.withUnsafeBytes({ Darwin.write(fd, $0.baseAddress, $0.count) }) == data.count else { throw RuriError.message(Messages.CoreGameSessionRecovery.recoveryLogSaveFailed) }
     }
 }

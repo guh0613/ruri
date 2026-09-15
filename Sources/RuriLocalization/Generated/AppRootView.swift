@@ -9,17 +9,17 @@ extension Messages {
         public static var manage: LocalizedMessage {
             .init(key: "appRootView.modelText1", table: "Interface", fallback: "管理")
         }
-        /// 运行记录
+        /// 游戏详情
         ///
         /// Resource: `Interface.appRootView.runningIDText1`.
         public static var runHistory: LocalizedMessage {
-            .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "运行记录")
+            .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "游戏详情")
         }
-        /// 查看正在运行的游戏的记录 ⌘L
+        /// 查看正在运行的游戏 ⌘L
         ///
         /// Resource: `Interface.appRootView.runningIDText2`.
         public static var viewRunningGameLogs: LocalizedMessage {
-            .init(key: "appRootView.runningIDText2", table: "Interface", fallback: "查看正在运行的游戏的记录 ⌘L")
+            .init(key: "appRootView.runningIDText2", table: "Interface", fallback: "查看正在运行的游戏 ⌘L")
         }
         /// 操作未完成
         ///
@@ -83,8 +83,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appRootView.modelText1": .init("管理", []),
-            "Interface:appRootView.runningIDText1": .init("运行记录", []),
-            "Interface:appRootView.runningIDText2": .init("查看正在运行的游戏的记录 ⌘L", []),
+            "Interface:appRootView.runningIDText1": .init("游戏详情", []),
+            "Interface:appRootView.runningIDText2": .init("查看正在运行的游戏 ⌘L", []),
             "Interface:appRootView.runningIDText3": .init("操作未完成", []),
             "Interface:appRootView.runningIDText4": .init("好", []),
             "Interface:appRootView.bodyText1": .init("添加账号…", []),

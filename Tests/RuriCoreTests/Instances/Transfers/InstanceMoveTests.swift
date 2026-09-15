@@ -9,7 +9,7 @@ struct InstanceMoveTests {
         let (paths, source) = (fixture.paths, fixture.source)
         let recorder = try GameSessionRecorder(paths: paths, instance: source, accountMode: "offline")
         try recorder.append("History before moving"); try recorder.fail(CancellationError(), cancelled: true)
-        let oldHistory = try Data(contentsOf: recorder.directory.appendingPathComponent("session.json"))
+        let oldHistory = try GameSessionStore.load(paths: paths, instanceID: source.id, sessionID: recorder.record.id)
         let pack = InstalledModpack(format: "Modrinth", name: "Fixture", version: "1", origin: .init(provider: .modrinth, projectID: "fixture", versionID: "v1"), settings: source, files: [])
         try ModpackRegistry.save(pack, paths: paths, instanceID: source.id)
         try FileExtendedAttributesTests.set(Data("instance label".utf8), at: paths.instance(source.id))
@@ -29,7 +29,7 @@ struct InstanceMoveTests {
         #expect(result.state.selectedInstanceID == source.id && result.state.selectedDirectoryID == fixture.target.id)
         #expect(result.preservedFiles.isEmpty && result.warning == nil)
         #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))
-        #expect(try Data(contentsOf: GameSessionStore.directory(paths: current, instanceID: source.id, sessionID: recorder.record.id).appendingPathComponent("session.json")) == oldHistory)
+        #expect(try GameSessionStore.load(paths: current, instanceID: source.id, sessionID: recorder.record.id) == oldHistory)
         #expect(try String(contentsOf: current.game(source.id).appendingPathComponent("options.txt"), encoding: .utf8) == "options")
         #expect(try String(contentsOf: current.game(source.id).appendingPathComponent(".ruri-partials/kept.bin"), encoding: .utf8) == "partial")
         #expect(try String(contentsOf: current.game(source.id).appendingPathComponent(".DS_Store"), encoding: .utf8) == "finder data")
@@ -206,8 +206,8 @@ struct InstanceMoveTests {
         let source = fixture.source
         let recorder = try GameSessionRecorder(paths: fixture.paths, instance: source, accountMode: "offline")
         try recorder.fail(CancellationError(), cancelled: true)
-        struct Reservation: Encodable { let version = 2; let paths: LauncherPaths; let instanceID: UUID; let sessionID: UUID }
-        let reservation = fixture.paths.gameDataState(source.id).appendingPathComponent("active-session.json")
+        struct Reservation: Encodable { let version = 1; let paths: LauncherPaths; let instanceID: UUID; let sessionID: UUID }
+        let reservation = fixture.paths.gameDataState(source.id).appendingPathComponent("active-run.json")
         try JSONEncoder().encode(Reservation(paths: fixture.paths.monitorSnapshot(for: source.id), instanceID: source.id, sessionID: recorder.record.id)).write(to: reservation)
         var alias = GameInstance(name: "Shared sibling", gameVersion: "1.21.1"); alias.runDirectory = .shared
         try StateStore.update(fixture.paths) { $0.instances.append(alias) }

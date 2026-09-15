@@ -171,7 +171,7 @@ struct CustomRunDirectoryRelocationTests {
         var shared = GameInstance(name: "Shared history", gameVersion: "1.21.1"); shared.directoryID = folder.id; shared.runDirectory = .shared
         let initial = try StateStore.update(paths) { $0.instances.append(shared) }, current = paths.configured(with: initial)
         let recorder = try GameSessionRecorder(paths: current, instance: shared, accountMode: "offline")
-        let marker = current.gameDataState(shared.id).appendingPathComponent("active-session.json")
+        let marker = current.gameDataState(shared.id).appendingPathComponent("active-run.json")
         let reservation = try Data(contentsOf: marker)
         try recorder.fail(RuriError.message("fixture ended"), cancelled: true)
         try reservation.write(to: marker)

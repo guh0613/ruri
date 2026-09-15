@@ -88,7 +88,7 @@ extension AppModel {
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
                     try advanceSession(.starting)
-                    try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [token])
+                    try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [token])
                     sessionRecorder = nil
                     activeSessions[instance.id] = recorder.record
                     try? GameMonitorClient.recordEvent(.connected, paths: paths, session: recorder.record)
@@ -96,7 +96,9 @@ extension AppModel {
                 } catch {
                     finishLaunchPresentation(recorder.record.id)
                     let cancelled = Task.isCancelled || error is CancellationError
-                    do { try recorder.fail(error, cancelled: cancelled) } catch { showRecordingError(error) }
+                    if !recorder.hasHandedOff {
+                        do { try recorder.fail(error, cancelled: cancelled) } catch { showRecordingError(error) }
+                    }
                     publishSession(recorder.record)
                     if let failure = recorder.record.failure { appendDisplayedLog("[Ruri] \(failure)") }
                     sessionRecorder = nil

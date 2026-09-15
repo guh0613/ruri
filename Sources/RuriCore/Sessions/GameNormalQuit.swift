@@ -2,13 +2,6 @@ import RuriLocalization
 import Foundation
 import AppKit
 
-struct GameNormalQuitRequest: Codable {
-    let version: Int
-    let id: UUID
-    let sessionID: UUID
-    let requestedAt: Date
-}
-
 public struct GameNormalQuitAttempt: Codable, Equatable, Sendable {
     public let requestID: UUID
     public let requestedAt: Date
@@ -39,20 +32,9 @@ extension GameMonitorClient {
               current.gameIdentity == record.gameIdentity, current.monitorIdentity?.isAlive == true,
               current.gameIdentity?.isAlive == true else { throw RuriError.message(Messages.CoreGameNormalQuit.quitStateChanged) }
         guard current.nativeQuitSupported == true else { throw RuriError.message(Messages.CoreGameNormalQuit.appExitRequestDisabled) }
-        let directory = try GameSessionStore.directory(paths: paths, instanceID: current.instanceID, sessionID: current.id)
-        let request = GameNormalQuitRequest(version: 1, id: UUID(), sessionID: current.id, requestedAt: Date())
-        let file = try LauncherPaths.safePath("quit-request.json", within: directory)
-        try JSONEncoder().encode(request).write(to: file, options: .atomic)
+        guard current.controlEndpoint != nil else { throw RuriError.message(Messages.CoreGameMonitor.monitorDisconnected) }
+        let reply = try MonitorSocket.request(current, command: .quit)
         try? recordEvent(.normalQuitRequested, paths: paths, session: current)
-        return request.id
-    }
-    static func normalQuitRequest(directory: URL, session: GameSession) -> GameNormalQuitRequest? {
-        guard let file = try? LauncherPaths.safePath("quit-request.json", within: directory),
-              let attributes = try? file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey]),
-              attributes.isRegularFile == true, (attributes.fileSize ?? .max) <= 2048,
-              let data = try? Data(contentsOf: file), let request = try? JSONDecoder().decode(GameNormalQuitRequest.self, from: data),
-              request.version == 1, request.sessionID == session.id, request.requestedAt >= session.createdAt,
-              request.requestedAt <= Date().addingTimeInterval(5) else { return nil }
-        return request
+        return reply.requestID
     }
 }

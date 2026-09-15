@@ -13,29 +13,18 @@ struct GameNormalQuitTests {
         #expect(success.succeeded && !success.stopRequested && !success.stoppedByLauncher)
         #expect(success.explanation.contains("正常退出请求"))
     }
-    @Test @MainActor func requestsMustMatchTheSessionAndRetainSeparateOutcome() throws {
+    @Test @MainActor func normalQuitOutcomeIsIndependentOfTheFinalExit() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try recorder.setNativeQuitSupported(false)
         #expect(throws: (any Error).self) { try GameMonitorClient.requestNormalQuit(paths: paths, record: recorder.record) }
-        let requestFile = recorder.directory.appendingPathComponent("quit-request.json")
-        func write(sessionID: UUID, version: Int = 1, date: Date = Date()) throws {
-            try JSONEncoder().encode(GameNormalQuitRequest(version: version, id: UUID(), sessionID: sessionID, requestedAt: date)).write(to: requestFile)
-        }
-        try write(sessionID: UUID())
-        #expect(GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record) == nil)
-        try write(sessionID: recorder.record.id, version: 2)
-        #expect(GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record) == nil)
-        try write(sessionID: recorder.record.id, date: recorder.record.createdAt.addingTimeInterval(-1))
-        #expect(GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record) == nil)
-        try write(sessionID: recorder.record.id)
-        let request = try #require(GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record))
-        try recorder.recordNormalQuit(request, accepted: true)
-        #expect(recorder.record.stage == .quitting && recorder.record.exit == nil && !recorder.record.state.isFinished)
+        let id = UUID()
+        try recorder.recordNormalQuit(requestID: id, requestedAt: Date(), accepted: true)
+        #expect(recorder.record.stage == .quitting && recorder.record.exit == nil)
         try recorder.fail(RuriError.message("later error"), cancelled: false)
-        #expect(recorder.record.state == .failed && recorder.record.normalQuitAttempt?.accepted == true)
-        try Data(repeating: 65, count: 2049).write(to: requestFile)
-        #expect(GameMonitorClient.normalQuitRequest(directory: recorder.directory, session: recorder.record) == nil)
+        #expect(recorder.record.state == .failed && recorder.record.normalQuitAttempt?.requestID == id)
+        #expect(recorder.record.normalQuitAttempt?.accepted == true)
+        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
     }
     @MainActor private func waitFor(_ condition: () throws -> Bool) async throws {
         let deadline = Date().addingTimeInterval(10)
@@ -48,7 +37,7 @@ struct GameNormalQuitTests {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", #"trap 'printf "explicit-stop\n"; exit 0' TERM; while :; do sleep 0.05; done"#], directory: paths.game(instance.id), environment: ["PATH": "/usr/bin:/bin"], nativeQuitSupported: true)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         func load() throws -> GameSession { try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) }
         defer { if let record = try? load() { try? GameMonitorClient.requestStop(paths: paths, record: record) } }
         try await waitFor { try load().gameIdentity?.isAlive == true }

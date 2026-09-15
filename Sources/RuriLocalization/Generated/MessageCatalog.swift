@@ -121,7 +121,6 @@ enum MessageCatalog {
         result.merge(Messages.CoreGameJavaRequirement.definitions) { first, _ in first }
         result.merge(Messages.CoreGameMonitor.definitions) { first, _ in first }
         result.merge(Messages.CoreGameNormalQuit.definitions) { first, _ in first }
-        result.merge(Messages.CoreGamePlaytime.definitions) { first, _ in first }
         result.merge(Messages.CoreGameResourcePaths.definitions) { first, _ in first }
         result.merge(Messages.CoreGameRunDirectory.definitions) { first, _ in first }
         result.merge(Messages.CoreGameRunDirectoryChange.definitions) { first, _ in first }
@@ -210,6 +209,8 @@ enum MessageCatalog {
         result.merge(Messages.MonitorLogging.definitions) { first, _ in first }
         result.merge(Messages.NativeGameLogs.definitions) { first, _ in first }
         result.merge(Messages.OfflineSkin.definitions) { first, _ in first }
+        result.merge(Messages.SessionRuntime.definitions) { first, _ in first }
+        result.merge(Messages.SessionUI.definitions) { first, _ in first }
         return result
     }()
 }

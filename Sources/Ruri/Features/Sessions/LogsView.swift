@@ -1,204 +1,114 @@
-import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
+import RuriLocalization
 
+/// A single run has one clear overview. History browsing and report export are
+/// separate screens rather than competing modes in an oversized log picker.
 struct LogsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
-    private enum Mode: String, CaseIterable {
-        case analysis, logs, share
-        var title: String { switch self { case .analysis: Messages.AppLogsView.diagnosticsAndHandling.localized; case .logs: Messages.AppLogsView.runLogs.localized; case .share: Messages.AppLogsView.collectReport.localized } }
-    }
+    private enum Tab: Hashable { case overview, console }
     private enum Destination: String, Identifiable { case settings, mods; var id: String { rawValue } }
-    @State private var mode = Mode.logs
+    @State private var tab = Tab.overview
+    @State private var loaded: GameSession?
+    @State private var error: String?
+    @State private var exporting = false
     @State private var destination: Destination?
-    @State private var filter = ""
-    @State private var follow = true
-    @State private var selectedID: UUID?
-    @State private var historicalLines: [String] = []
-    @State private var readError: String?
-    private var session: GameSession? { model.sessions.first { $0.id == selectedID } }
-    private var isCurrent: Bool { session.map { !$0.state.isFinished } ?? false }
-    private var isRunning: Bool { session.map { model.activeSessions[$0.instanceID]?.id == $0.id } ?? false }
-    private var lines: [String] {
-        historicalLines.filter { filter.isEmpty || $0.localizedCaseInsensitiveContains(filter) }
+    private var session: GameSession? {
+        let id = model.requestedLogSessionID
+        return model.sessions.first(where: { $0.id == id }) ??
+            (model.inspectedSession?.id == id ? model.inspectedSession : nil) ??
+            (loaded?.id == id ? loaded : nil)
     }
+
     var body: some View {
-        VStack(spacing: 12) {
-            HStack {
-                Text(Messages.AppLogsView.runHistory.localized).font(.title2.bold()); Spacer()
-                if isRunning, let session { TagPill(text: model.runningLabel(session.instanceID) ?? Messages.AppLogsView.running.localized) }
-                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-            }
-            if model.sessions.isEmpty {
-                ContentUnavailableView(Messages.AppLogsView.noRunHistory.localized, systemImage: "text.document", description: Text(Messages.AppLogsView.runHistoryDetails.localized))
+        VStack(spacing: 0) {
+            if let session {
+                HStack(alignment: .top, spacing: 14) {
+                    Image(systemName: session.resultSymbol).font(.system(size: 26)).foregroundStyle(session.resultColor)
+                        .frame(width: 36).padding(.top, 3)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(session.instanceName).font(.title2.bold()).lineLimit(1)
+                        HStack(spacing: 8) {
+                            Text(session.userResult).foregroundStyle(session.resultColor)
+                            Text("·")
+                            Text(session.createdAt, format: .dateTime.year().month().day().hour().minute()).foregroundStyle(.secondary)
+                        }.font(.callout)
+                    }
+                    Spacer(minLength: 12)
+                    Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                }.padding(24)
+                HStack {
+                    Picker(Messages.SessionUI.session.localized, selection: $tab) {
+                        Text(Messages.SessionUI.overview.localized).tag(Tab.overview)
+                        Text(Messages.SessionUI.console.localized).tag(Tab.console)
+                    }.pickerStyle(.segmented).labelsHidden().frame(width: 200)
+                    Spacer()
+                    Button { exporting = true } label: { Label(Messages.SessionUI.exportReport.localized, systemImage: "square.and.arrow.up") }
+                }.padding(.horizontal, 24).padding(.bottom, 16)
+                Divider()
+                Group {
+                    switch tab {
+                    case .overview: GameDiagnosticView(session: session, action: diagnosticAction).id(session.id)
+                    case .console: GameConsoleView(session: session).id(session.id)
+                    }
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                if !session.state.isFinished {
+                    Divider()
+                    if GameMonitorClient.activity(session) == .monitoring {
+                        GameQuitControls(session: session).padding(.horizontal, 24).padding(.vertical, 14)
+                    } else {
+                        GameSessionRecoveryView(session: session).id(session.id).padding(16)
+                    }
+                }
             } else {
-                Picker(Messages.AppLogsView.selectRecord.localized, selection: $selectedID) {
-                    ForEach(model.sessions) { record in
-                        Text("\(LocalizedFormat.date(record.createdAt, date: .abbreviated, time: .standard)) · \(record.instanceName)").tag(Optional(record.id))
-                    }
-                }
-                Picker(Messages.AppLogsView.viewContent.localized, selection: $mode) {
-                    ForEach(Mode.allCases, id: \.self) { Text($0.title).tag($0) }
-                }.pickerStyle(.segmented)
-                if let session, !session.state.isFinished, session.monitorIdentity != nil || !model.busy {
-                    GameSessionRecoveryView(session: session).id(session.id)
-                }
-                if mode != .logs, let session {
-                    GameDiagnosticView(session: session, collecting: mode == .share, action: diagnosticAction).id(session.id)
-                } else {
-                    if let session { summary(session) }
-                    HStack {
-                        TextField(Messages.AppLogsView.filterLogs.localized, text: $filter).textFieldStyle(.roundedBorder)
-                        Toggle(Messages.AppLogsView.autoScroll.localized, isOn: $follow).toggleStyle(.checkbox)
-                        Button(Messages.AppLogsView.exportFullLog.localized) { export() }.disabled(session == nil)
-                        Button(Messages.MonitorLogging.showGameLogs.localized) { revealGameLogs() }.disabled(session == nil)
-                    }
-                    if let readError { Text(readError).font(.callout).foregroundStyle(.red) }
-                    ScrollViewReader { proxy in
-                        ScrollView([.vertical, .horizontal]) {
-                            LazyVStack(alignment: .leading, spacing: 3) {
-                                ForEach(Array(lines.enumerated()), id: \.offset) { index, line in
-                                    Text(line).font(.system(size: 11, design: .monospaced))
-                                        .fixedSize(horizontal: true, vertical: false)
-                                        .foregroundStyle(line.contains("ERROR") || line.contains("Exception") ? .orange : .primary)
-                                        .textSelection(.enabled).id(index)
-                                }
-                                Color.clear.frame(height: 1).id("end")
-                            }.padding(12)
-                        }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 10))
-                            .onChange(of: lines.last) { if follow && isCurrent { proxy.scrollTo("end", anchor: .bottom) } }
-                    }
-                    if isRunning, let session, !session.state.isFinished, session.monitorIdentity?.isAlive == true {
-                        GameQuitControls(session: session)
-                    }
-                    HStack {
-                        Text(Messages.AppLogsView.recentLogPreview.localized).font(.caption).foregroundStyle(.secondary)
-                        Spacer()
-                    }
-                    if session?.debugLogging != true {
-                        Text(Messages.MonitorLogging.defaultModeHelp.localized).font(.caption).foregroundStyle(.secondary)
-                    }
+                HStack { Spacer(); Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction) }.padding(20)
+                if let error {
+                    ContentUnavailableView(Messages.SessionUI.session.localized, systemImage: "exclamationmark.triangle", description: Text(error))
+                } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+            }
+        }
+        .frame(width: 860, height: 680)
+        .sheet(isPresented: $exporting) { if let session { GameReportExportView(session: session).id(session.id) } }
+        .sheet(item: $destination) { target in
+            if let session, let instance = model.state.instances.first(where: { $0.id == session.instanceID }) {
+                switch target {
+                case .settings: InstanceSettingsView(instance: instance)
+                case .mods: InstanceContentView(instance: instance)
                 }
             }
-        }.padding(22).frame(width: 780, height: 660)
-            .sheet(item: $destination) { target in
-                if let record = session, let instance = model.state.instances.first(where: { $0.id == record.instanceID }) {
-                    switch target {
-                    case .settings: InstanceSettingsView(instance: instance)
-                    case .mods: InstanceContentView(instance: instance)
-                    }
-                }
-            }
-            .task {
-                await model.refreshSessions()
-                selectedID = model.requestedLogSessionID ?? model.logsSessionID ?? model.sessions.first?.id
-            }
-            .task(id: selectedID) {
-                guard let id = selectedID else { return }
-                while !Task.isCancelled {
-                    guard let record = model.sessions.first(where: { $0.id == id }) else { return }
-                    if mode == .logs && !NSApp.isHidden {
-                        let paths = model.paths
-                        let result = await Task.detached(priority: .utility) {
-                            Result {
-                                try GameMonitorClient.requestLogSnapshot(paths: paths, session: record)
-                                return Array(try GameMonitorClient.logPreview(paths: paths, session: record).split(separator: "\n", omittingEmptySubsequences: false).suffix(5000).map(String.init))
-                            }
-                        }.value
-                        guard !Task.isCancelled else { return }
-                        switch result {
-                        case .success(let value): if historicalLines != value { historicalLines = value }; readError = nil
-                        case .failure(let error): readError = error.localizedDescription
-                        }
-                        if record.state.isFinished { return }
-                    }
-                    do { try await Task.sleep(for: .seconds(1)) } catch { return }
-                }
-            }
-            .onChange(of: selectedID) { loadHistory(); mode = session?.state == .failed ? .analysis : .logs }
-            .onChange(of: session?.state) {
-                if let session {
-                    model.acknowledgeSession(session)
-                    if session.state == .failed && mode != .share { mode = .analysis }
-                }
-            }
-            .onChange(of: model.requestedLogSessionID) { if let id = model.requestedLogSessionID { selectedID = id } }
-    }
-    @ViewBuilder private func summary(_ record: GameSession) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(isRunning ? Messages.AppLogsView.lastRecordedStage(record.stage.title).localized : record.title).font(.headline)
-            if let exit = record.exit {
-                Text(exit.explanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            } else if let interruption = record.interruption {
-                Text(interruption.displayExplanation).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            } else if let failure = record.displayFailure {
-                Text(failure).font(.callout).foregroundStyle(.orange).lineLimit(3).textSelection(.enabled)
-            }
-            ForEach(Array((record.commandResults ?? []).enumerated()), id: \.offset) { _, result in
-                Text(result.summary).font(.caption).foregroundStyle(result.succeeded ? Color.secondary : .orange).textSelection(.enabled)
-            }
-            DisclosureGroup(Messages.AppLogsView.stageEnvironmentAndReport.localized) {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 7) {
-                        Text("Minecraft \(record.gameVersion) · \(record.loader) \(record.loaderVersion ?? "")").font(.caption)
-                        Text(record.memory?.summary ?? Messages.AppLogsView.recordedMemoryLimit(String(describing: record.memoryMB)).localized).font(.caption).textSelection(.enabled)
-                        Text("\(record.operatingSystem) · \(record.java ?? Messages.AppLogsView.javaNotSelected.localized)").font(.caption).foregroundStyle(.secondary)
-                        ForEach(record.events) { event in
-                            HStack(alignment: .top) {
-                                Text(LocalizedFormat.date(event.date, date: .omitted, time: .standard)).monospacedDigit().foregroundStyle(.secondary)
-                                Text(event.displayMessage).textSelection(.enabled)
-                            }.font(.caption)
-                        }
-                        ForEach(record.evidence) { evidence in
-                            Button(evidence.name + (evidence.truncated ? Messages.AppLogsView.truncatedCopy.localized : "")) { reveal(record, relativePath: evidence.relativePath) }
-                        }
-                        Button(Messages.AppLogsView.showRunRecordInFinder.localized) { reveal(record) }
-                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 6)
-                }.frame(maxHeight: 125)
-            }.font(.caption)
-        }.frame(maxWidth: .infinity, alignment: .leading)
-    }
-    private func diagnosticAction(_ action: GameDiagnosis.Action) {
-        guard let record = session else { return }
-        switch action {
-        case .collect: mode = .share
-        case .files: reveal(record)
-        case .accounts: model.page = .accounts; dismiss()
-        case .settings: destination = .settings
-        case .mods: destination = .mods
-        case .repair:
-            if let instance = model.state.instances.first(where: { $0.id == record.instanceID }) { model.repair(instance) }
+        }
+        .task(id: model.requestedLogSessionID) {
+            loaded = nil; error = nil; tab = .overview; exporting = false; destination = nil
+            guard let id = model.requestedLogSessionID else { return }
+            if let session { model.acknowledgeSession(session); return }
+            let paths = model.paths
+            do {
+                let value = try await Task.detached(priority: .utility) { try GameHistoryStore.load(paths: paths, sessionID: id) }.value
+                try Task.checkCancellation(); loaded = value
+                if let loaded { model.acknowledgeSession(loaded) }
+                else { error = Messages.SessionUI.recordUnavailable.localized }
+            } catch { self.error = error.localizedDescription }
+        }
+        .onChange(of: session?.state) {
+            if let session { model.acknowledgeSession(session) }
         }
     }
-    private func loadHistory() {
-        readError = nil; historicalLines = []
+    private func diagnosticAction(_ action: GameDiagnosis.Action) {
         guard let session else { return }
-        model.acknowledgeSession(session)
-    }
-    private func reveal(_ record: GameSession, relativePath: String? = nil) {
-        do {
-            let directory = try GameSessionStore.directory(paths: model.paths, instanceID: record.instanceID, sessionID: record.id)
-            let url = try relativePath.map { try LauncherPaths.safePath($0, within: directory) } ?? directory
-            NSWorkspace.shared.activateFileViewerSelecting([url])
-        } catch { readError = error.localizedDescription }
-    }
-    private func revealGameLogs() {
-        guard let session else { return }
-        do {
-            let game = model.paths.game(session.instanceID)
-            let logs = try LauncherPaths.safePath("logs", within: game)
-            NSWorkspace.shared.activateFileViewerSelecting([FileManager.default.fileExists(atPath: logs.path) ? logs : game])
-        } catch { readError = error.localizedDescription }
-    }
-    private func export() {
-        guard let session else { return }
-        let date = DateFormatter(); date.locale = Locale(identifier: "en_US_POSIX"); date.dateFormat = "yyyy-MM-dd"
-        let panel = NSSavePanel(); panel.nameFieldStringValue = "ruri-\(date.string(from: session.createdAt))-\(session.id.uuidString.prefix(8)).log"; panel.allowedContentTypes = [.plainText]
-        if panel.runModal() == .OK, let url = panel.url {
-            do { try GameSessionStore.exportLog(paths: model.paths, session: session, to: url) }
-            catch { readError = error.localizedDescription }
+        switch action {
+        case .collect: exporting = true
+        case .files:
+            if let directory = try? GameSessionStore.directory(paths: model.paths, instanceID: session.instanceID, sessionID: session.id) {
+                let target = FileManager.default.fileExists(atPath: directory.path) ? directory : (session.gameDirectory ?? model.paths.game(session.instanceID))
+                NSWorkspace.shared.activateFileViewerSelecting([target])
+            }
+        case .settings: destination = .settings
+        case .mods: destination = .mods
+        case .accounts: model.page = .accounts; dismiss()
+        case .repair:
+            if let instance = model.state.instances.first(where: { $0.id == session.instanceID }) { model.repair(instance) }
         }
     }
 }

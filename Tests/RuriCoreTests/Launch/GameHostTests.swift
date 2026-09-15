@@ -56,7 +56,7 @@ struct GameHostTests {
         var settings = MacOSGameSettings(); settings.enabled = false
         var plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "exit 0"], directory: paths.game(instance.id), environment: ["PATH": "/usr/bin:/bin"])
         plan.host = .init(instanceID: instance.id, name: instance.name, iconPNG: nil, javaVersion: "21", architecture: "aarch64", settings: settings, fullscreen: false)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         let finished = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
         #expect(finished.state == .succeeded && finished.host?.fallback == "disabled")
     }

@@ -20,7 +20,8 @@ struct LibraryInstanceDetail<Notices: View>: View {
     @State private var loaded = false
     /// Counts are read again when a content or save manager closes.
     private var managerOpen: Bool { model.contentPresentation != nil || model.worldInstance != nil }
-    private var sessions: [GameSession] { model.sessions.filter { $0.instanceID == instance.id } }
+    @State private var sessions: [GameSession] = []
+    @State private var historyDays: [GameSessionTiming.Day] = []
 
     var body: some View {
         GeometryReader { geometry in
@@ -41,6 +42,16 @@ struct LibraryInstanceDetail<Notices: View>: View {
             .softTopScrollEdge()
         }
         .task(id: managerOpen) { if !managerOpen { await load() } }
+        .task(id: "\(instance.id)-\(model.historyRevision)") {
+            let paths = model.paths, id = instance.id
+            let since = Calendar.current.date(byAdding: .day, value: -13, to: Calendar.current.startOfDay(for: Date())) ?? Date()
+            let result = await Task.detached(priority: .utility) {
+                try? (GameHistoryStore.list(paths: paths, query: .init(instanceID: id, limit: 3)), GameHistoryStore.days(paths: paths, instanceID: id, since: since))
+            }.value
+            guard !Task.isCancelled else { return }
+            if let result { sessions = result.0; historyDays = result.1 }
+            else { sessions = Array(model.sessions.filter { $0.instanceID == id }.prefix(3)) }
+        }
     }
 
     // MARK: Header
@@ -197,9 +208,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
     private var playDays: [InstancePlaytimeChart.Day] {
         let calendar = Calendar.current, today = calendar.startOfDay(for: .now)
         var minutes: [Date: Double] = [:]
-        for session in sessions {
-            if let exit = session.exit { minutes[calendar.startOfDay(for: exit.startedAt), default: 0] += exit.playTime / 60 }
-        }
+        for day in historyDays { minutes[calendar.startOfDay(for: day.date), default: 0] += day.seconds / 60 }
         return (0..<14).reversed().compactMap { offset in
             calendar.date(byAdding: .day, value: -offset, to: today).map { InstancePlaytimeChart.Day(date: $0, minutes: minutes[$0] ?? 0) }
         }
@@ -210,7 +219,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
         let total = days.reduce(0) { $0 + $1.minutes }
         return VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.AppLibraryView.playHistory.localized) {
-                if let latest = sessions.first { link(Messages.AppLibraryView.allRuns.localized) { model.showSession(latest.id) } }
+                link(Messages.SessionUI.history.localized) { model.showHistory(instanceID: instance.id) }
             }
             Surface(padding: 0) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -362,18 +371,16 @@ private struct RunRow: View {
     let session: GameSession
     @State private var hovering = false
     var body: some View {
-        Button { model.showSession(session.id) } label: {
+        Button { model.inspectSession(session) } label: {
             HStack(spacing: 12) {
                 Image(systemName: symbol).font(.system(size: 16)).foregroundStyle(tint).frame(width: 22).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(session.state.isFinished ? session.title : model.runningLabel(session.instanceID) ?? session.stage.title)
+                    Text(session.userResult)
                         .font(.callout.weight(.medium)).lineLimit(1)
                     Text(LocalizedFormat.date(session.createdAt)).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 8)
-                if let exit = session.exit {
-                    Text(LocalizedFormat.duration(exit.playTime)).font(.caption).foregroundStyle(.secondary).monospacedDigit()
-                }
+                if session.hasPlayed { Text(session.userDuration).font(.caption).foregroundStyle(.secondary).monospacedDigit() }
                 Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
             }
             .padding(.horizontal, 16).padding(.vertical, 10)

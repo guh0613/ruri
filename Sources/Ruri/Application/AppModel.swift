@@ -26,6 +26,7 @@ import RuriCore
     var logNavigationID = UUID()
     var journalPersistenceEnabled = true
     @ObservationIgnored var journalWriteTask: Task<Void, Never>?
+    @ObservationIgnored var persistedJournal = LauncherJournal()
     @ObservationIgnored var journalCheckpoint = Date.distantPast
     var operation: Task<Void, Never>?
     var activeSessions: [UUID: GameSession] = [:]
@@ -37,6 +38,11 @@ import RuriCore
     var sessions: [GameSession] = []
     var logsSessionID: UUID?
     var requestedLogSessionID: UUID?
+    var inspectedSession: GameSession?
+    var historyInstanceID: UUID?
+    var historyRevision = UUID()
+    var historyStorageError: String?
+    @ObservationIgnored var sessionSubscriptions: [UUID: Task<Void, Never>] = [:]
     var restoringGames = true
     var isQuitting = false
     var pendingOpenURLs: [URL] = []
@@ -99,7 +105,8 @@ import RuriCore
         }
         catch { state = PersistentState(); self.error = Messages.AppAppModel.unreadableData(error.localizedDescription).localized; readOnly = true }
         do {
-            journal = try LauncherJournal.load(from: journalURL)
+            journal = try LauncherJournalStore.load(paths: basePaths)
+            persistedJournal = journal
             journal.recoverInterrupted()
         } catch {
             journalPersistenceEnabled = false

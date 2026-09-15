@@ -65,7 +65,9 @@ struct InstanceMovePreviewTests {
         try RunDirectoryFileCopy.entries(preview.snapshot.entries, to: staging, validate: {}) { _, _ in }
         try preview.snapshot.destination.requireMatch(in: staging)
         try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
-        #expect(try Data(contentsOf: staging.appendingPathComponent("sessions/\(history.record.id)/session.json")) == Data(contentsOf: history.directory.appendingPathComponent("session.json")))
+        #expect(!FileManager.default.fileExists(atPath: staging.appendingPathComponent("sessions/\(history.record.id)/session.json").path))
+        #expect(try GameSessionStore.load(paths: paths, instanceID: source.id, sessionID: history.record.id) == history.record)
+        #expect(try GameSessionReviewStore.contains(history.record, paths: paths))
         #expect(FileManager.default.fileExists(atPath: staging.appendingPathComponent("empty-directory").path))
         if mode != .custom {
             #expect(try String(contentsOf: staging.appendingPathComponent("minecraft/.DS_Store"), encoding: .utf8) == "finder data")
@@ -125,15 +127,18 @@ struct InstanceMovePreviewTests {
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
         try recorder.fail(CancellationError(), cancelled: true)
         _ = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let recordFile = recorder.directory.appendingPathComponent("session.json")
-        let original = try Data(contentsOf: recordFile)
-        try Data("broken history".utf8).write(to: recordFile)
-        #expect(try GameSessionStore.list(paths: fixture.paths, instanceID: fixture.source.id).isEmpty)
+        let original = try JSONEncoder().encode(recorder.record)
+        try GameHistoryStore.withDatabase(paths: fixture.paths) { db in
+            try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(Data("broken history".utf8)), .text(recorder.record.id.uuidString)])
+        }
+        #expect(throws: (any Error).self) { try GameSessionStore.list(paths: fixture.paths, instanceID: fixture.source.id) }
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
-        try original.write(to: recordFile)
+        try GameHistoryStore.withDatabase(paths: fixture.paths) { db in
+            try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(original), .text(recorder.record.id.uuidString)])
+        }
         let identity: ProcessIdentity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
-        var live = recorder.record; live.gameIdentity = identity
-        try JSONEncoder().encode(live).write(to: recordFile)
+        var live = recorder.record; live.gameIdentity = identity; live.revision = (live.revision) + 1
+        try GameHistoryStore.record(live, paths: fixture.paths)
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
     }
 

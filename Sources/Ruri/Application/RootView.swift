@@ -20,6 +20,7 @@ struct RootView: View {
                         switch model.page {
                         case .home, .library: HomeView()
                         case .discover: DiscoverView()
+                        case .history: GameHistoryView()
                         case .activity: LauncherLogView().id(model.logNavigationID)
                         case .accounts: AccountsView()
                         case .java: JavaView()
@@ -63,7 +64,7 @@ struct RootToolbar: ToolbarContent {
         ToolbarItem(placement: .primaryAction) { LauncherNotificationButton() }
         if let runningID = model.runningID {
             ToolbarItem(placement: .primaryAction) {
-                Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.AppRootView.runHistory.localized, systemImage: "terminal") }
+                Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.SessionUI.session.localized, systemImage: "gamecontroller") }
                     .help(Messages.AppRootView.viewRunningGameLogs.localized)
             }
         }
@@ -75,7 +76,7 @@ private struct RootSidebar: View {
     var body: some View {
         @Bindable var model = model
         List(selection: $model.page) {
-            Section { ForEach([Page.home, .library, .discover, .activity]) { page in sidebarRow(page) } }
+            Section { ForEach([Page.home, .library, .discover, .history, .activity]) { page in sidebarRow(page) } }
             Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
         }
         .listStyle(.sidebar)

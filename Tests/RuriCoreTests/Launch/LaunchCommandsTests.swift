@@ -22,7 +22,7 @@ struct LaunchCommandsTests {
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "printf 'game\\n' >> trace; exit 7"], directory: game,
                               environment: ["PATH": "/bin:/usr/bin", "RURI_HOOK_SECRET": "secret-from-hook-env"], customEnvironmentNames: ["RURI_HOOK_SECRET"],
                               commands: commands, wrapper: ["/bin/sh", wrapper.path])
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         let finished = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
         #expect(finished.exit?.status == 7 && finished.state == .failed)
         #expect(finished.commandResults?.map(\.status) == [0, 3])
@@ -34,7 +34,7 @@ struct LaunchCommandsTests {
         commands.before = "exit 11"
         let retry = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let failedPlan = LaunchPlan(executable: plan.executable, arguments: plan.arguments, directory: game, environment: plan.environment, commands: commands)
-        try GameMonitorClient.start(plan: failedPlan, recorder: retry, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: failedPlan, recorder: retry, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         let failed = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: retry.record.id)
         #expect(failed.state == .failed && failed.exit == nil && failed.commandResults?.map(\.status) == [11])
         #expect(try String(contentsOf: game.appendingPathComponent("trace"), encoding: .utf8) == "before\nwrapper\ngame\nafter\n")
@@ -48,7 +48,7 @@ struct LaunchCommandsTests {
         commands.before = #"trap '' TERM; (trap '' TERM; exec /bin/sleep 30) & printf '%s\n' "$!" > child.pid; wait"#
         commands.after = "touch after-ran"
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "touch game-ran"], directory: game, environment: ["PATH": "/bin:/usr/bin"], commands: commands)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         let childFile = game.appendingPathComponent("child.pid")
         try await waitFor { FileManager.default.fileExists(atPath: childFile.path) }
         let pid = try #require(Int32(String(contentsOf: childFile, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)))
@@ -76,7 +76,7 @@ struct LaunchCommandsTests {
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         var commands = LaunchCommands(); commands.enabled = true; commands.after = "touch after-started; exec /bin/sleep 30"
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "exit 0"], directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"], commands: commands)
-        try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         func load() throws -> GameSession { try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) }
         try await waitFor { try load().stage == .afterCommand && load().commandIdentity != nil }
         let waiting = try load()
@@ -86,14 +86,14 @@ struct LaunchCommandsTests {
         let finished = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
         #expect(finished.exit?.status == 0 && finished.state == .succeeded)
         #expect(finished.commandResults?.last?.cancelled == true)
-        // Recovering an interrupted exit hook must retain the already observed game exit.
+        // A stale update cannot undo an authoritative completed history row.
         var interrupted = finished; interrupted.state = .running; interrupted.stage = .afterCommand
         interrupted.commandIdentity = finished.gameIdentity; interrupted.commandResults = []
-        let directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: finished.id)
-        try JSONEncoder().encode(interrupted).write(to: directory.appendingPathComponent("session.json"), options: .atomic)
-        let recovered = try GameSessionRecovery.finish(paths: paths, expected: interrupted)
-        #expect(recovered.exit == finished.exit && recovered.state == .succeeded)
-        #expect(recovered.commandResults?.last?.error != nil)
+        try GameHistoryStore.record(interrupted, paths: paths)
+        let restored = try load()
+        #expect(restored.exit == finished.exit && restored.state == .succeeded)
+        #expect(restored.commandResults == finished.commandResults)
+        #expect(throws: (any Error).self) { try GameSessionRecovery.finish(paths: paths, expected: interrupted) }
     }
 
     @Test func inheritanceSnapshotsAndImportedCommandsRemainExplicit() async throws {

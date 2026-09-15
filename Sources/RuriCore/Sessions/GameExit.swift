@@ -12,7 +12,8 @@ public struct GameExit: Codable, Equatable, Sendable {
     public var durationSeconds: Double?
     public var normalQuitRequested: Bool?
     public var reportedFailure: Bool? = nil
-    public var playTime: TimeInterval { max(0, durationSeconds ?? endedAt.timeIntervalSince(startedAt)) }
+    public var awakeDurationSeconds: Double? = nil
+    public var playTime: TimeInterval { max(0, awakeDurationSeconds ?? durationSeconds ?? endedAt.timeIntervalSince(startedAt)) }
 
     public var succeeded: Bool { reason == .exit && status == 0 && reportedFailure != true }
     public var stoppedByLauncher: Bool {
@@ -45,11 +46,7 @@ public struct GameExit: Codable, Equatable, Sendable {
     private var signalName: String {
         [2: "SIGINT", 6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"][status] ?? Messages.CoreGameExit.signalValue(String(describing: status)).localized
     }
-    public func save(paths: LauncherPaths, instanceID: UUID) throws {
-        let url = try LauncherPaths.safePath("last-exit.json", within: paths.instance(instanceID))
-        let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try encoder.encode(self).write(to: url, options: .atomic)
-    }
+
 }
 
 public struct GameCrashReport: Identifiable, Sendable {

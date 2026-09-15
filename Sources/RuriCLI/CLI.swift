@@ -268,32 +268,30 @@ import RuriCore
                     recorder.addSecrets(plan.environmentRedactions)
                     try recorder.append("[Ruri] \(plan.redactedCommand)")
                     try recorder.transition(.starting)
-                    try GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])
+                    try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [])
                     handedOff = true
                     print(Messages.CLICLI.gameSession(String(describing: recorder.record.id)).localized)
                     if args.contains("--detach") { print(Messages.CLICLI.monitorDetached.localized); break }
-                    let cursor = try GameSessionLogCursor(paths: paths, session: recorder.record)
-                    while true {
-                        let record = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
-                        let activity = GameMonitorClient.activity(record)
-                        let final = activity == .inactive
-                        var changed: Bool
-                        repeat {
-                            changed = try await cursor.refresh(final: final)
-                            for line in await cursor.updates { try? FileHandle.standardOutput.write(contentsOf: Data((line + "\n").utf8)) }
-                        } while final && changed
-                        if final {
-                            guard let result = record.exit else { throw RuriError.message(Messages.CLICLI.noGameExitResult) }
-                            let status = result.shellStatus
-                            print(Messages.CLICLI.gameExit(String(describing: status)).localized)
-                            if status != 0 { exit(status) }
-                            break
-                        }
-                        if activity != .monitoring { throw RuriError.message(Messages.CLICLI.statusDisconnected) }
-                        try await Task.sleep(for: .milliseconds(250))
+                    let observation = GameMonitorObservation(session: recorder.record, includeOutput: true)
+                    let output = Task { @MainActor in
+                        var previous = ""
+                        do {
+                            for try await update in observation.updates {
+                                guard !Task.isCancelled, let value = update.output, value.text != previous else { continue }
+                                let appended = value.text.hasPrefix(previous) ? String(value.text.dropFirst(previous.count)) : value.text
+                                previous = value.text
+                                try? FileHandle.standardOutput.write(contentsOf: Data(appended.utf8))
+                            }
+                        } catch { /* The final result is read independently below. */ }
                     }
+                    defer { output.cancel(); observation.cancel() }
+                    let record = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
+                    guard let result = record.exit else { throw RuriError.message(Messages.CLICLI.noGameExitResult) }
+                    let status = result.shellStatus
+                    print(Messages.CLICLI.gameExit(String(describing: status)).localized)
+                    if status != 0 { exit(status) }
                 } catch {
-                    if !handedOff { try? recorder.fail(error, cancelled: Task.isCancelled) }
+                    if !handedOff && !recorder.hasHandedOff { try? recorder.fail(error, cancelled: Task.isCancelled) }
                     throw RuriError.message(recorder.redacted(error.localizedDescription))
                 }
             case "quit":
@@ -323,7 +321,7 @@ import RuriCore
             case "diagnose":
                 guard args.count == 3, let instanceID = UUID(uuidString: args[1]), let sessionID = UUID(uuidString: args[2]) else { throw RuriError.message(Messages.CLICLI.diagnoseUsage) }
                 let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
-                let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: record)
+                let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: record, includeGameLogs: true)
                 print(diagnosis.title + "\n" + diagnosis.summary)
                 for fact in diagnosis.facts { print("• " + fact) }
                 for finding in diagnosis.findings {
@@ -336,14 +334,20 @@ import RuriCore
                 }
                 for limitation in diagnosis.limitations { print(Messages.CLICLI.diagnosticLimitation(limitation).localized) }
             case "sessions":
-                let state = try StateStore.load(paths)
-                let instances: [GameInstance]
+                let instanceID: UUID?
                 if args.count > 1 {
-                    guard let id = UUID(uuidString: args[1]), let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLICLI.invalidInstanceID) }
-                    instances = [instance]
-                } else { instances = state.instances }
-                let records = try instances.flatMap { try GameSessionStore.list(paths: paths, instanceID: $0.id) }.sorted { $0.createdAt > $1.createdAt }
-                for record in records { print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(record.title)") }
+                    guard let id = UUID(uuidString: args[1]) else { throw RuriError.message(Messages.CLICLI.invalidInstanceID) }
+                    instanceID = id
+                } else { instanceID = nil }
+                var offset = 0
+                while true {
+                    let records = try GameHistoryStore.list(paths: paths, query: .init(instanceID: instanceID, limit: 500, offset: offset))
+                    for record in records {
+                        print("\(record.id) | \(record.createdAt.ISO8601Format()) | \(record.instanceName) | \(LocalizedFormat.duration(record.playedSeconds)) | \(record.title)")
+                    }
+                    guard records.count == 500 else { break }
+                    offset += records.count
+                }
             default: print(Messages.CLICLI.cliUsage.localized)
             }
         } catch { fputs(Messages.CLICLI.errorOutput(error.localizedDescription).localized, stderr); exit(1) }

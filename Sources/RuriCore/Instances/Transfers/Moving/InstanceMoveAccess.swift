@@ -2,8 +2,8 @@ import RuriLocalization
 import Foundation
 import Darwin
 
-/// Moving retires the original history, so every session must be readable and
-/// finished. The history UI's best-effort list intentionally has weaker rules.
+/// History stays in the database when instance files move. Validate that no
+/// database record describes an unfinished/unconfirmed writer.
 final class InstanceMoveAccess {
     let lease: GameRunLease
     private var operations: [GameDataOperationLock] = []
@@ -29,22 +29,19 @@ final class InstanceMoveAccess {
     }
 
     static func requireFinishedSessions(paths: LauncherPaths, instanceID: UUID) throws {
-        let root = try LauncherPaths.safePath("sessions", within: paths.instance(instanceID))
-        guard FileManager.default.fileExists(atPath: root.path) else { return }
-        let entries = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard entries.count <= 100_000 else { throw RuriError.message(Messages.CoreInstanceMoveAccess.tooManyRunRecords) }
-        for url in entries where url.lastPathComponent != ".DS_Store" {
-            try Task.checkCancellation()
-            let info = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            guard info.isDirectory == true, info.isSymbolicLink != true, let id = UUID(uuidString: url.lastPathComponent) else {
-                throw RuriError.message(Messages.CoreInstanceMoveAccess.unknownRunRecordEntry(url.lastPathComponent))
-            }
-            let record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: id)
+        func requireFinished(_ record: GameSession) throws {
             guard record.state.isFinished,
                   record.monitorIdentity.map({ $0.liveness == .exited }) ?? true,
                   record.gameIdentity.map({ $0.liveness == .exited }) ?? true else {
                 throw RuriError.message(Messages.CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession)
             }
+        }
+        var offset = 0
+        while true {
+            let records = try GameHistoryStore.list(paths: paths, query: .init(instanceID: instanceID, limit: 500, offset: offset))
+            for record in records { try requireFinished(record) }
+            if records.count < 500 { break }
+            offset += records.count
         }
     }
 

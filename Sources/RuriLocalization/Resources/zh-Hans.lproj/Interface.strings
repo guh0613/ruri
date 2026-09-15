@@ -38,10 +38,10 @@
 "appRootView.modelText1" = "管理";
 
 /* @symbol AppRootView.runHistory @args - */
-"appRootView.runningIDText1" = "运行记录";
+"appRootView.runningIDText1" = "游戏详情";
 
 /* @symbol AppRootView.viewRunningGameLogs @args - */
-"appRootView.runningIDText2" = "查看正在运行的游戏的记录 ⌘L";
+"appRootView.runningIDText2" = "查看正在运行的游戏 ⌘L";
 
 /* @symbol AppRootView.operationIncomplete @args - */
 "appRootView.runningIDText3" = "操作未完成";
@@ -3017,10 +3017,10 @@
 "appLaunchSettingsEditor.valueText2" = "关闭“全屏启动”后，使用游戏保存的全屏状态。";
 
 /* @symbol AppLaunchSettingsEditor.openGameLogs @args - */
-"appLaunchSettingsEditor.valueText3" = "启动时打开游戏日志";
+"appLaunchSettingsEditor.valueText3" = "启动时打开游戏详情";
 
 /* @symbol AppLaunchSettingsEditor.logsKeepLauncherVisible @args - */
-"appLaunchSettingsEditor.valueText4" = "打开日志时，Ruri 保持可见。";
+"appLaunchSettingsEditor.valueText4" = "打开游戏详情时，Ruri 保持可见。";
 
 /* @symbol AppLaunchSettingsEditor.logsHideLauncherVisible @args - */
 "appLaunchSettingsEditor.valueText5" = "游戏退出后自动显示 Ruri 窗口。";
@@ -3948,10 +3948,10 @@
 "monitorLogging.debugMode" = "调试模式";
 
 /* @symbol MonitorLogging.debugModeHelp @args - */
-"monitorLogging.debugModeHelp" = "记录完整控制台日志以排查问题，会增加资源占用和磁盘写入。连续记录上限为 64 MiB，超出后仅保留近期故障输出。";
+"monitorLogging.debugModeHelp" = "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。";
 
 /* @symbol MonitorLogging.defaultModeHelp @args - */
-"monitorLogging.defaultModeHelp" = "默认只预览近期输出，异常退出时保存故障日志。需要从启动开始记录日志时，请在启动设置中开启调试模式。";
+"monitorLogging.defaultModeHelp" = "默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。";
 
 /* @symbol MonitorLogging.writeFailed @args text */
 "monitorLogging.writeFailed" = "[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。";

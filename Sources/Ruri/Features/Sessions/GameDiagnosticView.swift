@@ -1,206 +1,138 @@
-import RuriLocalization
 import SwiftUI
 import AppKit
-import UniformTypeIdentifiers
 import RuriCore
+import RuriLocalization
 
 struct GameDiagnosticView: View {
     @Environment(AppModel.self) private var model
     let session: GameSession
-    let collecting: Bool
     let action: (GameDiagnosis.Action) -> Void
     @State private var diagnosis: GameDiagnosis?
+    @State private var analyzing = false
     @State private var error: String?
-    @State private var bundle: GameDiagnosticBundle?
-    @State private var selected: Set<String> = []
-    @State private var previewID: String?
-    @State private var privateText = ""
-    @State private var appliedPrivateText = ""
-    @State private var page = 0
-    @State private var generation = UUID()
-    @State private var preparing = false
-    @State private var exporting = false
-    @State private var collectionRequest = UUID()
-    @State private var exported: URL?
-    private var previewFile: GameDiagnosticBundle.File? { bundle?.files.first { $0.id == previewID } }
-    private var previewPages: Int { max(1, ((previewFile?.text.count ?? 0) + 11999) / 12000) }
-    private var key: String { "\(session.id)-\(session.updatedAt.timeIntervalSince1970)-\(session.evidence.count)-\(collecting)-\(collectionRequest)" }
+    private var key: String { "\(session.id)-\(session.state.rawValue)-\(session.evidence.count)-\(session.artifactState?.rawValue ?? "")" }
+    private var instanceAvailable: Bool { model.state.instances.contains { $0.id == session.instanceID } }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if let host = session.host { Text(host.summary).font(.callout).foregroundStyle(.secondary) }
-            if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
-            if let diagnosis {
-                if collecting { collection(diagnosis) } else { analysis(diagnosis) }
-            } else { ProgressView(Messages.AppGameDiagnosticView.readingEvidence.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
-        }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                HStack(spacing: 24) {
+                    SessionMetric(title: Messages.SessionUI.duration.localized, value: session.userDuration)
+                    SessionMetric(title: "Minecraft", value: session.gameVersion)
+                    SessionMetric(title: "Java", value: session.java ?? "—")
+                }
+                Text(session.overviewHelp)
+                    .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if session.timing?.quality == .interrupted {
+                    Label(Messages.SessionRuntime.timingPartial.localized, systemImage: "clock.badge.questionmark").font(.callout).foregroundStyle(.secondary)
+                }
+                if session.hasPostCommandFailure {
+                    Button(Messages.CoreGameDiagnosis.checkInstanceSettings.localized) { action(.settings) }.disabled(!instanceAvailable)
+                } else if session.needsAttention { suggestions }
+                if session.artifactState == .expired {
+                    Label(Messages.SessionRuntime.artifactsExpired.localized, systemImage: "archivebox").font(.callout).foregroundStyle(.secondary)
+                }
+                if session.needsAttention || session.state.isFinished {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(Messages.SessionUI.reportHelp.localized).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                        Button(Messages.SessionUI.exportReport.localized) { action(.collect) }.buttonStyle(.borderedProminent)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(16).background(.quaternary.opacity(0.4), in: RoundedRectangle(cornerRadius: 12))
+                }
+                technicalDetails
+            }.padding(24).frame(maxWidth: .infinity, alignment: .leading)
+        }.scrollBounceBehavior(.basedOnSize)
         .task(id: key) {
-            if collecting && bundle != nil { return }
-            generation = UUID()
-            diagnosis = nil; bundle = nil; error = nil; exported = nil
-            let paths = model.paths, record = session, includeGameLogs = collecting
-            let work = Task.detached(priority: .utility) { try GameDiagnosticAnalyzer.load(paths: paths, session: record, includeGameLogs: includeGameLogs) }
+            diagnosis = nil; error = nil
+            guard session.needsAttention, !session.hasPostCommandFailure else { return }
+            analyzing = true; defer { analyzing = false }
+            let paths = model.paths, record = session
+            let work = Task.detached(priority: .utility) { try GameDiagnosticAnalyzer.load(paths: paths, session: record, includeGameLogs: true) }
             do {
                 let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
                 try Task.checkCancellation(); diagnosis = value
-                if collecting { await prepareBundle(value) }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
         }
-        .onChange(of: previewID) { page = 0 }
     }
-    private func analysis(_ diagnosis: GameDiagnosis) -> some View {
-        ScrollView {
+    @ViewBuilder private var suggestions: some View {
+        if analyzing { ProgressView(Messages.AppGameDiagnosticView.readingEvidence.localized).controlSize(.small) }
+        else if let diagnosis, !diagnosis.findings.isEmpty {
             VStack(alignment: .leading, spacing: 16) {
-                VStack(alignment: .leading, spacing: 7) {
-                    Text(diagnosis.title).font(.title3.bold())
-                    Text(diagnosis.summary).font(.callout).fixedSize(horizontal: false, vertical: true)
-                }
-                DisclosureGroup(Messages.AppGameDiagnosticView.recordedFacts.localized) {
-                    ForEach(diagnosis.facts, id: \.self) { Text($0).font(.caption).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading) }
-                }
-                ForEach(diagnosis.findings) { finding in
+                Text(Messages.SessionUI.suggestions.localized).font(.headline)
+                ForEach(Array(diagnosis.findings.prefix(3))) { finding in
                     VStack(alignment: .leading, spacing: 10) {
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(finding.title).font(.headline)
-                            Spacer(minLength: 6)
-                            Text(finding.confidence.title).font(.caption).foregroundStyle(.secondary)
-                        }
+                        Text(finding.title).font(.headline)
                         Text(finding.explanation).font(.callout).fixedSize(horizontal: false, vertical: true)
-                        ForEach(finding.evidence) { evidence in
-                            let document = diagnosis.documents.first { $0.id == evidence.documentID }
-                            DisclosureGroup(Messages.AppGameDiagnosticView.evidenceLine(String(describing: document?.title ?? evidence.documentID), String(describing: document?.isTail == true ? Messages.AppGameDiagnosticView.lastSection.localized : ""), String(describing: evidence.line)).localized) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(evidence.excerpt).font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    if let relative = document?.relativePath { Button(Messages.AppGameDiagnosticView.showEvidenceInFinder.localized) { reveal(relative) } }
-                                }.padding(10).background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 8))
-                            }.font(.caption)
-                        }
-                        ForEach(Array(finding.steps.enumerated()), id: \.offset) { index, step in
-                            HStack(alignment: .top) {
-                                Text("\(index + 1).").foregroundStyle(.secondary)
+                        ForEach(Array(finding.steps.prefix(3).enumerated()), id: \.offset) { index, step in
+                            HStack(alignment: .top, spacing: 8) {
+                                Text("\(index + 1).").foregroundStyle(.secondary).monospacedDigit()
                                 Text(step).fixedSize(horizontal: false, vertical: true)
                             }.font(.callout)
                         }
                         HStack {
-                            ForEach(finding.actions, id: \.self) { item in
+                            ForEach(Array(finding.actions.filter { $0 != .collect && $0 != .files }.prefix(2)), id: \.self) { item in
                                 Button(item.title) { action(item) }
-                                    .disabled(item == .repair && (model.busy || model.isInstanceInUse(session.instanceID)))
+                                    .disabled(!instanceAvailable || (item == .repair && (model.busy || model.isInstanceInUse(session.instanceID))))
                             }
                         }.controlSize(.small)
-                        if finding.actions.contains(.repair) {
-                            Text(Messages.AppGameDiagnosticView.repairNotice.localized).font(.caption).foregroundStyle(.secondary)
-                        }
-                    }.padding(14).background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12))
+                        DisclosureGroup(Messages.SessionUI.evidence.localized) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(finding.confidence.title).font(.caption).foregroundStyle(.secondary)
+                                ForEach(finding.evidence) { evidence in
+                                    Text(evidence.excerpt).font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }.padding(.top, 8)
+                        }.font(.caption)
+                    }.padding(16).frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 12))
                 }
-                if model.busy, let activity = model.activeActivity {
-                    HStack { ProgressView().controlSize(.small); Text(activity.progress.stage).font(.callout) }
-                }
-                if !diagnosis.limitations.isEmpty {
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(Messages.AppGameDiagnosticView.evidenceScope.localized).font(.headline)
-                        ForEach(diagnosis.limitations, id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
+            }
+        } else {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(Messages.SessionUI.noFinding.localized).font(.headline)
+                Text(diagnosis?.summary ?? session.displayFailure ?? Messages.SessionUI.noFindingHelp.localized)
+                    .font(.callout).textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
+                if let error { Text(error).font(.caption).foregroundStyle(.secondary) }
+            }
+        }
+    }
+    private var technicalDetails: some View {
+        DisclosureGroup(Messages.SessionUI.technicalDetails.localized) {
+            VStack(alignment: .leading, spacing: 12) {
+                Grid(alignment: .leading, horizontalSpacing: 18, verticalSpacing: 8) {
+                    detail(Messages.SessionUI.started.localized, (session.timing?.startedAt ?? session.exit?.startedAt ?? session.createdAt).formatted(date: .abbreviated, time: .standard))
+                    if let exit = session.exit { detail(Messages.SessionUI.ended.localized, exit.endedAt.formatted(date: .abbreviated, time: .standard)) }
+                    detail(Messages.SessionUI.environment.localized, "\(session.loader) \(session.loaderVersion ?? "") · \(session.hostArchitecture)")
+                    detail("Java", session.java ?? "—")
+                    detail("macOS", session.operatingSystem)
+                    if let host = session.host { detail(Messages.SessionUI.result.localized, host.summary) }
+                    if let exit = session.exit { detail(Messages.SessionUI.result.localized, exit.logDescription) }
+                }.textSelection(.enabled)
+                Text(Messages.SessionRuntime.timingHelp.localized).foregroundStyle(.secondary)
+                if session.needsAttention {
+                    Button(Messages.SessionUI.openSystemReports.localized) {
+                        if let app = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Console") { NSWorkspace.shared.open(app) }
                     }
                 }
-                HStack {
-                    Button(Messages.AppGameDiagnosticView.viewRunFiles.localized) { action(.files) }
-                    Spacer()
-                    Button(Messages.AppGameDiagnosticView.collectReport.localized) { action(.collect) }
+                Divider()
+                ForEach(session.events) { event in
+                    HStack(alignment: .top, spacing: 12) {
+                        Text(event.date, format: .dateTime.hour().minute().second()).monospacedDigit().foregroundStyle(.secondary)
+                        Text(event.displayMessage).textSelection(.enabled)
+                    }
                 }
-            }.padding(.vertical, 4).padding(.trailing, 5)
-        }
-    }
-    private func collection(_ diagnosis: GameDiagnosis) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text(Messages.AppGameDiagnosticView.collectionInstructions.localized).font(.headline)
-                Spacer()
-                Button(Messages.NativeGameLogs.collectAgain.localized) { bundle = nil; collectionRequest = UUID() }.disabled(preparing || exporting)
-            }
-            Text(Messages.NativeGameLogs.collectionHelp.localized).font(.caption).foregroundStyle(.secondary)
-            Text(Messages.AppGameDiagnosticView.redactionNotice.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            if let bundle {
-                HStack(alignment: .top, spacing: 12) {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            ForEach(bundle.files) { file in
-                                HStack(alignment: .top, spacing: 7) {
-                                    Toggle(Messages.AppGameDiagnosticView.containsFile(file.title).localized, isOn: Binding(get: { selected.contains(file.id) }, set: { if $0 { selected.insert(file.id) } else { selected.remove(file.id) } }))
-                                        .toggleStyle(.checkbox).labelsHidden()
-                                    Button { previewID = file.id } label: {
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            Text(file.title).font(.callout).multilineTextAlignment(.leading)
-                                            Text("\(LocalizedFormat.bytes(Int64(file.byteCount)))\(file.changedByRedaction ? Messages.AppGameDiagnosticView.redacted.localized : "")")
-                                                .font(.caption).foregroundStyle(.secondary)
-                                        }.frame(maxWidth: .infinity, alignment: .leading)
-                                    }.buttonStyle(.plain).foregroundStyle(previewID == file.id ? Color.accentColor : .primary)
-                                }
-                            }
-                        }.padding(9)
-                    }.frame(width: 214)
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Text(previewFile?.path ?? Messages.AppGameDiagnosticView.choosePreview.localized).font(.caption).lineLimit(1).truncationMode(.middle)
-                            Spacer()
-                            Button { page -= 1 } label: { Image(systemName: "chevron.left") }.disabled(page == 0).help(Messages.AppGameDiagnosticView.previousPage.localized)
-                            Text("\(page + 1) / \(previewPages)").font(.caption).monospacedDigit()
-                            Button { page += 1 } label: { Image(systemName: "chevron.right") }.disabled(page + 1 >= previewPages).help(Messages.AppGameDiagnosticView.nextPage.localized)
-                        }.controlSize(.small)
-                        ScrollView {
-                            Text(String((previewFile?.text ?? "").dropFirst(page * 12000).prefix(12000)))
-                                .font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
-                                .frame(maxWidth: .infinity, alignment: .leading).padding(10)
-                        }.background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 8))
-                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                }.frame(maxHeight: .infinity)
-                HStack(alignment: .top) {
-                    TextField(Messages.AppGameDiagnosticView.extraHiddenText.localized, text: $privateText, axis: .vertical).lineLimit(2...3).textFieldStyle(.roundedBorder)
-                        .onChange(of: privateText) { if privateText.count > 8192 { privateText = String(privateText.prefix(8192)) } }
-                    Button(Messages.AppGameDiagnosticView.updatePreview.localized) { Task { await prepareBundle(diagnosis, preserveSelection: true) } }.disabled(preparing || exporting)
+                if let diagnosis, !diagnosis.limitations.isEmpty {
+                    Text(Messages.SessionUI.collectingLimits.localized).fontWeight(.medium)
+                    ForEach(diagnosis.limitations, id: \.self) { Text($0).foregroundStyle(.secondary) }
                 }
-                if privateText != appliedPrivateText { Text(Messages.AppGameDiagnosticView.previewChanged.localized).font(.caption).foregroundStyle(.orange) }
-                HStack {
-                    if preparing || exporting { ProgressView().controlSize(.small) }
-                    else if let exported { Button(Messages.AppGameDiagnosticView.showExportedBundle.localized) { NSWorkspace.shared.activateFileViewerSelecting([exported]) } }
-                    else { Text(Messages.AppGameDiagnosticView.exportNotice.localized).font(.caption).foregroundStyle(.secondary) }
-                    Spacer()
-                    Button(Messages.AppGameDiagnosticView.exportBundle.localized) { export(bundle) }.buttonStyle(.borderedProminent)
-                        .disabled(selected.isEmpty || preparing || exporting || privateText != appliedPrivateText)
-                }
-            } else { ProgressView(Messages.AppGameDiagnosticView.prepareSharePreview.localized).frame(maxWidth: .infinity, maxHeight: .infinity) }
-        }
+            }.font(.caption).padding(.top, 12).frame(maxWidth: .infinity, alignment: .leading)
+        }.font(.callout)
     }
-    private func prepareBundle(_ diagnosis: GameDiagnosis, preserveSelection: Bool = false) async {
-        preparing = true; defer { preparing = false }
-        let record = session, text = privateText, request = generation
-        let values = text.components(separatedBy: .newlines).filter { !$0.isEmpty }
-        let work = Task.detached { try GameDiagnosticBundle.preview(session: record, diagnosis: diagnosis, additionalPrivateText: values) }
-        do {
-            let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
-            try Task.checkCancellation()
-            guard record.id == session.id && request == generation else { return }
-            bundle = value; appliedPrivateText = text; exported = nil; error = nil
-            if !preserveSelection { selected = Set(value.files.map(\.id)); previewID = value.files.first?.id }
-            page = 0
-        } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
-    }
-    private func reveal(_ relative: String) {
-        do {
-            let directory = try GameSessionStore.directory(paths: model.paths, instanceID: session.instanceID, sessionID: session.id)
-            NSWorkspace.shared.activateFileViewerSelecting([try LauncherPaths.safePath(relative, within: directory)])
-        } catch { self.error = error.localizedDescription }
-    }
-    private func export(_ snapshot: GameDiagnosticBundle) {
-        let panel = NSSavePanel(); panel.allowedContentTypes = [.zip]
-        panel.nameFieldStringValue = "ruri-diagnostic-\(session.id.uuidString.prefix(8)).zip"
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        let ids = selected, paths = model.paths
-        exporting = true; error = nil
-        Task {
-            defer { exporting = false }
-            do {
-                try await Task.detached { try snapshot.export(selectedIDs: ids, to: url, paths: paths) }.value
-                exported = url
-            } catch { self.error = error.localizedDescription }
+    private func detail(_ title: String, _ value: String) -> some View {
+        GridRow(alignment: .top) {
+            Text(title).foregroundStyle(.secondary).fixedSize()
+            Text(value).frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

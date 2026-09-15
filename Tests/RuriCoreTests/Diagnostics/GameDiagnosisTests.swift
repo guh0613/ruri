@@ -88,7 +88,8 @@ struct GameDiagnosisTests {
         let instance = GameInstance(name: "诊断", gameVersion: "1.21.1")
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try recorder.fail(RuriError.message("failed"), cancelled: false)
-        let url = recorder.directory.appendingPathComponent("launcher.log")
+        try FileManager.default.createDirectory(at: recorder.directory, withIntermediateDirectories: true)
+        let url = recorder.directory.appendingPathComponent("console.log")
         let large = String(repeating: "日志内容无需分析\n", count: 230_000) + "Error: Could not find or load main class example.Missing\n"
         try large.write(to: url, atomically: true, encoding: .utf8)
         try FileManager.default.createDirectory(at: paths.game(instance.id).appendingPathComponent("logs"), withIntermediateDirectories: true)

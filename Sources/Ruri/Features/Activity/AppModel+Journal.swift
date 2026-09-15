@@ -9,8 +9,6 @@ enum LauncherActivityContext {
 }
 
 extension AppModel {
-    var journalURL: URL { basePaths.root.appendingPathComponent("launcher-log.json") }
-
     func report(_ message: String, level: LauncherLogEntry.Level = .info,
                 sessionID: UUID? = nil, fileURL: URL? = nil) {
         report(.verbatim(message), level: level, sessionID: sessionID, fileURL: fileURL)
@@ -29,14 +27,16 @@ extension AppModel {
     }
 
     func persistJournal() {
-        guard journalPersistenceEnabled else { return }
-        let snapshot = journal, url = journalURL, previous = journalWriteTask
+        guard journalPersistenceEnabled, journalWriteTask == nil else { return }
         journalWriteTask = Task {
-            await previous?.value
-            do {
-                try await Task.detached(priority: .utility) { try snapshot.save(to: url) }.value
-                journalStorageError = nil
-            } catch { journalStorageError = Messages.LauncherLog.historyWriteFailed.localized }
+            defer { journalWriteTask = nil }
+            while journal != persistedJournal {
+                let snapshot = journal, previous = persistedJournal, paths = basePaths
+                do {
+                    try await Task.detached(priority: .utility) { try LauncherJournalStore.save(snapshot, previous: previous, paths: paths) }.value
+                    persistedJournal = snapshot; journalStorageError = nil
+                } catch { journalStorageError = Messages.LauncherLog.historyWriteFailed.localized; return }
+            }
         }
     }
 

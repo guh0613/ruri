@@ -46,13 +46,18 @@ struct GameSessionRecoveryView: View {
             } else if let message = error ?? refreshError { Text(message).font(.callout).foregroundStyle(.orange) }
         }
         .task(id: session.id) {
-            while !Task.isCancelled {
+            let directory = try? GameSessionStore.directory(paths: model.paths, instanceID: session.instanceID, sessionID: session.id)
+            let processes = [session.monitorIdentity, session.gameIdentity, session.commandIdentity].compactMap { $0?.pid }
+            let observer = FileChangeObserver(directories: directory.map { [$0] } ?? [], processes: processes, fallbackSeconds: 30)
+            defer { observer.cancel() }
+            await refresh()
+            for await _ in observer.events {
+                guard !Task.isCancelled, status != .finished else { return }
                 await refresh()
-                if status == .finished { return }
-                do { try await Task.sleep(for: .seconds(1)) } catch { return }
             }
         }
     }
+
     private func refresh() async {
         guard !working else { return }
         let paths = model.paths, instanceID = session.instanceID, sessionID = session.id
