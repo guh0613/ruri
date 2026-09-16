@@ -70,6 +70,7 @@ jobs:
           xcrun swift --version
       - name: Build and test
         run: |
+          python3 -m unittest discover -s scripts/tests
           scripts/swift-build.sh --force-resolved-versions
           scripts/swift-build.sh test --no-parallel --force-resolved-versions
       - name: Build DMG
@@ -78,6 +79,7 @@ jobs:
           RURI_BUILD_NUMBER: ${{ github.run_number }}
           # Public application ID. Leave unset until Minecraft API access is approved.
           RURI_MICROSOFT_CLIENT_ID: ${{ vars.RURI_MICROSOFT_CLIENT_ID }}
+          RURI_CURSEFORGE_API_KEY: ${{ secrets.RURI_CURSEFORGE_API_KEY }}
           RURI_SIGN_IDENTITY: '-'
         run: scripts/package-dmg.sh
       - name: Upload DMG and checksum

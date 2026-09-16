@@ -75,11 +75,23 @@ extension Messages {
         public static var apiKeySettings: LocalizedMessage {
             .init(key: "appCurseForgeSettingsSection.apiKeySettings", table: "Interface", fallback: "CurseForge API Key")
         }
-        /// 密钥保存在 macOS 钥匙串中，不会随实例导出。
+        /// 个人 Key 保存在 macOS 钥匙串中，不会随实例导出。
         ///
         /// Resource: `Interface.appCurseForgeSettingsSection.apiKeyStorageHelp`.
         public static var apiKeyStorageHelp: LocalizedMessage {
-            .init(key: "appCurseForgeSettingsSection.apiKeyStorageHelp", table: "Interface", fallback: "密钥保存在 macOS 钥匙串中，不会随实例导出。")
+            .init(key: "appCurseForgeSettingsSection.apiKeyStorageHelp", table: "Interface", fallback: "个人 Key 保存在 macOS 钥匙串中，不会随实例导出。")
+        }
+        /// 未设置个人 Key 时使用 Ruri 内置 Key；移除个人 Key 后会恢复使用内置 Key。
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bundledKeyHelp`.
+        public static var bundledKeyHelp: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.bundledKeyHelp", table: "Interface", fallback: "未设置个人 Key 时使用 Ruri 内置 Key；移除个人 Key 后会恢复使用内置 Key。")
+        }
+        /// 使用内置 Key
+        ///
+        /// Resource: `Interface.appCurseForgeSettingsSection.bundledKey`.
+        public static var bundledKey: LocalizedMessage {
+            .init(key: "appCurseForgeSettingsSection.bundledKey", table: "Interface", fallback: "使用内置 Key")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appCurseForgeSettingsSection.bodyText1": .init("已保存在钥匙串", []),
@@ -94,7 +106,9 @@ extension Messages {
             "Interface:appCurseForgeSettingsSection.configureApiKey": .init("设置…", []),
             "Interface:appCurseForgeSettingsSection.changeApiKey": .init("更换…", []),
             "Interface:appCurseForgeSettingsSection.apiKeySettings": .init("CurseForge API Key", []),
-            "Interface:appCurseForgeSettingsSection.apiKeyStorageHelp": .init("密钥保存在 macOS 钥匙串中，不会随实例导出。", []),
+            "Interface:appCurseForgeSettingsSection.apiKeyStorageHelp": .init("个人 Key 保存在 macOS 钥匙串中，不会随实例导出。", []),
+            "Interface:appCurseForgeSettingsSection.bundledKeyHelp": .init("未设置个人 Key 时使用 Ruri 内置 Key；移除个人 Key 后会恢复使用内置 Key。", []),
+            "Interface:appCurseForgeSettingsSection.bundledKey": .init("使用内置 Key", []),
         ]
     }
 }

@@ -5,14 +5,15 @@ import RuriCore
 struct CurseForgeSettingsSection: View {
     @Environment(AppModel.self) private var model
     @State private var configuringKey = false
+    @State private var hasCustomKey = CurseForgeKeyStore.hasCustomKey()
     var body: some View {
         Section {
             HStack(spacing: 12) {
                 Text("API Key")
                 Spacer()
-                Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.configured.localized : Messages.AppCurseForgeSettingsSection.notConfigured.localized)
+                Text(hasCustomKey ? Messages.AppCurseForgeSettingsSection.keychainSaved.localized : model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.bundledKey.localized : Messages.AppCurseForgeSettingsSection.notConfigured.localized)
                     .foregroundStyle(.secondary)
-                Button(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.changeApiKey.localized : Messages.AppCurseForgeSettingsSection.configureApiKey.localized) {
+                Button(hasCustomKey ? Messages.AppCurseForgeSettingsSection.changeApiKey.localized : Messages.AppCurseForgeSettingsSection.configureApiKey.localized) {
                     configuringKey = true
                 }.fixedSize().disabled(model.readOnly)
             }
@@ -21,7 +22,7 @@ struct CurseForgeSettingsSection: View {
         } footer: {
             Text(Messages.AppCurseForgeSettingsSection.apiKeyUsage.localized).fixedSize(horizontal: false, vertical: true)
         }
-        .sheet(isPresented: $configuringKey) { CurseForgeAPIKeyView() }
+        .sheet(isPresented: $configuringKey, onDismiss: { hasCustomKey = CurseForgeKeyStore.hasCustomKey() }) { CurseForgeAPIKeyView() }
     }
 }
 
@@ -29,6 +30,7 @@ struct CurseForgeAPIKeyView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State private var key = ""
+    private let hasCustomKey = CurseForgeKeyStore.hasCustomKey()
     @State private var error: String?
     @FocusState private var keyIsFocused: Bool
 
@@ -36,11 +38,15 @@ struct CurseForgeAPIKeyView: View {
         VStack(alignment: .leading, spacing: 20) {
             Text(Messages.AppCurseForgeSettingsSection.apiKeySettings.localized).font(.title2.weight(.semibold))
             VStack(alignment: .leading, spacing: 8) {
-                SecureField("API Key", text: $key, prompt: Text(model.curseForgeConfigured ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized))
+                SecureField("API Key", text: $key, prompt: Text(hasCustomKey ? Messages.AppCurseForgeSettingsSection.replaceApiKey.localized : Messages.AppCurseForgeSettingsSection.enterApiKey.localized))
                     .textFieldStyle(.roundedBorder).multilineTextAlignment(.leading)
                     .focused($keyIsFocused).accessibilityLabel("API Key").disabled(model.readOnly)
                 Text(Messages.AppCurseForgeSettingsSection.apiKeyStorageHelp.localized)
                     .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if CurseForgeKeyStore.hasBundledKey {
+                    Text(Messages.AppCurseForgeSettingsSection.bundledKeyHelp.localized)
+                        .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
                 Link(Messages.AppCurseForgeSettingsSection.apiApplicationGuide.localized, destination: AppLinks.curseForgeAPI)
                     .font(.callout)
             }
@@ -49,7 +55,7 @@ struct CurseForgeAPIKeyView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             HStack(spacing: 12) {
-                if model.curseForgeConfigured {
+                if hasCustomKey {
                     Button(Messages.AppCurseForgeSettingsSection.removeApiKey.localized, role: .destructive, action: remove)
                         .disabled(model.readOnly)
                 }
@@ -78,7 +84,7 @@ struct CurseForgeAPIKeyView: View {
         guard !model.readOnly else { return }
         do {
             try CurseForgeKeyStore.remove()
-            model.curseForgeConfigured = false
+            model.curseForgeConfigured = CurseForgeKeyStore.isConfigured()
             key = ""
             dismiss()
         } catch { self.error = error.localizedDescription }

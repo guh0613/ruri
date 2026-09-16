@@ -3683,7 +3683,14 @@
 "appCurseForgeSettingsSection.apiKeySettings" = "CurseForge API Key";
 
 /* @symbol AppCurseForgeSettingsSection.apiKeyStorageHelp @args - */
-"appCurseForgeSettingsSection.apiKeyStorageHelp" = "密钥保存在 macOS 钥匙串中，不会随实例导出。";
+"appCurseForgeSettingsSection.apiKeyStorageHelp" = "个人 Key 保存在 macOS 钥匙串中，不会随实例导出。";
+
+/* @symbol AppCurseForgeSettingsSection.bundledKeyHelp @args - */
+"appCurseForgeSettingsSection.bundledKeyHelp" = "未设置个人 Key 时使用 Ruri 内置 Key；移除个人 Key 后会恢复使用内置 Key。";
+
+/* @symbol AppCurseForgeSettingsSection.bundledKey @args - */
+"appCurseForgeSettingsSection.bundledKey" = "使用内置 Key";
+
 /* @symbol AppInstanceMoveView.preservedOriginalFiles @args - */
 "appInstanceMoveView.preservedOriginalFiles" = "保留的原文件";
 

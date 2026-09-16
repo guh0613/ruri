@@ -1,44 +1,30 @@
 import RuriLocalization
 import Foundation
-import Security
-
-public enum CurseForgeKeyStore {
-    private static var query: [String: Any] { [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: "dev.ruri.launcher.services", kSecAttrAccount as String: "curseforge"] }
-    public static func isConfigured() -> Bool {
-        var query = query; query[kSecReturnAttributes as String] = true; query[kSecMatchLimit as String] = kSecMatchLimitOne
-        var result: CFTypeRef?
-        return SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess
-    }
-    public static func load() throws -> String {
-        var query = query; query[kSecReturnData as String] = true; query[kSecMatchLimit as String] = kSecMatchLimitOne
-        var result: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        guard status == errSecSuccess, let data = result as? Data, let key = String(data: data, encoding: .utf8), !key.isEmpty else {
-            throw RuriError.message(status == errSecItemNotFound ? Messages.CoreCurseForge.apiKeyMissing : Messages.CoreCurseForge.apiKeyReadFailed(String(describing: status)))
-        }
-        return key
-    }
-    public static func save(_ input: String) throws {
-        let key = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !key.isEmpty, !key.contains("\n"), !key.contains("\r") else { throw RuriError.message(Messages.CoreCurseForge.invalidApiKey) }
-        let value = [kSecValueData as String: Data(key.utf8)]
-        let status = SecItemUpdate(query as CFDictionary, value as CFDictionary)
-        if status == errSecItemNotFound {
-            var add = query.merging(value) { _, new in new }; add[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-            let added = SecItemAdd(add as CFDictionary, nil)
-            guard added == errSecSuccess else { throw RuriError.message(Messages.CoreCurseForge.apiKeySaveFailed(String(describing: added))) }
-        } else if status != errSecSuccess { throw RuriError.message(Messages.CoreCurseForge.apiKeySaveFailed(String(describing: status))) }
-    }
-    public static func remove() throws {
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else { throw RuriError.message(Messages.CoreCurseForge.apiKeyRemoveFailed(String(describing: status))) }
-    }
-}
 
 public struct CurseForgeProject: Decodable, Identifiable, Sendable {
     public struct Author: Decodable, Sendable { public let name: String }
-    public struct Logo: Decodable, Sendable { public let thumbnailUrl: URL? }
-    public struct Links: Decodable, Sendable { public let websiteUrl: URL?; public let wikiUrl: URL?; public let issuesUrl: URL?; public let sourceUrl: URL? }
+    public struct Logo: Decodable, Sendable {
+        public let thumbnailUrl: URL?
+        private enum CodingKeys: String, CodingKey { case thumbnailUrl }
+        public init(from decoder: any Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            thumbnailUrl = try values.decodeCurseForgeWebURL(forKey: .thumbnailUrl)
+        }
+    }
+    public struct Links: Decodable, Sendable {
+        public let websiteUrl: URL?
+        public let wikiUrl: URL?
+        public let issuesUrl: URL?
+        public let sourceUrl: URL?
+        private enum CodingKeys: String, CodingKey { case websiteUrl, wikiUrl, issuesUrl, sourceUrl }
+        public init(from decoder: any Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            websiteUrl = try values.decodeCurseForgeWebURL(forKey: .websiteUrl)
+            wikiUrl = try values.decodeCurseForgeWebURL(forKey: .wikiUrl)
+            issuesUrl = try values.decodeCurseForgeWebURL(forKey: .issuesUrl)
+            sourceUrl = try values.decodeCurseForgeWebURL(forKey: .sourceUrl)
+        }
+    }
     public let id: Int
     public let gameId: Int
     public let name: String
@@ -62,6 +48,16 @@ public struct CurseForgeProject: Decodable, Identifiable, Sendable {
         CurseForgeEndpoints.filePage(project: self, fileID: fileID)
     }
 }
+private extension KeyedDecodingContainer {
+    func decodeCurseForgeWebURL(forKey key: Key) throws -> URL? {
+        // Unset optional links are often empty strings rather than JSON null.
+        // Decode their type strictly, but omit unusable links instead of failing
+        // the entire search page because one project has no Wiki or issue tracker.
+        guard let value = try decodeIfPresent(String.self, forKey: key) else { return nil }
+        return CatalogMetadata.webURL(value.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+}
+
 public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     public struct Hash: Decodable, Sendable { public let value: String; public let algo: Int }
     public struct Dependency: Decodable, Sendable { public let modId: Int; public let relationType: Int }

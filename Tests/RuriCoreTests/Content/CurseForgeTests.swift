@@ -66,6 +66,56 @@ struct CurseForgeTests {
         #expect(search.contains(.init(name: "searchFilter", value: "fabric 中文")))
         #expect(URLComponents(url: requests[1].url!, resolvingAgainstBaseURL: false)!.queryItems!.contains(.init(name: "modLoaderType", value: "6")))
     }
+    @Test func searchAndDetailAcceptEmptyOptionalLinks() async throws {
+        var entry = project(7)
+        entry["links"] = ["websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/project-7", "wikiUrl": "", "issuesUrl": "", "sourceUrl": NSNull()]
+        let (service, _, id, session) = service([
+            "/v1/mods/search": try json(["data": [entry, project(8)]]),
+            "/v1/mods/7": try json(["data": entry])
+        ])
+        defer { CFTestProtocol.servers.set(nil, id: id); session.invalidateAndCancel() }
+        let page = try await service.search("", type: "mod")
+        #expect(page.data.map(\.id) == [7, 8])
+        for item in [try #require(page.data.first), try await service.project(7)] {
+            #expect(item.links?.websiteUrl?.absoluteString == "https://www.curseforge.com/minecraft/mc-mods/project-7")
+            #expect(item.links?.wikiUrl == nil)
+            #expect(item.links?.issuesUrl == nil)
+            #expect(item.links?.sourceUrl == nil)
+        }
+    }
+    @Test func optionalWebURLsHandleMissingNullEmptyAndInvalidValues() throws {
+        for value in [nil, NSNull(), "", " \n\t ", "https://[", "/relative/path", "file:///tmp/wiki", "javascript:alert(1)", "https://user:secret@example.test/wiki"] as [Any?] {
+            var links: [String: Any] = [:], logo: [String: Any] = [:]
+            if let value {
+                links = Dictionary(uniqueKeysWithValues: ["websiteUrl", "wikiUrl", "issuesUrl", "sourceUrl"].map { ($0, value) })
+                logo = ["thumbnailUrl": value]
+            }
+            var entry = project(7); entry["links"] = links; entry["logo"] = logo
+            let result = try JSONDecoder().decode(CurseForgeProject.self, from: json(entry))
+            #expect(result.links?.websiteUrl == nil)
+            #expect(result.links?.wikiUrl == nil)
+            #expect(result.links?.issuesUrl == nil)
+            #expect(result.links?.sourceUrl == nil)
+            #expect(result.logo?.thumbnailUrl == nil)
+            #expect(result.page(for: 70).absoluteString == "https://www.curseforge.com/minecraft/mc-mods/project-7/files/70")
+        }
+    }
+    @Test func validOptionalWebURLsArePreservedAndSchemaErrorsStillFail() throws {
+        var entry = project(7)
+        entry["links"] = ["websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/project-7", "wikiUrl": " http://example.test/wiki \n",
+                          "issuesUrl": "https://example.test/issues?q=bug#new", "sourceUrl": "https://example.test/source"]
+        entry["logo"] = ["thumbnailUrl": "https://media.forgecdn.net/test.png"]
+        let result = try JSONDecoder().decode(CurseForgeProject.self, from: json(entry))
+        #expect(result.links?.wikiUrl?.absoluteString == "http://example.test/wiki")
+        #expect(result.links?.issuesUrl?.absoluteString == "https://example.test/issues?q=bug#new")
+        #expect(result.links?.sourceUrl?.absoluteString == "https://example.test/source")
+        #expect(result.logo?.thumbnailUrl?.absoluteString == "https://media.forgecdn.net/test.png")
+        entry["links"] = ["wikiUrl": 42]
+        #expect(throws: DecodingError.self) { try JSONDecoder().decode(CurseForgeProject.self, from: json(entry)) }
+        entry["links"] = [:] as [String: Any]
+        entry["id"] = nil
+        #expect(throws: DecodingError.self) { try JSONDecoder().decode(CurseForgeProject.self, from: json(entry)) }
+    }
     @Test func requiredDependenciesAndDistributionRestrictionsArePlanned() async throws {
         let root = file(10, project: 1, dependencies: [["modId": 2, "relationType": 3], ["modId": 3, "relationType": 2]])
         let dependency = file(20, project: 2, dependencies: [["modId": 1, "relationType": 3]])

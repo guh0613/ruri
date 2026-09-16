@@ -15,6 +15,7 @@ mkdir -p "$app/Contents/Helpers"
 cp Resources/Info.plist "$app/Contents/Info.plist"
 cp Resources/ThirdPartyNotices.txt "$app/Contents/Resources/ThirdPartyNotices.txt"
 python3 scripts/configure-app.py "$app/Contents/Info.plist"
+python3 scripts/configure-services.py "$app/Contents/Resources"
 scripts/swift-build.sh -c "$configuration" --product Ruri
 scripts/swift-build.sh -c "$configuration" --product ruri-monitor
 binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
