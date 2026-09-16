@@ -48,7 +48,7 @@ struct CatalogProjectCard: View {
     }
     private var title: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(project.title).font(.headline).lineLimit(compact ? 1 : 2, reservesSpace: !compact).help(project.title)
+            Text(project.title).font(.headline).lineLimit(compact ? 1 : 2).help(project.title)
             Text(Messages.AppDiscoverView.authorBy(project.author).localized).font(.caption).foregroundStyle(.secondary).lineLimit(1)
         }
     }
