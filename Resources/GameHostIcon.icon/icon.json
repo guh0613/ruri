@@ -1,0 +1,47 @@
+{
+  "fill-specializations": [
+    {
+      "value": {
+        "automatic-gradient": "srgb:0.92000,0.95000,0.98500,1.00000"
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "automatic-gradient": "srgb:0.08500,0.11000,0.18000,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "Lapis game host",
+      "layers": [
+        {
+          "image-name": "LapisGame.png",
+          "name": "Lapis block with glass gamepad",
+          "glass": true,
+          "position": {
+            "scale": 0.76,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.2
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": [
+      "macOS"
+    ]
+  }
+}

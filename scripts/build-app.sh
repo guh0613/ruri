@@ -30,9 +30,22 @@ codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app/Contents/Helpers/ruri-m
 for bundle in "$binary_dir/"*.bundle(N); do
   ditto "$bundle" "$app/Contents/Resources/${bundle:t}"
 done
-xcrun swift scripts/make-icon.swift build/AppIcon.iconset
-iconutil -c icns build/AppIcon.iconset -o "$app/Contents/Resources/AppIcon.icns"
-zsh scripts/build-game-host.sh "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist" "$app/Contents/Resources/AppIcon.icns"
+# Compile the layered Liquid Glass icon and the fallback ICNS for macOS 14/15.
+xcrun actool Resources/AppIcon.icon \
+  --compile "$app/Contents/Resources" \
+  --platform macosx --target-device mac \
+  --minimum-deployment-target "$(plutil -extract LSMinimumSystemVersion raw "$app/Contents/Info.plist")" \
+  --app-icon AppIcon --output-format human-readable-text \
+  --output-partial-info-plist "$stage_dir/icon-info.plist"
+python3 - "$app/Contents/Info.plist" "$stage_dir/icon-info.plist" <<'PY'
+import plistlib, sys
+from pathlib import Path
+target, generated = map(Path, sys.argv[1:])
+info = plistlib.loads(target.read_bytes())
+info.update(plistlib.loads(generated.read_bytes()))
+target.write_bytes(plistlib.dumps(info))
+PY
+zsh scripts/build-game-host.sh "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist"
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app"
 codesign --verify --deep --strict "$app"
 python3 scripts/check-localization-bundle.py "$app"

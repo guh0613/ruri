@@ -11,7 +11,6 @@ if [[ -z "${DEVELOPER_DIR:-}" ]]; then
 fi
 destination="${1:?Pass the destination RuriGame.app path}"
 main_plist="${2:-Resources/Info.plist}"
-icon="${3:-}"
 destination="${destination:A}"
 mkdir -p "${destination:h}"
 stage_dir="$(mktemp -d "${destination:h}/.ruri-game-build.XXXXXX")"
@@ -40,7 +39,21 @@ compiler=(xcrun clang -isysroot "$sdk" -mmacosx-version-min=14.0 -arch arm64 -ar
   Sources/RuriGameHost/main.m Sources/RuriGameHost/HostProtocol.m Sources/RuriGameHost/GameApplication.m \
   -L"$app/Contents/Frameworks" -lRuriGameSupport -Wl,-rpath,@executable_path/../Frameworks \
   -o "$app/Contents/MacOS/ruri-game"
-if [[ -n "$icon" ]]; then cp "$icon" "$app/Contents/Resources/AppIcon.icns"; fi
+# Give packaged and standalone hosts the same distinct layered icon and ICNS fallback.
+xcrun actool Resources/GameHostIcon.icon \
+  --compile "$app/Contents/Resources" \
+  --platform macosx --target-device mac \
+  --minimum-deployment-target "$(plutil -extract LSMinimumSystemVersion raw "$app/Contents/Info.plist")" \
+  --app-icon GameHostIcon --output-format human-readable-text \
+  --output-partial-info-plist "$stage_dir/icon-info.plist"
+python3 - "$app/Contents/Info.plist" "$stage_dir/icon-info.plist" <<'PY'
+import plistlib, sys
+from pathlib import Path
+target, generated = map(Path, sys.argv[1:])
+info = plistlib.loads(target.read_bytes())
+info.update(plistlib.loads(generated.read_bytes()))
+target.write_bytes(plistlib.dumps(info))
+PY
 sign_options=()
 if [[ "${RURI_SIGN_IDENTITY:--}" != "-" ]]; then
   # JIT/legacy HotSpot executable memory and vendor/mod native libraries belong

@@ -13,5 +13,5 @@
   <key>GCSupportsGameMode</key><true/>
   <key>LSSupportsGameMode</key><true/>
   <key>NSHighResolutionCapable</key><true/>
-  <key>CFBundleIconFile</key><string>AppIcon</string>
+  <key>CFBundleIconFile</key><string>GameHostIcon</string>
 </dict></plist>
