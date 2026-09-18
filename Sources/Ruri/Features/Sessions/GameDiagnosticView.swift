@@ -13,35 +13,24 @@ struct GameDiagnosticView: View {
     private var key: String { "\(session.id)-\(session.state.rawValue)-\(session.evidence.count)-\(session.artifactState?.rawValue ?? "")" }
     private var instanceAvailable: Bool { model.state.instances.contains { $0.id == session.instanceID } }
 
+    /// The written explanation for one run. Its container owns the scroll view,
+    /// the run's own numbers and the tools that leave this screen.
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack(spacing: 24) {
-                    SessionMetric(title: Messages.SessionUI.duration.localized, value: session.userDuration)
-                    SessionMetric(title: "Minecraft", value: session.gameVersion)
-                    SessionMetric(title: "Java", value: session.java ?? "—")
-                }
-                Text(session.overviewHelp)
-                    .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                if session.timing?.quality == .interrupted {
-                    Label(Messages.SessionRuntime.timingPartial.localized, systemImage: "clock.badge.questionmark").font(.callout).foregroundStyle(.secondary)
-                }
-                if session.hasPostCommandFailure {
-                    Button(Messages.CoreGameDiagnosis.checkInstanceSettings.localized) { action(.settings) }.disabled(!instanceAvailable)
-                } else if session.needsAttention { suggestions }
-                if session.artifactState == .expired {
-                    Label(Messages.SessionRuntime.artifactsExpired.localized, systemImage: "archivebox").font(.callout).foregroundStyle(.secondary)
-                }
-                if session.needsAttention || session.state.isFinished {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(Messages.SessionUI.reportHelp.localized).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                        Button(Messages.SessionUI.exportReport.localized) { action(.collect) }.buttonStyle(.borderedProminent)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(16).background(.quaternary.opacity(0.4), in: RoundedRectangle(cornerRadius: 12))
-                }
-                technicalDetails
-            }.padding(24).frame(maxWidth: .infinity, alignment: .leading)
-        }.scrollBounceBehavior(.basedOnSize)
+        VStack(alignment: .leading, spacing: 18) {
+            Text(session.overviewHelp)
+                .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            if session.timing?.quality == .interrupted {
+                Label(Messages.SessionRuntime.timingPartial.localized, systemImage: "clock.badge.questionmark").font(.callout).foregroundStyle(.secondary)
+            }
+            if session.hasPostCommandFailure {
+                Button(Messages.CoreGameDiagnosis.checkInstanceSettings.localized) { action(.settings) }.disabled(!instanceAvailable)
+            } else if session.needsAttention { suggestions }
+            if session.artifactState == .expired {
+                Label(Messages.SessionRuntime.artifactsExpired.localized, systemImage: "archivebox").font(.callout).foregroundStyle(.secondary)
+            }
+            technicalDetails
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .task(id: key) {
             diagnosis = nil; error = nil
             guard session.needsAttention, !session.hasPostCommandFailure else { return }
@@ -106,6 +95,7 @@ struct GameDiagnosticView: View {
                     detail(Messages.SessionUI.environment.localized, "\(session.loader) \(session.loaderVersion ?? "") · \(session.hostArchitecture)")
                     detail("Java", session.java ?? "—")
                     detail("macOS", session.operatingSystem)
+                    if let world = session.world { detail(Messages.HistoryUI.world.localized, world.name + " · " + world.folder) }
                     if let host = session.host { detail(Messages.SessionUI.result.localized, host.summary) }
                     if let exit = session.exit { detail(Messages.SessionUI.result.localized, exit.logDescription) }
                 }.textSelection(.enabled)

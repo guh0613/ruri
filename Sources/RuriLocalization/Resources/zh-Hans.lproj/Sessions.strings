@@ -1,8 +1,5 @@
 /* @symbol SessionRuntime.historyError @args text */
-"SessionRuntime.historyError" = "无法保存或读取游玩历史：%1$@";
-
-/* @symbol SessionRuntime.historyUnavailable @args - */
-"SessionRuntime.historyUnavailable" = "游玩历史暂时不可用。现有运行记录不会因此被清理，请稍后重试。";
+"SessionRuntime.historyError" = "无法读写游玩历史：%1$@";
 
 /* @symbol SessionRuntime.storageWarning @args text */
 "SessionRuntime.storageWarning" = "[Ruri] 记录保存遇到问题：%1$@";
@@ -20,58 +17,49 @@
 "SessionRuntime.transportFailed" = "无法连接游戏监控。请刷新运行状态后重试。";
 
 /* @symbol SessionRuntime.launchTimeout @args - */
-"SessionRuntime.launchTimeout" = "游戏监控没有及时确认启动，请查看本次记录；不要重复启动同一个实例。";
+"SessionRuntime.launchTimeout" = "游戏监控未及时确认启动，请查看本次记录，不要重复启动。";
 
 /* @symbol SessionRuntime.artifactsExpired @args - */
-"SessionRuntime.artifactsExpired" = "Ruri 保存的诊断附件已清理，游玩记录仍然保留；原生游戏日志若仍可确认归属，可以继续查看和导出。";
-
-/* @symbol SessionRuntime.systemReports @args - */
-"SessionRuntime.systemReports" = "macOS 崩溃报告";
+"SessionRuntime.artifactsExpired" = "诊断附件已清理，游玩记录仍保留。";
 
 /* @symbol SessionRuntime.reportUnavailable @args - */
-"SessionRuntime.reportUnavailable" = "未找到可读取且能确认属于本次运行的 macOS 崩溃报告。也可以在“控制台”的“崩溃报告”中查找。";
+"SessionRuntime.reportUnavailable" = "未找到属于本次运行的 macOS 崩溃报告。";
 
 /* @symbol SessionRuntime.collectedWithoutAnalysis @args - */
-"SessionRuntime.collectedWithoutAnalysis" = "已收集可用日志。自动分析未完成，仍可导出报告。";
+"SessionRuntime.collectedWithoutAnalysis" = "已收集日志，自动分析未完成，仍可导出报告。";
 
 /* @symbol SessionRuntime.launcherEvents @args - */
 "SessionRuntime.launcherEvents" = "启动器相关事件";
 
 /* @symbol SessionRuntime.timingPartial @args - */
-"SessionRuntime.timingPartial" = "本次计时不完整，仅统计已确认的运行时间。";
+"SessionRuntime.timingPartial" = "计时不完整，仅统计已确认的时间。";
 
 /* @symbol SessionRuntime.timingHelp @args - */
-"SessionRuntime.timingHelp" = "游玩时长包含游戏加载与后台运行，不包含电脑睡眠。旧记录沿用当时的计时方式。";
+"SessionRuntime.timingHelp" = "时长包含加载与后台运行，不含睡眠时间。";
 
 /* @symbol SessionRuntime.loggingHelp @args - */
-"SessionRuntime.loggingHelp" = "游戏日志优先使用 Minecraft 自己的文件。普通模式不额外复制控制台日志；进程输出只在内存中有界保留，异常时用于补充。";
+"SessionRuntime.loggingHelp" = "在 Finder 中查看游戏日志文件。";
 
 /* @symbol SessionUI.history @args - */
-"SessionUI.history" = "游玩历史";
-
-/* @symbol SessionUI.historySubtitle @args - */
-"SessionUI.historySubtitle" = "查看玩过的实例、游玩时间与每次运行的结果。清理日志不会删除这些记录。";
+"SessionUI.history" = "回顾";
 
 /* @symbol SessionUI.allInstances @args - */
 "SessionUI.allInstances" = "所有实例";
-
-/* @symbol SessionUI.allResults @args - */
-"SessionUI.allResults" = "所有结果";
 
 /* @symbol SessionUI.problemsOnly @args - */
 "SessionUI.problemsOnly" = "需要关注";
 
 /* @symbol SessionUI.search @args - */
-"SessionUI.search" = "搜索实例或游戏版本";
+"SessionUI.search" = "搜索";
 
 /* @symbol SessionUI.noHistory @args - */
-"SessionUI.noHistory" = "还没有游玩记录";
+"SessionUI.noHistory" = "暂无游玩记录";
 
 /* @symbol SessionUI.noHistoryHelp @args - */
-"SessionUI.noHistoryHelp" = "启动游戏后，这里会自动记录每次游玩。";
+"SessionUI.noHistoryHelp" = "启动游戏后会自动记录。";
 
 /* @symbol SessionUI.noMatches @args - */
-"SessionUI.noMatches" = "没有符合条件的记录";
+"SessionUI.noMatches" = "没有匹配的记录";
 
 /* @symbol SessionUI.loadMore @args - */
 "SessionUI.loadMore" = "加载更早的记录";
@@ -81,9 +69,6 @@
 
 /* @symbol SessionUI.playCount @args - */
 "SessionUI.playCount" = "游玩次数";
-
-/* @symbol SessionUI.recentTime @args - */
-"SessionUI.recentTime" = "最近 14 天";
 
 /* @symbol SessionUI.instance @args - */
 "SessionUI.instance" = "实例";
@@ -139,9 +124,6 @@
 /* @symbol SessionUI.partialTime @args text */
 "SessionUI.partialTime" = "至少 %1$@";
 
-/* @symbol SessionUI.overview @args - */
-"SessionUI.overview" = "概览";
-
 /* @symbol SessionUI.console @args - */
 "SessionUI.console" = "查看日志";
 
@@ -149,31 +131,31 @@
 "SessionUI.exportReport" = "导出诊断报告…";
 
 /* @symbol SessionUI.reportHelp @args - */
-"SessionUI.reportHelp" = "遇到问题时，将报告发给整合包作者或支持人员。导出前会隐藏常见隐私信息，你也可以检查包含的内容。";
+"SessionUI.reportHelp" = "隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。";
 
 /* @symbol SessionUI.normalHelp @args - */
-"SessionUI.normalHelp" = "这次游戏已正常结束。游玩记录会长期保留，需要排查问题时仍可查看可用日志。";
+"SessionUI.normalHelp" = "游戏已正常结束。";
 
 /* @symbol SessionUI.runningHelp @args - */
-"SessionUI.runningHelp" = "关闭这个窗口或退出启动器不会结束游戏。游戏退出后会自动保存记录。";
+"SessionUI.runningHelp" = "关闭此窗口或退出启动器不会结束游戏。";
 
 /* @symbol SessionUI.failureHelp @args - */
-"SessionUI.failureHelp" = "游戏未能正常完成运行。先查看下面的建议；如果仍无法解决，可以导出诊断报告。";
+"SessionUI.failureHelp" = "游戏未正常结束。可参考下方建议，或导出诊断报告。";
 
 /* @symbol SessionUI.noFinding @args - */
-"SessionUI.noFinding" = "暂时无法确定原因";
+"SessionUI.noFinding" = "无法确定原因";
 
 /* @symbol SessionUI.noFindingHelp @args - */
-"SessionUI.noFindingHelp" = "退出状态不足以判断具体原因。报告会包含目前可获得的日志，方便进一步检查。";
+"SessionUI.noFindingHelp" = "现有信息不足以判断原因，可导出报告进一步检查。";
 
 /* @symbol SessionUI.suggestions @args - */
-"SessionUI.suggestions" = "可以先试试";
+"SessionUI.suggestions" = "建议";
 
 /* @symbol SessionUI.technicalDetails @args - */
 "SessionUI.technicalDetails" = "技术信息";
 
 /* @symbol SessionUI.evidence @args - */
-"SessionUI.evidence" = "查看依据";
+"SessionUI.evidence" = "依据";
 
 /* @symbol SessionUI.environment @args - */
 "SessionUI.environment" = "游戏环境";
@@ -190,9 +172,6 @@
 /* @symbol SessionUI.launcherLog @args - */
 "SessionUI.launcherLog" = "启动信息";
 
-/* @symbol SessionUI.gameOutput @args - */
-"SessionUI.gameOutput" = "游戏输出";
-
 /* @symbol SessionUI.logSearch @args - */
 "SessionUI.logSearch" = "搜索当前日志";
 
@@ -206,10 +185,10 @@
 "SessionUI.openGameFolder" = "打开游戏日志文件夹";
 
 /* @symbol SessionUI.emptyLog @args - */
-"SessionUI.emptyLog" = "暂时没有可显示的输出";
+"SessionUI.emptyLog" = "暂无输出";
 
 /* @symbol SessionUI.noLiveConnection @args - */
-"SessionUI.noLiveConnection" = "实时日志连接已断开，已显示的内容仍可保存。";
+"SessionUI.noLiveConnection" = "实时连接已断开，已显示内容仍可保存。";
 
 /* @symbol SessionUI.retry @args - */
 "SessionUI.retry" = "重试";
@@ -221,16 +200,16 @@
 "SessionUI.reportReady" = "报告已准备好";
 
 /* @symbol SessionUI.reportPreparing @args - */
-"SessionUI.reportPreparing" = "正在收集可用日志…";
+"SessionUI.reportPreparing" = "正在收集日志…";
 
 /* @symbol SessionUI.reportPrivacy @args - */
-"SessionUI.reportPrivacy" = "报告仅保存在你选择的位置，不会自动上传。自动隐藏可能不完整，分享前请检查。";
+"SessionUI.reportPrivacy" = "报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。";
 
 /* @symbol SessionUI.reviewFiles @args - */
-"SessionUI.reviewFiles" = "检查包含的文件";
+"SessionUI.reviewFiles" = "检查文件";
 
 /* @symbol SessionUI.extraRedaction @args - */
-"SessionUI.extraRedaction" = "额外隐藏的内容（每行一项）";
+"SessionUI.extraRedaction" = "额外隐藏内容（每行一项）";
 
 /* @symbol SessionUI.exportZIP @args - */
 "SessionUI.exportZIP" = "保存报告…";
@@ -241,9 +220,6 @@
 /* @symbol SessionUI.showFile @args - */
 "SessionUI.showFile" = "在 Finder 中显示";
 
-/* @symbol SessionUI.recordOnly @args - */
-"SessionUI.recordOnly" = "仅保留游玩记录";
-
 /* @symbol SessionUI.collectingLimits @args - */
 "SessionUI.collectingLimits" = "部分日志不可用";
 
@@ -251,37 +227,25 @@
 "SessionUI.openSystemReports" = "打开 macOS 控制台";
 
 /* @symbol SessionUI.launcherActivity @args - */
-"SessionUI.launcherActivity" = "启动器活动";
-
-/* @symbol SessionUI.privacyAndStorage @args - */
-"SessionUI.privacyAndStorage" = "记录与隐私";
+"SessionUI.launcherActivity" = "活动";
 
 /* @symbol SessionUI.reportContents @args integer,text */
 "SessionUI.reportContents" = "包含 %1$lld 个文件 · %2$@";
 
-/* @symbol SessionUI.allDates @args - */
-"SessionUI.allDates" = "所有时间";
-
-/* @symbol SessionUI.lastWeek @args - */
-"SessionUI.lastWeek" = "最近 7 天";
-
-/* @symbol SessionUI.lastMonth @args - */
-"SessionUI.lastMonth" = "最近 30 天";
-
 /* @symbol SessionUI.recordUnavailable @args - */
-"SessionUI.recordUnavailable" = "无法找到这条游玩记录。";
+"SessionUI.recordUnavailable" = "找不到这条记录。";
 
 /* @symbol SessionUI.afterCommandFailed @args - */
 "SessionUI.afterCommandFailed" = "后置命令失败";
 
 /* @symbol SessionUI.afterCommandHelp @args - */
-"SessionUI.afterCommandHelp" = "游戏已经结束，游玩时长已保存，但退出后执行的命令没有成功。请检查启动设置中的后置命令。";
+"SessionUI.afterCommandHelp" = "游戏已结束，但后置命令执行失败。请检查启动设置。";
 
 /* @symbol SessionUI.interruptedHelp @args - */
-"SessionUI.interruptedHelp" = "启动器没有收到完整的结束信息，已保留能确认的时长与日志。这不一定表示游戏崩溃。";
+"SessionUI.interruptedHelp" = "未收到完整的结束信息，仅保留已确认的时长与日志。";
 
 /* @symbol SessionUI.finishingHelp @args - */
-"SessionUI.finishingHelp" = "游戏已退出，游玩时长已保存。正在完成退出后的操作。";
+"SessionUI.finishingHelp" = "游戏已退出，正在执行后置操作。";
 
 /* @symbol SessionUI.processOutput @args - */
 "SessionUI.processOutput" = "进程输出（补充）";
@@ -293,19 +257,175 @@
 "SessionUI.nativeDebugLog" = "详细游戏日志";
 
 /* @symbol SessionUI.fullFilePreview @args - */
-"SessionUI.fullFilePreview" = "这里只预览开头和末尾；导出包含所选附件的全部内容。标记为“摘录”的附件不等于完整原始日志。";
+"SessionUI.fullFilePreview" = "仅预览开头和末尾，导出包含完整内容。";
 
 /* @symbol SessionUI.unsafeLongLine @args - */
-"SessionUI.unsafeLongLine" = "日志含有超过 1 MiB 的单行，无法在内存预算内安全隐藏敏感信息，未将摘录冒充完整文件。可在游戏目录中查看原文件。";
+"SessionUI.unsafeLongLine" = "日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。";
 
 /* @symbol SessionUI.fullExportFailed @args text,text */
-"SessionUI.fullExportFailed" = "未能准备 %1$@ 的完整文件：%2$@。其他已取得的日志仍可导出。";
+"SessionUI.fullExportFailed" = "未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。";
 
 /* @symbol SessionUI.logOrigin @args text */
 "SessionUI.logOrigin" = "来源：%1$@";
 
 /* @symbol SessionUI.fallbackLogHelp @args - */
-"SessionUI.fallbackLogHelp" = "暂未取得本次游戏的原生日志，正在显示有界的进程输出。这是补充信息，不是完整游戏日志。";
+"SessionUI.fallbackLogHelp" = "未找到游戏日志，当前显示进程输出。";
 
 /* @symbol SessionUI.nativeLogUnavailable @args - */
-"SessionUI.nativeLogUnavailable" = "未找到能确认属于本次游玩的日志。原文件可能已轮转、清理或发生变化；游玩记录仍然保留。";
+"SessionUI.nativeLogUnavailable" = "未找到本次游玩的日志，文件可能已轮转或清理。";
+
+/* @symbol HistoryUI.rangeWeek @args - */
+"HistoryUI.rangeWeek" = "周";
+
+/* @symbol HistoryUI.rangeMonth @args - */
+"HistoryUI.rangeMonth" = "月";
+
+/* @symbol HistoryUI.rangeYear @args - */
+"HistoryUI.rangeYear" = "年";
+
+/* @symbol HistoryUI.rangeAll @args - */
+"HistoryUI.rangeAll" = "全部";
+
+/* @symbol HistoryUI.rangeWeekTitle @args - */
+"HistoryUI.rangeWeekTitle" = "最近 7 天";
+
+/* @symbol HistoryUI.rangeMonthTitle @args - */
+"HistoryUI.rangeMonthTitle" = "最近 30 天";
+
+/* @symbol HistoryUI.rangeYearTitle @args - */
+"HistoryUI.rangeYearTitle" = "最近 12 个月";
+
+/* @symbol HistoryUI.rangeAllTitle @args - */
+"HistoryUI.rangeAllTitle" = "全部时间";
+
+/* @symbol HistoryUI.activity @args - */
+"HistoryUI.activity" = "游玩活动";
+
+/* @symbol HistoryUI.noActivity @args - */
+"HistoryUI.noActivity" = "此时段无记录";
+
+/* @symbol HistoryUI.averageSession @args - */
+"HistoryUI.averageSession" = "平均每次";
+
+/* @symbol HistoryUI.longestSession @args - */
+"HistoryUI.longestSession" = "最长一次";
+
+/* @symbol HistoryUI.activeDays @args - */
+"HistoryUI.activeDays" = "游玩天数";
+
+/* @symbol HistoryUI.streak @args - */
+"HistoryUI.streak" = "连续游玩";
+
+/* @symbol HistoryUI.dayCount @args integer */
+"HistoryUI.dayCount" = "%1$lld 天";
+
+/* @symbol HistoryUI.sessionCount @args integer */
+"HistoryUI.sessionCount" = "%1$lld 次";
+
+/* @symbol HistoryUI.instancesSection @args - */
+"HistoryUI.instancesSection" = "实例";
+
+/* @symbol HistoryUI.worldsSection @args - */
+"HistoryUI.worldsSection" = "存档";
+
+/* @symbol HistoryUI.timelineSection @args - */
+"HistoryUI.timelineSection" = "游玩记录";
+
+/* @symbol HistoryUI.noWorldsHelp @args - */
+"HistoryUI.noWorldsHelp" = "退出游戏后会记录本次进入的存档。";
+
+/* @symbol HistoryUI.world @args - */
+"HistoryUI.world" = "存档";
+
+/* @symbol HistoryUI.allWorlds @args - */
+"HistoryUI.allWorlds" = "所有存档";
+
+/* @symbol HistoryUI.unknownWorld @args - */
+"HistoryUI.unknownWorld" = "未记录存档";
+
+/* @symbol HistoryUI.filters @args - */
+"HistoryUI.filters" = "筛选";
+
+/* @symbol HistoryUI.clearFilters @args - */
+"HistoryUI.clearFilters" = "清除筛选";
+
+/* @symbol HistoryUI.today @args - */
+"HistoryUI.today" = "今天";
+
+/* @symbol HistoryUI.yesterday @args - */
+"HistoryUI.yesterday" = "昨天";
+
+/* @symbol HistoryUI.timeRange @args text,text */
+"HistoryUI.timeRange" = "%1$@ – %2$@";
+
+/* @symbol HistoryUI.sinceFirstPlay @args text */
+"HistoryUI.sinceFirstPlay" = "自 %1$@";
+
+/* @symbol HistoryUI.shareOfRange @args text */
+"HistoryUI.shareOfRange" = "占 %1$@";
+
+/* @symbol HistoryUI.instanceRemoved @args - */
+"HistoryUI.instanceRemoved" = "实例已删除";
+
+/* @symbol HistoryUI.showRuns @args - */
+"HistoryUI.showRuns" = "仅显示此项";
+
+/* @symbol HistoryUI.filteredByInstance @args text */
+"HistoryUI.filteredByInstance" = "实例：%1$@";
+
+/* @symbol HistoryUI.filteredByWorld @args text */
+"HistoryUI.filteredByWorld" = "存档：%1$@";
+
+/* @symbol HistoryUI.otherInstances @args integer */
+"HistoryUI.otherInstances" = "还有 %1$lld 个";
+
+/* @symbol HistoryUI.moreTools @args - */
+"HistoryUI.moreTools" = "工具";
+
+/* @symbol HistoryUI.openLogs @args - */
+"HistoryUI.openLogs" = "查看日志";
+
+/* @symbol HistoryUI.openLogsHelp @args - */
+"HistoryUI.openLogsHelp" = "原始日志输出。";
+
+/* @symbol HistoryUI.memory @args - */
+"HistoryUI.memory" = "分配内存";
+
+/* @symbol HistoryUI.loader @args - */
+"HistoryUI.loader" = "加载器";
+
+/* @symbol HistoryUI.mostPlayed @args - */
+"HistoryUI.mostPlayed" = "最常玩";
+
+/* @symbol HistoryUI.favoriteWorld @args - */
+"HistoryUI.favoriteWorld" = "最常去的存档";
+
+/* @symbol HistoryUI.lastPlayed @args text */
+"HistoryUI.lastPlayed" = "上次游玩 %1$@";
+
+/* @symbol HistoryUI.previousWeek @args - */
+"HistoryUI.previousWeek" = "前 7 天";
+
+/* @symbol HistoryUI.previousMonth @args - */
+"HistoryUI.previousMonth" = "前 30 天";
+
+/* @symbol HistoryUI.previousYear @args - */
+"HistoryUI.previousYear" = "前 12 个月";
+
+/* @symbol HistoryUI.moreThanPrevious @args text,text */
+"HistoryUI.moreThanPrevious" = "比%1$@多 %2$@";
+
+/* @symbol HistoryUI.lessThanPrevious @args text,text */
+"HistoryUI.lessThanPrevious" = "比%1$@少 %2$@";
+
+/* @symbol HistoryUI.sameAsPrevious @args text */
+"HistoryUI.sameAsPrevious" = "与%1$@持平";
+
+/* @symbol HistoryUI.removeFilter @args - */
+"HistoryUI.removeFilter" = "移除筛选";
+
+/* @symbol HistoryUI.dayTrack @args - */
+"HistoryUI.dayTrack" = "当天的游玩时段";
+
+/* @symbol HistoryUI.recentWeek @args - */
+"HistoryUI.recentWeek" = "最近 7 天";

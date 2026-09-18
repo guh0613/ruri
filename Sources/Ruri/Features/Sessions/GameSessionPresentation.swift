@@ -39,22 +39,19 @@ extension GameSession {
         if needsAttention { return .orange }
         return state == .running || state == .preparing ? .accentColor : .secondary
     }
+    /// When the run began, preferring the measured clock over the record's own
+    /// creation stamp so a slow launch is not counted as play time.
+    var startDate: Date { timing?.startedAt ?? exit?.startedAt ?? createdAt }
+    var endDate: Date? {
+        if let exit { return exit.endedAt }
+        guard let timing, state.isFinished else { return nil }
+        return timing.observedAt
+    }
     var userDuration: String {
         guard hasPlayed else { return Messages.SessionUI.notStarted.localized }
         if exit == nil && timing == nil { return Messages.SessionUI.unknownTime.localized }
         let value = LocalizedFormat.duration(playedSeconds)
         if timing?.quality == .interrupted || (exit == nil && monitorIdentity?.liveness == .exited) { return Messages.SessionUI.partialTime(value).localized }
         return value
-    }
-}
-
-struct SessionMetric: View {
-    let title: String
-    let value: String
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title).font(.caption).foregroundStyle(.secondary)
-            Text(value).font(.title2.weight(.medium)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7)
-        }.frame(maxWidth: .infinity, alignment: .leading)
     }
 }

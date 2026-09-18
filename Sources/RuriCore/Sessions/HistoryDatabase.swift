@@ -67,7 +67,18 @@ final class HistoryDatabase: @unchecked Sendable {
             sqlite3_busy_timeout(connection, 1500)
             try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: file.path)
             let version = try scalar("PRAGMA user_version")
-            guard version == 0 || version == 1 else { throw POSIXError(.EPROTONOSUPPORT) }
+            guard version == 0 || version == 1 || version == 2 else { throw POSIXError(.EPROTONOSUPPORT) }
+            if version == 1 {
+                // The save a run was spent in became indexed metadata in v2.
+                // Existing rows keep NULL; they predate the read-back.
+                try transaction {
+                    guard try scalar("PRAGMA user_version") == 1 else { return }
+                    try execute("ALTER TABLE sessions ADD COLUMN world_folder TEXT")
+                    try execute("ALTER TABLE sessions ADD COLUMN world_name TEXT")
+                    try execute("CREATE INDEX sessions_world ON sessions(instance_id, world_folder, started)")
+                    try execute("PRAGMA user_version=2")
+                }
+            }
             if version == 0 {
                 var info = statfs()
                 let local = statfs(directory.path, &info) == 0 && info.f_flags & UInt32(MNT_LOCAL) != 0
@@ -80,8 +91,9 @@ final class HistoryDatabase: @unchecked Sendable {
                             created REAL NOT NULL, started REAL NOT NULL, updated REAL NOT NULL, seconds REAL NOT NULL,
                             played INTEGER NOT NULL, attention INTEGER NOT NULL, finished INTEGER NOT NULL,
                             revision INTEGER NOT NULL, payload BLOB NOT NULL, timing BLOB, endpoint TEXT, observed REAL NOT NULL,
-                            reviewed_revision INTEGER, reviewed_at REAL)
+                            reviewed_revision INTEGER, reviewed_at REAL, world_folder TEXT, world_name TEXT)
                         """)
+                    try execute("CREATE INDEX sessions_world ON sessions(instance_id, world_folder, started)")
                     try execute("CREATE INDEX sessions_instance_date ON sessions(instance_id, created DESC)")
                     try execute("CREATE INDEX sessions_date ON sessions(created DESC)")
                     try execute("CREATE INDEX sessions_updated ON sessions(updated)")
@@ -91,7 +103,7 @@ final class HistoryDatabase: @unchecked Sendable {
                     try execute("CREATE INDEX runtime_events_session ON runtime_events(session_id, date)")
                     try execute("CREATE TABLE launcher_events(id TEXT PRIMARY KEY, session_id TEXT, updated REAL NOT NULL, running INTEGER NOT NULL, payload BLOB NOT NULL)")
                     try execute("CREATE INDEX launcher_events_session ON launcher_events(session_id, updated)")
-                    try execute("PRAGMA user_version=1")
+                    try execute("PRAGMA user_version=2")
                 }
             }
             var info = stat()

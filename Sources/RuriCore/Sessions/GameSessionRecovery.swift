@@ -82,6 +82,7 @@ public enum GameSessionRecovery {
             record.commandIdentity = nil
             record.state = exit.stoppedByLauncher ? .stopped : exit.succeeded ? .succeeded : .failed
             record.stage = .finished; record.updatedAt = date
+            record.applyWorldPlayed(start: exit.startedAt, end: exit.endedAt)
             if record.events.count < 512 { record.events.append(.init(id: UUID(), date: date, stage: .monitorRecovery, message: explanation, localizedMessage: explanationMessage.recorded())) }
             try GameHistoryStore.record(record, paths: paths)
             try? lease.clearReservation(session: record)
@@ -95,6 +96,7 @@ public enum GameSessionRecovery {
         record.state = .interrupted; record.stage = .monitorRecovery; record.updatedAt = date
         record.exit = nil
         if record.timing != nil { record.timing?.quality = .interrupted }
+        if let started = record.timing?.startedAt { record.applyWorldPlayed(start: started, end: date) }
         if record.events.count < 512 { record.events.append(.init(id: UUID(), date: date, stage: .monitorRecovery, message: explanation, localizedMessage: explanationMessage.recorded())) }
         if record.nativeLogs == nil { record.nativeLogs = GameLogSources.references(paths: paths, session: record) }
         try GameHistoryStore.record(record, paths: paths)

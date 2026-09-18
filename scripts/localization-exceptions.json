@@ -526,11 +526,6 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0)\"",
-    "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"attention = 1\"",
     "reason": "SQLite statements and query fragments; internal storage syntax, not user-facing copy."
   },
@@ -726,11 +721,6 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"\"\"\n            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed)\n            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,\n                started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,\n                attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed\n            WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND\n                excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)\n            \"\"\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -762,11 +752,6 @@
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE instance_id=? AND finished=1 ORDER BY created DESC LIMIT 20\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
-    "literal": "\"\"\"\n                        CREATE TABLE sessions(\n                            id TEXT PRIMARY KEY, instance_id TEXT NOT NULL, name TEXT NOT NULL, game_version TEXT NOT NULL,\n                            created REAL NOT NULL, started REAL NOT NULL, updated REAL NOT NULL, seconds REAL NOT NULL,\n                            played INTEGER NOT NULL, attention INTEGER NOT NULL, finished INTEGER NOT NULL,\n                            revision INTEGER NOT NULL, payload BLOB NOT NULL, timing BLOB, endpoint TEXT, observed REAL NOT NULL,\n                            reviewed_revision INTEGER, reviewed_at REAL)\n                        \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
@@ -815,8 +800,93 @@
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed, world_folder, world_name)\n            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,\n                started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,\n                attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed,\n                world_folder=excluded.world_folder, world_name=excluded.world_name\n            WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND\n                excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)\n            \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"world_folder = ?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"played = 1\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n                SELECT coalesce(sum(seconds), 0), count(*), coalesce(max(seconds), 0), max(started), min(started),\n                       count(DISTINCT strftime('%Y-%m-%d', started, 'unixepoch', 'localtime')) FROM sessions\\(filter)\n                \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n                SELECT instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                GROUP BY instance_id ORDER BY 3 DESC LIMIT 16\n                \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"\"\"\n                SELECT world_folder, world_name, instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC LIMIT 16\n                \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT strftime(?, started, 'unixepoch', 'localtime'), sum(seconds), count(*) FROM sessions\\(filter) GROUP BY 1\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" WHERE played = 1\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT DISTINCT strftime('%Y-%m-%d', started, 'unixepoch', 'localtime') FROM sessions\\(filter) ORDER BY 1 DESC LIMIT 400\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
     "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
-    "literal": "\"PRAGMA user_version=1\"",
+    "literal": "\"ALTER TABLE sessions ADD COLUMN world_folder TEXT\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"ALTER TABLE sessions ADD COLUMN world_name TEXT\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"CREATE INDEX sessions_world ON sessions(instance_id, world_folder, started)\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"PRAGMA user_version=2\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "literal": "\"\"\"\n                        CREATE TABLE sessions(\n                            id TEXT PRIMARY KEY, instance_id TEXT NOT NULL, name TEXT NOT NULL, game_version TEXT NOT NULL,\n                            created REAL NOT NULL, started REAL NOT NULL, updated REAL NOT NULL, seconds REAL NOT NULL,\n                            played INTEGER NOT NULL, attention INTEGER NOT NULL, finished INTEGER NOT NULL,\n                            revision INTEGER NOT NULL, payload BLOB NOT NULL, timing BLOB, endpoint TEXT, observed REAL NOT NULL,\n                            reviewed_revision INTEGER, reviewed_at REAL, world_folder TEXT, world_name TEXT)\n                        \"\"\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"started < ?\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT coalesce(sum(seconds), 0) FROM sessions\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions\\(filter) ORDER BY seconds DESC LIMIT 1\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   }
 ]

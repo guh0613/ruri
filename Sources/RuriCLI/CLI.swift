@@ -249,6 +249,7 @@ import RuriCore
                         try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
                         return try WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths)
                     }
+                    if let world { try? recorder.setWorld(.init(folder: world.folder, name: world.name, lastPlayed: world.lastPlayed, source: .quickPlay)) }
                     try recorder.transition(.java)
                     let java = try GameJavaRequirement(instance: instance, manifest: manifest).require(from: await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 }))
                     try recorder.setJava(java.label + " · " + java.version)

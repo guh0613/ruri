@@ -20,6 +20,12 @@ public enum LocalizedFormat {
     public static func duration(_ seconds: Double) -> String {
         Duration.seconds(seconds).formatted(.units(allowed: [.hours, .minutes], width: .abbreviated, maximumUnitCount: 2).locale(LocalizationContext.current.formatLocale))
     }
+    /// A share of a whole, as a fraction in 0...1.
+    public static func percent(_ value: Double) -> String {
+        guard value.isFinite else { return "" }
+        let clamped = min(1, max(0, value))
+        return clamped.formatted(.percent.precision(.fractionLength(clamped > 0 && clamped < 0.01 ? 1 : 0)).locale(LocalizationContext.current.formatLocale))
+    }
     public static func list(_ values: [String]) -> String {
         values.formatted(.list(type: .and).locale(LocalizationContext.current.formatLocale))
     }

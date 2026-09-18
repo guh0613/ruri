@@ -84,7 +84,11 @@ extension AppModel {
                     try await installer.prepareRunDirectory(instance, manifest: manifest)
                     let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth, offlineSkin: offlineSkin)
                     recorder.addSecrets(plan.environmentRedactions)
-                    if let world { appendLog(Messages.AppAppModelLaunching.worldLaunch(world.name).localized) }
+                    if let world {
+                        appendLog(Messages.AppAppModelLaunching.worldLaunch(world.name).localized)
+                        // History metadata; a failure here must not stop a launch.
+                        try? recorder.setWorld(.init(folder: world.folder, name: world.name, lastPlayed: world.lastPlayed, source: .quickPlay))
+                    }
                     appendLog("[Ruri] \(java.label)")
                     appendLog("[Ruri] \(plan.redactedCommand)")
                     try advanceSession(.starting)

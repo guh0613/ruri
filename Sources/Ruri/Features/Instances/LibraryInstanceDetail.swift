@@ -377,7 +377,13 @@ private struct RunRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(session.userResult)
                         .font(.callout.weight(.medium)).lineLimit(1)
-                    Text(LocalizedFormat.date(session.createdAt)).font(.caption).foregroundStyle(.secondary)
+                    HStack(spacing: 6) {
+                        Text(LocalizedFormat.date(session.createdAt))
+                        if let world = session.world {
+                            Text("·")
+                            Label(world.name, systemImage: "map").labelStyle(.titleAndIcon).lineLimit(1)
+                        }
+                    }.font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 8)
                 if session.hasPlayed { Text(session.userDuration).font(.caption).foregroundStyle(.secondary).monospacedDigit() }

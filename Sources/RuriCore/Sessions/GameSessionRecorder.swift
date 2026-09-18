@@ -118,6 +118,12 @@ import OSLog
         try save(); note("[Ruri] \(status.summary)")
     }
     public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
+    /// The launcher picked this run's destination, so the save is known before
+    /// the game writes anything. A later read-back still wins if they differ.
+    public func setWorld(_ world: GameWorldPlay) throws {
+        guard !record.state.isFinished, world.isValid else { return }
+        record.world = world; try save()
+    }
     func recordNormalQuit(requestID: UUID, requestedAt: Date, accepted: Bool) throws {
         guard !record.state.isFinished else { return }
         let attempt = GameNormalQuitAttempt(requestID: requestID, requestedAt: requestedAt, processedAt: Date(), accepted: accepted)
@@ -180,6 +186,8 @@ import OSLog
             catch { storageWarning(error) }
         }
         record.artifactState = FileManager.default.fileExists(atPath: directory.path) ? .available : .unavailable
+        // History metadata only, read after the game has written its saves.
+        record.applyWorldPlayed(start: exit.startedAt, end: exit.endedAt)
         record.finalSnapshot = true; record.updatedAt = Date()
         do { try save(); persistence = .success(()) } catch { storageWarning(error) }
         try close()

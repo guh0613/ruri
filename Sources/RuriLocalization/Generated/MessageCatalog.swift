@@ -205,6 +205,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreWorldQuickPlay.definitions) { first, _ in first }
         result.merge(Messages.Discovery.definitions) { first, _ in first }
         result.merge(Messages.GameHost.definitions) { first, _ in first }
+        result.merge(Messages.HistoryUI.definitions) { first, _ in first }
         result.merge(Messages.LauncherLog.definitions) { first, _ in first }
         result.merge(Messages.MonitorLogging.definitions) { first, _ in first }
         result.merge(Messages.NativeGameLogs.definitions) { first, _ in first }
