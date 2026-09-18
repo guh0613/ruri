@@ -1295,7 +1295,7 @@
 "appInstanceComponentsView.errorText5" = "现有模组需与所选加载器兼容。";
 
 /* @symbol AppInstanceComponentsView.applyLoaderDetails @args - */
-"appInstanceComponentsView.errorText6" = "启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。";
+"appInstanceComponentsView.errorText6" = "更改加载器不会影响实例的存档和模组文件。";
 
 /* @symbol AppInstanceComponentsView.restorePreviousConfiguration @args - */
 "appInstanceComponentsView.backupText2" = "恢复上次配置";
@@ -1310,7 +1310,7 @@
 "appInstanceComponentsView.backupText5" = "应用加载器";
 
 /* @symbol AppInstanceComponentsView.noCompatibleLoader @args - */
-"appInstanceComponentsView.currentText1" = "此 Minecraft 版本没有兼容的加载器版本。";
+"appInstanceComponentsView.currentText1" = "未找到兼容版本";
 
 /* @symbol AppInstanceMenu.showOnHome @args - */
 "appInstanceMenu.bodyText1" = "在主页中显示";
@@ -4004,3 +4004,85 @@
 
 /* @symbol NativeGameLogs.collectionHelp @args - */
 "nativeGameLogs.collectionHelp" = "按需读取游戏的 latest.log、debug.log 和本次崩溃报告，脱敏后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会为此持续复制日志。";
+
+/* @symbol LoaderSelection.invalidSelection @args - */
+"loaderSelection.invalidSelection" = "请选择不同的加载器；原版无需添加组件。";
+
+/* @symbol LoaderSelection.incompatibleLoaders @args - */
+"loaderSelection.incompatibleLoaders" = "这些加载器不能组合使用，请先移除冲突的加载器。";
+
+
+/* @symbol LoaderSelection.unsupportedLaunchMethod @args - */
+"loaderSelection.unsupportedLaunchMethod" = "此版本使用了无法识别的加载器启动入口，无法组合安装。";
+
+/* @symbol LoaderSelection.optiFineWithoutForge @args - */
+"loaderSelection.optiFineWithoutForge" = "此 OptiFine 版本明确不支持 Forge，请选择其他版本。";
+
+/* @symbol LoaderSelection.optiFineCombinationUnavailable @args - */
+"loaderSelection.optiFineCombinationUnavailable" = "此 OptiFine 安装包不包含组合启动入口，请选择其他版本。";
+
+/* @symbol LoaderSelection.stable @args - */
+"loaderSelection.stable" = "稳定版";
+
+/* @symbol LoaderSelection.snapshot @args - */
+"loaderSelection.snapshot" = "快照版";
+
+/* @symbol LoaderSelection.preview @args - */
+"loaderSelection.preview" = "预览版";
+
+/* @symbol LoaderSelection.addLoader @args - */
+"loaderSelection.addLoader" = "添加加载器";
+
+/* @symbol LoaderSelection.noLoaders @args - */
+"loaderSelection.noLoaders" = "按原版启动";
+
+/* @symbol LoaderSelection.incompatibleChoicesHint @args - */
+"loaderSelection.incompatibleChoicesHint" = "互不兼容的加载器无法同时选择。";
+
+/* @symbol LoaderSelection.removeComponent @args text */
+"loaderSelection.removeComponent" = "移除 %1$@";
+
+/* @symbol LoaderSelection.versionUnavailable @args - */
+"loaderSelection.versionUnavailable" = "此版本已不可用，请重新选择。";
+
+/* @symbol LoaderSelection.chooseVersion @args - */
+"loaderSelection.chooseVersion" = "选择版本…";
+
+/* @symbol LoaderSelection.searchVersions @args - */
+"loaderSelection.searchVersions" = "搜索加载器版本";
+
+/* @symbol LoaderSelection.channel @args - */
+"loaderSelection.channel" = "版本分支";
+
+/* @symbol LoaderSelection.allChannels @args - */
+"loaderSelection.allChannels" = "全部分支";
+
+/* @symbol LoaderSelection.forgeCompatibility @args text */
+"loaderSelection.forgeCompatibility" = "OptiFine 标注的兼容性：%1$@";
+
+/* @symbol LoaderSelection.latestStable @args - */
+"loaderSelection.latestStable" = "最新稳定版";
+
+/* @symbol LoaderSelection.noMatchingVersions @args - */
+"loaderSelection.noMatchingVersions" = "没有符合筛选条件的版本";
+
+/* @symbol LoaderSelection.universalVersionsHint @args - */
+"loaderSelection.universalVersionsHint" = "建议使用最新稳定版；旧版可能不兼容当前游戏或模组。";
+
+/* @symbol LoaderSelection.forgeLiteLoaderWarning @args - */
+"loaderSelection.forgeLiteLoaderWarning" = "Forge 14.23.5.2760–14.23.5.2772 与 LiteLoader 有已知冲突，建议更换 Forge 版本。";
+
+/* @symbol LoaderSelection.forgeOptiFineWarning @args - */
+"loaderSelection.forgeOptiFineWarning" = "Minecraft 1.14.4 的 Forge 28.2.2 及后续版本与 OptiFine 有已知冲突，建议使用较早的 Forge。";
+
+/* @symbol LoaderSelection.optiFineTransformationUnavailable @args - */
+"loaderSelection.optiFineTransformationUnavailable" = "此 OptiFine 安装包不包含现代 Forge 所需的转换服务，请选择其他版本。";
+
+/* @symbol LoaderSelection.optiFineBootstrapTooOld @args - */
+"loaderSelection.optiFineBootstrapTooOld" = "此 OptiFine 构建早于现代 Forge 的兼容版本，请使用 H1 pre2 或更新的对应版本。";
+
+/* @symbol LoaderSelection.discoveryLibraryMismatch @args - */
+"loaderSelection.discoveryLibraryMismatch" = "加载器发现服务的校验信息不匹配，请重新应用加载器配置。";
+
+/* @symbol LoaderSelection.discoveryLibraryMissing @args - */
+"loaderSelection.discoveryLibraryMissing" = "应用中缺少加载器发现服务，请重新安装 Ruri。";

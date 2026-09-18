@@ -3,6 +3,40 @@ import Testing
 @testable import RuriCore
 
 struct InstanceComponentsTests {
+    @Test func addsRemovesAndRestoresSecondaryLoaderWithoutLosingPrimary() async throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
+        defer { try? FileManager.default.removeItem(at: paths.root) }
+        try paths.prepare()
+        var original = GameInstance(name: "Legacy", gameVersion: "1.12.2", loader: .forge, loaderVersion: "14.23.5.2860")
+        original.installed = true
+        var state = PersistentState(); state.instances = [original]; try StateStore.save(state, to: paths)
+        try paths.prepareInstance(original.id)
+        let base = VersionManifest(id: "1.12.2", mainClass: "net.minecraft.launchwrapper.Launch", libraries: [])
+        try JSONEncoder().encode(base).write(to: paths.manifest(original.id))
+        let client = try paths.clientJar("1.12.2", instance: original)
+        try FileManager.default.createDirectory(at: client.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data("unchanged client".utf8).write(to: client)
+        let install: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance = { candidate, location in
+            try location.prepareInstance(candidate.id)
+            let libraries = candidate.loaderSelections.map { selection in
+                Library(name: selection.loader == .forge ? "net.minecraftforge:forge:1.12.2-14.23.5.2860:universal" : "optifine:OptiFine:1.12.2_HD_U_G5:installer", downloads: nil, rules: nil, natives: nil, extract: nil)
+            }
+            try JSONEncoder().encode(VersionManifest(id: "combined", mainClass: "net.minecraft.launchwrapper.Launch", libraries: libraries)).write(to: location.manifest(candidate.id))
+            var result = candidate; result.installed = true; return result
+        }
+        let service = InstanceComponents(paths: paths)
+        let selections = original.loaderSelections + [LoaderSelection(loader: .optifine, version: "HD_U_G5")]
+        let combined = try await service.change(original, selections: selections, installing: install).instances[0]
+        #expect(combined.loader == .forge && combined.loaderSelections.count == 2)
+        #expect(InstanceComponents.unavailableReason(combined) == nil)
+        let removed = try await service.change(combined, selections: original.loaderSelections, installing: install).instances[0]
+        #expect(removed.loaderSelections == original.loaderSelections)
+        let restored = try await service.restore(removed).instances[0]
+        #expect(restored.loaderSelections == combined.loaderSelections)
+        #expect(try Data(contentsOf: client) == Data("unchanged client".utf8))
+        #expect(try await GameInstaller(paths: paths).loadManifest(restored).libraries.count == 2)
+    }
+
     private func fixture(_ layout: String) throws -> (LauncherPaths, GameInstance, URL) {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-components-\(UUID())/Ruri"))
         try paths.prepare()

@@ -6,7 +6,7 @@ public struct ComponentBackup: Codable, Sendable {
     public let instance: GameInstance
     let manifest: Data
     let resourceRoot: URL
-    public var title: String { instance.loader.title + (instance.loaderVersion.map { " " + $0 } ?? "") }
+    public var title: String { instance.loaderSummary }
 }
 
 /// Prepare dependencies before atomically replacing the active launch manifest.
@@ -24,9 +24,6 @@ public actor InstanceComponents {
         let supported = Set(LoaderKind.allCases.map(\.title))
         let additional = (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter { !supported.contains($0.name) }
         if !additional.isEmpty { return Messages.CoreInstanceComponents.unsupportedComponents(LocalizedFormat.list(additional.map(\.name))).localized }
-        if (instance.repositoryComponents ?? instance.importedInstallation?.components ?? []).filter({ supported.contains($0.name) }).count > 1 {
-            return Messages.CoreInstanceComponents.multipleLoadersUnsupported.localized
-        }
         return nil
     }
 
@@ -39,8 +36,14 @@ public actor InstanceComponents {
 
     public func change(_ requested: GameInstance, to loader: LoaderKind, version: String?, concurrency: Int = 8,
                        progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> PersistentState {
+        let selections: [LoaderSelection] = loader == .vanilla ? [] : [.init(loader: loader, version: version ?? "")]
+        return try await change(requested, selections: selections, concurrency: concurrency, progress: progress)
+    }
+
+    public func change(_ requested: GameInstance, selections: [LoaderSelection], concurrency: Int = 8,
+                       progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> PersistentState {
         let downloader = downloader
-        return try await change(requested, to: loader, version: version, installing: { candidate, location in
+        return try await change(requested, selections: selections, installing: { candidate, location in
             try await GameInstaller(paths: location, downloader: downloader, protectExistingFiles: true)
                 .install(candidate, concurrency: concurrency, progress: progress)
         }, progress: progress)
@@ -49,12 +52,20 @@ public actor InstanceComponents {
     func change(_ requested: GameInstance, to loader: LoaderKind, version: String?,
                 installing: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance,
                 progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PersistentState {
+        let selections: [LoaderSelection] = loader == .vanilla ? [] : [.init(loader: loader, version: version ?? "")]
+        return try await change(requested, selections: selections, installing: installing, progress: progress)
+    }
+
+    func change(_ requested: GameInstance, selections: [LoaderSelection],
+                installing: @Sendable (GameInstance, LauncherPaths) async throws -> GameInstance,
+                progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in }) async throws -> PersistentState {
         let state = try StateStore.load(paths), current = paths.configured(with: state)
         let original = try find(requested.id, state: state)
         _ = try original.applyingInstallation(requested, requested: requested)
         if let reason = Self.unavailableReason(original) { throw RuriError.message(reason) }
-        guard loader == .vanilla || version?.isEmpty == false else { throw RuriError.message(Messages.CoreInstanceComponents.loaderVersionSelectionRequired) }
-        guard loader != original.loader || (loader != .vanilla && version != original.loaderVersion) else { throw RuriError.message(Messages.CoreInstanceComponents.loaderVersionAlreadySelected) }
+        try LoaderCompatibility.validate(selections, game: original.gameVersion)
+        let selections = LoaderSelection.ordered(selections)
+        guard selections != original.loaderSelections else { throw RuriError.message(Messages.CoreInstanceComponents.loaderVersionAlreadySelected) }
         let lease = try GameRunLease.acquire(paths: current, instanceID: original.id)
         defer { withExtendedLifetime(lease) {} }
         try current.validateBinding(original)
@@ -75,7 +86,8 @@ public actor InstanceComponents {
             try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
             try FileManager.default.createSymbolicLink(at: work.appendingPathComponent(name), withDestinationURL: destination)
         }
-        var candidate = GameInstance(name: original.name, gameVersion: original.gameVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : version)
+        var candidate = GameInstance(name: original.name, gameVersion: original.gameVersion)
+        candidate.setLoaderSelections(selections)
         candidate.packLibraries = original.packLibraries?.filter { !Self.isLoaderLibrary($0) }
         defer {
             let log = staging.instance(candidate.id).appendingPathComponent("installer.log")
@@ -106,12 +118,11 @@ public actor InstanceComponents {
             arguments.game = try arguments.game?.map(argument); arguments.jvm = try arguments.jvm?.map(argument); manifest.arguments = arguments
         }
         if let legacy = manifest.minecraftArguments { manifest.minecraftArguments = try ArgumentTokenizer.join(ArgumentTokenizer.split(legacy).map(rewrite)) }
-        let components: [MinecraftDirectoryComponent] = loader == .vanilla ? [] : [.init(name: loader.title, version: installed.loaderVersion ?? version!)]
+        let components = installed.loaderSelections.map { MinecraftDirectoryComponent(name: $0.loader.title, version: $0.version) }
         let encoded = try encode(manifest, gameVersion: original.gameVersion, components: components)
         var replacement = original
-        replacement.loader = loader; replacement.loaderVersion = loader == .vanilla ? nil : installed.loaderVersion
+        replacement.setLoaderSelections(installed.loaderSelections)
         replacement.packLibraries = candidate.packLibraries
-        if original.repositoryVersionID != nil { replacement.repositoryComponents = components }
         if let imported = original.importedInstallation {
             replacement.importedInstallation = .init(sourceVersionID: imported.sourceVersionID, components: components)
         }
@@ -192,7 +203,7 @@ public actor InstanceComponents {
     private func encode(_ manifest: VersionManifest, gameVersion: String, components: [MinecraftDirectoryComponent]) throws -> Data {
         var document = try JSONSerialization.jsonObject(with: JSONEncoder().encode(manifest)) as! [String: Any]
         document["clientVersion"] = gameVersion
-        document["patches"] = components.map { ["id": $0.name.lowercased(), "version": $0.version] }
+        document["patches"] = components.map { ["id": $0.name.lowercased().replacingOccurrences(of: " ", with: ""), "version": $0.version] }
         return try JSONSerialization.data(withJSONObject: document, options: [.sortedKeys, .prettyPrinted])
     }
 }

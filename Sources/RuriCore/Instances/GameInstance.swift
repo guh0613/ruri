@@ -21,6 +21,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var packLibraries: [Library]?
     /// The folder name under a registered Minecraft repository’s versions directory.
     public var repositoryVersionID: String?
+    /// All installed loaders, including combinations in managed instances.
+    /// Older single-loader records fall back to loader and loaderVersion.
     public var repositoryComponents: [MinecraftDirectoryComponent]?
     public var repositoryIssue: String?
     public var importedInstallation: ImportedMinecraftInstallation?

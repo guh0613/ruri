@@ -63,11 +63,11 @@ extension Messages {
         public static var changeLoaderDetails: LocalizedMessage {
             .init(key: "appInstanceComponentsView.errorText5", table: "Interface", fallback: "现有模组需与所选加载器兼容。")
         }
-        /// 启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。
+        /// 更改加载器不会影响实例的存档和模组文件。
         ///
         /// Resource: `Interface.appInstanceComponentsView.errorText6`.
         public static var applyLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。")
+            .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "更改加载器不会影响实例的存档和模组文件。")
         }
         /// 恢复上次配置
         ///
@@ -93,11 +93,11 @@ extension Messages {
         public static var applyLoader: LocalizedMessage {
             .init(key: "appInstanceComponentsView.backupText5", table: "Interface", fallback: "应用加载器")
         }
-        /// 此 Minecraft 版本没有兼容的加载器版本。
+        /// 未找到兼容版本
         ///
         /// Resource: `Interface.appInstanceComponentsView.currentText1`.
         public static var noCompatibleLoader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.currentText1", table: "Interface", fallback: "此 Minecraft 版本没有兼容的加载器版本。")
+            .init(key: "appInstanceComponentsView.currentText1", table: "Interface", fallback: "未找到兼容版本")
         }
         /// 上次配置：%1$@
         ///
@@ -116,12 +116,12 @@ extension Messages {
             "Interface:appInstanceComponentsView.errorText3": .init("（当前）", []),
             "Interface:appInstanceComponentsView.errorText4": .init("移除加载器后按原版启动，模组文件仍会保留。", []),
             "Interface:appInstanceComponentsView.errorText5": .init("现有模组需与所选加载器兼容。", []),
-            "Interface:appInstanceComponentsView.errorText6": .init("启动清单会重新生成，其中的手动修改不保留。存档、模组和实例设置保留；应用后可恢复上次的加载器配置。", []),
+            "Interface:appInstanceComponentsView.errorText6": .init("更改加载器不会影响实例的存档和模组文件。", []),
             "Interface:appInstanceComponentsView.backupText2": .init("恢复上次配置", []),
             "Interface:appInstanceComponentsView.backupText3": .init("关闭", []),
             "Interface:appInstanceComponentsView.backupText4": .init("移除加载器", []),
             "Interface:appInstanceComponentsView.backupText5": .init("应用加载器", []),
-            "Interface:appInstanceComponentsView.currentText1": .init("此 Minecraft 版本没有兼容的加载器版本。", []),
+            "Interface:appInstanceComponentsView.currentText1": .init("未找到兼容版本", []),
             "Interface:appInstanceComponentsView.previousComponents": .init("上次配置：%1$@", [.text]),
         ]
     }

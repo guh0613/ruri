@@ -9,13 +9,10 @@ struct CreateInstanceView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var name = ""
     @State private var selectedVersion = ""
-    @State private var loader = LoaderKind.vanilla
-    @State private var loaderVersion = ""
-    @State private var loaders: [String] = []
+    @State private var selections: [LoaderSelection] = []
+    @State private var loadersValid = true
     @State private var search = ""
     @State private var snapshots = false
-    @State private var loadingLoader = false
-    @State private var loaderError: String?
     var versions: [VersionEntry] { (model.catalog?.versions ?? []).filter { (snapshots || $0.isRelease) && (search.isEmpty || $0.id.localizedCaseInsensitiveContains(search)) } }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -36,33 +33,14 @@ struct CreateInstanceView: View {
                     }.padding(.vertical, 4).tag(version.id)
                 }.listStyle(.bordered).frame(height: 230)
             }
-            HStack {
-                Picker(Messages.AppCreateInstanceView.loader.localized, selection: $loader) { ForEach(LoaderKind.allCases) { Text($0.title).tag($0) } }.pickerStyle(.menu)
-            }
-            if loader != .vanilla {
-                if loader == .optifine { Text(Messages.AppCreateInstanceView.optifineSource.localized).font(.caption).foregroundStyle(.secondary) }
-                if loadingLoader { ProgressView(Messages.AppCreateInstanceView.findCompatibleLoaders.localized).controlSize(.small) }
-                else if let loaderError { Text(loaderError).font(.caption).foregroundStyle(.red) }
-                else { Picker(Messages.AppCreateInstanceView.loaderVersion.localized, selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }
-            }
+            LoaderSelectionView(game: selectedVersion, selections: $selections, isValid: $loadersValid)
             HStack {
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.AppCreateInstanceView.createAndInstall.localized) { model.install(name: name, version: selectedVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : loaderVersion) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
-                    .disabled(selectedVersion.isEmpty || model.busy || (loader != .vanilla && (loaderVersion.isEmpty || loadingLoader)))
+                Button(Messages.AppCreateInstanceView.createAndInstall.localized) { model.install(name: name, version: selectedVersion, selections: selections) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
+                    .disabled(selectedVersion.isEmpty || model.busy || !loadersValid)
             }
         }.padding(28).frame(width: 570)
         .task { if model.catalog == nil { await model.refreshCatalog() }; if selectedVersion.isEmpty { selectedVersion = model.catalog?.latest.release ?? "" } }
-        .task(id: selectedVersion + loader.rawValue) {
-            loaders = []; loaderVersion = ""; loaderError = nil
-            guard loader != .vanilla, !selectedVersion.isEmpty else { return }
-            loadingLoader = true
-            do {
-                let result = try await model.installer.loaderVersions(loader, game: selectedVersion)
-                try Task.checkCancellation(); loaders = result; loaderVersion = result.first ?? ""
-                if result.isEmpty { loaderError = Messages.AppCreateInstanceView.noCompatibleLoader.localized }
-            } catch { if !Task.isCancelled { loaderError = error.localizedDescription } }
-            loadingLoader = false
-        }
     }
 }

@@ -105,6 +105,9 @@ public struct Library: Codable, Equatable, Sendable {
     public let rules: [Rule]?
     public let natives: [String: String]?
     public let extract: Extraction?
+    /// Transformation services may be discovered separately from the Java
+    /// classpath. Their artifacts still participate in download/copy/repair.
+    public var includeInClasspath: Bool?
     public var identity: String { let p = name.split(separator: ":"); return p.prefix(2).joined(separator: ":") + (p.count > 3 ? ":\(p[3])" : "") }
     public func artifact() throws -> Artifact? {
         if let artifact = downloads?.artifact { return artifact }
@@ -170,7 +173,10 @@ public struct VersionManifest: Codable, Sendable {
         result.downloads = child.downloads ?? downloads
         result.assetIndex = child.assetIndex ?? assetIndex
         result.logging = child.logging ?? logging
-        result.generatedLibraries = child.generatedLibraries ?? generatedLibraries
+        if let added = child.generatedLibraries {
+            let replaced = Set(added.compactMap(\.path))
+            result.generatedLibraries = (generatedLibraries ?? []).filter { $0.path.map { !replaced.contains($0) } ?? true } + added
+        }
         if compatibilityRules != nil || child.compatibilityRules != nil {
             result.compatibilityRules = (compatibilityRules ?? []) + (child.compatibilityRules ?? [])
         }

@@ -19,7 +19,7 @@ let package = Package(
         .systemLibrary(name: "CZlib"),
         .systemLibrary(name: "CSQLite"),
         .target(name: "RuriLocalization", resources: [.process("Resources")]),
-        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown")]),
+        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown")], resources: [.copy("Resources/LoaderSupport")]),
         .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization"], resources: [.copy("Resources/JavaBrands")]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),

@@ -14,11 +14,16 @@ extension AppModel {
         }
     }
     func install(name: String, version: String, loader: LoaderKind, loaderVersion: String?) {
+        install(name: name, version: version, selections: loader == .vanilla ? [] : [.init(loader: loader, version: loaderVersion ?? "")])
+    }
+    func install(name: String, version: String, selections: [LoaderSelection]) {
         guard !busy, !readOnly else { return }
-        var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version, loader: loader, loaderVersion: loaderVersion)
+        if let issue = LoaderCompatibility.combinationIssue(selections.map(\.loader), game: version) { error = issue; return }
+        var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version)
+        instance.setLoaderSelections(selections)
         instance.launchOverrides = .init()
         instance.directoryID = paths.newInstanceDirectoryID
-        instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: loader)
+        instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: instance.loader)
         do { instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths) }
         catch { self.error = error.localizedDescription; return }
         state.instances.append(instance); select(instance); showCreate = false; page = .activity
@@ -48,15 +53,15 @@ extension AppModel {
             try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
         }
     }
-    func changeComponents(_ instance: GameInstance, loader: LoaderKind, version: String?) {
+    func changeComponents(_ instance: GameInstance, selections: [LoaderSelection]) {
         guard !busy, !readOnly, !isInstanceInUse(instance.id) else { return }
         save()
         perform(Messages.AppAppModelInstallation.changeLoader(instance.name)) { [self] id in
             let service = await InstanceComponents(paths: paths, downloader: installer.downloader)
-            let saved = try await service.change(instance, to: loader, version: version, concurrency: state.settings.concurrentDownloads) { [weak self] p in
+            let saved = try await service.change(instance, selections: selections, concurrency: state.settings.concurrentDownloads) { [weak self] p in
                 await self?.progress(id, p)
             }
-            acceptState(saved); report(Messages.AppAppModelInstallation.loaderConfigurationSaved(instance.name, loader.title))
+            acceptState(saved); report(Messages.AppAppModelInstallation.loaderConfigurationSaved(instance.name, saved.instances.first(where: { $0.id == instance.id })?.loaderSummary ?? ""))
         }
     }
     func restoreComponents(_ instance: GameInstance) {

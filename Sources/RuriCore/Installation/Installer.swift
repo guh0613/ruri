@@ -22,17 +22,10 @@ public actor GameInstaller {
         }
     }
     public func loaderVersions(_ loader: LoaderKind, game: String) async throws -> [String] {
-        struct Entry: Decodable, Sendable { struct Version: Decodable, Sendable { let version: String }; let loader: Version }
-        guard loader != .vanilla else { return [] }
-        if loader == .liteloader { return try await LiteLoaderCatalog.releases(game: game).map(\.version) }
-        if loader == .optifine { return try await OptiFineCatalog.releases(game: game).map(\.version) }
-        if loader == .legacyfabric {
-            struct Game: Decodable, Sendable { let version: String }
-            let games = try await HTTPClient.shared.get([Game].self, from: LoaderEndpoints.legacyFabricGames)
-            guard games.contains(where: { $0.version == LoaderEndpoints.metadataGame(game, loader: loader) }) else { return [] }
-        }
-        if loader.usesInstaller { return try await ForgeCatalog.versions(loader: loader, game: game) }
-        return try await HTTPClient.shared.get([Entry].self, from: LoaderEndpoints.versions(loader: loader, game: game)).map(\.loader.version)
+        try await loaderReleases(loader, game: game).map(\.version)
+    }
+    public func loaderReleases(_ loader: LoaderKind, game: String) async throws -> [LoaderRelease] {
+        try await LoaderRelease.sorted(LoaderReleaseCatalog.releases(loader, game: game))
     }
     public func install(_ input: GameInstance, concurrency: Int = 8, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
         guard input.importedInstallation == nil else { throw RuriError.message(Messages.CoreInstaller.localVersionManifestRequiresRepair) }
@@ -50,25 +43,8 @@ public actor GameInstaller {
         var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
         var instance = input
         instance.directoryID = paths.directoryID(for: instance.id)
-        if instance.loader != .vanilla {
-            await progress(InstallProgress(Messages.CoreInstaller.installingInstance(instance.loader.title)))
-            if instance.loaderVersion == nil { instance.loaderVersion = try await loaderVersions(instance.loader, game: instance.gameVersion).first }
-            guard let loaderVersion = instance.loaderVersion else { throw RuriError.message(Messages.CoreInstaller.loaderVersionUnavailable(instance.loader.title)) }
-            let child: VersionManifest
-            if instance.loader.usesInstaller {
-                child = try await ForgeInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, concurrency: concurrency, progress: progress)
-            } else if instance.loader == .optifine {
-                instance.loaderVersion = OptiFineCatalog.normalized(loaderVersion, game: instance.gameVersion)
-                child = try await OptiFineInstaller(paths: paths, downloader: downloader, protectExistingFiles: protectExistingFiles).install(instance: instance, base: manifest, progress: progress)
-            } else if instance.loader == .liteloader {
-                let result = try await LiteLoaderCatalog.profile(game: instance.gameVersion, version: loaderVersion, base: manifest)
-                child = result.0; instance.loaderVersion = result.1
-            } else {
-                let url = try LoaderEndpoints.profile(loader: instance.loader, game: instance.gameVersion, version: loaderVersion)
-                child = try await HTTPClient.shared.get(VersionManifest.self, from: url)
-            }
-            manifest = manifest.merging(child: child)
-        }
+        let installed = try await installLoaders(instance, base: manifest, concurrency: concurrency, progress: progress)
+        instance = installed.instance; manifest = installed.manifest
         if let version = instance.repositoryVersionID { manifest.id = version; manifest.jar = version; manifest.inheritsFrom = nil }
         manifest = try Self.applyingPackLibraries(instance.packLibraries ?? [], to: manifest)
         try paths.validateBinding(instance)
@@ -102,7 +78,7 @@ public actor GameInstaller {
         try paths.validateBinding(instance)
         if instance.repositoryVersionID == nil && instance.importedInstallation == nil && instance.loader.usesInstaller { _ = try await install(instance, concurrency: concurrency, progress: progress); return }
         let manifest = try loadManifest(instance)
-        if instance.loader == .optifine {
+        if instance.loaderSelections.contains(where: { $0.loader == .optifine }) {
             try await OptiFineInstaller(paths: paths, downloader: downloader).repair(instance: instance, manifest: manifest, progress: progress)
         }
         try await prepareFiles(manifest, instance: instance, concurrency: concurrency, progress: progress)
@@ -164,6 +140,7 @@ public actor GameInstaller {
     }
     func prepareFiles(_ manifest: VersionManifest, instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let resources = try paths.resources(for: instance)
+        try OptiFineForgeSupport.prepareDiscoveryLibrary(manifest, resources: resources, protectExistingFiles: protectExistingFiles)
         let arch = Self.architecture(for: manifest)
         guard manifest.compatibilityRules?.isEmpty != false || Rule.allows(manifest.compatibilityRules, architecture: arch) else {
             throw RuriError.message(Messages.CoreInstaller.unsupportedMacOSCompatibility)

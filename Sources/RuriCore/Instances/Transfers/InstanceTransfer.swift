@@ -80,6 +80,7 @@ struct PortableInstance: Codable {
     let gameVersion: String
     let loader: LoaderKind
     let loaderVersion: String?
+    let components: [MinecraftDirectoryComponent]?
     let memoryMB: Int
     let extraJVMArguments: String
     let extraGameArguments: String?
@@ -97,6 +98,7 @@ struct PortableInstance: Codable {
     let installation: ImportedMinecraftInstallation?
     init(_ instance: GameInstance, installation: ImportedMinecraftInstallation? = nil) {
         name = instance.name; gameVersion = instance.gameVersion; loader = instance.loader; loaderVersion = instance.loaderVersion
+        components = instance.repositoryComponents
         extraGameArguments = instance.extraGameArguments; supportedJavaMajors = instance.supportedJavaMajors; packLibraries = instance.packLibraries
         javaMajor = instance.javaMajor
         memoryMB = instance.memoryMB; extraJVMArguments = instance.extraJVMArguments; width = instance.width; height = instance.height
@@ -104,11 +106,20 @@ struct PortableInstance: Codable {
         launchCommands = instance.launchCommands?.isEmpty == false ? instance.launchCommands : nil
         iconPNG = instance.iconPNG; iconStyle = instance.iconStyle; self.installation = installation
         if installation != nil { formatVersion = 2 }
+        if instance.loaderSelections.count > 1 { formatVersion = 3 }
     }
     func instance() throws -> GameInstance {
-        guard (1...2).contains(formatVersion), (formatVersion == 2) == (installation != nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.unsupportedInstanceVersion) }
+        guard (1...3).contains(formatVersion), formatVersion == 3 || (formatVersion == 2) == (installation != nil) else { throw RuriError.message(Messages.CoreInstanceTransfer.unsupportedInstanceVersion) }
         try installation?.validate()
         var result = GameInstance(name: name, gameVersion: gameVersion, loader: loader, loaderVersion: loaderVersion)
+        result.repositoryComponents = components
+        if installation == nil, let components {
+            guard components.count == result.loaderSelections.count,
+                  (result.loaderSelections.first?.loader ?? .vanilla) == loader,
+                  result.loaderSelections.first?.version == loaderVersion else {
+                throw RuriError.message(Messages.LoaderSelection.invalidSelection)
+            }
+        }
         result.extraGameArguments = extraGameArguments; result.supportedJavaMajors = supportedJavaMajors; result.packLibraries = packLibraries
         result.javaMajor = javaMajor
         result.memoryMB = memoryMB; result.extraJVMArguments = extraJVMArguments; result.width = width; result.height = height
@@ -296,10 +307,10 @@ public actor InstanceTransfer {
         if instance.loader == .legacyfabric && [.multimc, .mrpack].contains(format) {
             throw RuriError.message(Messages.CoreInstanceTransfer.legacyFabricUnsupported)
         }
-        if instance.loader == .liteloader && [.multimc, .mrpack].contains(format) {
+        if instance.loaderSelections.contains(where: { $0.loader == .liteloader }) && [.multimc, .mrpack].contains(format) {
             throw RuriError.message(Messages.CoreInstanceTransfer.liteLoaderUnsupported)
         }
-        if instance.loader == .optifine && [.multimc, .mrpack].contains(format) {
+        if instance.loaderSelections.contains(where: { $0.loader == .optifine }) && [.multimc, .mrpack].contains(format) {
             throw RuriError.message(Messages.CoreInstanceTransfer.optifineUnsupported)
         }
         var instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
@@ -419,6 +430,7 @@ public actor InstanceTransfer {
                                          installation: instance.importedInstallation != nil ? try LauncherPaths.safePath("installation", within: root) : nil)
     }
     static func validate(_ instance: GameInstance) throws {
+        if instance.importedInstallation == nil { try LoaderCompatibility.validate(instance.loaderSelections, game: instance.gameVersion) }
         try instance.launchCommands?.validate()
         if let icon = instance.iconPNG { try InstanceIconImage.validate(icon) }
         guard !instance.name.isEmpty, instance.name.count <= 256, !instance.gameVersion.isEmpty, instance.gameVersion.count <= 128,

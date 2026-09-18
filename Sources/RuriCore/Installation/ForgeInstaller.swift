@@ -4,8 +4,8 @@ import ZIPFoundation
 import CryptoKit
 
 public enum ForgeCatalog {
-    public static func versions(loader: LoaderKind, game: String) async throws -> [String] {
-        let data = try await HTTPClient.shared.data(from: LoaderEndpoints.mavenMetadata(loader: loader, game: game))
+    public static func versions(loader: LoaderKind, game: String, client: HTTPClient = .shared) async throws -> [String] {
+        let data = try await client.data(from: LoaderEndpoints.mavenMetadata(loader: loader, game: game))
         let parser = XMLParser(data: data); let delegate = MavenVersionsParser(); parser.delegate = delegate
         parser.shouldResolveExternalEntities = false
         guard parser.parse() else { throw RuriError.message(Messages.CoreForgeInstaller.loaderVersionsReadFailed) }
@@ -16,11 +16,7 @@ public enum ForgeCatalog {
             guard let prefix = neoForgePrefix(game) else { return [] }
             candidates = delegate.versions.filter { $0.hasPrefix(prefix) }
         }
-        return Array(Set(candidates)).sorted {
-            let unstableA = $0.contains("beta") || $0.contains("alpha")
-            let unstableB = $1.contains("beta") || $1.contains("alpha")
-            return unstableA != unstableB ? !unstableA : $0.compare($1, options: .numeric) == .orderedDescending
-        }
+        return LoaderRelease.sorted(candidates.map { LoaderRelease(version: $0) }).map(\.version)
     }
     public static func neoForgePrefix(_ game: String) -> String? {
         let parts = game.split(separator: ".").map(String.init)

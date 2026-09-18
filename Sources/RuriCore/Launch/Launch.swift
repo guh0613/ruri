@@ -77,7 +77,12 @@ public enum LaunchBuilder {
         let libraries = resources.libraries.standardizedFileURL.resolvingSymlinksInPath()
         var classpath: [String] = []
         for library in manifest.libraries where GameInstaller.allowed(library, architecture: architecture) {
-            if let artifact = try library.artifact() { classpath.append(try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name)).path) }
+            if let artifact = try library.artifact() {
+                let file = try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name))
+                if library.includeInClasspath == false {
+                    guard FileManager.default.fileExists(atPath: file.path) else { throw RuriError.message(Messages.CoreLaunch.gameFilesMissing(file.lastPathComponent)) }
+                } else { classpath.append(file.path) }
+            }
         }
         classpath.append(jar.path)
         // Native and ordinary declarations can share a Java artifact. Keep
@@ -114,12 +119,7 @@ public enum LaunchBuilder {
         let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": world != nil,
                         "is_quick_play_singleplayer": world != nil, "is_quick_play_multiplayer": false, "is_quick_play_realms": false]
         var jvm = try (manifest.arguments?.jvm ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand)
-        if mainClass == "cpw.mods.bootstraplauncher.BootstrapLauncher" {
-            jvm = jvm.map { value in
-                guard value.hasPrefix("-DignoreList="), !value.dropFirst(13).split(separator: ",").contains(Substring(jar.lastPathComponent)) else { return value }
-                return value + "," + jar.lastPathComponent
-            }
-        }
+        jvm = ForgeLaunchArguments.bootstrap(jvm, manifest: manifest, classpath: classpath, client: jar)
         if jvm.isEmpty { jvm = ["-Djava.library.path=\(natives.path)", "-cp", classpath.joined(separator: ":")] }
         // LWJGL 2 uses the AWT/AppKit thread arrangement. Forcing the GLFW/LWJGL 3
         // startup flag on it can leave the legacy OpenGL context unbound.

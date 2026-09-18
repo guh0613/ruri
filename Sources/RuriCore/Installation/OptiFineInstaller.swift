@@ -6,17 +6,26 @@ struct OptiFineInstaller: Sendable {
     let paths: LauncherPaths
     let downloader: DownloadManager
     var protectExistingFiles = false
+    var client: HTTPClient = .shared
 
-    func install(instance: GameInstance, base: VersionManifest, progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> VersionManifest {
-        guard base.mainClass == "net.minecraft.client.main.Main" else { throw RuriError.message(Messages.CoreOptiFineInstaller.unsupportedStandaloneInstall) }
+    func install(instance: GameInstance, base: VersionManifest, companions: [LoaderSelection] = [], progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> VersionManifest {
+        guard companions.isEmpty ? base.mainClass == "net.minecraft.client.main.Main" : OptiFineForgeSupport.launchKind(base) != nil else {
+            throw RuriError.message(Messages.CoreOptiFineInstaller.unsupportedStandaloneInstall)
+        }
         guard let requested = instance.loaderVersion,
-              let release = try await OptiFineCatalog.releases(game: instance.gameVersion).first(where: { $0.version == OptiFineCatalog.normalized(requested, game: instance.gameVersion) }) else {
+              let release = try await OptiFineCatalog.releases(game: instance.gameVersion, client: client).first(where: { $0.version == OptiFineCatalog.normalized(requested, game: instance.gameVersion) }) else {
             throw RuriError.message(Messages.CoreOptiFineInstaller.matchingOptiFineVersionMissing)
+        }
+        if companions.contains(where: { $0.loader == .forge }), LoaderRelease(version: release.version, forgeCompatibility: release.forge).excludesForge {
+            throw RuriError.message(Messages.LoaderSelection.optiFineWithoutForge)
         }
         let file = try LauncherPaths.safePath("installers/optifine-\(instance.gameVersion)-\(release.version).jar", within: paths.cache)
         await progress(InstallProgress(Messages.CoreOptiFineInstaller.downloadInstallPackage))
         let url = try release.url()
         try await downloader.fetch(DownloadItem(url: url, destination: file))
+        if !companions.isEmpty {
+            return try combinedProfile(instance: instance, base: base, installer: file, version: release.version, sourceURL: url)
+        }
         let generated = try await generate(instance: instance, base: base, installer: file, version: release.version, sourceURL: url, progress: progress)
         var child = VersionManifest(id: instance.gameVersion + "-OptiFine-" + release.version, mainClass: "net.minecraft.launchwrapper.Launch", libraries: generated.libraries)
         child.generatedLibraries = [generated.installer]
@@ -39,10 +48,16 @@ struct OptiFineInstaller: Sendable {
         }
         guard missing else { return }
         guard let installer = manifest.generatedLibraries?.first(where: { $0.path?.hasSuffix("-installer.jar") == true && $0.path?.hasPrefix("optifine/OptiFine/") == true }),
-              let version = instance.loaderVersion else { throw RuriError.message(Messages.CoreOptiFineInstaller.missingInstallSource) }
+              let version = instance.loaderSelections.first(where: { $0.loader == .optifine })?.version else { throw RuriError.message(Messages.CoreOptiFineInstaller.missingInstallSource) }
         let file = try resources.libraryFile(installer)
         try await downloader.fetch(DownloadItem(installer, to: file))
-        _ = try await generate(instance: instance, base: manifest, installer: file, version: OptiFineCatalog.normalized(version, game: instance.gameVersion), sourceURL: installer.url, expected: expected, progress: progress)
+        if owned.contains(where: { $0.downloads?.artifact?.path?.hasSuffix("-combined.jar") == true }) {
+            guard let sourceURL = installer.url else { throw RuriError.message(Messages.CoreOptiFineInstaller.missingInstallSource) }
+            _ = try combinedProfile(instance: instance, base: manifest, installer: file,
+                                    version: OptiFineCatalog.normalized(version, game: instance.gameVersion), sourceURL: sourceURL, expected: expected)
+        } else {
+            _ = try await generate(instance: instance, base: manifest, installer: file, version: OptiFineCatalog.normalized(version, game: instance.gameVersion), sourceURL: installer.url, expected: expected, progress: progress)
+        }
     }
 
     private func generate(instance: GameInstance, base: VersionManifest, installer file: URL, version: String, sourceURL: URL?, expected: [Artifact]? = nil,
@@ -148,13 +163,13 @@ struct OptiFineInstaller: Sendable {
         try data.write(to: target, options: .atomic)
         try SafeArchive.verify(target, maxBytes: 256 * 1024 * 1024)
     }
-    private static func read(_ name: String, in archive: Archive) throws -> Data {
+    static func read(_ name: String, in archive: Archive) throws -> Data {
         guard let entry = archive[name], entry.type == .file, entry.uncompressedSize <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreOptiFineInstaller.missingPackageField(name)) }
         var data = Data(); let crc = try archive.extract(entry) { part in try Task.checkCancellation(); data.append(part) }
         guard crc == entry.checksum else { throw RuriError.message(Messages.CoreOptiFineInstaller.fileChecksumFailed) }
         return data
     }
-    private func publish(_ source: URL, to target: URL) throws {
+    func publish(_ source: URL, to target: URL) throws {
         if source.standardizedFileURL == target.standardizedFileURL { return }
         if FileManager.default.fileExists(atPath: target.path) {
             if try InstanceTransfer.sha1(source) == InstanceTransfer.sha1(target) { return }

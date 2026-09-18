@@ -54,5 +54,5 @@ extension GameInstance {
         guard playTime >= 60 else { return playTime > 0 ? Messages.AppInstancePresentation.lessThanAMinute.localized : Messages.AppInstancePresentation.neverPlayed.localized }
         return LocalizedFormat.duration(playTime)
     }
-    var loaderLabel: String { loader == .vanilla ? Messages.AppInstancePresentation.vanilla.localized : loader.title + (loaderVersion.map { " " + $0 } ?? "") }
+    var loaderLabel: String { loaderSummary }
 }

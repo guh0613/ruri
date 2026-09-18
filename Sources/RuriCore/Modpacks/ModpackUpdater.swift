@@ -94,8 +94,8 @@ public actor ModpackUpdater {
         var updated = latest
         updated.gameVersion = installed.gameVersion; updated.loader = installed.loader; updated.loaderVersion = installed.loaderVersion
         updated.supportedJavaMajors = installed.supportedJavaMajors; updated.packLibraries = installed.packLibraries
-        let components: [MinecraftDirectoryComponent] = installed.loader == .vanilla ? [] : [.init(name: installed.loader.title, version: installed.loaderVersion ?? "")]
-        if latest.repositoryVersionID != nil { updated.repositoryComponents = components }
+        let components = installed.loaderSelections.map { MinecraftDirectoryComponent(name: $0.loader.title, version: $0.version) }
+        updated.repositoryComponents = components
         if let imported = latest.importedInstallation { updated.importedInstallation = .init(sourceVersionID: imported.sourceVersionID, components: components) }
         if latest.extraJVMArguments == plan.current.settings.extraJVMArguments { updated.extraJVMArguments = installed.extraJVMArguments }
         if latest.extraGameArguments == plan.current.settings.extraGameArguments { updated.extraGameArguments = installed.extraGameArguments }

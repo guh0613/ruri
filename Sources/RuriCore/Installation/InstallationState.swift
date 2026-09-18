@@ -10,6 +10,7 @@ extension GameInstance {
               gameVersion == requested.gameVersion, result.gameVersion == gameVersion,
               loader == requested.loader, result.loader == loader,
               loaderVersion == requested.loaderVersion || loaderVersion == result.loaderVersion,
+              repositoryComponents == requested.repositoryComponents || repositoryComponents == result.repositoryComponents,
               (directoryID ?? GameDirectory.defaultID) == (requested.directoryID ?? GameDirectory.defaultID),
               (result.directoryID ?? GameDirectory.defaultID) == (directoryID ?? GameDirectory.defaultID),
               (runDirectory ?? .isolated) == (requested.runDirectory ?? .isolated),
@@ -22,6 +23,7 @@ extension GameInstance {
         }
         var current = self
         current.installed = result.installed; current.loaderVersion = result.loaderVersion; current.directoryID = result.directoryID
+        current.repositoryComponents = result.repositoryComponents
         return current
     }
 }

@@ -51,8 +51,10 @@ extension InstanceTransfer {
         let unknown = manifest.addons.filter { !supported.contains($0.id) }
         guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMCBBSPack.unsupportedPackComponents(String(describing: unknown.map(\.id).joined(separator: "、")))) }
         let loaders = manifest.addons.filter { $0.id != "game" }
-        guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreMCBBSPack.multiplePackLoaders) }
-        var instance = GameInstance(name: manifest.name, gameVersion: gameVersion, loader: loaders.first.flatMap { LoaderKind(rawValue: $0.id) } ?? .vanilla, loaderVersion: loaders.first?.version)
+        let selections = loaders.compactMap { addon in LoaderKind(rawValue: addon.id).map { LoaderSelection(loader: $0, version: addon.version) } }
+        try LoaderCompatibility.validate(selections, game: gameVersion)
+        var instance = GameInstance(name: manifest.name, gameVersion: gameVersion)
+        instance.setLoaderSelections(selections)
         if let minimum = manifest.launchInfo?.minMemory {
             guard (0...131_072).contains(minimum) else { throw RuriError.message(Messages.CoreMCBBSPack.invalidPackMemoryRequirement) }
             instance.memoryMB = max(instance.memoryMB, minimum)
@@ -115,9 +117,9 @@ extension InstanceTransfer {
             files.append(.init(type: "addon", path: entry.path, hash: try Self.sha1(entry.url)))
         }
         var addons = [MCBBSManifest.Addon(id: "game", version: instance.gameVersion)]
-        if instance.loader != .vanilla {
-            guard let version = instance.loaderVersion else { throw RuriError.message(Messages.CoreMCBBSPack.loaderInstallRequiredForExport) }
-            addons.append(.init(id: instance.loader.rawValue, version: version))
+        for selection in instance.loaderSelections {
+            guard !selection.version.isEmpty else { throw RuriError.message(Messages.CoreMCBBSPack.loaderInstallRequiredForExport) }
+            addons.append(.init(id: selection.loader.rawValue, version: selection.version))
         }
         var gameArguments = try ArgumentTokenizer.split(instance.extraGameArguments ?? "")
         if !gameArguments.contains("--width") { gameArguments += ["--width", String(instance.width)] }
@@ -128,7 +130,9 @@ extension InstanceTransfer {
                                      launchInfo: .init(minMemory: instance.memoryMB, supportJava: instance.supportedJavaMajors ?? [],
                                                        launchArgument: gameArguments, javaArgument: try ArgumentTokenizer.split(instance.extraJVMArguments)))
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        let loaders = instance.loader == .vanilla ? [] : [["id": "\(instance.loader.rawValue)-\(instance.loaderVersion!)", "primary": true] as [String: Any]]
+        let loaders = instance.loaderSelections.enumerated().map { index, selection in
+            ["id": selection.loader.rawValue + "-" + selection.version, "primary": index == 0] as [String: Any]
+        }
         let compatible: [String: Any] = ["manifestType": "minecraftModpack", "manifestVersion": 1, "name": instance.name, "version": details.version, "author": details.author, "overrides": "overrides",
                                         "minecraft": ["version": instance.gameVersion, "modLoaders": loaders], "files": []]
         let extras = ["mcbbs.packmeta": try encoder.encode(manifest), "manifest.json": try JSONSerialization.data(withJSONObject: compatible, options: [.prettyPrinted, .sortedKeys])]

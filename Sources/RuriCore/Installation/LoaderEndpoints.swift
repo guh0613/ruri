@@ -21,6 +21,9 @@ enum LoaderEndpoints {
     static func versions(loader: LoaderKind, game: String) throws -> URL {
         try EndpointURL.build(base: profileService(loader), path: [metadataGame(game, loader: loader)])
     }
+    static func games(loader: LoaderKind) throws -> URL {
+        try profileService(loader).deletingLastPathComponent().appending(component: "game")
+    }
     static func profile(loader: LoaderKind, game: String, version: String) throws -> URL {
         try EndpointURL.build(base: profileService(loader), path: [metadataGame(game, loader: loader), version, "profile", "json"])
     }

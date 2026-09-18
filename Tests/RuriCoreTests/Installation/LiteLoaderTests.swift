@@ -73,6 +73,6 @@ struct LiteLoaderTests {
         await transfer.discard(prism)
         var combined = instance; combined.installed = true
         combined.repositoryComponents = [.init(name: "Forge", version: "14.23.5.2860"), .init(name: "LiteLoader", version: "1.12.2-SNAPSHOT")]
-        #expect(InstanceComponents.unavailableReason(combined)?.contains("多个加载器") == true)
+        #expect(InstanceComponents.unavailableReason(combined) == nil)
     }
 }

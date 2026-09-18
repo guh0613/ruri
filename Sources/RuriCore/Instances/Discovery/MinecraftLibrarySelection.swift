@@ -23,7 +23,8 @@ extension MinecraftManifestResolution {
         let libraries = selection.libraries.map { declaration -> MinecraftLibraryDeclaration in
             let library = declaration.library
             let normalized = Library(name: library.name, downloads: library.downloads, url: library.url,
-                                     rules: library.rules?.isEmpty == true ? nil : library.rules, natives: library.natives, extract: library.extract)
+                                     rules: library.rules?.isEmpty == true ? nil : library.rules, natives: library.natives, extract: library.extract,
+                                     includeInClasspath: library.includeInClasspath)
             return .init(library: normalized, localFile: declaration.localFile, sourceMetadata: declaration.sourceMetadata)
         }
         result.libraries = libraries.map(\.library)

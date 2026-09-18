@@ -92,16 +92,18 @@ extension InstanceTransfer {
             }
         }
         guard !neo || components[.neoforge] != nil else { throw RuriError.message(Messages.CoreHMCLPack.neoforgeVersionUnknown) }
-        guard components.count <= 1 else { throw RuriError.message(Messages.CoreHMCLPack.multiplePackLoaders) }
-        let loader = components.keys.first ?? .vanilla
-        if gameArguments.contains(where: { ($0.lowercased().contains("optifine") && loader != .optifine) || ($0.lowercased().contains("liteloader") && loader != .liteloader) }) {
+        let selections = LoaderSelection.ordered(components.map { LoaderSelection(loader: $0.key, version: $0.value) })
+        try LoaderCompatibility.validate(selections, game: version)
+        let loader = selections.first?.loader ?? .vanilla
+        if gameArguments.contains(where: { ($0.lowercased().contains("optifine") && components[.optifine] == nil) || ($0.lowercased().contains("liteloader") && components[.liteloader] == nil) }) {
             throw RuriError.message(Messages.CoreHMCLPack.unsupportedLiteLoaderArguments)
         }
         if loader == .vanilla, gameArguments.contains("--tweakClass") { throw RuriError.message(Messages.CoreHMCLPack.unknownLaunchWrapper) }
         if loader == .vanilla, let main = nodes.compactMap(\.mainClass).last, !["net.minecraft.client.main.Main", "net.minecraft.launchwrapper.Launch", "net.minecraft.client.Minecraft", "com.mojang.rubydung.RubyDung"].contains(main) {
             throw RuriError.message(Messages.CoreHMCLPack.unknownLaunchMethod(String(describing: main)))
         }
-        let instance = GameInstance(name: metadata.name, gameVersion: version, loader: loader, loaderVersion: components[loader])
+        var instance = GameInstance(name: metadata.name, gameVersion: version)
+        instance.setLoaderSelections(selections)
         try validate(instance)
         var warnings = [Messages.CoreHMCLPack.reinstallDependenciesForMac.localized]
         if let author = metadata.author, !author.isEmpty { warnings.append(Messages.CoreHMCLPack.packAuthor(String(describing: author)).localized) }

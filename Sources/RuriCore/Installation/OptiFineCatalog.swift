@@ -9,7 +9,7 @@ enum OptiFineCatalog {
         let patch: String
         let forge: String?
         var version: String { type + "_" + patch }
-        var preview: Bool { patch.hasPrefix("pre") || patch.hasPrefix("alpha") }
+        var preview: Bool { LoaderReleaseChannel.detect(version) != .stable }
         func url() throws -> URL { try EndpointURL.build(base: root, path: [mcversion, type, patch]) }
     }
     static func normalized(_ version: String, game: String) -> String {
