@@ -333,11 +333,11 @@ extension Messages {
         public static var microsoftLogin: LocalizedMessage {
             .init(key: "accountCenter.microsoftLogin", table: "Accounts", fallback: "使用微软账号登录")
         }
-        /// Ruri 将在浏览器中打开微软登录页面。完成授权后，会自动回到这里。
+        /// Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。
         ///
         /// Resource: `Accounts.accountCenter.browserLoginHelp`.
         public static var browserLoginHelp: LocalizedMessage {
-            .init(key: "accountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 将在浏览器中打开微软登录页面。完成授权后，会自动回到这里。")
+            .init(key: "accountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。")
         }
         /// 已连接
         ///
@@ -527,7 +527,7 @@ extension Messages {
             "Accounts:accountCenter.addAccountHelp": .init("选择登录方式，开始你的下一段旅程。", []),
             "Accounts:accountCenter.offlineLoginHelp": .init("离线账号可用于本地游戏，无法加入要求正版验证的服务器。", []),
             "Accounts:accountCenter.microsoftLogin": .init("使用微软账号登录", []),
-            "Accounts:accountCenter.browserLoginHelp": .init("Ruri 将在浏览器中打开微软登录页面。完成授权后，会自动回到这里。", []),
+            "Accounts:accountCenter.browserLoginHelp": .init("Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。", []),
             "Accounts:accountCenter.connected": .init("已连接", []),
             "Accounts:accountCenter.connecting": .init("正在连接账号…", []),
             "Accounts:accountCenter.unverified": .init("尚未连接", []),

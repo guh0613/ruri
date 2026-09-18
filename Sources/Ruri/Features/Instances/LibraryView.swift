@@ -2,63 +2,63 @@ import RuriLocalization
 import SwiftUI
 import AppKit
 import RuriCore
+import Observation
 
-/// The library as a content column of instances beside the chosen instance's
-/// page, like Mail. The column's title menu switches the instance folder, its
-/// toolbar section holds import, a filter field sits on top of the list and
-/// the add button beneath it, as in Reminders.
-struct LibraryView<Sidebar: View>: View {
+@MainActor @Observable final class LibraryNavigationState {
+    var search = ""
+    var selectedID: UUID?
+    var deleteTarget: GameInstance?
+}
+
+/// The root split view hosts the list and detail with shared navigation state.
+struct LibraryView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var columnVisibility: NavigationSplitViewVisibility
-    @ViewBuilder var sidebar: Sidebar
-    @State private var search = ""
-    @State private var selectedID: UUID?
-    @State private var deleteTarget: GameInstance?
+    let column: NavigationSplitViewColumn
+    @Bindable var navigation: LibraryNavigationState
     private var filtered: [GameInstance] {
-        model.directoryInstances.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) || $0.gameVersion.contains(search) }
+        model.directoryInstances.filter { navigation.search.isEmpty || $0.name.localizedCaseInsensitiveContains(navigation.search) || $0.gameVersion.contains(navigation.search) }
             .sorted { $0.favorite != $1.favorite ? $0.favorite : $0.createdAt > $1.createdAt }
     }
-    private var current: GameInstance? { filtered.first { $0.id == selectedID } ?? filtered.first }
+    private var current: GameInstance? { filtered.first { $0.id == navigation.selectedID } ?? filtered.first }
 
     var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            sidebar
-        } content: {
-            listColumn
-                .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 420)
-                .navigationTitle(model.page.title)
-                .navigationSubtitle("\(model.selectedDirectoryName) · \(countLabel)")
-                .toolbar {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        importMenu
-                        Button { model.showCreate = true } label: { Label(Messages.AppLibraryView.newInstance.localized, systemImage: "plus") }
-                            .help(Messages.AppLibraryView.newInstanceShortcut.localized)
-                            .disabled(model.busy)
-                    }
-                }
-        } detail: {
+        if column == .content { contentColumn }
+        else {
             detailColumn
-                .toolbarBackground(.hidden, for: .windowToolbar)
                 .toolbar { RootToolbar(model: model) }
+                .confirmationDialog(Messages.AppLibraryView.moveInstanceToTrashConfirmation.localized, isPresented: Binding(get: { navigation.deleteTarget != nil }, set: { if !$0 { navigation.deleteTarget = nil } }), titleVisibility: .visible) {
+                    Button(Messages.AppLibraryView.moveToTrash.localized, role: .destructive) { if let target = navigation.deleteTarget { model.trash(target) }; navigation.deleteTarget = nil }
+                } message: { Text(navigation.deleteTarget?.repositoryVersionID != nil ? Messages.AppLibraryView.managedVersionFolderTrashDetails.localized : (navigation.deleteTarget?.runDirectory ?? .isolated) != .isolated ? Messages.AppLibraryView.instanceTrashDetails.localized : Messages.AppLibraryView.instanceAndSharedFilesTrashDetails.localized) }
         }
-        .confirmationDialog(Messages.AppLibraryView.moveInstanceToTrashConfirmation.localized, isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
-            Button(Messages.AppLibraryView.moveToTrash.localized, role: .destructive) { if let target = deleteTarget { model.trash(target) }; deleteTarget = nil }
-        } message: { Text(deleteTarget?.repositoryVersionID != nil ? Messages.AppLibraryView.managedVersionFolderTrashDetails.localized : (deleteTarget?.runDirectory ?? .isolated) != .isolated ? Messages.AppLibraryView.instanceTrashDetails.localized : Messages.AppLibraryView.instanceAndSharedFilesTrashDetails.localized) }
-        .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability(); await model.refreshMinecraftFolder() }
-        // Keep a row selected: start from the instance featured on the home
-        // page, and move on when the selection is filtered out or trashed.
-        .onChange(of: filtered.map(\.id), initial: true) { _, ids in
-            guard selectedID.map(ids.contains) != true else { return }
-            let preferred = model.selected?.id
-            selectedID = preferred.flatMap { ids.contains($0) ? $0 : nil } ?? ids.first
-        }
-        .onChange(of: selectedID) { _, id in if id == nil { selectedID = filtered.first?.id } }
+    }
+
+    private var contentColumn: some View {
+        listColumn
+            .navigationTitle(Messages.AppPage.library.localized)
+            .navigationSubtitle("\(model.selectedDirectoryName) · \(countLabel)")
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    importMenu
+                    Button { model.showCreate = true } label: { Label(Messages.AppLibraryView.newInstance.localized, systemImage: "plus") }
+                        .help(Messages.AppLibraryView.newInstanceShortcut.localized)
+                        .disabled(model.busy)
+                }
+            }
+            .task(id: model.selectedDirectoryID) { await model.refreshDirectoryAvailability(); await model.refreshMinecraftFolder() }
+            // Keep a row selected: start from the instance featured on the home
+            // page, and move on when the selection is filtered out or trashed.
+            .onChange(of: filtered.map(\.id), initial: true) { _, ids in
+                guard navigation.selectedID.map(ids.contains) != true else { return }
+                let preferred = model.selected?.id
+                navigation.selectedID = preferred.flatMap { ids.contains($0) ? $0 : nil } ?? ids.first
+            }
+            .onChange(of: navigation.selectedID) { _, id in if id == nil { navigation.selectedID = filtered.first?.id } }
     }
 
     private var countLabel: String {
         let total = model.directoryInstances.count
-        guard !search.isEmpty else { return Messages.AppLibraryView.instanceCount(Int64(total)).localized }
+        guard !navigation.search.isEmpty else { return Messages.AppLibraryView.instanceCount(Int64(total)).localized }
         return Messages.AppLibraryView.filteredInstanceCount(Int64(filtered.count), Int64(total)).localized
     }
 
@@ -82,7 +82,7 @@ struct LibraryView<Sidebar: View>: View {
         list.topScrollBar {
             VStack(spacing: 16) {
                 LibraryFolderMenu()
-                LibrarySearchField(text: $search, prompt: Messages.AppLibraryView.searchInstancesOrVersions.localized)
+                NativeSearchField(text: $navigation.search, prompt: Messages.AppLibraryView.searchInstancesOrVersions.localized)
             }
             .padding(.horizontal, 10).padding(.top, 6).padding(.bottom, 12)
         }
@@ -92,7 +92,7 @@ struct LibraryView<Sidebar: View>: View {
     /// set them apart from. Double-clicking a row launches it, and Delete
     /// moves it to the Trash after confirming.
     private var list: some View {
-        List(selection: $selectedID) {
+        List(selection: $navigation.selectedID) {
             let favorites = filtered.filter(\.favorite)
             if favorites.isEmpty || favorites.count == filtered.count {
                 rows(filtered)
@@ -103,10 +103,10 @@ struct LibraryView<Sidebar: View>: View {
         }
         .listStyle(.inset)
         .scrollContentBackground(.hidden)
-        .overlay { if filtered.isEmpty && !search.isEmpty { ContentUnavailableView.search(text: search) } }
+        .overlay { if filtered.isEmpty && !navigation.search.isEmpty { ContentUnavailableView.search(text: navigation.search) } }
         .contextMenu(forSelectionType: UUID.self) { ids in
             if let instance = instance(ids) {
-                LibraryContextActions(instance: instance, onTrash: { deleteTarget = $0 }).labelStyle(.titleAndIcon)
+                LibraryContextActions(instance: instance, onTrash: { navigation.deleteTarget = $0 }).labelStyle(.titleAndIcon)
             }
         } primaryAction: { ids in
             guard let instance = instance(ids) else { return }
@@ -114,7 +114,7 @@ struct LibraryView<Sidebar: View>: View {
             else if !model.busy, !model.isInstanceInUse(instance.id) { model.launch(instance) }
         }
         .onDeleteCommand {
-            if let current, !model.busy, !model.isInstanceInUse(current.id) { deleteTarget = current }
+            if let current, !model.busy, !model.isInstanceInUse(current.id) { navigation.deleteTarget = current }
         }
     }
 
@@ -138,7 +138,7 @@ struct LibraryView<Sidebar: View>: View {
                     }.padding(28).frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
                 }
             } else if let instance = current {
-                LibraryInstanceDetail(instance: instance, onTrash: { deleteTarget = $0 }) { folderNotices }.id(instance.id)
+                LibraryInstanceDetail(instance: instance, onTrash: { navigation.deleteTarget = $0 }) { folderNotices }.id(instance.id)
             } else {
                 EmptyPanel(symbol: "magnifyingglass", title: Messages.AppLibraryView.noMatchingInstances.localized, detail: Messages.AppLibraryView.tryAnotherNameOrVersion.localized)
                     .frame(maxHeight: .infinity)
@@ -244,30 +244,5 @@ private struct LibraryContextActions: View {
         Button(Messages.AppLibraryView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }
         Divider()
         Button(Messages.AppLibraryView.moveToTrash.localized, systemImage: "trash", role: .destructive) { onTrash(instance) }.disabled(model.busy || model.isInstanceInUse(instance.id))
-    }
-}
-
-/// The system search field, which SwiftUI only offers in the toolbar, for
-/// filtering the list column from its top edge as Settings does.
-private struct LibrarySearchField: NSViewRepresentable {
-    @Binding var text: String
-    let prompt: String
-    func makeNSView(context: Context) -> NSSearchField {
-        let field = NSSearchField()
-        field.sendsSearchStringImmediately = true
-        field.target = context.coordinator
-        field.action = #selector(Coordinator.changed(_:))
-        return field
-    }
-    func updateNSView(_ field: NSSearchField, context: Context) {
-        context.coordinator.text = $text
-        if field.stringValue != text { field.stringValue = text }
-        field.placeholderString = prompt
-    }
-    func makeCoordinator() -> Coordinator { Coordinator(text: $text) }
-    @MainActor final class Coordinator: NSObject {
-        var text: Binding<String>
-        init(text: Binding<String>) { self.text = text }
-        @objc func changed(_ sender: NSSearchField) { text.wrappedValue = sender.stringValue }
     }
 }

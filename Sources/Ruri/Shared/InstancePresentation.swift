@@ -2,17 +2,21 @@ import RuriLocalization
 import SwiftUI
 import RuriCore
 
-/// Normal availability is implicit in the launch action. Reserve a status
-/// line for work in progress or something that needs the player's attention.
+/// Normal availability is implicit in the launch action. Callers can reserve
+/// the hidden line's space to keep surrounding content stable as status changes.
 struct InstanceStatus: View {
     @Environment(AppModel.self) private var model
     let instance: GameInstance
+    var reservesSpace = false
+    private var isNominal: Bool { model.statusIsNominal(instance) }
     var body: some View {
-        if !model.statusIsNominal(instance) {
+        if reservesSpace || !isNominal {
             Label(model.statusLabel(instance), systemImage: symbol)
                 .font(.caption.weight(.medium))
                 .foregroundStyle(model.statusColor(instance))
                 .fixedSize(horizontal: false, vertical: true)
+                .opacity(isNominal ? 0 : 1)
+                .accessibilityHidden(isNominal)
         }
     }
     private var symbol: String {

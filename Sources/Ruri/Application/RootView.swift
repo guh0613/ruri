@@ -6,16 +6,53 @@ import RuriCore
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @State private var columns = NavigationSplitViewVisibility.automatic
+    @State private var sidebarWidth: CGFloat = 236
+    @State private var collectionWidth: CGFloat = 280
+    @State private var libraryNavigation = LibraryNavigationState()
+    @State private var accountsNavigation = AccountsNavigationState()
+    private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts }
+    private var minimumWindowWidth: CGFloat {
+        // Three visible columns need 210 + 280 + 420 points, plus their dividers.
+        hasCollectionColumn && columns != .detailOnly && columns != .doubleColumn ? 912 : 760
+    }
     var body: some View {
-        // Library and accounts each have a content column beside their detail.
+        // Keep the same split view and column constraints when switching collections.
         ZStack {
-            if model.page == .library {
-                LibraryView(columnVisibility: $columns) { RootSidebar() }
-            } else if model.page == .accounts {
-                AccountsView(columnVisibility: $columns) { RootSidebar() }
+            if hasCollectionColumn {
+                NavigationSplitView(columnVisibility: $columns) {
+                    RootSidebar(width: $sidebarWidth)
+                } content: {
+                    Group {
+                        if model.page == .library {
+                            LibraryView(column: .content, navigation: libraryNavigation)
+                        } else {
+                            AccountsView(column: .content, navigation: accountsNavigation)
+                        }
+                    }
+                    .frame(minWidth: 280, maxWidth: .infinity)
+                    .navigationSplitViewColumnWidth(min: 280, ideal: collectionWidth, max: 420)
+                    .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width in
+                        // Navigation and window restoration can report temporary compressed sizes.
+                        // Only remember intentional resizing, not those layout transitions.
+                        if NSApp.currentEvent?.type == .leftMouseDragged,
+                           width >= 280, abs(width - collectionWidth) > 1 {
+                            collectionWidth = min(width, 420)
+                        }
+                    }
+                } detail: {
+                    Group {
+                        if model.page == .library {
+                            LibraryView(column: .detail, navigation: libraryNavigation)
+                        } else {
+                            AccountsView(column: .detail, navigation: accountsNavigation)
+                        }
+                    }
+                    .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
+                    .toolbarBackground(model.page == .library ? .hidden : .automatic, for: .windowToolbar)
+                }
             } else {
                 NavigationSplitView(columnVisibility: $columns) {
-                    RootSidebar()
+                    RootSidebar(width: $sidebarWidth)
                 } detail: {
                     Group {
                         switch model.page {
@@ -33,7 +70,7 @@ struct RootView: View {
                 }
             }
         }
-        .frame(minWidth: 760, minHeight: 600)
+        .frame(minWidth: minimumWindowWidth, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
         .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }
         .sheet(isPresented: Binding(get: { model.showDirectories || model.showAddDirectory }, set: {
@@ -64,24 +101,35 @@ struct RootView: View {
 }
 
 /// App-wide items at the trailing edge of the detail column's toolbar.
-struct RootToolbar: ToolbarContent {
+struct RootToolbar<Trailing: View>: ToolbarContent {
     let model: AppModel
+    @ViewBuilder var trailing: Trailing
     var body: some ToolbarContent {
         // In the library's detail column nothing else fills the toolbar, so
         // without a spacer these items sit at its leading edge.
         if #available(macOS 26, *) { ToolbarSpacer(.flexible, placement: .primaryAction) }
-        ToolbarItem(placement: .primaryAction) { LauncherNotificationButton() }
-        if let runningID = model.runningID {
-            ToolbarItem(placement: .primaryAction) {
+        ToolbarItemGroup(placement: .primaryAction) {
+            if let runningID = model.runningID {
                 Button { model.showSession(model.activeSessions[runningID]?.id) } label: { Label(Messages.SessionUI.session.localized, systemImage: "gamecontroller") }
                     .help(Messages.AppRootView.viewRunningGameLogs.localized)
             }
+            LauncherNotificationButton()
+            // Explicit controls stay beside notifications; .searchable inserts its own spacer.
+            trailing
         }
+    }
+}
+
+extension RootToolbar where Trailing == EmptyView {
+    init(model: AppModel) {
+        self.model = model
+        trailing = EmptyView()
     }
 }
 
 private struct RootSidebar: View {
     @Environment(AppModel.self) private var model
+    @Binding var width: CGFloat
     var body: some View {
         @Bindable var model = model
         List(selection: $model.page) {
@@ -91,7 +139,15 @@ private struct RootSidebar: View {
         .listStyle(.sidebar)
         .controlSize(.large)
         .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
-        .navigationSplitViewColumnWidth(min: 210, ideal: 236, max: 320)
+        // Constrain the actual sidebar as well as the split view's preferred width.
+        .frame(minWidth: 210, idealWidth: width, maxWidth: 320)
+        .navigationSplitViewColumnWidth(min: 210, ideal: width, max: 320)
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { measuredWidth in
+            if NSApp.currentEvent?.type == .leftMouseDragged,
+               measuredWidth >= 210, abs(measuredWidth - width) > 1 {
+                width = min(measuredWidth, 320)
+            }
+        }
     }
     private func sidebarRow(_ page: Page) -> some View {
         HStack {

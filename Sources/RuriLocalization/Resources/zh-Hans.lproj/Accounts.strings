@@ -164,7 +164,7 @@
 "accountCenter.microsoftLogin" = "使用微软账号登录";
 
 /* @symbol AccountCenter.browserLoginHelp @args - */
-"accountCenter.browserLoginHelp" = "Ruri 将在浏览器中打开微软登录页面。完成授权后，会自动回到这里。";
+"accountCenter.browserLoginHelp" = "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。";
 
 /* @symbol AccountCenter.connected @args - */
 "accountCenter.connected" = "已连接";

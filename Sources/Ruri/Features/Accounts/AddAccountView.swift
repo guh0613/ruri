@@ -86,11 +86,9 @@ struct AddAccountView: View {
                 HStack(spacing: 16) {
                     Text(code.user_code).font(.system(size: 32, weight: .semibold, design: .monospaced)).textSelection(.enabled)
                     Spacer()
-                    Button(Messages.AppAddAccountView.copyCode.localized) {
-                        NSPasteboard.general.clearContents(); NSPasteboard.general.setString(code.user_code, forType: .string)
-                    }
+                    Button(Messages.AppAddAccountView.copyCode.localized) { copyCode(code) }
                 }.padding(16).background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
-                Button(Messages.AppAddAccountView.openMicrosoftLogin.localized, systemImage: "arrow.up.right.square") { NSWorkspace.shared.open(code.verification_uri) }
+                Button(Messages.AppAddAccountView.openMicrosoftLogin.localized, systemImage: "arrow.up.right.square") { openMicrosoftLogin(code) }
                 Text(Messages.AppAddAccountView.waitingMicrosoftLogin.localized).font(.callout).foregroundStyle(.secondary)
             }
         } else {
@@ -102,6 +100,14 @@ struct AddAccountView: View {
             }
         }
     }
+    private func copyCode(_ code: DeviceCode) {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(code.user_code, forType: .string)
+    }
+    private func openMicrosoftLogin(_ code: DeviceCode) {
+        copyCode(code)
+        NSWorkspace.shared.open(code.verification_uri)
+    }
     private func login() {
         guard task == nil else { return }
         error = nil
@@ -110,7 +116,7 @@ struct AddAccountView: View {
             do {
                 let auth = MicrosoftAuth(clientID: clientID)
                 let code = try await auth.begin(); try Task.checkCancellation(); self.code = code
-                NSWorkspace.shared.open(code.verification_uri)
+                openMicrosoftLogin(code)
                 var (account, credentials) = try await auth.finish(code)
                 try Task.checkCancellation()
                 if let existing { account = try existing.reauthenticated(with: account) }

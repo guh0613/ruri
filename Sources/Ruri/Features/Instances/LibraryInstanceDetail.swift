@@ -88,7 +88,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
     }
 
     private var identity: some View {
-        HStack(alignment: .bottom, spacing: 20) {
+        HStack(alignment: .instanceIdentityCenter, spacing: 20) {
             Button { model.editingInstance = instance } label: {
                 InstanceIcon(instance, size: 108)
             }
@@ -97,9 +97,13 @@ struct LibraryInstanceDetail<Notices: View>: View {
             .help(Messages.AppLibraryView.changeIconOrEditSettings.localized)
             .accessibilityLabel(Messages.AppLibraryView.editIconAndSettings(instance.name).localized)
             VStack(alignment: .leading, spacing: 8) {
-                Text(instance.name).font(.system(size: 30, weight: .bold)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
-                InstanceMetadata(instance: instance)
-                InstanceStatus(instance: instance)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(instance.name).font(.system(size: 30, weight: .bold)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                    InstanceMetadata(instance: instance)
+                }
+                // Anchor the title and metadata; reserve a status line below them.
+                .alignmentGuide(.instanceIdentityCenter) { $0[VerticalAlignment.center] }
+                InstanceStatus(instance: instance, reservesSpace: true)
                 if let issue = instance.repositoryIssue { Text(issue).font(.caption).foregroundStyle(.secondary).lineLimit(2).help(issue) }
             }
         }
@@ -280,6 +284,14 @@ struct LibraryInstanceDetail<Notices: View>: View {
         worldIcons = icons.compactMapValues(NSImage.init(data:))
         loaded = true
     }
+}
+
+private extension VerticalAlignment {
+    enum InstanceIdentityCenter: AlignmentID {
+        static func defaultValue(in context: ViewDimensions) -> CGFloat { context[VerticalAlignment.center] }
+    }
+
+    static let instanceIdentityCenter = VerticalAlignment(InstanceIdentityCenter.self)
 }
 
 private struct StripItem: Identifiable {
