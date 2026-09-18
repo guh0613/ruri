@@ -824,7 +824,7 @@
 "appHomeView.addExistingGameFolder" = "添加已有游戏文件夹…";
 
 /* @symbol AppHomeView.existingGameFolderHint @args - */
-"appHomeView.existingGameFolderHint" = "用过其他启动器？";
+"appHomeView.existingGameFolderHint" = "本机已有游戏，或用过其他启动器？";
 
 /* @symbol AppHomeView.continuePlaying @args - */
 "appHomeView.featuredSectionText1" = "继续游戏";
@@ -1259,7 +1259,7 @@
 "appAppModelMinecraftDirectory.panelText1" = "添加文件夹";
 
 /* @symbol AppAppModelMinecraftDirectory.folderSelectionHelp @args - */
-"appAppModelMinecraftDirectory.panelText2" = "选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。";
+"appAppModelMinecraftDirectory.panelText2" = "选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。";
 
 /* @symbol AppAppModelMinecraftDirectory.addGameFolderEntry @args - */
 "appAppModelMinecraftDirectory.baseText2" = "添加游戏文件夹";

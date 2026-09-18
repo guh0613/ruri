@@ -55,6 +55,12 @@ import RuriCore
     @ObservationIgnored var bootTask: Task<Void, Never>?
     var showCreate = false
     var showDirectories = false
+    var showAddDirectory = false
+    var detectedMinecraftLocations: [URL]?
+    var discoveringMinecraftLocations = false
+    var minecraftFolderDiscoveryError: String?
+    @ObservationIgnored var minecraftFolderDiscoveryDate: Date?
+    @ObservationIgnored var minecraftFolderDiscoveryTask: Task<[URL], Error>?
     var directoryErrors: [UUID: String] = [:]
     var customDirectoryErrors: [UUID: String] = [:]
     var pendingDirectoryCopyIDs: Set<UUID> = []

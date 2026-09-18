@@ -1,0 +1,96 @@
+/* @symbol FolderExperience.chooseFolder @args - */
+"folders.chooseFolder" = "请选择一个文件夹。";
+/* @symbol FolderExperience.chooseCloserFolder @args - */
+"folders.chooseCloserFolder" = "搜索范围过大。请选择游戏文件夹或其上一级目录。";
+/* @symbol FolderExperience.noFolderFound @args - */
+"folders.noFolderFound" = "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。";
+/* @symbol FolderExperience.localMinecraft @args - */
+"folders.localMinecraft" = "本机 Minecraft";
+/* @symbol FolderExperience.newFolder @args - */
+"folders.newFolder" = "新游戏文件夹";
+/* @symbol FolderExperience.addTitle @args - */
+"folders.addTitle" = "添加游戏文件夹";
+/* @symbol FolderExperience.chooseLocation @args - */
+"folders.chooseLocation" = "选择文件夹…";
+/* @symbol FolderExperience.locationHelp @args - */
+"folders.locationHelp" = "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。";
+/* @symbol FolderExperience.back @args - */
+"folders.back" = "返回";
+/* @symbol FolderExperience.commonLocations @args - */
+"folders.commonLocations" = "检测到的游戏文件夹";
+/* @symbol FolderExperience.refreshDiscovery @args - */
+"folders.refreshDiscovery" = "刷新检测结果";
+/* @symbol FolderExperience.removedFolder @args - */
+"folders.removedFolder" = "已移除";
+/* @symbol FolderExperience.noSuggestions @args - */
+"folders.noSuggestions" = "未在自动查找范围内检测到游戏文件夹，请手动选择位置。";
+/* @symbol FolderExperience.checking @args - */
+"folders.checking" = "正在查找游戏文件夹…";
+/* @symbol FolderExperience.chooseResult @args - */
+"folders.chooseResult" = "选择要添加的游戏文件夹";
+/* @symbol FolderExperience.multipleResults @args - */
+"folders.multipleResults" = "此位置包含多个游戏文件夹。";
+/* @symbol FolderExperience.folderLocation @args - */
+"folders.folderLocation" = "文件夹位置";
+/* @symbol FolderExperience.detectedInside @args - */
+"folders.detectedInside" = "已自动定位到游戏文件夹";
+/* @symbol FolderExperience.changeLocation @args - */
+"folders.changeLocation" = "更换…";
+/* @symbol FolderExperience.libraryName @args - */
+"folders.libraryName" = "显示名称";
+/* @symbol FolderExperience.namePlaceholder @args - */
+"folders.namePlaceholder" = "例如：日常生存、HMCL 整合包";
+/* @symbol FolderExperience.nameHelp @args - */
+"folders.nameHelp" = "仅用于 Ruri 中的显示，不修改文件夹名称。";
+/* @symbol FolderExperience.duplicateName @args - */
+"folders.duplicateName" = "此名称已被其他文件夹使用。";
+/* @symbol FolderExperience.invalidName @args - */
+"folders.invalidName" = "请输入 1–100 个字符的名称，不要包含换行等控制字符。";
+/* @symbol FolderExperience.versionsFound @args integer */
+"folders.versionsFound" = "找到 %lld 个游戏版本";
+/* @symbol FolderExperience.versionsNeedAttention @args integer */
+"folders.versionsNeedAttention" = "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。";
+/* @symbol FolderExperience.emptyFolder @args - */
+"folders.emptyFolder" = "未包含游戏版本";
+/* @symbol FolderExperience.emptyFolderHelp @args - */
+"folders.emptyFolderHelp" = "可用于安装游戏或导入整合包。";
+/* @symbol FolderExperience.alreadyAdded @args text */
+"folders.alreadyAdded" = "已添加为“%@”";
+/* @symbol FolderExperience.openExisting @args - */
+"folders.openExisting" = "使用此文件夹";
+/* @symbol FolderExperience.add @args - */
+"folders.add" = "添加文件夹";
+/* @symbol FolderExperience.adding @args - */
+"folders.adding" = "正在添加文件夹…";
+/* @symbol FolderExperience.activeFolders @args - */
+"folders.activeFolders" = "已添加";
+/* @symbol FolderExperience.currentFolder @args - */
+"folders.currentFolder" = "当前使用";
+/* @symbol FolderExperience.available @args - */
+"folders.available" = "可用";
+/* @symbol FolderExperience.unavailable @args - */
+"folders.unavailable" = "无法访问";
+/* @symbol FolderExperience.name @args - */
+"folders.name" = "名称";
+/* @symbol FolderExperience.status @args - */
+"folders.status" = "状态";
+/* @symbol FolderExperience.contents @args - */
+"folders.contents" = "实例数量";
+/* @symbol FolderExperience.defaultHelp @args - */
+"folders.defaultHelp" = "由 Ruri 管理，用于存放新安装和导入的实例。";
+/* @symbol FolderExperience.showLibrary @args - */
+"folders.showLibrary" = "在实例库中查看";
+/* @symbol FolderExperience.removeHelp @args - */
+"folders.removeHelp" = "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。";
+/* @symbol FolderExperience.managedRemoveHelp @args - */
+"folders.managedRemoveHelp" = "此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。";
+/* @symbol FolderExperience.reconnectHelp @args - */
+"folders.reconnectHelp" = "如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。";
+/* @symbol FolderExperience.retainedFolder @args - */
+"folders.retainedFolder" = "已从实例库移除";
+/* @symbol FolderExperience.savedSettings @args - */
+"folders.savedSettings" = "保留的实例设置";
+/* @symbol FolderExperience.noSelection @args - */
+"folders.noSelection" = "选择一个文件夹以查看详情";
+/* @symbol FolderExperience.newFolderHelp @args - */
+"folders.newFolderHelp" = "新游戏可使用空文件夹。";

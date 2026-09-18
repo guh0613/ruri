@@ -15,11 +15,11 @@ extension Messages {
         public static var addGameFolder: LocalizedMessage {
             .init(key: "appAppModelMinecraftDirectory.panelText1", table: "Interface", fallback: "添加文件夹")
         }
-        /// 选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。
+        /// 选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。
         ///
         /// Resource: `Interface.appAppModelMinecraftDirectory.panelText2`.
         public static var folderSelectionHelp: LocalizedMessage {
-            .init(key: "appAppModelMinecraftDirectory.panelText2", table: "Interface", fallback: "选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。")
+            .init(key: "appAppModelMinecraftDirectory.panelText2", table: "Interface", fallback: "选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。")
         }
         /// 添加游戏文件夹
         ///
@@ -30,7 +30,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:appAppModelMinecraftDirectory.baseText1": .init("恢复游戏文件夹", []),
             "Interface:appAppModelMinecraftDirectory.panelText1": .init("添加文件夹", []),
-            "Interface:appAppModelMinecraftDirectory.panelText2": .init("选择已有 Minecraft 文件夹，或新建一个文件夹。已有版本会直接出现在实例列表中。", []),
+            "Interface:appAppModelMinecraftDirectory.panelText2": .init("选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。", []),
             "Interface:appAppModelMinecraftDirectory.baseText2": .init("添加游戏文件夹", []),
         ]
     }

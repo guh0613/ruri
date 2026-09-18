@@ -36,7 +36,16 @@ struct RootView: View {
         .frame(minWidth: 760, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
         .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }
-        .sheet(isPresented: Bindable(model).showDirectories) { GameDirectoriesView() }
+        .sheet(isPresented: Binding(get: { model.showDirectories || model.showAddDirectory }, set: {
+            if !$0 { model.showDirectories = false; model.showAddDirectory = false }
+        })) {
+            if model.showAddDirectory {
+                AddMinecraftFolderView(cancel: { model.showAddDirectory = false }, completed: { _ in
+                    model.showAddDirectory = false
+                    if !model.showDirectories { model.page = .library }
+                })
+            } else { GameDirectoriesView() }
+        }
         .sheet(isPresented: Bindable(model).showAccount) { AddAccountView() }
         .sheet(isPresented: Bindable(model).showLogs) { LogsView() }
         .sheet(item: Bindable(model).editingInstance) { instance in InstanceSettingsView(instance: instance) }

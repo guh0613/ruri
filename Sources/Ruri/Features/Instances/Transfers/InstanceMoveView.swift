@@ -10,6 +10,7 @@ struct InstanceMoveView: View {
     @State private var directoryID: UUID?
     @State private var preview: InstanceMovePreview?
     @State private var recovery: InstanceMoveRecovery?
+    @State private var addingDirectory = false
     @State private var checking = false
     @State private var cancelling = false
     @State private var issue: String?
@@ -42,7 +43,7 @@ struct InstanceMoveView: View {
                             if directoryID == nil { Text(Messages.AppInstanceMoveView.chooseTargetFolder.localized).tag(UUID?.none) }
                             ForEach(choices, id: \.self) { id in Text(directoryName(id)).tag(Optional(id)) }
                         }.disabled(model.busy)
-                        Button(Messages.AppInstanceMoveView.addTargetFolder.localized, systemImage: "folder.badge.plus", action: addDirectory).disabled(model.busy || checking)
+                        Button(Messages.AppInstanceMoveView.addTargetFolder.localized, systemImage: "folder.badge.plus", action: { addingDirectory = true }).disabled(model.busy || checking)
                         switch source.runDirectory ?? .isolated {
                         case .isolated: Text(Messages.AppInstanceMoveView.sourceCleanupNotice.localized)
                         case .shared: Text(Messages.AppInstanceMoveView.moveSharedContent.localized)
@@ -95,6 +96,11 @@ struct InstanceMoveView: View {
                 }
             }
         }.padding(24).frame(width: 660, height: 535)
+        .sheet(isPresented: $addingDirectory) {
+            AddMinecraftFolderView(cancel: { addingDirectory = false }, completed: { id in
+                directoryID = id; addingDirectory = false
+            })
+        }
         .interactiveDismissDisabled(model.busy)
         .onAppear { if directoryID == nil { directoryID = choices.first } }
         .task(id: (directoryID?.uuidString ?? "") + refresh.uuidString) {
@@ -121,14 +127,5 @@ struct InstanceMoveView: View {
     private func recover(_ pending: InstanceMoveRecovery, preserving: Bool) {
         operationIssue = nil
         model.recoverInstanceMove(pending, preservingSource: preserving, failed: { operationIssue = $0 }) { dismiss() }
-    }
-    private func addDirectory() {
-        let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppInstanceMoveView.minecraftFolderDescription.localized
-        panel.begin { response in
-            guard response == .OK, let url = panel.url else { return }
-            model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
-            if let added = model.state.gameDirectories?.first(where: { $0.url.standardizedFileURL.path == url.standardizedFileURL.resolvingSymlinksInPath().path }) { directoryID = added.id }
-        }
     }
 }

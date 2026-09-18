@@ -11,6 +11,7 @@ struct InstanceCopyView: View {
     @State private var directoryID: UUID
     @State private var includeWorlds = true
     @State private var includeBackups = false
+    @State private var addingDirectory = false
     @State private var checking = false
     @State private var cancelling = false
     @State private var preview: InstanceCopyPreview?
@@ -37,7 +38,7 @@ struct InstanceCopyView: View {
                             Text(Messages.AppInstanceCopyView.defaultInstanceDirectory.localized).tag(GameDirectory.defaultID)
                             ForEach(model.state.gameDirectories ?? []) { Text($0.name).tag($0.id) }
                         }.disabled(model.busy)
-                        Button(Messages.AppInstanceCopyView.addTargetFolder.localized, systemImage: "folder.badge.plus") { addDirectory() }.disabled(model.busy || checking)
+                        Button(Messages.AppInstanceCopyView.addTargetFolder.localized, systemImage: "folder.badge.plus") { addingDirectory = true }.disabled(model.busy || checking)
                         Toggle(Messages.AppInstanceCopyView.copyWorlds.localized, isOn: $includeWorlds).disabled(model.busy)
                         Toggle(Messages.AppInstanceCopyView.copyBackups.localized, isOn: $includeBackups).disabled(model.busy)
                         Text(Messages.AppInstanceCopyView.copyDescription.localized)
@@ -67,6 +68,11 @@ struct InstanceCopyView: View {
                 }
             }
         }.padding(24).frame(width: 640, height: 535)
+        .sheet(isPresented: $addingDirectory) {
+            AddMinecraftFolderView(cancel: { addingDirectory = false }, completed: { id in
+                directoryID = id; addingDirectory = false
+            })
+        }
         .interactiveDismissDisabled(model.busy)
         .task(id: name + directoryID.uuidString + String(includeWorlds) + String(includeBackups) + refresh.uuidString) {
             preview = nil; recovery = nil; issue = nil; checking = true
@@ -82,14 +88,5 @@ struct InstanceCopyView: View {
             if !Task.isCancelled { checking = false }
         }
         .onChange(of: model.busy) { if !model.busy { cancelling = false; refresh = UUID() } }
-    }
-    private func addDirectory() {
-        let panel = NSOpenPanel(); panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true; panel.allowsMultipleSelection = false
-        panel.message = Messages.AppInstanceCopyView.minecraftFolderDescription.localized
-        panel.begin { response in
-            guard response == .OK, let url = panel.url else { return }
-            model.changeDirectory { try MinecraftFolderStore.add(name: String(url.lastPathComponent.prefix(100)), url: url, paths: $0) }
-            if let added = model.state.gameDirectories?.first(where: { $0.url.standardizedFileURL.path == url.standardizedFileURL.resolvingSymlinksInPath().path }) { directoryID = added.id }
-        }
     }
 }

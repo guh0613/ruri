@@ -50,16 +50,21 @@ struct HomeView: View {
                     Button(Messages.AppHomeView.createInstance.localized) { model.showCreate = true }.buttonStyle(.borderedProminent)
                     Button(Messages.AppHomeView.importPack.localized) { model.chooseInstanceImport() }.buttonStyle(.bordered)
                 }.fixedSize()
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(Messages.AppHomeView.existingGameFolderHint.localized).foregroundStyle(.secondary)
-                    Button(Messages.AppHomeView.addExistingGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
-                        .buttonStyle(.link).disabled(model.readOnly)
-                        .help(Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized)
-                }.font(.callout).fixedSize()
+                ViewThatFits(in: .horizontal) {
+                    HStack(alignment: .firstTextBaseline, spacing: 8) { existingFolderActions }.fixedSize()
+                    VStack(spacing: 8) { existingFolderActions }
+                }.font(.callout)
             }
         }
         .disabled(model.busy)
         .frame(maxWidth: .infinity, minHeight: 320)
+    }
+
+    @ViewBuilder private var existingFolderActions: some View {
+        Text(Messages.AppHomeView.existingGameFolderHint.localized).foregroundStyle(.secondary)
+        Button(Messages.AppHomeView.addExistingGameFolder.localized, systemImage: "folder.badge.plus") { model.chooseMinecraftDirectory() }
+            .buttonStyle(.link).disabled(model.readOnly)
+            .help(Messages.AppAppModelMinecraftDirectory.folderSelectionHelp.localized)
     }
 
     // MARK: Continue playing

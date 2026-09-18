@@ -204,6 +204,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreWorldManager.definitions) { first, _ in first }
         result.merge(Messages.CoreWorldQuickPlay.definitions) { first, _ in first }
         result.merge(Messages.Discovery.definitions) { first, _ in first }
+        result.merge(Messages.FolderExperience.definitions) { first, _ in first }
         result.merge(Messages.GameHost.definitions) { first, _ in first }
         result.merge(Messages.HistoryUI.definitions) { first, _ in first }
         result.merge(Messages.HomeActivity.definitions) { first, _ in first }

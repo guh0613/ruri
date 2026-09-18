@@ -66,7 +66,7 @@ private struct MainWindowContent: View {
             }
             .task(id: model.pendingOpenURLs.first) {
                 guard model.pendingOpenURLs.first != nil else { return }
-                while model.busy || model.showLogs || model.showCreate || model.showAccount || model.importingInstance != nil || model.exportingInstance != nil {
+                while model.busy || model.showLogs || model.showCreate || model.showAccount || model.showDirectories || model.showAddDirectory || model.importingInstance != nil || model.exportingInstance != nil {
                     do { try await Task.sleep(for: .milliseconds(200)) } catch { return }
                 }
                 guard !Task.isCancelled, let url = model.pendingOpenURLs.first else { return }
