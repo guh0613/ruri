@@ -13,8 +13,14 @@ private struct HTTPReply: Sendable {
 private final class HTTPScenario: @unchecked Sendable {
     let lock = NSLock()
     var requests: [URLRequest] = []
+    private var partialFile: URL?
     let reply: @Sendable (URLRequest, Int) -> HTTPReply
     init(_ reply: @escaping @Sendable (URLRequest, Int) -> HTTPReply) { self.reply = reply }
+    func setPartialFile(_ url: URL) { lock.withLock { partialFile = url } }
+    func hasPersistedPartial(_ data: Data) -> Bool {
+        guard let file = lock.withLock({ partialFile }) else { return false }
+        return (try? Data(contentsOf: file)) == data
+    }
     func response(_ request: URLRequest) -> HTTPReply {
         let count = lock.withLock { requests.append(request); return requests.count }
         return reply(request, count)
@@ -38,14 +44,26 @@ private final class StubHTTP: URLProtocol, @unchecked Sendable {
         let reply = scenario.response(request)
         var headers = reply.headers; headers["Content-Type"] = "application/octet-stream"
         client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: reply.status, httpVersion: "HTTP/1.1", headerFields: headers)!, cacheStoragePolicy: .notAllowed)
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.025) {
-            guard !self.stopLock.withLock({ self.stopped }) else { return }
-            if !reply.data.isEmpty { self.client?.urlProtocol(self, didLoad: reply.data) }
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.025) {
+        if !reply.data.isEmpty { client?.urlProtocol(self, didLoad: reply.data) }
+        if let error = reply.error {
+            Task {
+                // URLSession may discard queued data on failure. Wait for the
+                // partial write instead of assuming its delegate runs within 25 ms.
+                let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+                while !scenario.hasPersistedPartial(reply.data) {
+                    guard !self.stopLock.withLock({ self.stopped }) else { return }
+                    guard ContinuousClock.now < deadline else {
+                        Issue.record("Timed out waiting for the partial download before simulating a connection failure")
+                        self.client?.urlProtocol(self, didFailWithError: URLError(.timedOut))
+                        return
+                    }
+                    try? await Task.sleep(for: .milliseconds(10))
+                }
                 guard !self.stopLock.withLock({ self.stopped }) else { return }
-                if let error = reply.error { self.client?.urlProtocol(self, didFailWithError: URLError(error)) }
-                else if !reply.hold { self.client?.urlProtocolDidFinishLoading(self) }
+                self.client?.urlProtocol(self, didFailWithError: URLError(error))
             }
+        } else if !reply.hold {
+            client?.urlProtocolDidFinishLoading(self)
         }
     }
     override func stopLoading() { stopLock.withLock { stopped = true } }
@@ -66,6 +84,7 @@ struct DownloadTests {
         StubHTTP.scenarios.set(scenario, host: host)
         let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
         let item = DownloadItem(url: URL(string: "https://\(host)/artifact.jar")!, destination: root.appendingPathComponent("artifact.jar"), sha1: Insecure.SHA1.hash(data: body).map { String(format: "%02x", $0) }.joined(), size: Int64(body.count))
+        scenario.setPartialFile(DownloadManager.partialFiles(item).data)
         return (DownloadManager(configuration: config, retryDelay: .zero), item, root, host)
     }
     @Test func retriesUsingVerifiedByteRange() async throws {
@@ -89,16 +108,25 @@ struct DownloadTests {
         #expect(transfer.attempt == 2); #expect(transfer.resumedBytes == 200)
         #expect(!FileManager.default.fileExists(atPath: DownloadManager.partialFiles(item).data.path))
     }
-    @Test func serverIgnoringRangeRestartsCleanly() async throws {
+    @Test(arguments: [0.0, 0.1])
+    func serverIgnoringRangeRestartsCleanly(responseDelay: TimeInterval) async throws {
         let body = body
         let scenario = HTTPScenario { _, attempt in
             HTTPReply(status: 200, headers: ["Content-Length": "512", "ETag": "\"v\(attempt)\""], data: attempt == 1 ? body.prefix(123) : body, error: attempt == 1 ? .networkConnectionLost : nil)
         }
         let (manager, item, root, host) = try setup(scenario)
         defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
-        try await manager.fetch(item)
+        try await manager.fetch(item) { progress in
+            // Reproduce a busy runner delaying response acceptance past the old stub timer.
+            if progress.receivedBytes == 0 { Thread.sleep(forTimeInterval: responseDelay) }
+        }
         #expect(try Data(contentsOf: item.destination) == body)
-        #expect(scenario.receivedRequests.last?.value(forHTTPHeaderField: "Range") == "bytes=123-")
+        let requests = scenario.receivedRequests
+        #expect(requests.count == 2)
+        #expect(requests.first?.value(forHTTPHeaderField: "Range") == nil)
+        #expect(requests.last?.value(forHTTPHeaderField: "Range") == "bytes=123-")
+        #expect(requests.last?.value(forHTTPHeaderField: "If-Range") == "\"v1\"")
+        #expect(!FileManager.default.fileExists(atPath: DownloadManager.partialFiles(item).data.path))
     }
     @Test func invalidRangeDiscardsPartialAndRetriesFromStart() async throws {
         let body = body
