@@ -261,4 +261,58 @@ import Testing
         #expect(try MinecraftFolderStore.add(name: "Games again", url: root, paths: paths).instances.count == 2)
     }
 
+    @Test func loggingWithoutFileIDSupportsLaunchAndDependencyChecks() async throws {
+        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
+        let parent = try version("1.21.1", root: root, extra: ["logging": ["client": [
+            "argument": "-Dlog4j.configurationFile=${path}",
+            "file": ["url": "https://fixture.invalid/objects/hash/client-1.12.xml", "sha1": "hash", "size": 888]
+        ]]])
+        try Data("fixture jar".utf8).write(to: parent.appendingPathComponent("1.21.1.jar"))
+        _ = try version("Fabric", root: root, extra: ["inheritsFrom": "1.21.1"])
+        let source = try Data(contentsOf: parent.appendingPathComponent("1.21.1.json"))
+        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
+        let instance = try #require(state.instances.first { $0.repositoryVersionID == "1.21.1" })
+        let current = paths.configured(with: state)
+        let manifest = try await GameInstaller(paths: current).loadManifest(instance)
+        let java = JavaRuntime(path: "/fixture/java", version: "21", major: 21,
+                               architecture: GameInstaller.architecture(for: manifest), vendor: "Fixture")
+        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java,
+                                          account: Account(username: "Player"), paths: current)
+        #expect(plan.arguments.contains("-Dlog4j.configurationFile=\(root.appendingPathComponent("assets/log_configs/client-1.12.xml").path)"))
+        #expect(manifest.logging?.client?.file.sha1 == "hash")
+        #expect(manifest.logging?.client?.file.size == 888)
+        // Deletion must reach the dependency check, not fail decoding a
+        // different version's inherited logging configuration.
+        do {
+            _ = try MinecraftFolderStore.trashVersion(instance.id, paths: paths)
+            Issue.record("Expected dependent version to prevent deletion")
+        } catch {
+            #expect(error is RuriError)
+            #expect(error.localizedDescription.contains("Fabric"))
+        }
+        #expect(try Data(contentsOf: parent.appendingPathComponent("1.21.1.json")) == source)
+    }
+
+    @Test func deletesIndependentVersionWhenOtherVersionsOmitLoggingFileID() throws {
+        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
+        let extra: [String: Any] = ["logging": ["client": ["argument": "-Dlog4j.configurationFile=${path}",
+                                                          "file": ["url": "https://fixture.invalid/client.xml"]]]]
+        let target = try version("Snapshot", root: root, extra: extra)
+        let other = try version("1.21.1", root: root, extra: extra)
+        let shared = root.appendingPathComponent("options.txt")
+        try Data("shared game data".utf8).write(to: shared)
+        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
+        let instance = try #require(state.instances.first { $0.repositoryVersionID == "Snapshot" })
+        let trash = base.appendingPathComponent("Trash")
+        let remaining = try MinecraftFolderStore.trashVersion(instance.id, paths: paths) { folder in
+            #expect(folder.path == target.path)
+            try FileManager.default.moveItem(at: folder, to: trash)
+        }
+        #expect(!remaining.instances.contains { $0.id == instance.id })
+        #expect(FileManager.default.fileExists(atPath: trash.appendingPathComponent("Snapshot.json").path))
+        #expect(FileManager.default.fileExists(atPath: other.appendingPathComponent("1.21.1.json").path))
+        #expect(try String(contentsOf: shared, encoding: .utf8) == "shared game data")
+        #expect(try StateStore.load(paths).instances == remaining.instances)
+    }
+
 }

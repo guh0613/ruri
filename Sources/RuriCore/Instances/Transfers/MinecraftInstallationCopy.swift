@@ -132,7 +132,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
         if let logging = manifest.logging?.client {
             let url = try LauncherPaths.safePath("log_configs/" + logging.file.id, within: source.assets)
             let file = try add(url, as: "assets/log_configs/" + logging.file.id)
-            manifest.logging = .init(client: .init(argument: logging.argument, file: .init(id: logging.file.id, url: logging.file.url, sha1: file.sha1, size: file.size)))
+            manifest.logging = .init(client: .init(argument: logging.argument, file: .init(id: logging.file.id, url: logging.file.url, sha1: file.sha1, size: file.size), type: logging.type))
         }
         for (index, document) in documents.enumerated() {
             if let data = document.data { originals["source-manifests/\(index).json"] = data; _ = try inspect(document.url) }
@@ -159,7 +159,7 @@ struct MinecraftInstallationCopy: Equatable, Sendable {
             manifest.arguments = arguments
         }
         if let legacy = manifest.minecraftArguments { manifest.minecraftArguments = try ArgumentTokenizer.join(ArgumentTokenizer.split(legacy).map(rewrite)) }
-        if let logging = manifest.logging?.client { manifest.logging = .init(client: .init(argument: rewrite(logging.argument), file: logging.file)) }
+        if let logging = manifest.logging?.client { manifest.logging = .init(client: .init(argument: rewrite(logging.argument), file: logging.file, type: logging.type)) }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
         var document = try JSONSerialization.jsonObject(with: encoder.encode(manifest)) as! [String: Any]
         document["clientVersion"] = instance.gameVersion

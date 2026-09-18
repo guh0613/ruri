@@ -138,8 +138,49 @@ public struct VersionManifest: Codable, Sendable {
     public struct JavaVersion: Codable, Sendable { public let majorVersion: Int; public let component: String? }
     public struct AssetIndex: Codable, Sendable { public let id: String; public let url: URL; public let sha1: String?; public let size: Int64? }
     public struct Logging: Codable, Sendable {
-        public struct Client: Codable, Sendable { public let argument: String; public let file: LogFile }
-        public struct LogFile: Codable, Sendable { public let id: String; public let url: URL; public let sha1: String?; public let size: Int64? }
+        public struct Client: Codable, Sendable {
+            public let argument: String
+            public let file: LogFile
+            public let type: String
+            init(argument: String, file: LogFile, type: String) {
+                self.argument = argument; self.file = file; self.type = type
+            }
+            private enum CodingKeys: String, CodingKey { case argument, file, type }
+            public init(from decoder: any Decoder) throws {
+                let c = try decoder.container(keyedBy: CodingKeys.self)
+                argument = try c.decode(String.self, forKey: .argument)
+                file = try c.decode(LogFile.self, forKey: .file)
+                // Older Ruri manifests dropped this field; HMCL requires it.
+                let declared = try c.decodeIfPresent(String.self, forKey: .type)
+                type = declared.flatMap { $0.isEmpty ? nil : $0 } ?? "log4j2-xml"
+            }
+        }
+        public struct LogFile: Codable, Sendable {
+            public let id: String
+            public let url: URL
+            public let sha1: String?
+            public let size: Int64?
+
+            init(id: String, url: URL, sha1: String?, size: Int64?) {
+                self.id = id; self.url = url; self.sha1 = sha1; self.size = size
+            }
+
+            private enum CodingKeys: String, CodingKey { case id, url, sha1, size }
+            public init(from decoder: any Decoder) throws {
+                let c = try decoder.container(keyedBy: CodingKeys.self)
+                url = try c.decode(URL.self, forKey: .url)
+                let declared = try c.decodeIfPresent(String.self, forKey: .id)
+                // Some launchers omit the log config ID when saving a version.
+                // Its download URL still names the file under assets/log_configs.
+                id = declared.flatMap { $0.isEmpty ? nil : $0 } ?? (url.hasDirectoryPath ? "" : url.lastPathComponent)
+                guard !id.isEmpty, id != ".", id != "..", !id.contains("/"), !id.contains("\\"),
+                      !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else {
+                    throw DecodingError.dataCorruptedError(forKey: .id, in: c, debugDescription: "Invalid logging file name")
+                }
+                sha1 = try c.decodeIfPresent(String.self, forKey: .sha1)
+                size = try c.decodeIfPresent(Int64.self, forKey: .size)
+            }
+        }
         public let client: Client?
     }
     public var id: String

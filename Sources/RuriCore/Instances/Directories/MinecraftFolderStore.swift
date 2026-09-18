@@ -122,6 +122,10 @@ public enum MinecraftFolderStore {
     /// Version deletion affects only that version folder. Shared libraries,
     /// assets and game data remain in place, including other profiles’ base jars.
     @discardableResult public static func trashVersion(_ id: UUID, paths: LauncherPaths) throws -> PersistentState {
+        try trashVersion(id, paths: paths) { try FileManager.default.trashItem(at: $0, resultingItemURL: nil) }
+    }
+
+    static func trashVersion(_ id: UUID, paths: LauncherPaths, moveToTrash: (URL) throws -> Void) throws -> PersistentState {
         try StateStore.update(paths) { state in
             guard let instance = state.instances.first(where: { $0.id == id }), let versionID = instance.repositoryVersionID else { throw RuriError.message(Messages.CoreMinecraftFolderStore.localVersionMissing) }
             let current = paths.configured(with: state)
@@ -138,7 +142,7 @@ public enum MinecraftFolderStore {
                         throw RuriError.message(Messages.CoreMinecraftFolderStore.dependencyExists(String(describing: other.id)))
                     }
                 }
-                try FileManager.default.trashItem(at: folder, resultingItemURL: nil)
+                try moveToTrash(folder)
             }
             // History remains recoverable under .ruri; removing the instance
             // never moves a shared or custom game root to the Trash.

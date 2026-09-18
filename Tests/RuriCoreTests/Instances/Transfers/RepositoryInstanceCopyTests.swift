@@ -23,6 +23,8 @@ import Testing
         let library: [String: Any] = ["name": "example:common:1", "downloads": ["artifact": ["path": "example/common/1/common-1.jar", "sha1": String(repeating: "0", count: 40), "url": "https://example.invalid/common.jar"]]]
         let parent: [String: Any] = ["id": "1.21.1", "mainClass": "net.minecraft.client.main.Main", "libraries": [library],
                                      "downloads": ["client": ["sha1": String(repeating: "0", count: 40)]],
+                                     "logging": ["client": ["argument": "-Dlog4j.configurationFile=${path}", "type": "fixture-log-format",
+                                                            "file": ["url": "https://example.invalid/client.xml"]]],
                                      "assetIndex": ["id": "test", "url": "https://example.invalid/index.json"]]
         let child: [String: Any] = ["id": "Original", "inheritsFrom": "1.21.1", "patches": [["id": "liteloader", "version": "fixture"]], "libraries": [["name": "example:local:1", "hint": "local", "filename": "custom.jar"]],
                                     "arguments": ["jvm": ["-Dlocal=" + repository.appendingPathComponent("versions/Original/libraries/custom.jar").path], "game": ["--username", "${auth_player_name}"]]]
@@ -32,6 +34,7 @@ import Testing
         try write(Data("locally modified common".utf8), "libraries/example/common/1/common-1.jar", at: repository)
         try write(Data("custom dependency".utf8), "versions/Original/libraries/custom.jar", at: repository)
         try write(Data("unrelated".utf8), "libraries/unrelated.jar", at: repository)
+        try write(Data("log configuration".utf8), "assets/log_configs/client.xml", at: repository)
         let asset = Data("changed asset".utf8), oldHash = String(repeating: "a", count: 40)
         try write(asset, "assets/objects/aa/" + oldHash, at: repository)
         try write(JSONSerialization.data(withJSONObject: ["objects": ["example/sound.ogg": ["hash": oldHash, "size": 1]]]), "assets/indexes/test.json", at: repository)
@@ -80,6 +83,11 @@ import Testing
         #expect(FileManager.default.fileExists(atPath: current.gameDataState(copy.id).appendingPathComponent("world-backups/fixture.zip").path))
         let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: current.manifest(copy.id)))
         #expect(manifest.inheritsFrom == nil && manifest.jar == "My Copy" && manifest.id == "My Copy")
+        let raw = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: current.manifest(copy.id))) as? [String: Any])
+        let logging = try #require((raw["logging"] as? [String: Any])?["client"] as? [String: Any])
+        #expect(logging["type"] as? String == "fixture-log-format")
+        #expect((logging["file"] as? [String: Any])?["id"] as? String == "client.xml")
+        #expect(try String(contentsOf: f.target.appendingPathComponent("assets/log_configs/client.xml"), encoding: .utf8) == "log configuration")
         let client = try current.clientJar("My Copy", instance: copy)
         #expect(try String(contentsOf: client, encoding: .utf8) == "locally modified client")
         #expect(manifest.downloads?["client"]?.sha1 == MinecraftInstallationCopy.sha1(Data("locally modified client".utf8)))

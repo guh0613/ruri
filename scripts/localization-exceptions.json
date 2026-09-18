@@ -395,6 +395,11 @@
     "reason": "Developer-facing DecodingError debugDescription, not a localized explanation."
   },
   {
+    "file": "Sources/RuriCore/Installation/Manifest.swift",
+    "literal": "\"Invalid logging file name\"",
+    "reason": "Developer-facing DecodingError debugDescription, not a localized explanation."
+  },
+  {
     "file": "Sources/RuriCore/Instances/Discovery/MinecraftVersionMetadata.swift",
     "literal": "\"Legacy Fabric\"",
     "reason": "Loader identity or version recognition syntax used by import/launch logic."
