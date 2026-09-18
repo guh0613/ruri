@@ -6,8 +6,13 @@
 set -euo pipefail
 cd "${0:A:h:h}"
 python3 scripts/localization.py --check >&2
-if [[ -z "${DEVELOPER_DIR:-}" && -d /Applications/Xcode-beta.app/Contents/Developer ]]; then
-  export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer
+if [[ -z "${DEVELOPER_DIR:-}" ]]; then
+  for xcode in /Applications/Xcode.app /Applications/Xcode-beta.app; do
+    if [[ -d "$xcode/Contents/Developer" ]]; then
+      export DEVELOPER_DIR="$xcode/Contents/Developer"
+      break
+    fi
+  done
 fi
 
 swift_command=build

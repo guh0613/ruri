@@ -20,14 +20,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runner: macos-26
+          - runner: xcode-27
             arch: arm64
+            developer_dir: /Applications/Xcode.app/Contents/Developer
           - runner: macos-26-intel
             arch: x86_64
+            developer_dir: /Applications/Xcode_26.6.app/Contents/Developer
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     env:
-      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+      DEVELOPER_DIR: ${{ matrix.developer_dir }}
       RURI_BUILD_DIR: .build/ci
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
