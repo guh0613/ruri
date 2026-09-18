@@ -3122,7 +3122,7 @@
 "appPreferencesView.modelText14" = "并行下载：%1$@";
 
 /* @symbol AppPreferencesView.automaticMirrorDetails @args - */
-"appPreferencesView.modelText15" = "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。";
+"appPreferencesView.modelText15" = "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。";
 
 /* @symbol AppPreferencesView.bmclapiMirror @args - */
 "appPreferencesView.modelText16" = "BMCLAPI 镜像服务";

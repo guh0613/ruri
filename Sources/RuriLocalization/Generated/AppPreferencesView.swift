@@ -87,11 +87,11 @@ extension Messages {
         public static func parallelDownloads(_ value0: String) -> LocalizedMessage {
             .init(key: "appPreferencesView.modelText14", table: "Interface", fallback: "并行下载：%1$@", arguments: [.text(value0)])
         }
-        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。
+        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。
         ///
         /// Resource: `Interface.appPreferencesView.modelText15`.
         public static var automaticMirrorDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。")
+            .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。")
         }
         /// BMCLAPI 镜像服务
         ///
@@ -258,7 +258,7 @@ extension Messages {
             "Interface:appPreferencesView.modelText12": .init("下载与网络", []),
             "Interface:appPreferencesView.modelText13": .init("下载源", []),
             "Interface:appPreferencesView.modelText14": .init("并行下载：%1$@", [.text]),
-            "Interface:appPreferencesView.modelText15": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像。", []),
+            "Interface:appPreferencesView.modelText15": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。", []),
             "Interface:appPreferencesView.modelText16": .init("BMCLAPI 镜像服务", []),
             "Interface:appPreferencesView.modelText17": .init("Microsoft 登录", []),
             "Interface:appPreferencesView.modelText18": .init("留空使用内置登录配置。", []),
