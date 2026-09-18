@@ -13,7 +13,6 @@ struct AccountAppearanceView: View {
     @Environment(\.colorScheme) private var colorScheme
     let account: Account
     var relogin: () -> Void = {}
-    @State private var client: AccountAppearanceClient?
     @State private var appearance: AccountAppearance?
     @State private var skin: PlayerTextureImage?
     @State private var cape: PlayerTextureImage?
@@ -50,22 +49,35 @@ struct AccountAppearanceView: View {
         .onAppear {
             model.loadAccountPreview(account)
             skin = model.accountSkins[account.id].flatMap { try? $0.image }
+            cape = model.accountCapes[account.id]
             if isOffline {
                 do { skin = try store.preview(for: account.id)?.image; cape = try store.cape(for: account.id) }
                 catch { self.error = error.localizedDescription }
+            } else if let cached = model.cachedAccountAppearance(account) {
+                appearance = cached; capeID = cached.activeCape?.id ?? ""
             }
             reloadLibrary()
             if !isOffline { load() }
         }
         .onDisappear { task?.cancel(); messageTask?.cancel() }
         .task(id: "\(revision)-\(capeID)") {
-            if isOffline { return }
-            cape = nil; capeError = nil
-            guard let selectedCape, let client else { return }
+            guard !isOffline, let appearance else { return }
+            capeError = nil
+            // Keep the current preview visible while refreshing the same cape.
+            if selectedCape?.active != true { cape = nil }
             do {
-                let image = try await client.image(for: selectedCape)
-                try image.validate(kind: .cape, accountKind: account.kind)
-                try Task.checkCancellation(); cape = image
+                guard let selectedCape else {
+                    cape = nil
+                    if appearance.activeCape == nil { try model.cacheAccountCape(nil, account: account) }
+                    return
+                }
+                try await model.accountOperations.withLock(for: account.id) {
+                    let client = AccountAppearanceClient(account: account, accessToken: "")
+                    let image = try await model.fetchAccountTexture(selectedCape, kind: .cape, account: account, using: client)
+                    try Task.checkCancellation()
+                    if selectedCape.active { try model.cacheAccountCape(image, account: account) }
+                    cape = image
+                }
             } catch { if !Task.isCancelled { capeError = error.localizedDescription } }
         }
         .sheet(item: $draft) { item in
@@ -116,7 +128,7 @@ struct AccountAppearanceView: View {
                         Label(appearance != nil ? Messages.AccountCenter.connected.localized : task != nil ? Messages.AccountCenter.connecting.localized : Messages.AccountCenter.unverified.localized,
                               systemImage: appearance != nil ? "checkmark.shield.fill" : "network")
                             .foregroundStyle(.secondary)
-                        Button { load() } label: { Image(systemName: "arrow.clockwise") }
+                        Button { load(forceRefresh: true) } label: { Image(systemName: "arrow.clockwise") }
                             .buttonStyle(.borderless)
                             .help(Messages.AppAccountAppearanceView.refresh.localized).accessibilityLabel(Messages.AppAccountAppearanceView.refresh.localized)
                             .disabled(locked)
@@ -342,34 +354,42 @@ struct AccountAppearanceView: View {
         guard let appearance else { return }
         try await model.withAppearanceClient(for: account) { client in
             try await client.upload(draft.image, kind: draft.kind, model: draft.model, expecting: appearance)
+            try model.invalidateAccountAppearance(account, uploaded: draft.kind == .skin ? appearance.skin : appearance.activeCape, kind: draft.kind)
             try Task.checkCancellation()
             error = nil; show(Messages.AppAccountAppearanceView.uploaded(draft.kind.title).localized)
-            do { try await fetch(client) }
+            do { try await fetch(client, forceRefresh: true) }
             catch { if !Task.isCancelled { self.error = Messages.AppAccountAppearanceView.refreshAppearanceError(error.localizedDescription).localized } }
         }
     }
-    private func load() {
+    private func load(forceRefresh: Bool = false) {
         guard task == nil, !model.readOnly else { return }
         error = nil
         task = Task {
             defer { task = nil }
-            do { try await model.withAppearanceClient(for: account) { try await fetch($0) } }
+            do {
+                if !forceRefresh {
+                    let usedCache = try await model.accountOperations.withLock(for: account.id) {
+                        // Recheck after any login prefetch finishes so both paths
+                        // share its profile and images without duplicate downloads.
+                        guard let cached = model.cachedAccountAppearance(account) else { return false }
+                        try await display(cached, using: AccountAppearanceClient(account: account, accessToken: ""))
+                        return true
+                    }
+                    if usedCache { return }
+                }
+                try await model.withAppearanceClient(for: account) { try await fetch($0, forceRefresh: forceRefresh) }
+            }
             catch { if !Task.isCancelled { self.error = error.localizedDescription } }
         }
     }
-    private func fetch(_ pendingClient: AccountAppearanceClient) async throws {
-        let loaded = try await pendingClient.load()
+    private func fetch(_ client: AccountAppearanceClient, forceRefresh: Bool = false) async throws {
+        let loaded = try await model.fetchAccountAppearance(account, using: client, forceRefresh: forceRefresh)
+        try await display(loaded, using: client)
+    }
+    private func display(_ loaded: AccountAppearance, using client: AccountAppearanceClient) async throws {
         try Task.checkCancellation()
-        client = pendingClient; appearance = loaded; capeID = loaded.activeCape?.id ?? ""; revision = UUID()
-        if let texture = loaded.skin {
-            let image = try await pendingClient.image(for: texture)
-            try image.validate(kind: .skin, accountKind: account.kind, model: texture.model)
-            try Task.checkCancellation()
-            try model.cacheAccountSkin(SavedPlayerSkin(name: String(loaded.playerName.prefix(80)), image: image, model: texture.model), account: account)
-            skin = image
-        } else {
-            try model.cacheAccountSkin(nil, account: account); skin = nil
-        }
+        appearance = loaded; capeID = loaded.activeCape?.id ?? ""; revision = UUID()
+        skin = try await model.fetchAccountSkin(loaded, using: client)
     }
     private func change(_ success: String, action: @escaping @MainActor (AccountAppearanceClient) async throws -> Void) {
         guard task == nil, !model.readOnly else { return }
@@ -379,8 +399,9 @@ struct AccountAppearanceView: View {
             do {
                 try await model.withAppearanceClient(for: account) { client in
                     try Task.checkCancellation(); try await action(client)
+                    try model.invalidateAccountAppearance(account)
                     try Task.checkCancellation(); show(success)
-                    do { try await fetch(client) }
+                    do { try await fetch(client, forceRefresh: true) }
                     catch { if !Task.isCancelled { self.error = Messages.AppAccountAppearanceView.refreshAppearanceError(error.localizedDescription).localized } }
                 }
             } catch { if !Task.isCancelled { self.error = error.localizedDescription } }

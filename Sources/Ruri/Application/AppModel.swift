@@ -71,6 +71,7 @@ import RuriCore
     var accountSkins: [UUID: SavedPlayerSkin] = [:]
     var accountCapes: [UUID: PlayerTextureImage] = [:]
     @ObservationIgnored let accountOperations = AccountOperationGate()
+    @ObservationIgnored let accountAppearanceCache: AccountAppearanceCache
     var loadedAccountPreviews: Set<UUID> = []
     var editingInstance: GameInstance?
     var contentPresentation: InstanceContentPresentation?
@@ -104,6 +105,7 @@ import RuriCore
     init() {
         let root = ProcessInfo.processInfo.environment["RURI_DATA_DIR"].map { URL(fileURLWithPath: $0) }
         basePaths = LauncherPaths(root: root)
+        accountAppearanceCache = AccountAppearanceCache(paths: basePaths)
         do {
             state = try StateStore.load(basePaths)
             persistedState = state
@@ -157,6 +159,12 @@ import RuriCore
         restoringGames = false
         startGameObservation()
         await applyNetworkSettings()
+        if !readOnly {
+            for account in state.accounts where account.kind != .offline {
+                loadAccountPreview(account)
+                refreshAccountPreview(account, forceRefresh: false)
+            }
+        }
         async let versions: () = refreshCatalog()
         async let java: () = scanJava()
         _ = await (versions, java)

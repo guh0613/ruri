@@ -122,7 +122,8 @@ struct AddAccountView: View {
                 if let existing { account = try existing.reauthenticated(with: account) }
                 let key = existing?.id ?? model.state.accounts.first(where: { $0.hasSameIdentity(as: account) })?.id ?? account.id
                 try await model.accountOperations.withLock(for: key) {
-                    try model.addMicrosoft(account, credentials: credentials, activate: existing == nil, requireExisting: existing != nil)
+                    let saved = try model.addMicrosoft(account, credentials: credentials, activate: existing == nil, requireExisting: existing != nil)
+                    model.refreshAccountPreview(saved)
                 }
                 dismiss()
             } catch { if !Task.isCancelled { self.error = error.localizedDescription; code = nil } }
