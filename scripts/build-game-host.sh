@@ -60,8 +60,10 @@ if [[ "${RURI_SIGN_IDENTITY:--}" != "-" ]]; then
   # to this executable's runtime permissions, not to the launcher or monitor.
   sign_options=(--options runtime --entitlements Resources/GameHost.entitlements)
 fi
-codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app/Contents/Frameworks/libRuriGameSupport.dylib"
-codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_options[@]}" "$app"
+sign_keychain=()
+if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Frameworks/libRuriGameSupport.dylib"
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "${sign_options[@]}" "$app"
 codesign --verify --deep --strict "$app"
 if [[ -e "$destination" ]]; then mv "$destination" "$stage_dir/previous.app"; fi
 if ! mv "$app" "$destination"; then

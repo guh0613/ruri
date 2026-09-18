@@ -1,6 +1,9 @@
 #!/bin/zsh
 set -euo pipefail
 cd "${0:A:h:h}"
+if [[ "${RURI_SIGNING_ACTIVE:-}" != 1 ]]; then
+  exec python3 scripts/signing.py run -- /bin/zsh scripts/build-app.sh "$@"
+fi
 if [[ -z "${DEVELOPER_DIR:-}" ]]; then
   for xcode in /Applications/Xcode.app /Applications/Xcode-beta.app; do
     if [[ -d "$xcode/Contents/Developer" ]]; then
@@ -26,7 +29,9 @@ scripts/swift-build.sh -c "$configuration" --product ruri-monitor
 binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
 cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
-codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app/Contents/Helpers/ruri-monitor"
+sign_keychain=()
+if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-monitor"
 for bundle in "$binary_dir/"*.bundle(N); do
   ditto "$bundle" "$app/Contents/Resources/${bundle:t}"
 done
@@ -46,8 +51,9 @@ info.update(plistlib.loads(generated.read_bytes()))
 target.write_bytes(plistlib.dumps(info))
 PY
 zsh scripts/build-game-host.sh "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist"
-codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "$app"
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app"
 codesign --verify --deep --strict "$app"
+python3 scripts/signing.py verify "$app"
 python3 scripts/check-localization-bundle.py "$app"
 destination="$(pwd)/build/Ruri.app"
 if [[ -e "$destination" ]]; then
