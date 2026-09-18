@@ -1,0 +1,26 @@
+/* @symbol ContentImport.emptyHint @args - */
+"contentImport.emptyHint" = "从 Finder 拖入资源，或使用上方的“导入…”。";
+
+/* @symbol ContentImport.modFormats @args - */
+"contentImport.modFormats" = "JAR 或 LITEMOD 文件";
+
+/* @symbol ContentImport.resourcePackFormats @args - */
+"contentImport.resourcePackFormats" = "资源包 ZIP 或文件夹";
+
+/* @symbol ContentImport.shaderFormats @args - */
+"contentImport.shaderFormats" = "光影 ZIP 或文件夹";
+
+/* @symbol ContentImport.dropTitle @args integer,text */
+"contentImport.dropTitle" = "松开以导入 %1$lld 项%2$@";
+
+/* @symbol ContentImport.copyHint @args - */
+"contentImport.copyHint" = "文件将复制到当前实例";
+
+/* @symbol ContentImport.unavailable @args - */
+"contentImport.unavailable" = "当前暂不能导入资源";
+
+/* @symbol ContentImport.invalidDrop @args - */
+"contentImport.invalidDrop" = "未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。";
+
+/* @symbol ContentImport.importing @args text */
+"contentImport.importing" = "导入%1$@";

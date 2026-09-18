@@ -15,6 +15,7 @@ struct InstanceContentPresentation: Identifiable {
 struct InstanceContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let instance: GameInstance
     @State private var kind: ContentKind
     init(instance: GameInstance, kind: ContentKind = .mod) { self.instance = instance; _kind = State(initialValue: kind) }
@@ -40,13 +41,16 @@ struct InstanceContentView: View {
     @State private var updatesChecked = false
     @State private var checkedFileIDs = Set<String>()
     @State private var showImporter = false
+    @State private var dropItemCount: Int?
+    @State private var importedFilenames: Set<String>?
+    @State private var listLoaded = false
     @State private var deleteTarget: LocalContentFile?
     @State private var versionTarget: LocalContentFile?
     @State private var detailTarget: LocalContentFile?
     @State private var updateGeneration = UUID()
     @State private var identificationNotice: String?
     private var manager: ContentManager { ContentManager(paths: model.paths, instanceID: instance.id) }
-    private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
+    private var canModify: Bool { !model.busy && !model.readOnly && !model.isInstanceInUse(instance.id) }
     private var selectedFiles: [LocalContentFile] { selection.compactMap { filePositions[$0].map { files[$0] } } }
     private var actionFiles: [LocalContentFile] { selection.isEmpty ? filtered : selectedFiles }
     private var updateCandidates: [LocalContentFile] { actionFiles.filter { !$0.isDirectory } }
@@ -72,17 +76,15 @@ struct InstanceContentView: View {
                     Text(identificationNotice).font(.caption).foregroundStyle(.secondary)
                         .padding(.horizontal, 20).padding(.vertical, 6)
                 }
-                if loading || (filtered.isEmpty && metadataTask != nil) { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-                else if filtered.isEmpty {
-                    EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? Messages.AppInstanceContentView.contentNotInstalled(kind.title).localized : Messages.AppInstanceContentView.noMatchingContent.localized, detail: Messages.AppInstanceContentView.importOrDiscoverContent.localized)
-                        .frame(maxHeight: .infinity)
-                } else { contentTable }
+                contentList
             }
         } footer: {
             footer
         }
         .task(id: kind) {
             files = []; filtered = []; filePositions = [:]; enabledCount = 0; gameFormat = nil
+            listLoaded = false
+            dropItemCount = nil; importedFilenames = nil
             selection.removeAll(); cancelUpdateCheck(); identificationNotice = nil; updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false
             await reload()
             if kind == .resourcepack {
@@ -92,6 +94,7 @@ struct InstanceContentView: View {
         }
         .onChange(of: search) { refilter() }
         .onChange(of: statusFilter) { refilter() }
+        .onChange(of: canModify) { if !canModify { dropItemCount = nil } }
         .onChange(of: model.busy) {
             if model.busy { cancelMetadataLoading(); loading = false }
             else { Task { await reload() } }
@@ -114,15 +117,12 @@ struct InstanceContentView: View {
                 }
             }
         }
-        .onDisappear { cancelUpdateCheck(); cancelMetadataLoading() }
+        .onDisappear { dropItemCount = nil; cancelUpdateCheck(); cancelMetadataLoading() }
+        .interactiveDismissDisabled(model.busy)
         .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data } + (kind == .mod ? [] : [.folder]), allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
-                mutate(Messages.AppInstanceContentView.importContentCount(Int64(urls.count), kind.title).localized) {
-                    let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }
-                    defer { for url in scoped { url.stopAccessingSecurityScopedResource() } }
-                    try await manager.importFiles(urls, kind: kind)
-                }
+                importFiles { urls }
             } catch { self.error = error.localizedDescription }
         }
         .confirmationDialog(Messages.AppInstanceContentView.moveContentToTrashConfirmation.localized, isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
@@ -136,7 +136,8 @@ struct InstanceContentView: View {
                     ForEach(ContentKind.allCases) { Text($0.title).tag($0) }
                 }.pickerStyle(.segmented).labelsHidden().fixedSize(horizontal: true, vertical: false).disabled(model.busy)
                 Spacer(minLength: 12)
-                Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
+                Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }
+                    .disabled(!canModify).help(Messages.ContentImport.emptyHint.localized)
                 Button(Messages.ContentDetails.download.localized, systemImage: "safari") {
                     model.discovery.switchCollection(type: kind.rawValue)
                     model.discovery.change { query in
@@ -168,6 +169,44 @@ struct InstanceContentView: View {
                 Button(Messages.ContentDetails.refresh.localized, systemImage: "arrow.clockwise") { Task { await reload() } }
                     .labelStyle(.iconOnly).help(Messages.ContentDetails.refresh.localized)
                     .disabled(loading || model.busy || updateTask != nil)
+            }
+        }
+    }
+
+    private var importFormats: String {
+        switch kind {
+        case .mod: Messages.ContentImport.modFormats.localized
+        case .resourcepack: Messages.ContentImport.resourcePackFormats.localized
+        case .shader: Messages.ContentImport.shaderFormats.localized
+        }
+    }
+    private var importUnavailable: Bool { model.readOnly || model.isInstanceInUse(instance.id) }
+    private var contentList: some View {
+        Group {
+            if loading || (filtered.isEmpty && metadataTask != nil) { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+            else if filtered.isEmpty {
+                EmptyPanel(symbol: "square.and.arrow.down", title: files.isEmpty ? Messages.AppInstanceContentView.contentNotInstalled(kind.title).localized : Messages.AppInstanceContentView.noMatchingContent.localized,
+                           detail: importUnavailable ? Messages.ContentImport.unavailable.localized : Messages.ContentImport.emptyHint.localized)
+                    .frame(maxHeight: .infinity)
+            } else { contentTable }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
+        .onDrop(of: [.fileURL], delegate: ContentImportDropDelegate(isEnabled: canModify, itemCount: $dropItemCount) { providers in
+            importFiles { try await ContentImportDropDelegate.fileURLs(from: providers) }
+        })
+        .overlay {
+            if let count = dropItemCount, canModify {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10).fill(Color.accentColor.opacity(0.08))
+                    RoundedRectangle(cornerRadius: 10).strokeBorder(Color.accentColor, lineWidth: 2)
+                    VStack(spacing: 8) {
+                        Image(systemName: "square.and.arrow.down").font(.system(size: 28)).foregroundStyle(Color.accentColor)
+                        Text(Messages.ContentImport.dropTitle(Int64(count), kind.title).localized).font(.headline)
+                        Text(importFormats).font(.callout).foregroundStyle(.secondary)
+                        Text(Messages.ContentImport.copyHint.localized).font(.caption).foregroundStyle(.secondary)
+                    }.padding(24).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+                }.padding(6).allowsHitTesting(false)
             }
         }
     }
@@ -286,48 +325,57 @@ struct InstanceContentView: View {
             }.labelStyle(.titleAndIcon).fixedSize(horizontal: true, vertical: false)
             Spacer(minLength: 24)
             Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                .buttonStyle(.borderedProminent).controlSize(.regular)
+                .buttonStyle(.borderedProminent).controlSize(.regular).disabled(model.busy)
         }.controlSize(.small).frame(minHeight: 28)
     }
 
-    @ViewBuilder private var updateActions: some View {
-        if model.busy {
-            ProgressView().controlSize(.small)
-            Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
-        } else if updateTask != nil {
-            ProgressView().controlSize(.small).help(Messages.ContentDetails.identifyingUpdates.localized)
-            if let updateProgress, updateProgress.total > 0 {
-                Text("\(updateProgress.completed)/\(updateProgress.total)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
-                    .frame(width: 60, alignment: .trailing).lineLimit(1).minimumScaleFactor(0.8)
-                    .accessibilityLabel(Messages.ContentDetails.updateProgress(Int64(updateProgress.completed), Int64(updateProgress.total)).localized)
-            }
-            Button(Messages.Common.cancel.localized) { cancelUpdateCheck() }
-        } else {
-            Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }
-                .disabled(updateCandidates.isEmpty || loading)
-                .help(updateCandidates.isEmpty && !actionFiles.isEmpty ? Messages.ContentDetails.folderOnlineInfo.localized : Messages.AppInstanceContentView.checkForUpdates.localized)
-            if hasUpdates(updateCandidates) {
-                Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepareBatch(updateCandidates) }
-                    .disabled(!canModify || loading)
-            } else if updatesChecked && checkedFileIDs == Set(updateCandidates.map(\.id)) {
-                Label(Messages.ContentDetails.noIdentifiedUpdates.localized, systemImage: "checkmark.circle")
-                    .labelStyle(.iconOnly).foregroundStyle(.secondary).help(Messages.ContentDetails.noIdentifiedUpdates.localized)
+    private var updateActions: some View {
+        HStack(spacing: 8) {
+            if model.busy {
+                ProgressView().controlSize(.small)
+                Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
+            } else if updateTask != nil {
+                ProgressView().controlSize(.small).help(Messages.ContentDetails.identifyingUpdates.localized)
+                if let updateProgress, updateProgress.total > 0 {
+                    Text("\(updateProgress.completed)/\(updateProgress.total)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                        .frame(width: 60, alignment: .trailing).lineLimit(1).minimumScaleFactor(0.8)
+                        .accessibilityLabel(Messages.ContentDetails.updateProgress(Int64(updateProgress.completed), Int64(updateProgress.total)).localized)
+                }
+                Button(Messages.Common.cancel.localized) { cancelUpdateCheck() }
+            } else {
+                Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }
+                    .disabled(updateCandidates.isEmpty || loading)
+                    .help(updateCandidates.isEmpty && !actionFiles.isEmpty ? Messages.ContentDetails.folderOnlineInfo.localized : Messages.AppInstanceContentView.checkForUpdates.localized)
+                if hasUpdates(updateCandidates) {
+                    Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepareBatch(updateCandidates) }
+                        .disabled(!canModify || loading)
+                } else if updatesChecked && checkedFileIDs == Set(updateCandidates.map(\.id)) {
+                    Label(Messages.ContentDetails.noIdentifiedUpdates.localized, systemImage: "checkmark.circle")
+                        .labelStyle(.iconOnly).foregroundStyle(.secondary).help(Messages.ContentDetails.noIdentifiedUpdates.localized)
+                }
             }
         }
+        .animation(reduceMotion ? nil : .default, value: model.busy)
+        .animation(reduceMotion ? nil : .default, value: updateTask != nil)
     }
 
     private func reload() async {
         cancelMetadataLoading()
         let generation = loadGeneration, requestedKind = kind
-        loading = files.isEmpty
+        loading = !listLoaded
         defer { if loadGeneration == generation { loading = false } }
         do {
             let items = try await manager.scan(requestedKind, cachedOnly: true)
             try Task.checkCancellation()
             guard loadGeneration == generation, kind == requestedKind else { return }
+            listLoaded = true
             files = items
             filePositions = Dictionary(uniqueKeysWithValues: items.enumerated().map { ($0.element.id, $0.offset) })
             enabledCount = items.lazy.filter(\.enabled).count
+            if let importedFilenames {
+                selection = Set(items.filter { importedFilenames.contains($0.filename) }.map(\.id))
+                self.importedFilenames = nil
+            }
             refilter()
             let versions = Dictionary(items.compactMap(\.managed).map { ($0.id, $0.versionID) }, uniquingKeysWith: { first, _ in first })
             updates = updates.filter { versions[$0.key] == $0.value.installed.versionID }
@@ -375,6 +423,22 @@ struct InstanceContentView: View {
             // Fast operations can start and finish between SwiftUI updates.
             do { try await action(); await reload() }
             catch { self.error = error.localizedDescription; throw error }
+        }
+    }
+    private func importFiles(_ loadURLs: @escaping @MainActor @Sendable () async throws -> [URL]) {
+        let destinationKind = kind
+        mutate(Messages.ContentImport.importing(destinationKind.title).localized) {
+            let input = try await loadURLs()
+            try Task.checkCancellation()
+            guard !input.isEmpty, input.allSatisfy(\.isFileURL) else { throw RuriError.message(Messages.ContentImport.invalidDrop) }
+            var seen = Set<URL>()
+            let urls = input.filter { seen.insert($0.standardizedFileURL).inserted }
+            let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }
+            defer { for url in scoped { url.stopAccessingSecurityScopedResource() } }
+            try await manager.importFiles(urls, kind: destinationKind)
+            guard kind == destinationKind else { return }
+            search = ""; statusFilter = .all
+            importedFilenames = Set(urls.map(\.lastPathComponent))
         }
     }
     private func setSelectedEnabled(_ enabled: Bool) {

@@ -86,6 +86,7 @@ enum MessageCatalog {
         result.merge(Messages.CLISchematicCommands.definitions) { first, _ in first }
         result.merge(Messages.Common.definitions) { first, _ in first }
         result.merge(Messages.ContentDetails.definitions) { first, _ in first }
+        result.merge(Messages.ContentImport.definitions) { first, _ in first }
         result.merge(Messages.CoreAccount.definitions) { first, _ in first }
         result.merge(Messages.CoreAccountAppearance.definitions) { first, _ in first }
         result.merge(Messages.CoreArchive.definitions) { first, _ in first }

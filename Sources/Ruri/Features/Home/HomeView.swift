@@ -3,9 +3,8 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-/// The landing page: the instance to play next, what is running or
-/// installing right now, the other instances played recently, and shortcuts
-/// to the things a new player does first.
+/// The landing page: the instance to play next, running games, play history,
+/// and shortcuts to the things a new player does first.
 struct HomeView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
@@ -26,7 +25,6 @@ struct HomeView: View {
                         featuredSection(featured)
                     }
                     if !running.isEmpty { runningSection }
-                    if let task = model.activeActivity { activitySection(task) }
                     HomeActivityCard()
                     if !recent.isEmpty { recentSection }
                     quickActions(columns: geometry.size.width >= 1000 ? 4 : geometry.size.width >= 620 ? 2 : 1)
@@ -139,7 +137,7 @@ struct HomeView: View {
         }
     }
 
-    // MARK: Running and active work
+    // MARK: Running games
 
     private var runningSection: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -161,19 +159,6 @@ struct HomeView: View {
                         }.padding(.horizontal, 16).padding(.vertical, 12)
                         if record.id != running.last?.id { Divider().padding(.leading, 70) }
                     }
-                }
-            }
-        }
-    }
-
-    private func activitySection(_ task: LauncherLogEntry) -> some View {
-        VStack(alignment: .leading, spacing: 14) {
-            SectionTitle(Messages.AppHomeView.inProgress.localized) { seeAll(Messages.AppHomeView.allTasks.localized) { model.page = .activity } }
-            Surface {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack { Text(task.title).font(.headline).lineLimit(1); Spacer(); Button(Messages.Common.cancel.localized) { model.operation?.cancel() }.controlSize(.small) }
-                    if task.progress.total > 0 { ProgressView(value: task.progress.fraction) } else { ProgressView().controlSize(.small) }
-                    HStack { Text(task.progress.stage).lineLimit(1); Spacer(); if task.progress.total > 0 { Text("\(task.progress.completed) / \(task.progress.total)").monospacedDigit() } }.font(.caption).foregroundStyle(.secondary)
                 }
             }
         }
