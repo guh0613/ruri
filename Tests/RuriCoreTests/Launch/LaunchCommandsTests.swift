@@ -50,8 +50,14 @@ struct LaunchCommandsTests {
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "touch game-ran"], directory: game, environment: ["PATH": "/bin:/usr/bin"], commands: commands)
         try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: TestPaths.monitorExecutable)
         let childFile = game.appendingPathComponent("child.pid")
-        try await waitFor { FileManager.default.fileExists(atPath: childFile.path) }
-        let pid = try #require(Int32(String(contentsOf: childFile, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)))
+        var childPID: Int32?
+        try await waitFor {
+            // Redirection creates the file before printf writes its PID.
+            guard let contents = try? String(contentsOf: childFile, encoding: .utf8), contents.hasSuffix("\n") else { return false }
+            childPID = Int32(contents.trimmingCharacters(in: .whitespacesAndNewlines))
+            return childPID != nil
+        }
+        let pid = try #require(childPID)
         // Other main-actor tests may delay this read until the independent
         // monitor has already timed out and reaped the fixture child.
         let child = ProcessIdentity.read(pid)
