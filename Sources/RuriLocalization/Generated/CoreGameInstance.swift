@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreGameInstance {
-        /// 本地版本
+        /// 原版
         ///
         /// Resource: `Core.coreGameInstance.componentsText1`.
-        public static var localVersion: LocalizedMessage {
-            .init(key: "coreGameInstance.componentsText1", table: "Core", fallback: "本地版本")
+        public static var vanilla: LocalizedMessage {
+            .init(key: "coreGameInstance.componentsText1", table: "Core", fallback: "原版")
         }
         /// 指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。
         ///
@@ -28,7 +28,7 @@ extension Messages {
             .init(key: "coreGameInstance.selectedText3", table: "Errors", fallback: "整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreGameInstance.componentsText1": .init("本地版本", []),
+            "Core:coreGameInstance.componentsText1": .init("原版", []),
             "Errors:coreGameInstance.selectedText1": .init("指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", [.text, .text]),
             "Errors:coreGameInstance.selectedText2": .init("指定的 Java %1$@ 不在此整合包支持的版本中。", [.text]),
             "Errors:coreGameInstance.selectedText3": .init("整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", [.text]),

@@ -415,8 +415,8 @@
 /* @symbol CoreMinecraftVersionMetadata.unknownLaunchEntry @args text */
 "coreMinecraftVersionMetadata.mainText1" = "此版本使用尚未识别的启动入口：%1$@";
 
-/* @symbol CoreGameInstance.localVersion @args - */
-"coreGameInstance.componentsText1" = "本地版本";
+/* @symbol CoreGameInstance.vanilla @args - */
+"coreGameInstance.componentsText1" = "原版";
 
 /* @symbol CoreInstanceCopier.copyCompletedWithTemporaryFiles @args - */
 "coreInstanceCopier.remainderText1" = "实例已复制，部分临时文件保留，可在 Finder 中查看。";

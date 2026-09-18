@@ -21,7 +21,7 @@ struct InstanceMetadata: View {
         self.compact = compact
         if let declared = instance.repositoryComponents ?? instance.importedInstallation?.components {
             components = declared.isEmpty
-                ? [.init(id: "local", text: Messages.CoreGameInstance.localVersion.localized, loader: nil)]
+                ? [.init(id: LoaderKind.vanilla.rawValue, text: Messages.CoreGameInstance.vanilla.localized, loader: LoaderKind.vanilla.modrinthLoader)]
                 : declared.map { component in
                     let kind = LoaderKind.allCases.first { $0.title.caseInsensitiveCompare(component.name) == .orderedSame }
                     return Component(id: component.id, text: component.name + " " + component.version, loader: kind?.modrinthLoader)

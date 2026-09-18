@@ -69,32 +69,15 @@ struct HomeView: View {
             SectionTitle(Messages.AppHomeView.continuePlaying.localized) { seeAll(Messages.AppHomeView.allInstances.localized) { model.page = .library } }
             Surface(padding: 0) {
                 VStack(alignment: .leading, spacing: 0) {
-                    ViewThatFits(in: .horizontal) {
-                        HStack(spacing: 28) {
-                            featuredIdentity(instance)
-                            Spacer(minLength: 24)
-                            LaunchButton(instance: instance, size: .large)
-                        }
-                        VStack(alignment: .leading, spacing: 18) {
-                            featuredIdentity(instance)
-                            LaunchButton(instance: instance, size: .large)
-                        }
+                    HomeFeaturedHeaderLayout {
+                        featuredIdentity(instance)
+                        LaunchButton(instance: instance, size: .large)
+                        featuredActions(instance)
                     }
-                    .padding(28)
+                    .padding(.horizontal, 24).padding(.vertical, 22)
                     Divider()
-                    ViewThatFits(in: .horizontal) {
-                        HStack(spacing: 28) {
-                            featuredStats(instance)
-                                .fixedSize(horizontal: true, vertical: false)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            featuredActions(instance)
-                        }
-                        VStack(alignment: .leading, spacing: 16) {
-                            featuredStats(instance)
-                            featuredActions(instance)
-                        }
-                    }
-                    .padding(.horizontal, 28).padding(.vertical, 18)
+                    featuredStats(instance)
+                        .padding(.horizontal, 24).padding(.vertical, 18)
                     if model.activeAccount == nil {
                         Divider()
                         HStack {
@@ -110,19 +93,21 @@ struct HomeView: View {
     }
 
     private func featuredIdentity(_ instance: GameInstance) -> some View {
-        HStack(spacing: 24) {
+        HStack(alignment: .top, spacing: 20) {
             Button { model.editingInstance = instance } label: {
-                InstanceIcon(instance, size: 104)
+                InstanceIcon(instance, size: 80)
             }.buttonStyle(.plain).help(Messages.AppHomeView.editInstance.localized)
                 .accessibilityLabel(Messages.AppLibraryView.editIconAndSettings(instance.name).localized)
             VStack(alignment: .leading, spacing: 10) {
-                Text(instance.name).font(.system(size: 28, weight: .semibold)).fixedSize(horizontal: false, vertical: true)
+                Text(instance.name).font(.system(size: 24, weight: .semibold)).fixedSize(horizontal: false, vertical: true)
                 InstanceMetadata(instance: instance)
                 InstanceStatus(instance: instance)
                 if let issue = instance.repositoryIssue {
                     Text(issue).font(.caption).foregroundStyle(.secondary).lineLimit(2).help(issue)
                 }
-            }.fixedSize(horizontal: false, vertical: true)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -134,10 +119,18 @@ struct HomeView: View {
     }
 
     private func featuredStats(_ instance: GameInstance) -> some View {
-        HStack(alignment: .top, spacing: 24) {
+        HStack(alignment: .top, spacing: 20) {
             StatTile(label: Messages.AppHomeView.playTime.localized, value: instance.playTimeLabel)
+                .frame(minWidth: 80, maxWidth: .infinity)
+                .accessibilityElement(children: .combine)
+            Divider().frame(height: 32)
             StatTile(label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized)
+                .frame(minWidth: 80, maxWidth: .infinity)
+                .accessibilityElement(children: .combine)
+            Divider().frame(height: 32)
             StatTile(label: Messages.AppHomeView.memory.localized, value: model.memoryLabel(instance))
+                .frame(minWidth: 80, maxWidth: .infinity)
+                .accessibilityElement(children: .combine)
         }
     }
 

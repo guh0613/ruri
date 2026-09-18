@@ -68,7 +68,7 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var subtitle: String {
         if let details = repositoryComponents ?? importedInstallation?.components {
             let components = details.map { $0.name + " " + $0.version }
-            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? [Messages.CoreGameInstance.localVersion.localized] : components)).joined(separator: " · ")
+            return (["Minecraft \(gameVersion)"] + (components.isEmpty ? [Messages.CoreGameInstance.vanilla.localized] : components)).joined(separator: " · ")
         }
         return loader == .vanilla ? "Minecraft \(gameVersion)" : "\(gameVersion) · \(loader.title) \(loaderVersion ?? "")"
     }
