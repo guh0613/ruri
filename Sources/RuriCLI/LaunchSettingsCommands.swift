@@ -94,13 +94,14 @@ extension CLI {
         }
         let state = try StateStore.load(paths)
         let overrides: InstanceLaunchOverrides
+        var workload: MemoryWorkload?
         if let id {
             guard let instance = state.instances.first(where: { $0.id == id }) else { throw RuriError.message(Messages.CLILaunchSettingsCommands.instanceMissing) }
-            overrides = instance.effectiveLaunchOverrides
+            overrides = instance.effectiveLaunchOverrides; workload = MemoryWorkload.scan(paths: paths, instance: instance)
         } else { overrides = .init(fixing: state.settings.defaultLaunchSettings) }
         let values = overrides.resolve(defaults: state.settings.defaultLaunchSettings)
         var memory: LaunchMemory?, memoryIssue: String?
-        do { memory = try values.memoryPreview() } catch { memoryIssue = error.localizedDescription }
+        do { memory = try values.memoryPreview(workload: workload) } catch { memoryIssue = error.localizedDescription }
         struct Report: Encodable { let scope: String; let values: LaunchSettingsValues; let inherited: [String]; let memoryPreview: LaunchMemory?; let memoryIssue: String? }
         let report = Report(scope: scope, values: values, inherited: LaunchSettingKey.allCases.filter { overrides.inherits($0) }.map(\.rawValue), memoryPreview: memory, memoryIssue: memoryIssue)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]

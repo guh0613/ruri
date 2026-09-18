@@ -21,6 +21,7 @@ struct InstanceSettingsView: View {
     @State private var choosingIcon = false
     @State private var modpackOrigin: ModpackOrigin?
     @State private var preservedWorkspaces: [URL] = []
+    @State private var memoryWorkload: MemoryWorkload?
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
     private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
@@ -38,7 +39,8 @@ struct InstanceSettingsView: View {
                     if pane == .runtime, let versions = instance.supportedJavaMajors, !versions.isEmpty {
                         Section { LabeledContent(Messages.AppInstanceSettingsView.supportedJava.localized, value: LocalizedFormat.list(versions.map(String.init))) }
                     }
-                    LaunchSettingsEditor(overrides: $launchOverrides, defaults: model.state.settings.defaultLaunchSettings, runtimes: model.runtimes, keys: pane.launchKeys)
+                    LaunchSettingsEditor(overrides: $launchOverrides, defaults: model.state.settings.defaultLaunchSettings, runtimes: model.runtimes, keys: pane.launchKeys,
+                                         memoryWorkload: memoryWorkload, scansContent: true)
                 }
             }
             Divider()
@@ -77,6 +79,11 @@ struct InstanceSettingsView: View {
             let paths = model.paths, id = instance.id
             let origin = await Task.detached(priority: .utility) { try? ModpackRegistry.load(paths: paths, instanceID: id)?.origin }.value
             if let origin, origin.provider != .mcbbs, origin.projectID != nil { modpackOrigin = origin }
+        }
+        .task {
+            let paths = model.paths, scanned = locationInstance
+            let workload = await Task.detached(priority: .utility) { MemoryWorkload.cached(paths: paths, instance: scanned) }.value
+            if !Task.isCancelled { memoryWorkload = workload }
         }
     }
     @ViewBuilder private var overview: some View {

@@ -48,7 +48,7 @@ public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
 
 /// Fully resolved values used by previews, launch snapshots and portable exports.
 public struct LaunchSettingsValues: Codable, Equatable, Sendable {
-    public var memory = MemorySettings()
+    public var memory = MemorySettings(mode: .automatic)
     public var memoryMB: Int {
         get { memory.maximumMB }
         set { memory.maximumMB = newValue; memory.mode = .manual }
@@ -62,11 +62,11 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     public var commands = LaunchCommands()
     public var macOS = MacOSGameSettings()
     public init() {}
-    public func memoryPreview(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
-        try JVMHeapArguments.resolve(base: memory.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments))
+    public func memoryPreview(availability: MemoryAvailability = .current(), workload: MemoryWorkload? = nil) throws -> LaunchMemory {
+        try JVMHeapArguments.resolve(base: memory.resolve(availability: availability, workload: workload), arguments: ArgumentTokenizer.split(jvmArguments))
     }
-    public func validate(availability: MemoryAvailability = .current()) throws {
-        let baseMemory = try memory.resolve(availability: availability)
+    public func validate(availability: MemoryAvailability = .current(), workload: MemoryWorkload? = nil) throws {
+        let baseMemory = try memory.resolve(availability: availability, workload: workload)
         guard (320...16_384).contains(window.width), (240...16_384).contains(window.height) else { throw RuriError.message(Messages.CoreLaunchSettings.invalidWindowSize) }
         guard jvmArguments.count <= 32768, gameArguments.count <= 32768 else { throw RuriError.message(Messages.CoreLaunchSettings.argumentsTooLong) }
         if let path = java.path {
@@ -81,7 +81,7 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? .init(maximumMB: values.decodeIfPresent(Int.self, forKey: .memoryMB) ?? 4096)
+        memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? values.decodeIfPresent(Int.self, forKey: .memoryMB).map { .init(maximumMB: $0) } ?? .init(mode: .automatic)
         java = try values.decodeIfPresent(JavaSelection.self, forKey: .java) ?? .automatic
         jvmArguments = try values.decodeIfPresent(String.self, forKey: .jvmArguments) ?? ""
         gameArguments = try values.decodeIfPresent(String.self, forKey: .gameArguments) ?? ""
@@ -180,7 +180,7 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
 extension AppSettings {
     public var defaultLaunchSettings: LaunchSettingsValues {
         get {
-            var result = LaunchSettingsValues(); result.memory = defaultMemorySettings ?? .init(maximumMB: defaultMemoryMB)
+            var result = LaunchSettingsValues(); result.memory = defaultMemorySettings ?? .init(mode: .automatic)
             result.java = defaultJava ?? .automatic; result.jvmArguments = defaultJVMArguments ?? ""
             result.gameArguments = defaultGameArguments ?? ""; result.window = defaultWindow ?? .init(); result.presentation = defaultLaunchPresentation ?? .init()
             result.environment = defaultEnvironment ?? ""; result.commands = defaultLaunchCommands ?? .init(); result.macOS = defaultMacOSGameSettings ?? .init()
@@ -210,9 +210,11 @@ extension GameInstance {
     }
     /// A frozen copy for one launch/export. Never persist this over the instance
     /// being edited or installed: it deliberately removes the inheritance link.
-    public func launchSnapshot(defaults: AppSettings, availability: MemoryAvailability = .current()) throws -> GameInstance {
-        let settings = resolvedLaunchSettings(defaults: defaults); try settings.validate(availability: availability)
-        let memory = try settings.memory.resolve(availability: availability)
+    public func launchSnapshot(defaults: AppSettings, availability: MemoryAvailability = .current(), workload: MemoryWorkload? = nil) throws -> GameInstance {
+        // Without a folder scan the version and loader still shape the estimate.
+        let workload = workload ?? MemoryWorkload(gameVersion: gameVersion, loader: loader, scanned: false)
+        let settings = resolvedLaunchSettings(defaults: defaults); try settings.validate(availability: availability, workload: workload)
+        let memory = try settings.memory.resolve(availability: availability, workload: workload)
         var copy = self; copy.memoryMB = memory.maximumMB; copy.frozenMemory = memory; copy.javaPath = settings.java.path
         copy.javaMajor = settings.java.major; copy.environmentVariables = settings.environment.isEmpty ? nil : settings.environment
         copy.launchCommands = settings.commands
@@ -223,6 +225,6 @@ extension GameInstance {
     }
     func resolvingPersistedLaunchSettings(paths: LauncherPaths) throws -> GameInstance {
         guard launchOverrides != nil else { return self }
-        return try launchSnapshot(defaults: StateStore.load(paths).settings)
+        return try launchSnapshot(defaults: StateStore.load(paths).settings, workload: MemoryWorkload.scan(paths: paths, instance: self))
     }
 }

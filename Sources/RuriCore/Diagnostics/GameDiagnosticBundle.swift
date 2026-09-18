@@ -99,7 +99,7 @@ public struct GameDiagnosticBundle: Sendable {
             session.loader,
             session.loaderVersion ?? "",
             session.java ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
-            session.memory?.summary ?? Messages.CoreGameDiagnosticBundle.heapLimit(String(session.memoryMB)).localized,
+            session.memory.map { $0.summary + ($0.estimateDetail.map { " · " + $0 } ?? "") } ?? Messages.CoreGameDiagnosticBundle.heapLimit(String(session.memoryMB)).localized,
             session.operatingSystem,
             session.hostArchitecture,
             session.accountMode,

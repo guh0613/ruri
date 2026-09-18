@@ -9,6 +9,10 @@ struct LaunchSettingsEditor: View {
     let runtimes: [JavaRuntime]
     var showsInheritance = true
     var keys = LaunchSettingKey.allCases
+    /// The scanned content of the edited instance; nil while scanning or when
+    /// editing the global defaults, which have no instance to inspect.
+    var memoryWorkload: MemoryWorkload? = nil
+    var scansContent = false
     @State private var javaIssue: String?
     private var effective: LaunchSettingsValues { overrides.resolve(defaults: defaults) }
 
@@ -48,7 +52,8 @@ struct LaunchSettingsEditor: View {
     @ViewBuilder private func fields(_ key: LaunchSettingKey) -> some View {
         switch key {
         case .memory:
-            MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments)
+            MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments,
+                                 workload: memoryWorkload, scansContent: scansContent)
         case .java:
             Picker(Messages.AppLaunchSettingsEditor.runtime.localized, selection: Binding(get: { effective.java }, set: { overrides.java = $0; javaIssue = nil })) {
                 Text(Messages.AppLaunchSettingsEditor.autoCompatibleRuntime.localized).tag(JavaSelection.automatic)
@@ -132,8 +137,10 @@ struct LaunchSettingsEditor: View {
 struct MemorySettingsEditor: View {
     @Binding var settings: MemorySettings
     let jvmArguments: String
+    var workload: MemoryWorkload? = nil
+    var scansContent = false
     @State private var availability = MemoryAvailability.current()
-    private var preview: Result<LaunchMemory, Error> { Result { try JVMHeapArguments.resolve(base: settings.resolve(availability: availability), arguments: ArgumentTokenizer.split(jvmArguments)) } }
+    private var preview: Result<LaunchMemory, Error> { Result { try JVMHeapArguments.resolve(base: settings.resolve(availability: availability, workload: workload), arguments: ArgumentTokenizer.split(jvmArguments)) } }
     var body: some View {
         Picker(Messages.AppLaunchSettingsEditor.allocationMethod.localized, selection: $settings.mode) { Text(Messages.AppLaunchSettingsEditor.automaticMemory.localized).tag(MemorySettings.Mode.automatic); Text(Messages.AppLaunchSettingsEditor.manualMemory.localized).tag(MemorySettings.Mode.manual) }
         if settings.mode == .manual {
@@ -151,19 +158,13 @@ struct MemorySettingsEditor: View {
         VStack(alignment: .leading, spacing: 6) {
             switch preview {
             case .success(let memory):
-                HStack {
-                    Text(memory.summary).font(.callout).textSelection(.enabled)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: 8)
-                    if settings.mode == .automatic {
-                        Button(Messages.AppLaunchSettingsEditor.reestimateMemory.localized) { availability = .current() }.controlSize(.small)
-                    }
-                }
-                if settings.mode == .automatic {
-                    Text(Messages.AppLaunchSettingsEditor.memoryEstimateHelp.localized).font(.caption).foregroundStyle(.secondary)
+                if settings.mode == .automatic, let estimate = memory.estimate, memory.maximumSource == .automatic {
+                    MemoryEstimateCard(memory: memory, estimate: estimate, scanning: scansContent && workload == nil, scansContent: scansContent) { availability = .current() }
+                } else {
+                    Text(memory.summary).font(.callout).textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
                 }
                 if memory.maximumSource == .jvmArguments || memory.initialSource == .jvmArguments || memory.metaspaceSource == .jvmArguments {
-                    Text(Messages.AppLaunchSettingsEditor.initialMemoryField.localized).font(.caption).foregroundStyle(.orange)
+                    Label(Messages.AppLaunchSettingsEditor.initialMemoryField.localized, systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.orange)
                 }
             case .failure(let error): Text(error.localizedDescription).font(.callout).foregroundStyle(.red)
             }
@@ -187,5 +188,124 @@ struct MemorySettingsEditor: View {
                     .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
             }.multilineTextAlignment(.leading).padding(.top, 12).padding(.bottom, 6)
         }
+    }
+}
+
+/// The automatic estimate as a figure, a bar and a row of facts rather than
+/// a paragraph: the number the game will get, how much of that is basic
+/// demand versus comfort margin against what the machine allows, and the
+/// inputs it came from. The reasoning lives behind an info button.
+struct MemoryEstimateCard: View {
+    let memory: LaunchMemory
+    let estimate: MemoryEstimate
+    let scanning: Bool
+    let scansContent: Bool
+    let reestimate: () -> Void
+    @State private var explaining = false
+
+    private func size(_ megabytes: Int) -> String { LocalizedFormat.bytes(Int64(megabytes) * 1_048_576, memory: true) }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(size(memory.maximumMB))
+                        .font(.system(size: 26, weight: .semibold, design: .rounded)).monospacedDigit()
+                        .foregroundStyle(estimate.constrained ? Color.orange : Color.primary)
+                    Text(Messages.AppLaunchSettingsEditor.heapLimit.localized + " · " + Messages.AppLaunchSettingsEditor.initialHeapValue(size(Int(memory.initialBytes / 1_048_576))).localized)
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 8)
+                Button { explaining.toggle() } label: { Image(systemName: "info.circle") }
+                    .buttonStyle(.borderless).foregroundStyle(.secondary)
+                    .help(Messages.AppLaunchSettingsEditor.memoryEstimateExplain.localized)
+                    .accessibilityLabel(Messages.AppLaunchSettingsEditor.memoryEstimateExplain.localized)
+                    .popover(isPresented: $explaining, arrowEdge: .bottom) {
+                        Text((scansContent ? Messages.AppLaunchSettingsEditor.memoryEstimateHelp : Messages.AppLaunchSettingsEditor.memoryEstimateGenericHelp).localized)
+                            .font(.callout).multilineTextAlignment(.leading).frame(width: 320, alignment: .leading).padding(16)
+                    }
+                Button(Messages.AppLaunchSettingsEditor.reestimateMemory.localized, systemImage: "arrow.clockwise", action: reestimate)
+                    .controlSize(.small)
+            }
+            bar
+            facts
+            if estimate.constrained {
+                status(Messages.AppLaunchSettingsEditor.memoryEstimateShortfall(size(estimate.demandMB), size(estimate.maximumMB)).localized, symbol: "exclamationmark.triangle.fill", tint: .orange)
+            } else if estimate.trimmed {
+                status(Messages.AppLaunchSettingsEditor.memoryEstimateTrimmed(size(estimate.demandMB), size(estimate.generousMB)).localized, symbol: "info.circle", tint: .secondary)
+            }
+        }
+        .padding(.vertical, 6)
+        .accessibilityElement(children: .combine)
+    }
+
+    /// Track is what the machine allows; the filled part is the heap, split into
+    /// basic demand and margin. Demand the machine cannot cover shows as a
+    /// faint orange tail so the shortfall is visible at a glance.
+    private var bar: some View {
+        let track = max(estimate.ceilingMB, estimate.generousMB, estimate.demandMB, 1)
+        let granted = min(estimate.maximumMB, estimate.demandMB), margin = max(0, estimate.maximumMB - estimate.demandMB), unmet = max(0, estimate.demandMB - estimate.maximumMB)
+        let tint: Color = estimate.constrained ? .orange : Theme.accent
+        return VStack(alignment: .leading, spacing: 6) {
+            GeometryReader { geometry in
+                let unit = geometry.size.width / CGFloat(track)
+                HStack(spacing: 2) {
+                    Capsule().fill(tint.gradient).frame(width: max(4, unit * CGFloat(granted)))
+                    if margin > 0 { Capsule().fill(tint.opacity(0.4)).frame(width: max(3, unit * CGFloat(margin))) }
+                    if unmet > 0 { Capsule().fill(Color.orange.opacity(0.28)).frame(width: max(3, unit * CGFloat(unmet))) }
+                    Spacer(minLength: 0)
+                }
+                .background(Capsule().fill(.primary.opacity(0.08)))
+            }
+            .frame(height: 7)
+            .accessibilityHidden(true)
+            HStack(spacing: 14) {
+                legend(Messages.AppLaunchSettingsEditor.estimateDemandLegend.localized, value: size(estimate.demandMB), color: tint)
+                if margin > 0 { legend(Messages.AppLaunchSettingsEditor.estimateMarginLegend.localized, value: size(margin), color: tint.opacity(0.4)) }
+                if unmet > 0 { legend(Messages.AppLaunchSettingsEditor.estimateUnmetLegend.localized, value: size(unmet), color: .orange.opacity(0.28)) }
+                Spacer(minLength: 0)
+                Text(Messages.AppLaunchSettingsEditor.estimateCeilingLegend(size(estimate.ceilingMB)).localized).font(.caption2).foregroundStyle(.tertiary)
+            }
+        }
+    }
+
+    private func legend(_ title: String, value: String, color: Color) -> some View {
+        HStack(spacing: 5) {
+            Circle().fill(color).frame(width: 7, height: 7)
+            Text(title).foregroundStyle(.secondary)
+            Text(value).monospacedDigit()
+        }.font(.caption2)
+    }
+
+    @ViewBuilder private var facts: some View {
+        if scanning {
+            Label(Messages.AppLaunchSettingsEditor.memoryEstimateScanning.localized, systemImage: "magnifyingglass").font(.caption).foregroundStyle(.secondary)
+        } else {
+            HStack(spacing: 8) {
+                if estimate.workload.scanned {
+                    chip(estimate.workload.gameVersion, symbol: "cube")
+                    chip(estimate.workload.loader.title, symbol: estimate.workload.loader.symbol)
+                    chip(Messages.CoreMemoryEstimate.modCount(Int64(estimate.workload.modCount)).localized, symbol: "shippingbox")
+                } else {
+                    chip(Messages.AppLaunchSettingsEditor.memoryEstimateSample.localized, symbol: "cube")
+                }
+                if let available = estimate.availability.availableMB {
+                    chip(Messages.CoreMemoryEstimate.availableMemory(size(available)).localized, symbol: "memorychip")
+                }
+            }
+        }
+    }
+
+    private func chip(_ text: String, symbol: String) -> some View {
+        Label(text, systemImage: symbol)
+            .font(.caption.weight(.medium)).labelStyle(.titleAndIcon)
+            .padding(.horizontal, 9).padding(.vertical, 5)
+            .background(.primary.opacity(0.06), in: Capsule())
+            .foregroundStyle(.secondary).lineLimit(1)
+    }
+
+    private func status(_ text: String, symbol: String, tint: Color) -> some View {
+        Label { Text(text).fixedSize(horizontal: false, vertical: true) } icon: { Image(systemName: symbol) }
+            .font(.caption).foregroundStyle(tint)
     }
 }

@@ -908,5 +908,10 @@
     "file": "Sources/RuriCore/Infrastructure/Networking/HTTPRetryCooldown.swift",
     "literal": "\"EEE, dd MMM yyyy HH:mm:ss zzz\"",
     "reason": "Fixed HTTP-date format for parsing the Retry-After header; protocol syntax, not user-facing text."
+  },
+  {
+    "file": "Sources/RuriCore/Launch/MemoryEstimator.swift",
+    "literal": "\"Minecraft \\(workload.gameVersion)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   }
 ]

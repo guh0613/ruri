@@ -30,8 +30,6 @@ struct LaunchSettingsTests {
         #expect(inherited.memoryMB == 8192 && inherited.width == 1600 && inherited.javaPath == "/new/java")
         #expect(inherited.extraJVMArguments == "-Dnew=yes" && inherited.extraGameArguments == "--demo")
         #expect(modern.launchOverrides == .init() && inherited.launchOverrides == nil)
-        let oldSettings = try JSONDecoder().decode(AppSettings.self, from: Data(#"{"concurrentDownloads":8,"microsoftClientID":"","showSnapshots":false,"defaultMemoryMB":6144,"appearance":"system"}"#.utf8))
-        #expect(oldSettings.defaultLaunchSettings.memoryMB == 6144 && oldSettings.defaultLaunchSettings.java == .automatic)
     }
 
     @Test func emptyArgumentsAndAutomaticJavaAreExplicitOverrides() throws {

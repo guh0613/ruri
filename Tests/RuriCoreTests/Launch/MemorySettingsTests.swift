@@ -3,14 +3,23 @@ import Testing
 @testable import RuriCore
 
 struct MemorySettingsTests {
-    @Test func automaticMemoryReservesHeadroomAndUsesAvailableEstimate() throws {
+    @Test func automaticMemoryFollowsContentAndOnlyHardwareCapsIt() throws {
         let automatic = MemorySettings(mode: .automatic)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 65536, availableMB: 49152)).maximumMB == 8192)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 12288)).maximumMB == 4096)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 2048)).maximumMB == 1024)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 4096)).maximumMB == 1024)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 4096, availableMB: 200)).maximumMB == 512)
+        // Without an instance the estimate is a current vanilla client; big
+        // machines no longer hand it a quarter of their RAM for nothing.
+        let plenty = try automatic.resolve(availability: .init(physicalMB: 65536, availableMB: 49152))
+        #expect(plenty.maximumMB == 3584 && plenty.initialBytes == 1792 * 1_048_576 && plenty.estimate?.constrained == false)
+        #expect(plenty.arguments == ["-Xms1792M", "-Xmx3584M"])
+        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 12288)).maximumMB == 3584)
+        // macOS file caches make "available" look small; that alone must not starve the game.
+        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 2048)).maximumMB == 3584)
+        let small = try automatic.resolve(availability: .init(physicalMB: 4096))
+        #expect(small.maximumMB == 2048 && small.estimate?.constrained == true)
+        #expect(try automatic.resolve(availability: .init(physicalMB: 4096, availableMB: 200)).maximumMB == 1536)
+        #expect(try MemorySettings(mode: .automatic, initialMB: 256).resolve(availability: .init(physicalMB: 16384)).initialBytes == 256 * 1_048_576)
+        #expect(throws: (any Error).self) { try MemorySettings(mode: .automatic, initialMB: 4096).resolve(availability: .init(physicalMB: 16384)) }
         #expect(throws: (any Error).self) { try automatic.resolve(availability: .init(physicalMB: 0)) }
+        #expect(try MemorySettings(maximumMB: 4096).resolve(availability: .init(physicalMB: 16384)).estimate == nil)
         let sample = MemoryAvailability.current()
         #expect(sample.physicalMB >= 512)
         #expect(sample.availableMB == nil || sample.availableMB! >= 0)
@@ -51,6 +60,11 @@ struct MemorySettingsTests {
         }
     }
 
+    @Test func freshGlobalDefaultsUseAutomaticMemory() {
+        #expect(AppSettings().defaultLaunchSettings.memory.mode == .automatic)
+        #expect(LaunchSettingsValues().memory.mode == .automatic)
+    }
+
     @Test func oldOverrideJSONAndGlobalMemoryEditsKeepManualSemantics() throws {
         let old = try JSONDecoder().decode(InstanceLaunchOverrides.self, from: Data(#"{"memoryMB":6144,"jvmArguments":""}"#.utf8))
         #expect(old.memory == .init(maximumMB: 6144))
@@ -68,7 +82,9 @@ struct MemorySettingsTests {
         var instance = GameInstance(name: "Heap", gameVersion: "1.0"); instance.launchOverrides = .init()
         var defaults = AppSettings(); defaults.defaultMemorySettings = .init(mode: .automatic); defaults.defaultJVMArguments = "-Xmx2G -Xms1G"
         let snapshot = try instance.launchSnapshot(defaults: defaults, availability: .init(physicalMB: 65536, availableMB: 49152))
-        #expect(snapshot.frozenMemory?.maximumMB == 8192 && snapshot.frozenMemory?.maximumSource == .automatic)
+        // An unscanned snapshot still knows this is an old vanilla version.
+        #expect(snapshot.frozenMemory?.maximumMB == 2048 && snapshot.frozenMemory?.maximumSource == .automatic)
+        #expect(snapshot.frozenMemory?.estimate?.workload == .init(gameVersion: "1.0", loader: .vanilla, scanned: false))
         var state = PersistentState(); state.instances = [instance]; state.settings = defaults; try StateStore.save(state, to: paths)
         let recorder = try GameSessionRecorder(paths: paths, instance: snapshot, accountMode: "offline")
         #expect(recorder.record.memoryMB == 2048 && recorder.record.memory?.initialBytes == 1_073_741_824)
@@ -117,7 +133,7 @@ struct MemorySettingsTests {
         // Start at the previous format without structured global memory.
         try JSONEncoder().encode(legacy).write(to: paths.state)
         let baseline = try StateStore.load(paths)
-        var local = baseline; local.settings.defaultMemorySettings = .init(mode: .automatic)
+        var local = baseline; local.settings.defaultMemorySettings = .init(maximumMB: 2048)
         try StateStore.update(paths) { $0.settings.defaultMemoryMB = 8192 }
         var bytes = try Data(contentsOf: paths.state)
         #expect(throws: (any Error).self) { try StateStore.save(local, to: paths, basedOn: baseline) }

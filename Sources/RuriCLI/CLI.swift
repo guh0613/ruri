@@ -200,7 +200,7 @@ import RuriCore
                 guard args.count <= 2, args.count == 1 || UUID(uuidString: args[1]) != nil else { throw RuriError.message(Messages.CLICLI.planUsage) }
                 let selectedID = args.count == 2 ? UUID(uuidString: args[1]) : state.selectedInstanceID
                 guard let stored = selectedID.flatMap({ id in state.instances.first { $0.id == id } }) ?? (args.count == 1 ? state.instances.last : nil) else { throw RuriError.message(Messages.CLICLI.instanceNotFound) }
-                let instance = try stored.launchSnapshot(defaults: state.settings)
+                let instance = try stored.launchSnapshot(defaults: state.settings, workload: MemoryWorkload.scan(paths: paths, instance: stored))
                 let manifest = try await GameInstaller(paths: paths).loadManifest(instance)
                 let runtimes = await JavaDiscovery.scan(paths: paths, extra: [instance.javaPath].compactMap { $0 })
                 let java = try GameJavaRequirement(instance: instance, manifest: manifest).require(from: runtimes)
@@ -239,7 +239,7 @@ import RuriCore
                 let recorder = try GameSessionRecorder(paths: paths, instance: stored, accountMode: account.kind.rawValue)
                 var handedOff = false
                 do {
-                    let instance = try stored.launchSnapshot(defaults: state.settings)
+                    let instance = try stored.launchSnapshot(defaults: state.settings, workload: MemoryWorkload.scan(paths: paths, instance: stored))
                     try recorder.transition(.recovery)
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()
                     try await WorldManager(paths: paths, instanceID: instance.id).recover()

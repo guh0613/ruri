@@ -993,3 +993,15 @@
 
 /* @symbol GameHost.compatibility @args text */
 "gameHost.compatibility" = "使用常规 Java 启动：%@";
+
+/* @symbol CoreMemoryEstimate.modCount @args integer */
+"coreMemoryEstimate.modCount" = "%1$lld 个 Mod";
+
+
+
+/* @symbol CoreMemoryEstimate.constrained @args text,text */
+"coreMemoryEstimate.constrained" = "内容需要 %1$@，受本机内存限制为 %2$@";
+
+
+/* @symbol CoreMemoryEstimate.availableMemory @args text */
+"coreMemoryEstimate.availableMemory" = "剩余内存 %1$@";

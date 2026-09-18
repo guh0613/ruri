@@ -164,6 +164,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreMCBBSPack.definitions) { first, _ in first }
         result.merge(Messages.CoreMRPack.definitions) { first, _ in first }
         result.merge(Messages.CoreManifest.definitions) { first, _ in first }
+        result.merge(Messages.CoreMemoryEstimate.definitions) { first, _ in first }
         result.merge(Messages.CoreMemorySettings.definitions) { first, _ in first }
         result.merge(Messages.CoreMinecraftDirectoryCatalog.definitions) { first, _ in first }
         result.merge(Messages.CoreMinecraftDirectoryReader.definitions) { first, _ in first }

@@ -333,11 +333,11 @@ extension Messages {
         public static var chooseMemorySize: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.bodyText10", table: "Interface", fallback: "选择内存")
         }
-        /// 按当前可用内存估算。
+        /// 按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.bodyText11`.
         public static var memoryEstimateHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.bodyText11", table: "Interface", fallback: "按当前可用内存估算。")
+            .init(key: "appLaunchSettingsEditor.bodyText11", table: "Interface", fallback: "按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。")
         }
         /// 重新估算
         ///
@@ -399,6 +399,78 @@ extension Messages {
         public static func unavailableJavaPath(_ value0: String) -> LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.unavailableJavaPath", table: "Interface", fallback: "自选：%1$@", arguments: [.text(value0)])
         }
+        /// 正在统计实例内容…
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateScanning`.
+        public static var memoryEstimateScanning: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateScanning", table: "Interface", fallback: "正在统计实例内容…")
+        }
+        /// 本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateShortfall`.
+        public static func memoryEstimateShortfall(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateShortfall", table: "Interface", fallback: "本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateGenericHelp`.
+        public static var memoryEstimateGenericHelp: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateGenericHelp", table: "Interface", fallback: "每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。")
+        }
+        /// 剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateTrimmed`.
+        public static func memoryEstimateTrimmed(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateTrimmed", table: "Interface", fallback: "剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 堆上限
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.heapLimit`.
+        public static var heapLimit: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.heapLimit", table: "Interface", fallback: "堆上限")
+        }
+        /// 初始 %1$@
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.initialHeapValue`.
+        public static func initialHeapValue(_ value0: String) -> LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.initialHeapValue", table: "Interface", fallback: "初始 %1$@", arguments: [.text(value0)])
+        }
+        /// 基本需求
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.estimateDemandLegend`.
+        public static var estimateDemandLegend: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.estimateDemandLegend", table: "Interface", fallback: "基本需求")
+        }
+        /// 宽裕余量
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.estimateMarginLegend`.
+        public static var estimateMarginLegend: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.estimateMarginLegend", table: "Interface", fallback: "宽裕余量")
+        }
+        /// 未满足
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.estimateUnmetLegend`.
+        public static var estimateUnmetLegend: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.estimateUnmetLegend", table: "Interface", fallback: "未满足")
+        }
+        /// 本机上限 %1$@
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.estimateCeilingLegend`.
+        public static func estimateCeilingLegend(_ value0: String) -> LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.estimateCeilingLegend", table: "Interface", fallback: "本机上限 %1$@", arguments: [.text(value0)])
+        }
+        /// 估算说明
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateExplain`.
+        public static var memoryEstimateExplain: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateExplain", table: "Interface", fallback: "估算说明")
+        }
+        /// 示例：无 Mod 实例
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.memoryEstimateSample`.
+        public static var memoryEstimateSample: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.memoryEstimateSample", table: "Interface", fallback: "示例：无 Mod 实例")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appLaunchSettingsEditor.bodyText1": .init("跟随默认设置", []),
             "Interface:appLaunchSettingsEditor.bodyText2": .init("自定义", []),
@@ -455,7 +527,7 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.bodyText8": .init("最大内存", []),
             "Interface:appLaunchSettingsEditor.bodyText9": .init("常用大小", []),
             "Interface:appLaunchSettingsEditor.bodyText10": .init("选择内存", []),
-            "Interface:appLaunchSettingsEditor.bodyText11": .init("按当前可用内存估算。", []),
+            "Interface:appLaunchSettingsEditor.bodyText11": .init("按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。", []),
             "Interface:appLaunchSettingsEditor.bodyText12": .init("重新估算", []),
             "Interface:appLaunchSettingsEditor.memoryText1": .init("附加 JVM 参数覆盖了部分内存设置。", []),
             "Interface:appLaunchSettingsEditor.errorText1": .init("高级内存选项", []),
@@ -466,6 +538,18 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.errorText6": .init("初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。", []),
             "Interface:appLaunchSettingsEditor.errorText7": .init("此处设置 Java 堆内存，游戏进程的总内存占用会更高。", []),
             "Interface:appLaunchSettingsEditor.unavailableJavaPath": .init("自选：%1$@", [.text]),
+            "Interface:appLaunchSettingsEditor.memoryEstimateScanning": .init("正在统计实例内容…", []),
+            "Interface:appLaunchSettingsEditor.memoryEstimateShortfall": .init("本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。", [.text, .text]),
+            "Interface:appLaunchSettingsEditor.memoryEstimateGenericHelp": .init("每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。", []),
+            "Interface:appLaunchSettingsEditor.memoryEstimateTrimmed": .init("剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。", [.text, .text]),
+            "Interface:appLaunchSettingsEditor.heapLimit": .init("堆上限", []),
+            "Interface:appLaunchSettingsEditor.initialHeapValue": .init("初始 %1$@", [.text]),
+            "Interface:appLaunchSettingsEditor.estimateDemandLegend": .init("基本需求", []),
+            "Interface:appLaunchSettingsEditor.estimateMarginLegend": .init("宽裕余量", []),
+            "Interface:appLaunchSettingsEditor.estimateUnmetLegend": .init("未满足", []),
+            "Interface:appLaunchSettingsEditor.estimateCeilingLegend": .init("本机上限 %1$@", [.text]),
+            "Interface:appLaunchSettingsEditor.memoryEstimateExplain": .init("估算说明", []),
+            "Interface:appLaunchSettingsEditor.memoryEstimateSample": .init("示例：无 Mod 实例", []),
         ]
     }
 }

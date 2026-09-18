@@ -47,7 +47,7 @@ extension AppModel {
         return .green
     }
     func memoryLabel(_ instance: GameInstance) -> String {
-        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview() else { return Messages.AppInstancePresentation.memoryNeedsCheck.localized }
+        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview(workload: MemoryWorkload.cached(paths: paths, instance: instance)) else { return Messages.AppInstancePresentation.memoryNeedsCheck.localized }
         return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? Messages.AppInstancePresentation.automaticMemory.localized : memory.maximumSource == .jvmArguments ? Messages.AppInstancePresentation.memoryArguments.localized : "")
     }
 }

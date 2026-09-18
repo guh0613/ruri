@@ -8,7 +8,7 @@ public struct AppSettings: Codable, Equatable, Sendable {
     }
     public var showSnapshots = false
     public var defaultMemoryMB = 4096 {
-        didSet { if defaultMemorySettings != nil { defaultMemorySettings?.maximumMB = defaultMemoryMB; defaultMemorySettings?.mode = .manual } }
+        didSet { var memory = defaultMemorySettings ?? .init(); memory.maximumMB = defaultMemoryMB; memory.mode = .manual; defaultMemorySettings = memory }
     }
     public var defaultMemorySettings: MemorySettings?
     public var appearance = "system"

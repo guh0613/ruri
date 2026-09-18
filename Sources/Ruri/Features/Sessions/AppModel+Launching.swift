@@ -25,13 +25,14 @@ extension AppModel {
             perform(Messages.AppAppModelLaunching.launchingInstance(stored.name), presentErrors: false) { [self] id in
                 journal.linkSession(recorder.record.id, to: id)
                 do {
-                    var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability)
+                    let workload = MemoryWorkload.scan(paths: paths, instance: stored)
+                    var instance = try stored.launchSnapshot(defaults: defaults, availability: memoryAvailability, workload: workload)
                     try Task.checkCancellation()
                     if !instance.installed {
                         try advanceSession(.installation)
                         let installed = try await installer.install(stored, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
                         try recordInstallation(installed, requested: stored)
-                        instance = try installed.launchSnapshot(defaults: defaults, availability: memoryAvailability)
+                        instance = try installed.launchSnapshot(defaults: defaults, availability: memoryAvailability, workload: MemoryWorkload.scan(paths: paths, instance: installed))
                     }
                     try advanceSession(.recovery)
                     try await ContentManager(paths: paths, instanceID: instance.id).recover()

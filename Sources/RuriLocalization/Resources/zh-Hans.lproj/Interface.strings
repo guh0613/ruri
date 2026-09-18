@@ -3044,7 +3044,7 @@
 "appLaunchSettingsEditor.bodyText10" = "选择内存";
 
 /* @symbol AppLaunchSettingsEditor.memoryEstimateHelp @args - */
-"appLaunchSettingsEditor.bodyText11" = "按当前可用内存估算。";
+"appLaunchSettingsEditor.bodyText11" = "按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。";
 
 /* @symbol AppLaunchSettingsEditor.reestimateMemory @args - */
 "appLaunchSettingsEditor.bodyText12" = "重新估算";
@@ -4086,3 +4086,40 @@
 
 /* @symbol LoaderSelection.discoveryLibraryMissing @args - */
 "loaderSelection.discoveryLibraryMissing" = "应用中缺少加载器发现服务，请重新安装 Ruri。";
+
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateScanning @args - */
+"appLaunchSettingsEditor.memoryEstimateScanning" = "正在统计实例内容…";
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateShortfall @args text,text */
+"appLaunchSettingsEditor.memoryEstimateShortfall" = "本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。";
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateGenericHelp @args - */
+"appLaunchSettingsEditor.memoryEstimateGenericHelp" = "每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。";
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateTrimmed @args text,text */
+"appLaunchSettingsEditor.memoryEstimateTrimmed" = "剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。";
+
+/* @symbol AppLaunchSettingsEditor.heapLimit @args - */
+"appLaunchSettingsEditor.heapLimit" = "堆上限";
+
+/* @symbol AppLaunchSettingsEditor.initialHeapValue @args text */
+"appLaunchSettingsEditor.initialHeapValue" = "初始 %1$@";
+
+/* @symbol AppLaunchSettingsEditor.estimateDemandLegend @args - */
+"appLaunchSettingsEditor.estimateDemandLegend" = "基本需求";
+
+/* @symbol AppLaunchSettingsEditor.estimateMarginLegend @args - */
+"appLaunchSettingsEditor.estimateMarginLegend" = "宽裕余量";
+
+/* @symbol AppLaunchSettingsEditor.estimateUnmetLegend @args - */
+"appLaunchSettingsEditor.estimateUnmetLegend" = "未满足";
+
+/* @symbol AppLaunchSettingsEditor.estimateCeilingLegend @args text */
+"appLaunchSettingsEditor.estimateCeilingLegend" = "本机上限 %1$@";
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateExplain @args - */
+"appLaunchSettingsEditor.memoryEstimateExplain" = "估算说明";
+
+/* @symbol AppLaunchSettingsEditor.memoryEstimateSample @args - */
+"appLaunchSettingsEditor.memoryEstimateSample" = "示例：无 Mod 实例";

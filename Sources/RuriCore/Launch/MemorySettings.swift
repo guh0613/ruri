@@ -30,21 +30,22 @@ public struct MemorySettings: Codable, Equatable, Sendable {
     public init(mode: Mode = .manual, maximumMB: Int = 4096, initialMB: Int? = nil, metaspaceMB: Int? = nil) {
         self.mode = mode; self.maximumMB = maximumMB; self.initialMB = initialMB; self.metaspaceMB = metaspaceMB
     }
-    public func resolve(availability: MemoryAvailability = .current()) throws -> LaunchMemory {
+    /// Automatic mode sizes the heap from the instance's content and this
+    /// machine; pass the scanned workload whenever an instance is known.
+    public func resolve(availability: MemoryAvailability = .current(), workload: MemoryWorkload? = nil) throws -> LaunchMemory {
         guard (512...131_072).contains(maximumMB), initialMB == nil || (16...131_072).contains(initialMB!),
               metaspaceMB == nil || (16...131_072).contains(metaspaceMB!) else { throw RuriError.message(Messages.CoreMemorySettings.invalidMemoryLimits) }
-        let maximum: Int
+        let maximum: Int, initial: Int
+        var estimate: MemoryEstimate?
         if mode == .automatic {
             guard availability.physicalMB >= 512 else { throw RuriError.message(Messages.CoreMemorySettings.physicalMemoryUnreadable) }
-            var candidate = min(8192, availability.physicalMB / 4)
-            if let available = availability.availableMB { candidate = min(candidate, max(0, available) / 2) }
-            maximum = max(512, candidate / 256 * 256)
-        } else { maximum = maximumMB }
-        let initial = initialMB ?? min(512, maximum)
+            let estimated = MemoryEstimator.estimate(workload: workload ?? .generic, availability: availability)
+            maximum = estimated.maximumMB; initial = initialMB ?? estimated.initialMB; estimate = estimated
+        } else { maximum = maximumMB; initial = initialMB ?? min(512, maximum) }
         guard initial <= maximum else { throw RuriError.message(Messages.CoreMemorySettings.initialHeapTooLarge(String(describing: initial), String(describing: maximum))) }
         return .init(maximumBytes: Int64(maximum) * 1_048_576, minimumBytes: Int64(initial) * 1_048_576, initialBytes: Int64(initial) * 1_048_576,
                      metaspaceBytes: metaspaceMB.map { Int64($0) * 1_048_576 }, maximumSource: mode == .automatic ? .automatic : .settings,
-                     initialSource: .settings, metaspaceSource: .settings, availability: mode == .automatic ? availability : nil)
+                     initialSource: .settings, metaspaceSource: .settings, availability: mode == .automatic ? availability : nil, estimate: estimate)
     }
 }
 
@@ -61,8 +62,16 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
     public var initialSource: Source
     public var metaspaceSource: Source
     public var availability: MemoryAvailability?
+    /// Present when the maximum came from automatic estimation.
+    public var estimate: MemoryEstimate? = nil
     public var maximumMB: Int { Int((maximumBytes + 1_048_575) / 1_048_576) }
     public var summary: String { Messages.CoreMemorySettings.memorySummary(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.automaticallyManagedMemory.localized : Self.size(initialBytes)), maximumSource.title).localized + (metaspaceBytes.map { " · Metaspace ≤ \(Self.size($0))" } ?? "") }
+    /// The estimate's inputs and any hardware shortfall, for records and diagnostics.
+    public var estimateDetail: String? {
+        guard maximumSource == .automatic, let estimate else { return nil }
+        guard estimate.constrained else { return estimate.basis }
+        return estimate.basis + " · " + Messages.CoreMemoryEstimate.constrained(String(describing: Self.size(Int64(estimate.demandMB) * 1_048_576)), String(describing: Self.size(Int64(estimate.maximumMB) * 1_048_576))).localized
+    }
     public var arguments: [String] {
         func size(_ value: Int64) -> String { value % 1_048_576 == 0 ? "\(value / 1_048_576)M" : String(value) }
         var values = ["-Xms\(size(minimumBytes))", "-Xmx\(size(maximumBytes))"]

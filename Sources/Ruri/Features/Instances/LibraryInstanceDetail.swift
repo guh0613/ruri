@@ -174,7 +174,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
                 model.contentPresentation = .init(instance: instance, kind: kind)
             })
         }
-        if let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview() {
+        if let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview(workload: MemoryWorkload.cached(paths: model.paths, instance: instance)) {
             items.append(StripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: LaunchMemory.size(memory.maximumBytes), detail: memory.maximumSource.title))
         } else {
             items.append(StripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: Messages.AppInstancePresentation.memoryNeedsCheck.localized))
