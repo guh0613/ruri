@@ -49,6 +49,8 @@ public struct LocalContentFile: Identifiable, Sendable {
     public let size: Int64
     public let managed: ManagedContent?
     public var metadata: LocalModMetadata? = nil
+    public internal(set) var packMetadata: LocalPackMetadata? = nil
+    public internal(set) var identities: [ContentIdentity] = []
     public internal(set) var translation: ModNameIndex.Entry? = nil
     public internal(set) var metadataLoaded = true
     var stamp: LocalContentStamp? = nil
@@ -58,7 +60,14 @@ public struct LocalContentFile: Identifiable, Sendable {
         self.url = url; self.filename = filename; self.title = title; self.version = version; self.modID = modID
         self.kind = kind; self.enabled = enabled; self.size = size; self.managed = managed; self.metadata = metadata
     }
-    public var presentationRevision: String { "\(stamp?.key ?? id):\(metadata?.iconPath ?? "")" }
+    public var isDirectory: Bool { stamp?.isDirectory == true }
+    public var contentRevision: String { stamp?.key ?? id }
+    public var localIconPath: String? { metadata?.iconPath ?? packMetadata?.iconPath }
+    public var onlineIdentity: ContentIdentity? {
+        identities.first(where: { $0.record.provider == managed?.provider }) ?? identities.first
+    }
+    public var summary: String? { metadata?.summary ?? packMetadata?.summary ?? onlineIdentity?.summary }
+    public var presentationRevision: String { "\(stamp?.key ?? id):\(localIconPath ?? ""):\(onlineIdentity?.iconURL?.absoluteString ?? "")" }
     public var displayTitle: String {
         LocalizationContext.current.language.hasPrefix("zh") ? chineseTitle ?? title : title
     }
@@ -66,19 +75,33 @@ public struct LocalContentFile: Identifiable, Sendable {
         text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
     }
     public func matches(searchKey: String) -> Bool { searchKey.isEmpty || searchText.contains(searchKey) }
-    func presenting(_ info: LocalModMetadata?, loaded: Bool) -> Self {
+    public func presenting(identities matches: [ContentIdentity]) -> Self {
+        presenting(metadata, pack: packMetadata, identities: matches, loaded: metadataLoaded)
+    }
+    public func compatibility(with game: ResourcePackFormat?) -> ResourcePackCompatibility {
+        guard kind == .resourcepack, let packMetadata else { return .unknown }
+        switch packMetadata.state {
+        case .valid: return packMetadata.format?.compatibility(with: game) ?? .invalid
+        case .missingMetadata: return .missingMetadata
+        default: return .invalid
+        }
+    }
+    func presenting(_ info: LocalModMetadata?, pack: LocalPackMetadata? = nil, identities: [ContentIdentity] = [], loaded: Bool) -> Self {
+        let identities = identities.filter { $0.record.kind == kind }
+        let online = identities.first(where: { $0.record.provider == managed?.provider }) ?? identities.first
         var file = Self(url: url, filename: filename,
-                        title: info?.name ?? managed?.title ?? URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent,
-                        version: info?.version ?? managed?.versionName, modID: info?.id,
+                        title: info?.name ?? online?.record.title ?? managed?.title ?? (isDirectory ? filename : URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent),
+                        version: info?.version ?? online?.record.versionName ?? (managed?.provider == "local" ? nil : managed?.versionName), modID: info?.id,
                         kind: kind, enabled: enabled, size: size, managed: managed, metadata: info)
         file.stamp = stamp; file.metadataLoaded = loaded
+        file.packMetadata = pack; file.identities = identities
         if kind == .mod, loaded {
             file.translation = ModNameIndex.shared.match(id: file.modID, name: file.title)
             if let entry = file.translation, entry.hasChineseName, entry.chineseName != file.title {
                 file.chineseTitle = "\(file.title) (\(entry.chineseName))"
             }
         }
-        file.searchText = Self.searchKey([file.title, filename, file.modID ?? "", file.translation?.searchText ?? ""].joined(separator: "\n"))
+        file.searchText = Self.searchKey([file.title, filename, file.modID ?? "", file.translation?.searchText ?? "", kind == .mod ? "" : file.summary ?? ""].joined(separator: "\n"))
         return file
     }
 }
@@ -164,7 +187,7 @@ public actor ContentManager {
         let journal = try JSONDecoder().decode(Journal.self, from: Data(contentsOf: journalURL))
         for path in journal.originals {
             let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
-            guard journal.affected.contains(path), (try? fm.attributesOfItem(atPath: backup.path)[.type]) as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentManager.missingRestoreBackup(path, transactionURL.path)) }
+            guard journal.affected.contains(path), Self.supportsContentType((try? fm.attributesOfItem(atPath: backup.path)[.type]) as? FileAttributeType, path: path) else { throw RuriError.message(Messages.CoreContentManager.missingRestoreBackup(path, transactionURL.path)) }
         }
         // Backups remain in place throughout recovery so another interrupted
         // recovery can safely repeat the same operation.
@@ -256,22 +279,33 @@ public actor ContentManager {
         try lock(); defer { unlock() }
         try recover()
         let managed = Dictionary(try readRecords().filter { $0.kind == kind }.map { ($0.relativePath, $0) }, uniquingKeysWith: { first, _ in first })
-        let cache = kind == .mod ? LocalModMetadataCache.shared(in: paths.cache) : nil
-        defer { if !cachedOnly { cache?.flush() } }
+        let cache = LocalContentMetadataCache.shared(in: paths.cache)
+        defer { if !cachedOnly { cache.flush() } }
         let directory = root.appendingPathComponent(kind.folder)
         guard FileManager.default.fileExists(atPath: directory.path) else { return [] }
         return try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [], options: [.skipsHiddenFiles]).compactMap { url in
             try Task.checkCancellation()
             let enabled = !url.lastPathComponent.hasSuffix(".disabled")
             let filename = enabled ? url.lastPathComponent : String(url.lastPathComponent.dropLast(9))
-            guard kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) else { return nil }
-            guard let stamp = LocalContentStamp.read(url) else { return nil }
+            guard let stamp = LocalContentStamp.read(url, allowDirectory: kind != .mod) else { return nil }
+            if stamp.isDirectory {
+                guard Self.isPackDirectory(url, kind: kind) else { return nil }
+            } else if !kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) { return nil }
             let record = managed["\(kind.folder)/\(url.lastPathComponent)"]
-            let cached = cachedOnly ? cache?.cached(stamp) : cache?.resolve(url, stamp: stamp)
+            let cached = cachedOnly ? cache.cached(stamp, kind: kind) : cache.resolve(url, stamp: stamp, kind: kind)
             var file = LocalContentFile(url: url, filename: filename, title: filename, version: nil, modID: nil, kind: kind, enabled: enabled, size: stamp.size, managed: record)
             file.stamp = stamp
-            return file.presenting(cached?.metadata, loaded: kind != .mod || cached != nil)
+            return file.presenting(cached?.metadata, pack: cached?.pack, identities: cached?.identities ?? [], loaded: cached?.isParsed == true)
         }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
+    }
+    static func isPackDirectory(_ url: URL, kind: ContentKind) -> Bool {
+        guard kind != .mod else { return false }
+        let child = url.appendingPathComponent(kind == .resourcepack ? "pack.mcmeta" : "shaders")
+        guard let values = try? child.resourceValues(forKeys: [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey]), values.isSymbolicLink != true else { return false }
+        return kind == .resourcepack ? values.isRegularFile == true : values.isDirectory == true
+    }
+    static func supportsContentType(_ type: FileAttributeType?, path: String) -> Bool {
+        type == .typeRegular || (type == .typeDirectory && ["resourcepacks", "shaderpacks"].contains(String(path.split(separator: "/").first ?? "")))
     }
     /// How many files of a kind the instance holds, without opening them, for
     /// summaries that need no titles or versions.
@@ -281,11 +315,13 @@ public actor ContentManager {
         let directory = root.appendingPathComponent(kind.folder)
         guard FileManager.default.fileExists(atPath: directory.path) else { return (0, 0) }
         var total = 0, disabled = 0
-        for url in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) {
-            guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { continue }
+        for url in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles]) {
+            let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else { continue }
             let enabled = !url.lastPathComponent.hasSuffix(".disabled")
             let filename = enabled ? url.lastPathComponent : String(url.lastPathComponent.dropLast(9))
-            guard kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) else { continue }
+            guard (values.isDirectory == true && Self.isPackDirectory(url, kind: kind)) ||
+                    (values.isRegularFile == true && kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased())) else { continue }
             total += 1
             if !enabled { disabled += 1 }
         }
@@ -299,16 +335,47 @@ public actor ContentManager {
         var plans: [ContentInstallation] = []
         let existing = try scan(kind)
         var importedIDs = Set<String>()
+        var containsDirectory = false
         for file in files {
-            guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.chooseFiles(String(describing: kind.fileExtensions.map { "." + $0 }.joined(separator: Messages.CoreContentManager.importedIDsSeparator.localized)))) }
-            _ = try Archive(url: file, accessMode: .read)
-            let size = try file.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
+            let values = try file.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey, .fileSizeKey])
+            let directory = values.isDirectory == true
+            guard values.isSymbolicLink != true else { throw RuriError.message(Messages.CoreContentManager.symlinkUnmodified(file.lastPathComponent)) }
+            if directory {
+                guard Self.isPackDirectory(file, kind: kind) else { throw RuriError.message(Messages.ContentDetails.invalidPackFolder) }
+                containsDirectory = true
+            } else {
+                guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.chooseFiles(String(describing: kind.fileExtensions.map { "." + $0 }.joined(separator: Messages.CoreContentManager.importedIDsSeparator.localized)))) }
+                _ = try Archive(url: file, accessMode: .read)
+            }
+            let size = directory ? 0 : values.fileSize ?? 0
             let info = kind == .mod ? Self.modInfo(file) : nil
             if let id = info?.id, existing.contains(where: { $0.modID == id }) || !importedIDs.insert(id).inserted { throw RuriError.message(Messages.CoreContentManager.duplicateModID(String(describing: info?.name ?? id))) }
-            let record = ManagedContent(provider: "local", projectID: UUID().uuidString, versionID: "local", title: info?.name ?? file.deletingPathExtension().lastPathComponent, versionName: info?.version ?? Messages.CoreContentManager.localFile.localized, kind: kind, filename: file.lastPathComponent, size: Int64(size))
+            let record = ManagedContent(provider: "local", projectID: UUID().uuidString, versionID: "local", title: info?.name ?? (directory ? file.lastPathComponent : file.deletingPathExtension().lastPathComponent), versionName: info?.version ?? Messages.CoreContentManager.localFile.localized, kind: kind, filename: file.lastPathComponent, size: Int64(size))
             plans.append(ContentInstallation(record: record, source: file))
         }
-        try install(plans)
+        if containsDirectory { try importIncludingFolders(plans) }
+        else { try install(plans) }
+    }
+    private func importIncludingFolders(_ plans: [ContentInstallation]) throws {
+        try recover(); try Task.checkCancellation()
+        let records = try readRecords(), paths = plans.map { $0.record.relativePath }
+        guard Set(paths).count == paths.count else { throw RuriError.message(Messages.CoreContentManager.duplicateContentFilenames) }
+        for path in paths {
+            guard !FileManager.default.fileExists(atPath: try contentURL(path).path) else { throw RuriError.message(Messages.CoreContentManager.targetFileConflict(path)) }
+        }
+        for plan in plans {
+            let source = plan.source.standardizedFileURL.resolvingSymlinksInPath().path + "/"
+            let destination = try contentURL(plan.record.relativePath).standardizedFileURL.resolvingSymlinksInPath().path + "/"
+            guard !destination.hasPrefix(source) else { throw RuriError.message(Messages.CoreContentManager.targetFileConflict(plan.record.filename)) }
+        }
+        try changeFiles(affected: paths, oldRecords: records) {
+            for plan in plans {
+                let destination = try contentURL(plan.record.relativePath)
+                try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try FileManager.default.copyItem(at: plan.source, to: destination)
+            }
+            try writeRecords(records.filter { !paths.contains($0.relativePath) } + plans.map(\.record))
+        }
     }
     public func remove(_ file: LocalContentFile) throws { _ = try remove([file]) }
     struct ModInfo { let id: String?; let name: String?; let version: String? }

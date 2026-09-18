@@ -183,11 +183,107 @@ extension Messages {
         public static func resultCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "contentDetails.resultCount", table: "ContentDetails", fallback: "%1$lld 项结果", arguments: [.integer(value0)])
         }
-        /// 正在读取模组信息…
+        /// 正在读取资源信息…
         ///
         /// Resource: `ContentDetails.contentDetails.loadingMetadata`.
         public static var loadingMetadata: LocalizedMessage {
-            .init(key: "contentDetails.loadingMetadata", table: "ContentDetails", fallback: "正在读取模组信息…")
+            .init(key: "contentDetails.loadingMetadata", table: "ContentDetails", fallback: "正在读取资源信息…")
+        }
+        /// 请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。
+        ///
+        /// Resource: `ContentDetails.contentDetails.invalidPackFolder`.
+        public static var invalidPackFolder: LocalizedMessage {
+            .init(key: "contentDetails.invalidPackFolder", table: "ContentDetails", fallback: "请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。")
+        }
+        /// 文件夹
+        ///
+        /// Resource: `ContentDetails.contentDetails.folder`.
+        public static var folder: LocalizedMessage {
+            .init(key: "contentDetails.folder", table: "ContentDetails", fallback: "文件夹")
+        }
+        /// 包含文件夹
+        ///
+        /// Resource: `ContentDetails.contentDetails.includesFolders`.
+        public static var includesFolders: LocalizedMessage {
+            .init(key: "contentDetails.includesFolders", table: "ContentDetails", fallback: "包含文件夹")
+        }
+        /// 文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。
+        ///
+        /// Resource: `ContentDetails.contentDetails.folderOnlineInfo`.
+        public static var folderOnlineInfo: LocalizedMessage {
+            .init(key: "contentDetails.folderOnlineInfo", table: "ContentDetails", fallback: "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。")
+        }
+        /// 资源格式
+        ///
+        /// Resource: `ContentDetails.contentDetails.packFormat`.
+        public static var packFormat: LocalizedMessage {
+            .init(key: "contentDetails.packFormat", table: "ContentDetails", fallback: "资源格式")
+        }
+        /// 当前游戏格式
+        ///
+        /// Resource: `ContentDetails.contentDetails.gameFormat`.
+        public static var gameFormat: LocalizedMessage {
+            .init(key: "contentDetails.gameFormat", table: "ContentDetails", fallback: "当前游戏格式")
+        }
+        /// 兼容性
+        ///
+        /// Resource: `ContentDetails.contentDetails.compatibility`.
+        public static var compatibility: LocalizedMessage {
+            .init(key: "contentDetails.compatibility", table: "ContentDetails", fallback: "兼容性")
+        }
+        /// 格式兼容
+        ///
+        /// Resource: `ContentDetails.contentDetails.compatible`.
+        public static var compatible: LocalizedMessage {
+            .init(key: "contentDetails.compatible", table: "ContentDetails", fallback: "格式兼容")
+        }
+        /// 适用于较早的游戏版本
+        ///
+        /// Resource: `ContentDetails.contentDetails.packTooOld`.
+        public static var packTooOld: LocalizedMessage {
+            .init(key: "contentDetails.packTooOld", table: "ContentDetails", fallback: "适用于较早的游戏版本")
+        }
+        /// 需要较新的游戏版本
+        ///
+        /// Resource: `ContentDetails.contentDetails.packTooNew`.
+        public static var packTooNew: LocalizedMessage {
+            .init(key: "contentDetails.packTooNew", table: "ContentDetails", fallback: "需要较新的游戏版本")
+        }
+        /// 资源包信息无效
+        ///
+        /// Resource: `ContentDetails.contentDetails.invalidPackMetadata`.
+        public static var invalidPackMetadata: LocalizedMessage {
+            .init(key: "contentDetails.invalidPackMetadata", table: "ContentDetails", fallback: "资源包信息无效")
+        }
+        /// 缺少资源包信息
+        ///
+        /// Resource: `ContentDetails.contentDetails.missingPackMetadata`.
+        public static var missingPackMetadata: LocalizedMessage {
+            .init(key: "contentDetails.missingPackMetadata", table: "ContentDetails", fallback: "缺少资源包信息")
+        }
+        /// 暂时无法判断
+        ///
+        /// Resource: `ContentDetails.contentDetails.unknownCompatibility`.
+        public static var unknownCompatibility: LocalizedMessage {
+            .init(key: "contentDetails.unknownCompatibility", table: "ContentDetails", fallback: "暂时无法判断")
+        }
+        /// 未找到光影文件
+        ///
+        /// Resource: `ContentDetails.contentDetails.missingShaders`.
+        public static var missingShaders: LocalizedMessage {
+            .init(key: "contentDetails.missingShaders", table: "ContentDetails", fallback: "未找到光影文件")
+        }
+        /// 游戏版本
+        ///
+        /// Resource: `ContentDetails.contentDetails.gameVersions`.
+        public static var gameVersions: LocalizedMessage {
+            .init(key: "contentDetails.gameVersions", table: "ContentDetails", fallback: "游戏版本")
+        }
+        /// Iris 功能要求
+        ///
+        /// Resource: `ContentDetails.contentDetails.irisFeatures`.
+        public static var irisFeatures: LocalizedMessage {
+            .init(key: "contentDetails.irisFeatures", table: "ContentDetails", fallback: "Iris 功能要求")
         }
         static let definitions: [String: MessageDefinition] = [
             "ContentDetails:contentDetails.details": .init("资源详情", []),
@@ -220,7 +316,23 @@ extension Messages {
             "ContentDetails:contentDetails.refresh": .init("刷新列表", []),
             "ContentDetails:contentDetails.metadataAttribution": .init("中文名称与百科关联来自 MC 百科，由 HMCL 整理。", []),
             "ContentDetails:contentDetails.resultCount": .init("%1$lld 项结果", [.integer]),
-            "ContentDetails:contentDetails.loadingMetadata": .init("正在读取模组信息…", []),
+            "ContentDetails:contentDetails.loadingMetadata": .init("正在读取资源信息…", []),
+            "ContentDetails:contentDetails.invalidPackFolder": .init("请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。", []),
+            "ContentDetails:contentDetails.folder": .init("文件夹", []),
+            "ContentDetails:contentDetails.includesFolders": .init("包含文件夹", []),
+            "ContentDetails:contentDetails.folderOnlineInfo": .init("文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。", []),
+            "ContentDetails:contentDetails.packFormat": .init("资源格式", []),
+            "ContentDetails:contentDetails.gameFormat": .init("当前游戏格式", []),
+            "ContentDetails:contentDetails.compatibility": .init("兼容性", []),
+            "ContentDetails:contentDetails.compatible": .init("格式兼容", []),
+            "ContentDetails:contentDetails.packTooOld": .init("适用于较早的游戏版本", []),
+            "ContentDetails:contentDetails.packTooNew": .init("需要较新的游戏版本", []),
+            "ContentDetails:contentDetails.invalidPackMetadata": .init("资源包信息无效", []),
+            "ContentDetails:contentDetails.missingPackMetadata": .init("缺少资源包信息", []),
+            "ContentDetails:contentDetails.unknownCompatibility": .init("暂时无法判断", []),
+            "ContentDetails:contentDetails.missingShaders": .init("未找到光影文件", []),
+            "ContentDetails:contentDetails.gameVersions": .init("游戏版本", []),
+            "ContentDetails:contentDetails.irisFeatures": .init("Iris 功能要求", []),
         ]
     }
 }

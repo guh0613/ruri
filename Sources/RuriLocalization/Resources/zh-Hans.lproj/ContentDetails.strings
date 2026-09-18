@@ -90,4 +90,52 @@
 "contentDetails.resultCount" = "%1$lld 项结果";
 
 /* @symbol ContentDetails.loadingMetadata @args - */
-"contentDetails.loadingMetadata" = "正在读取模组信息…";
+"contentDetails.loadingMetadata" = "正在读取资源信息…";
+
+/* @symbol ContentDetails.invalidPackFolder @args - */
+"contentDetails.invalidPackFolder" = "请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。";
+
+/* @symbol ContentDetails.folder @args - */
+"contentDetails.folder" = "文件夹";
+
+/* @symbol ContentDetails.includesFolders @args - */
+"contentDetails.includesFolders" = "包含文件夹";
+
+/* @symbol ContentDetails.folderOnlineInfo @args - */
+"contentDetails.folderOnlineInfo" = "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。";
+
+/* @symbol ContentDetails.packFormat @args - */
+"contentDetails.packFormat" = "资源格式";
+
+/* @symbol ContentDetails.gameFormat @args - */
+"contentDetails.gameFormat" = "当前游戏格式";
+
+/* @symbol ContentDetails.compatibility @args - */
+"contentDetails.compatibility" = "兼容性";
+
+/* @symbol ContentDetails.compatible @args - */
+"contentDetails.compatible" = "格式兼容";
+
+/* @symbol ContentDetails.packTooOld @args - */
+"contentDetails.packTooOld" = "适用于较早的游戏版本";
+
+/* @symbol ContentDetails.packTooNew @args - */
+"contentDetails.packTooNew" = "需要较新的游戏版本";
+
+/* @symbol ContentDetails.invalidPackMetadata @args - */
+"contentDetails.invalidPackMetadata" = "资源包信息无效";
+
+/* @symbol ContentDetails.missingPackMetadata @args - */
+"contentDetails.missingPackMetadata" = "缺少资源包信息";
+
+/* @symbol ContentDetails.unknownCompatibility @args - */
+"contentDetails.unknownCompatibility" = "暂时无法判断";
+
+/* @symbol ContentDetails.missingShaders @args - */
+"contentDetails.missingShaders" = "未找到光影文件";
+
+/* @symbol ContentDetails.gameVersions @args - */
+"contentDetails.gameVersions" = "游戏版本";
+
+/* @symbol ContentDetails.irisFeatures @args - */
+"contentDetails.irisFeatures" = "Iris 功能要求";

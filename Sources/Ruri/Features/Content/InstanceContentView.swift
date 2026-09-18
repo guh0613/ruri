@@ -22,6 +22,7 @@ struct InstanceContentView: View {
     @State private var filtered: [LocalContentFile] = []
     @State private var filePositions: [String: Int] = [:]
     @State private var enabledCount = 0
+    @State private var gameFormat: ResourcePackFormat?
     @State private var metadataTask: Task<Void, Never>?
     @State private var loadGeneration = UUID()
     @State private var search = ""
@@ -47,6 +48,7 @@ struct InstanceContentView: View {
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
     private var selectedFiles: [LocalContentFile] { selection.compactMap { filePositions[$0].map { files[$0] } } }
     private var actionFiles: [LocalContentFile] { selection.isEmpty ? filtered : selectedFiles }
+    private var updateCandidates: [LocalContentFile] { actionFiles.filter { !$0.isDirectory } }
     private var selectionSummary: String {
         if !selection.isEmpty { return Messages.AppInstanceContentView.selectedCount(Int64(selection.count)).localized }
         if !search.isEmpty || statusFilter != .all { return Messages.ContentDetails.resultCount(Int64(filtered.count)).localized }
@@ -78,7 +80,15 @@ struct InstanceContentView: View {
         } footer: {
             footer
         }
-        .task(id: kind) { files = []; filtered = []; filePositions = [:]; enabledCount = 0; selection.removeAll(); cancelUpdateCheck(); identificationNotice = nil; updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
+        .task(id: kind) {
+            files = []; filtered = []; filePositions = [:]; enabledCount = 0; gameFormat = nil
+            selection.removeAll(); cancelUpdateCheck(); identificationNotice = nil; updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false
+            await reload()
+            if kind == .resourcepack {
+                let format = await ResourcePackGameFormat.shared.read(instance: instance, paths: model.paths)
+                if !Task.isCancelled, kind == .resourcepack { gameFormat = format }
+            }
+        }
         .onChange(of: search) { refilter() }
         .onChange(of: statusFilter) { refilter() }
         .onChange(of: model.busy) {
@@ -86,7 +96,9 @@ struct InstanceContentView: View {
             else { Task { await reload() } }
         }
         .sheet(item: $detailTarget) { file in
-            LocalContentDetailView(file: filePositions[file.id].map { files[$0] } ?? file)
+            LocalContentDetailView(file: filePositions[file.id].map { files[$0] } ?? file, gameFormat: gameFormat) { source, matches in
+                applyIdentities(matches, to: source)
+            }
         }
         .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
         .sheet(item: $batchPlan) { plan in ContentBatchUpdateView(plan: plan) }
@@ -102,7 +114,7 @@ struct InstanceContentView: View {
             }
         }
         .onDisappear { cancelUpdateCheck(); cancelMetadataLoading() }
-        .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data }, allowsMultipleSelection: true) { result in
+        .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data } + (kind == .mod ? [] : [.folder]), allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
                 mutate(Messages.AppInstanceContentView.importContentCount(Int64(urls.count), kind.title).localized) {
@@ -172,6 +184,9 @@ struct InstanceContentView: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(file.displayTitle).font(.body.weight(.medium)).lineLimit(1).help(file.displayTitle)
                         Text(file.filename).font(.caption).foregroundStyle(.secondary).lineLimit(1).help(file.filename)
+                        if file.kind != .mod, let summary = file.summary {
+                            Text(summary.replacingOccurrences(of: "\n", with: " ")).font(.caption).foregroundStyle(.secondary).lineLimit(1).help(summary)
+                        }
                     }
                 }.padding(.vertical, 5)
             }.width(min: 190, ideal: 330)
@@ -182,10 +197,20 @@ struct InstanceContentView: View {
                         Text(provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : Messages.ContentDetails.localFile.localized)
                             .font(.caption2).lineLimit(1)
                     }
+                    if file.kind == .resourcepack {
+                        let compatibility = file.compatibility(with: gameFormat)
+                        if compatibility.isWarning {
+                            Label(compatibility.title, systemImage: "exclamationmark.triangle")
+                                .font(.caption2).foregroundStyle(.orange).lineLimit(1).help(compatibility.title)
+                        }
+                    } else if file.kind == .shader, let state = file.packMetadata?.state, state != .valid {
+                        Label(Messages.ContentDetails.missingShaders.localized, systemImage: "exclamationmark.triangle")
+                            .font(.caption2).foregroundStyle(.orange).lineLimit(1).help(Messages.ContentDetails.missingShaders.localized)
+                    }
                 }.foregroundStyle(.secondary)
             }.width(min: 90, ideal: 130, max: 170)
             TableColumn(Messages.AppInstanceContentView.sizeColumn.localized) { file in
-                Text(LocalizedFormat.bytes(file.size)).font(.callout).foregroundStyle(.secondary)
+                Text(file.isDirectory ? Messages.ContentDetails.folder.localized : LocalizedFormat.bytes(file.size)).font(.callout).foregroundStyle(.secondary)
                     .monospacedDigit().frame(maxWidth: .infinity, alignment: .trailing)
             }.width(76)
             TableColumn(Messages.AppInstanceContentView.actionsColumn.localized) { file in
@@ -273,11 +298,12 @@ struct InstanceContentView: View {
             Button(Messages.Common.cancel.localized) { cancelUpdateCheck() }
         } else {
             Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }
-                .disabled(actionFiles.isEmpty || loading)
-            if hasUpdates(actionFiles) {
-                Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepareBatch(actionFiles) }
+                .disabled(updateCandidates.isEmpty || loading)
+                .help(updateCandidates.isEmpty && !actionFiles.isEmpty ? Messages.ContentDetails.folderOnlineInfo.localized : Messages.AppInstanceContentView.checkForUpdates.localized)
+            if hasUpdates(updateCandidates) {
+                Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepareBatch(updateCandidates) }
                     .disabled(!canModify || loading)
-            } else if updatesChecked && checkedFileIDs == Set(actionFiles.map(\.id)) {
+            } else if updatesChecked && checkedFileIDs == Set(updateCandidates.map(\.id)) {
                 Label(Messages.ContentDetails.noIdentifiedUpdates.localized, systemImage: "checkmark.circle")
                     .labelStyle(.iconOnly).foregroundStyle(.secondary).help(Messages.ContentDetails.noIdentifiedUpdates.localized)
             }
@@ -308,7 +334,10 @@ struct InstanceContentView: View {
                         guard loadGeneration == generation else { return }
                         // Preserve the snapshot's ordering while names and icons arrive.
                         for file in batch {
-                            if let position = filePositions[file.id] { files[position] = file }
+                            if let position = filePositions[file.id] {
+                                let current = files[position].identities
+                                files[position] = current.isEmpty ? file : file.presenting(identities: current)
+                            }
                         }
                         refilter()
                     }
@@ -327,6 +356,11 @@ struct InstanceContentView: View {
         }
         selection.formIntersection(Set(filtered.map(\.id)))
     }
+    private func applyIdentities(_ identities: [ContentIdentity], to source: LocalContentFile) {
+        guard let position = filePositions[source.id], files[position].contentRevision == source.contentRevision else { return }
+        files[position] = files[position].presenting(identities: identities)
+        refilter()
+    }
     private func mutate(_ title: String, action: @escaping @MainActor @Sendable () async throws -> Void) {
         guard canModify else { return }
         cancelUpdateCheck()
@@ -342,7 +376,7 @@ struct InstanceContentView: View {
         mutate(Messages.AppInstanceContentView.selectedContentCount(String(describing: enabled ? Messages.AppInstanceContentView.enable.localized : Messages.AppInstanceContentView.disable.localized), Int64(selected.count)).localized) { try await manager.setEnabled(enabled, files: selected) }
     }
     private func checkUpdates() {
-        let snapshot = actionFiles
+        let snapshot = updateCandidates
         guard updateTask == nil, !snapshot.isEmpty else { return }
         error = nil; identificationNotice = nil; updatesChecked = false; updates = [:]; curseUpdates = [:]
         let generation = UUID(); updateGeneration = generation
@@ -356,6 +390,9 @@ struct InstanceContentView: View {
                 if !unknown.isEmpty {
                     let result = try await service.identify(unknown)
                     try Task.checkCancellation()
+                    for file in unknown {
+                        if let matches = result.matches[file.id] { applyIdentities(matches, to: file) }
+                    }
                     failures += result.failures
                     let skipped = try await manager.associate(unknown, matches: result.matches)
                     if !skipped.isEmpty { failures.append(Messages.ContentDetails.duplicateProjects(skipped.joined(separator: ", ")).localized) }

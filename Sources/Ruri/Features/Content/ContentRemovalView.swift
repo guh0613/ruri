@@ -28,7 +28,7 @@ struct ContentRemovalView: View {
                 }
             }.listStyle(.bordered)
             HStack {
-                Text(LocalizedFormat.bytes(files.reduce(0) { $0 + $1.size })).font(.caption).foregroundStyle(.secondary)
+                Text(files.contains(where: \.isDirectory) ? Messages.ContentDetails.includesFolders.localized : LocalizedFormat.bytes(files.reduce(0) { $0 + $1.size })).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(Messages.AppContentRemovalView.moveToTrash.localized, role: .destructive) { remove(); dismiss() }.disabled(model.busy || model.isInstanceInUse(instanceID))

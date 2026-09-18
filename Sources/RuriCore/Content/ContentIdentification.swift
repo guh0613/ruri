@@ -22,8 +22,10 @@ public actor ContentIdentificationService {
     private let modrinth: ModrinthService
     private let curseforge: CurseForgeService?
     private let cacheDirectory: URL
+    private let metadataDirectory: URL
     public init(cacheDirectory: URL, modrinth: ModrinthService = ModrinthService(), curseforge: CurseForgeService? = nil) {
         self.cacheDirectory = cacheDirectory.appendingPathComponent("content-identities-v1")
+        self.metadataDirectory = cacheDirectory
         self.modrinth = modrinth; self.curseforge = curseforge
     }
     private struct Input: Sendable { let file: LocalContentFile; let digest: ContentFileDigest }
@@ -37,6 +39,7 @@ public actor ContentIdentificationService {
         var result = ContentIdentificationResult(), inputs: [Input] = []
         for file in files {
             try Task.checkCancellation()
+            guard !file.isDirectory else { continue }
             do { inputs.append(Input(file: file, digest: try ContentFileDigest.read(file.url))) }
             catch { if Task.isCancelled { throw CancellationError() }; result.failures.append(error.localizedDescription) }
         }
@@ -73,6 +76,11 @@ public actor ContentIdentificationService {
                 }
             }
         }
+        let presentationCache = LocalContentMetadataCache.shared(in: metadataDirectory)
+        for input in inputs {
+            if let matches = result.matches[input.file.id], !matches.isEmpty { presentationCache.remember(matches, for: input.file) }
+        }
+        presentationCache.flush()
         return result
     }
     private func cacheURL(_ hash: String, provider: String) -> URL { cacheDirectory.appendingPathComponent(provider + "-" + hash + ".json") }
@@ -113,7 +121,7 @@ public actor ContentIdentificationService {
             let record = ManagedContent(provider: "curseforge", projectID: String(project.id), versionID: String(file.id), title: project.name, versionName: file.displayName,
                                         publishedAt: file.fileDate, kind: kind, filename: file.fileName, sha1: digest.sha1, sha512: digest.sha512, md5: digest.md5, size: digest.size,
                                         requiredProjects: file.dependencies.filter { $0.relationType == 3 }.map { String($0.modId) })
-            let loaders = file.gameVersions.filter { ["fabric", "quilt", "forge", "neoforge", "liteloader"].contains($0.lowercased()) }
+            let loaders = file.gameVersions.filter { ["fabric", "quilt", "forge", "neoforge", "liteloader", "iris", "optifine", "oculus", "canvas"].contains($0.lowercased()) }
             result[digest.sha512] = ContentIdentity(record: record, pageURL: project.links?.websiteUrl, iconURL: project.logo?.thumbnailUrl, summary: project.summary, loaders: loaders,
                                                    gameVersions: file.gameVersions.filter { !loaders.contains($0) })
         }

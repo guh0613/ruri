@@ -4,9 +4,9 @@ import Foundation
 public enum ContentMetadataLoader {
     @concurrent public static func enrich(_ files: [LocalContentFile], cacheDirectory: URL,
                               receive: @escaping @Sendable ([LocalContentFile]) async -> Void) async {
-        let pending = files.filter { $0.kind == .mod && !$0.metadataLoaded }
+        let pending = files.filter { !$0.metadataLoaded }
         guard !pending.isEmpty, !Task.isCancelled else { return }
-        let cache = LocalModMetadataCache.shared(in: cacheDirectory)
+        let cache = LocalContentMetadataCache.shared(in: cacheDirectory)
         defer { cache.flush() }
         // Small chunks cap open archives and memory, and return early visible results.
         await withTaskGroup(of: [LocalContentFile].self) { group in
@@ -19,8 +19,8 @@ public enum ContentMetadataLoader {
                     var result: [LocalContentFile] = []
                     for file in batch {
                         guard !Task.isCancelled else { break }
-                        guard let stamp = file.stamp, let entry = cache.resolve(file.url, stamp: stamp) else { continue }
-                        result.append(file.presenting(entry.metadata, loaded: true))
+                        guard let stamp = file.stamp, let entry = cache.resolve(file.url, stamp: stamp, kind: file.kind) else { continue }
+                        result.append(file.presenting(entry.metadata, pack: entry.pack, identities: entry.identities ?? [], loaded: true))
                     }
                     return result
                 }

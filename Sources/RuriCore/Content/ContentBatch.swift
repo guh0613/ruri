@@ -65,8 +65,9 @@ extension ContentManager {
         guard Set(files.map(\.id)).count == files.count else { throw RuriError.message(Messages.CoreContentBatch.duplicateSelection) }
         for file in files {
             let path = relativePath(file), expected = try contentURL(path)
-            let info = try expected.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-            guard expected.standardizedFileURL.resolvingSymlinksInPath() == file.url.standardizedFileURL.resolvingSymlinksInPath(), info.isRegularFile == true, Int64(info.fileSize ?? -1) == file.size,
+            let info = try expected.resourceValues(forKeys: [.isRegularFileKey, .isDirectoryKey, .fileSizeKey])
+            let validType = file.isDirectory ? (file.kind != .mod && info.isDirectory == true && LocalContentStamp.read(expected, allowDirectory: true) == file.stamp) : (info.isRegularFile == true && Int64(info.fileSize ?? -1) == file.size)
+            guard expected.standardizedFileURL.resolvingSymlinksInPath() == file.url.standardizedFileURL.resolvingSymlinksInPath(), validType,
                   records.first(where: { $0.relativePath == path }) == file.managed else {
                 throw RuriError.message(Messages.CoreContentBatch.contentListChanged(file.filename))
             }
@@ -101,7 +102,7 @@ extension ContentManager {
                 let source = try contentURL(path)
                 if fm.fileExists(atPath: source.path) {
                     let attributes = try fm.attributesOfItem(atPath: source.path)
-                    guard attributes[.type] as? FileAttributeType == .typeRegular else { throw RuriError.message(Messages.CoreContentBatch.unsupportedContentFileType(path)) }
+                    guard Self.supportsContentType(attributes[.type] as? FileAttributeType, path: path) else { throw RuriError.message(Messages.CoreContentBatch.unsupportedContentFileType(path)) }
                     let backup = try LauncherPaths.safePath(path, within: transactionURL.appendingPathComponent("backups"))
                     try fm.createDirectory(at: backup.deletingLastPathComponent(), withIntermediateDirectories: true)
                     try fm.copyItem(at: source, to: backup); originals.append(path)
