@@ -88,8 +88,8 @@ jobs:
           RURI_MICROSOFT_CLIENT_ID: ${{ vars.RURI_MICROSOFT_CLIENT_ID }}
           RURI_CURSEFORGE_API_KEY: ${{ secrets.RURI_CURSEFORGE_API_KEY }}
           RURI_REQUIRE_SIGNING: '1'
-          RURI_SIGN_P12_BASE64: ${{ secrets.RURI_SIGN_P12_BASE64 }}
-          RURI_SIGN_P12_PASSWORD: ${{ secrets.RURI_SIGN_P12_PASSWORD }}
+          RURI_SIGN_P12_BASE64: ${{ secrets.RURI_APPLE_SIGN_P12_BASE64 }}
+          RURI_SIGN_P12_PASSWORD: ${{ secrets.RURI_APPLE_SIGN_P12_PASSWORD }}
         run: scripts/package-dmg.sh
       - name: Clean up signing keychain
         if: always()
