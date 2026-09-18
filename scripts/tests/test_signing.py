@@ -103,6 +103,24 @@ class SigningTests(unittest.TestCase):
                 signing.command(["security", "import", "-P", "private password"], label="Import")
         self.assertNotIn("private", str(error.exception))
 
+    def test_security_passwords_use_stdin_and_secrets_are_not_inherited(self):
+        result = subprocess.CompletedProcess([], 0, b"", b"")
+        password = 'private "password" \\ value'
+        with patch.object(subprocess, "run", return_value=result) as run:
+            signing.command(["security", "unlock-keychain", "-p", password, "/keychain path"], label="Unlock",
+                            env={"PATH": "/usr/bin", "RURI_SIGN_P12_BASE64": "private data", "RURI_SIGN_P12_PASSWORD": password})
+        self.assertEqual(run.call_args.args[0], ["/usr/bin/security", "-i"])
+        self.assertEqual(run.call_args.kwargs["env"], {"PATH": "/usr/bin"})
+        self.assertEqual(run.call_args.kwargs["input"],
+                         b'"unlock-keychain" "-p" "private \\"password\\" \\\\ value" "/keychain path"\n')
+
+    def test_security_stdin_rejects_line_injection_and_truncation(self):
+        for value in ["password\nlist-keychains", "password\rcommand", "password\0suffix", "x" * 4096]:
+            with patch.object(subprocess, "run") as run:
+                with self.assertRaises(signing.SigningError):
+                    signing.command(["security", "unlock-keychain", "-p", value], label="Unlock")
+                run.assert_not_called()
+
     def test_final_cleanup_is_confined_to_its_own_temporary_directories(self):
         owned = self.root / "ruri-signing-interrupted"
         owned.mkdir()

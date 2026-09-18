@@ -25,7 +25,23 @@ class SigningError(Exception):
 
 
 def command(arguments, *, label, env=None):
-    result = subprocess.run(arguments, capture_output=True, env=env)
+    environment = dict(os.environ if env is None else env)
+    for name in SECRET_VARIABLES:
+        environment.pop(name, None)
+    input_data = None
+    if arguments[0] == "security":
+        # security supports one command on stdin in interactive mode and
+        # returns that command's status at EOF. Keep passwords out of argv.
+        values = arguments[1:]
+        if len(values) > 32 or any(any(c in value for c in "\0\r\n") for value in values):
+            raise SigningError(f"{label} has invalid input.")
+        def quote(value):
+            return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+        input_data = (" ".join(map(quote, values)) + "\n").encode()
+        if len(input_data) >= 4096:
+            raise SigningError(f"{label} input is too long.")
+        arguments = ["/usr/bin/security", "-i"]
+    result = subprocess.run(arguments, input=input_data, capture_output=True, env=environment)
     if result.returncode:
         # security/openssl arguments can contain passwords. Never include the
         # command line, environment or captured output in an exception/log.
