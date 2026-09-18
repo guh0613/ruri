@@ -79,7 +79,7 @@ jobs:
         env:
           RURI_VERSION: ${{ needs.metadata.outputs.version }}
           RURI_BUILD_NUMBER: ${{ github.run_number }}
-          # Public application ID. Leave unset until Minecraft API access is approved.
+          # Optional public application ID override; otherwise use Resources/Info.plist.
           RURI_MICROSOFT_CLIENT_ID: ${{ vars.RURI_MICROSOFT_CLIENT_ID }}
           RURI_CURSEFORGE_API_KEY: ${{ secrets.RURI_CURSEFORGE_API_KEY }}
           RURI_SIGN_IDENTITY: '-'

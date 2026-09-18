@@ -7,22 +7,22 @@ struct RootView: View {
     @Environment(AppModel.self) private var model
     @State private var columns = NavigationSplitViewVisibility.automatic
     var body: some View {
-        // The library is a list with a detail beside it, so it adds a content
-        // column like Mail; every other page is a single detail.
+        // Library and accounts each have a content column beside their detail.
         ZStack {
             if model.page == .library {
                 LibraryView(columnVisibility: $columns) { RootSidebar() }
+            } else if model.page == .accounts {
+                AccountsView(columnVisibility: $columns) { RootSidebar() }
             } else {
                 NavigationSplitView(columnVisibility: $columns) {
                     RootSidebar()
                 } detail: {
                     Group {
                         switch model.page {
-                        case .home, .library: HomeView()
+                        case .home, .library, .accounts: HomeView()
                         case .discover: DiscoverView()
                         case .history: GameHistoryView()
                         case .activity: LauncherLogView().id(model.logNavigationID)
-                        case .accounts: AccountsView()
                         case .java: JavaView()
                         case .settings: PreferencesView()
                         }

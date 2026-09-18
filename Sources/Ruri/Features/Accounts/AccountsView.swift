@@ -5,8 +5,10 @@ import RuriCore
 
 /// Accounts as a master–detail page: the list on the left, and on the right
 /// the selected player's identity card, appearance and details.
-struct AccountsView: View {
+struct AccountsView<Sidebar: View>: View {
     @Environment(AppModel.self) private var model
+    @Binding var columnVisibility: NavigationSplitViewVisibility
+    @ViewBuilder var sidebar: Sidebar
     @State private var selectedID: UUID?
     @State private var query = ""
     @State private var relogin: Account?
@@ -18,36 +20,39 @@ struct AccountsView: View {
         model.state.accounts.filter { query.isEmpty || $0.username.localizedStandardContains(query) || $0.kindLabel.localizedStandardContains(query) }
     }
     var body: some View {
-        Group {
-            if model.state.accounts.isEmpty {
-                ContentUnavailableView {
-                    Label(Messages.AccountCenter.welcome.localized, systemImage: "person.crop.circle.badge.plus")
-                } description: {
-                    Text(Messages.AccountCenter.welcomeHelp.localized)
-                } actions: {
-                    Button(Messages.AppAccountsView.addAccount.localized) { model.showAccount = true }.buttonStyle(.borderedProminent)
-                        .disabled(model.busy || model.readOnly)
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+            sidebar
+        } content: {
+            accountList
+                .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 300)
+                .navigationTitle(model.page.title)
+                .navigationSubtitle(model.state.accounts.isEmpty ? "" : Messages.AccountCenter.accountCount(Int64(model.state.accounts.count)).localized)
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button { model.showAccount = true } label: { Label(Messages.AppAccountsView.addAccount.localized, systemImage: "plus") }
+                            .help(Messages.AppAccountsView.addAccount.localized).disabled(model.busy || model.readOnly)
+                    }
                 }
-            } else {
-                HSplitView {
-                    accountList.frame(minWidth: 200, idealWidth: 240, maxWidth: 300)
-                    Group {
-                        if let selected {
-                            AccountDetailView(account: selected, relogin: { relogin = selected }, remove: { removing = selected }, logout: { loggingOut = selected }).id("\(selected.id)-\(detailRevision)")
-                        } else {
-                            ContentUnavailableView(Messages.AccountCenter.selectAccount.localized, systemImage: "person.crop.circle")
-                        }
-                    }.frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
+        } detail: {
+            Group {
+                if model.state.accounts.isEmpty {
+                    ContentUnavailableView {
+                        Label(Messages.AccountCenter.welcome.localized, systemImage: "person.crop.circle.badge.plus")
+                    } description: {
+                        Text(Messages.AccountCenter.welcomeHelp.localized)
+                    } actions: {
+                        Button(Messages.AppAccountsView.addAccount.localized) { model.showAccount = true }.buttonStyle(.borderedProminent)
+                            .disabled(model.busy || model.readOnly)
+                    }
+                } else if let selected {
+                    AccountDetailView(account: selected, relogin: { relogin = selected }, remove: { removing = selected }, logout: { loggingOut = selected }).id("\(selected.id)-\(detailRevision)")
+                } else {
+                    ContentUnavailableView(Messages.AccountCenter.selectAccount.localized, systemImage: "person.crop.circle")
                 }
             }
-        }
-        .navigationSubtitle(model.state.accounts.isEmpty ? "" : Messages.AccountCenter.accountCount(Int64(model.state.accounts.count)).localized)
-        .searchable(text: $query, placement: .toolbar, prompt: Messages.AccountCenter.searchAccounts.localized)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { model.showAccount = true } label: { Label(Messages.AppAccountsView.addAccount.localized, systemImage: "plus") }
-                    .help(Messages.AppAccountsView.addAccount.localized).disabled(model.busy || model.readOnly)
-            }
+            .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
+            .searchable(text: $query, placement: .toolbar, prompt: Messages.AccountCenter.searchAccounts.localized)
+            .toolbar { RootToolbar(model: model) }
         }
         .sheet(item: $relogin, onDismiss: { detailRevision = UUID() }) { account in
             if account.kind == .external { ExternalAccountReloginView(account: account) }
@@ -93,7 +98,7 @@ struct AccountsView: View {
                 }.disabled(model.readOnly)
             }
         }.listStyle(.inset)
-            .overlay { if accounts.isEmpty { ContentUnavailableView.search(text: query) } }
+            .overlay { if accounts.isEmpty && !query.isEmpty { ContentUnavailableView.search(text: query) } }
             .onDeleteCommand { if !model.busy && !model.readOnly { removing = selected } }
     }
     private func reconcileSelection() {

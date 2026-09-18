@@ -99,6 +99,12 @@ extension Messages {
         public static var minecraftJavaEntitlementMissing: LocalizedMessage {
             .init(key: "coreAuthentication.entitlementsText1", table: "Errors", fallback: "此 Microsoft 账号未拥有 Minecraft Java 版。")
         }
+        /// 此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。
+        ///
+        /// Resource: `Errors.coreAuthentication.minecraftJavaProfileMissing`.
+        public static var minecraftJavaProfileMissing: LocalizedMessage {
+            .init(key: "coreAuthentication.minecraftJavaProfileMissing", table: "Errors", fallback: "此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Core:coreAuthentication.failureText1": .init("钥匙串访问失败（%1$@），请重新登录或检查系统授权。", [.text]),
             "Core:coreAuthentication.refreshText1": .init("登录已取消。", []),
@@ -116,6 +122,7 @@ extension Messages {
             "Errors:coreAuthentication.explanationText7": .init("%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。", [.text, .text]),
             "Errors:coreAuthentication.uhsText1": .init("Xbox 账号身份校验失败。", []),
             "Errors:coreAuthentication.entitlementsText1": .init("此 Microsoft 账号未拥有 Minecraft Java 版。", []),
+            "Errors:coreAuthentication.minecraftJavaProfileMissing": .init("此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。", []),
         ]
     }
 }

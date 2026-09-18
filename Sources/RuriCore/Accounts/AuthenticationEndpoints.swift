@@ -11,6 +11,7 @@ enum AuthenticationEndpoints {
     static let xstsAuthorize = URL(string: "https://xsts.auth.xboxlive.com/xsts/authorize")!
     static let minecraftLogin = minecraft.appending(path: "authentication/login_with_xbox")
     static let entitlements = minecraft.appending(path: "entitlements/mcstore")
+    static let license = minecraft.appending(path: "entitlements/license")
     static let profile = minecraft.appending(path: "minecraft/profile")
     static let scope = "XboxLive.signin offline_access"
     static let xboxSite = "user.auth.xboxlive.com"

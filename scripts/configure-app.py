@@ -24,7 +24,7 @@ def configure(path: Path) -> None:
     build_number = os.environ.get("RURI_BUILD_NUMBER") or info["CFBundleVersion"]
     if not re.fullmatch(r"[1-9][0-9]*", build_number):
         raise ValueError("RURI_BUILD_NUMBER must be a positive integer.")
-    client_id = os.environ.get("RURI_MICROSOFT_CLIENT_ID", "").strip()
+    client_id = os.environ.get("RURI_MICROSOFT_CLIENT_ID", "").strip() or info.get("RuriMicrosoftClientID", "").strip()
     if client_id:
         # Canonical UUIDs only; a client ID is public, not a client secret.
         if str(uuid.UUID(client_id)) != client_id.lower():

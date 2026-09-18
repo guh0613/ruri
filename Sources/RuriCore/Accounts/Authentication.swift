@@ -75,11 +75,12 @@ public actor MicrosoftAuth {
         var interval = max(code.interval ?? 5, 1)
         while Date() < deadline {
             try await Task.sleep(for: .seconds(interval)); try Task.checkCancellation()
-            let (data, _) = try await form(AuthenticationEndpoints.token, values: ["client_id": clientID, "grant_type": "urn:ietf:params:oauth:grant-type:device_code", "device_code": code.device_code])
+            let (data, status) = try await form(AuthenticationEndpoints.token, values: ["client_id": clientID, "grant_type": "urn:ietf:params:oauth:grant-type:device_code", "device_code": code.device_code])
             let token = try JSONDecoder().decode(OAuthToken.self, from: data)
             if token.error == "authorization_pending" { continue }
             if token.error == "slow_down" { interval += 5; continue }
-            guard let access = token.access_token, let refresh = token.refresh_token else {
+            if token.error == "expired_token" { throw RuriError.message(Messages.CoreAuthentication.deviceLoginCodeExpired) }
+            guard status == 200, token.error == nil, let access = token.access_token, let refresh = token.refresh_token else {
                 throw RuriError.message(token.error == "authorization_declined" ? Messages.CoreAuthentication.loginCancelled : Messages.CoreAuthentication.microsoftLoginExpiredOrFailed)
             }
             return try await exchange(access: access, refresh: refresh)
@@ -134,10 +135,21 @@ public actor MicrosoftAuth {
         let minecraft = try await post(Minecraft.self, url: AuthenticationEndpoints.minecraftLogin, body: ["identityToken": "XBL3.0 x=\(uhs);\(xsts.Token)"])
         var request = URLRequest(url: AuthenticationEndpoints.entitlements)
         request.setValue("Bearer \(minecraft.access_token)", forHTTPHeaderField: "Authorization")
-        let entitlements = try JSONDecoder().decode(Entitlements.self, from: await HTTPClient(session: session).data(for: request))
-        guard !entitlements.items.isEmpty else { throw RuriError.message(Messages.CoreAuthentication.minecraftJavaEntitlementMissing) }
+        // Complete the mcstore check, then verify the Java profile. An empty
+        // store list alone does not rule out access.
+        _ = try await HTTPClient(session: session).data(for: request)
         request.url = AuthenticationEndpoints.profile
-        let profile = try JSONDecoder().decode(Profile.self, from: await HTTPClient(session: session).data(for: request))
+        let profile: Profile
+        do {
+            profile = try JSONDecoder().decode(Profile.self, from: await HTTPClient(session: session).data(for: request))
+        } catch let error as RuriError where error.httpStatusCode == 404 {
+            request.url = AuthenticationEndpoints.license
+            let license = try JSONDecoder().decode(Entitlements.self, from: await HTTPClient(session: session).data(for: request))
+            guard license.items.contains(where: { $0.name == "game_minecraft" }) else {
+                throw RuriError.message(Messages.CoreAuthentication.minecraftJavaEntitlementMissing)
+            }
+            throw RuriError.message(Messages.CoreAuthentication.minecraftJavaProfileMissing)
+        }
         return (Account(username: profile.name, uuid: profile.id, kind: .microsoft), AccountCredentials(accessToken: minecraft.access_token, refreshToken: refresh, expiresAt: Date().addingTimeInterval(TimeInterval(minecraft.expires_in)), clientID: clientID))
     }
 }

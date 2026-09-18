@@ -307,6 +307,9 @@
 /* @symbol CoreAuthentication.minecraftJavaEntitlementMissing @args - */
 "coreAuthentication.entitlementsText1" = "此 Microsoft 账号未拥有 Minecraft Java 版。";
 
+/* @symbol CoreAuthentication.minecraftJavaProfileMissing @args - */
+"coreAuthentication.minecraftJavaProfileMissing" = "此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。";
+
 /* @symbol CoreAuthlibInjector.externalAuthComponentNotReady @args - */
 "coreAuthlibInjector.argumentsText1" = "外置认证组件尚未准备好。";
 
