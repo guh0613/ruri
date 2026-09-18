@@ -26,6 +26,9 @@ enum ModrinthEndpoints {
     }
     static let categories = api.appending(path: "tag/category")
     static func project(_ id: String) throws -> URL { try EndpointURL.build(base: api, path: ["project", id]) }
+    static func projects(_ ids: [String]) throws -> URL {
+        try EndpointURL.build(base: api, path: ["projects"], query: [.init(name: "ids", value: String(decoding: JSONEncoder().encode(ids), as: UTF8.self))])
+    }
     static func version(_ id: String) throws -> URL { try EndpointURL.build(base: api, path: ["version", id]) }
     static func projectPage(type: String, identifier: String) -> URL? {
         guard ["mod", "modpack", "resourcepack", "shader", "datapack", "plugin"].contains(type) else { return nil }

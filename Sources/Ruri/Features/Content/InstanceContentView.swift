@@ -19,6 +19,11 @@ struct InstanceContentView: View {
     @State private var kind: ContentKind
     init(instance: GameInstance, kind: ContentKind = .mod) { self.instance = instance; _kind = State(initialValue: kind) }
     @State private var files: [LocalContentFile] = []
+    @State private var filtered: [LocalContentFile] = []
+    @State private var filePositions: [String: Int] = [:]
+    @State private var enabledCount = 0
+    @State private var metadataTask: Task<Void, Never>?
+    @State private var loadGeneration = UUID()
     @State private var search = ""
     @State private var statusFilter = ContentStatusFilter.all
     @State private var selection = Set<String>()
@@ -31,16 +36,22 @@ struct InstanceContentView: View {
     @State private var batchPlan: ContentBatchUpdatePlan?
     @State private var updateTask: Task<Void, Never>?
     @State private var updatesChecked = false
+    @State private var checkedFileIDs = Set<String>()
     @State private var showImporter = false
     @State private var deleteTarget: LocalContentFile?
     @State private var versionTarget: LocalContentFile?
+    @State private var detailTarget: LocalContentFile?
+    @State private var updateGeneration = UUID()
+    @State private var identificationNotice: String?
     private var manager: ContentManager { ContentManager(paths: model.paths, instanceID: instance.id) }
     private var canModify: Bool { !model.busy && !model.isInstanceInUse(instance.id) }
-    private var filtered: [LocalContentFile] { files.filter {
-        (statusFilter == .all || $0.enabled == (statusFilter == .enabled)) &&
-        (search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) || $0.filename.localizedCaseInsensitiveContains(search))
-    } }
-    private var selectedFiles: [LocalContentFile] { filtered.filter { selection.contains($0.id) } }
+    private var selectedFiles: [LocalContentFile] { selection.compactMap { filePositions[$0].map { files[$0] } } }
+    private var actionFiles: [LocalContentFile] { selection.isEmpty ? filtered : selectedFiles }
+    private var selectionSummary: String {
+        if !selection.isEmpty { return Messages.AppInstanceContentView.selectedCount(Int64(selection.count)).localized }
+        if !search.isEmpty || statusFilter != .all { return Messages.ContentDetails.resultCount(Int64(filtered.count)).localized }
+        return Messages.AppInstanceContentView.enabledCount(String(enabledCount), Int64(files.count)).localized
+    }
     var body: some View {
         InstanceManagementSheet(title: Messages.AppInstanceContentView.manageGameContent.localized, instanceName: instance.name) {
             controls
@@ -54,7 +65,11 @@ struct InstanceContentView: View {
                     Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled)
                         .padding(.horizontal, 20).padding(.vertical, 8)
                 }
-                if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+                if let identificationNotice {
+                    Text(identificationNotice).font(.caption).foregroundStyle(.secondary)
+                        .padding(.horizontal, 20).padding(.vertical, 6)
+                }
+                if loading || (filtered.isEmpty && metadataTask != nil) { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
                 else if filtered.isEmpty {
                     EmptyPanel(symbol: "puzzlepiece.extension", title: files.isEmpty ? Messages.AppInstanceContentView.contentNotInstalled(kind.title).localized : Messages.AppInstanceContentView.noMatchingContent.localized, detail: Messages.AppInstanceContentView.importOrDiscoverContent.localized)
                         .frame(maxHeight: .infinity)
@@ -63,10 +78,16 @@ struct InstanceContentView: View {
         } footer: {
             footer
         }
-        .task(id: kind) { selection.removeAll(); updateTask?.cancel(); updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
-        .onChange(of: search) { pruneSelection() }
-        .onChange(of: statusFilter) { pruneSelection() }
-        .onChange(of: model.busy) { if !model.busy { Task { await reload() } } }
+        .task(id: kind) { files = []; filtered = []; filePositions = [:]; enabledCount = 0; selection.removeAll(); cancelUpdateCheck(); identificationNotice = nil; updates.removeAll(); curseUpdates.removeAll(); updatesChecked = false; await reload() }
+        .onChange(of: search) { refilter() }
+        .onChange(of: statusFilter) { refilter() }
+        .onChange(of: model.busy) {
+            if model.busy { cancelMetadataLoading(); loading = false }
+            else { Task { await reload() } }
+        }
+        .sheet(item: $detailTarget) { file in
+            LocalContentDetailView(file: filePositions[file.id].map { files[$0] } ?? file)
+        }
         .sheet(item: $cursePlan) { plan in CurseForgePlanView(plan: plan) }
         .sheet(item: $batchPlan) { plan in ContentBatchUpdateView(plan: plan) }
         .sheet(item: $versionTarget) { file in
@@ -80,7 +101,7 @@ struct InstanceContentView: View {
                 }
             }
         }
-        .onDisappear { updateTask?.cancel() }
+        .onDisappear { cancelUpdateCheck(); cancelMetadataLoading() }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: kind.fileExtensions.map { UTType(filenameExtension: $0) ?? .data }, allowsMultipleSelection: true) { result in
             do {
                 let urls = try result.get()
@@ -102,23 +123,8 @@ struct InstanceContentView: View {
                     ForEach(ContentKind.allCases) { Text($0.title).tag($0) }
                 }.pickerStyle(.segmented).labelsHidden().fixedSize(horizontal: true, vertical: false).disabled(model.busy)
                 Spacer(minLength: 12)
-                Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath", action: checkUpdates)
-                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.checkForUpdates.localized)
-                    .disabled(updateTask != nil || model.busy || files.allSatisfy { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") })
-                if !updates.isEmpty || !curseUpdates.isEmpty {
-                    Menu {
-                        Group {
-                            Button(Messages.AppInstanceContentView.updateSelectedContent.localized, systemImage: "arrow.down.circle") { prepareBatch(selectedFiles) }.disabled(!hasUpdates(selectedFiles))
-                            Button(Messages.AppInstanceContentView.updateCurrentResults.localized, systemImage: "arrow.down.circle") { prepareBatch(filtered) }.disabled(!hasUpdates(filtered))
-                        }.labelStyle(.titleAndIcon)
-                    } label: {
-                        Label(Messages.AppInstanceContentView.batchUpdate.localized, systemImage: "square.and.arrow.down.on.square")
-                            .labelStyle(.iconOnly)
-                    }.labelStyle(.titleAndIcon).menuIndicator(.hidden).help(Messages.AppInstanceContentView.batchUpdate.localized)
-                        .disabled(!canModify || updateTask != nil)
-                }
                 Button(Messages.AppInstanceContentView.importContent.localized, systemImage: "plus") { showImporter = true }.disabled(!canModify)
-                Button(Messages.AppInstanceContentView.discoverMoreContent.localized, systemImage: "safari") {
+                Button(Messages.ContentDetails.download.localized, systemImage: "safari") {
                     model.discovery.switchCollection(type: kind.rawValue)
                     model.discovery.change { query in
                         query.text = ""; query.category = ""; query.game = instance.gameVersion
@@ -128,19 +134,27 @@ struct InstanceContentView: View {
                     model.discovery.path = []
                     model.page = .discover; dismiss()
                 }
-                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.discoverMoreContent.localized).disabled(model.busy)
-                Button(Messages.AppInstanceContentView.openContentFolder.localized, systemImage: "folder") { model.reveal(instance, folder: kind.folder) }
-                    .labelStyle(.iconOnly).help(Messages.AppInstanceContentView.openContentFolder.localized)
+                    .labelStyle(.titleAndIcon).help(Messages.AppInstanceContentView.discoverMoreContent.localized).disabled(model.busy)
+                Button(Messages.AppInstanceContentView.showInFinder.localized, systemImage: "folder") { model.reveal(instance, folder: kind.folder) }
+                    .labelStyle(.titleAndIcon).help(Messages.AppInstanceContentView.openContentFolder.localized)
             }
             HStack(spacing: 12) {
                 HStack(spacing: 6) {
                     Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
                     TextField(Messages.AppInstanceContentView.searchInstalledContent.localized, text: $search).textFieldStyle(.plain)
+                    if metadataTask != nil {
+                        ProgressView().controlSize(.small)
+                            .help(Messages.ContentDetails.loadingMetadata.localized)
+                            .accessibilityLabel(Messages.ContentDetails.loadingMetadata.localized)
+                    }
                 }.padding(.horizontal, 8).padding(.vertical, 5)
                     .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
                 Picker(Messages.AppInstanceContentView.status.localized, selection: $statusFilter) {
                     ForEach(ContentStatusFilter.allCases) { Text($0.title).tag($0) }
-                }.labelsHidden().frame(width: 120)
+                }.labelsHidden().frame(width: 112)
+                Button(Messages.ContentDetails.refresh.localized, systemImage: "arrow.clockwise") { Task { await reload() } }
+                    .labelStyle(.iconOnly).help(Messages.ContentDetails.refresh.localized)
+                    .disabled(loading || model.busy || updateTask != nil)
             }
         }
     }
@@ -153,16 +167,19 @@ struct InstanceContentView: View {
                 })).labelsHidden().toggleStyle(.checkbox).disabled(!canModify)
             }.width(42)
             TableColumn(Messages.AppInstanceContentView.nameColumn.localized) { file in
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(file.title).font(.body.weight(.medium)).lineLimit(1).help(file.title)
-                    Text(file.filename).font(.caption2).foregroundStyle(.secondary).lineLimit(1).help(file.filename)
-                }.padding(.vertical, 4)
+                HStack(spacing: 10) {
+                    LocalContentIcon(file: file)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(file.displayTitle).font(.body.weight(.medium)).lineLimit(1).help(file.displayTitle)
+                        Text(file.filename).font(.caption).foregroundStyle(.secondary).lineLimit(1).help(file.filename)
+                    }
+                }.padding(.vertical, 5)
             }.width(min: 190, ideal: 330)
             TableColumn(Messages.AppInstanceContentView.versionColumn.localized) { file in
                 VStack(alignment: .leading, spacing: 3) {
                     Text(file.version ?? "—").font(.callout).lineLimit(1).help(file.version ?? "—")
                     if let provider = file.managed?.provider {
-                        Text(provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : provider)
+                        Text(provider == "curseforge" ? "CurseForge" : provider == "modrinth" ? "Modrinth" : Messages.ContentDetails.localFile.localized)
                             .font(.caption2).lineLimit(1)
                     }
                 }.foregroundStyle(.secondary)
@@ -184,18 +201,28 @@ struct InstanceContentView: View {
                             .labelStyle(.iconOnly).buttonStyle(.borderless).disabled(!canModify)
                             .help(Messages.AppInstanceContentView.updateTo(update.available.displayName).localized)
                     }
+                    Button(Messages.ContentDetails.details.localized, systemImage: "info.circle") { detailTarget = file }
+                        .labelStyle(.iconOnly).buttonStyle(.borderless).help(Messages.ContentDetails.details.localized)
                     Menu { fileActions(file).labelStyle(.titleAndIcon) } label: { Image(systemName: "ellipsis") }
                         .menuStyle(.borderlessButton).menuIndicator(.hidden).labelStyle(.titleAndIcon).fixedSize()
                         .help(Messages.AppInstanceContentView.actionsColumn.localized)
                 }
-            }.width(68)
+            }.width(76)
         }.tableStyle(.inset)
+            .contextMenu(forSelectionType: String.self) { ids in
+                if ids.count == 1, let file = files.first(where: { ids.contains($0.id) }) { fileActions(file); Divider() }
+                Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized, systemImage: "checkmark.square") { selection = Set(filtered.map(\.id)) }
+                    .disabled(filtered.isEmpty || loading)
+            } primaryAction: { ids in
+                if ids.count == 1 { detailTarget = files.first(where: { ids.contains($0.id) }) }
+            }
     }
 
     @ViewBuilder private func fileActions(_ file: LocalContentFile) -> some View {
+        Button(Messages.ContentDetails.details.localized, systemImage: "info.circle") { detailTarget = file }
         if let record = file.managed, ["modrinth", "curseforge"].contains(record.provider) {
             Button(Messages.AppInstanceContentView.changeVersion.localized, systemImage: "arrow.triangle.swap") {
-                updateTask?.cancel(); updatesChecked = false; updates = [:]; curseUpdates = [:]
+                cancelUpdateCheck(); updatesChecked = false; updates = [:]; curseUpdates = [:]
                 versionTarget = file
             }.disabled(!canModify)
         }
@@ -209,70 +236,136 @@ struct InstanceContentView: View {
 
     private var footer: some View {
         HStack(spacing: 12) {
-            Menu {
-                Group {
-                    Button(Messages.AppInstanceContentView.selectAllCurrentResults.localized, systemImage: "checkmark.square") { selection = Set(filtered.map(\.id)) }
-                        .disabled(filtered.isEmpty || loading)
-                    Button(Messages.AppInstanceContentView.deselect.localized) { selection.removeAll() }.disabled(selectedFiles.isEmpty)
-                    Divider()
-                    Button(Messages.AppInstanceContentView.enableSelected.localized, systemImage: "checkmark.circle") { setSelectedEnabled(true) }
-                        .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy(\.enabled))
-                    Button(Messages.AppInstanceContentView.disableSelected.localized, systemImage: "pause.circle") { setSelectedEnabled(false) }
-                        .disabled(!canModify || selectedFiles.isEmpty || selectedFiles.allSatisfy { !$0.enabled })
-                    Button(Messages.AppInstanceContentView.removeSelected.localized, systemImage: "trash", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }
-                        .disabled(!canModify || selectedFiles.isEmpty)
-                }.labelStyle(.titleAndIcon)
-            } label: {
-                Label(Messages.AppInstanceContentView.selectionActions.localized, systemImage: "checklist").labelStyle(.iconOnly)
-            }.menuIndicator(.hidden).labelStyle(.titleAndIcon).help(Messages.AppInstanceContentView.selectionActions.localized)
-            Text(selectedFiles.isEmpty
-                 ? Messages.AppInstanceContentView.enabledCount(String(files.filter(\.enabled).count), Int64(files.count)).localized
-                 : Messages.AppInstanceContentView.selectedCount(Int64(selectedFiles.count)).localized)
-                .font(.caption).foregroundStyle(.secondary).monospacedDigit()
-            Spacer(minLength: 8)
-            if model.busy {
-                ProgressView().controlSize(.small)
-                Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
-            } else if updateTask != nil {
-                ProgressView().controlSize(.small)
-                Text(Messages.AppInstanceContentView.checkingCompatibleReleases.localized).font(.caption).foregroundStyle(.secondary)
-            } else if updatesChecked && updates.isEmpty && curseUpdates.isEmpty {
-                Label(Messages.AppInstanceContentView.latestCompatibleRelease.localized, systemImage: "checkmark.circle")
-                    .font(.caption).foregroundStyle(.secondary)
+            HStack(spacing: 6) {
+                Text(selectionSummary).font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                    .lineLimit(1).help(selectionSummary)
+                if !selection.isEmpty {
+                    Button(Messages.AppInstanceContentView.deselect.localized, systemImage: "xmark.circle.fill") { selection.removeAll() }
+                        .labelStyle(.iconOnly).buttonStyle(.plain).foregroundStyle(.secondary)
+                        .help(Messages.AppInstanceContentView.deselect.localized)
+                }
+            }.frame(width: 96, alignment: .leading)
+            Divider().frame(height: 18)
+            HStack(spacing: 8) {
+                updateActions
+                if !selection.isEmpty {
+                    Divider().frame(height: 18)
+                    Button(Messages.AppInstanceContentView.enable.localized, systemImage: "checkmark.circle") { setSelectedEnabled(true) }
+                        .disabled(!canModify || loading || selectedFiles.allSatisfy(\.enabled))
+                    Button(Messages.AppInstanceContentView.disable.localized, systemImage: "pause.circle") { setSelectedEnabled(false) }
+                        .disabled(!canModify || loading || selectedFiles.allSatisfy { !$0.enabled })
+                    Button(Messages.AppInstanceContentView.moveToTrash.localized, systemImage: "trash", role: .destructive) { bulkRemoval = .init(files: selectedFiles) }
+                        .disabled(!canModify || loading)
+                }
+            }.labelStyle(.titleAndIcon).fixedSize(horizontal: true, vertical: false)
+            Spacer(minLength: 24)
+            Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction)
+                .buttonStyle(.borderedProminent).controlSize(.regular)
+        }.controlSize(.small).frame(minHeight: 28)
+    }
+
+    @ViewBuilder private var updateActions: some View {
+        if model.busy {
+            ProgressView().controlSize(.small)
+            Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
+        } else if updateTask != nil {
+            ProgressView().controlSize(.small).help(Messages.ContentDetails.identifyingUpdates.localized)
+            Button(Messages.Common.cancel.localized) { cancelUpdateCheck() }
+        } else {
+            Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }
+                .disabled(actionFiles.isEmpty || loading)
+            if hasUpdates(actionFiles) {
+                Button(Messages.AppInstanceContentView.update.localized, systemImage: "arrow.down.circle") { prepareBatch(actionFiles) }
+                    .disabled(!canModify || loading)
+            } else if updatesChecked && checkedFileIDs == Set(actionFiles.map(\.id)) {
+                Label(Messages.ContentDetails.noIdentifiedUpdates.localized, systemImage: "checkmark.circle")
+                    .labelStyle(.iconOnly).foregroundStyle(.secondary).help(Messages.ContentDetails.noIdentifiedUpdates.localized)
             }
-            Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).buttonStyle(.borderedProminent)
         }
     }
 
     private func reload() async {
-        loading = true
-        do { let items = try await manager.scan(kind); try Task.checkCancellation(); files = items; pruneSelection()
+        cancelMetadataLoading()
+        let generation = loadGeneration, requestedKind = kind
+        loading = files.isEmpty
+        defer { if loadGeneration == generation { loading = false } }
+        do {
+            let items = try await manager.scan(requestedKind, cachedOnly: true)
+            try Task.checkCancellation()
+            guard loadGeneration == generation, kind == requestedKind else { return }
+            files = items
+            filePositions = Dictionary(uniqueKeysWithValues: items.enumerated().map { ($0.element.id, $0.offset) })
+            enabledCount = items.lazy.filter(\.enabled).count
+            refilter()
             let versions = Dictionary(items.compactMap(\.managed).map { ($0.id, $0.versionID) }, uniquingKeysWith: { first, _ in first })
             updates = updates.filter { versions[$0.key] == $0.value.installed.versionID }
-            curseUpdates = curseUpdates.filter { versions[$0.key] == $0.value.installed.versionID } }
-        catch { if !Task.isCancelled { self.error = error.localizedDescription } }
-        loading = false
+            curseUpdates = curseUpdates.filter { versions[$0.key] == $0.value.installed.versionID }
+            guard items.contains(where: { !$0.metadataLoaded }) else { return }
+            let cacheDirectory = model.paths.cache
+            metadataTask = Task {
+                await ContentMetadataLoader.enrich(items, cacheDirectory: cacheDirectory) { batch in
+                    await MainActor.run {
+                        guard loadGeneration == generation else { return }
+                        // Preserve the snapshot's ordering while names and icons arrive.
+                        for file in batch {
+                            if let position = filePositions[file.id] { files[position] = file }
+                        }
+                        refilter()
+                    }
+                }
+                if loadGeneration == generation { metadataTask = nil }
+            }
+        } catch { if !Task.isCancelled, loadGeneration == generation { self.error = error.localizedDescription } }
+    }
+    private func cancelMetadataLoading() {
+        loadGeneration = UUID(); metadataTask?.cancel(); metadataTask = nil
+    }
+    private func refilter() {
+        let key = LocalContentFile.searchKey(search)
+        filtered = files.filter {
+            (statusFilter == .all || $0.enabled == (statusFilter == .enabled)) && $0.matches(searchKey: key)
+        }
+        selection.formIntersection(Set(filtered.map(\.id)))
     }
     private func mutate(_ title: String, action: @escaping @MainActor @Sendable () async throws -> Void) {
         guard canModify else { return }
-        updateTask?.cancel()
+        cancelUpdateCheck()
         error = nil
         model.perform(title, presentErrors: false, instanceID: instance.id) { _ in
+            // Fast operations can start and finish between SwiftUI updates.
             do { try await action(); await reload() }
             catch { self.error = error.localizedDescription; throw error }
         }
     }
-    private func pruneSelection() { selection.formIntersection(Set(filtered.map(\.id))) }
     private func setSelectedEnabled(_ enabled: Bool) {
         let selected = selectedFiles
         mutate(Messages.AppInstanceContentView.selectedContentCount(String(describing: enabled ? Messages.AppInstanceContentView.enable.localized : Messages.AppInstanceContentView.disable.localized), Int64(selected.count)).localized) { try await manager.setEnabled(enabled, files: selected) }
     }
     private func checkUpdates() {
-        error = nil; updatesChecked = false
+        let snapshot = actionFiles
+        guard updateTask == nil, !snapshot.isEmpty else { return }
+        error = nil; identificationNotice = nil; updatesChecked = false; updates = [:]; curseUpdates = [:]
+        let generation = UUID(); updateGeneration = generation
         updateTask = Task {
-            defer { updateTask = nil }
-            let records = files.compactMap(\.managed)
+            defer { if updateGeneration == generation { updateTask = nil } }
             var failures: [String] = []
+            do {
+                let key = try? CurseForgeKeyStore.load()
+                let service = ContentIdentificationService(cacheDirectory: model.paths.cache, curseforge: key.map { CurseForgeService(apiKey: $0) })
+                let unknown = snapshot.filter { $0.managed == nil || $0.managed?.provider == "local" }
+                if !unknown.isEmpty {
+                    let result = try await service.identify(unknown)
+                    try Task.checkCancellation()
+                    failures += result.failures
+                    let skipped = try await manager.associate(unknown, matches: result.matches)
+                    if !skipped.isEmpty { failures.append(Messages.ContentDetails.duplicateProjects(skipped.joined(separator: ", ")).localized) }
+                    await reload()
+                }
+                try Task.checkCancellation()
+            } catch { if Task.isCancelled { return }; failures.append(error.localizedDescription) }
+            let scopeIDs = Set(snapshot.map(\.id))
+            let scopedFiles = files.filter { scopeIDs.contains($0.id) }
+            let records = scopedFiles.compactMap(\.managed)
             if records.contains(where: { $0.provider == "modrinth" }) {
                 do {
                     let result = try await ModrinthService().updates(for: records, instance: instance)
@@ -285,9 +378,16 @@ struct InstanceContentView: View {
                     try Task.checkCancellation(); curseUpdates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
                 } catch { if Task.isCancelled { return }; failures.append("CurseForge：" + error.localizedDescription) }
             }
+            guard !Task.isCancelled, updateGeneration == generation else { return }
+            let unmatched = scopedFiles.filter { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") }.count
+            identificationNotice = unmatched > 0 ? Messages.ContentDetails.unmatchedCount(Int64(unmatched)).localized : nil
+            checkedFileIDs = scopeIDs
             updatesChecked = failures.isEmpty
             error = failures.isEmpty ? nil : failures.joined(separator: "\n")
         }
+    }
+    private func cancelUpdateCheck() {
+        updateTask?.cancel(); updateTask = nil; updateGeneration = UUID()
     }
     private func prepare(_ update: CurseForgeUpdate) {
         error = nil

@@ -1,0 +1,93 @@
+/* @symbol ContentDetails.details @args - */
+"contentDetails.details" = "资源详情";
+
+/* @symbol ContentDetails.onlineProjects @args - */
+"contentDetails.onlineProjects" = "在线项目";
+
+/* @symbol ContentDetails.lookingUp @args - */
+"contentDetails.lookingUp" = "正在识别在线项目…";
+
+/* @symbol ContentDetails.noMatch @args - */
+"contentDetails.noMatch" = "未找到与此文件匹配的在线项目。";
+
+/* @symbol ContentDetails.retry @args - */
+"contentDetails.retry" = "重新识别";
+
+/* @symbol ContentDetails.localFile @args - */
+"contentDetails.localFile" = "本地导入";
+
+/* @symbol ContentDetails.authors @args - */
+"contentDetails.authors" = "作者";
+
+/* @symbol ContentDetails.description @args - */
+"contentDetails.description" = "简介";
+
+/* @symbol ContentDetails.modID @args - */
+"contentDetails.modID" = "模组 ID";
+
+/* @symbol ContentDetails.homepage @args - */
+"contentDetails.homepage" = "官方网站";
+
+/* @symbol ContentDetails.encyclopedia @args - */
+"contentDetails.encyclopedia" = "MC 百科";
+
+/* @symbol ContentDetails.searchEncyclopedia @args - */
+"contentDetails.searchEncyclopedia" = "在 MC 百科搜索";
+
+/* @symbol ContentDetails.filename @args - */
+"contentDetails.filename" = "文件名";
+
+/* @symbol ContentDetails.version @args - */
+"contentDetails.version" = "版本";
+
+/* @symbol ContentDetails.size @args - */
+"contentDetails.size" = "大小";
+
+/* @symbol ContentDetails.source @args - */
+"contentDetails.source" = "安装来源";
+
+/* @symbol ContentDetails.noDescription @args - */
+"contentDetails.noDescription" = "这个文件没有提供简介。";
+
+/* @symbol ContentDetails.curseforgeUnavailable @args - */
+"contentDetails.curseforgeUnavailable" = "配置 CurseForge API Key 后可同时识别该平台。";
+
+/* @symbol ContentDetails.fileChanged @args text */
+"contentDetails.fileChanged" = "文件已发生变化，请刷新后重试：%1$@";
+
+/* @symbol ContentDetails.projectUnavailable @args - */
+"contentDetails.projectUnavailable" = "暂时无法读取匹配项目的信息，请稍后重试。";
+
+/* @symbol ContentDetails.serviceFailure @args text,text */
+"contentDetails.serviceFailure" = "%1$@：%2$@";
+
+/* @symbol ContentDetails.download @args - */
+"contentDetails.download" = "获取资源";
+
+/* @symbol ContentDetails.openFolder @args - */
+"contentDetails.openFolder" = "打开文件夹";
+
+/* @symbol ContentDetails.duplicateProjects @args text */
+"contentDetails.duplicateProjects" = "以下文件对应重复项目，暂未纳入更新：%1$@";
+
+/* @symbol ContentDetails.noIdentifiedUpdates @args - */
+"contentDetails.noIdentifiedUpdates" = "已识别的资源暂无更新";
+
+/* @symbol ContentDetails.unmatchedCount @args integer */
+"contentDetails.unmatchedCount" = "%1$lld 项资源尚未关联在线项目";
+
+/* @symbol ContentDetails.identifyingUpdates @args - */
+"contentDetails.identifyingUpdates" = "正在识别资源并检查更新…";
+
+/* @symbol ContentDetails.refresh @args - */
+"contentDetails.refresh" = "刷新列表";
+
+/* @symbol ContentDetails.metadataAttribution @args - */
+"contentDetails.metadataAttribution" = "中文名称与百科关联来自 MC 百科，由 HMCL 整理。";
+
+
+/* @symbol ContentDetails.resultCount @args integer */
+"contentDetails.resultCount" = "%1$lld 项结果";
+
+/* @symbol ContentDetails.loadingMetadata @args - */
+"contentDetails.loadingMetadata" = "正在读取模组信息…";

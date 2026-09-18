@@ -93,6 +93,10 @@ public actor ModrinthService {
     public func project(_ id: String) async throws -> ModrinthProject {
         try await client.get(ModrinthProject.self, from: ModrinthEndpoints.project(id))
     }
+    public func projects(_ ids: [String]) async throws -> [ModrinthProject] {
+        guard !ids.isEmpty else { return [] }
+        return try await client.get([ModrinthProject].self, from: ModrinthEndpoints.projects(ids))
+    }
     public func version(_ id: String) async throws -> ModrinthVersion {
         try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(id))
     }

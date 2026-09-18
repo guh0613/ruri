@@ -13,13 +13,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20"),
-        .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0")
+        .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0"),
+        .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5")
     ],
     targets: [
         .systemLibrary(name: "CZlib"),
         .systemLibrary(name: "CSQLite"),
         .target(name: "RuriLocalization", resources: [.process("Resources")]),
-        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown")], resources: [.copy("Resources/LoaderSupport")]),
+        .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown"), "TOMLDecoder"], resources: [.copy("Resources/LoaderSupport"), .copy("Resources/mod_data.txt")]),
         .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization"], resources: [.copy("Resources/JavaBrands")]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),

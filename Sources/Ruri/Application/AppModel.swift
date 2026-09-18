@@ -138,6 +138,7 @@ import RuriCore
         await work.value
     }
     private func initializeApplication() async {
+        Task.detached(priority: .utility) { _ = ModNameIndex.shared }
         if !readOnly {
             do {
                 let basePaths = basePaths

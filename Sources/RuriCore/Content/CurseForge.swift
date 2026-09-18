@@ -73,6 +73,7 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     public let dependencies: [Dependency]
     public let hashes: [Hash]
     public let isAvailable: Bool?
+    public var fileFingerprint: UInt32? = nil
     public var sha1: String? { hash(algorithm: 1, length: 40) }
     public var md5: String? { hash(algorithm: 2, length: 32) }
     public var downloadURL: URL? { downloadUrl.flatMap(URL.init(string:)).flatMap { $0.scheme == "https" ? $0 : nil } }
@@ -205,6 +206,19 @@ public actor CurseForgeService {
         let result = try await request(Response<CurseForgeProject>.self, route: .project(id)).data
         guard result.id == id, result.gameId == 432 else { throw RuriError.message(Messages.CoreCurseForge.projectMismatch) }
         return result
+    }
+    public func projects(_ ids: [Int]) async throws -> [CurseForgeProject] {
+        guard !ids.isEmpty else { return [] }
+        let body = try JSONEncoder().encode(["modIds": ids])
+        return try await request(Response<[CurseForgeProject]>.self, route: .projects, body: body).data.filter { $0.gameId == 432 && ids.contains($0.id) }
+    }
+    public func filesFromFingerprints(_ fingerprints: [UInt32]) async throws -> [CurseForgeFile] {
+        struct Match: Decodable, Sendable { let file: CurseForgeFile }
+        struct Matches: Decodable, Sendable { let exactMatches: [Match] }
+        guard !fingerprints.isEmpty else { return [] }
+        let body = try JSONEncoder().encode(["fingerprints": fingerprints])
+        return try await request(Response<Matches>.self, route: .fingerprints, body: body).data.exactMatches.map(\.file)
+            .filter { $0.fileFingerprint.map(fingerprints.contains) ?? false }
     }
     public func file(project id: Int, file fileID: Int) async throws -> CurseForgeFile {
         guard id > 0, fileID > 0 else { throw RuriError.message(Messages.CoreCurseForge.invalidFileID) }

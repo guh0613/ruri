@@ -27,6 +27,8 @@ public struct ManagedContent: Codable, Identifiable, Equatable, Sendable {
     public var size: Int64
     public var requiredProjects: [String]
     public var enabled: Bool
+    /// Original acquisition source; online identification can add a provider without losing this.
+    public var installationSource: String? = nil
     public var relativePath: String { "\(kind.folder)/\(filename)\(enabled ? "" : ".disabled")" }
     public init(provider: String = "modrinth", projectID: String, versionID: String, title: String, versionName: String, publishedAt: String? = nil, kind: ContentKind, filename: String, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64, requiredProjects: [String] = [], enabled: Bool = true) {
         self.provider = provider; self.projectID = projectID; self.versionID = versionID; self.title = title
@@ -46,6 +48,39 @@ public struct LocalContentFile: Identifiable, Sendable {
     public let enabled: Bool
     public let size: Int64
     public let managed: ManagedContent?
+    public var metadata: LocalModMetadata? = nil
+    public internal(set) var translation: ModNameIndex.Entry? = nil
+    public internal(set) var metadataLoaded = true
+    var stamp: LocalContentStamp? = nil
+    private var chineseTitle: String? = nil
+    private var searchText = ""
+    init(url: URL, filename: String, title: String, version: String?, modID: String?, kind: ContentKind, enabled: Bool, size: Int64, managed: ManagedContent?, metadata: LocalModMetadata? = nil) {
+        self.url = url; self.filename = filename; self.title = title; self.version = version; self.modID = modID
+        self.kind = kind; self.enabled = enabled; self.size = size; self.managed = managed; self.metadata = metadata
+    }
+    public var presentationRevision: String { "\(stamp?.key ?? id):\(metadata?.iconPath ?? "")" }
+    public var displayTitle: String {
+        LocalizationContext.current.language.hasPrefix("zh") ? chineseTitle ?? title : title
+    }
+    public static func searchKey(_ text: String) -> String {
+        text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+    }
+    public func matches(searchKey: String) -> Bool { searchKey.isEmpty || searchText.contains(searchKey) }
+    func presenting(_ info: LocalModMetadata?, loaded: Bool) -> Self {
+        var file = Self(url: url, filename: filename,
+                        title: info?.name ?? managed?.title ?? URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent,
+                        version: info?.version ?? managed?.versionName, modID: info?.id,
+                        kind: kind, enabled: enabled, size: size, managed: managed, metadata: info)
+        file.stamp = stamp; file.metadataLoaded = loaded
+        if kind == .mod, loaded {
+            file.translation = ModNameIndex.shared.match(id: file.modID, name: file.title)
+            if let entry = file.translation, entry.hasChineseName, entry.chineseName != file.title {
+                file.chineseTitle = "\(file.title) (\(entry.chineseName))"
+            }
+        }
+        file.searchText = Self.searchKey([file.title, filename, file.modID ?? "", file.translation?.searchText ?? ""].joined(separator: "\n"))
+        return file
+    }
 }
 public struct ContentInstallation: Sendable {
     public var record: ManagedContent
@@ -165,7 +200,10 @@ public actor ContentManager {
         guard Set(installs.map { $0.record.id }).count == installs.count else { throw RuriError.message(Messages.CoreContentManager.duplicateProjectVersions) }
         // Preserve a user's disabled state when updating a project.
         for i in installs.indices {
-            if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) { installs[i].record.enabled = old.enabled }
+            if let old = oldRecords.first(where: { $0.id == installs[i].record.id }) {
+                installs[i].record.enabled = old.enabled
+                installs[i].record.installationSource = old.installationSource
+            }
             if enabling.contains(installs[i].record.id) { installs[i].record.enabled = true }
             let record = installs[i].record
             guard !record.filename.contains("/"), !record.filename.contains("\\"), record.kind.fileExtensions.contains(URL(fileURLWithPath: record.filename).pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.invalidContentFilename(record.filename)) }
@@ -214,21 +252,25 @@ public actor ContentManager {
             try writeRecords(oldRecords.filter { !incomingIDs.contains($0.id) } + installs.map(\.record))
         }
     }
-    public func scan(_ kind: ContentKind) throws -> [LocalContentFile] {
+    public func scan(_ kind: ContentKind, cachedOnly: Bool = false) throws -> [LocalContentFile] {
         try lock(); defer { unlock() }
         try recover()
-        let managed = try readRecords()
+        let managed = Dictionary(try readRecords().filter { $0.kind == kind }.map { ($0.relativePath, $0) }, uniquingKeysWith: { first, _ in first })
+        let cache = kind == .mod ? LocalModMetadataCache.shared(in: paths.cache) : nil
+        defer { if !cachedOnly { cache?.flush() } }
         let directory = root.appendingPathComponent(kind.folder)
         guard FileManager.default.fileExists(atPath: directory.path) else { return [] }
-        return try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey], options: [.skipsHiddenFiles]).compactMap { url in
-            let attributes = try url.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-            guard attributes.isRegularFile == true else { return nil }
+        return try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [], options: [.skipsHiddenFiles]).compactMap { url in
+            try Task.checkCancellation()
             let enabled = !url.lastPathComponent.hasSuffix(".disabled")
             let filename = enabled ? url.lastPathComponent : String(url.lastPathComponent.dropLast(9))
             guard kind.fileExtensions.contains(URL(fileURLWithPath: filename).pathExtension.lowercased()) else { return nil }
-            let record = managed.first { $0.kind == kind && $0.filename == filename && $0.enabled == enabled }
-            let info = kind == .mod ? Self.modInfo(url) : nil
-            return LocalContentFile(url: url, filename: filename, title: info?.name ?? record?.title ?? URL(fileURLWithPath: filename).deletingPathExtension().lastPathComponent, version: info?.version ?? record?.versionName, modID: info?.id, kind: kind, enabled: enabled, size: Int64(attributes.fileSize ?? 0), managed: record)
+            guard let stamp = LocalContentStamp.read(url) else { return nil }
+            let record = managed["\(kind.folder)/\(url.lastPathComponent)"]
+            let cached = cachedOnly ? cache?.cached(stamp) : cache?.resolve(url, stamp: stamp)
+            var file = LocalContentFile(url: url, filename: filename, title: filename, version: nil, modID: nil, kind: kind, enabled: enabled, size: stamp.size, managed: record)
+            file.stamp = stamp
+            return file.presenting(cached?.metadata, loaded: kind != .mod || cached != nil)
         }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
     /// How many files of a kind the instance holds, without opening them, for
@@ -271,20 +313,6 @@ public actor ContentManager {
     public func remove(_ file: LocalContentFile) throws { _ = try remove([file]) }
     struct ModInfo { let id: String?; let name: String?; let version: String? }
     static func modInfo(_ url: URL) -> ModInfo? {
-        let archive: Archive
-        do { archive = try Archive(url: url, accessMode: .read) } catch { return nil }
-        for path in ["fabric.mod.json", "quilt.mod.json", "litemod.json"] {
-            guard let entry = archive[path], entry.uncompressedSize <= 1024 * 1024 else { continue }
-            var data = Data()
-            guard (try? archive.extract(entry) { data.append($0) }) != nil,
-                  let object = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else { continue }
-            if let quilt = object["quilt_loader"] as? [String: Any] {
-                let metadata = quilt["metadata"] as? [String: Any]
-                return ModInfo(id: quilt["id"] as? String, name: metadata?["name"] as? String, version: quilt["version"] as? String)
-            }
-            if path == "litemod.json" { return ModInfo(id: object["name"] as? String, name: object["displayName"] as? String ?? object["name"] as? String, version: object["version"] as? String) }
-            return ModInfo(id: object["id"] as? String, name: object["name"] as? String, version: object["version"] as? String)
-        }
-        return nil
+        LocalModMetadata.read(url).map { ModInfo(id: $0.id, name: $0.name, version: $0.version) }
     }
 }
