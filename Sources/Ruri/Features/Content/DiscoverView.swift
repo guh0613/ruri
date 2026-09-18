@@ -31,7 +31,7 @@ struct DiscoverView: View {
                 VStack(spacing: 0) {
                     Divider()
                     HStack(spacing: 12) {
-                        if activity.progress.total > 0 { ProgressView(value: activity.progress.fraction).frame(width: 100) }
+                        if let fraction = activity.overallFraction { ProgressView(value: fraction).frame(width: 100) }
                         else { ProgressView().controlSize(.small) }
                         Text(activity.progress.stage).font(.callout).lineLimit(1)
                         Spacer()

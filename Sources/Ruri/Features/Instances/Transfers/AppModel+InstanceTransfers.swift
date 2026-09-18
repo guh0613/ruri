@@ -30,9 +30,11 @@ extension AppModel {
         perform(Messages.AppAppModelInstanceTransfers.finishImport(name)) { [self] id in
             let service = InstanceTransfer(paths: paths)
             do {
-                try await service.validateDestination(prepared, name: name)
-                let content = try await CurseForgeService(apiKey: "").materialize(curseFiles, paths: paths, downloader: installer.downloader, manualFiles: manualFiles) { [weak self] p in await self?.progress(id, p) }
-                let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, content: content, installer: installer, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
+                let installer = installer, paths = paths
+                let update: @Sendable (InstallProgress) async -> Void = { [weak self] p in await self?.progress(id, p) }
+                let instance = try await service.install(prepared, name: name, importJVMArguments: keepJVMArguments, installer: installer, concurrency: state.settings.concurrentDownloads,
+                                                         content: { try await CurseForgeService(apiKey: "").materialize(curseFiles, paths: paths, downloader: installer.downloader, manualFiles: manualFiles, progress: update) },
+                                                         progress: update)
                 if instance.repositoryVersionID != nil { acceptState(try StateStore.load(basePaths)) }
                 else { state.instances.append(instance); select(instance) }
                 report(Messages.AppAppModelInstanceTransfers.instanceImported(instance.name))

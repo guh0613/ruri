@@ -77,7 +77,7 @@ public struct PackFile: Identifiable, Sendable {
     public var fallbackURLs: [URL] = []
     public var optional = false
     public var force = false
-    func item(in root: URL, url override: URL? = nil) throws -> DownloadItem { DownloadItem(url: override ?? url, destination: try LauncherPaths.safePath(path, within: root), sha1: sha1, sha512: sha512, size: size) }
+    func item(in root: URL, url override: URL? = nil) throws -> DownloadItem { DownloadItem(url: override ?? url, destination: try LauncherPaths.safePath(path, within: root), sha1: sha1, sha512: sha512, size: size, cacheable: true) }
 }
 
 /// Portable exports contain game data and preferences; shared downloads and
@@ -205,13 +205,29 @@ public actor InstanceTransfer {
 
     public func discard(_ prepared: PreparedInstanceImport) { try? FileManager.default.removeItem(at: prepared.workspace) }
 
-    public func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, content: [ContentInstallation] = [], installer: GameInstaller, concurrency: Int = 8,
+    /// `content` downloads provider files the pack references, such as CurseForge mods.
+    public func install(_ prepared: PreparedInstanceImport, name: String, importJVMArguments: Bool = false, installer: GameInstaller, concurrency: Int = 8,
+                        content: @Sendable () async throws -> [ContentInstallation] = { [] },
                         progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> GameInstance {
-        try validateDestination(prepared, name: name)
+        let target = try destinationInstance(prepared, name: name, importJVMArguments: false)
+        // Game assets download alongside the pack's own files on a parallel
+        // track; the installer later finds them in place or joins the transfers.
+        async let assets: Void = prefetchGame(target, prepared: prepared, downloader: installer.downloader, concurrency: concurrency, progress: progress)
+        let files = try await content()
         try await completeFiles(prepared, downloader: installer.downloader, concurrency: concurrency, progress: progress)
-        return try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: content, installing: { instance, location in
+        let instance = try await install(prepared, name: name, importJVMArguments: importJVMArguments, content: files, installing: { instance, location in
             try await GameInstaller(paths: location, downloader: installer.downloader).install(instance, concurrency: concurrency, progress: progress)
         })
+        await assets
+        return instance
+    }
+
+    private nonisolated func prefetchGame(_ target: GameInstance, prepared: PreparedInstanceImport, downloader: DownloadManager, concurrency: Int,
+                                          progress: @Sendable @escaping (InstallProgress) async -> Void) async {
+        guard !prepared.includesInstallation, target.importedInstallation == nil else { return }
+        // Resolve resources exactly as the install will, including its repository guard.
+        let location = target.repositoryVersionID == nil ? paths.including(target) : paths.stagingRepositoryImport(target)
+        await GameInstaller(paths: location, downloader: downloader).prefetch(target, concurrency: concurrency, progress: progress)
     }
 
     public func validateDestination(_ prepared: PreparedInstanceImport, name: String) throws {
@@ -235,25 +251,17 @@ public actor InstanceTransfer {
     public func completeFiles(_ prepared: PreparedInstanceImport, downloader: DownloadManager, concurrency: Int = 8,
                               progress: @Sendable @escaping (InstallProgress) async -> Void) async throws {
         let files = prepared.selectedPackFiles; let root = prepared.game
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            var index = 0; var completed = 0
-            func add(_ file: PackFile) {
-                group.addTask {
-                    let urls = [file.url].compactMap { $0 } + file.fallbackURLs
-                    if urls.isEmpty { try await downloader.fetch(file.item(in: root)); return }
-                    var failure: (any Error)?
-                    for url in urls {
-                        do { try await downloader.fetch(file.item(in: root, url: url)); return }
-                        catch { if Task.isCancelled { throw CancellationError() }; failure = error }
-                    }
-                    throw failure ?? RuriError.message(Messages.CoreInstanceTransfer.missingDownloadSource)
-                }
+        try await forEachConcurrently(files, width: concurrency) { file in
+            let urls = [file.url].compactMap { $0 } + file.fallbackURLs
+            if urls.isEmpty { try await downloader.fetch(file.item(in: root)); return }
+            var failure: (any Error)?
+            for url in urls {
+                do { try await downloader.fetch(file.item(in: root, url: url)); return }
+                catch { if Task.isCancelled { throw CancellationError() }; failure = error }
             }
-            while index < min(max(1, min(16, concurrency)), files.count) { add(files[index]); index += 1 }
-            while try await group.next() != nil {
-                completed += 1; await progress(InstallProgress(Messages.CoreInstanceTransfer.completingPackFiles, completed: completed, total: files.count))
-                if index < files.count { add(files[index]); index += 1 }
-            }
+            throw failure ?? RuriError.message(Messages.CoreInstanceTransfer.missingDownloadSource)
+        } completed: { _, done in
+            await progress(InstallProgress(Messages.CoreInstanceTransfer.completingPackFiles, completed: done, total: files.count))
         }
     }
     // The closure makes filesystem rollback testable without contacting game services.

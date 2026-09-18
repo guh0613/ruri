@@ -13,5 +13,8 @@ extension AppModel {
         Task { await scanJava() }
         return !readOnly
     }
-    func applyNetworkSettings() async { await NetworkRouting.shared.configure(state.settings.downloadSource ?? .automatic) }
+    func applyNetworkSettings() async {
+        await NetworkRouting.shared.configure(state.settings.downloadSource ?? .automatic)
+        await downloader.configure(concurrency: state.settings.concurrentDownloads, cache: DownloadCache(paths: basePaths))
+    }
 }

@@ -27,11 +27,47 @@ public struct LauncherLogEntry: Identifiable, Codable, Equatable, Sendable {
     public internal(set) var isRead: Bool
     public internal(set) var sessionID: UUID?
     public internal(set) var fileURL: URL?
+    /// Work running alongside the main stage, such as game assets downloading
+    /// while a loader installs. Finished tracks stay recorded but hidden.
+    public internal(set) var parallel: [ParallelProgress]?
     public var title: String { titleMessage.localized }
     public var progress: InstallProgress {
         InstallProgress(steps.last?.message ?? Messages.AppActivityItem.preparing, completed: completed, total: total)
     }
+    public var parallelProgress: [InstallProgress] { (parallel ?? []).filter { !$0.isFinished }.map(\.progress) }
+    /// Files completed across the main stage and every visible parallel track.
+    public var overallFraction: Double? {
+        let counted = ([progress] + parallelProgress).filter { $0.total > 0 }
+        let total = counted.reduce(0) { $0 + $1.total }
+        guard total > 0 else { return nil }
+        return min(1, Double(counted.reduce(0) { $0 + min($1.completed, $1.total) }) / Double(total))
+    }
     public var needsAttention: Bool { level == .warning || level == .error }
+
+    public struct ParallelProgress: Codable, Equatable, Sendable {
+        public let track: InstallProgress.Track
+        public internal(set) var message: LocalizedMessage
+        public internal(set) var completed: Int
+        public internal(set) var total: Int
+        var isFinished: Bool { total > 0 && completed >= total }
+        var progress: InstallProgress { InstallProgress(message, completed: completed, total: total, track: track) }
+    }
+    mutating func record(parallel update: InstallProgress, message: LocalizedMessage) {
+        var rows = parallel ?? []
+        let finished = update.total > 0 && update.completed >= update.total
+        if let index = rows.firstIndex(where: { $0.track == update.track }) {
+            // A finished track ignores stragglers. Several passes over the same
+            // files report together, so keep the furthest count.
+            guard !rows[index].isFinished else { return }
+            let sameWork = rows[index].total == update.total
+            rows[index].completed = finished || !sameWork ? update.completed : max(rows[index].completed, update.completed)
+            rows[index].total = update.total
+            if !finished { rows[index].message = message }
+        } else {
+            rows.append(.init(track: update.track, message: message, completed: max(0, update.completed), total: max(0, update.total)))
+        }
+        parallel = rows
+    }
 }
 
 /// One bounded history backs both the launcher log and its notification inbox.
@@ -76,6 +112,12 @@ public struct LauncherJournal: Codable, Equatable, Sendable {
 
     public mutating func progress(_ id: UUID, _ progress: InstallProgress, date: Date = Date()) {
         guard let index = entries.firstIndex(where: { $0.id == id && $0.status == .running }) else { return }
+        guard progress.track == .main else {
+            // Parallel tracks keep their own counters; only the main stage writes steps.
+            entries[index].record(parallel: progress, message: sanitized(progress.message))
+            entries[index].updatedAt = date
+            return
+        }
         entries[index].completed = max(0, progress.completed)
         entries[index].total = max(0, progress.total)
         entries[index].updatedAt = date
@@ -110,6 +152,7 @@ public struct LauncherJournal: Codable, Equatable, Sendable {
               let index = entries.firstIndex(where: { $0.id == id && $0.status == .running }) else { return }
         entries[index].status = status
         entries[index].updatedAt = date
+        entries[index].parallel = nil
         if let detail { entries[index].detailMessage = sanitized(.verbatim(detail)) }
         if status == .failed { entries[index].level = .error }
         else if status == .cancelled { entries[index].level = entries[index].needsAttention ? .warning : .info }
@@ -129,6 +172,7 @@ public struct LauncherJournal: Codable, Equatable, Sendable {
     public mutating func recoverInterrupted(date: Date = Date()) {
         for index in entries.indices where entries[index].status == .running {
             entries[index].status = .interrupted
+            entries[index].parallel = nil
             entries[index].level = .warning
             entries[index].detailMessage = Messages.LauncherLog.interruptedDetail
             entries[index].updatedAt = date

@@ -155,7 +155,7 @@ private struct RootSidebar: View {
             Label(page.title, systemImage: page.symbol)
             Spacer()
             if page == .activity, let task = model.activeActivity {
-                if task.progress.total > 0 { ProgressView(value: task.progress.fraction).progressViewStyle(.circular).controlSize(.mini) }
+                if let fraction = task.overallFraction { ProgressView(value: fraction).progressViewStyle(.circular).controlSize(.mini) }
                 else { ProgressView().controlSize(.mini) }
             } else if page == .activity, model.journal.unreadCount > 0 {
                 Text(model.journal.unreadCount, format: .number).font(.caption).foregroundStyle(.secondary)

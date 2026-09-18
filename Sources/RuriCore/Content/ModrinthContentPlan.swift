@@ -62,14 +62,14 @@ extension ModrinthService {
 
     public func materialize(_ plan: [PlannedModrinthFile], paths: LauncherPaths, downloader: DownloadManager,
                             progress: @Sendable @escaping (InstallProgress) async -> Void) async throws -> [ContentInstallation] {
-        var result: [ContentInstallation] = []
-        for item in plan {
-            try Task.checkCancellation()
-            let destination = try LauncherPaths.safePath("modrinth/\(item.record.versionID)/\(item.file.filename)", within: paths.cache)
-            await progress(InstallProgress(Messages.CoreModrinthContentPlan.downloadingContent(item.file.filename), completed: result.count, total: plan.count))
-            try await downloader.fetch(DownloadItem(url: item.file.url, destination: destination, sha1: item.record.sha1, sha512: item.record.sha512, size: item.record.size))
-            result.append(ContentInstallation(record: item.record, source: destination))
+        let destinations = try plan.map { try LauncherPaths.safePath("modrinth/\($0.record.versionID)/\($0.file.filename)", within: paths.cache) }
+        // The downloader's shared limit bounds the transfers; this only keeps enough queued.
+        try await forEachConcurrently(Array(plan.indices), width: 16) { index in
+            let item = plan[index]
+            try await downloader.fetch(DownloadItem(url: item.file.url, destination: destinations[index], sha1: item.record.sha1, sha512: item.record.sha512, size: item.record.size, cacheable: true))
+        } completed: { index, done in
+            await progress(InstallProgress(Messages.CoreModrinthContentPlan.downloadingContent(plan[index].file.filename), completed: done, total: plan.count))
         }
-        return result
+        return zip(plan, destinations).map { ContentInstallation(record: $0.record, source: $1) }
     }
 }

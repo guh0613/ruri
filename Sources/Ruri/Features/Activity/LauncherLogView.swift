@@ -59,7 +59,9 @@ struct LauncherLogView: View {
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(entry.title).fontWeight(entry.isNotification && !entry.isRead ? .semibold : .regular).lineLimit(1)
                                     if entry.status == .running {
-                                        Text(entry.progress.stage).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                        ForEach(Array(([entry.progress] + entry.parallelProgress).enumerated()), id: \.offset) { _, progress in
+                                            Text(progress.stage).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                        }
                                     }
                                 }.padding(.vertical, 7)
                                 if entry.isNotification && !entry.isRead {
@@ -165,15 +167,20 @@ private struct LauncherLogDetail: View {
                     }
                 }
                 if entry.status == .running {
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(entry.progress.stage)
-                            Spacer()
-                            if entry.progress.total > 0 {
-                                Text(Messages.LauncherLog.transferProgress(Int64(entry.progress.completed), Int64(entry.progress.total)).localized).monospacedDigit()
+                    // The main stage first, then work running alongside it.
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(Array(([entry.progress] + entry.parallelProgress).enumerated()), id: \.offset) { _, progress in
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text(progress.stage)
+                                    Spacer()
+                                    if progress.total > 0 {
+                                        Text(Messages.LauncherLog.transferProgress(Int64(progress.completed), Int64(progress.total)).localized).monospacedDigit()
+                                    }
+                                }.font(.caption).foregroundStyle(.secondary)
+                                if progress.total > 0 { ProgressView(value: min(1, progress.fraction)) }
                             }
-                        }.font(.caption).foregroundStyle(.secondary)
-                        if entry.progress.total > 0 { ProgressView(value: min(1, entry.progress.fraction)) }
+                        }
                     }.padding(.leading, 30).frame(maxWidth: 960, alignment: .leading)
                 }
                 if let detail = entry.summary, detail != entry.title,

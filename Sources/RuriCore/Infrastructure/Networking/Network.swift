@@ -56,45 +56,67 @@ public struct DownloadItem: Sendable {
     public let sha512: String?
     public let md5: String?
     public let size: Int64?
-    public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64? = nil) {
-        self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.md5 = md5; self.size = size
+    /// Reusable files (mods, libraries, installers) are kept in the download cache by SHA-1.
+    public let cacheable: Bool
+    public init(url: URL?, destination: URL, sha1: String? = nil, sha512: String? = nil, md5: String? = nil, size: Int64? = nil, cacheable: Bool = false) {
+        self.url = url; self.destination = destination; self.sha1 = sha1; self.sha512 = sha512; self.md5 = md5; self.size = size; self.cacheable = cacheable
     }
-    public init(_ artifact: Artifact, to destination: URL) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, md5: artifact.md5, size: artifact.size) }
+    public init(_ artifact: Artifact, to destination: URL, cacheable: Bool = false) { self.init(url: artifact.url, destination: destination, sha1: artifact.sha1, md5: artifact.md5, size: artifact.size, cacheable: cacheable) }
+}
+
+/// Runs `perform` over `elements` with at most `width` in flight. A finished
+/// slot is refilled before `completed` runs, so slow progress handlers never
+/// hold back the queue.
+func forEachConcurrently<Element: Sendable>(_ elements: [Element], width: Int, perform: @escaping @Sendable (Element) async throws -> Void,
+                                            completed: (Element, Int) async -> Void = { _, _ in }) async throws {
+    try await withThrowingTaskGroup(of: Element.self) { group in
+        var next = 0; var done = 0
+        func add() {
+            guard next < elements.count else { return }
+            let element = elements[next]; next += 1
+            group.addTask { try await perform(element); return element }
+        }
+        for _ in 0..<min(max(width, 1), 16) { add() }
+        while let element = try await group.next() {
+            done += 1; add()
+            await completed(element, done)
+            try Task.checkCancellation()
+        }
+    }
 }
 
 public actor DownloadManager {
     private let transport: DownloadTransport
     private let retryDelay: Duration
     private let routing: NetworkRouting
+    private var cache: DownloadCache?
     private var inFlight: [String: (identity: String, task: Task<Void, any Error>)] = [:]
+    // Every caller shares one transfer limit, so overlapping install phases
+    // never multiply the number of open requests.
+    private var transferLimit = 8
+    private var activeTransfers = 0
+    private var waitingTransfers: [(id: UUID, continuation: CheckedContinuation<Void, any Error>)] = []
     var transferRecords: [String: FileTransfer] = [:]
-    public init(configuration: URLSessionConfiguration = .default, retryDelay: Duration = .seconds(1), routing: NetworkRouting = .shared) {
+    public init(configuration: URLSessionConfiguration = .default, retryDelay: Duration = .seconds(1), routing: NetworkRouting = .shared, cache: DownloadCache? = nil) {
         let config = configuration.copy() as! URLSessionConfiguration
-        config.httpMaximumConnectionsPerHost = 8
-        config.timeoutIntervalForRequest = 45
+        config.httpMaximumConnectionsPerHost = 16
+        config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 1800
-        self.transport = DownloadTransport(configuration: config); self.retryDelay = retryDelay; self.routing = routing
+        self.transport = DownloadTransport(configuration: config); self.retryDelay = retryDelay; self.routing = routing; self.cache = cache
+    }
+    public func configure(concurrency: Int, cache: DownloadCache?) {
+        transferLimit = min(max(concurrency, 1), 16); self.cache = cache
+        resumeWaitingTransfers()
     }
     public func download(_ items: [DownloadItem], concurrency: Int = 8, progress: @Sendable @escaping (Int, Int) async -> Void = { _, _ in }) async throws {
         // A shared artifact appears many times in asset indexes. Do not race writers.
         var seen = Set<String>()
         let unique = items.filter { seen.insert($0.destination.path).inserted }
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            var next = 0; var completed = 0
-            let limit = min(max(concurrency, 1), 16)
-            while next < min(limit, unique.count) {
-                let item = unique[next]; group.addTask { try await self.fetch(item) }; next += 1
-            }
-            while try await group.next() != nil {
-                completed += 1; await progress(completed, unique.count)
-                try Task.checkCancellation()
-                if next < unique.count { let item = unique[next]; group.addTask { try await self.fetch(item) }; next += 1 }
-            }
-        }
+        try await forEachConcurrently(unique, width: concurrency) { item in try await self.fetch(item) } completed: { _, done in await progress(done, unique.count) }
     }
     public func fetch(_ item: DownloadItem, progress: @escaping @Sendable (DownloadTransferProgress) -> Void = { _ in }) async throws {
         try Task.checkCancellation()
-        if Self.valid(item.destination, item: item) { return }
+        if await Self.verified(item.destination, item: item) { return }
         guard let url = item.url else { throw RuriError.message(Messages.CoreNetwork.installerFileMissing(item.destination.lastPathComponent)) }
         guard url.scheme == "https" else { throw RuriError.message(Messages.CoreNetwork.httpsRequired(String(describing: url.host ?? Messages.CoreNetwork.unknownSource.localized))) }
         let identity = Self.identity(item)
@@ -104,7 +126,6 @@ public actor DownloadManager {
             try await existing.task.value; try Task.checkCancellation(); return
         }
         let candidates = await routing.candidates(for: url)
-        if Self.valid(item.destination, item: item) { return }
         // Recheck after the routing await so simultaneous callers still share one writer.
         if let existing = inFlight[key] {
             guard existing.identity == identity else { throw RuriError.message(Messages.CoreNetwork.duplicateDownloadDestination(item.destination.lastPathComponent)) }
@@ -131,17 +152,22 @@ public actor DownloadManager {
     private func performFetch(_ item: DownloadItem, identity: String, candidates: [URL], progress: @escaping @Sendable (DownloadTransferProgress) -> Void) async throws {
         try FileManager.default.createDirectory(at: item.destination.deletingLastPathComponent(), withIntermediateDirectories: true)
         let lock = try await DownloadFileLock.acquire(for: item.destination); defer { close(lock) }
-        if Self.valid(item.destination, item: item) { return }
+        if await Self.verified(item.destination, item: item) { return }
         let files = Self.partialFiles(item)
         try FileManager.default.createDirectory(at: files.data.deletingLastPathComponent(), withIntermediateDirectories: true)
+        if let cache, await cache.restore(item, through: files.data.appendingPathExtension("cached")) { return }
+        try await acquireTransferSlot(); defer { releaseTransferSlot() }
         func discard() { try? FileManager.default.removeItem(at: files.data); try? FileManager.default.removeItem(at: files.metadata) }
-        for attempt in 0..<3 {
+        // Each source gets two tries. Moving on to another source is immediate;
+        // only a retry against the same sources backs off.
+        let attempts = max(3, candidates.count * 2)
+        for attempt in 0..<attempts {
             try Task.checkCancellation()
             do {
                 let url = candidates[attempt % candidates.count]
-                if Self.valid(files.data, item: item), item.sha1 != nil || item.sha512 != nil || item.md5 != nil {
+                if await Self.verified(files.data, item: item), item.sha1 != nil || item.sha512 != nil || item.md5 != nil {
                     guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.verifiedDownloadSaveFailed) }
-                    try? FileManager.default.removeItem(at: files.metadata); return
+                    try? FileManager.default.removeItem(at: files.metadata); await cache?.store(item); return
                 }
                 let state = (try? Data(contentsOf: files.metadata)).flatMap { try? JSONDecoder().decode(DownloadResumeState.self, from: $0) }
                 let info = try? FileManager.default.attributesOfItem(atPath: files.data.path)
@@ -163,19 +189,43 @@ public actor DownloadManager {
                 }
                 try await stream.run(request: request, transport: transport)
                 try Task.checkCancellation()
-                guard Self.valid(files.data, item: item) else { throw DownloadFailure(message: Messages.CoreNetwork.downloadChecksumFailed(item.destination.lastPathComponent).localized, discardPartial: true) }
+                guard await Self.verified(files.data, item: item) else { throw DownloadFailure(message: Messages.CoreNetwork.downloadChecksumFailed(item.destination.lastPathComponent).localized, discardPartial: true) }
                 guard rename(files.data.path, item.destination.path) == 0 else { throw RuriError.message(Messages.CoreNetwork.downloadSaveFailed(item.destination.lastPathComponent)) }
                 try? FileManager.default.removeItem(at: files.metadata)
+                await cache?.store(item)
                 return
             } catch {
                 if (error as? DownloadFailure)?.discardPartial == true { discard() }
                 if Task.isCancelled { throw CancellationError() }
-                if attempt == 2 { throw error }
+                if attempt == attempts - 1 { throw error }
                 retryTransfer(identity, message: error.localizedDescription)
-                try await Task.sleep(for: retryDelay * (attempt + 1))
+                let round = (attempt + 1) / candidates.count
+                if (attempt + 1) % candidates.count == 0 { try await Task.sleep(for: retryDelay * round) }
             }
         }
     }
+    private func acquireTransferSlot() async throws {
+        if activeTransfers < transferLimit && waitingTransfers.isEmpty { activeTransfers += 1; return }
+        let id = UUID()
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+                if Task.isCancelled { continuation.resume(throwing: CancellationError()) }
+                else { waitingTransfers.append((id: id, continuation: continuation)) }
+            }
+        } onCancel: { Task { await self.cancelWaitingTransfer(id) } }
+    }
+    private func releaseTransferSlot() { activeTransfers -= 1; resumeWaitingTransfers() }
+    private func resumeWaitingTransfers() {
+        while activeTransfers < transferLimit, !waitingTransfers.isEmpty {
+            activeTransfers += 1; waitingTransfers.removeFirst().continuation.resume()
+        }
+    }
+    private func cancelWaitingTransfer(_ id: UUID) {
+        guard let index = waitingTransfers.firstIndex(where: { $0.id == id }) else { return }
+        waitingTransfers.remove(at: index).continuation.resume(throwing: CancellationError())
+    }
+    /// Hashes off the actor so concurrent downloads verify in parallel.
+    static func verified(_ file: URL, item: DownloadItem) async -> Bool { valid(file, item: item) }
     public nonisolated static func valid(_ file: URL, item: DownloadItem) -> Bool {
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: file.path), attributes[.type] as? FileAttributeType == .typeRegular,
               let size = attributes[.size] as? NSNumber, size.int64Value > 0 || item.size == 0 || item.sha1 != nil || item.sha512 != nil || item.md5 != nil else { return false }

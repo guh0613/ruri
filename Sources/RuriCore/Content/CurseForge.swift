@@ -86,7 +86,7 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     }
     public func downloadItem(to destination: URL, permittedURL: URL?) throws -> DownloadItem {
         try validateDownloadMetadata()
-        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength)
+        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength, cacheable: true)
     }
     func validateDownloadMetadata() throws {
         guard id > 0, modId > 0, fileLength >= 0, isAvailable != false, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.invalidDownloadMetadata(fileName)) }
@@ -309,21 +309,22 @@ public actor CurseForgeService {
             let check = try item.file.downloadItem(to: file, permittedURL: nil)
             guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.checksumMismatch(String(describing: item.file.displayName))) }
         }
-        var installations: [ContentInstallation] = []
         for item in items {
-            try Task.checkCancellation()
-            let cache = try LauncherPaths.safePath("curseforge/\(item.id)/\(item.file.fileName)", within: paths.cache)
-            await progress(InstallProgress(Messages.CoreCurseForge.downloadFile(item.project.name), completed: installations.count, total: items.count))
-            if let file = manualFiles[item.id] {
-                let check = try item.file.downloadItem(to: file, permittedURL: nil)
-                guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.fileChecksumFailed(item.file.fileName)) }
-                installations.append(ContentInstallation(record: item.record, source: file))
-            } else {
-                try await downloader.fetch(item.file.downloadItem(to: cache, permittedURL: item.downloadURL))
-                installations.append(ContentInstallation(record: item.record, source: cache))
-            }
+            guard let file = manualFiles[item.id] else { continue }
+            let check = try item.file.downloadItem(to: file, permittedURL: nil)
+            guard DownloadManager.valid(file, item: check) else { throw RuriError.message(Messages.CoreCurseForge.fileChecksumFailed(item.file.fileName)) }
         }
-        return installations
+        let caches = try items.map { try LauncherPaths.safePath("curseforge/\($0.id)/\($0.file.fileName)", within: paths.cache) }
+        let remote = items.indices.filter { manualFiles[items[$0].id] == nil }
+        let requests = try remote.map { try items[$0].file.downloadItem(to: caches[$0], permittedURL: items[$0].downloadURL) }
+        let manualCount = items.count - remote.count
+        // The downloader's shared limit bounds the transfers; this only keeps enough queued.
+        try await forEachConcurrently(Array(requests.indices), width: 16) { index in
+            try await downloader.fetch(requests[index])
+        } completed: { index, done in
+            await progress(InstallProgress(Messages.CoreCurseForge.downloadFile(items[remote[index]].project.name), completed: manualCount + done, total: items.count))
+        }
+        return items.indices.map { ContentInstallation(record: items[$0].record, source: manualFiles[items[$0].id] ?? caches[$0]) }
     }
     public func updates(for records: [ManagedContent], instance: GameInstance) async throws -> [CurseForgeUpdate] {
         let result = try await ContentUpdateQueries.run(records.filter { $0.provider == "curseforge" }) { record in

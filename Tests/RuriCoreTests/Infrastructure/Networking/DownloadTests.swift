@@ -202,6 +202,46 @@ struct DownloadTests {
         #expect(scenario.receivedRequests.count == 1)
         #expect(DownloadManager.valid(item.destination, item: item))
     }
+    @Test func verifiedDownloadsAreReusedFromTheCache() async throws {
+        let body = body
+        let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }
+        let (_, item, root, host) = try setup(scenario)
+        defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
+        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
+        let cache = DownloadCache(root: root.appendingPathComponent("cache"))
+        func copy(to folder: String, cacheable: Bool = true) -> DownloadItem {
+            DownloadItem(url: item.url, destination: root.appendingPathComponent("\(folder)/artifact.jar"), sha1: item.sha1, size: item.size, cacheable: cacheable)
+        }
+        let key = try #require(item.sha1)
+        try await DownloadManager(configuration: config, retryDelay: .zero, cache: cache).fetch(copy(to: "plain", cacheable: false))
+        #expect(!FileManager.default.fileExists(atPath: cache.file(key).path))
+        try await DownloadManager(configuration: config, retryDelay: .zero, cache: cache).fetch(copy(to: "first"))
+        try await DownloadManager(configuration: config, retryDelay: .zero, cache: cache).fetch(copy(to: "second"))
+        #expect(scenario.receivedRequests.count == 2)
+        #expect(try Data(contentsOf: copy(to: "second").destination) == body)
+        // A damaged entry is dropped and the file is downloaded again.
+        try Data(repeating: 0, count: 512).write(to: cache.file(key))
+        try await DownloadManager(configuration: config, retryDelay: .zero, cache: cache).fetch(copy(to: "third"))
+        #expect(scenario.receivedRequests.count == 3)
+        #expect(try Data(contentsOf: copy(to: "third").destination) == body)
+        #expect(try Data(contentsOf: cache.file(key)) == body)
+    }
+    @Test func concurrentFetchesShareTheTransferLimit() async throws {
+        let body = body
+        let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body.prefix(10), hold: true) }
+        let (manager, item, root, host) = try setup(scenario)
+        defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
+        await manager.configure(concurrency: 1, cache: nil)
+        let other = DownloadItem(url: URL(string: "https://\(host)/other.jar")!, destination: root.appendingPathComponent("other.jar"), sha1: item.sha1, size: item.size)
+        let first = Task { try await manager.fetch(item) }
+        let second = Task { try await manager.fetch(other) }
+        for _ in 0..<200 where scenario.receivedRequests.isEmpty { try await Task.sleep(for: .milliseconds(10)) }
+        // Give a missing limit the chance to start the second request.
+        try await Task.sleep(for: .milliseconds(200))
+        #expect(scenario.receivedRequests.count == 1)
+        first.cancel(); second.cancel()
+        _ = await (first.result, second.result)
+    }
     @Test func separateManagersCannotWriteOnePartialConcurrently() async throws {
         let body = body
         let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }

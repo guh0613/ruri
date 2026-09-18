@@ -31,6 +31,29 @@ struct LauncherJournalTests {
         #expect(journal.entries[0].steps.count == 2)
     }
 
+    @Test func parallelTracksShowBesideTheMainStageUntilTheyFinish() throws {
+        var journal = LauncherJournal()
+        let id = journal.begin(.verbatim("Import pack"))
+        journal.progress(id, InstallProgress("Pack files", completed: 30, total: 100))
+        journal.progress(id, InstallProgress("Assets", completed: 200, total: 900, track: .gameAssets))
+        var entry = journal.entries[0]
+        #expect(entry.progress.stage == "Pack files")
+        #expect(entry.steps.count == 1)
+        #expect(entry.parallelProgress.map(\.stage) == ["Assets"])
+        #expect(entry.overallFraction == 0.23)
+        // A second pass over the same files never moves the count backwards.
+        journal.progress(id, InstallProgress("Assets", completed: 50, total: 900, track: .gameAssets))
+        #expect(journal.entries[0].parallelProgress.first?.completed == 200)
+        // Once handed over or done, the track stays hidden despite late reports.
+        journal.progress(id, .finished(.gameAssets))
+        journal.progress(id, InstallProgress("Assets", completed: 400, total: 900, track: .gameAssets))
+        entry = journal.entries[0]
+        #expect(entry.parallelProgress.isEmpty)
+        #expect(entry.overallFraction == 0.3)
+        journal.finish(id, status: .completed)
+        #expect(journal.entries[0].parallel == nil)
+    }
+
     @Test func cancellationDistinguishesCleanExitFromRecoveryWarning() {
         var journal = LauncherJournal()
         let clean = journal.begin(.verbatim("Clean cancellation"))

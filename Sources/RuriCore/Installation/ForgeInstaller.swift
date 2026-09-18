@@ -67,7 +67,7 @@ public actor ForgeInstaller {
         guard checksum.range(of: "^[0-9A-Fa-f]{40}$", options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreForgeInstaller.installerChecksumMissing) }
         let jar = try LauncherPaths.safePath("installers/\(instance.loader.rawValue)-\(instance.gameVersion)-\(version).jar", within: paths.cache)
         await progress(InstallProgress(Messages.CoreForgeInstaller.downloadInstaller(instance.loader.title)))
-        try await downloader.fetch(DownloadItem(url: url, destination: jar, sha1: checksum))
+        try await downloader.fetch(DownloadItem(url: url, destination: jar, sha1: checksum, cacheable: true))
         let archive = try Archive(url: jar, accessMode: .read)
         let profile = try JSONDecoder().decode(Profile.self, from: read("install_profile.json", in: archive))
         guard (profile.minecraft ?? profile.install?.minecraft ?? profile.versionInfo?.inheritsFrom) == instance.gameVersion else { throw RuriError.message(Messages.CoreForgeInstaller.minecraftVersionMismatch) }
@@ -80,7 +80,7 @@ public actor ForgeInstaller {
         let jarID = instance.repositoryVersionID ?? instance.gameVersion
         let sourceJar = try paths.clientJar(jarID, instance: instance)
         guard let client = base.downloads?["client"] else { throw RuriError.message(Messages.CoreForgeInstaller.vanillaClientMissing) }
-        try await downloader.fetch(DownloadItem(client, to: sourceJar))
+        try await downloader.fetch(DownloadItem(client, to: sourceJar, cacheable: true))
         let vanilla = try LauncherPaths.safePath("versions/\(instance.gameVersion)", within: work)
         try FileManager.default.createDirectory(at: vanilla, withIntermediateDirectories: true)
         try copyAtomically(sourceJar, to: vanilla.appendingPathComponent("\(instance.gameVersion).jar"))
@@ -101,7 +101,7 @@ public actor ForgeInstaller {
                 if FileManager.default.fileExists(atPath: target.path) { try FileManager.default.removeItem(at: target) }
                 let crc = try archive.extract(entry, to: target)
                 guard crc == entry.checksum else { throw RuriError.message(Messages.CoreForgeInstaller.embeddedFileChecksumFailed(String(describing: relative))) }
-            } else if artifact.url?.scheme == "https" { requests.append(DownloadItem(artifact, to: target)) }
+            } else if artifact.url?.scheme == "https" { requests.append(DownloadItem(artifact, to: target, cacheable: true)) }
         }
         try await downloader.download(requests, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreForgeInstaller.prepareDependencies, completed: done, total: total)) }
         let processorCoordinates = (profile.processors ?? []).filter { $0.sides == nil || $0.sides!.contains("client") }

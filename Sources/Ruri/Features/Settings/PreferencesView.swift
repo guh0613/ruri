@@ -20,7 +20,7 @@ struct PreferencesView: View {
         .sheet(isPresented: $showLaunchDefaults) { DefaultLaunchSettingsView(settings: model.state.settings) }
         .onChange(of: model.state.settings.appearance) { model.save() }
         .onChange(of: model.state.settings.isolationPolicy) { model.save() }
-        .onChange(of: model.state.settings.concurrentDownloads) { model.save() }
+        .onChange(of: model.state.settings.concurrentDownloads) { model.save(); Task { await model.applyNetworkSettings() } }
         .onChange(of: model.state.settings.downloadSource) { model.save(); Task { await model.applyNetworkSettings() } }
         .onChange(of: model.state.settings.microsoftClientID) { model.save() }
     }

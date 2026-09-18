@@ -36,13 +36,12 @@ public actor GameInstaller {
         try paths.prepare()
         try paths.prepareInstance(input.id)
         await progress(InstallProgress(Messages.CoreInstaller.fetchingVersionManifest))
-        let catalog = try await catalog()
-        guard let version = catalog.versions.first(where: { $0.id == input.gameVersion }) else { throw RuriError.message(Messages.CoreInstaller.minecraftVersionNotFound(input.gameVersion)) }
-        let baseFile = try LauncherPaths.safePath("\(version.id)/\(version.id).json", within: paths.versions)
-        try await downloader.fetch(DownloadItem(url: version.url, destination: baseFile, sha1: version.sha1))
-        var manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
+        var manifest = try await baseManifest(input.gameVersion)
         var instance = input
         instance.directoryID = paths.directoryID(for: instance.id)
+        // Assets depend only on the base game; download them while loaders install.
+        let base = manifest, target = instance
+        async let assets: Void = prefetchAssets(base, instance: target, concurrency: concurrency, progress: progress)
         let installed = try await installLoaders(instance, base: manifest, concurrency: concurrency, progress: progress)
         instance = installed.instance; manifest = installed.manifest
         if let version = instance.repositoryVersionID { manifest.id = version; manifest.jar = version; manifest.inheritsFrom = nil }
@@ -55,8 +54,48 @@ public actor GameInstaller {
         try FileManager.default.createDirectory(at: paths.manifest(instance.id).deletingLastPathComponent(), withIntermediateDirectories: true)
         try encoder.encode(manifest).write(to: paths.manifest(instance.id), options: instance.repositoryVersionID == nil ? .atomic : .withoutOverwriting)
         instance.installed = true
+        await assets
         await progress(InstallProgress(Messages.CoreInstaller.installationCompleted, completed: 1, total: 1))
         return instance
+    }
+    func baseManifest(_ gameVersion: String) async throws -> VersionManifest {
+        let catalog = try await catalog()
+        guard let version = catalog.versions.first(where: { $0.id == gameVersion }) else { throw RuriError.message(Messages.CoreInstaller.minecraftVersionNotFound(gameVersion)) }
+        let baseFile = try LauncherPaths.safePath("\(version.id)/\(version.id).json", within: paths.versions)
+        try await downloader.fetch(DownloadItem(url: version.url, destination: baseFile, sha1: version.sha1))
+        return try JSONDecoder().decode(VersionManifest.self, from: Data(contentsOf: baseFile))
+    }
+    /// Warms the shared game assets for an instance that is about to be installed.
+    public func prefetch(_ instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async {
+        guard let manifest = try? await baseManifest(instance.gameVersion) else { return }
+        await prefetchAssets(manifest, instance: instance, concurrency: concurrency, progress: progress)
+    }
+    /// Best effort on its own progress track: `prepareFiles` repeats every
+    /// step on the main track and reports any failure.
+    nonisolated func prefetchAssets(_ manifest: VersionManifest, instance: GameInstance, concurrency: Int, progress: @Sendable @escaping (InstallProgress) async -> Void) async {
+        guard let index = manifest.assetIndex else { return }
+        do {
+            let (_, objects) = try await assetObjects(index, resources: paths.resources(for: instance))
+            try protectRepositoryResources(objects)
+            await progress(InstallProgress(Messages.CoreInstaller.downloadingGameResources, total: objects.count, track: .gameAssets))
+            try await downloader.download(objects, concurrency: concurrency) { done, total in
+                await progress(InstallProgress(Messages.CoreInstaller.downloadingGameResources, completed: done, total: total, track: .gameAssets))
+            }
+        } catch { await progress(.finished(.gameAssets)) }
+    }
+    nonisolated func assetObjects(_ index: VersionManifest.AssetIndex, resources: GameResourcePaths) async throws -> (AssetObjects, [DownloadItem]) {
+        let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
+        // Mojang reuses asset index IDs when updating resources. Treat indexes as
+        // refreshable cache entries: the downloader verifies the replacement before
+        // atomically publishing it, preserving the old index if the download fails.
+        try await downloader.fetch(DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size))
+        let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: indexFile))
+        let objects = try assets.objects.values.map { object -> DownloadItem in
+            let url = try MinecraftEndpoints.asset(hash: object.hash)
+            let subpath = "\(object.hash.prefix(2))/\(object.hash)"
+            return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: resources.assets), sha1: object.hash, size: object.size)
+        }
+        return (assets, objects)
     }
     static func applyingPackLibraries(_ libraries: [Library], to manifest: VersionManifest) throws -> VersionManifest {
         guard libraries.count <= 1000 else { throw RuriError.message(Messages.CoreInstaller.modpackDependencyCountExceeded) }
@@ -148,7 +187,7 @@ public actor GameInstaller {
         let client = manifest.downloads?["client"] ?? Artifact(url: nil)
         let jarID = manifest.jar ?? instance.gameVersion
         let clientFile = try paths.clientJar(jarID, instance: instance)
-        var files = [DownloadItem(client, to: clientFile)]
+        var files = [DownloadItem(client, to: clientFile, cacheable: true)]
         for artifact in manifest.generatedLibraries ?? [] {
             guard let path = artifact.path else { throw RuriError.message(Messages.CoreInstaller.generatedDependencyPathMissing) }
             files.append(DownloadItem(artifact, to: try resources.libraryFile(artifact, fallback: path)))
@@ -157,12 +196,12 @@ public actor GameInstaller {
         for library in manifest.libraries where Self.allowed(library, architecture: arch) {
             if let artifact = try library.artifact() {
                 let target = try resources.libraryFile(artifact, fallback: Library.mavenPath(library.name))
-                files.append(DownloadItem(artifact, to: target))
+                files.append(DownloadItem(artifact, to: target, cacheable: true))
             }
             if let artifact = try library.nativeArtifact(architecture: arch) {
                 guard let nativePath = artifact.path ?? artifact.url.map({ "natives/\($0.lastPathComponent)" }) else { throw RuriError.message(Messages.CoreInstaller.nativeLibraryPathMissing) }
                 let target = try resources.libraryFile(artifact, fallback: nativePath)
-                files.append(DownloadItem(artifact, to: target)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
+                files.append(DownloadItem(artifact, to: target, cacheable: true)); nativeFiles.append((target, library.extract?.exclude ?? ["META-INF/"]))
             }
         }
         if let logging = manifest.logging?.client {
@@ -173,18 +212,10 @@ public actor GameInstaller {
         try protectRepositoryResources(files)
         try await downloader.download(files, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.downloadingGameAndDependencies, completed: done, total: total)) }
         if let index = manifest.assetIndex {
-            let indexFile = try LauncherPaths.safePath("indexes/\(index.id).json", within: resources.assets)
-            // Mojang reuses asset index IDs when updating resources. Treat indexes as
-            // refreshable cache entries: the downloader verifies the replacement before
-            // atomically publishing it, preserving the old index if the download fails.
-            try await downloader.fetch(DownloadItem(url: index.url, destination: indexFile, sha1: index.sha1, size: index.size))
-            let assets = try JSONDecoder().decode(AssetObjects.self, from: Data(contentsOf: indexFile))
-            let objects = try assets.objects.values.map { object -> DownloadItem in
-                let url = try MinecraftEndpoints.asset(hash: object.hash)
-                let subpath = "\(object.hash.prefix(2))/\(object.hash)"
-                return DownloadItem(url: url, destination: try LauncherPaths.safePath("objects/\(subpath)", within: resources.assets), sha1: object.hash, size: object.size)
-            }
+            let (assets, objects) = try await assetObjects(index, resources: resources)
             try protectRepositoryResources(objects)
+            // Any background asset download now continues under the main stage.
+            await progress(.finished(.gameAssets))
             try await downloader.download(objects, concurrency: concurrency) { done, total in await progress(InstallProgress(Messages.CoreInstaller.downloadingGameResources, completed: done, total: total)) }
             try mapLegacyAssets(assets, indexID: index.id, instance: instance)
         }
@@ -195,7 +226,7 @@ public actor GameInstaller {
         for (file, excluded) in nativeFiles { try SafeArchive.extract(file, to: natives, excluding: excluded) }
     }
 
-    private func protectRepositoryResources(_ items: [DownloadItem]) throws {
+    private nonisolated func protectRepositoryResources(_ items: [DownloadItem]) throws {
         if protectExistingFiles {
             let workspace = paths.root.standardizedFileURL.resolvingSymlinksInPath().path + "/"
             for item in items where !item.destination.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(workspace) &&
