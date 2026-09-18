@@ -27,6 +27,7 @@ struct HomeView: View {
                     }
                     if !running.isEmpty { runningSection }
                     if let task = model.activeActivity { activitySection(task) }
+                    HomeActivityCard()
                     if !recent.isEmpty { recentSection }
                     quickActions(columns: geometry.size.width >= 1000 ? 4 : geometry.size.width >= 620 ? 2 : 1)
                 }

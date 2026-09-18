@@ -159,23 +159,33 @@ public enum GameHistoryStore {
         }
     }
 
-    public static func days(paths: LauncherPaths, instanceID: UUID? = nil, since date: Date, calendar: Calendar = .current) throws -> [GameSessionTiming.Day] {
+    public static func days(paths: LauncherPaths, instanceID: UUID? = nil, since date: Date, before endDate: Date? = nil,
+                            calendar: Calendar = .current) throws -> [GameSessionTiming.Day] {
         return try withDatabase(paths: paths) { db in
             // updated includes checkpoint/end time, so cross-midnight runs are read.
             var values: [HistoryDatabase.Value] = [.real(date.timeIntervalSince1970)]
-            if let id = instanceID { values.append(.text(id.uuidString)) }
-            let records = try db.records("SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE updated >= ? AND played=1" + (instanceID == nil ? "" : " AND instance_id = ?"), values)
+            var filter = " WHERE updated >= ? AND played=1"
+            if let id = instanceID { filter += " AND instance_id = ?"; values.append(.text(id.uuidString)) }
+            if let endDate { filter += " AND started < ?"; values.append(.real(endDate.timeIntervalSince1970)) }
+            let records = try db.records("SELECT payload, timing, updated, revision, endpoint, observed FROM sessions" + filter, values)
             var totals: [Date: Double] = [:]
             for record in records {
+                try Task.checkCancellation()
                 if let timing = record.timing, !timing.days.isEmpty {
-                    for day in timing.days where day.date >= date { totals[calendar.startOfDay(for: day.date), default: 0] += day.seconds }
+                    for day in timing.days {
+                        let key = calendar.startOfDay(for: day.date)
+                        if key >= date, endDate.map({ key < $0 }) ?? true { totals[key, default: 0] += day.seconds }
+                    }
                 } else if let exit = record.exit {
                     // A result without daily segments still has a measured credit;
                     // split it over its known interval rather than putting it on day 1.
                     var cursor = max(exit.startedAt, date)
-                    let end = max(exit.startedAt, exit.endedAt), wall = end.timeIntervalSince(exit.startedAt)
+                    let finish = max(exit.startedAt, exit.endedAt), wall = finish.timeIntervalSince(exit.startedAt)
+                    let end = min(finish, endDate ?? finish)
                     if wall <= 0 {
-                        if exit.startedAt >= date { totals[calendar.startOfDay(for: exit.startedAt), default: 0] += exit.playTime }
+                        if exit.startedAt >= date, endDate.map({ exit.startedAt < $0 }) ?? true {
+                            totals[calendar.startOfDay(for: exit.startedAt), default: 0] += exit.playTime
+                        }
                         continue
                     }
                     while cursor < end {

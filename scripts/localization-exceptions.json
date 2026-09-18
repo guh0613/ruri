@@ -731,11 +731,6 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE updated >= ? AND played=1\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"\"\"\n                UPDATE sessions SET timing=?, seconds=?, started=?, played=1, updated=?, revision=?, observed=?\n                WHERE id=? AND finished=0 AND revision < ?\n                \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -888,5 +883,20 @@
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions\\(filter) ORDER BY seconds DESC LIMIT 1\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" WHERE updated >= ? AND played=1\"",
+    "reason": "SQLite query syntax, not user-facing text."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\" AND started < ?\"",
+    "reason": "SQLite query syntax, not user-facing text."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameYearActivity.swift",
+    "literal": "\"SELECT min(started) FROM sessions WHERE played = 1\"",
+    "reason": "SQLite query syntax, not user-facing text."
   }
 ]

@@ -429,3 +429,57 @@
 
 /* @symbol HistoryUI.recentWeek @args - */
 "HistoryUI.recentWeek" = "最近 7 天";
+
+/* @symbol HomeActivity.title @args - */
+"HomeActivity.title" = "游玩回顾";
+
+/* @symbol HomeActivity.openHistory @args - */
+"HomeActivity.openHistory" = "打开回顾";
+
+/* @symbol HomeActivity.totalTime @args - */
+"HomeActivity.totalTime" = "全年游玩时长";
+
+/* @symbol HomeActivity.activeDays @args integer */
+"HomeActivity.activeDays" = "游玩了 %1$lld 天";
+
+/* @symbol HomeActivity.yearPicker @args - */
+"HomeActivity.yearPicker" = "年份";
+
+/* @symbol HomeActivity.year @args text */
+"HomeActivity.year" = "%1$@ 年";
+
+/* @symbol HomeActivity.modePicker @args - */
+"HomeActivity.modePicker" = "统计方式";
+
+/* @symbol HomeActivity.day @args - */
+"HomeActivity.day" = "日";
+
+/* @symbol HomeActivity.week @args - */
+"HomeActivity.week" = "周";
+
+/* @symbol HomeActivity.cumulative @args - */
+"HomeActivity.cumulative" = "累积";
+
+/* @symbol HomeActivity.less @args - */
+"HomeActivity.less" = "少";
+
+/* @symbol HomeActivity.more @args - */
+"HomeActivity.more" = "多";
+
+/* @symbol HomeActivity.legendHelp @args - */
+"HomeActivity.legendHelp" = "颜色越深，游玩时长越长。";
+
+/* @symbol HomeActivity.loadFailed @args - */
+"HomeActivity.loadFailed" = "暂时无法读取游玩记录";
+
+/* @symbol HomeActivity.chartLabel @args - */
+"HomeActivity.chartLabel" = "全年游玩热力图";
+
+/* @symbol HomeActivity.keyboardHelp @args - */
+"HomeActivity.keyboardHelp" = "使用左右方向键切换周，上下方向键切换日。";
+
+/* @symbol HomeActivity.dayTime @args - */
+"HomeActivity.dayTime" = "当日游玩时长";
+
+/* @symbol HomeActivity.dayContribution @args text */
+"HomeActivity.dayContribution" = "当日游玩 %1$@";
