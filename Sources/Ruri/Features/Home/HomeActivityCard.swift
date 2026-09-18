@@ -28,17 +28,11 @@ struct HomeActivityCard: View {
                 }
                 Surface(padding: 24) {
                     VStack(alignment: .leading, spacing: 18) {
-                        ViewThatFits(in: .horizontal) {
-                            HStack(alignment: .top, spacing: 24) {
-                                summary(loaded)
-                                Spacer(minLength: 12)
-                                controls(year: year, currentYear: currentYear)
-                            }
-                            VStack(alignment: .leading, spacing: 16) {
-                                summary(loaded)
-                                controls(year: year, currentYear: currentYear)
-                            }
-                        }
+                        HomeActivityHeader(activity: loaded, isLoading: loaded == nil && error == nil,
+                                           year: year, currentYear: currentYear,
+                                           firstRecordedYear: activity?.firstRecordedYear,
+                                           selectedYear: $selectedYear, mode: $mode)
+                        Divider()
                         YearActivityGrid(activity: loaded ?? GameYearActivity(year: year, now: context.date), mode: mode)
                             .opacity(loaded == nil ? 0.45 : 1)
                             .allowsHitTesting(loaded != nil)
@@ -49,42 +43,6 @@ struct HomeActivityCard: View {
             }
             .task(id: loadKey(year: year, date: context.date)) { await load(year: year, now: context.date) }
         }
-    }
-
-    private func summary(_ activity: GameYearActivity?) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(Messages.HomeActivity.totalTime.localized).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-            HStack(alignment: .firstTextBaseline, spacing: 12) {
-                Text(activity.map { LocalizedFormat.duration($0.seconds) } ?? "—")
-                    .font(.system(size: 28, weight: .semibold, design: .rounded)).monospacedDigit()
-                    .lineLimit(1).minimumScaleFactor(0.7)
-                if let activity {
-                    Text(Messages.HomeActivity.activeDays(Int64(activity.activeDays)).localized)
-                        .font(.callout).foregroundStyle(.secondary).fixedSize()
-                } else if error == nil {
-                    ProgressView().controlSize(.small)
-                }
-            }
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func controls(year: Int, currentYear: Int) -> some View {
-        HStack(spacing: 12) {
-            Picker(Messages.HomeActivity.yearPicker.localized, selection: Binding(
-                get: { year }, set: { selectedYear = $0 == currentYear ? nil : $0 }
-            )) {
-                ForEach(Array(stride(from: currentYear, through: min(year, activity?.firstRecordedYear ?? currentYear), by: -1)), id: \.self) { value in
-                    Text(Messages.HomeActivity.year(String(value)).localized).tag(value)
-                }
-            }
-            .labelsHidden().pickerStyle(.menu).fixedSize()
-            Picker(Messages.HomeActivity.modePicker.localized, selection: $mode) {
-                ForEach(YearActivityMode.allCases) { Text($0.title).tag($0) }
-            }
-            .labelsHidden().pickerStyle(.segmented).frame(width: 178)
-        }
-        .fixedSize()
     }
 
     private var footer: some View {
