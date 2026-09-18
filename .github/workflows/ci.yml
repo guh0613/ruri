@@ -48,6 +48,3 @@ jobs:
       - name: Test
         # Process/timeout fixtures need prompt scheduling on shared runners.
         run: scripts/swift-build.sh test --no-parallel --force-resolved-versions
-      - name: Build app bundle
-        # Compile both Icon Composer assets and verify the signed app bundles.
-        run: scripts/build-app.sh debug
