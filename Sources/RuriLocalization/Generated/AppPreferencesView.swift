@@ -45,11 +45,11 @@ extension Messages {
         public static var automaticEstimate: LocalizedMessage {
             .init(key: "appPreferencesView.modelText7", table: "Interface", fallback: "自动估算")
         }
-        /// 编辑默认启动设置…
+        /// 编辑全局游戏设置…
         ///
         /// Resource: `Interface.appPreferencesView.modelText8`.
         public static var editDefaultLaunchSettings: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText8", table: "Interface", fallback: "编辑默认启动设置…")
+            .init(key: "appPreferencesView.modelText8", table: "Interface", fallback: "编辑全局游戏设置…")
         }
         /// 未单独设置的实例将使用这些选项；保存后用于下一次启动。
         ///
@@ -251,7 +251,7 @@ extension Messages {
             "Interface:appPreferencesView.modelText5": .init("游戏默认设置", []),
             "Interface:appPreferencesView.modelText6": .init("默认内存分配", []),
             "Interface:appPreferencesView.modelText7": .init("自动估算", []),
-            "Interface:appPreferencesView.modelText8": .init("编辑默认启动设置…", []),
+            "Interface:appPreferencesView.modelText8": .init("编辑全局游戏设置…", []),
             "Interface:appPreferencesView.modelText9": .init("未单独设置的实例将使用这些选项；保存后用于下一次启动。", []),
             "Interface:appPreferencesView.modelText10": .init("新实例隔离规则", []),
             "Interface:appPreferencesView.modelText11": .init("仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),

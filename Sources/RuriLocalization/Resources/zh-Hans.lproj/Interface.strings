@@ -3095,7 +3095,7 @@
 "appPreferencesView.modelText7" = "自动估算";
 
 /* @symbol AppPreferencesView.editDefaultLaunchSettings @args - */
-"appPreferencesView.modelText8" = "编辑默认启动设置…";
+"appPreferencesView.modelText8" = "编辑全局游戏设置…";
 
 /* @symbol AppPreferencesView.inheritedLaunchSettingsDetails @args - */
 "appPreferencesView.modelText9" = "未单独设置的实例将使用这些选项；保存后用于下一次启动。";

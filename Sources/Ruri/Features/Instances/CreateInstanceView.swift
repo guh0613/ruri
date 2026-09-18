@@ -46,7 +46,6 @@ struct CreateInstanceView: View {
                 else { Picker(Messages.AppCreateInstanceView.loaderVersion.localized, selection: $loaderVersion) { ForEach(loaders, id: \.self) { Text($0).tag($0) } } }
             }
             HStack {
-                Text((model.state.settings.isolationPolicy ?? .always).directory(loader: loader).title).font(.caption).foregroundStyle(.secondary)
                 Spacer()
                 Button(Messages.Common.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(Messages.AppCreateInstanceView.createAndInstall.localized) { model.install(name: name, version: selectedVersion, loader: loader, loaderVersion: loader == .vanilla ? nil : loaderVersion) }.buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
