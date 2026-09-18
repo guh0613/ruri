@@ -34,7 +34,7 @@ struct CatalogInstallView: View {
     private var loaderKey: String { "\(destination.rawValue)|\(game)|\(loader.rawValue)" }
     private var planKey: String { "\(loaderKey)|\(loaderVersion)|\(instanceID?.uuidString ?? "")|\(selected?.gameVersion ?? "")|\(selected?.loader.rawValue ?? "")|\(selected?.loaderVersion ?? "")|\(model.selectedDirectoryID)|\(retry)" }
     private var manualRoot: CurseForgeFile? {
-        guard case .curseforge(let p) = project, case .curseforge(let f) = version, p.allowModDistribution == false || f.downloadURL == nil else { return nil }
+        guard case .curseforge = project, case .curseforge(let f) = version, f.downloadURL == nil else { return nil }
         return f
     }
     private var ready: Bool {

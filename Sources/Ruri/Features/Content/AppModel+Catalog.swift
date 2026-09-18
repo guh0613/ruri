@@ -50,7 +50,7 @@ extension AppModel {
                 guard let file = version.primaryFile else { throw RuriError.message(Messages.CoreModrinthContentPlan.noDownloadableFile(version.name)) }
                 guard file.hashes["sha1"] != nil || file.hashes["sha512"] != nil else { throw RuriError.message(Messages.CoreModrinthContentPlan.missingFileChecksum(file.filename)) }
                 try await downloader.fetch(DownloadItem(url: file.url, destination: destination, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size))
-            case (.curseforge(let project), .curseforge(let file)):
+            case (.curseforge, .curseforge(let file)):
                 if let manual = manualFiles[file.id] {
                     let check = try file.downloadItem(to: manual, permittedURL: nil)
                     guard DownloadManager.valid(manual, item: check) else { throw RuriError.message(Messages.CoreCurseForge.fileMismatch(file.displayName)) }
@@ -60,7 +60,7 @@ extension AppModel {
                     try Task.checkCancellation()
                     guard rename(temporary.path, destination.path) == 0 else { throw RuriError.message(Messages.Discovery.saveFailed) }
                 } else {
-                    guard project.allowModDistribution != false, let url = file.downloadURL else { throw RuriError.message(Messages.CoreCurseForge.manualDownloadRequired(file.fileName)) }
+                    guard let url = file.downloadURL else { throw RuriError.message(Messages.CoreCurseForge.manualDownloadRequired(file.fileName)) }
                     try await downloader.fetch(file.downloadItem(to: destination, permittedURL: url))
                 }
             default: throw RuriError.message(Messages.Discovery.incompatibleTarget)

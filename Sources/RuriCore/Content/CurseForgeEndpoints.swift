@@ -2,6 +2,7 @@ import Foundation
 
 enum CurseForgeEndpoints {
     static let api = URL(string: "https://api.curseforge.com/v1")!
+    private static let cdn = URL(string: "https://edge.forgecdn.net/files")!
     private static let website = URL(string: "https://www.curseforge.com/minecraft")!
     private static let alternateWebsite = URL(string: "https://curseforge.com/minecraft")!
 
@@ -26,6 +27,12 @@ enum CurseForgeEndpoints {
         try EndpointURL.build(base: api, path: route.path, query: query)
     }
     static func allowsAPI(_ url: URL) -> Bool { EndpointURL.belongsTo(url, origin: api) }
+    /// Files whose authors opted out of third-party distribution come back with a
+    /// null downloadUrl, but they stay on the CDN at a path derived from the file ID
+    /// (same approach as HMCL). The caller still verifies the API-provided hash.
+    static func cdnFile(id: Int, fileName: String) -> URL? {
+        try? EndpointURL.build(base: cdn, path: [String(id / 1000), String(id % 1000), fileName])
+    }
     static func filePage(project: CurseForgeProject, fileID: Int) -> URL {
         if let page = project.links?.websiteUrl,
            EndpointURL.belongsTo(page, origin: website) || EndpointURL.belongsTo(page, origin: alternateWebsite),

@@ -76,7 +76,11 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     public var fileFingerprint: UInt32? = nil
     public var sha1: String? { hash(algorithm: 1, length: 40) }
     public var md5: String? { hash(algorithm: 2, length: 32) }
-    public var downloadURL: URL? { downloadUrl.flatMap(URL.init(string:)).flatMap { $0.scheme == "https" ? $0 : nil } }
+    public var downloadURL: URL? {
+        if let official = downloadUrl.flatMap(URL.init(string:)), official.scheme == "https" { return official }
+        guard id > 0, !fileName.isEmpty, !fileName.contains("/"), !fileName.contains("\\") else { return nil }
+        return CurseForgeEndpoints.cdnFile(id: id, fileName: fileName)
+    }
     private func hash(algorithm: Int, length: Int) -> String? {
         hashes.first(where: { $0.algo == algorithm && $0.value.range(of: "^[a-fA-F0-9]{\(length)}$", options: .regularExpression) != nil })?.value.lowercased()
     }
@@ -112,7 +116,7 @@ public struct PlannedCurseFile: Identifiable, Sendable {
     public let project: CurseForgeProject
     public let file: CurseForgeFile
     public let kind: ContentKind
-    public var downloadURL: URL? { project.allowModDistribution == false ? nil : file.downloadURL }
+    public var downloadURL: URL? { file.downloadURL }
     public var pageURL: URL { project.page(for: file.id) }
     public var requiresManualDownload: Bool { downloadURL == nil }
     public var record: ManagedContent {

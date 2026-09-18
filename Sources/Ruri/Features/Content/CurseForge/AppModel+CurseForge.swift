@@ -16,7 +16,7 @@ extension AppModel {
             let archive: URL
             if let manual { archive = manual }
             else {
-                guard project.allowModDistribution != false, let url = file.downloadURL else { throw RuriError.message(Messages.AppAppModelCurseForge.downloadRequired) }
+                guard let url = file.downloadURL else { throw RuriError.message(Messages.AppAppModelCurseForge.downloadRequired) }
                 archive = try LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache)
                 try await installer.downloader.fetch(file.downloadItem(to: archive, permittedURL: url))
             }

@@ -45,9 +45,9 @@ public actor ModpackReleaseService {
             let page = try await service.files(project: projectID, offset: offset)
             let items = page.data.filter { $0.isAvailable != false }.map { file in
                 ModpackRelease(id: String(file.id), title: file.displayName, gameVersions: file.gameVersions, publishedAt: file.fileDate,
-                               stable: file.releaseType == 1, page: project.page(for: file.id), requiresManualDownload: project.allowModDistribution == false || file.downloadURL == nil,
+                               stable: file.releaseType == 1, page: project.page(for: file.id), requiresManualDownload: file.downloadURL == nil,
                                origin: .init(provider: .curseforge, projectID: String(projectID), versionID: String(file.id)), filename: file.fileName,
-                               url: project.allowModDistribution == false ? nil : file.downloadURL, sha1: file.sha1, sha512: nil, md5: file.md5, size: file.fileLength)
+                               url: file.downloadURL, sha1: file.sha1, sha512: nil, md5: file.md5, size: file.fileLength)
             }
             let next = offset + page.data.count
             return .init(items: items, nextOffset: next < (page.pagination?.totalCount ?? next) && !page.data.isEmpty ? next : nil)

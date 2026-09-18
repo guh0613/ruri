@@ -127,11 +127,15 @@ struct CurseForgeTests {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)); defer { try? FileManager.default.removeItem(at: paths.root) }
         let instance = GameInstance(name: "Test", gameVersion: "1.21.1", loader: .fabric, loaderVersion: "0.19.5")
         let plan = try await service.plan(file: decoded(root), instance: instance, paths: paths)
-        #expect(plan.files.map(\.id) == [10, 20]); #expect(plan.manualFiles.map(\.id) == [20])
+        #expect(plan.files.map(\.id) == [10, 20]); #expect(plan.manualFiles.isEmpty)
         #expect(plan.files[0].record.requiredProjects == ["2"])
-        #expect(plan.manualFiles[0].downloadURL == nil)
-        #expect(plan.manualFiles[0].pageURL.absoluteString == "https://www.curseforge.com/minecraft/mc-mods/project-2/files/20")
+        #expect(plan.files[1].downloadURL?.absoluteString == "https://download.cf.test/mod-20.jar")
+        #expect(plan.files[1].pageURL.absoluteString == "https://www.curseforge.com/minecraft/mc-mods/project-2/files/20")
         #expect(!server.received.contains { $0.url!.path.contains("/3") || $0.url!.path == "/v1/mods/1/files" })
+    }
+    @Test func restrictedFilesFallBackToCDN() throws {
+        var record = file(5_012_045, project: 1); record["downloadUrl"] = NSNull(); record["fileName"] = "Some Mod+1.0.jar"
+        #expect(try decoded(record).downloadURL?.absoluteString == "https://edge.forgecdn.net/files/5012/45/Some%20Mod+1.0.jar")
     }
     @Test func manualFilesAreVerifiedBeforeContentChanges() async throws {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)); try paths.prepare()
