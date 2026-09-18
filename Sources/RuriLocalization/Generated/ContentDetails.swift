@@ -285,6 +285,24 @@ extension Messages {
         public static var irisFeatures: LocalizedMessage {
             .init(key: "contentDetails.irisFeatures", table: "ContentDetails", fallback: "Iris 功能要求")
         }
+        /// %1$@：%2$@
+        ///
+        /// Resource: `ContentDetails.contentDetails.updateFailure`.
+        public static func updateFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "contentDetails.updateFailure", table: "ContentDetails", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 另外 %1$lld 项未能完成更新检查。
+        ///
+        /// Resource: `ContentDetails.contentDetails.updateFailuresRemaining`.
+        public static func updateFailuresRemaining(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "contentDetails.updateFailuresRemaining", table: "ContentDetails", fallback: "另外 %1$lld 项未能完成更新检查。", arguments: [.integer(value0)])
+        }
+        /// 正在检查更新，已处理 %1$lld/%2$lld 项
+        ///
+        /// Resource: `ContentDetails.contentDetails.updateProgress`.
+        public static func updateProgress(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "contentDetails.updateProgress", table: "ContentDetails", fallback: "正在检查更新，已处理 %1$lld/%2$lld 项", arguments: [.integer(value0), .integer(value1)])
+        }
         static let definitions: [String: MessageDefinition] = [
             "ContentDetails:contentDetails.details": .init("资源详情", []),
             "ContentDetails:contentDetails.onlineProjects": .init("在线项目", []),
@@ -333,6 +351,9 @@ extension Messages {
             "ContentDetails:contentDetails.missingShaders": .init("未找到光影文件", []),
             "ContentDetails:contentDetails.gameVersions": .init("游戏版本", []),
             "ContentDetails:contentDetails.irisFeatures": .init("Iris 功能要求", []),
+            "ContentDetails:contentDetails.updateFailure": .init("%1$@：%2$@", [.text, .text]),
+            "ContentDetails:contentDetails.updateFailuresRemaining": .init("另外 %1$lld 项未能完成更新检查。", [.integer]),
+            "ContentDetails:contentDetails.updateProgress": .init("正在检查更新，已处理 %1$lld/%2$lld 项", [.integer, .integer]),
         ]
     }
 }

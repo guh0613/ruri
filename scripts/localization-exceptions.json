@@ -898,5 +898,10 @@
     "file": "Sources/RuriCore/Sessions/GameYearActivity.swift",
     "literal": "\"SELECT min(started) FROM sessions WHERE played = 1\"",
     "reason": "SQLite query syntax, not user-facing text."
+  },
+  {
+    "file": "Sources/RuriCore/Infrastructure/Networking/HTTPRetryCooldown.swift",
+    "literal": "\"EEE, dd MMM yyyy HH:mm:ss zzz\"",
+    "reason": "Fixed HTTP-date format for parsing the Retry-After header; protocol syntax, not user-facing text."
   }
 ]

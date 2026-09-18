@@ -115,17 +115,21 @@ public actor ModrinthService {
         try await ContentManager(paths: paths, instanceID: instance.id).install(files)
     }
     public func updates(for records: [ManagedContent], instance: GameInstance) async throws -> [ContentUpdate] {
-        var updates: [ContentUpdate] = []
-        for record in records where record.provider == "modrinth" {
-            try Task.checkCancellation()
-            let available = try await versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.modrinthLoader : nil)
-            guard let candidate = available.first(where: { $0.version_type == "release" || $0.version_type == nil }), candidate.id != record.versionID else { continue }
-            let currentDate: String?
-            if let date = record.publishedAt { currentDate = date }
-            else { currentDate = try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(record.versionID)).date_published }
-            if let currentDate, let newer = candidate.date_published, Self.date(newer) > Self.date(currentDate) { updates.append(ContentUpdate(installed: record, available: candidate)) }
+        let result = try await ContentUpdateQueries.run(records.filter { $0.provider == "modrinth" }) { record in
+            try await self.update(for: record, instance: instance)
         }
-        return updates
+        if let failure = result.failures.first { throw failure.underlying }
+        return result.updates
+    }
+    func update(for record: ManagedContent, instance: GameInstance) async throws -> ContentUpdate? {
+        try Task.checkCancellation()
+        let available = try await versions(project: record.projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader.modrinthLoader : nil)
+        guard let candidate = available.first(where: { $0.version_type == "release" || $0.version_type == nil }), candidate.id != record.versionID else { return nil }
+        let currentDate: String?
+        if let date = record.publishedAt { currentDate = date }
+        else { currentDate = try await client.get(ModrinthVersion.self, from: ModrinthEndpoints.version(record.versionID)).date_published }
+        guard let currentDate, let newer = candidate.date_published, Self.date(newer) > Self.date(currentDate) else { return nil }
+        return ContentUpdate(installed: record, available: candidate)
     }
     private static func date(_ value: String) -> Date {
         let formatter = ISO8601DateFormatter(); formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

@@ -139,3 +139,12 @@
 
 /* @symbol ContentDetails.irisFeatures @args - */
 "contentDetails.irisFeatures" = "Iris 功能要求";
+
+/* @symbol ContentDetails.updateFailure @args text,text */
+"contentDetails.updateFailure" = "%1$@：%2$@";
+
+/* @symbol ContentDetails.updateFailuresRemaining @args integer */
+"contentDetails.updateFailuresRemaining" = "另外 %1$lld 项未能完成更新检查。";
+
+/* @symbol ContentDetails.updateProgress @args integer,integer */
+"contentDetails.updateProgress" = "正在检查更新，已处理 %1$lld/%2$lld 项";

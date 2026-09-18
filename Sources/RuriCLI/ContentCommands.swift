@@ -72,8 +72,10 @@ extension CLI {
         let records = chosen.compactMap(\.managed)
         let modrinth = ModrinthService(), hasCurse = records.contains { $0.provider == "curseforge" }
         let curseforge = CurseForgeService(apiKey: hasCurse ? try CurseForgeKeyStore.load() : "")
-        let updates = try await modrinth.updates(for: records, instance: instance)
-        let curseUpdates = hasCurse ? try await curseforge.updates(for: records, instance: instance) : []
+        let result = try await ContentUpdateChecker(modrinth: modrinth, curseforge: hasCurse ? curseforge : nil).check(records, instance: instance)
+        // A command that may apply updates requires a complete check of its scope.
+        if let message = result.failureDescription { throw RuriError.message(message) }
+        let updates = result.modrinth, curseUpdates = result.curseforge
         guard !updates.isEmpty || !curseUpdates.isEmpty else { print(Messages.CLIContentCommands.noCompatibleContentUpdates.localized); return }
         let updater = ContentBatchUpdater(modrinth: modrinth, curseforge: curseforge)
         let plan = try await updater.prepare(modrinth: updates, curseforge: curseUpdates, instance: instance, paths: paths)

@@ -322,17 +322,21 @@ public actor CurseForgeService {
         return installations
     }
     public func updates(for records: [ManagedContent], instance: GameInstance) async throws -> [CurseForgeUpdate] {
-        var result: [CurseForgeUpdate] = []
-        for record in records where record.provider == "curseforge" {
-            try Task.checkCancellation()
-            guard let projectID = Int(record.projectID), let fileID = Int(record.versionID) else { continue }
-            let available = try await files(project: projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader : nil).data
-            guard let next = available.first(where: { $0.releaseType == 1 && $0.supports(instance, kind: record.kind) }), next.id != fileID else { continue }
-            let date: String
-            if let published = record.publishedAt { date = published } else { date = try await file(project: projectID, file: fileID).fileDate }
-            if Self.date(next.fileDate) > Self.date(date) { result.append(CurseForgeUpdate(installed: record, available: next)) }
+        let result = try await ContentUpdateQueries.run(records.filter { $0.provider == "curseforge" }) { record in
+            try await self.update(for: record, instance: instance)
         }
-        return result
+        if let failure = result.failures.first { throw failure.underlying }
+        return result.updates
+    }
+    func update(for record: ManagedContent, instance: GameInstance) async throws -> CurseForgeUpdate? {
+        try Task.checkCancellation()
+        guard let projectID = Int(record.projectID), let fileID = Int(record.versionID) else { return nil }
+        let available = try await files(project: projectID, game: instance.gameVersion, loader: record.kind == .mod ? instance.loader : nil).data
+        guard let next = available.first(where: { $0.releaseType == 1 && $0.supports(instance, kind: record.kind) }), next.id != fileID else { return nil }
+        let date: String
+        if let published = record.publishedAt { date = published } else { date = try await file(project: projectID, file: fileID).fileDate }
+        guard Self.date(next.fileDate) > Self.date(date) else { return nil }
+        return CurseForgeUpdate(installed: record, available: next)
     }
     private static func date(_ value: String) -> Date {
         let formatter = ISO8601DateFormatter(); formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

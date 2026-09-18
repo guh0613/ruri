@@ -36,6 +36,7 @@ struct InstanceContentView: View {
     @State private var cursePlan: CurseForgeContentPlan?
     @State private var batchPlan: ContentBatchUpdatePlan?
     @State private var updateTask: Task<Void, Never>?
+    @State private var updateProgress: ContentUpdateCheckProgress?
     @State private var updatesChecked = false
     @State private var checkedFileIDs = Set<String>()
     @State private var showImporter = false
@@ -295,6 +296,11 @@ struct InstanceContentView: View {
             Button(Messages.AppInstanceContentView.cancelTask.localized) { model.operation?.cancel() }
         } else if updateTask != nil {
             ProgressView().controlSize(.small).help(Messages.ContentDetails.identifyingUpdates.localized)
+            if let updateProgress, updateProgress.total > 0 {
+                Text("\(updateProgress.completed)/\(updateProgress.total)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                    .frame(width: 60, alignment: .trailing).lineLimit(1).minimumScaleFactor(0.8)
+                    .accessibilityLabel(Messages.ContentDetails.updateProgress(Int64(updateProgress.completed), Int64(updateProgress.total)).localized)
+            }
             Button(Messages.Common.cancel.localized) { cancelUpdateCheck() }
         } else {
             Button(Messages.AppInstanceContentView.checkForUpdates.localized, systemImage: "arrow.triangle.2.circlepath") { checkUpdates() }
@@ -378,14 +384,15 @@ struct InstanceContentView: View {
     private func checkUpdates() {
         let snapshot = updateCandidates
         guard updateTask == nil, !snapshot.isEmpty else { return }
-        error = nil; identificationNotice = nil; updatesChecked = false; updates = [:]; curseUpdates = [:]
+        error = nil; identificationNotice = nil; updatesChecked = false; updates = [:]; curseUpdates = [:]; updateProgress = nil
         let generation = UUID(); updateGeneration = generation
         updateTask = Task {
-            defer { if updateGeneration == generation { updateTask = nil } }
+            defer { if updateGeneration == generation { updateTask = nil; updateProgress = nil } }
             var failures: [String] = []
+            let key = try? CurseForgeKeyStore.load()
+            let curseforge = key.map { CurseForgeService(apiKey: $0) }
             do {
-                let key = try? CurseForgeKeyStore.load()
-                let service = ContentIdentificationService(cacheDirectory: model.paths.cache, curseforge: key.map { CurseForgeService(apiKey: $0) })
+                let service = ContentIdentificationService(cacheDirectory: model.paths.cache, curseforge: curseforge)
                 let unknown = snapshot.filter { $0.managed == nil || $0.managed?.provider == "local" }
                 if !unknown.isEmpty {
                     let result = try await service.identify(unknown)
@@ -403,18 +410,19 @@ struct InstanceContentView: View {
             let scopeIDs = Set(snapshot.map(\.id))
             let scopedFiles = files.filter { scopeIDs.contains($0.id) }
             let records = scopedFiles.compactMap(\.managed)
-            if records.contains(where: { $0.provider == "modrinth" }) {
-                do {
-                    let result = try await ModrinthService().updates(for: records, instance: instance)
-                    try Task.checkCancellation(); updates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-                } catch { if Task.isCancelled { return }; failures.append("Modrinth：" + error.localizedDescription) }
-            }
-            if records.contains(where: { $0.provider == "curseforge" }) {
-                do {
-                    let result = try await CurseForgeService(apiKey: CurseForgeKeyStore.load()).updates(for: records, instance: instance)
-                    try Task.checkCancellation(); curseUpdates = Dictionary(result.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-                } catch { if Task.isCancelled { return }; failures.append("CurseForge：" + error.localizedDescription) }
-            }
+            do {
+                let result = try await ContentUpdateChecker(curseforge: curseforge).check(records, instance: instance) { progress in
+                    await MainActor.run {
+                        guard updateGeneration == generation else { return }
+                        updateProgress = progress
+                    }
+                }
+                try Task.checkCancellation()
+                guard updateGeneration == generation else { return }
+                updates = Dictionary(result.modrinth.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+                curseUpdates = Dictionary(result.curseforge.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+                if let failure = result.failureDescription { failures.append(failure) }
+            } catch { if Task.isCancelled { return }; failures.append(error.localizedDescription) }
             guard !Task.isCancelled, updateGeneration == generation else { return }
             let unmatched = scopedFiles.filter { !["modrinth", "curseforge"].contains($0.managed?.provider ?? "") }.count
             identificationNotice = unmatched > 0 ? Messages.ContentDetails.unmatchedCount(Int64(unmatched)).localized : nil
@@ -424,7 +432,7 @@ struct InstanceContentView: View {
         }
     }
     private func cancelUpdateCheck() {
-        updateTask?.cancel(); updateTask = nil; updateGeneration = UUID()
+        updateTask?.cancel(); updateTask = nil; updateProgress = nil; updateGeneration = UUID()
     }
     private func prepare(_ update: CurseForgeUpdate) {
         error = nil

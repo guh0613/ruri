@@ -3,6 +3,7 @@ import Foundation
 import CryptoKit
 
 public struct HTTPClient: Sendable {
+    @TaskLocal static var retryCooldown: HTTPRetryCooldown?
     public static let shared = HTTPClient()
     public let session: URLSession
     private let routing: NetworkRouting
@@ -20,12 +21,25 @@ public struct HTTPClient: Sendable {
                 var request = input; request.url = url
                 if candidates.count > 1 { request.timeoutInterval = min(request.timeoutInterval, 20) }
                 request.setValue("Ruri/0.1 (macOS Minecraft launcher)", forHTTPHeaderField: "User-Agent")
-                let (data, response) = try await session.data(for: request)
-                guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-                    let status = (response as? HTTPURLResponse)?.statusCode ?? 0
-                    throw RuriError.message(Messages.CoreNetwork.httpError(String(describing: url.host ?? Messages.CoreNetwork.serviceName.localized), String(describing: status)))
+                var retries = 0
+                let host = url.host ?? Messages.CoreNetwork.serviceName.localized
+                while true {
+                    try await Self.retryCooldown?.wait(for: host)
+                    let (data, response) = try await session.data(for: request)
+                    if let http = response as? HTTPURLResponse, http.statusCode == 429, let cooldown = Self.retryCooldown, retries < 2 {
+                        let seconds = HTTPRetryCooldown.delay(for: http)
+                        if seconds <= 120 {
+                            retries += 1
+                            await cooldown.postpone(host, seconds: seconds)
+                            continue
+                        }
+                    }
+                    guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+                        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+                        throw RuriError.httpResponse(statusCode: status, host: host)
+                    }
+                    return data
                 }
-                return data
             } catch { if Task.isCancelled { throw CancellationError() }; lastError = error }
         }
         throw lastError
