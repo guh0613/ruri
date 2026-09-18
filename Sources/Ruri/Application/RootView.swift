@@ -9,6 +9,7 @@ struct RootView: View {
     @State private var sidebarWidth: CGFloat = 236
     @State private var collectionWidth: CGFloat = 280
     @State private var libraryNavigation = LibraryNavigationState()
+    @State private var historyCache = GameHistoryView.Cache()
     @State private var accountsNavigation = AccountsNavigationState()
     private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts }
     private var minimumWindowWidth: CGFloat {
@@ -58,7 +59,7 @@ struct RootView: View {
                         switch model.page {
                         case .home, .library, .accounts: HomeView()
                         case .discover: DiscoverView()
-                        case .history: GameHistoryView()
+                        case .history: GameHistoryView(cache: historyCache, instanceID: model.historyInstanceID)
                         case .activity: LauncherLogView().id(model.logNavigationID)
                         case .java: JavaView()
                         case .settings: PreferencesView()

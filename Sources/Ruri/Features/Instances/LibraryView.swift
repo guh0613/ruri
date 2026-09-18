@@ -8,6 +8,7 @@ import Observation
     var search = ""
     var selectedID: UUID?
     var deleteTarget: GameInstance?
+    @ObservationIgnored let details = ViewSnapshotCache<LibraryInstanceSnapshot.Key, LibraryInstanceSnapshot>()
 }
 
 /// The root split view hosts the list and detail with shared navigation state.
@@ -138,7 +139,9 @@ struct LibraryView: View {
                     }.padding(28).frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
                 }
             } else if let instance = current {
-                LibraryInstanceDetail(instance: instance, onTrash: { navigation.deleteTarget = $0 }) { folderNotices }.id(instance.id)
+                let key = LibraryInstanceSnapshot.Key(instanceID: instance.id, gameDirectory: model.paths.game(instance.id), dataDirectory: model.paths.gameDataState(instance.id))
+                LibraryInstanceDetail(instance: instance, cache: navigation.details, cacheKey: key,
+                                      onTrash: { navigation.deleteTarget = $0 }) { folderNotices }.id(key)
             } else {
                 EmptyPanel(symbol: "magnifyingglass", title: Messages.AppLibraryView.noMatchingInstances.localized, detail: Messages.AppLibraryView.tryAnotherNameOrVersion.localized)
                     .frame(maxHeight: .infinity)

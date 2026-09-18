@@ -3,6 +3,23 @@ import SwiftUI
 import AppKit
 import RuriCore
 
+struct LibraryInstanceSnapshot {
+    struct Key: Hashable {
+        let instanceID: UUID
+        let gameDirectory: URL
+        let dataDirectory: URL
+    }
+
+    var content: [ContentKind: (total: Int, disabled: Int)] = [:]
+    var worlds: [WorldSnapshot] = []
+    var worldIcons: [String: NSImage] = [:]
+    var backups = 0
+    var loaded = false
+    var sessions: [GameSession] = []
+    var historyDays: [GameSessionTiming.Day] = []
+    var historyLoaded = false
+}
+
 /// The instance chosen in the library, laid out like a game page in the App
 /// Store or Games: a header tinted by the instance's artwork with the launch
 /// button, a strip of the numbers players check, their worlds, and how play
@@ -13,15 +30,29 @@ struct LibraryInstanceDetail<Notices: View>: View {
     let instance: GameInstance
     let onTrash: (GameInstance) -> Void
     @ViewBuilder var notices: Notices
-    @State private var content: [ContentKind: (total: Int, disabled: Int)] = [:]
-    @State private var worlds: [WorldSnapshot] = []
-    @State private var worldIcons: [String: NSImage] = [:]
-    @State private var backups = 0
-    @State private var loaded = false
+    let cache: ViewSnapshotCache<LibraryInstanceSnapshot.Key, LibraryInstanceSnapshot>
+    let cacheKey: LibraryInstanceSnapshot.Key
+    @State private var snapshot: LibraryInstanceSnapshot
+    private var content: [ContentKind: (total: Int, disabled: Int)] { snapshot.content }
+    private var worlds: [WorldSnapshot] { snapshot.worlds }
+    private var worldIcons: [String: NSImage] { snapshot.worldIcons }
+    private var backups: Int { snapshot.backups }
+    private var loaded: Bool { snapshot.loaded }
+    private var sessions: [GameSession] { snapshot.sessions }
+    private var historyDays: [GameSessionTiming.Day] { snapshot.historyDays }
     /// Counts are read again when a content or save manager closes.
     private var managerOpen: Bool { model.contentPresentation != nil || model.worldInstance != nil }
-    @State private var sessions: [GameSession] = []
-    @State private var historyDays: [GameSessionTiming.Day] = []
+
+    init(instance: GameInstance, cache: ViewSnapshotCache<LibraryInstanceSnapshot.Key, LibraryInstanceSnapshot>,
+         cacheKey: LibraryInstanceSnapshot.Key, onTrash: @escaping (GameInstance) -> Void,
+         @ViewBuilder notices: () -> Notices) {
+        self.instance = instance
+        self.cache = cache
+        self.cacheKey = cacheKey
+        self.onTrash = onTrash
+        self.notices = notices()
+        _snapshot = State(initialValue: cache[cacheKey] ?? LibraryInstanceSnapshot())
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -49,8 +80,10 @@ struct LibraryInstanceDetail<Notices: View>: View {
                 try? (GameHistoryStore.list(paths: paths, query: .init(instanceID: id, limit: 3)), GameHistoryStore.days(paths: paths, instanceID: id, since: since))
             }.value
             guard !Task.isCancelled else { return }
-            if let result { sessions = result.0; historyDays = result.1 }
-            else { sessions = Array(model.sessions.filter { $0.instanceID == id }.prefix(3)) }
+            if let result { snapshot.sessions = result.0; snapshot.historyDays = result.1 }
+            else if !snapshot.historyLoaded { snapshot.sessions = Array(model.sessions.filter { $0.instanceID == id }.prefix(3)) }
+            snapshot.historyLoaded = true
+            cache[cacheKey] = snapshot
         }
     }
 
@@ -182,7 +215,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
                 }
             }
             if !loaded {
-                ProgressView().controlSize(.small).frame(maxWidth: .infinity, minHeight: 68)
+                DelayedProgressView().controlSize(.small).frame(maxWidth: .infinity, minHeight: 68)
             } else if worlds.isEmpty {
                 Surface(padding: 24) {
                     VStack(spacing: 10) {
@@ -226,29 +259,33 @@ struct LibraryInstanceDetail<Notices: View>: View {
                 link(Messages.SessionUI.history.localized) { model.showHistory(instanceID: instance.id) }
             }
             Surface(padding: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    VStack(alignment: .leading, spacing: 14) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(Messages.AppLibraryView.lastTwoWeeks.localized).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                            if total > 0 {
-                                Text(LocalizedFormat.duration(total * 60)).font(.system(size: 22, weight: .semibold, design: .rounded))
-                            } else {
-                                Text(Messages.AppLibraryView.noRecentPlay.localized).font(.callout).foregroundStyle(.secondary)
+                if snapshot.historyLoaded {
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 14) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(Messages.AppLibraryView.lastTwoWeeks.localized).font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                                if total > 0 {
+                                    Text(LocalizedFormat.duration(total * 60)).font(.system(size: 22, weight: .semibold, design: .rounded))
+                                } else {
+                                    Text(Messages.AppLibraryView.noRecentPlay.localized).font(.callout).foregroundStyle(.secondary)
+                                }
+                            }
+                            InstancePlaytimeChart(days: days).frame(height: 130)
+                        }
+                        .padding(20)
+                        Divider()
+                        if recent.isEmpty {
+                            Text(Messages.AppLibraryView.noRuns.localized).font(.callout).foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity).padding(.vertical, 18)
+                        } else {
+                            ForEach(recent) { run in
+                                RunRow(session: run)
+                                if run.id != recent.last?.id { Divider().padding(.leading, 50) }
                             }
                         }
-                        InstancePlaytimeChart(days: days).frame(height: 130)
                     }
-                    .padding(20)
-                    Divider()
-                    if recent.isEmpty {
-                        Text(Messages.AppLibraryView.noRuns.localized).font(.callout).foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity).padding(.vertical, 18)
-                    } else {
-                        ForEach(recent) { run in
-                            RunRow(session: run)
-                            if run.id != recent.last?.id { Divider().padding(.leading, 50) }
-                        }
-                    }
+                } else {
+                    DelayedProgressView().frame(maxWidth: .infinity, minHeight: 254)
                 }
             }
         }
@@ -278,11 +315,15 @@ struct LibraryInstanceDetail<Notices: View>: View {
             }
         }.value
         guard !Task.isCancelled else { return }
-        content = counts
-        worlds = recent
-        backups = overview?.backups ?? 0
-        worldIcons = icons.compactMapValues(NSImage.init(data:))
-        loaded = true
+        // Keep the last successful values if a background refresh cannot read a folder.
+        snapshot.content.merge(counts) { _, new in new }
+        if let overview {
+            snapshot.worlds = recent
+            snapshot.backups = overview.backups
+            snapshot.worldIcons = icons.compactMapValues(NSImage.init(data:))
+        }
+        snapshot.loaded = true
+        cache[cacheKey] = snapshot
     }
 }
 

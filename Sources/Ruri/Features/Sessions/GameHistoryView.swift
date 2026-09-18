@@ -13,6 +13,32 @@ import RuriLocalization
 struct GameHistoryView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
+    let cache: Cache
+
+    @MainActor final class Cache {
+        let overviews = ViewSnapshotCache<OverviewKey, GameHistoryOverview>()
+        let runs = ViewSnapshotCache<RunsKey, RunsSnapshot>()
+        let worldIcons = ViewSnapshotCache<String, NSImage>(capacity: 128)
+    }
+
+    struct OverviewKey: Hashable {
+        let instanceID: UUID?
+        let range: GameHistoryRange
+        var day = Calendar.current.startOfDay(for: .now)
+        var calendar = Calendar.current
+    }
+
+    struct RunsKey: Hashable {
+        let overview: OverviewKey
+        var worldFolder: String?
+        var search = ""
+        var problemsOnly = false
+    }
+
+    struct RunsSnapshot {
+        let records: [GameSession]
+        let hasMore: Bool
+    }
 
     private enum Span: String, CaseIterable, Identifiable {
         case week, month, year, all
@@ -78,8 +104,10 @@ struct GameHistoryView: View {
     @State private var world: GameHistoryTotal?
     @State private var search = ""
     @State private var problemsOnly = false
-    @State private var loadingOverview = false
     @State private var loadingRuns = false
+    @State private var overviewResolved = false
+    @State private var runsResolved = false
+    @State private var previousSearch = ""
     @State private var hasMore = false
     @State private var error: String?
     @State private var request = UUID()
@@ -90,14 +118,58 @@ struct GameHistoryView: View {
     /// later range or filter switch rolls the numbers over.
     @State private var settled = false
 
+    init(cache: Cache, instanceID: UUID?) {
+        self.cache = cache
+        let key = OverviewKey(instanceID: instanceID, range: Span.month.query)
+        let overview = cache.overviews[key]
+        let runs = cache.runs[RunsKey(overview: key)]
+        _overview = State(initialValue: overview ?? GameHistoryOverview())
+        _records = State(initialValue: runs?.records ?? [])
+        _hasMore = State(initialValue: runs?.hasMore ?? false)
+        _overviewResolved = State(initialValue: overview != nil)
+        _runsResolved = State(initialValue: runs != nil)
+        var icons: [String: NSImage] = [:]
+        for total in overview?.worlds ?? [] {
+            icons[total.id] = cache.worldIcons[total.id]
+        }
+        for record in runs?.records ?? [] {
+            if let folder = record.world?.folder {
+                let key = record.instanceID.uuidString + "/" + folder
+                icons[key] = cache.worldIcons[key]
+            }
+        }
+        _worldIcons = State(initialValue: icons)
+    }
+
     private var instanceID: UUID? { world?.instanceID ?? model.historyInstanceID }
     private var filtered: Bool { model.historyInstanceID != nil || world != nil || problemsOnly || !search.trimmed.isEmpty }
     private var overviewKey: String { "\(model.historyInstanceID?.uuidString ?? "")|\(span.rawValue)|\(model.historyRevision)|\(request)" }
     private var runsKey: String { "\(instanceID?.uuidString ?? "")|\(world?.folder ?? "")|\(span.rawValue)|\(search)|\(problemsOnly)|\(model.historyRevision)|\(request)" }
-    private var isBlank: Bool { overview.playCount == 0 && records.isEmpty && !loadingOverview && !loadingRuns }
+    private var overviewCacheKey: OverviewKey { .init(instanceID: model.historyInstanceID, range: span.query) }
+    private var runsCacheKey: RunsKey {
+        .init(overview: .init(instanceID: instanceID, range: span.query), worldFolder: world?.folder, search: search, problemsOnly: problemsOnly)
+    }
+    private var isBlank: Bool { overviewResolved && runsResolved && overview.playCount == 0 && records.isEmpty }
     private var showsEmptyState: Bool { isBlank && !filtered }
 
     var body: some View {
+        Group {
+            if overviewResolved && runsResolved {
+                history
+            } else {
+                DelayedProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .background(Theme.canvas(for: colorScheme))
+        .searchable(text: $search, prompt: Text(Messages.SessionUI.search.localized))
+        .toolbar { filterMenu }
+        .task(id: overviewKey) { await loadOverview() }
+        .task(id: runsKey) { await loadRuns() }
+        .task(id: worldIconKey) { await loadWorldIcons() }
+        .onChange(of: span) { chartSelection = nil }
+    }
+
+    private var history: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 hero
@@ -119,13 +191,6 @@ struct GameHistoryView: View {
         }
         .scrollBounceBehavior(.basedOnSize)
         .softTopScrollEdge()
-        .background(Theme.canvas(for: colorScheme))
-        .searchable(text: $search, prompt: Text(Messages.SessionUI.search.localized))
-        .toolbar { filterMenu }
-        .task(id: overviewKey) { await loadOverview() }
-        .task(id: runsKey) { await loadRuns() }
-        .task(id: worldIconKey) { await loadWorldIcons() }
-        .onChange(of: span) { chartSelection = nil }
     }
 
     // MARK: Header
@@ -376,7 +441,7 @@ struct GameHistoryView: View {
                 Surface(padding: 20) {
                     HStack(spacing: 14) {
                         Image(systemName: "globe.asia.australia").font(.system(size: 24)).foregroundStyle(.tertiary).accessibilityHidden(true)
-                        Text(loadingOverview ? Messages.HistoryUI.noActivity.localized : Messages.HistoryUI.noWorldsHelp.localized)
+                        Text(Messages.HistoryUI.noWorldsHelp.localized)
                             .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                         Spacer(minLength: 0)
                     }
@@ -406,19 +471,13 @@ struct GameHistoryView: View {
     private var timeline: some View {
         VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.HistoryUI.timelineSection.localized) {
-                if loadingRuns && !records.isEmpty { ProgressView().controlSize(.small) }
+                if loadingRuns && !records.isEmpty { DelayedProgressView().controlSize(.small) }
             }
             if records.isEmpty {
                 Surface(padding: 0) {
-                    Group {
-                        if loadingRuns {
-                            ProgressView()
-                        } else {
-                            Text(filtered ? Messages.SessionUI.noMatches.localized : Messages.SessionUI.noHistoryHelp.localized)
-                                .font(.callout).foregroundStyle(.secondary)
-                        }
-                    }
-                    .frame(maxWidth: .infinity).padding(.vertical, 36)
+                    Text(filtered ? Messages.SessionUI.noMatches.localized : Messages.SessionUI.noHistoryHelp.localized)
+                        .font(.callout).foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity).padding(.vertical, 36)
                 }
             }
             ForEach(days, id: \.day) { group in
@@ -537,19 +596,25 @@ struct GameHistoryView: View {
         }.value
         guard !Task.isCancelled else { return }
         for item in wanted { worldIconsChecked.insert(item.key) }
-        for (key, data) in loaded { if let image = NSImage(data: data) { worldIcons[key] = image } }
+        for (key, data) in loaded {
+            if let image = NSImage(data: data) { worldIcons[key] = image; cache.worldIcons[key] = image }
+        }
     }
 
     // MARK: Loading
 
     private func loadOverview() async {
-        let generation = overviewKey
-        loadingOverview = true; defer { if generation == overviewKey { loadingOverview = false } }
+        let generation = overviewKey, cacheKey = overviewCacheKey
+        defer {
+            if generation == overviewKey && !Task.isCancelled { overviewResolved = true }
+        }
         let paths = model.paths, id = model.historyInstanceID, range = span.query
         let work = Task.detached(priority: .utility) { try GameHistoryStore.overview(paths: paths, instanceID: id, range: range) }
         do {
             let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
             try Task.checkCancellation()
+            guard generation == overviewKey else { return }
+            cache.overviews[cacheKey] = value
             if settled {
                 withAnimation(.smooth(duration: 0.45)) { overview = value }
             } else {
@@ -561,17 +626,27 @@ struct GameHistoryView: View {
     }
 
     private func loadRuns() async {
-        let generation = runsKey
-        loadingRuns = true; defer { if generation == runsKey { loadingRuns = false } }
+        let generation = runsKey, cacheKey = runsCacheKey
+        let debounce = search != previousSearch
+        previousSearch = search
+        loadingRuns = true
+        defer {
+            if generation == runsKey {
+                loadingRuns = false
+                if !Task.isCancelled { runsResolved = true }
+            }
+        }
         let query = GameHistoryQuery(instanceID: instanceID, worldFolder: world?.folder, since: span.since,
                                      search: search, problemsOnly: problemsOnly, limit: 60)
         let paths = model.paths
         do {
-            try await Task.sleep(for: .milliseconds(180))
+            if debounce { try await Task.sleep(for: .milliseconds(180)) }
             let work = Task.detached(priority: .utility) { try GameHistoryStore.list(paths: paths, query: query) }
             let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
             try Task.checkCancellation()
+            guard generation == runsKey else { return }
             records = value; hasMore = value.count == query.limit; error = nil
+            cache.runs[cacheKey] = RunsSnapshot(records: value, hasMore: hasMore)
         } catch { if !Task.isCancelled { self.error = error.localizedDescription } }
     }
 
