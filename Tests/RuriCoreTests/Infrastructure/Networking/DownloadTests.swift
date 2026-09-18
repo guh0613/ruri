@@ -46,7 +46,8 @@ private final class StubHTTP: URLProtocol, @unchecked Sendable {
         client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: reply.status, httpVersion: "HTTP/1.1", headerFields: headers)!, cacheStoragePolicy: .notAllowed)
         if !reply.data.isEmpty { client?.urlProtocol(self, didLoad: reply.data) }
         if let error = reply.error {
-            Task {
+            // Swift 6.3 needs an explicitly Sendable closure in this URLProtocol override.
+            Task { @Sendable [self] in
                 // URLSession may discard queued data on failure. Wait for the
                 // partial write instead of assuming its delegate runs within 25 ms.
                 let deadline = ContinuousClock.now.advanced(by: .seconds(5))
