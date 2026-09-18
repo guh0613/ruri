@@ -27,7 +27,9 @@ extension InstanceTransfer {
             guard let dash = entry.id.firstIndex(of: "-"), let kind = LoaderKind(rawValue: String(entry.id[..<dash])), kind != .vanilla else { throw RuriError.message(Messages.CoreCurseForgePack.unsupportedPackLoader(String(describing: entry.id))) }
             loader = kind; version = String(entry.id[entry.id.index(after: dash)...])
         }
-        let instance = GameInstance(name: manifest.name, gameVersion: manifest.minecraft.version, loader: loader, loaderVersion: version)
+        var instance = GameInstance(name: manifest.name, gameVersion: manifest.minecraft.version, loader: loader, loaderVersion: version)
+        // The pack carries no launch settings, so it follows the global ones.
+        instance.launchOverrides = .init()
         try validate(instance)
         guard manifest.files.count <= 5000, manifest.files.allSatisfy({ $0.projectID > 0 && $0.fileID > 0 }),
               Set(manifest.files.map(\.projectID)).count == manifest.files.count else { throw RuriError.message(Messages.CoreCurseForgePack.duplicateOrInvalidPackFile) }

@@ -63,6 +63,18 @@ extension Messages {
         public static var window: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText10", table: "Interface", fallback: "窗口")
         }
+        /// 跟随全局设置
+        ///
+        /// Resource: `Interface.appImportInstanceView.followsGlobalSettings`.
+        public static var followsGlobalSettings: LocalizedMessage {
+            .init(key: "appImportInstanceView.followsGlobalSettings", table: "Interface", fallback: "跟随全局设置")
+        }
+        /// 整合包设置：%1$@
+        ///
+        /// Resource: `Interface.appImportInstanceView.packSetting`.
+        public static func packSetting(_ value0: String) -> LocalizedMessage {
+            .init(key: "appImportInstanceView.packSetting", table: "Interface", fallback: "整合包设置：%1$@", arguments: [.text(value0)])
+        }
         /// 支持 Java
         ///
         /// Resource: `Interface.appImportInstanceView.javaText1`.
@@ -170,6 +182,8 @@ extension Messages {
             "Interface:appImportInstanceView.updateTargetText8": .init("游戏版本", []),
             "Interface:appImportInstanceView.updateTargetText9": .init("内存", []),
             "Interface:appImportInstanceView.updateTargetText10": .init("窗口", []),
+            "Interface:appImportInstanceView.followsGlobalSettings": .init("跟随全局设置", []),
+            "Interface:appImportInstanceView.packSetting": .init("整合包设置：%1$@", [.text]),
             "Interface:appImportInstanceView.javaText1": .init("支持 Java", []),
             "Interface:appImportInstanceView.javaText2": .init("待下载文件", []),
             "Interface:appImportInstanceView.javaText3": .init("%1$lld 个（整合包下载源）", [.integer]),

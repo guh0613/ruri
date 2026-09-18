@@ -193,9 +193,6 @@
 /* @symbol CoreStateStore.memory @args - */
 "coreStateStore.labelsText8" = "内存";
 
-/* @symbol CoreStateStore.defaultMemory @args - */
-"coreStateStore.labelsText9" = "默认内存";
-
 /* @symbol CoreStateStore.javaSelection @args - */
 "coreStateStore.labelsText10" = "Java 选择";
 

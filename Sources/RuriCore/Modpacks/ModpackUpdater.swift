@@ -100,8 +100,11 @@ public actor ModpackUpdater {
         if latest.extraJVMArguments == plan.current.settings.extraJVMArguments { updated.extraJVMArguments = installed.extraJVMArguments }
         if latest.extraGameArguments == plan.current.settings.extraGameArguments { updated.extraGameArguments = installed.extraGameArguments }
         if var overrides = latest.launchOverrides {
-            if overrides.jvmArguments == plan.current.settings.extraJVMArguments { overrides.jvmArguments = installed.extraJVMArguments }
-            if overrides.gameArguments == plan.current.settings.extraGameArguments { overrides.gameArguments = installed.extraGameArguments }
+            // Imports leave arguments the pack does not set inherited, so an
+            // empty pack value corresponds to inheritance here.
+            func packValue(_ value: String?) -> String? { value?.isEmpty == false ? value : nil }
+            if overrides.jvmArguments == packValue(plan.current.settings.extraJVMArguments) { overrides.jvmArguments = packValue(installed.extraJVMArguments) }
+            if overrides.gameArguments == packValue(plan.current.settings.extraGameArguments) { overrides.gameArguments = packValue(installed.extraGameArguments) }
             updated.launchOverrides = overrides
         }
         updated.lastModpackUpdateID = plan.id

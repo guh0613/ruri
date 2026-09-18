@@ -7,9 +7,6 @@ public struct AppSettings: Codable, Equatable, Sendable {
         BuildConfiguration().microsoftClientID(override: microsoftClientID)
     }
     public var showSnapshots = false
-    public var defaultMemoryMB = 4096 {
-        didSet { var memory = defaultMemorySettings ?? .init(); memory.maximumMB = defaultMemoryMB; memory.mode = .manual; defaultMemorySettings = memory }
-    }
     public var defaultMemorySettings: MemorySettings?
     public var appearance = "system"
     public var downloadSource: DownloadSource?

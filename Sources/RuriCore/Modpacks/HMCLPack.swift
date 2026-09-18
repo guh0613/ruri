@@ -104,6 +104,8 @@ extension InstanceTransfer {
         }
         var instance = GameInstance(name: metadata.name, gameVersion: version)
         instance.setLoaderSelections(selections)
+        // The pack carries no launch settings, so it follows the global ones.
+        instance.launchOverrides = .init()
         try validate(instance)
         var warnings = [Messages.CoreHMCLPack.reinstallDependenciesForMac.localized]
         if let author = metadata.author, !author.isEmpty { warnings.append(Messages.CoreHMCLPack.packAuthor(String(describing: author)).localized) }

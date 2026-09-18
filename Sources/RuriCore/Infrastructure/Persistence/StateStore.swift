@@ -53,16 +53,10 @@ public enum StateStore {
     }
     private static func write(_ input: PersistentState, paths: LauncherPaths) throws -> PersistentState {
         var state = input; state.schemaVersion = currentSchemaVersion; state.revision = UUID()
-        normalizeMemory(&state)
         try validate(state, paths: paths)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try encoder.encode(state).write(to: paths.state, options: [.atomic])
         return state
-    }
-    private static func normalizeMemory(_ state: inout PersistentState) {
-        let memory = state.settings.defaultLaunchSettings.memory
-        state.settings.defaultMemoryMB = memory.maximumMB
-        state.settings.defaultMemorySettings = memory
     }
     private static func acquire(_ paths: LauncherPaths) throws -> Int32 {
         try paths.prepare()
@@ -78,7 +72,7 @@ public enum StateStore {
     private static func conflict(_ field: String) -> RuriError {
         let parts = field.split(separator: ".").map(String.init)
         let labels = ["instances": Messages.CoreStateStore.sameInstance.localized, "accounts": Messages.CoreStateStore.sameAccount.localized, "gameDirectories": Messages.CoreStateStore.sameInstanceDirectory.localized, "detachedMinecraftFolders": Messages.CoreStateStore.retainedFolderRecord.localized, "settings": Messages.CoreStateStore.launcherSettings.localized,
-                      "name": Messages.CoreStateStore.name.localized, "favorite": Messages.CoreStateStore.favoriteStatus.localized, "memoryMB": Messages.CoreStateStore.memory.localized, "defaultMemoryMB": Messages.CoreStateStore.defaultMemory.localized, "javaPath": Messages.CoreStateStore.javaSelection.localized,
+                      "name": Messages.CoreStateStore.name.localized, "favorite": Messages.CoreStateStore.favoriteStatus.localized, "memoryMB": Messages.CoreStateStore.memory.localized, "javaPath": Messages.CoreStateStore.javaSelection.localized,
                       "width": Messages.CoreStateStore.windowWidth.localized, "height": Messages.CoreStateStore.windowHeight.localized, "appearance": Messages.CoreStateStore.appearance.localized, "downloadSource": Messages.CoreStateStore.downloadSource.localized,
                       "extraJVMArguments": Messages.CoreStateStore.jvmArguments.localized, "extraGameArguments": Messages.CoreStateStore.gameArguments.localized, "directoryID": Messages.CoreStateStore.owningFolder.localized,
                       "memory": Messages.CoreStateStore.memoryPolicy.localized, "defaultMemorySettings": Messages.CoreStateStore.defaultMemoryPolicy.localized]
@@ -98,8 +92,7 @@ public enum StateStore {
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {
         func object(_ state: PersistentState) throws -> [String: Any] {
-            var normalized = state; normalizeMemory(&normalized)
-            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(normalized)) as? [String: Any] else { throw conflict(Messages.CoreStateStore.invalidDataFormat.localized) }
+            guard var result = try JSONSerialization.jsonObject(with: JSONEncoder().encode(state)) as? [String: Any] else { throw conflict(Messages.CoreStateStore.invalidDataFormat.localized) }
             result.removeValue(forKey: "revision"); result.removeValue(forKey: "schemaVersion")
             return result
         }

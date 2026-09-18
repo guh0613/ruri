@@ -2002,6 +2002,12 @@
 /* @symbol AppImportInstanceView.window @args - */
 "appImportInstanceView.updateTargetText10" = "窗口";
 
+/* @symbol AppImportInstanceView.followsGlobalSettings @args - */
+"appImportInstanceView.followsGlobalSettings" = "跟随全局设置";
+
+/* @symbol AppImportInstanceView.packSetting @args text */
+"appImportInstanceView.packSetting" = "整合包设置：%1$@";
+
 /* @symbol AppImportInstanceView.supportedJava @args - */
 "appImportInstanceView.javaText1" = "支持 Java";
 

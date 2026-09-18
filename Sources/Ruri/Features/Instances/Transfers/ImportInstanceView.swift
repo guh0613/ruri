@@ -15,7 +15,9 @@ struct ImportInstanceView: View {
     @State private var files: [PlannedCurseFile]?
     @State private var excluded = Set<Int>()
     @State private var excludedOptional = Set<String>()
-    private var selectedImport: PreparedInstanceImport { prepared.selectingOptionalFiles(excluding: excludedOptional) }
+    /// Settings the pack sets that the player chose to leave to the global defaults.
+    @State private var inheritedSettings = Set<LaunchSettingKey>()
+    private var selectedImport: PreparedInstanceImport { prepared.selectingOptionalFiles(excluding: excludedOptional).inheritingLaunchSettings(inheritedSettings) }
     @State private var manualFiles: [Int: URL] = [:]
     @State private var resolving = false
     @State private var error: String?
@@ -25,6 +27,18 @@ struct ImportInstanceView: View {
     init(prepared: PreparedInstanceImport, updateTarget: GameInstance? = nil, onPreparedUpdate: (@MainActor @Sendable (PreparedModpackUpdate) -> Void)? = nil, onCancel: (@MainActor @Sendable () -> Void)? = nil) {
         self.prepared = prepared; self.updateTarget = updateTarget; self.onPreparedUpdate = onPreparedUpdate; self.onCancel = onCancel
         _name = State(initialValue: prepared.instance.name); _keepJVMArguments = State(initialValue: prepared.format == "MCBBS" || prepared.includesInstallation); _excludedOptional = State(initialValue: prepared.omittedOptionalPaths)
+    }
+    /// A Ruri export keeps every value fixed. Other formats keep only what the
+    /// pack sets, and for a new instance the player can hand that to the
+    /// global settings instead; the rest follows them already.
+    @ViewBuilder private func launchSetting(_ key: LaunchSettingKey, title: String, pack: String?, fixed: String) -> some View {
+        if prepared.instance.launchOverrides == nil { LabeledContent(title, value: fixed) }
+        else if let pack, updateTarget == nil {
+            Picker(title, selection: Binding(get: { !inheritedSettings.contains(key) }, set: { if $0 { inheritedSettings.remove(key) } else { inheritedSettings.insert(key) } })) {
+                Text(Messages.AppImportInstanceView.packSetting(pack).localized).tag(true)
+                Text(Messages.AppImportInstanceView.followsGlobalSettings.localized).tag(false)
+            }.fixedSize()
+        } else { LabeledContent(title, value: pack ?? Messages.AppImportInstanceView.followsGlobalSettings.localized) }
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -40,8 +54,10 @@ struct ImportInstanceView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         if updateTarget == nil { LabeledContent(Messages.AppImportInstanceView.instanceName.localized) { TextField(Messages.AppImportInstanceView.instanceName.localized, text: $name).textFieldStyle(.roundedBorder) } }
                         LabeledContent(Messages.AppImportInstanceView.gameVersion.localized, value: prepared.instance.subtitle)
-                        LabeledContent(Messages.AppImportInstanceView.memory.localized, value: "\(prepared.instance.memoryMB) MB")
-                        LabeledContent(Messages.AppImportInstanceView.window.localized, value: "\(prepared.instance.width) × \(prepared.instance.height)")
+                        launchSetting(.memory, title: Messages.AppImportInstanceView.memory.localized, pack: prepared.instance.launchOverrides?.memory.map { "\($0.maximumMB) MB" },
+                                      fixed: "\(prepared.instance.memoryMB) MB")
+                        launchSetting(.window, title: Messages.AppImportInstanceView.window.localized, pack: prepared.instance.launchOverrides?.window.map { "\($0.width) × \($0.height)" },
+                                      fixed: "\(prepared.instance.width) × \(prepared.instance.height)")
                         if let java = prepared.instance.supportedJavaMajors, !java.isEmpty { LabeledContent(Messages.AppImportInstanceView.supportedJava.localized, value: LocalizedFormat.list(java.map(String.init))) }
                         if selectedImport.remoteFileCount > 0 { LabeledContent(Messages.AppImportInstanceView.pendingDownloads.localized, value: Messages.AppImportInstanceView.modpackDownloadCount(Int64(selectedImport.remoteFileCount)).localized) }
                         LabeledContent(Messages.AppImportInstanceView.migratedContent.localized, value: Messages.AppImportInstanceView.migratedFileCount(Int64(prepared.fileCount), String(describing: LocalizedFormat.bytes(prepared.byteCount))).localized)

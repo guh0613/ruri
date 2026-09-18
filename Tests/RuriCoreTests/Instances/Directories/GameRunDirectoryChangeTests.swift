@@ -36,9 +36,9 @@ struct GameRunDirectoryChangeTests {
         #expect(preview.sourceFileCount == 4 && preview.targetFileCount == 4 && !preview.canCopyToTarget)
         #expect(preview.otherInstances == [b.name])
         #expect(try StateStore.load(paths).instances.first?.runDirectory == nil)
-        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 8192; $0.instances[0].memoryMB = 6144 }
+        try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 8192); $0.instances[0].memoryMB = 6144 }
         let changed = try await service.useExisting(preview)
-        #expect(changed.instances[0].runDirectory == .shared && changed.instances[0].memoryMB == 6144 && changed.settings.defaultMemoryMB == 8192)
+        #expect(changed.instances[0].runDirectory == .shared && changed.instances[0].memoryMB == 6144 && changed.settings.defaultMemorySettings?.maximumMB == 8192)
         #expect(try String(contentsOf: paths.configured(with: changed).game(a.id).appendingPathComponent("options.txt"), encoding: .utf8) == "shared-settings")
         #expect(try await WorldManager(paths: paths.configured(with: changed), instanceID: a.id).backups().first?.id == sharedBackup.id)
         let back = try await service.preview(instanceID: a.id, target: .isolated)

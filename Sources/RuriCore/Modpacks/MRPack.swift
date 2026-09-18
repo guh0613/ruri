@@ -33,7 +33,9 @@ extension InstanceTransfer {
         guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMRPack.unknownComponent(String(describing: unknown.sorted().joined(separator: "、")))) }
         let loaders = index.dependencies.keys.filter { mrpackLoaders[$0] != nil }
         guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreMRPack.multipleLoaders) }
-        let instance = GameInstance(name: index.name, gameVersion: gameVersion, loader: loaders.first.flatMap { mrpackLoaders[$0] } ?? .vanilla, loaderVersion: loaders.first.flatMap { index.dependencies[$0] })
+        var instance = GameInstance(name: index.name, gameVersion: gameVersion, loader: loaders.first.flatMap { mrpackLoaders[$0] } ?? .vanilla, loaderVersion: loaders.first.flatMap { index.dependencies[$0] })
+        // The pack carries no launch settings, so it follows the global ones.
+        instance.launchOverrides = .init()
         try validate(instance)
         let game = root.appendingPathComponent("overrides")
         guard index.files.count <= 100_000 else { throw RuriError.message(Messages.CoreMRPack.fileLimit) }

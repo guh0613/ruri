@@ -171,7 +171,7 @@ struct InstanceMovePreviewTests {
         let fixture = try Fixture(mode: .isolated); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)
         let preview = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let updated = try StateStore.update(fixture.paths) { $0.settings.defaultMemoryMB = 6144 }
+        let updated = try StateStore.update(fixture.paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
         try await service.validate(preview, state: updated)
         let parked = fixture.root.appendingPathComponent("Original folder")
         try FileManager.default.moveItem(at: preview.sourceDirectory, to: parked)

@@ -122,6 +122,38 @@ struct HMCLPackTests {
             #expect(try FileManager.default.contentsOfDirectory(atPath: paths.instances.path).isEmpty)
         }
     }
+    @Test func mcbbsKeepsOnlyLaunchSettingsThePackSets() async throws {
+        let (paths, source) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        try json(["manifestType": "minecraftModpack", "manifestVersion": 2, "name": "Settings", "addons": [["id": "game", "version": "1.21.1"]], "files": [],
+                  "launchInfo": ["minMemory": 6144, "javaArgument": ["-Dpack=yes"]]], to: "mcbbs.packmeta", in: source)
+        let transfer = InstanceTransfer(paths: paths); let preview = try await transfer.prepare(source)
+        let overrides = try #require(preview.instance.launchOverrides)
+        #expect(overrides.memory == .init(maximumMB: 6144)); #expect(try ArgumentTokenizer.split(overrides.jvmArguments ?? "") == ["-Dpack=yes"])
+        #expect(overrides.window == nil && overrides.gameArguments == nil && overrides.java == nil)
+        let imported = try await transfer.install(preview, name: "Settings", importJVMArguments: false) { $0 }
+        #expect(imported.launchOverrides?.jvmArguments == nil && imported.launchOverrides?.memory == .init(maximumMB: 6144))
+        let global = try await transfer.install(preview.inheritingLaunchSettings([.memory]), name: "Global", importJVMArguments: true) { $0 }
+        #expect(global.launchOverrides?.memory == nil && global.launchOverrides?.jvmArguments != nil)
+        await transfer.discard(preview)
+    }
+    @Test func packsWithoutLaunchSettingsFollowGlobalSettings() async throws {
+        let (paths, source) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        try json(["manifestType": "minecraftModpack", "manifestVersion": 2, "name": "Plain", "addons": [["id": "game", "version": "1.21.1"]], "files": []], to: "mcbbs.packmeta", in: source)
+        let transfer = InstanceTransfer(paths: paths); let preview = try await transfer.prepare(source)
+        #expect(preview.instance.launchOverrides == .init())
+        var defaults = AppSettings(); defaults.defaultWindow = .init(width: 1600, height: 900)
+        let resolved = preview.instance.resolvedLaunchSettings(defaults: defaults)
+        #expect(resolved.memory.mode == .automatic && resolved.window.width == 1600)
+        await transfer.discard(preview)
+        let mmc = paths.cache.appendingPathComponent("mmc")
+        try FileManager.default.createDirectory(at: mmc.appendingPathComponent(".minecraft"), withIntermediateDirectories: true)
+        try json(["formatVersion": 1, "components": [["uid": "net.minecraft", "version": "1.21.1"]]], to: "mmc-pack.json", in: mmc)
+        try write(Data("OverrideMemory=true\nMaxMemAlloc=6144\nOverrideWindow=false\nMinecraftWinWidth=640\n".utf8), to: "instance.cfg", in: mmc)
+        let multimc = try await transfer.prepare(mmc)
+        let overrides = try #require(multimc.instance.launchOverrides)
+        #expect(overrides.memory == .init(maximumMB: 6144) && overrides.window == nil && overrides.jvmArguments == nil)
+        await transfer.discard(multimc)
+    }
     @Test func curseForceFlagControlsReplacementNotOptionality() async throws {
         let (paths, source) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         try json(["manifestType": "minecraftModpack", "manifestVersion": 2, "name": "Curse", "addons": [["id": "game", "version": "1.21.1"]],

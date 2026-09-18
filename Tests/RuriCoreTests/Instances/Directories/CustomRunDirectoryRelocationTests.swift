@@ -29,10 +29,10 @@ struct CustomRunDirectoryRelocationTests {
         let preview = try await service.preview(instanceID: a.id, target: moved)
         #expect(preview.instances.count == 3 && preview.instances.filter(\.usesDirectory).count == 2)
         #expect(try Data(contentsOf: paths.state) == before)
-        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 8192; $0.instances[0].name = "Renamed elsewhere" }
+        try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 8192); $0.instances[0].name = "Renamed elsewhere" }
         let state = try await service.apply(preview), current = paths.configured(with: state)
         #expect(state.instances.allSatisfy { $0.customRunDirectory?.url.path == moved.path })
-        #expect(state.instances[0].name == "Renamed elsewhere" && state.settings.defaultMemoryMB == 8192)
+        #expect(state.instances[0].name == "Renamed elsewhere" && state.settings.defaultMemorySettings?.maximumMB == 8192)
         #expect(state.instances[2].runDirectory == nil)
         for item in state.instances { #expect(current.instance(item.id) == paths.instance(item.id)) }
         #expect(try String(contentsOf: moved.appendingPathComponent("options.txt"), encoding: .utf8) == "game options")

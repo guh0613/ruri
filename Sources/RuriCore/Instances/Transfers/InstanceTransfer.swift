@@ -26,6 +26,14 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
         result.remoteFileCount = result.selectedPackFiles.filter { !FileManager.default.fileExists(atPath: game.appendingPathComponent($0.path).path) }.count
         return result
     }
+    /// Drops the pack's values for these settings so the new instance follows
+    /// the global ones instead.
+    public func inheritingLaunchSettings(_ keys: Set<LaunchSettingKey>) -> Self {
+        guard !keys.isEmpty, var overrides = instance.launchOverrides else { return self }
+        for key in keys { overrides.setInheritance(true, for: key, defaults: .init()) }
+        var result = self; result.instance.launchOverrides = overrides
+        return result
+    }
     /// Uses a catalog project's artwork when the imported instance has no icon of its own.
     public func usingIcon(_ png: Data) -> Self {
         guard instance.iconPNG == nil, instance.iconStyle == nil else { return self }
@@ -216,7 +224,7 @@ public actor InstanceTransfer {
         instance.directoryID = paths.newInstanceDirectoryID; instance.runDirectory = .isolated
         if instance.name.isEmpty { instance.name = prepared.instance.name }
         instance.javaPath = nil; instance.installed = false
-        if !importJVMArguments { instance.extraJVMArguments = "" }
+        if !importJVMArguments { instance.extraJVMArguments = ""; instance.launchOverrides?.jvmArguments = nil }
         instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths)
         if prepared.includesInstallation, instance.repositoryVersionID != nil {
             instance.repositoryComponents = instance.importedInstallation?.components; instance.importedInstallation = nil
@@ -407,15 +415,20 @@ public actor InstanceTransfer {
             let cfgURL = root.appendingPathComponent("instance.cfg")
             let cfg = fm.fileExists(atPath: cfgURL.path) ? try iniDecode(String(decoding: read(cfgURL), as: UTF8.self)) : [:]
             instance = GameInstance(name: cfg["name"] ?? root.lastPathComponent, gameVersion: game, loader: loaders.first.flatMap { loaderIDs[$0.uid] } ?? .vanilla, loaderVersion: loaders.first?.version)
-            if cfg["OverrideMemory"]?.lowercased() == "true", let value = cfg["MaxMemAlloc"].flatMap(Int.init) { instance.memoryMB = value }
+            // Only what the instance explicitly overrides stays local; everything
+            // else follows this Mac's global settings like a new instance.
+            var overrides = InstanceLaunchOverrides()
+            if cfg["OverrideMemory"]?.lowercased() == "true", let value = cfg["MaxMemAlloc"].flatMap(Int.init) { instance.memoryMB = value; overrides.memory = .init(maximumMB: value) }
             if cfg["OverrideWindow"]?.lowercased() == "true" {
                 instance.width = cfg["MinecraftWinWidth"].flatMap(Int.init) ?? instance.width; instance.height = cfg["MinecraftWinHeight"].flatMap(Int.init) ?? instance.height
                 instance.fullscreen = cfg["LaunchMaximized"]?.lowercased() == "true"
+                overrides.window = .init(width: instance.width, height: instance.height, fullscreen: instance.fullscreen ?? false)
             }
-            if cfg["OverrideJavaArgs"]?.lowercased() == "true" { instance.extraJVMArguments = cfg["JvmArgs"] ?? "" }
+            if cfg["OverrideJavaArgs"]?.lowercased() == "true" { instance.extraJVMArguments = cfg["JvmArgs"] ?? ""; overrides.jvmArguments = instance.extraJVMArguments }
             var commands = LaunchCommands()
             commands.before = cfg["PreLaunchCommand"] ?? ""; commands.after = cfg["PostExitCommand"] ?? ""; commands.wrapper = cfg["WrapperCommand"] ?? ""
-            if !commands.isEmpty { instance.launchCommands = commands }
+            if !commands.isEmpty { instance.launchCommands = commands; overrides.commands = commands }
+            instance.launchOverrides = overrides
         }
         try validate(instance)
         if instance.launchCommands?.isEmpty == false { warnings.append(Messages.CoreInstanceTransfer.retainedCommands.localized) }

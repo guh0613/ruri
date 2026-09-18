@@ -65,16 +65,13 @@ struct MemorySettingsTests {
         #expect(LaunchSettingsValues().memory.mode == .automatic)
     }
 
-    @Test func oldOverrideJSONAndGlobalMemoryEditsKeepManualSemantics() throws {
-        let old = try JSONDecoder().decode(InstanceLaunchOverrides.self, from: Data(#"{"memoryMB":6144,"jvmArguments":""}"#.utf8))
-        #expect(old.memory == .init(maximumMB: 6144))
-        var modern = old; modern.memory?.mode = .automatic; modern.memory?.initialMB = 1024
-        #expect(try JSONDecoder().decode(InstanceLaunchOverrides.self, from: JSONEncoder().encode(modern)) == modern)
-        var defaults = AppSettings(); defaults.defaultLaunchSettings = .init()
-        defaults.defaultMemoryMB = 8192
+    @Test func memoryOverridesRoundTripAndInherit() throws {
+        var overrides = InstanceLaunchOverrides(); overrides.memory = .init(mode: .automatic, initialMB: 1024); overrides.jvmArguments = ""
+        #expect(try JSONDecoder().decode(InstanceLaunchOverrides.self, from: JSONEncoder().encode(overrides)) == overrides)
+        var defaults = AppSettings(); defaults.defaultMemorySettings = .init(maximumMB: 8192)
         #expect(defaults.defaultLaunchSettings.memory == .init(maximumMB: 8192))
-        modern.setInheritance(true, for: .memory, defaults: defaults.defaultLaunchSettings)
-        #expect(modern.memory == nil && modern.inherits(.memory))
+        overrides.setInheritance(true, for: .memory, defaults: defaults.defaultLaunchSettings)
+        #expect(overrides.memory == nil && overrides.inherits(.memory))
     }
 
     @MainActor @Test func snapshotFreezesAutomaticMemoryAndSessionSeesArgumentOverride() throws {
@@ -134,7 +131,7 @@ struct MemorySettingsTests {
         try JSONEncoder().encode(legacy).write(to: paths.state)
         let baseline = try StateStore.load(paths)
         var local = baseline; local.settings.defaultMemorySettings = .init(maximumMB: 2048)
-        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 8192 }
+        try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 8192) }
         var bytes = try Data(contentsOf: paths.state)
         #expect(throws: (any Error).self) { try StateStore.save(local, to: paths, basedOn: baseline) }
         #expect(try Data(contentsOf: paths.state) == bytes)

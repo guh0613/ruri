@@ -57,7 +57,7 @@ extension InstanceTransfer {
         instance.setLoaderSelections(selections)
         if let minimum = manifest.launchInfo?.minMemory {
             guard (0...131_072).contains(minimum) else { throw RuriError.message(Messages.CoreMCBBSPack.invalidPackMemoryRequirement) }
-            instance.memoryMB = max(instance.memoryMB, minimum)
+            if minimum > 0 { instance.memoryMB = max(minimum, 512) }
         }
         instance.supportedJavaMajors = manifest.launchInfo?.supportJava
         instance.extraJVMArguments = ArgumentTokenizer.join(manifest.launchInfo?.javaArgument ?? [])
@@ -67,6 +67,14 @@ extension InstanceTransfer {
             if let index = gameArguments.lastIndex(of: flag), index + 1 < gameArguments.count, let value = Int(gameArguments[index + 1]) { instance[keyPath: key] = value }
         }
         instance.packLibraries = manifest.libraries
+        // What the pack spells out stays with the instance; everything else
+        // follows the global settings like a new instance.
+        var overrides = InstanceLaunchOverrides()
+        if (manifest.launchInfo?.minMemory ?? 0) > 0 { overrides.memory = .init(maximumMB: instance.memoryMB) }
+        if !instance.extraJVMArguments.isEmpty { overrides.jvmArguments = instance.extraJVMArguments }
+        if let arguments = instance.extraGameArguments, !arguments.isEmpty { overrides.gameArguments = arguments }
+        if gameArguments.contains("--width") || gameArguments.contains("--height") { overrides.window = .init(width: instance.width, height: instance.height) }
+        instance.launchOverrides = overrides
         try validate(instance)
         let game = try LauncherPaths.safePath("overrides", within: root)
         if FileManager.default.fileExists(atPath: game.path) {

@@ -49,10 +49,6 @@ public enum LaunchSettingKey: String, CaseIterable, Identifiable, Sendable {
 /// Fully resolved values used by previews, launch snapshots and portable exports.
 public struct LaunchSettingsValues: Codable, Equatable, Sendable {
     public var memory = MemorySettings(mode: .automatic)
-    public var memoryMB: Int {
-        get { memory.maximumMB }
-        set { memory.maximumMB = newValue; memory.mode = .manual }
-    }
     public var java: JavaSelection = .automatic
     public var jvmArguments: String = ""
     public var gameArguments: String = ""
@@ -78,10 +74,10 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         _ = try JVMHeapArguments.resolve(base: baseMemory, arguments: ArgumentTokenizer.split(jvmArguments))
         _ = try ArgumentTokenizer.split(gameArguments)
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
+    private enum CodingKeys: String, CodingKey { case memory, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? values.decodeIfPresent(Int.self, forKey: .memoryMB).map { .init(maximumMB: $0) } ?? .init(mode: .automatic)
+        memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) ?? .init(mode: .automatic)
         java = try values.decodeIfPresent(JavaSelection.self, forKey: .java) ?? .automatic
         jvmArguments = try values.decodeIfPresent(String.self, forKey: .jvmArguments) ?? ""
         gameArguments = try values.decodeIfPresent(String.self, forKey: .gameArguments) ?? ""
@@ -91,28 +87,12 @@ public struct LaunchSettingsValues: Codable, Equatable, Sendable {
         commands = try values.decodeIfPresent(LaunchCommands.self, forKey: .commands) ?? .init()
         macOS = try values.decodeIfPresent(MacOSGameSettings.self, forKey: .macOS) ?? .init()
     }
-    public func encode(to encoder: Encoder) throws {
-        var values = encoder.container(keyedBy: CodingKeys.self)
-        try values.encode(memory, forKey: .memory); try values.encode(memoryMB, forKey: .memoryMB)
-        try values.encode(java, forKey: .java); try values.encode(jvmArguments, forKey: .jvmArguments)
-        try values.encode(gameArguments, forKey: .gameArguments); try values.encode(window, forKey: .window); try values.encode(presentation, forKey: .presentation)
-        try values.encode(environment, forKey: .environment)
-        try values.encode(commands, forKey: .commands)
-        try values.encode(macOS, forKey: .macOS)
-    }
 }
 
 /// Nil means inheritance; explicit automatic Java and empty arguments are real
 /// overrides. Each value and its inheritance choice share one state field.
 public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
     public var memory: MemorySettings?
-    public var memoryMB: Int? {
-        get { memory?.maximumMB }
-        set {
-            if let newValue { var value = memory ?? .init(); value.maximumMB = newValue; value.mode = .manual; memory = value }
-            else { memory = nil }
-        }
-    }
     public var java: JavaSelection?
     public var jvmArguments: String?
     public var gameArguments: String?
@@ -152,29 +132,6 @@ public struct InstanceLaunchOverrides: Codable, Equatable, Sendable {
         case .macOS: macOS = inherit ? nil : effective.macOS
         }
     }
-    private enum CodingKeys: String, CodingKey { case memory, memoryMB, java, jvmArguments, gameArguments, window, presentation, environment, commands, macOS }
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        if values.contains(.memory) { memory = try values.decodeIfPresent(MemorySettings.self, forKey: .memory) }
-        else { memory = try values.decodeIfPresent(Int.self, forKey: .memoryMB).map { .init(maximumMB: $0) } }
-        java = try values.decodeIfPresent(JavaSelection.self, forKey: .java)
-        jvmArguments = try values.decodeIfPresent(String.self, forKey: .jvmArguments)
-        gameArguments = try values.decodeIfPresent(String.self, forKey: .gameArguments)
-        window = try values.decodeIfPresent(GameWindowSize.self, forKey: .window)
-        presentation = try values.decodeIfPresent(LaunchPresentation.self, forKey: .presentation)
-        environment = try values.decodeIfPresent(String.self, forKey: .environment)
-        commands = try values.decodeIfPresent(LaunchCommands.self, forKey: .commands)
-        macOS = try values.decodeIfPresent(MacOSGameSettings.self, forKey: .macOS)
-    }
-    public func encode(to encoder: Encoder) throws {
-        var values = encoder.container(keyedBy: CodingKeys.self)
-        try values.encodeIfPresent(memory, forKey: .memory); try values.encodeIfPresent(java, forKey: .java)
-        try values.encodeIfPresent(jvmArguments, forKey: .jvmArguments); try values.encodeIfPresent(gameArguments, forKey: .gameArguments)
-        try values.encodeIfPresent(window, forKey: .window); try values.encodeIfPresent(presentation, forKey: .presentation)
-        try values.encodeIfPresent(environment, forKey: .environment)
-        try values.encodeIfPresent(commands, forKey: .commands)
-        try values.encodeIfPresent(macOS, forKey: .macOS)
-    }
 }
 
 extension AppSettings {
@@ -187,7 +144,7 @@ extension AppSettings {
             return result
         }
         set {
-            defaultMemoryMB = newValue.memoryMB; defaultMemorySettings = newValue.memory; defaultJava = newValue.java; defaultJVMArguments = newValue.jvmArguments
+            defaultMemorySettings = newValue.memory; defaultJava = newValue.java; defaultJVMArguments = newValue.jvmArguments
             defaultGameArguments = newValue.gameArguments; defaultWindow = newValue.window; defaultLaunchPresentation = newValue.presentation
             defaultEnvironment = newValue.environment; defaultLaunchCommands = newValue.commands; defaultMacOSGameSettings = newValue.macOS
         }
@@ -199,7 +156,7 @@ extension GameInstance {
     /// existing value fixed, including an empty argument or automatic Java.
     public var effectiveLaunchOverrides: InstanceLaunchOverrides {
         if let launchOverrides { return launchOverrides }
-        var legacy = LaunchSettingsValues(); legacy.memoryMB = memoryMB; legacy.java = javaPath.map(JavaSelection.path) ?? javaMajor.map(JavaSelection.major) ?? .automatic
+        var legacy = LaunchSettingsValues(); legacy.memory = .init(maximumMB: memoryMB); legacy.java = javaPath.map(JavaSelection.path) ?? javaMajor.map(JavaSelection.major) ?? .automatic
         legacy.jvmArguments = extraJVMArguments; legacy.gameArguments = extraGameArguments ?? ""
         legacy.window = .init(width: width, height: height, fullscreen: fullscreen ?? false); legacy.presentation = launchPresentation ?? .init()
         legacy.environment = environmentVariables ?? ""; legacy.commands = launchCommands ?? .init(); legacy.macOS = macOSGameSettings ?? .init()

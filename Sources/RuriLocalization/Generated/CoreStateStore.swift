@@ -57,12 +57,6 @@ extension Messages {
         public static var memory: LocalizedMessage {
             .init(key: "coreStateStore.labelsText8", table: "Core", fallback: "内存")
         }
-        /// 默认内存
-        ///
-        /// Resource: `Core.coreStateStore.labelsText9`.
-        public static var defaultMemory: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText9", table: "Core", fallback: "默认内存")
-        }
         /// Java 选择
         ///
         /// Resource: `Core.coreStateStore.labelsText10`.
@@ -205,7 +199,6 @@ extension Messages {
             "Core:coreStateStore.labelsText6": .init("名称", []),
             "Core:coreStateStore.labelsText7": .init("收藏状态", []),
             "Core:coreStateStore.labelsText8": .init("内存", []),
-            "Core:coreStateStore.labelsText9": .init("默认内存", []),
             "Core:coreStateStore.labelsText10": .init("Java 选择", []),
             "Core:coreStateStore.labelsText11": .init("窗口宽度", []),
             "Core:coreStateStore.labelsText12": .init("窗口高度", []),

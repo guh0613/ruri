@@ -22,10 +22,10 @@ struct InstanceMoveTests {
         let service = InstanceMover(paths: paths)
         let preview = try await service.preview(instanceID: source.id, directoryID: fixture.target.id)
         let originalGame = mode == .isolated ? nil : try FileTreeManifest.capture(in: paths.game(source.id))
-        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 6144 }
+        try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
         let result = try await service.move(preview), current = paths.configured(with: result.state)
         #expect(result.state.instances == [preview.moved])
-        #expect(result.state.schemaVersion == StateStore.currentSchemaVersion && result.state.settings.defaultMemoryMB == 6144)
+        #expect(result.state.schemaVersion == StateStore.currentSchemaVersion && result.state.settings.defaultMemorySettings?.maximumMB == 6144)
         #expect(result.state.selectedInstanceID == source.id && result.state.selectedDirectoryID == fixture.target.id)
         #expect(result.preservedFiles.isEmpty && result.warning == nil)
         #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))

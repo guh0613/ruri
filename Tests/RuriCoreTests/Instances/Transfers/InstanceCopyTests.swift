@@ -15,7 +15,7 @@ struct InstanceCopyTests {
             let game = root.appendingPathComponent("Custom game"); try FileManager.default.createDirectory(at: game, withIntermediateDirectories: false)
             original.customRunDirectory = try CustomRunDirectory.register(at: game, paths: base)
         }
-        var state = PersistentState(); state.instances = [original]; state.gameDirectories = [collection]; state.settings.defaultMemoryMB = 2048
+        var state = PersistentState(); state.instances = [original]; state.gameDirectories = [collection]; state.settings.defaultMemorySettings = .init(maximumMB: 2048)
         let saved = try StateStore.save(state, to: base), paths = base.configured(with: saved)
         func write(_ text: String, _ relative: String, at root: URL) throws {
             let url = root.appendingPathComponent(relative)
@@ -47,7 +47,7 @@ struct InstanceCopyTests {
         let preview = try await service.preview(instanceID: source.id, name: "  Independent copy  ", directoryID: target.id, options: .init(includeBackups: true))
         #expect(preview.copy.id != source.id && preview.copy.name == "Independent copy" && preview.copy.directoryID == target.id)
         #expect(preview.bytes > 0 && !FileManager.default.fileExists(atPath: preview.destination.path))
-        try StateStore.update(paths) { $0.settings.defaultMemoryMB = 6144 }
+        try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
         let result = try await service.copy(preview), copy = try #require(result.state.instances.first { $0.id == preview.copy.id }), current = paths.configured(with: result.state)
         #expect(copy.installed && copy.runDirectory == .isolated && copy.customRunDirectory == nil)
         #expect(copy.playTime == 0 && copy.lastPlayed == nil && !copy.favorite)
