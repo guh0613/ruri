@@ -1,7 +1,10 @@
 name: Appcast
 
 # Publishing, editing or withdrawing a release rebuilds the Sparkle feeds from
-# the published releases. Drafts are never listed.
+# the published releases. Drafts are never listed. Each run force-pushes a
+# single fresh commit to gh-pages, which GitHub Pages serves: Actions-based
+# Pages deployments are keyed by commit, so redeploying a tag that points at an
+# already deployed commit would keep serving the old feed.
 on:
   release:
     types: [published, edited, unpublished, deleted]
@@ -15,9 +18,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -28,20 +33,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/sparkle-update.py appcast --output build/appcast
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        with:
-          path: build/appcast
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      - name: Push to gh-pages
+        working-directory: build/appcast
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          touch .nojekyll
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -q -m "Update appcast ($GITHUB_EVENT_NAME)"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
