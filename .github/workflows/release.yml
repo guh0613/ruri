@@ -91,6 +91,10 @@ jobs:
           RURI_SIGN_P12_BASE64: ${{ secrets.RURI_APPLE_SIGN_P12_BASE64 }}
           RURI_SIGN_P12_PASSWORD: ${{ secrets.RURI_APPLE_SIGN_P12_PASSWORD }}
         run: scripts/package-dmg.sh
+      - name: Sign update for Sparkle
+        env:
+          RURI_SPARKLE_PRIVATE_KEY: ${{ secrets.RURI_SPARKLE_PRIVATE_KEY }}
+        run: python3 scripts/sparkle-update.py sign build/Ruri.app build/dmg/*.dmg
       - name: Clean up signing keychain
         if: always()
         run: python3 scripts/signing.py cleanup-ci
@@ -101,6 +105,7 @@ jobs:
           path: |
             build/dmg/*.dmg
             build/dmg/*.sha256
+            build/dmg/*.sparkle.json
           if-no-files-found: error
           overwrite: true
           compression-level: 0

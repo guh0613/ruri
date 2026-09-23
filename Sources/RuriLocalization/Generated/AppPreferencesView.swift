@@ -243,6 +243,54 @@ extension Messages {
         public static var globalGameSettingsDescription: LocalizedMessage {
             .init(key: "appPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "设置 Java、内存、窗口和启动参数的默认值。")
         }
+        /// 软件更新
+        ///
+        /// Resource: `Interface.appPreferencesView.softwareUpdate`.
+        public static var softwareUpdate: LocalizedMessage {
+            .init(key: "appPreferencesView.softwareUpdate", table: "Interface", fallback: "软件更新")
+        }
+        /// 自动检查更新
+        ///
+        /// Resource: `Interface.appPreferencesView.automaticallyCheckForUpdates`.
+        public static var automaticallyCheckForUpdates: LocalizedMessage {
+            .init(key: "appPreferencesView.automaticallyCheckForUpdates", table: "Interface", fallback: "自动检查更新")
+        }
+        /// 自动下载并安装更新
+        ///
+        /// Resource: `Interface.appPreferencesView.automaticallyInstallUpdates`.
+        public static var automaticallyInstallUpdates: LocalizedMessage {
+            .init(key: "appPreferencesView.automaticallyInstallUpdates", table: "Interface", fallback: "自动下载并安装更新")
+        }
+        /// 接收预览版更新
+        ///
+        /// Resource: `Interface.appPreferencesView.receivePrereleaseUpdates`.
+        public static var receivePrereleaseUpdates: LocalizedMessage {
+            .init(key: "appPreferencesView.receivePrereleaseUpdates", table: "Interface", fallback: "接收预览版更新")
+        }
+        /// 检查更新
+        ///
+        /// Resource: `Interface.appPreferencesView.checkForUpdates`.
+        public static var checkForUpdates: LocalizedMessage {
+            .init(key: "appPreferencesView.checkForUpdates", table: "Interface", fallback: "检查更新")
+        }
+        /// 上次检查：%1$@
+        ///
+        /// Resource: `Interface.appPreferencesView.lastUpdateCheck`.
+        public static func lastUpdateCheck(_ value0: String) -> LocalizedMessage {
+            .init(key: "appPreferencesView.lastUpdateCheck", table: "Interface", fallback: "上次检查：%1$@", arguments: [.text(value0)])
+        }
+        /// 尚未检查
+        ///
+        /// Resource: `Interface.appPreferencesView.neverCheckedForUpdates`.
+        public static var neverCheckedForUpdates: LocalizedMessage {
+            .init(key: "appPreferencesView.neverCheckedForUpdates", table: "Interface", fallback: "尚未检查")
+        }
+        /// 更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。
+        ///
+        /// Resource: `Interface.appPreferencesView.softwareUpdateDetails`.
+        public static var softwareUpdateDetails: LocalizedMessage {
+            .init(key: "appPreferencesView.softwareUpdateDetails", table: "Interface", fallback: "更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appPreferencesView.modelText1": .init("外观", []),
             "Interface:appPreferencesView.modelText2": .init("主题", []),
@@ -284,6 +332,14 @@ extension Messages {
             "Interface:appPreferencesView.discardGameChanges": .init("还原更改", []),
             "Interface:appPreferencesView.globalGameSettings": .init("全局游戏设置", []),
             "Interface:appPreferencesView.globalGameSettingsDescription": .init("设置 Java、内存、窗口和启动参数的默认值。", []),
+            "Interface:appPreferencesView.softwareUpdate": .init("软件更新", []),
+            "Interface:appPreferencesView.automaticallyCheckForUpdates": .init("自动检查更新", []),
+            "Interface:appPreferencesView.automaticallyInstallUpdates": .init("自动下载并安装更新", []),
+            "Interface:appPreferencesView.receivePrereleaseUpdates": .init("接收预览版更新", []),
+            "Interface:appPreferencesView.checkForUpdates": .init("检查更新", []),
+            "Interface:appPreferencesView.lastUpdateCheck": .init("上次检查：%1$@", [.text]),
+            "Interface:appPreferencesView.neverCheckedForUpdates": .init("尚未检查", []),
+            "Interface:appPreferencesView.softwareUpdateDetails": .init("更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。", []),
         ]
     }
 }

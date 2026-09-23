@@ -81,6 +81,12 @@ extension Messages {
         public static var showRuri: LocalizedMessage {
             .init(key: "appRuriApp.showText1", table: "Interface", fallback: "显示 Ruri")
         }
+        /// 检查更新…
+        ///
+        /// Resource: `Interface.appRuriApp.checkForUpdates`.
+        public static var checkForUpdates: LocalizedMessage {
+            .init(key: "appRuriApp.checkForUpdates", table: "Interface", fallback: "检查更新…")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appRuriApp.bodyText1": .init("显示主窗口", []),
             "Interface:appRuriApp.bodyText2": .init("新建游戏实例", []),
@@ -95,6 +101,7 @@ extension Messages {
             "Interface:appRuriApp.instanceText4": .init("运行记录与日志", []),
             "Interface:appRuriApp.instanceText5": .init("在 Finder 中显示实例", []),
             "Interface:appRuriApp.showText1": .init("显示 Ruri", []),
+            "Interface:appRuriApp.checkForUpdates": .init("检查更新…", []),
         ]
     }
 }

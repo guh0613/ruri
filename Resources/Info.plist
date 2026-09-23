@@ -10,6 +10,8 @@
   <key>CFBundleVersion</key><string>11</string>
   <key>RuriVersion</key><string>0.8.5-beta</string>
   <key>RuriMicrosoftClientID</key><string>92e3a8ab-0d43-4868-bbc2-58ddcb2081c5</string>
+  <key>SUPublicEDKey</key><string>3hdQ72WKQKvwwiVzOAtxr1H63tX7Gjm7CUTY93U3ij0=</string>
+  <key>SUEnableAutomaticChecks</key><true/>
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>NSHighResolutionCapable</key><true/>

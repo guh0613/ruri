@@ -112,6 +112,9 @@
 /* @symbol AppRuriApp.showRuri @args - */
 "appRuriApp.showText1" = "显示 Ruri";
 
+/* @symbol AppRuriApp.checkForUpdates @args - */
+"appRuriApp.checkForUpdates" = "检查更新…";
+
 /* @symbol AppAccountAppearanceView.skinsAndCapes @args - */
 "appAccountAppearanceView.bodyText1" = "皮肤与披风";
 
@@ -3675,6 +3678,30 @@
 
 /* @symbol AppPreferencesView.globalGameSettingsDescription @args - */
 "appPreferencesView.globalGameSettingsDescription" = "设置 Java、内存、窗口和启动参数的默认值。";
+
+/* @symbol AppPreferencesView.softwareUpdate @args - */
+"appPreferencesView.softwareUpdate" = "软件更新";
+
+/* @symbol AppPreferencesView.automaticallyCheckForUpdates @args - */
+"appPreferencesView.automaticallyCheckForUpdates" = "自动检查更新";
+
+/* @symbol AppPreferencesView.automaticallyInstallUpdates @args - */
+"appPreferencesView.automaticallyInstallUpdates" = "自动下载并安装更新";
+
+/* @symbol AppPreferencesView.receivePrereleaseUpdates @args - */
+"appPreferencesView.receivePrereleaseUpdates" = "接收预览版更新";
+
+/* @symbol AppPreferencesView.checkForUpdates @args - */
+"appPreferencesView.checkForUpdates" = "检查更新";
+
+/* @symbol AppPreferencesView.lastUpdateCheck @args text */
+"appPreferencesView.lastUpdateCheck" = "上次检查：%1$@";
+
+/* @symbol AppPreferencesView.neverCheckedForUpdates @args - */
+"appPreferencesView.neverCheckedForUpdates" = "尚未检查";
+
+/* @symbol AppPreferencesView.softwareUpdateDetails @args - */
+"appPreferencesView.softwareUpdateDetails" = "更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。";
 
 /* @symbol AppCurseForgeSettingsSection.configured @args - */
 "appCurseForgeSettingsSection.configured" = "已配置";

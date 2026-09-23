@@ -32,6 +32,15 @@ cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
 sign_keychain=()
 if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-monitor"
+# Ruri is not sandboxed, so Sparkle installs in-process and its XPC services,
+# which only sandboxed hosts use, are left out. Sign nested code inside-out.
+sparkle="$app/Contents/Frameworks/Sparkle.framework"
+mkdir -p "$app/Contents/Frameworks"
+ditto "$binary_dir/Sparkle.framework" "$sparkle"
+rm -rf "$sparkle/XPCServices" "$sparkle/Versions/B/XPCServices"
+for component in "$sparkle/Versions/B/Autoupdate" "$sparkle/Versions/B/Updater.app" "$sparkle"; do
+  codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$component"
+done
 for bundle in "$binary_dir/"*.bundle(N); do
   ditto "$bundle" "$app/Contents/Resources/${bundle:t}"
 done

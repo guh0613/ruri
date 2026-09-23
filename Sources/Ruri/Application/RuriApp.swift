@@ -5,6 +5,7 @@ import RuriCore
 
 @main struct RuriApp: App {
     @State private var model: AppModel
+    @State private var updater = SoftwareUpdater()
     @NSApplicationDelegateAdaptor(RuriLifecycle.self) private var lifecycle
     init() {
         if let status = LocalizationCommandLine.resourceCheck() { exit(status) }
@@ -12,10 +13,15 @@ import RuriCore
     }
     var body: some Scene {
         Window("Ruri", id: "main") {
-            MainWindowContent(model: model, lifecycle: lifecycle)
+            MainWindowContent(model: model, updater: updater, lifecycle: lifecycle)
         }
         .defaultSize(width: 1140, height: 780)
         .commands {
+            if updater.isAvailable {
+                CommandGroup(after: .appInfo) {
+                    Button(Messages.AppRuriApp.checkForUpdates.localized) { updater.checkForUpdates() }.disabled(!updater.canCheckForUpdates)
+                }
+            }
             CommandGroup(replacing: .newItem) {
                 Button(Messages.AppRuriApp.showMainWindow.localized) { model.openMainWindow?() }.keyboardShortcut("0")
                 Divider()
@@ -49,9 +55,10 @@ import RuriCore
 private struct MainWindowContent: View {
     @Environment(\.openWindow) private var openWindow
     let model: AppModel
+    let updater: SoftwareUpdater
     let lifecycle: RuriLifecycle
     var body: some View {
-        RootView().environment(model)
+        RootView().environment(model).environment(updater)
             .environment(\.locale, LocalizationContext.current.formatLocale)
             .environment(\.layoutDirection, Locale.Language(identifier: LocalizationContext.current.language).characterDirection == .rightToLeft ? .rightToLeft : .leftToRight)
             .onAppear {

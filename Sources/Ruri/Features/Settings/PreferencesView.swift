@@ -5,6 +5,7 @@ import RuriCore
 
 struct PreferencesView: View {
     @Environment(AppModel.self) private var model
+    @Environment(SoftwareUpdater.self) private var updater
     @State private var showLaunchDefaults = false
     @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
     var body: some View {
@@ -13,6 +14,7 @@ struct PreferencesView: View {
             launchDefaults
             newInstances
             network
+            if updater.isAvailable { softwareUpdate }
             dataAndAbout
         }
         .formStyle(.grouped).scrollContentBackground(.hidden)
@@ -96,6 +98,26 @@ struct PreferencesView: View {
             Text(Messages.AppPreferencesView.aboutRuri.localized)
         } footer: {
             Text(Messages.AppPreferencesView.aboutRuriDescription.localized).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    @ViewBuilder private var softwareUpdate: some View {
+        @Bindable var updater = updater
+        Section {
+            Toggle(Messages.AppPreferencesView.automaticallyCheckForUpdates.localized, isOn: $updater.automaticallyChecksForUpdates)
+            Toggle(Messages.AppPreferencesView.automaticallyInstallUpdates.localized, isOn: $updater.automaticallyDownloadsUpdates)
+                .disabled(!updater.automaticallyChecksForUpdates)
+            Toggle(Messages.AppPreferencesView.receivePrereleaseUpdates.localized, isOn: $updater.receivesPrereleases)
+            SettingsActionRow(title: Messages.AppPreferencesView.checkForUpdates.localized,
+                              detail: updater.lastUpdateCheckDate.map { Messages.AppPreferencesView.lastUpdateCheck($0.formatted(.relative(presentation: .named))).localized }
+                                  ?? Messages.AppPreferencesView.neverCheckedForUpdates.localized,
+                              button: Messages.AppRuriApp.checkForUpdates.localized) {
+                updater.checkForUpdates()
+            }.disabled(!updater.canCheckForUpdates)
+        } header: {
+            Text(Messages.AppPreferencesView.softwareUpdate.localized)
+        } footer: {
+            Text(Messages.AppPreferencesView.softwareUpdateDetails.localized).fixedSize(horizontal: false, vertical: true)
         }
     }
 

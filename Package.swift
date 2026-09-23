@@ -14,14 +14,18 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0"),
-        .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5")
+        .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5"),
+        .package(url: "https://github.com/sparkle-project/Sparkle.git", exact: "2.10.0")
     ],
     targets: [
         .systemLibrary(name: "CZlib"),
         .systemLibrary(name: "CSQLite"),
         .target(name: "RuriLocalization", resources: [.process("Resources")]),
         .target(name: "RuriCore", dependencies: ["ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown"), "TOMLDecoder"], resources: [.copy("Resources/LoaderSupport"), .copy("Resources/mod_data.txt")]),
-        .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization"], resources: [.copy("Resources/JavaBrands")]),
+        // Sparkle.framework is embedded in Contents/Frameworks by scripts/build-app.sh.
+        .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization", .product(name: "Sparkle", package: "Sparkle")],
+                          resources: [.copy("Resources/JavaBrands")],
+                          linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCore", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriLocalization"]),
