@@ -35,9 +35,9 @@ struct FileExtendedAttributesTests {
         for directory in [source, source.appendingPathComponent("empty")] { try Self.set(tags, name: "com.apple.metadata:_kMDItemUserTags", at: directory) }
         try Self.set(Data(), name: "org.ruri.empty", at: source.appendingPathComponent("file"))
         let manifest = try FileTreeManifest.capture(in: source)
+        #expect(manifest.rootAttributes?.isEmpty == false)
         try RunDirectoryFileCopy.copyForPublication(source, to: target, directory: true, ignoringTransientFiles: false, created: { _ in }, validate: {}, progress: { _ in })
         try manifest.requireMatch(in: target)
-        #expect(manifest.version == 2 && manifest.rootAttributes?.isEmpty == false)
         #expect(try FileExtendedAttributes.capture(target.appendingPathComponent("empty")) == FileExtendedAttributes.capture(source.appendingPathComponent("empty")))
     }
 

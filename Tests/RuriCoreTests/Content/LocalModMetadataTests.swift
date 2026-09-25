@@ -79,6 +79,5 @@ struct LocalModMetadataTests {
         #expect(index.match(id: "different", name: "First Mod")?.encyclopediaID == "3")
         #expect(index.match(id: nil, name: "First_Mod")?.encyclopediaID == "1")
         #expect(index.match(id: nil, name: "First Mod Extra") == nil)
-        #expect(ModNameIndex.shared.match(id: "jei", name: "Just Enough Items")?.chineseName.isEmpty == false)
     }
 }

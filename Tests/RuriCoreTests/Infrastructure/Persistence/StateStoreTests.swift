@@ -88,7 +88,6 @@ struct StateStoreTests {
         var initial = PersistentState(); initial.instances = [game]
         let baseline = try StateStore.save(initial, to: paths)
         #expect(try StateStore.load(paths).instances == [game])
-        #expect(game.subtitle == "Minecraft 1.21.1 · Fabric 0.16.10")
         let bytes = try Data(contentsOf: paths.state)
         let invalid: [ImportedMinecraftInstallation] = [
             .init(sourceVersionID: " ", components: []),

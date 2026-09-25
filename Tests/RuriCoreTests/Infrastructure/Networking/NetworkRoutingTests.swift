@@ -50,10 +50,4 @@ struct NetworkRoutingTests {
         var post = URLRequest(url: url); post.httpMethod = "POST"
         #expect(await routing.candidates(for: post) == [url])
     }
-    @Test func olderSettingsStillDecode() throws {
-        let data = Data(#"{"concurrentDownloads":8,"microsoftClientID":"","showSnapshots":false,"defaultMemoryMB":4096,"appearance":"system"}"#.utf8)
-        let settings = try JSONDecoder().decode(AppSettings.self, from: data)
-        #expect(settings.downloadSource == nil)
-        #expect(settings.concurrentDownloads == 8)
-    }
 }

@@ -36,7 +36,7 @@ jobs:
           export RURI_VERSION
           mkdir -p build
           cp Resources/Info.plist build/Info.plist
-          python3 scripts/configure-app.py build/Info.plist
+          python3 scripts/lib/app.py metadata build/Info.plist
           echo "version=$RURI_VERSION" >> "$GITHUB_OUTPUT"
           if [[ "$RURI_VERSION" == *-* ]]; then
             echo 'prerelease=true' >> "$GITHUB_OUTPUT"
@@ -94,10 +94,10 @@ jobs:
       - name: Sign update for Sparkle
         env:
           RURI_SPARKLE_PRIVATE_KEY: ${{ secrets.RURI_SPARKLE_PRIVATE_KEY }}
-        run: python3 scripts/sparkle-update.py sign build/Ruri.app build/dmg/*.dmg
+        run: python3 scripts/release/sparkle-update.py sign build/Ruri.app build/dmg/*.dmg
       - name: Clean up signing keychain
         if: always()
-        run: python3 scripts/signing.py cleanup-ci
+        run: python3 scripts/release/signing.py cleanup-ci
       - name: Upload DMG and checksum
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

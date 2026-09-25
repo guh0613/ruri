@@ -49,7 +49,6 @@ struct MinecraftDirectoryReaderTests {
         let catalog = try await MinecraftDirectoryReader().scan(fixture.root)
         #expect(catalog.versions.count == 5)
         #expect(catalog.versions.filter { $0.issue == nil }.map(\.id) == ["1.21.1"])
-        #expect(catalog.versions.first { $0.id == "1.21.1" }?.warnings.contains { $0.contains("JAR 缺失") } == true)
     }
 
     @Test func modernHMCLSettingsDistinguishExplicitIsolationFromInheritedPresets() async throws {
@@ -73,7 +72,6 @@ struct MinecraftDirectoryReaderTests {
         let catalog = try await MinecraftDirectoryReader().scan(fixture.root)
         let version = try #require(catalog.versions.first { $0.id == "1.21.1" })
         #expect(version.suggestedLocationID == custom.path)
-        #expect(version.gameLocations.first { $0.id == custom.path }?.contents == ["存档"])
         #expect(catalog.versions.first { $0.id == "Pack" }?.suggestedLocationID == fixture.root.appendingPathComponent("versions/Pack").path)
     }
 
@@ -84,7 +82,6 @@ struct MinecraftDirectoryReaderTests {
         let catalog = try await MinecraftDirectoryReader().scan(fixture.root)
         let ambiguous = try #require(catalog.versions.first { $0.id == "1.21.1" })
         #expect(ambiguous.gameLocations.count == 3 && ambiguous.suggestedLocationID == nil)
-        #expect(ambiguous.warnings.contains { $0.contains("多个启动配置") })
         #expect(catalog.versions.first { $0.id == "1.20.1" }?.suggestedLocationID == fixture.root.path)
     }
 

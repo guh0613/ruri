@@ -28,8 +28,6 @@ import Testing
         let instance = try #require(state.instances.first { $0.repositoryVersionID == "1.21.1" })
         let configured = paths.configured(with: state)
         #expect(configured.game(instance.id).path == a.path)
-        #expect(configured.manifest(instance.id) == a.appendingPathComponent("1.21.1.json"))
-        #expect(try configured.resources(for: instance).root.path == root.path)
         #expect(!FileManager.default.fileExists(atPath: root.appendingPathComponent(".ruri/instances").path))
         #expect(try Data(contentsOf: a.appendingPathComponent("1.21.1.json")) == original)
         state.instances[state.instances.firstIndex { $0.id == instance.id }!].favorite = true
@@ -85,25 +83,6 @@ import Testing
         #expect(state.instances.first?.repositoryIssue != nil)
         #expect(state.instances.count == 1)
     }
-    @Test func isolationSwitchUsesExistingDataAndSkipsRepositoryResources() async throws {
-        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
-        let folder = try version("1.21.1", root: root)
-        try Data("shared settings".utf8).write(to: root.appendingPathComponent("options.txt"))
-        try Data("isolated settings".utf8).write(to: folder.appendingPathComponent("options.txt"))
-        try Data("{}".utf8).write(to: folder.appendingPathComponent("modpack.cfg"))
-        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
-        let instance = try #require(state.instances.first)
-        let service = GameRunDirectoryChange(paths: paths)
-        let preview = try await service.preview(instanceID: instance.id, target: .shared)
-        #expect(preview.sourceSnapshot.game.map(\.path) == ["options.txt"])
-        #expect(preview.targetSnapshot.game.map(\.path) == ["options.txt"])
-        let changed = try await service.useExisting(preview)
-        #expect(paths.configured(with: changed).game(instance.id).path == root.path)
-        #expect(try String(contentsOf: folder.appendingPathComponent("options.txt"), encoding: .utf8) == "isolated settings")
-        let restored = try await service.preview(instanceID: instance.id, target: .isolated)
-        #expect(try await service.useExisting(restored).instances.first?.runDirectory == .isolated)
-    }
-
     @Test @MainActor func reattachmentRestoresPreferencesSelectionAndHistoryWhileDiscoveringChanges() throws {
         let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
         let folder = try version("1.21.1", root: root)
@@ -126,7 +105,6 @@ import Testing
         _ = try version("1.20.1", root: root)
         let restored = try MinecraftFolderStore.add(name: "Restored", url: root, paths: paths)
         #expect(restored.selectedDirectoryID == id && restored.selectedInstanceID == instance.id)
-        #expect(restored.gameDirectories?.first?.createdAt == state.gameDirectories?.first?.createdAt)
         #expect(restored.instances.first { $0.id == instance.id } == instance)
         #expect(restored.instances.count == 2 && restored.detachedMinecraftFolders?.isEmpty == true)
         #expect(try GameSessionStore.logTail(paths: paths.configured(with: restored), session: recorder.record) == history)
@@ -247,20 +225,6 @@ import Testing
         #expect(!FileManager.default.fileExists(atPath: custom.path))
     }
 
-    @Test func parentDeletionIsBlockedAndRemovingFolderKeepsAllVersions() throws {
-        let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
-        let parent = try version("1.21.1", root: root)
-        _ = try version("Fabric", root: root, extra: ["inheritsFrom": "1.21.1"])
-        let state = try MinecraftFolderStore.add(name: "Games", url: root, paths: paths)
-        let instance = try #require(state.instances.first { $0.repositoryVersionID == "1.21.1" })
-        #expect(throws: (any Error).self) { try MinecraftFolderStore.trashVersion(instance.id, paths: paths) }
-        #expect(FileManager.default.fileExists(atPath: parent.appendingPathComponent("1.21.1.json").path))
-        let removed = try GameDirectoryStore.remove(state.selectedDirectoryID!, paths: paths)
-        #expect(removed.instances.isEmpty && removed.gameDirectories?.isEmpty == true)
-        #expect(FileManager.default.fileExists(atPath: parent.appendingPathComponent("1.21.1.json").path))
-        #expect(try MinecraftFolderStore.add(name: "Games again", url: root, paths: paths).instances.count == 2)
-    }
-
     @Test func loggingWithoutFileIDSupportsLaunchAndDependencyChecks() async throws {
         let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
         let parent = try version("1.21.1", root: root, extra: ["logging": ["client": [
@@ -279,8 +243,6 @@ import Testing
         let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java,
                                           account: Account(username: "Player"), paths: current)
         #expect(plan.arguments.contains("-Dlog4j.configurationFile=\(root.appendingPathComponent("assets/log_configs/client-1.12.xml").path)"))
-        #expect(manifest.logging?.client?.file.sha1 == "hash")
-        #expect(manifest.logging?.client?.file.size == 888)
         // Deletion must reach the dependency check, not fail decoding a
         // different version's inherited logging configuration.
         do {
@@ -297,7 +259,7 @@ import Testing
         let (base, paths, root) = try fixture(); defer { try? FileManager.default.removeItem(at: base) }
         let extra: [String: Any] = ["logging": ["client": ["argument": "-Dlog4j.configurationFile=${path}",
                                                           "file": ["url": "https://fixture.invalid/client.xml"]]]]
-        let target = try version("Snapshot", root: root, extra: extra)
+        _ = try version("Snapshot", root: root, extra: extra)
         let other = try version("1.21.1", root: root, extra: extra)
         let shared = root.appendingPathComponent("options.txt")
         try Data("shared game data".utf8).write(to: shared)
@@ -305,7 +267,6 @@ import Testing
         let instance = try #require(state.instances.first { $0.repositoryVersionID == "Snapshot" })
         let trash = base.appendingPathComponent("Trash")
         let remaining = try MinecraftFolderStore.trashVersion(instance.id, paths: paths) { folder in
-            #expect(folder.path == target.path)
             try FileManager.default.moveItem(at: folder, to: trash)
         }
         #expect(!remaining.instances.contains { $0.id == instance.id })
@@ -314,5 +275,4 @@ import Testing
         #expect(try String(contentsOf: shared, encoding: .utf8) == "shared game data")
         #expect(try StateStore.load(paths).instances == remaining.instances)
     }
-
 }

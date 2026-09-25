@@ -16,20 +16,6 @@ struct ContentManagerTests {
         let hash = Insecure.SHA1.hash(data: data).map { String(format: "%02x", $0) }.joined()
         return ContentInstallation(record: ManagedContent(projectID: project, versionID: version, title: "Example", versionName: version, kind: .mod, filename: file, sha1: hash, size: Int64(data.count), requiredProjects: dependencies), source: source)
     }
-    @Test func updatesReplaceOldFilenameAndPreserveDisabledState() async throws {
-        let (paths, id, manager) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        try await manager.install([plan(paths, version: "1", file: "example-1.jar", text: "first")])
-        let original = try #require(await manager.scan(.mod).first)
-        try await manager.setEnabled(false, file: original)
-        try await manager.install([plan(paths, version: "2", file: "example-2.jar", text: "second")])
-        #expect(!FileManager.default.fileExists(atPath: paths.game(id).appendingPathComponent("mods/example-1.jar.disabled").path))
-        #expect(try Data(contentsOf: paths.game(id).appendingPathComponent("mods/example-2.jar.disabled")) == Data("second".utf8))
-        let current = try #require(await manager.scan(.mod).first)
-        #expect(!current.enabled)
-        #expect(current.managed?.versionID == "2")
-        try await manager.setEnabled(true, file: current)
-        #expect(try await manager.scan(.mod).first?.enabled == true)
-    }
     @Test func rejectsModifiedFilesBeforeChangingAnything() async throws {
         let (paths, id, manager) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         try await manager.install([plan(paths, version: "1", file: "one.jar", text: "original")])

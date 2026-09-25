@@ -24,7 +24,6 @@ struct GameDiagnosisTests {
         let record = session(status: 9, reason: .signal)
         let diagnosis = try GameDiagnosticAnalyzer.analyze(session: record, documents: [document("[12:00:00] [main/ERROR]: java.lang.OutOfMemoryError\nIncompatible mods found!")])
         #expect(diagnosis.findings.isEmpty)
-        #expect(diagnosis.summary.contains("不能确定请求来源"))
     }
     @Test func warningsAndAuthenticationErrorsDoNotIdentifyACulprit() throws {
         let log = """
@@ -73,13 +72,11 @@ struct GameDiagnosisTests {
         var record = session(); record.exit = nil; record.stage = .account; record.failure = "Refresh request failed"
         let preparation = try GameDiagnosticAnalyzer.analyze(session: record, documents: [])
         #expect(preparation.findings.first?.actions.contains(.accounts) == true)
-        #expect(preparation.summary.contains("验证账号"))
     }
     @Test func activeOrUnknownExitDoesNotInventADiagnosis() throws {
         var record = session(state: .running); record.exit = nil
         let result = try GameDiagnosticAnalyzer.analyze(session: record, documents: [document("Incompatible mods found!")])
-        #expect(result.findings.isEmpty && result.summary.contains("尚无最终退出记录"))
-        #expect(try GameDiagnosticAnalyzer.analyze(session: session(), documents: []).summary.contains("尚不能定位原因"))
+        #expect(result.findings.isEmpty)
     }
     @Test @MainActor func loaderUsesOnlySnapshotEvidenceAndBoundsLargeLogs() throws {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
@@ -104,6 +101,6 @@ struct GameDiagnosisTests {
         try FileManager.default.createSymbolicLink(at: url, withDestinationURL: paths.game(instance.id).appendingPathComponent("logs/latest.log"))
         let unsafe = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record)
         #expect(!unsafe.findings.contains { $0.id == "dependencies" })
-        #expect(unsafe.limitations.contains { $0.contains("未能读取") })
+        #expect(!unsafe.limitations.isEmpty)
     }
 }

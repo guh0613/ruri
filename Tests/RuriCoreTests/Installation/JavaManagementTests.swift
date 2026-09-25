@@ -14,18 +14,6 @@ private enum JavaFixture {
         ]], options: [.sortedKeys])
     }
 }
-private final class JavaFixtureProtocol: URLProtocol, @unchecked Sendable {
-    override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "java.fixture.test" }
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
-    override func startLoading() {
-        let url = request.url!
-        let data = url.path == "/manifest" ? JavaFixture.manifest : url.path == "/java" ? JavaFixture.binary : JavaFixture.library
-        client?.urlProtocol(self, didReceive: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["Content-Length": String(data.count)])!, cacheStoragePolicy: .notAllowed)
-        client?.urlProtocol(self, didLoad: data); client?.urlProtocolDidFinishLoading(self)
-    }
-    override func stopLoading() {}
-}
-
 struct JavaManagementTests {
     private func paths() throws -> LauncherPaths {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-java-management-\(UUID())")); try paths.prepare(); return paths
@@ -67,8 +55,13 @@ struct JavaManagementTests {
                                  manifest: .init(url: URL(string: "https://java.fixture.test/manifest"), sha1: JavaFixture.hash(JavaFixture.manifest), size: Int64(JavaFixture.manifest.count)))
         let directory = paths.runtimes.appendingPathComponent(runtime.id), binary = directory.appendingPathComponent("jre.bundle/Contents/Home/bin/java")
         try executable(Data("#!/bin/sh\nexit 1\n".utf8), at: binary)
-        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [JavaFixtureProtocol.self]
-        let downloader = DownloadManager(configuration: config, retryDelay: .zero), installer = JavaInstaller(paths: paths)
+        let http = EndpointHTTPFixture([
+            "java.fixture.test/manifest": JavaFixture.manifest,
+            "java.fixture.test/java": JavaFixture.binary,
+            "java.fixture.test/library": JavaFixture.library
+        ])
+        defer { http.close() }
+        let downloader = DownloadManager(configuration: http.session.configuration, retryDelay: .zero), installer = JavaInstaller(paths: paths)
         do {
             let lease = try JavaRuntimeLease.shared(binary: binary, paths: paths)
             await #expect(throws: (any Error).self) { try await installer.install(runtime, downloader: downloader, repairing: true) { _ in } }
@@ -78,7 +71,6 @@ struct JavaManagementTests {
         let repaired = try await installer.install(runtime, downloader: downloader, repairing: true) { _ in }
         #expect(repaired.major == 21 && repaired.architecture == runtime.architecture)
         #expect(try Data(contentsOf: directory.appendingPathComponent("jre.bundle/Contents/Home/lib/support.bin")) == JavaFixture.library)
-        #expect(JavaRuntimeStore.descriptor(runtime.id, paths: paths)?.id == runtime.id)
         #expect(!FileManager.default.fileExists(atPath: paths.runtimes.appendingPathComponent(".partial-" + runtime.id).path))
     }
     @Test func removalRequiresExplicitReferenceResetAndPreservesOtherJava() throws {

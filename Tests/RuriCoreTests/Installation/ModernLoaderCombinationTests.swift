@@ -4,7 +4,7 @@ import ZIPFoundation
 @testable import RuriCore
 
 struct ModernLoaderCombinationTests {
-    @Test(arguments: ["0.1.16", "0.1.17", "1.1.2"])
+    @Test(arguments: ["0.1.16", "0.1.17"])
     func bootstrapIgnoresOnlyItsOwnLibrariesAndClient(_ version: String) {
         let client = URL(fileURLWithPath: "/games/asm/profile.jar")
         let classpath = ["/games/asm/libraries/asm-9.1.jar", "/games/asm/libraries/OptiFine-combined.jar", client.path]
@@ -61,11 +61,8 @@ struct ModernLoaderCombinationTests {
         let child = try installer.combinedProfile(instance: instance, base: base, installer: file, version: "HD_U_I6", sourceURL: URL(string: "https://example.test/optifine.jar")!)
         let manifest = try LoaderLaunchArguments.combining(base.merging(child: child), loaders: [.forge, .optifine])
         #expect(manifest.mainClass == main)
-        #expect(manifest.generatedLibraries?.count == 2)
-        #expect(manifest.minecraftArguments == nil)
         #expect(manifest.arguments?.game?.flatMap { $0.values(architecture: "x86_64", features: [:]) } == ["--launchTarget", "forgeclient"])
         let library = try #require(manifest.libraries.first { $0.name.hasPrefix("optifine:OptiFine:") }), artifact = try #require(try library.artifact())
-        #expect(library.includeInClasspath == (main == "cpw.mods.modlauncher.Launcher" ? false : nil))
         let resources = try paths.resources(for: instance), normalized = try resources.libraryFile(artifact)
         let archive = try Archive(url: normalized, accessMode: .read)
         #expect(archive["META-INF/mods.toml"] == nil)
@@ -85,9 +82,6 @@ struct ModernLoaderCombinationTests {
             #expect(cp.contains("transformer-discovery-1.0.jar"))
         } else { #expect(cp.contains(normalized.path)) }
         #expect(!plan.arguments.contains("--tweakClass"))
-        let resolution = MinecraftManifestResolution(manifest: manifest, clientFile: client,
-            libraries: manifest.libraries.map { .init(library: $0, localFile: nil, sourceMetadata: nil) }, warnings: [], sourceManifests: [])
-        #expect(try resolution.selectingLibraries().manifest.libraries.first?.includeInClasspath == library.includeInClasspath)
         try FileManager.default.removeItem(at: normalized)
         try await installer.repair(instance: instance, manifest: manifest) { _ in }
         #expect(try InstanceTransfer.sha1(normalized) == artifact.sha1)

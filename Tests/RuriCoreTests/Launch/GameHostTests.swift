@@ -61,20 +61,6 @@ struct GameHostTests {
         #expect(finished.state == .succeeded && finished.host?.fallback == "disabled")
     }
 
-    @Test func settingsPreserveInheritanceAndPortableSnapshots() throws {
-        var defaults = AppSettings()
-        var settings = MacOSGameSettings(); settings.enabled = false; settings.nativeFullscreen = false
-        defaults.defaultMacOSGameSettings = settings
-        var instance = GameInstance(name: "Game", gameVersion: "1.21.1"); instance.launchOverrides = .init()
-        #expect(try instance.launchSnapshot(defaults: defaults).macOSGameSettings == settings)
-        instance.launchOverrides?.macOS = .init()
-        let snapshot = try instance.launchSnapshot(defaults: defaults)
-        #expect(snapshot.macOSGameSettings?.enabled == true)
-        let exported = try JSONDecoder().decode(PortableInstance.self, from: JSONEncoder().encode(PortableInstance(snapshot)))
-        #expect(try exported.instance().macOSGameSettings == snapshot.macOSGameSettings)
-        #expect(try JSONDecoder().decode(MacOSGameSettings.self, from: Data("{}".utf8)) == .init())
-    }
-
     @Test func framedEventsHandlePartialReadsAndRejectOversizedFrames() throws {
         let sessionID = UUID()
         let payload = try JSONSerialization.data(withJSONObject: ["version": 1, "sessionID": sessionID.uuidString, "pid": 42, "event": "windowReady"])

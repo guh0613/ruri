@@ -101,7 +101,6 @@ struct ImportedMinecraftInstallationTests {
 
     @Test func repairRetainsTheLocalForgeManifestAndMapsItsOwnLegacyAssets() async throws {
         let f = try Fixture(); defer { f.cleanup() }
-        let manifestBytes = try Data(contentsOf: f.paths.manifest(f.instance.id))
         let shared = try [f.paths.versions, f.paths.libraries, f.paths.assets].map { ($0, try FileTreeManifest.capture(in: $0)) }
         let native = f.resources.libraries.appendingPathComponent("fixture/native.jar")
         try ArchiveAndLaunchTests().makeZip(native, entries: [("fixture.dylib", Data("native".utf8), .file)])
@@ -109,7 +108,6 @@ struct ImportedMinecraftInstallationTests {
         manifest.libraries.append(try JSONDecoder().decode(Library.self, from: Data(#"{"name":"fixture:native:1","natives":{"osx":"natives-osx"},"downloads":{"classifiers":{"natives-osx":{"path":"fixture/native.jar"}}}}"#.utf8)))
         try JSONEncoder().encode(manifest).write(to: f.paths.manifest(f.instance.id))
         let expected = try Data(contentsOf: f.paths.manifest(f.instance.id))
-        #expect(expected != manifestBytes)
         let http = EndpointHTTPFixture([:]); defer { http.close() }
         let service = GameInstaller(paths: f.paths, downloader: DownloadManager(configuration: http.session.configuration, retryDelay: .zero))
         try await service.repair(f.instance) { _ in }

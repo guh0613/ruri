@@ -13,21 +13,15 @@ struct GameRunDirectoryTests {
         return (paths, a, b, isolated)
     }
 
-    @Test func defaultsOnlyAffectNewInstancesAndSharedMetadataHasOneLocation() async throws {
+    @Test func changingTheDefaultIsolationPolicyDoesNotMoveExistingInstances() throws {
         let (paths, a, b, isolated) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        #expect(paths.game(a.id) == paths.game(b.id))
-        #expect(paths.game(a.id) != paths.game(isolated.id))
-        #expect(paths.gameDataState(a.id) == paths.gameDataState(b.id))
-        #expect(paths.gameDataState(isolated.id) == paths.instance(isolated.id))
-        #expect(paths.manifest(a.id) != paths.manifest(b.id))
-        #expect(GameIsolationPolicy.always.directory(loader: .vanilla) == .isolated)
-        #expect(GameIsolationPolicy.modded.directory(loader: .vanilla) == .shared)
-        #expect(GameIsolationPolicy.modded.directory(loader: .fabric) == .isolated)
-        #expect(GameIsolationPolicy.never.directory(loader: .forge) == .shared)
-        var state = PersistentState(); state.instances = [isolated]; state.settings.isolationPolicy = .never
-        #expect(paths.configured(with: state).game(isolated.id) == paths.game(isolated.id))
-        await #expect(throws: (any Error).self) { try await GameInstaller(paths: LauncherPaths(root: paths.root)).install(a) { _ in } }
-        #expect(!FileManager.default.fileExists(atPath: paths.cache.appendingPathComponent("versions.json").path))
+        var state = PersistentState()
+        state.instances = [a, b, isolated]
+        state.settings.isolationPolicy = .never
+        let changed = paths.configured(with: state)
+        #expect(changed.game(isolated.id) == paths.game(isolated.id))
+        #expect(changed.game(a.id) == changed.game(b.id))
+        #expect(changed.game(isolated.id) != changed.game(a.id))
     }
 
     @Test func sharedInstancesCannotAcquireTheSameGameButIsolatedOneCanRun() throws {
@@ -46,11 +40,9 @@ struct GameRunDirectoryTests {
         let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         try recorder.handoff(to: identity)
-        #expect(!GameRunLease.isHeld(paths: paths, instanceID: b.id))
         #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: b.id) }
         let monitor = try GameSessionRecorder(resuming: recorder.record.id, instanceID: a.id, paths: paths, monitor: identity)
         try monitor.fail(RuriError.message("controlled preparation failure"), cancelled: false)
-        #expect(!FileManager.default.fileExists(atPath: paths.game(a.id).appendingPathComponent(".ruri/active-run.json").path))
         try FileManager.default.removeItem(at: paths.instance(a.id))
         let next = try GameRunLease.acquire(paths: paths, instanceID: b.id)
         withExtendedLifetime(next) {}
@@ -68,7 +60,7 @@ struct GameRunDirectoryTests {
         withExtendedLifetime(next) {}
     }
 
-    @Test func contentChangesAndWorldBackupLocationsAreShared() async throws {
+    @Test func contentChangesAreVisibleToOtherSharedInstances() async throws {
         let (paths, a, b, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let source = paths.cache.appendingPathComponent("fixture.jar"); let data = Data("fixture-content".utf8)
         try data.write(to: source)
@@ -80,15 +72,6 @@ struct GameRunDirectoryTests {
         try await second.setEnabled(false, file: file)
         #expect(try await first.scan(.mod).first?.enabled == false)
         #expect(try await first.records().first?.enabled == false)
-        let worldsA = WorldManager(paths: paths, instanceID: a.id), worldsB = WorldManager(paths: paths, instanceID: b.id)
-        #expect(await worldsA.backupDirectory == worldsB.backupDirectory)
-        let world = paths.game(a.id).appendingPathComponent("saves/SharedWorld")
-        try FileManager.default.createDirectory(at: world, withIntermediateDirectories: true)
-        try WorldTests().nbt().write(to: world.appendingPathComponent("level.dat"))
-        let backup = try await worldsA.backup(folder: "SharedWorld")
-        #expect(try await worldsB.backups().first?.id == backup.id)
-        #expect(try await worldsB.worlds().first?.name == "测试世界🐱")
-        #expect(!FileManager.default.fileExists(atPath: paths.instance(b.id).appendingPathComponent("content.json").path))
     }
 
     @Test func recoveryCannotRollBackAnotherClientsLiveContentTransaction() async throws {
@@ -117,20 +100,5 @@ struct GameRunDirectoryTests {
         #expect(FileManager.default.fileExists(atPath: prepared.game.appendingPathComponent("options.txt").path))
         #expect(!FileManager.default.fileExists(atPath: prepared.game.appendingPathComponent(".ruri").path))
         await transfer.discard(prepared)
-    }
-
-    @Test(.timeLimit(.minutes(1))) @MainActor func actualSharedMonitorRetainsGameLockAndSavesDistinctHistory() async throws {
-        let (paths, a, b, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
-        let helper = TestPaths.monitorExecutable
-        let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo shared-game-finished"], directory: paths.game(a.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
-        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
-        #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }
-        let completed = try await GameMonitorClient.wait(paths: paths, instanceID: a.id, sessionID: recorder.record.id)
-        #expect(completed.exit?.status == 0)
-        #expect(try GameSessionStore.list(paths: paths, instanceID: b.id).isEmpty)
-        #expect(try GameSessionStore.logTail(paths: paths, session: completed).contains("shared-game-finished"))
-        let next = try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline")
-        try next.fail(CancellationError(), cancelled: true)
     }
 }

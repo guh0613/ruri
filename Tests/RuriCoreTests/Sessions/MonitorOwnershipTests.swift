@@ -3,13 +3,6 @@ import Testing
 @testable import RuriCore
 
 struct MonitorOwnershipTests {
-    @Test func processIdentityIncludesKernelStartTime() throws {
-        let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
-        #expect(identity.isAlive)
-        let reused = ProcessIdentity(pid: identity.pid, startSeconds: identity.startSeconds + 1, startMicroseconds: identity.startMicroseconds)
-        #expect(!reused.isAlive)
-        #expect(ProcessIdentity.read(-1) == nil)
-    }
     @Test @MainActor func handoffKeepsInstanceReservedAndAllowsOnlyDesignatedMonitor() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let first = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")

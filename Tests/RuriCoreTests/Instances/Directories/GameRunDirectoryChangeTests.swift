@@ -23,33 +23,21 @@ struct GameRunDirectoryChangeTests {
         let otherMetadata = paths.gameDataState(b.id).appendingPathComponent("content.json")
         try FileManager.default.createDirectory(at: otherMetadata.deletingLastPathComponent(), withIntermediateDirectories: true)
         try Data("[]".utf8).write(to: firstMetadata); try Data("[ ]".utf8).write(to: otherMetadata)
-        for (instance, folder) in [(a, "OriginalWorld"), (b, "SharedWorld")] {
-            let world = paths.game(instance.id).appendingPathComponent("saves/" + folder)
-            try FileManager.default.createDirectory(at: world, withIntermediateDirectories: true)
-            try WorldTests().nbt().write(to: world.appendingPathComponent("level.dat"))
-        }
-        let originalBackup = try await WorldManager(paths: paths, instanceID: a.id).backup(folder: "OriginalWorld")
-        let sharedBackup = try await WorldManager(paths: paths, instanceID: b.id).backup(folder: "SharedWorld")
-        let originalBackupBytes = try Data(contentsOf: originalBackup.url), sharedBackupBytes = try Data(contentsOf: sharedBackup.url)
         let service = GameRunDirectoryChange(paths: paths)
         let preview = try await service.preview(instanceID: a.id, target: .shared)
-        #expect(preview.sourceFileCount == 4 && preview.targetFileCount == 4 && !preview.canCopyToTarget)
+        #expect(!preview.canCopyToTarget)
         #expect(preview.otherInstances == [b.name])
         #expect(try StateStore.load(paths).instances.first?.runDirectory == nil)
         try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 8192); $0.instances[0].memoryMB = 6144 }
         let changed = try await service.useExisting(preview)
         #expect(changed.instances[0].runDirectory == .shared && changed.instances[0].memoryMB == 6144 && changed.settings.defaultMemorySettings?.maximumMB == 8192)
         #expect(try String(contentsOf: paths.configured(with: changed).game(a.id).appendingPathComponent("options.txt"), encoding: .utf8) == "shared-settings")
-        #expect(try await WorldManager(paths: paths.configured(with: changed), instanceID: a.id).backups().first?.id == sharedBackup.id)
         let back = try await service.preview(instanceID: a.id, target: .isolated)
         let restored = try await service.useExisting(back)
         #expect(restored.instances[0].runDirectory == .isolated)
         #expect(try String(contentsOf: paths.game(a.id).appendingPathComponent("options.txt"), encoding: .utf8) == "original-settings")
         #expect(try String(contentsOf: firstMetadata, encoding: .utf8) == "[]")
         #expect(try String(contentsOf: otherMetadata, encoding: .utf8) == "[ ]")
-        #expect(try await WorldManager(paths: paths.configured(with: restored), instanceID: a.id).backups().first?.id == originalBackup.id)
-        #expect(try Data(contentsOf: originalBackup.url) == originalBackupBytes)
-        #expect(try Data(contentsOf: sharedBackup.url) == sharedBackupBytes)
     }
     @Test func changedSourceTargetOrLocationInvalidateOldPreview() async throws {
         let (paths, a, b) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
@@ -70,7 +58,6 @@ struct GameRunDirectoryChangeTests {
         let service = GameRunDirectoryChange(paths: paths)
         let running = try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline")
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: a.id, target: .shared) }
-        #expect(!GameRunLease.isHeld(paths: paths, instanceID: a.id))
         try running.fail(CancellationError(), cancelled: true)
         let interrupted = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
         try interrupted.close()

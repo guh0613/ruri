@@ -29,7 +29,7 @@ struct ContentBatchUpdateTests {
         let oldCF = PlannedCurseFile(project: project, file: try cf.decoded(cf.file(9, project: 1)), kind: .mod)
         let cfSource = paths.cache.appendingPathComponent("old-cf.jar"); try write(cf.body, to: cfSource)
         try await manager.install([
-            helper.plan(paths, project: "a", version: "a1", file: "a1.jar", text: "hello"),
+            helper.plan(paths, project: "a", version: "a1", file: "a1.jar", text: "old mod"),
             helper.plan(paths, project: "dep", version: "d1", file: "d1.jar", text: "hello"),
             ContentInstallation(record: oldCF.record, source: cfSource)
         ])
@@ -48,22 +48,22 @@ struct ContentBatchUpdateTests {
             ContentUpdate(installed: a, available: version("a2", project: "a", dependencies: [.init(version_id: nil, project_id: "dep", dependency_type: "required")])),
             ContentUpdate(installed: dep, available: version("d2", project: "dep"))
         ], curseforge: [CurseForgeUpdate(installed: oldCF.record, available: try cf.decoded(cf.file(10, project: 1, dependencies: [["modId": 2, "relationType": 3]])))], instance: instance, paths: paths)
-        #expect(plan.records.count == 4 && plan.selectedIDs.count == 3)
-        #expect(plan.modrinth.map(\.record.projectID) == ["a", "dep"])
-        #expect(!server.requests.contains { $0.url.host == "api.modrinth.com" })
-        // Missing restricted files stop before any download or replacement.
-        await #expect(throws: (any Error).self) { try await updater.install(plan, paths: paths, downloader: DownloadManager()) { _ in } }
+        // An unavailable download must leave the installed files untouched.
+        let downloader = DownloadManager(configuration: server.session.configuration, retryDelay: .zero)
+        await #expect(throws: (any Error).self) { try await updater.install(plan, paths: paths, downloader: downloader) { _ in } }
         #expect(try await manager.records() == baseline)
+        #expect(try Data(contentsOf: aFile.url.appendingPathExtension("disabled")) == Data("old mod".utf8))
         for item in plan.modrinth { try write(Data("hello".utf8), to: paths.cache.appendingPathComponent("modrinth/\(item.record.versionID)/\(item.file.filename)")) }
         for item in plan.curseforge { try write(cf.body, to: paths.cache.appendingPathComponent("curseforge/\(item.id)/\(item.file.fileName)")) }
         let manual = paths.cache.appendingPathComponent("curseforge/10/mod-10.jar")
-        try await updater.install(plan, paths: paths, downloader: DownloadManager(), manualFiles: [10: manual]) { _ in }
+        try await updater.install(plan, paths: paths, downloader: downloader, manualFiles: [10: manual]) { _ in }
         let files = try await manager.scan(.mod)
-        #expect(files.count == 4)
-        #expect(files.first { $0.managed?.projectID == "a" }?.url.lastPathComponent == "a2.jar.disabled")
+        #expect(Set(files.map(\.filename)) == ["a2.jar", "d2.jar", "mod-10.jar", "mod-20.jar"])
+        let updated = try #require(files.first { $0.managed?.projectID == "a" })
+        #expect(updated.url.lastPathComponent == "a2.jar.disabled")
+        #expect(try Data(contentsOf: updated.url) == Data("hello".utf8))
         #expect(files.first { $0.managed?.projectID == "dep" }?.managed?.versionID == "d2")
         #expect(files.contains { $0.managed?.provider == "curseforge" && $0.managed?.versionID == "10" })
-        #expect(!FileManager.default.fileExists(atPath: paths.game(instance.id).appendingPathComponent("mods/d1.jar").path))
     }
 
     @Test func stalePreviewAndConflictingDependenciesLeaveAllFilesIntact() async throws {
@@ -86,6 +86,5 @@ struct ContentBatchUpdateTests {
         let incompatible = version("a2", project: "a", dependencies: [.init(version_id: nil, project_id: "b", dependency_type: "incompatible")])
         await #expect(throws: (any Error).self) { try await service.plan(versions: [incompatible, version("b2", project: "b")], kind: .mod, instance: instance) }
         await #expect(throws: (any Error).self) { try await service.plan(versions: [version("a2", project: "a"), version("a3", project: "a")], kind: .mod, instance: instance) }
-        #expect(server.requests.isEmpty)
     }
 }

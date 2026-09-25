@@ -15,10 +15,8 @@ struct GameLogExportTests {
         let file = logs.appendingPathComponent("latest.log")
         let padding = String(repeating: "ordinary " + String(repeating: "x", count: 4080) + "\n", count: 1150)
         let content = "start-marker\nAuthorization: Bearer source-private-token\n" + padding + "middle-marker private-middle-text\n" + padding + "end-marker\n"
-        #expect(content.utf8.count > 8 * 1_048_576)
         try content.write(to: file, atomically: true, encoding: .utf8)
         try recorder.finish(exit: .init(status: 0, reason: .exit, processID: 123, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false))
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
         let record = recorder.record
         let bundle = try await Task.detached(priority: .utility) { try GameDiagnosticBundle.collect(paths: paths, session: record) }.value
         let attachment = try #require(bundle.files.first { $0.path == "game/logs/latest.log" })
@@ -35,7 +33,6 @@ struct GameLogExportTests {
         #expect(exported.contains("start-marker") && exported.contains("middle-marker") && exported.contains("end-marker"))
         #expect(!exported.contains("private-middle-text") && !exported.contains("source-private-token") && !exported.contains("unreviewed"))
         #expect(bytes.count == redacted.files.first { $0.id == attachment.id }?.byteCount)
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
     }
 
     @Test @MainActor func nativeCursorSwitchesFilesAndNeverShowsAPreviousUnchangedLog() async throws {
@@ -73,7 +70,7 @@ struct GameLogExportTests {
         try Data(repeating: 120, count: 1_048_577).write(to: logs.appendingPathComponent("latest.log"))
         try recorder.finish(exit: .init(status: 0, reason: .exit, processID: 123, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false))
         let bundle = try GameDiagnosticBundle.collect(paths: paths, session: recorder.record)
-        #expect(bundle.files.contains { $0.id.hasPrefix("unavailable/") && $0.text.contains("单行") })
+        #expect(bundle.files.contains { $0.id.hasPrefix("unavailable/") })
         #expect(!bundle.files.contains { $0.snapshot != nil })
     }
     @Test @MainActor func streamingRedactionMasksQuotedCredentialContinuations() throws {

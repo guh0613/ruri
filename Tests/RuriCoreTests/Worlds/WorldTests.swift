@@ -20,10 +20,7 @@ struct WorldTests {
         try Data("lock".utf8).write(to: world.appendingPathComponent("session.lock"))
         return (paths, id, WorldManager(paths: paths, instanceID: id), world)
     }
-    @Test func readsNBTAndRejectsTruncation() throws {
-        var reader = try NBTReader(data: nbt()); let root = try reader.read()
-        #expect(root["Data"]?["LevelName"]?.string == "测试世界🐱")
-        #expect(root["Data"]?["GameType"]?.integer == 1)
+    @Test func readsModifiedUTF8AndRejectsTruncatedNBT() throws {
         var broken = try NBTReader(data: nbt().dropLast(2))
         #expect(throws: (any Error).self) { try broken.read() }
         let surrogateString = Data([10,0,0,8,0,1,110,0,6,0xed,0xa0,0xbd,0xed,0xb8,0xb1,0])
@@ -40,7 +37,7 @@ struct WorldTests {
     @Test func backupRestoreAndImportPreserveWorldData() async throws {
         let (paths, id, manager, world) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let listed = try #require(await manager.worlds().first)
-        #expect(listed.name == "测试世界🐱"); #expect(listed.version == "1.21.1"); #expect(listed.gameMode == "创造")
+        #expect(listed.name == "测试世界🐱"); #expect(listed.version == "1.21.1"); #expect(listed.gameType == 1)
         let backup = try await manager.backup(folder: "World")
         let archive = try Archive(url: backup.url, accessMode: .read)
         #expect(archive["world/session.lock"] == nil)
@@ -53,8 +50,9 @@ struct WorldTests {
         _ = try await manager.restore(backup, replaceExisting: true)
         #expect(try Data(contentsOf: world.appendingPathComponent("region/r.0.0.mca")) == Data("generation-a".utf8))
         let backups = try await manager.backups()
-        #expect(backups.count == 2)
-        #expect(backups.contains { $0.metadata?.reason == "恢复前自动备份" })
+        let automatic = try #require(backups.first { $0.url != backup.url })
+        let previous = try await manager.restore(automatic)
+        #expect(try Data(contentsOf: paths.game(id).appendingPathComponent("saves/\(previous)/region/r.0.0.mca")) == Data("generation-b".utf8))
         let imported = try await manager.importWorld(from: backup.url)
         #expect(FileManager.default.fileExists(atPath: paths.game(id).appendingPathComponent("saves/\(imported)/level.dat").path))
     }

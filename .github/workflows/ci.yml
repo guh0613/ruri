@@ -41,8 +41,6 @@ jobs:
           xcrun swift --version
       - name: Check build configuration
         run: python3 -m unittest discover -s scripts/tests
-      - name: Check localization resources
-        run: python3 scripts/localization.py --check
       - name: Build all products
         run: scripts/swift-build.sh --force-resolved-versions
       - name: Test

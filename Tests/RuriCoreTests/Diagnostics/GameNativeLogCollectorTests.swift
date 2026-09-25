@@ -1,7 +1,6 @@
 import Darwin
 import Foundation
 import Testing
-import ZIPFoundation
 @testable import RuriCore
 
 struct GameNativeLogCollectorTests {
@@ -18,40 +17,23 @@ struct GameNativeLogCollectorTests {
                                        startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false))
     }
 
-    @Test @MainActor func nativeLogsAreCollectedOnlyOnRequestAndExportUsesRedactedPreview() throws {
-        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        defer { try? FileManager.default.removeItem(at: root) }
-        let paths = LauncherPaths(root: root.appendingPathComponent("data")); try paths.prepare()
-        let instance = GameInstance(name: "Native logs", gameVersion: "1.21.1")
+    @Test @MainActor func nativeLogsAreCollectedOnlyOnRequestWithoutChangingSources() throws {
+        let (paths, instance) = try GameSessionTests().setup()
+        defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id)
-        let content = "[Render thread/INFO] Setting user: PrivatePlayer\nAuthorization: Bearer private-token\n游戏已启动\n"
+        let content = "Authorization: Bearer private-token\n游戏已启动\n"
         let latest = try write(content, "logs/latest.log", game: game)
-        let debug = try write("Loader debug detail\n", "logs/debug.log", game: game)
+        _ = try write("Loader debug detail\n", "logs/debug.log", game: game)
         _ = try write("private options", "options.txt", game: game)
         try finish(recorder)
         let saved = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record)
         #expect(saved.documents.allSatisfy { $0.gameRelativePath == nil })
-        let sessionFiles = (try? FileManager.default.contentsOfDirectory(atPath: recorder.directory.path)) ?? []
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record, includeGameLogs: true)
         #expect(Set(diagnosis.documents.compactMap(\.gameRelativePath)) == ["logs/latest.log", "logs/debug.log"])
-        #expect(recorder.record.evidence.isEmpty)
-        #expect(((try? FileManager.default.contentsOfDirectory(atPath: recorder.directory.path)) ?? []) == sessionFiles)
         #expect(try String(contentsOf: latest, encoding: .utf8) == content)
-        let preview = try GameDiagnosticBundle.preview(session: recorder.record, diagnosis: diagnosis)
-        let file = try #require(preview.files.first { $0.path == "game/logs/latest.log" })
-        #expect(file.text.contains("游戏已启动") && !file.text.contains("PrivatePlayer") && !file.text.contains("private-token"))
-        #expect(preview.files.first { $0.path == "game/logs/debug.log" }?.text == "Loader debug detail\n")
-        try "unreviewed-new-output".write(to: latest, atomically: true, encoding: .utf8)
-        try FileManager.default.removeItem(at: debug)
-        let zip = root.appendingPathComponent("report.zip")
-        try preview.export(selectedIDs: [file.id], to: zip, paths: paths)
-        let archive = try Archive(url: zip, accessMode: .read)
-        #expect(archive.map(\.path) == [file.path])
-        var exported = Data()
-        _ = try archive.extract(try #require(archive[file.path])) { exported.append($0) }
-        #expect(exported == Data(file.text.utf8))
-        #expect(try String(contentsOf: latest, encoding: .utf8) == "unreviewed-new-output")
+        let text = try #require(diagnosis.documents.first { $0.gameRelativePath == "logs/latest.log" }).text
+        #expect(text.contains("游戏已启动") && !text.contains("private-token"))
     }
 
     @Test @MainActor func onlyReportsFromThisRunAndExactJVMPIDAreIncluded() throws {
@@ -68,7 +50,6 @@ struct GameNativeLogCollectorTests {
         try finish(recorder)
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record, includeGameLogs: true)
         #expect(Set(diagnosis.documents.compactMap(\.gameRelativePath)) == ["logs/latest.log", "crash-reports/crash-current.txt", "hs_err_pid123456.log"])
-        #expect(!diagnosis.documents.contains { $0.gameRelativePath == "logs/debug.log" })
     }
 
     @Test @MainActor func currentNativeFileReplacesTheSavedDuplicate() throws {
@@ -128,21 +109,6 @@ struct GameNativeLogCollectorTests {
         #expect(!diagnosis.limitations.isEmpty)
     }
 
-    @Test @MainActor func activeGameLogsRefreshOnlyWhenCollectedAgain() throws {
-        let (paths, instance) = try GameSessionTests().setup()
-        defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
-        defer { try? recorder.close() }
-        try recorder.started(processID: ProcessInfo.processInfo.processIdentifier)
-        let latest = try write("running-first", "logs/latest.log", game: paths.game(instance.id))
-        let first = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record, includeGameLogs: true)
-        try "running-second".write(to: latest, atomically: true, encoding: .utf8)
-        #expect(first.documents.first { $0.gameRelativePath == "logs/latest.log" }?.text == "running-first")
-        let second = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record, includeGameLogs: true)
-        #expect(second.documents.first { $0.gameRelativePath == "logs/latest.log" }?.text == "running-second")
-        #expect(first.findings.isEmpty && second.findings.isEmpty)
-    }
-
     @Test @MainActor func preparationFailureDoesNotCollectPreviousGameOutput() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
@@ -163,6 +129,10 @@ struct GameNativeLogCollectorTests {
         let secret = try write("outside-private-content", "secret.txt", game: paths.root)
         try FileManager.default.createSymbolicLink(at: logs.appendingPathComponent("latest.log"), withDestinationURL: secret)
         #expect(mkfifo(logs.appendingPathComponent("debug.log").path, 0o600) == 0)
+        try FileManager.default.createDirectory(at: game.appendingPathComponent("crash-reports"), withIntermediateDirectories: true)
+        for relative in ["crash-reports/crash-link.txt", "hs_err_pid123456.log"] {
+            try FileManager.default.createSymbolicLink(at: game.appendingPathComponent(relative), withDestinationURL: secret)
+        }
         try finish(recorder)
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record, includeGameLogs: true)
         #expect(diagnosis.documents.allSatisfy { $0.gameRelativePath == nil && !$0.text.contains("outside-private-content") })

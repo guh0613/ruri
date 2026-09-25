@@ -21,7 +21,7 @@ import sys
 import tempfile
 import xml.etree.ElementTree as ElementTree
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 ARCHITECTURES = ("arm64", "x86_64")
 PRERELEASE_CHANNEL = "prerelease"
 ITEM_LIMIT = 10

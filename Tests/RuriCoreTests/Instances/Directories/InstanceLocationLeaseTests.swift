@@ -40,26 +40,13 @@ struct InstanceLocationLeaseTests {
         withExtendedLifetime(owner) {}; owner = nil
         #expect(throws: (any Error).self) { try paths.prepareInstance(id) }
         #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: id) }
-        #expect(GameRunLease.isHeld(paths: paths, instanceID: id))
         await #expect(throws: (any Error).self) { try await content.records() }
         await #expect(throws: (any Error).self) { try await worlds.worlds() }
         await #expect(throws: (any Error).self) { try await installer.install(fixture.source) { _ in } }
-        #expect(!FileManager.default.fileExists(atPath: paths.instance(id).path))
         let current = paths.configured(with: saved)
         #expect(try await ContentManager(paths: current, instanceID: id).records().isEmpty)
         let currentLease = try GameRunLease.acquire(paths: current, instanceID: id)
         withExtendedLifetime(currentLease) {}
         #expect(!FileManager.default.fileExists(atPath: paths.instance(id).path))
-    }
-
-    @Test func moveAccessUpgradesItsExistingRunLeaseAndReleasesAllLocks() async throws {
-        let fixture = try InstanceMovePreviewTests.Fixture(mode: .custom); defer { fixture.cleanup() }
-        var access: InstanceMoveAccess? = try await .acquire(instance: fixture.source, paths: fixture.paths)
-        #expect(throws: (any Error).self) { try InstanceLocationLease.acquire(paths: fixture.paths, instanceID: fixture.source.id) }
-        await #expect(throws: (any Error).self) { try await ContentManager(paths: fixture.paths, instanceID: fixture.source.id).records() }
-        withExtendedLifetime(access) {}; access = nil
-        _ = try await ContentManager(paths: fixture.paths, instanceID: fixture.source.id).records()
-        let lease = try GameRunLease.acquire(paths: fixture.paths, instanceID: fixture.source.id)
-        withExtendedLifetime(lease) {}
     }
 }

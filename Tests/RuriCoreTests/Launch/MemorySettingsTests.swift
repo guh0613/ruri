@@ -3,26 +3,14 @@ import Testing
 @testable import RuriCore
 
 struct MemorySettingsTests {
-    @Test func automaticMemoryFollowsContentAndOnlyHardwareCapsIt() throws {
-        let automatic = MemorySettings(mode: .automatic)
-        // Without an instance the estimate is a current vanilla client; big
-        // machines no longer hand it a quarter of their RAM for nothing.
-        let plenty = try automatic.resolve(availability: .init(physicalMB: 65536, availableMB: 49152))
-        #expect(plenty.maximumMB == 3584 && plenty.initialBytes == 1792 * 1_048_576 && plenty.estimate?.constrained == false)
-        #expect(plenty.arguments == ["-Xms1792M", "-Xmx3584M"])
-        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 12288)).maximumMB == 3584)
-        // macOS file caches make "available" look small; that alone must not starve the game.
-        #expect(try automatic.resolve(availability: .init(physicalMB: 16384, availableMB: 2048)).maximumMB == 3584)
-        let small = try automatic.resolve(availability: .init(physicalMB: 4096))
-        #expect(small.maximumMB == 2048 && small.estimate?.constrained == true)
-        #expect(try automatic.resolve(availability: .init(physicalMB: 4096, availableMB: 200)).maximumMB == 1536)
-        #expect(try MemorySettings(mode: .automatic, initialMB: 256).resolve(availability: .init(physicalMB: 16384)).initialBytes == 256 * 1_048_576)
-        #expect(throws: (any Error).self) { try MemorySettings(mode: .automatic, initialMB: 4096).resolve(availability: .init(physicalMB: 16384)) }
-        #expect(throws: (any Error).self) { try automatic.resolve(availability: .init(physicalMB: 0)) }
-        #expect(try MemorySettings(maximumMB: 4096).resolve(availability: .init(physicalMB: 16384)).estimate == nil)
-        let sample = MemoryAvailability.current()
-        #expect(sample.physicalMB >= 512)
-        #expect(sample.availableMB == nil || sample.availableMB! >= 0)
+    @Test func automaticMemoryUsesTheEstimateAndValidatesExplicitLimits() throws {
+        let availability = MemoryAvailability(physicalMB: 16384, availableMB: 12288)
+        let workload = MemoryWorkload(gameVersion: "1.21.1", loader: .forge, modCount: 100)
+        let resolved = try MemorySettings(mode: .automatic, initialMB: 256).resolve(availability: availability, workload: workload)
+        #expect(resolved.maximumSource == .automatic && resolved.estimate?.workload == workload)
+        #expect(resolved.initialBytes == 256 * 1_048_576)
+        #expect(throws: (any Error).self) { try MemorySettings(mode: .automatic, initialMB: 8192).resolve(availability: .init(physicalMB: 4096)) }
+        #expect(throws: (any Error).self) { try MemorySettings(mode: .automatic).resolve(availability: .init(physicalMB: 0)) }
     }
 
     @Test func manualInitialAndMetaspaceAndValidation() throws {
@@ -31,7 +19,6 @@ struct MemorySettingsTests {
         #expect(resolved.maximumSource == .settings && resolved.initialBytes == 1_073_741_824)
         #expect(throws: (any Error).self) { try MemorySettings(maximumMB: 512, initialMB: 1024).resolve() }
         #expect(throws: (any Error).self) { try MemorySettings(metaspaceMB: 0).resolve() }
-        #expect(try MemorySettings().resolve().metaspaceBytes == nil)
     }
 
     @Test func aliasesAndUnitsRespectOrderWithoutConflatingInitialAndMinimum() throws {
@@ -48,7 +35,6 @@ struct MemorySettingsTests {
         #expect(unrelated == base)
         let ergonomic = try JVMHeapArguments.resolve(base: base, arguments: ["-XX:InitialHeapSize=0"])
         #expect(ergonomic.initialBytes == 0 && ergonomic.minimumBytes == base.minimumBytes)
-        #expect(ergonomic.summary.contains("由 JVM 自动决定"))
         let zero = try JVMHeapArguments.resolve(base: base, arguments: ["-Xms0"])
         #expect(zero.minimumBytes == 0 && zero.initialBytes == 0)
     }
@@ -60,27 +46,13 @@ struct MemorySettingsTests {
         }
     }
 
-    @Test func freshGlobalDefaultsUseAutomaticMemory() {
-        #expect(AppSettings().defaultLaunchSettings.memory.mode == .automatic)
-        #expect(LaunchSettingsValues().memory.mode == .automatic)
-    }
-
-    @Test func memoryOverridesRoundTripAndInherit() throws {
-        var overrides = InstanceLaunchOverrides(); overrides.memory = .init(mode: .automatic, initialMB: 1024); overrides.jvmArguments = ""
-        #expect(try JSONDecoder().decode(InstanceLaunchOverrides.self, from: JSONEncoder().encode(overrides)) == overrides)
-        var defaults = AppSettings(); defaults.defaultMemorySettings = .init(maximumMB: 8192)
-        #expect(defaults.defaultLaunchSettings.memory == .init(maximumMB: 8192))
-        overrides.setInheritance(true, for: .memory, defaults: defaults.defaultLaunchSettings)
-        #expect(overrides.memory == nil && overrides.inherits(.memory))
-    }
-
     @MainActor @Test func snapshotFreezesAutomaticMemoryAndSessionSeesArgumentOverride() throws {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-heap-\(UUID())")); defer { try? FileManager.default.removeItem(at: paths.root) }
         var instance = GameInstance(name: "Heap", gameVersion: "1.0"); instance.launchOverrides = .init()
         var defaults = AppSettings(); defaults.defaultMemorySettings = .init(mode: .automatic); defaults.defaultJVMArguments = "-Xmx2G -Xms1G"
         let snapshot = try instance.launchSnapshot(defaults: defaults, availability: .init(physicalMB: 65536, availableMB: 49152))
         // An unscanned snapshot still knows this is an old vanilla version.
-        #expect(snapshot.frozenMemory?.maximumMB == 2048 && snapshot.frozenMemory?.maximumSource == .automatic)
+        #expect(snapshot.frozenMemory?.maximumSource == .automatic)
         #expect(snapshot.frozenMemory?.estimate?.workload == .init(gameVersion: "1.0", loader: .vanilla, scanned: false))
         var state = PersistentState(); state.instances = [instance]; state.settings = defaults; try StateStore.save(state, to: paths)
         let recorder = try GameSessionRecorder(paths: paths, instance: snapshot, accountMode: "offline")

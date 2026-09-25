@@ -4,18 +4,6 @@ import Testing
 import ZIPFoundation
 @testable import RuriCore
 
-private final class MCBBSFileProtocol: URLProtocol, @unchecked Sendable {
-    static let body = Data("remote pack config".utf8)
-    override class func canInit(with request: URLRequest) -> Bool { true }
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
-    override func startLoading() {
-        guard let url = request.url, url.host == "mcbbs.ruri.test", url.path == "/pack/overrides/config/中文 file.txt" else { client?.urlProtocol(self, didFailWithError: URLError(.resourceUnavailable)); return }
-        client?.urlProtocol(self, didReceive: HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Length": String(Self.body.count)])!, cacheStoragePolicy: .notAllowed)
-        client?.urlProtocol(self, didLoad: Self.body); client?.urlProtocolDidFinishLoading(self)
-    }
-    override func stopLoading() {}
-}
-
 struct HMCLPackTests {
     func setup() throws -> (LauncherPaths, URL) {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)); try paths.prepare()
@@ -46,12 +34,10 @@ struct HMCLPackTests {
             try json(version, to: "minecraft/pack.json", in: source)
             try write(Data("options".utf8), to: "minecraft/options.txt", in: source)
             let transfer = InstanceTransfer(paths: paths); let preview = try await transfer.prepare(source)
-            #expect(preview.format == "HMCL"); #expect(preview.instance.gameVersion == game)
+            #expect(preview.instance.gameVersion == game)
             #expect(preview.instance.loader == loader); #expect(preview.instance.loaderVersion == loaderVersion)
-            #expect(preview.fileCount == 1); #expect(!FileManager.default.fileExists(atPath: preview.game.appendingPathComponent("pack.json").path))
-            let imported = try await transfer.install(preview, name: name) { $0 }
-            #expect(try Data(contentsOf: paths.game(imported.id).appendingPathComponent("options.txt")) == Data("options".utf8))
-            #expect(FileManager.default.fileExists(atPath: source.appendingPathComponent("minecraft/pack.json").path))
+            #expect(!FileManager.default.fileExists(atPath: preview.game.appendingPathComponent("pack.json").path))
+            #expect(try Data(contentsOf: preview.game.appendingPathComponent("options.txt")) == Data("options".utf8))
             await transfer.discard(preview)
         }
     }
@@ -82,10 +68,8 @@ struct HMCLPackTests {
         #expect(preview.instance.supportedJavaMajors == [21, 25]); #expect(preview.instance.packLibraries == instance.packLibraries)
         #expect(try ArgumentTokenizer.split(preview.instance.extraJVMArguments) == ArgumentTokenizer.split(instance.extraJVMArguments))
         #expect(preview.instance.extraGameArguments?.contains("play.example.test") == true)
-        #expect(preview.warnings.contains { $0.contains("测试作者") })
         let sourceManifest = try #require(preview.sourceMetadata)
         #expect(try JSONDecoder().decode(MCBBSManifest.self, from: sourceManifest).version == "2.3.4")
-        for file in preview.packFiles { #expect(DownloadManager.valid(try file.item(in: preview.game).destination, item: try file.item(in: preview.game))) }
         let imported = try await transfer.install(preview, name: "Imported", importJVMArguments: true) { $0 }
         #expect(try Data(contentsOf: paths.game(imported.id).appendingPathComponent("config/empty.txt")).isEmpty)
         #expect(try Data(contentsOf: paths.instance(imported.id).appendingPathComponent("source-mcbbs.packmeta")) == sourceManifest)
@@ -98,15 +82,16 @@ struct HMCLPackTests {
     }
     @Test func mcbbsRemoteCompletionVerifiesFilesBeforeInstanceCreation() async throws {
         let (paths, source) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let body = MCBBSFileProtocol.body
+        let body = Data("remote pack config".utf8)
+        let server = EndpointHTTPFixture(["mcbbs.ruri.test/pack/overrides/config/中文 file.txt": body])
+        defer { server.close() }
         let manifest: [String: Any] = ["manifestType": "minecraftModpack", "manifestVersion": 2, "name": "Remote", "addons": [["id": "game", "version": "1.21.1"]],
             "fileApi": "https://mcbbs.ruri.test/pack", "files": [["type": "addon", "path": "config/中文 file.txt", "hash": hash(body), "force": false]]]
         try json(manifest, to: "mcbbs.packmeta", in: source)
         let transfer = InstanceTransfer(paths: paths); let preview = try await transfer.prepare(source)
         #expect(preview.remoteFileCount == 1)
         await #expect(throws: (any Error).self) { try await transfer.install(preview, name: "Missing") { _ in Issue.record("Must not run installer with missing files"); throw RuriError.message("unreachable") } }
-        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [MCBBSFileProtocol.self]
-        try await transfer.completeFiles(preview, downloader: DownloadManager(configuration: config, retryDelay: .zero)) { _ in }
+        try await transfer.completeFiles(preview, downloader: DownloadManager(configuration: server.session.configuration, retryDelay: .zero)) { _ in }
         let imported = try await transfer.install(preview, name: "Complete") { $0 }
         #expect(try Data(contentsOf: paths.game(imported.id).appendingPathComponent("config/中文 file.txt")) == body)
         #expect(!FileManager.default.fileExists(atPath: source.appendingPathComponent("overrides").path))

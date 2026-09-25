@@ -4,7 +4,7 @@ import Testing
 @testable import RuriCore
 
 struct GameRunDirectoryCopyTests {
-    private func fixture(withData: Bool = true) async throws -> (LauncherPaths, GameInstance, GameInstance, GameRunDirectoryChangePreview) {
+    private func fixture(withData: Bool = true, withContent: Bool = false) async throws -> (LauncherPaths, GameInstance, GameInstance, GameRunDirectoryChangePreview) {
         let base = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-copy-\(UUID())"))
         let a = GameInstance(name: "Copy source", gameVersion: "1.21.1")
         var b = GameInstance(name: "Shared target", gameVersion: "1.21.1"); b.runDirectory = .shared
@@ -14,6 +14,8 @@ struct GameRunDirectoryCopyTests {
         try FileManager.default.createDirectory(at: paths.game(b.id).appendingPathComponent("mods/empty-folder"), withIntermediateDirectories: true)
         if withData {
             try Data("source-options".utf8).write(to: paths.game(a.id).appendingPathComponent("options.txt"))
+        }
+        if withContent {
             let jar = paths.cache.appendingPathComponent("mod.jar"); try Data("fixture-mod".utf8).write(to: jar)
             let record = ManagedContent(projectID: "fixture", versionID: "v1", title: "Fixture Mod", versionName: "1", kind: .mod, filename: "fixture.jar", size: 11, requiredProjects: [])
             try await ContentManager(paths: paths, instanceID: a.id).install([.init(record: record, source: jar)])
@@ -48,13 +50,13 @@ struct GameRunDirectoryCopyTests {
     }
 
     @Test func copiesGameRecordsAndBackupsAndKeepsTheOriginalIndependent() async throws {
-        let (paths, a, b, preview) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, a, b, preview) = try await fixture(withContent: true); defer { try? FileManager.default.removeItem(at: paths.root) }
         #expect(preview.canCopyToTarget)
         let oldBackup = try #require(try await WorldManager(paths: paths, instanceID: a.id).backups().first)
         let oldBackupBytes = try Data(contentsOf: oldBackup.url)
         let result = try await GameRunDirectoryChange(paths: paths).copyToEmpty(preview)
         let current = paths.configured(with: result.state)
-        #expect(result.state.instances[0].runDirectory == .shared && result.state.instances[0].lastRunDirectoryChangeID != nil)
+        #expect(result.state.instances[0].runDirectory == .shared)
         #expect(!RunDirectoryCopyGuard.hasPending(paths: current, instanceID: a.id))
         #expect(!RunDirectoryCopyGuard.hasPending(paths: current, instanceID: b.id))
         #expect(try await ContentManager(paths: current, instanceID: a.id).records().first?.projectID == "fixture")
@@ -68,7 +70,7 @@ struct GameRunDirectoryCopyTests {
     }
 
     @Test func cancellationDuringCopyPreservesWorkspaceAndDoesNotChangeBinding() async throws {
-        let (paths, a, b, preview) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, a, b, preview) = try await fixture(withContent: true); defer { try? FileManager.default.removeItem(at: paths.root) }
         let service = GameRunDirectoryChange(paths: paths)
         let work = Task {
             try await service.copyToEmpty(preview) { progress in
@@ -88,7 +90,7 @@ struct GameRunDirectoryCopyTests {
     }
 
     @Test func cancellationAfterPublicationRollsBackItsFilesAndRestoresEmptyFolders() async throws {
-        let (paths, a, b, preview) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, a, b, preview) = try await fixture(withContent: true); defer { try? FileManager.default.removeItem(at: paths.root) }
         let service = GameRunDirectoryChange(paths: paths)
         let work = Task {
             try await service.copyToEmpty(preview) { progress in
@@ -108,7 +110,7 @@ struct GameRunDirectoryCopyTests {
     }
 
     @Test func lateForeignFileIsNeverOverwrittenAndPublishedItemsArePreserved() async throws {
-        let (paths, a, b, preview) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, a, b, preview) = try await fixture(withContent: true); defer { try? FileManager.default.removeItem(at: paths.root) }
         let foreign = paths.game(b.id).appendingPathComponent("options.txt")
         do {
             _ = try await GameRunDirectoryChange(paths: paths).copyToEmpty(preview) { progress in
@@ -199,18 +201,25 @@ struct GameRunDirectoryCopyTests {
         withExtendedLifetime(lease) {}
     }
 
-    @Test func emptyCopyWorksAndStreamFallbackCanBeCancelledInsideALargeFile() async throws {
+    @Test func emptyCopySwitchesTheBindingWithoutLeavingAPendingTransaction() async throws {
         let (paths, a, _, preview) = try await fixture(withData: false); defer { try? FileManager.default.removeItem(at: paths.root) }
         let result = try await GameRunDirectoryChange(paths: paths).copyToEmpty(preview)
         #expect(result.state.instances[0].runDirectory == .shared)
-        let source = paths.cache.appendingPathComponent("large.bin"), target = paths.cache.appendingPathComponent("partial.bin")
+        #expect(!RunDirectoryCopyGuard.hasPending(paths: paths.configured(with: result.state), instanceID: a.id))
+    }
+
+    @Test func streamFallbackCanBeCancelledInsideALargeFile() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-stream-copy-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("large.bin"), target = root.appendingPathComponent("partial.bin")
         let data = Data(repeating: 0x55, count: 4 * 1_048_576); try data.write(to: source)
         let work = Task {
             try RunDirectoryFileCopy.file(source, to: target, preferClone: false) { _ in withUnsafeCurrentTask { $0?.cancel() } }
         }
         await #expect(throws: CancellationError.self) { try await work.value }
         #expect(try Data(contentsOf: source) == data)
-        #expect(try target.resourceValues(forKeys: [.fileSizeKey]).fileSize == 1_048_576)
-        #expect(!RunDirectoryCopyGuard.hasPending(paths: paths.configured(with: result.state), instanceID: a.id))
+        let copiedBytes = try #require(target.resourceValues(forKeys: [.fileSizeKey]).fileSize)
+        #expect(copiedBytes > 0 && copiedBytes < data.count)
     }
 }

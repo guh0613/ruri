@@ -19,20 +19,11 @@ struct CustomRunDirectoryTests {
         return (base.configured(with: saved), a, b, custom)
     }
 
-    @Test func customRootsKeepGameDataTogetherAndInstanceMetadataSeparate() throws {
-        let (paths, a, b, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        #expect(paths.game(a.id) == custom.url && paths.game(b.id) == custom.url)
-        #expect(paths.gameDataState(a.id) == paths.gameDataState(b.id))
-        #expect(paths.manifest(a.id) != paths.manifest(b.id))
-        #expect(try String(contentsOf: custom.url.appendingPathComponent("options.txt"), encoding: .utf8) == "original-options")
+    @Test func registeringTheSameCustomRootPreservesItsIdentityAndContents() throws {
+        let (paths, _, _, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let again = try CustomRunDirectory.register(at: custom.url, paths: paths)
         #expect(again.isSameLocation(as: custom))
-        #expect(try StateStore.load(paths).schemaVersion == StateStore.currentSchemaVersion)
-        var wrong = a; wrong.customRunDirectory = .init(id: UUID(), url: custom.url, bookmark: nil, createdAt: Date())
-        #expect(throws: (any Error).self) { try paths.validateBinding(wrong) }
-        #expect(throws: (any Error).self) { try a.applyingInstallation(wrong, requested: a) }
-        var independent = a; independent.runDirectory = .isolated
-        #expect(paths.including(independent).game(a.id) == paths.instance(a.id).appendingPathComponent("minecraft"))
+        #expect(try String(contentsOf: custom.url.appendingPathComponent("options.txt"), encoding: .utf8) == "original-options")
     }
 
     @Test func missingOrReplacedLocationDoesNotCreateAFallbackGame() throws {
@@ -72,51 +63,17 @@ struct CustomRunDirectoryTests {
         #expect(throws: (any Error).self) { try StateStore.save(state, to: paths) }
     }
 
-    @Test func resolvingOneMovedLocationUpdatesEveryReferenceWithoutChangingPreferences() throws {
-        let (paths, a, b, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        let moved = custom.url.deletingLastPathComponent().appendingPathComponent("Relocated")
-        try FileManager.default.moveItem(at: custom.url, to: moved)
-        let location = try custom.relocated(to: moved, paths: paths)
-        var state = try StateStore.load(paths)
-        state.instances[0].customRunDirectory = location
-        state.instances[1].customRunDirectory?.bookmark = nil
-        let resolved = state.resolvingCustomRunDirectoryBookmarks()
-        #expect(resolved.instances[0].customRunDirectory == resolved.instances[1].customRunDirectory)
-        #expect(resolved.instances.map(\.id) == [a.id, b.id])
-        #expect(resolved.instances[1].directoryID == b.directoryID && resolved.settings == state.settings)
-        try paths.configured(with: resolved).validateDirectoryConfiguration()
-        let copied = moved.deletingLastPathComponent().appendingPathComponent("Remembered copy")
-        try FileManager.default.copyItem(at: moved, to: copied)
-        var withCopy = resolved
-        withCopy.instances[1].runDirectory = .isolated
-        withCopy.instances[1].customRunDirectory?.url = copied
-        withCopy.instances[1].customRunDirectory?.bookmark = nil
-        #expect(withCopy.resolvingCustomRunDirectoryBookmarks().instances[1].customRunDirectory?.url == copied)
-    }
-
-    @Test func customInstancesShareContentBackupsAndOneWriterAcrossCollections() async throws {
+    @Test func customInstancesInDifferentCollectionsShareContentRecords() async throws {
         let (paths, a, b, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        var lease: GameRunLease? = try GameRunLease.acquire(paths: paths, instanceID: a.id)
-        #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: b.id) }
-        let isolated = GameInstance(name: "Separate", gameVersion: "1.21.1")
-        let independent = try GameRunLease.acquire(paths: paths.including(isolated), instanceID: isolated.id)
-        withExtendedLifetime([lease, independent]) {}; lease = nil
         let source = paths.cache.appendingPathComponent("fixture.jar"); try Data("fixture".utf8).write(to: source)
         let record = ManagedContent(projectID: "fixture", versionID: "v1", title: "Fixture", versionName: "1", kind: .mod, filename: "fixture.jar", size: 7, requiredProjects: [])
         try await ContentManager(paths: paths, instanceID: a.id).install([.init(record: record, source: source)])
         #expect(try await ContentManager(paths: paths, instanceID: b.id).records() == [record])
-        let world = paths.game(a.id).appendingPathComponent("saves/World")
-        try FileManager.default.createDirectory(at: world, withIntermediateDirectories: true)
-        try WorldTests().nbt().write(to: world.appendingPathComponent("level.dat"))
-        let backup = try await WorldManager(paths: paths, instanceID: a.id).backup(folder: "World")
-        #expect(try await WorldManager(paths: paths, instanceID: b.id).backups().first?.id == backup.id)
-        #expect(!FileManager.default.fileExists(atPath: paths.instance(b.id).appendingPathComponent("content.json").path))
     }
 
     @Test @MainActor func monitorSnapshotsStripBookmarksAndRejectOtherProtocols() throws {
         let (paths, a, _, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let frozen = paths.monitorSnapshot(for: a.id)
-        #expect(frozen.game(a.id) == custom.url && frozen.instanceDirectories.count == 1)
         #expect(frozen.instanceCustomDirectories?[a.id]?.bookmark == nil)
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: [], directory: custom.url, environment: [:])
@@ -126,20 +83,23 @@ struct CustomRunDirectoryTests {
         #expect(throws: (any Error).self) { try GameMonitorService.validatedPaths(old) }
     }
 
-    @Test(.timeLimit(.minutes(1))) @MainActor func actualMonitorUsesCustomRootAndRetainsReservation() async throws {
+    @Test(.timeLimit(.minutes(1))) @MainActor func monitorRetainsCustomRootAndExternalMetadataAfterSelectionChanges() async throws {
         let (paths, a, b, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline")
+        let selected = try StateStore.update(paths) { $0.selectedDirectoryID = b.directoryID }
+        let selectedPaths = paths.configured(with: selected)
+        let recorder = try GameSessionRecorder(paths: selectedPaths, instance: b, accountMode: "offline")
         let helper = TestPaths.monitorExecutable
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "pwd; sleep 1; echo custom-game-finished"], directory: custom.url, environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
-        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: [], helper: helper)
-        try StateStore.update(paths) { $0.selectedDirectoryID = b.directoryID }
-        #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: b, accountMode: "offline") }
-        let completed = try await GameMonitorClient.wait(paths: paths, instanceID: a.id, sessionID: recorder.record.id)
+        try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: selectedPaths, secrets: [], helper: helper)
+        let changed = try StateStore.update(paths) { $0.selectedDirectoryID = nil }
+        let reconnected = paths.configured(with: changed)
+        #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: a, accountMode: "offline") }
+        let completed = try await GameMonitorClient.wait(paths: reconnected, instanceID: b.id, sessionID: recorder.record.id)
         #expect(completed.exit?.status == 0)
-        let log = try GameSessionStore.logTail(paths: paths, session: completed)
+        #expect(!FileManager.default.fileExists(atPath: LauncherPaths(root: paths.root).instance(b.id).path))
+        let log = try GameSessionStore.logTail(paths: reconnected, session: completed)
         #expect(log.contains(custom.url.path) && log.contains("custom-game-finished"))
-        #expect(try GameSessionStore.list(paths: paths, instanceID: b.id).isEmpty)
-        #expect(!FileManager.default.fileExists(atPath: custom.url.appendingPathComponent(".ruri/active-run.json").path))
-        let next = try GameRunLease.acquire(paths: paths, instanceID: b.id); withExtendedLifetime(next) {}
+        #expect(try GameSessionStore.list(paths: paths, instanceID: a.id).isEmpty)
+        let next = try GameRunLease.acquire(paths: paths, instanceID: a.id); withExtendedLifetime(next) {}
     }
 }

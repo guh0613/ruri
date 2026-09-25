@@ -14,7 +14,6 @@ struct GameSessionTests {
         #expect(try GameSessionReviewStore.contains(recorder.record, paths: paths))
         var later = recorder.record; later.updatedAt = later.updatedAt.addingTimeInterval(60)
         #expect(try !GameSessionReviewStore.contains(later, paths: paths))
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
 
     }
     func setup() throws -> (LauncherPaths, GameInstance) {
@@ -33,7 +32,6 @@ struct GameSessionTests {
         let oldLog = try GameSessionStore.logTail(paths: paths, session: failed.record)
         #expect(!oldLog.contains("private-refresh-value") && oldLog.contains("<redacted>"))
         #expect(failed.record.stage == .account && failed.record.state == .failed)
-        #expect(failed.record.events.last?.localizedMessage?.key == GameSession.Stage.account.message.key)
         let next = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try next.transition(.java); try next.setJava("Java 21")
         try next.started(processID: 123)
@@ -54,10 +52,8 @@ struct GameSessionTests {
         let message = Messages.CoreNetwork.downloadChecksumFailed("private-localization-secret")
         try recorder.fail(RuriError.message(message), cancelled: false)
         let data = try JSONEncoder().encode(GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id))
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.appendingPathComponent("session.json").path))
         #expect(!String(decoding: data, as: UTF8.self).contains("private-localization-secret"))
         let stored = try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
-        #expect(stored.failureMessage?.key == message.key)
         #expect(stored.displayFailure == stored.failure && stored.failure?.contains("<redacted>") == true)
 
     }

@@ -3,7 +3,7 @@ import Testing
 @testable import RuriCore
 
 struct InstanceCopyTests {
-    private func fixture(mode: GameRunDirectory = .isolated) async throws -> (LauncherPaths, GameInstance, GameDirectory) {
+    private func fixture(mode: GameRunDirectory = .isolated) throws -> (LauncherPaths, GameInstance, GameDirectory) {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-instance-copy-\(UUID())")
         let base = LauncherPaths(root: root.appendingPathComponent("data")), target = root.appendingPathComponent("Target collection")
         try FileManager.default.createDirectory(at: target, withIntermediateDirectories: true)
@@ -29,6 +29,10 @@ struct InstanceCopyTests {
         try write("options", "options.txt", at: paths.game(original.id))
         try write("config", "config/custom.json", at: paths.game(original.id))
         try write("old logs", "logs/latest.log", at: paths.game(original.id))
+        return (paths, original, collection)
+    }
+
+    private func addManagedContentAndWorld(to original: GameInstance, paths: LauncherPaths) async throws {
         let source = paths.cache.appendingPathComponent("mod.jar"); try Data("mod".utf8).write(to: source)
         let mod = ManagedContent(projectID: "fixture", versionID: "one", title: "Fixture", versionName: "1", kind: .mod, filename: "mod.jar", size: 3, requiredProjects: [])
         try await ContentManager(paths: paths, instanceID: original.id).install([.init(record: mod, source: source)])
@@ -36,17 +40,16 @@ struct InstanceCopyTests {
         try FileManager.default.createDirectory(at: world, withIntermediateDirectories: true)
         try WorldTests().nbt().write(to: world.appendingPathComponent("level.dat"))
         _ = try await WorldManager(paths: paths, instanceID: original.id).backup(folder: "World")
-        return (paths, original, collection)
     }
 
     @Test func duplicatesInstallationAndSettingsWithIndependentDataAndFreshHistory() async throws {
-        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        try await addManagedContentAndWorld(to: source, paths: paths)
         let pack = InstalledModpack(format: "Modrinth", name: "Fixture pack", version: "1", origin: .init(provider: .modrinth, projectID: "project", versionID: "version"), settings: source, files: [])
         try ModpackRegistry.save(pack, paths: paths, instanceID: source.id)
         let service = InstanceCopier(paths: paths)
         let preview = try await service.preview(instanceID: source.id, name: "  Independent copy  ", directoryID: target.id, options: .init(includeBackups: true))
         #expect(preview.copy.id != source.id && preview.copy.name == "Independent copy" && preview.copy.directoryID == target.id)
-        #expect(preview.bytes > 0 && !FileManager.default.fileExists(atPath: preview.destination.path))
         try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
         let result = try await service.copy(preview), copy = try #require(result.state.instances.first { $0.id == preview.copy.id }), current = paths.configured(with: result.state)
         #expect(copy.installed && copy.runDirectory == .isolated && copy.customRunDirectory == nil)
@@ -64,13 +67,13 @@ struct InstanceCopyTests {
         #expect(copiedPack.settings.id == copy.id && copiedPack.settings.directoryID == target.id && copiedPack.origin == pack.origin)
         try Data("changed copy".utf8).write(to: current.game(copy.id).appendingPathComponent("mods/mod.jar"))
         #expect(try String(contentsOf: paths.game(source.id).appendingPathComponent("mods/mod.jar"), encoding: .utf8) == "mod")
-        #expect(!InstanceCopyGuard.hasPending(paths: current, instanceID: source.id) && !InstanceCopyGuard.hasPending(paths: current, instanceID: copy.id))
         #expect(result.preservedCopy == nil && result.warning == nil)
     }
 
     @Test func sharedAndCustomSourcesBecomeIndependentAndWorldOptionsAreRespected() async throws {
         for mode in [GameRunDirectory.shared, .custom] {
-            let (paths, source, _) = try await fixture(mode: mode); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let (paths, source, _) = try fixture(mode: mode); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            try await addManagedContentAndWorld(to: source, paths: paths)
             let service = InstanceCopier(paths: paths)
             let preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: GameDirectory.defaultID, options: .init(includeWorlds: false))
             let result = try await service.copy(preview), current = paths.configured(with: result.state)
@@ -84,7 +87,7 @@ struct InstanceCopyTests {
     }
 
     @Test func rejectsActiveSourcesChangedPreviewsAndMissingInstalledManifests() async throws {
-        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let service = InstanceCopier(paths: paths)
         var lease: GameRunLease? = try GameRunLease.acquire(paths: paths, instanceID: source.id)
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id) }
@@ -102,7 +105,7 @@ struct InstanceCopyTests {
 
     @Test func cancellationAndForeignDestinationPreserveSourceAndDoNotRegisterPartialInstances() async throws {
         for foreign in [false, true] {
-            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             let operation = Task {
                 try await service.copy(preview) { progress in
@@ -128,7 +131,7 @@ struct InstanceCopyTests {
 
     @Test func recoveryDistinguishesAnUnpublishedCopyFromTheAtomicRegistrationReceipt() async throws {
         for committed in [false, true] {
-            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
             journal.version = 1 // Recovery remains compatible with pre-verification journals.
@@ -141,7 +144,12 @@ struct InstanceCopyTests {
             if committed { try StateStore.update(paths) { $0.instances.append(preview.copy) } }
             #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: source.id) }
             await #expect(throws: (any Error).self) { try await ContentManager(paths: paths, instanceID: source.id).records() }
-            #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths.including(preview.copy), instanceID: preview.copy.id) }
+            let targetPaths = paths.including(preview.copy)
+            let untouchedTarget = try FileTreeManifest.capture(in: preview.destination)
+            #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: targetPaths, instanceID: preview.copy.id) }
+            await #expect(throws: (any Error).self) { try await ContentManager(paths: targetPaths, instanceID: preview.copy.id).records() }
+            await #expect(throws: (any Error).self) { try await WorldManager(paths: targetPaths, instanceID: preview.copy.id).worlds() }
+            try untouchedTarget.requireMatch(in: preview.destination)
             #expect(throws: (any Error).self) { try GameDirectoryStore.relocate(target.id, to: target.url, paths: paths) }
             #expect(try await service.pending(instanceID: committed ? preview.copy.id : source.id)?.committed == committed)
             if committed {
@@ -163,7 +171,7 @@ struct InstanceCopyTests {
 
     @Test func recoveryRetainsCompleteStagingWhenPortablePublicationStopsAfterClaimingItsRoot() async throws {
         enum Interruption: Error { case simulated }
-        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
         var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
         journal.version = 1
@@ -185,10 +193,9 @@ struct InstanceCopyTests {
     }
 
     @Test func oversizedUnicodeNamesCannotCreateAnUnreadableCopyReservation() async throws {
-        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+        let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         // Grapheme count alone does not bound the encoded marker size.
         let name = "e" + String(repeating: "\u{0301}", count: 5000)
-        #expect(name.count == 1)
         try StateStore.update(paths) { $0.instances[0].name = name }
         await #expect(throws: (any Error).self) { try await InstanceCopier(paths: paths).preview(instanceID: source.id, name: "Copy", directoryID: target.id) }
         #expect(!InstanceCopyGuard.hasPending(paths: paths, instanceID: source.id))
@@ -197,7 +204,7 @@ struct InstanceCopyTests {
     }
     @Test func equalSizeSourceEditsCannotBypassPreviewOrPublicationChecks() async throws {
         for afterPublication in [false, true] {
-            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             let file = paths.game(source.id).appendingPathComponent("options.txt")
             let date = try #require(try file.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate)
@@ -222,7 +229,7 @@ struct InstanceCopyTests {
 
     @Test func committedCopiesKeepRecoveryDataUntilContentAndReceiptAreRestored() async throws {
         for damage in ["content", "record", "missing-record", "nonempty-lock"] {
-            let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
+            let (paths, source, target) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
             let service = InstanceCopier(paths: paths), preview = try await service.preview(instanceID: source.id, name: "Copy", directoryID: target.id)
             let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id)
             let record = root.appendingPathComponent("verification.json"), backup = paths.cache.appendingPathComponent("receipt-backup.json")
@@ -253,22 +260,4 @@ struct InstanceCopyTests {
         }
     }
 
-    @Test func newPublicationJournalsRequireContentReceiptsAndPendingTargetsAreNotPrepared() async throws {
-        let (paths, source, target) = try await fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        let preview = try await InstanceCopier(paths: paths).preview(instanceID: source.id, name: "Copy", directoryID: target.id)
-        var journal = InstanceCopyJournal(id: preview.id, original: source, copy: preview.copy, targetCollection: target, createdAt: Date(), phase: .publishing)
-        #expect(throws: (any Error).self) { try journal.validate() }
-        journal.phase = .copying
-        let root = try InstanceCopyJournal.root(paths: paths, sourceID: source.id)
-        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        try journal.save(paths: paths)
-        try FileManager.default.createDirectory(at: preview.destination, withIntermediateDirectories: true)
-        try InstanceCopyGuard.mark(journal, at: preview.destination)
-        let before = try FileTreeManifest.capture(in: preview.destination)
-        #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths.including(preview.copy), instanceID: preview.copy.id) }
-        await #expect(throws: (any Error).self) { try await ContentManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).records() }
-        await #expect(throws: (any Error).self) { try await WorldManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).worlds() }
-        await #expect(throws: (any Error).self) { try await WorldManager(paths: paths.including(preview.copy), instanceID: preview.copy.id).backups() }
-        try before.requireMatch(in: preview.destination)
-    }
 }

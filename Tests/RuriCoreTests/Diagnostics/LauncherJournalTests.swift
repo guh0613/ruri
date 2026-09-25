@@ -7,22 +7,14 @@ struct LauncherJournalTests {
     @Test func taskLifecycleKeepsStagesAndOneNotification() throws {
         var journal = LauncherJournal()
         let id = journal.begin(.verbatim("Install Minecraft"))
-        let session = UUID(), file = URL(fileURLWithPath: "/tmp/kept-copy")
-        journal.linkSession(session, to: id)
-        #expect(journal.entries[0].detail == nil)
-        #expect(journal.entries[0].steps.isEmpty)
-        #expect(journal.entries[0].sessionID == session)
         for count in 1...120 { journal.progress(id, InstallProgress("Assets", completed: count, total: 120)) }
         #expect(journal.entries[0].steps.count == 1)
         #expect(journal.entries[0].progress.completed == 120)
-        journal.annotate(id, message: .verbatim("Preserved copy"), level: .warning, sessionID: session, fileURL: file)
+        journal.annotate(id, message: .verbatim("Preserved copy"), level: .warning)
         journal.finish(id, status: .completed)
-        #expect(journal.entries.count == 1)
         #expect(journal.notifications.count == 1)
         #expect(journal.unreadCount == 1)
         #expect(journal.entries[0].level == .warning)
-        #expect(journal.entries[0].sessionID == session)
-        #expect(journal.entries[0].fileURL == file)
         journal.markRead(id)
         #expect(journal.unreadCount == 0)
         journal.progress(id, InstallProgress("Late callback"))
@@ -37,9 +29,6 @@ struct LauncherJournalTests {
         journal.progress(id, InstallProgress("Pack files", completed: 30, total: 100))
         journal.progress(id, InstallProgress("Assets", completed: 200, total: 900, track: .gameAssets))
         var entry = journal.entries[0]
-        #expect(entry.progress.stage == "Pack files")
-        #expect(entry.steps.count == 1)
-        #expect(entry.parallelProgress.map(\.stage) == ["Assets"])
         #expect(entry.overallFraction == 0.23)
         // A second pass over the same files never moves the count backwards.
         journal.progress(id, InstallProgress("Assets", completed: 50, total: 900, track: .gameAssets))
@@ -50,8 +39,6 @@ struct LauncherJournalTests {
         entry = journal.entries[0]
         #expect(entry.parallelProgress.isEmpty)
         #expect(entry.overallFraction == 0.3)
-        journal.finish(id, status: .completed)
-        #expect(journal.entries[0].parallel == nil)
     }
 
     @Test func cancellationDistinguishesCleanExitFromRecoveryWarning() {

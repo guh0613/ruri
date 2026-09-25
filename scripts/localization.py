@@ -14,7 +14,7 @@ import plistlib
 import re
 import sys
 sys.dont_write_bytecode = True
-from localization_lint import check as check_source_literals
+from lib.localization import check_source_literals, check_bundle
 
 ROOT = Path(__file__).resolve().parent.parent
 RESOURCES = ROOT / 'Sources/RuriLocalization/Resources'
@@ -166,9 +166,17 @@ def run(check):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check', action='store_true')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--check', action='store_true')
+    mode.add_argument('--bundle', type=Path, help='Verify resources in a built app after relocation')
+    parser.add_argument('--cli', type=Path, help='Also verify a standalone CLI with --bundle')
     options = parser.parse_args()
+    if options.cli and not options.bundle:
+        parser.error('--cli requires --bundle')
     try:
-        run(options.check)
+        if options.bundle:
+            check_bundle(options.bundle.resolve(), options.cli.resolve() if options.cli else None)
+        else:
+            run(options.check)
     except (ValueError, KeyError, OSError) as error:
         sys.exit(str(error))

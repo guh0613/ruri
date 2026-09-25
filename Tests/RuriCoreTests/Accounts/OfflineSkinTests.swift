@@ -5,10 +5,9 @@ import Security
 
 struct OfflineSkinTests {
     func fixture() throws -> (LauncherPaths, OfflineSkinLaunch) {
-        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("offline-skin-" + UUID().uuidString))
-        try paths.prepare()
+        let paths = try AccountTestFixtures.paths()
         let jar = paths.root.appendingPathComponent("injector.jar"); try Data().write(to: jar)
-        let image = try PlayerTextureImage(data: AccountAppearanceTests.png())
+        let image = try PlayerTextureImage(data: AccountTestFixtures.png())
         return (paths, try OfflineSkinLaunch(account: Account(username: "OfflineSkin"), skin: SavedPlayerSkin(name: "Skin", image: image, model: .slim), injector: jar))
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func loopbackServiceReturnsSignedProfileAndExactPixelsAndStops() async throws {
@@ -20,9 +19,7 @@ struct OfflineSkinTests {
         let session = URLSession(configuration: .ephemeral); defer { session.invalidateAndCancel() }
         let (metadata, _) = try await session.data(from: root)
         let json = try #require(try JSONSerialization.jsonObject(with: metadata) as? [String: Any])
-        #expect(json["skinDomains"] as? [String] == ["127.0.0.1"])
-        let (profileData, response) = try await session.data(from: root.appendingPathComponent("sessionserver/session/minecraft/profile/" + launch.account.uuid))
-        #expect((response as? HTTPURLResponse)?.statusCode == 200)
+        let (profileData, _) = try await session.data(from: root.appendingPathComponent("sessionserver/session/minecraft/profile/" + launch.account.uuid))
         let profile = try #require(try JSONSerialization.jsonObject(with: profileData) as? [String: Any])
         #expect(profile["id"] as? String == launch.account.uuid)
         let property = try #require((profile["properties"] as? [[String: String]])?.first)
@@ -71,12 +68,10 @@ struct OfflineSkinTests {
         let (data, _) = try await session.data(for: request)
         #expect(try JSONDecoder().decode([[String: String]].self, from: data) == [["id": input.account.uuid, "name": input.account.username]])
         #expect(throws: (any Error).self) { try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "Another"), paths: paths, offlineSkin: input) }
-        let legacy = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: input.account, paths: paths)
-        #expect(legacy.offlineSkin == nil && !legacy.arguments.contains(where: { $0.hasPrefix("-javaagent:") }))
     }
     @Test func hdSkinIsNormalizedWithoutChangingTheSavedOriginal() throws {
         let (paths, fixture) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let image = try PlayerTextureImage(data: AccountAppearanceTests.png(width: 256, height: 256))
+        let image = try PlayerTextureImage(data: AccountTestFixtures.png(width: 256, height: 256))
         let original = try SavedPlayerSkin(name: "HD", image: image, model: .slim)
         let launch = try OfflineSkinLaunch(account: fixture.account, skin: original, injector: fixture.injector)
         #expect(try launch.skin?.image.width == 64 && launch.skin?.image.height == 64)
@@ -87,7 +82,7 @@ struct OfflineSkinTests {
 extension OfflineSkinTests {
     @Test(.timeLimit(.minutes(1))) @MainActor func capeOnlyAppearanceWorksAndCompactCapeIsPadded() async throws {
         let (paths, fixture) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let cape = try PlayerTextureImage(data: AccountAppearanceTests.png(width: 22, height: 17))
+        let cape = try PlayerTextureImage(data: AccountTestFixtures.png(width: 22, height: 17))
         let launch = try OfflineSkinLaunch(account: fixture.account, skin: nil, cape: cape, injector: fixture.injector)
         let normalized = try PlayerTextureImage(data: #require(launch.capePNG))
         #expect(normalized.width == 64 && normalized.height == 32 && launch.skin == nil)

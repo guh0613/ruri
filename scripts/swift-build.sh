@@ -5,15 +5,9 @@
 # DEVELOPER_DIR selects Xcode; RURI_BUILD_DIR optionally selects the build folder.
 set -euo pipefail
 cd "${0:A:h:h}"
+source scripts/lib/build.sh
 python3 scripts/localization.py --check >&2
-if [[ -z "${DEVELOPER_DIR:-}" ]]; then
-  for xcode in /Applications/Xcode.app /Applications/Xcode-beta.app; do
-    if [[ -d "$xcode/Contents/Developer" ]]; then
-      export DEVELOPER_DIR="$xcode/Contents/Developer"
-      break
-    fi
-  done
-fi
+select_xcode
 
 swift_command=build
 if [[ "${1:-}" == test ]]; then
@@ -55,7 +49,7 @@ fi
 if [[ "$swift_command" == test ]]; then
   host_app="$(pwd)/${RURI_BUILD_DIR:-.build}/game-host/RuriGame.app"
   if [[ "${RURI_BUILD_DIR:-}" == /* ]]; then host_app="$RURI_BUILD_DIR/game-host/RuriGame.app"; fi
-  zsh scripts/build-game-host.sh "$host_app"
+  build_game_host "$host_app"
   export RURI_TEST_GAME_HOST="$host_app/Contents/MacOS/ruri-game"
 fi
 exec xcrun swift "$swift_command" "${build_args[@]}" "$@"

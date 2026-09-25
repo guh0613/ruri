@@ -11,7 +11,6 @@ struct GameNormalQuitTests {
         #expect(signal.requiresAttention && !signal.stoppedByLauncher)
         let success = GameExit(status: 0, reason: .exit, processID: 123, startedAt: now, endedAt: now, stopRequested: false, normalQuitRequested: true)
         #expect(success.succeeded && !success.stopRequested && !success.stoppedByLauncher)
-        #expect(success.explanation.contains("正常退出请求"))
     }
     @Test @MainActor func normalQuitOutcomeIsIndependentOfTheFinalExit() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
@@ -24,7 +23,6 @@ struct GameNormalQuitTests {
         try recorder.fail(RuriError.message("later error"), cancelled: false)
         #expect(recorder.record.state == .failed && recorder.record.normalQuitAttempt?.requestID == id)
         #expect(recorder.record.normalQuitAttempt?.accepted == true)
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.path))
     }
     @MainActor private func waitFor(_ condition: () throws -> Bool) async throws {
         let deadline = Date().addingTimeInterval(10)
@@ -48,8 +46,7 @@ struct GameNormalQuitTests {
         try await Task.sleep(for: .milliseconds(650))
         let stillRunning = try load()
         #expect(stillRunning.gameIdentity?.isAlive == true && stillRunning.monitorIdentity?.isAlive == true)
-        #expect(stillRunning.events.filter { $0.message.contains("没有成功发送正常退出请求") }.count == 1)
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.appendingPathComponent("stop-request.json").path))
+        #expect(stillRunning.events == pending.events)
         try GameMonitorClient.requestStop(paths: paths, record: stillRunning)
         let finished = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: recorder.record.id)
         #expect(finished.exit?.stopRequested == true && finished.exit?.normalQuitRequested != true)

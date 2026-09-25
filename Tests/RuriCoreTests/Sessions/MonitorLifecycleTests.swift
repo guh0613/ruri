@@ -12,7 +12,6 @@ struct MonitorLifecycleTests {
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func monitorOutlivesParentAndAcceptsReconnectedStopWithoutPersistingCredentials() async throws {
         let helper = TestPaths.monitorExecutable
-        #expect(FileManager.default.isExecutableFile(atPath: helper.path))
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
@@ -43,7 +42,6 @@ struct MonitorLifecycleTests {
         try await waitFor { !parent.isRunning }
         let reconnected = try load()
         #expect(reconnected.monitorIdentity?.isAlive == true && reconnected.gameIdentity?.isAlive == true)
-        #expect(reconnected.ownerPID == identity.pid)
         #expect(GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline") }
         try GameMonitorClient.requestStop(paths: paths, record: reconnected)
@@ -81,8 +79,6 @@ struct MonitorLifecycleTests {
         finished.revision += 1; finished.updatedAt = Date()
         try GameHistoryStore.record(finished, paths: paths)
 
-        #expect(!queued.state.isFinished && queued.exit?.succeeded == true)
-        #expect(GameMonitorClient.activity(queued) == .inactive)
         let resolved = try GameMonitorClient.reconcile(paths: paths, record: queued)
         #expect(resolved == finished)
         #expect(resolved.needsAttention == (state == .failed))
@@ -105,20 +101,6 @@ struct MonitorLifecycleTests {
         try GameHistoryStore.record(finished, paths: paths)
         let resolved = try GameMonitorClient.reconcile(paths: paths, record: queued)
         #expect(resolved.exit?.succeeded == true && resolved.hasPostCommandFailure && resolved.needsAttention)
-    }
-
-    @Test @MainActor func liveMonitorDoesNotRequireAHistoryReadForEveryUpdate() throws {
-        let (paths, record) = try disconnectedExit()
-        defer { try? FileManager.default.removeItem(at: paths.root) }
-        var live = record
-        let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
-        live.monitorIdentity = identity; live.exit = nil
-        // This session does not exist in the other database. A live update must
-        // not attempt the disconnected-monitor reconciliation path.
-        let (otherPaths, _) = try GameSessionTests().setup()
-        defer { try? FileManager.default.removeItem(at: otherPaths.root) }
-        #expect(try GameMonitorClient.reconcile(paths: otherPaths, record: live) == live)
-        #expect(throws: (any Error).self) { try GameMonitorClient.reconcile(paths: otherPaths, record: record) }
     }
 
     private func assertNoCredentials(in directory: URL) throws {

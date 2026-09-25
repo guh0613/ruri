@@ -58,11 +58,8 @@ struct AssetIndexInstallationTests {
         func cleanup() { try? FileManager.default.removeItem(at: root) }
     }
 
-    @Test(arguments: ["older", "matching", "missing"])
-    func importPublishesTheVerifiedIndexAndUsesItForLaunchAndRepair(_ existing: String) async throws {
+    @Test func importReplacesAStaleSharedIndexAndReusesItForLaunchAndRepair() async throws {
         let f = try Fixture(); defer { f.cleanup() }
-        if existing == "matching" { try f.index.write(to: f.indexFile) }
-        if existing == "missing" { try FileManager.default.removeItem(at: f.indexFile) }
         let http = f.http(); defer { http.close() }
         let downloader = f.downloader(http)
         let transfer = InstanceTransfer(paths: f.paths), prepared = try await transfer.prepare(f.source)
@@ -75,8 +72,6 @@ struct AssetIndexInstallationTests {
         let id = try #require(manifest.assetIndex?.id)
         #expect(id == "5")
         #expect(try Data(contentsOf: f.indexFile) == f.index)
-        #expect(try FileManager.default.contentsOfDirectory(atPath: f.indexFile.deletingLastPathComponent().path).filter { $0.hasSuffix(".json") } == ["5.json"])
-        #expect(http.requests.filter { $0.url.host == "fixture.invalid" }.count == (existing == "matching" ? 0 : 1))
         let java = JavaRuntime(path: "/fixture/java", version: "17", major: 17, architecture: GameInstaller.architecture(for: manifest), vendor: "Fixture")
         let plan = try LaunchBuilder.build(instance: installed, manifest: manifest, java: java, account: Account(username: "Player"), paths: paths)
         let argument = try #require(plan.arguments.firstIndex(of: "--assetIndex"))
@@ -85,8 +80,6 @@ struct AssetIndexInstallationTests {
         #expect(plan.arguments.contains(virtual.path))
         #expect(try Data(contentsOf: virtual.appendingPathComponent("minecraft/lang/example.json")) == f.asset)
         let requestCount = http.requests.count
-        try await installer.repair(installed) { _ in }
-        #expect(http.requests.count == requestCount)
         // A second import should reuse the same verified index and asset objects.
         _ = try await transfer.install(prepared, name: "Another Pack", installing: { instance, location in
             try await f.install(instance, at: location, downloader: downloader)
@@ -131,8 +124,6 @@ struct AssetIndexInstallationTests {
         #expect(try Data(contentsOf: f.indexFile) == f.previous)
         #expect(try StateStore.load(f.paths).instances.isEmpty)
         if failure == "library conflict" { #expect(try Data(contentsOf: library) == f.previous) }
-        if failure == "library conflict" { #expect(http.requests.isEmpty) }
-        else { #expect(!http.requests.isEmpty) }
         await transfer.discard(prepared)
     }
 

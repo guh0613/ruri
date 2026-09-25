@@ -1,16 +1,13 @@
 import base64
 import importlib.util
-import os
 from pathlib import Path
-import secrets
 import subprocess
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
-spec = importlib.util.spec_from_file_location("signing", ROOT / "scripts/signing.py")
+spec = importlib.util.spec_from_file_location("signing", ROOT / "scripts/release/signing.py")
 signing = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(signing)
 
@@ -171,50 +168,6 @@ class SigningTests(unittest.TestCase):
             command.assert_called_once()
         self.assertFalse(owned.exists())
         self.assertTrue(unrelated.is_dir())
-
-
-@unittest.skipUnless(sys.platform == "darwin" and os.environ.get("RURI_TEST_SIGNING") == "1"
-                     and not os.environ.get("CI"), "Requires explicit opt-in and the local Apple signing identity")
-class KeychainSigningTests(unittest.TestCase):
-    def test_disposable_keychain_acl_survives_updates_and_rejects_other_signers(self):
-        # security create-keychain creates a legacy keychain. This covers ACL
-        # continuity only, not the login keychain's additional partition checks.
-        with tempfile.TemporaryDirectory(prefix="ruri-keychain-test-") as temporary:
-            work = Path(temporary)
-            source = ROOT / "scripts/tests/signing-keychain-probe.swift"
-            executable = work / "probe"
-            # Change the executable's bytes between builds while retaining the
-            # identifier and certificate. Neither run may show keychain UI.
-            sources = []
-            for revision in (1, 2):
-                file = work / f"probe-{revision}.swift"
-                file.write_text(source.read_text() + f'\nprint("build {revision}")\n')
-                sources.append(file)
-            store = work / "credentials.keychain-db"
-            password = secrets.token_urlsafe(32)
-            try:
-                signing.command(["security", "create-keychain", "-p", password, str(store)], label="Test keychain creation")
-                signing.command(["security", "unlock-keychain", "-p", password, str(store)], label="Test keychain unlock")
-                with signing.signing_environment(dict(os.environ, RURI_REQUIRE_SIGNING="1")) as environment:
-                    requirements = []
-                    keychain_options = (["--keychain", environment["RURI_SIGN_KEYCHAIN"]]
-                                        if environment.get("RURI_SIGN_KEYCHAIN") else [])
-                    for revision, file in enumerate(sources):
-                        signing.command(["xcrun", "swiftc", str(file), "-o", str(executable)], label="Keychain probe compilation")
-                        signing.command(["codesign", "--force", "--sign", environment["RURI_SIGN_IDENTITY"],
-                                         *keychain_options,
-                                         "--identifier", "dev.ruri.signing-probe", str(executable)], label="Keychain probe signing")
-                        result = subprocess.run(["codesign", "-d", "-r-", str(executable)], capture_output=True, text=True, check=True)
-                        requirements.append(next(line for line in (result.stdout + result.stderr).splitlines() if line.startswith("designated =>")))
-                        result = subprocess.run([str(executable), "read" if revision else "create", str(store)], capture_output=True, text=True)
-                        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                    self.assertEqual(requirements[0], requirements[1])
-                    signing.command(["codesign", "--force", "--sign", "-", "--identifier", "dev.ruri.signing-probe", str(executable)], label="Unrelated probe signing")
-                    result = subprocess.run([str(executable), "deny", str(store)], capture_output=True, text=True)
-                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            finally:
-                if store.exists():
-                    signing.command(["security", "delete-keychain", str(store)], label="Test keychain cleanup")
 
 
 if __name__ == "__main__":

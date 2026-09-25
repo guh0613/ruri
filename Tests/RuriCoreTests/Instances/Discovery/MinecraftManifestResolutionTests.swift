@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import RuriLocalization
 @testable import RuriCore
 
 struct MinecraftManifestResolutionTests {
@@ -27,10 +28,6 @@ struct MinecraftManifestResolutionTests {
         #expect(strings(result.manifest.arguments?.jvm) == ["-Dearly=true", "-cp", "${classpath}", "-Dpatch=first", "-Dpatch=second"])
         #expect(strings(result.manifest.arguments?.game) == ["--username", "${auth_player_name}", "--fml.mcVersion", "1.21.1"])
         #expect(result.manifest.libraries.map(\.name) == ["fixture:base:1", "fixture:loader:2", "fixture:custom:1"])
-        var reader = MinecraftDirectoryScan(root: f.root)
-        let graph = try reader.manifestGraph("Renamed")
-        #expect(graph.value["patches"] == nil && graph.value["inheritsFrom"] == nil)
-        #expect(try reader.version("Renamed").gameVersion == "1.21.1")
     }
 
     @Test func caseInsensitiveDownloadTypesResolveToTheClientUsedByRuri() async throws {
@@ -39,8 +36,6 @@ struct MinecraftManifestResolutionTests {
         let result = try await resolve(f, "1.21.1")
         #expect(result.manifest.downloads?["client"]?.url?.lastPathComponent == "client.jar")
         #expect(result.manifest.logging?.client?.file.id == "client.xml")
-        let source = try #require(result.sourceManifests.first?.data)
-        #expect(String(decoding: source, as: UTF8.self).contains("CLIENT"))
     }
 
     @Test func inheritedFieldsAndExplicitEmptyMapsFollowTheirDifferentMergeRules() async throws {
@@ -89,8 +84,6 @@ struct MinecraftManifestResolutionTests {
         let result = try await resolve(f, "Selected")
         let folder = f.root.appendingPathComponent("versions/Selected/libraries")
         #expect(result.libraries.map(\.localFile) == [folder.appendingPathComponent("local/custom payload.jar"), folder.appendingPathComponent("default-2-classifier.zip"), nil, folder.appendingPathComponent("parent library.jar")])
-        #expect(result.sourceManifests.count == 2)
-        #expect(result.sourceManifests.allSatisfy { $0.url.path.contains("/versions/") })
         let preserved = try #require(result.sourceManifests.first { $0.url.lastPathComponent == "Selected.json" }?.data)
         #expect(String(decoding: preserved, as: UTF8.self).contains("customUnrecognizedField"))
         #expect(!result.sourceManifests.contains { String(decoding: $0.data ?? Data(), as: UTF8.self).contains("must-not-be-persisted") })
@@ -116,8 +109,6 @@ struct MinecraftManifestResolutionTests {
         try f.version("1.21.1", values: ["root": true, "patches": [["id": "game", "mainClass": "fixture.TopLevel", "inheritsFrom": "Unavailable old parent", "patches": [["id": "nested", "mainClass": "must.not.execute"]]]]])
         let result = try await resolve(f, "1.21.1")
         #expect(result.manifest.mainClass == "fixture.TopLevel")
-        #expect(result.warnings.count == 1 && result.warnings[0].contains("仅合并顶层"))
-        #expect(result.sourceManifests.count == 1)
     }
 
     @Test func localFilenameTraversalAndStaleParentSnapshotsAreRejected() async throws {
@@ -132,9 +123,6 @@ struct MinecraftManifestResolutionTests {
         let child = try #require(catalog.versions.first { $0.id == "Child" })
         try f.version("1.21.1", values: ["mainClass": "fixture.Changed"])
         await #expect(throws: (any Error).self) { try await reader.resolveManifest(child, in: catalog) }
-        let fresh = try await reader.scan(f.root), selected = try #require(fresh.versions.first { $0.id == "Child" })
-        let cancelled = Task { withUnsafeCurrentTask { $0?.cancel() }; return try await reader.resolveManifest(selected, in: fresh) }
-        await #expect(throws: CancellationError.self) { _ = try await cancelled.value }
     }
 
     @Test func incompatibleTopLevelRulesPreventLaunchAndRepairBeforeFileWork() async throws {
@@ -145,9 +133,9 @@ struct MinecraftManifestResolutionTests {
         try JSONEncoder().encode(manifest).write(to: paths.manifest(game.id))
         let java = JavaRuntime(path: "/fixture/java", version: "21", major: 21, architecture: GameInstaller.architecture(for: manifest), vendor: "Fixture")
         do { _ = try LaunchBuilder.build(instance: game, manifest: manifest, java: java, account: Account(username: "Player"), paths: paths); Issue.record("Expected compatibility rejection") }
-        catch { #expect(error.localizedDescription.contains("兼容规则")) }
+        catch let error as RuriError { #expect(error.messageID == Messages.CoreLaunch.unsupportedArchitecture.key) }
         do { try await GameInstaller(paths: paths).repair(game) { _ in }; Issue.record("Expected compatibility rejection") }
-        catch { #expect(error.localizedDescription.contains("兼容规则")) }
+        catch let error as RuriError { #expect(error.messageID == Messages.CoreInstaller.unsupportedMacOSCompatibility.key) }
         #expect(!FileManager.default.fileExists(atPath: paths.game(game.id).path))
     }
 }

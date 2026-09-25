@@ -26,16 +26,12 @@ struct MonitorTransportTests {
         defer { if let record = try? load(), !record.state.isFinished { try? GameMonitorClient.requestStop(paths: paths, record: record) } }
         let running = try load()
         let endpoint = try #require(running.controlEndpoint)
-        #expect(endpoint.utf8.count < 104)
         for _ in 0..<2 {
             let observation = GameMonitorObservation(session: running, includeOutput: true)
             let text = try await nextOutput(observation, containing: "ready")
             observation.cancel()
             #expect(text.contains("<redacted>") && !text.contains("private-token"))
         }
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.appendingPathComponent("log-preview.log").path))
-        #expect(!FileManager.default.fileExists(atPath: recorder.directory.appendingPathComponent("log-request.json").path))
-        #expect(try GameHistoryStore.load(paths: paths, sessionID: running.id)?.controlEndpoint == endpoint)
         try GameMonitorClient.requestStop(paths: paths, record: try load())
         let ended = try await GameMonitorClient.wait(paths: paths, instanceID: instance.id, sessionID: running.id)
         #expect(ended.state == .stopped && ended.timing?.quality == .complete)

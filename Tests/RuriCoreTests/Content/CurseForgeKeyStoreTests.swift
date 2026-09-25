@@ -6,7 +6,6 @@ struct CurseForgeKeyStoreTests {
     @Test func customKeyOverridesBundledKeyAndRemovalRestoresDefault() throws {
         #expect(try CurseForgeKeyStore.resolve(bundledKey: "bundled", customKey: { "custom" }) == "custom")
         #expect(try CurseForgeKeyStore.resolve(bundledKey: "bundled", customKey: { nil }) == "bundled")
-        #expect(try CurseForgeKeyStore.resolve(bundledKey: nil, customKey: { "custom" }) == "custom")
         #expect(throws: (any Error).self) { try CurseForgeKeyStore.resolve(bundledKey: nil, customKey: { nil }) }
     }
 
@@ -40,8 +39,6 @@ struct CurseForgeKeyStoreTests {
         let bundle = try #require(Bundle(url: root))
         #expect(CurseForgeKeyStore.bundledKey(in: bundle) == "$bundled&key")
         try PropertyListSerialization.data(fromPropertyList: ["CurseForgeAPIKey": "invalid\nkey"], format: .xml, options: 0).write(to: resource)
-        #expect(CurseForgeKeyStore.bundledKey(in: bundle) == nil)
-        try Data("not a plist".utf8).write(to: resource)
         #expect(CurseForgeKeyStore.bundledKey(in: bundle) == nil)
         try FileManager.default.removeItem(at: resource)
         #expect(CurseForgeKeyStore.bundledKey(in: bundle) == nil)

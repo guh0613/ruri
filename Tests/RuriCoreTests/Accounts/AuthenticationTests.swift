@@ -4,20 +4,8 @@ import Testing
 @testable import RuriCore
 
 struct AuthenticationTests {
-    @Test func distributionDefaultsPreserveAccountConfigurationOverrides() throws {
-        let bundledID = UUID().uuidString, customID = UUID().uuidString
-        let configuration = BuildConfiguration(info: ["RuriMicrosoftClientID": bundledID, "RuriVersion": "0.2.0-beta.1", "CFBundleShortVersionString": "0.2.0"])
-        let oldSettings = try JSONDecoder().decode(AppSettings.self, from: Data(#"{"concurrentDownloads":8,"microsoftClientID":"","showSnapshots":false,"defaultMemoryMB":4096,"appearance":"system"}"#.utf8))
-        #expect(configuration.microsoftClientID(override: oldSettings.microsoftClientID) == bundledID)
-        #expect(configuration.microsoftClientID(override: " \n") == bundledID)
-        #expect(configuration.microsoftClientID(override: " \(customID)\n") == customID)
-        #expect(configuration.version == "0.2.0-beta.1")
-        #expect(BuildConfiguration(info: [:]).microsoftClientID(override: "") == "")
-        #expect(BuildConfiguration(info: [:]).microsoftClientID(override: customID) == customID)
-    }
-
     private static let responses: [String: Data] = [
-            "login.microsoftonline.com/consumers/oauth2/v2.0/devicecode": Data(#"{"device_code":"device","user_code":"USER","verification_uri":"https://www.microsoft.com/link","expires_in":900}"#.utf8),
+            "login.microsoftonline.com/consumers/oauth2/v2.0/devicecode": Data(#"{"device_code":"device+&=","user_code":"USER","verification_uri":"https://www.microsoft.com/link","expires_in":900,"interval":1}"#.utf8),
             "login.microsoftonline.com/consumers/oauth2/v2.0/token": Data(#"{"access_token":"oauth-access","refresh_token":"oauth-refresh"}"#.utf8),
             "user.auth.xboxlive.com/user/authenticate": Data(#"{"Token":"xbox-token","DisplayClaims":{"xui":[{"uhs":"user-hash"}]}}"#.utf8),
             "xsts.auth.xboxlive.com/xsts/authorize": Data(#"{"Token":"xsts-token","DisplayClaims":{"xui":[{"uhs":"user-hash"}]}}"#.utf8),
@@ -26,26 +14,35 @@ struct AuthenticationTests {
             "api.minecraftservices.com/minecraft/profile": Data(#"{"id":"profile-id","name":"Player"}"#.utf8)
         ]
 
-    @Test func configuredSessionExercisesOfficialAuthenticationExchange() async throws {
-        let stub = EndpointHTTPFixture(Self.responses)
+    @Test(arguments: [false, true])
+    func refreshPreservesIdentityAndRotatesTokensWhenAvailable(rotatesToken: Bool) async throws {
+        var responses = Self.responses
+        if !rotatesToken {
+            responses["login.microsoftonline.com/consumers/oauth2/v2.0/token"] = Data(#"{"access_token":"oauth-access"}"#.utf8)
+        }
+        let stub = EndpointHTTPFixture(responses)
         defer { stub.close() }
-        let clientID = UUID().uuidString, service = MicrosoftAuth(clientID: clientID, session: stub.session)
-        #expect(try await service.begin().user_code == "USER")
-        let original = Account(username: "OldName", uuid: "profile-id", kind: .microsoft)
-        let (account, credentials) = try await service.refresh(.init(accessToken: "old", refreshToken: "refresh+&=", expiresAt: .distantPast, clientID: clientID), account: original)
-        #expect(account.id == original.id && account.username == "Player")
-        #expect(credentials.accessToken == "minecraft-token" && credentials.refreshToken == "oauth-refresh" && credentials.clientID == clientID)
-        let requests = stub.requests
-        #expect(requests.map(\.url) == [AuthenticationEndpoints.deviceCode, AuthenticationEndpoints.token, AuthenticationEndpoints.xboxAuthenticate, AuthenticationEndpoints.xstsAuthorize, AuthenticationEndpoints.minecraftLogin, AuthenticationEndpoints.entitlements, AuthenticationEndpoints.profile])
-        #expect(requests.map(\.method) == ["POST", "POST", "POST", "POST", "POST", "GET", "GET"])
-        #expect(String(decoding: requests[1].body, as: UTF8.self).contains("refresh_token=refresh%2B%26%3D"))
-        let xbox = try #require(try JSONSerialization.jsonObject(with: requests[2].body) as? [String: Any])
-        let xsts = try #require(try JSONSerialization.jsonObject(with: requests[3].body) as? [String: Any])
-        #expect(xbox["RelyingParty"] as? String == "http://auth.xboxlive.com")
-        #expect(xsts["RelyingParty"] as? String == "rp://api.minecraftservices.com/")
-        #expect(requests.prefix(5).allSatisfy { $0.header("Authorization") == nil })
-        #expect(requests.suffix(2).allSatisfy { $0.header("Authorization") == "Bearer minecraft-token" })
-        #expect(requests.allSatisfy { $0.url.scheme == "https" && $0.url.query == nil && $0.url.fragment == nil })
+        let (account, credentials) = try await MicrosoftAuth(clientID: Self.oldCredentials.clientID, session: stub.session)
+            .refresh(Self.oldCredentials, account: Self.account)
+        #expect(account.id == Self.account.id && account.username == "Player")
+        #expect(credentials.accessToken == "minecraft-token")
+        #expect(credentials.refreshToken == (rotatesToken ? "oauth-refresh" : Self.oldCredentials.refreshToken))
+        #expect(credentials.clientID == Self.oldCredentials.clientID && credentials.expiresAt > Date())
+        let token = try #require(stub.requests.first { $0.url == AuthenticationEndpoints.token })
+        #expect(String(decoding: token.body, as: UTF8.self).contains("refresh_token=refresh%2B%26%3D"))
+        for (endpoint, relyingParty) in [(AuthenticationEndpoints.xboxAuthenticate, "http://auth.xboxlive.com"),
+                                         (AuthenticationEndpoints.xstsAuthorize, "rp://api.minecraftservices.com/")] {
+            let request = try #require(stub.requests.first { $0.url == endpoint })
+            let payload = try #require(try JSONSerialization.jsonObject(with: request.body) as? [String: Any])
+            #expect(payload["RelyingParty"] as? String == relyingParty)
+        }
+        let login = try #require(stub.requests.first { $0.url == AuthenticationEndpoints.minecraftLogin })
+        let body = try JSONDecoder().decode([String: String].self, from: login.body)
+        #expect(body["identityToken"] == "XBL3.0 x=user-hash;xsts-token")
+        for endpoint in [AuthenticationEndpoints.entitlements, AuthenticationEndpoints.profile] {
+            #expect(stub.requests.first { $0.url == endpoint }?.header("Authorization") == "Bearer minecraft-token")
+        }
+        #expect(stub.requests.filter { $0.url.host != "api.minecraftservices.com" }.allSatisfy { $0.header("Authorization") == nil })
     }
 
     @Test func deviceLoginAcceptsAJavaProfileEvenWhenStoreItemsAreEmpty() async throws {
@@ -54,14 +51,13 @@ struct AuthenticationTests {
         let stub = EndpointHTTPFixture(responses)
         defer { stub.close() }
         let clientID = UUID().uuidString, service = MicrosoftAuth(clientID: clientID, session: stub.session)
-        let code = try JSONDecoder().decode(DeviceCode.self, from: Data(#"{"device_code":"device+&=","user_code":"USER","verification_uri":"https://www.microsoft.com/link","expires_in":900,"interval":1}"#.utf8))
+        let code = try await service.begin()
         let (account, credentials) = try await service.finish(code)
         #expect(account.kind == .microsoft && account.username == "Player")
         #expect(credentials.clientID == clientID && credentials.refreshToken == "oauth-refresh")
-        let request = try #require(stub.requests.first)
+        let request = try #require(stub.requests.first { $0.url == AuthenticationEndpoints.token })
         let form = String(decoding: request.body, as: UTF8.self)
         #expect(form.contains("device_code=device%2B%26%3D") && form.contains("grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code"))
-        #expect(!stub.requests.contains { $0.url == AuthenticationEndpoints.license })
     }
 
     @Test(arguments: [false, true])
@@ -80,7 +76,6 @@ struct AuthenticationTests {
         } catch let error as RuriError {
             #expect(error.messageID == (ownsJava ? Messages.CoreAuthentication.minecraftJavaProfileMissing.key : Messages.CoreAuthentication.minecraftJavaEntitlementMissing.key))
         }
-        #expect(stub.requests.last?.header("Authorization") == "Bearer minecraft-token")
     }
 
     @Test func profileServiceFailureDoesNotBecomeAnOwnershipError() async throws {
@@ -113,16 +108,15 @@ struct AuthenticationTests {
         #expect(stub.requests.count == 1)
     }
 
-    @Test func refreshKeepsThePreviousRefreshTokenWhenNoReplacementIsIssued() async throws {
-        var responses = Self.responses
-        responses["login.microsoftonline.com/consumers/oauth2/v2.0/token"] = Data(#"{"access_token":"oauth-access"}"#.utf8)
-        let stub = EndpointHTTPFixture(responses)
-        defer { stub.close() }
-        let (account, credentials) = try await MicrosoftAuth(clientID: Self.oldCredentials.clientID, session: stub.session).refresh(Self.oldCredentials, account: Self.account)
-        #expect(account.id == Self.account.id && credentials.refreshToken == Self.oldCredentials.refreshToken)
-        #expect(credentials.expiresAt > Date().addingTimeInterval(3500))
+    @Test func reauthenticationPreservesAccountIdentityAndRejectsAnotherPlayer() throws {
+        let original = Account(username: "OldName", uuid: "0123456789abcdef0123456789abcdef", kind: .microsoft)
+        let renamed = Account(username: "NewName", uuid: "01234567-89AB-CDEF-0123-456789ABCDEF", kind: .microsoft)
+        let updated = try original.reauthenticated(with: renamed)
+        #expect(updated.id == original.id && updated.username == "NewName")
+        #expect(throws: (any Error).self) { try original.reauthenticated(with: Account(username: "Other", uuid: String(repeating: "f", count: 32), kind: .microsoft)) }
+        #expect(throws: (any Error).self) { try original.reauthenticated(with: Account(username: "Offline")) }
     }
 
     private static let account = Account(username: "OldName", uuid: "profile-id", kind: .microsoft)
-    private static let oldCredentials = AccountCredentials(accessToken: "old", refreshToken: "old-refresh", expiresAt: .distantPast, clientID: "df01d133-3715-49b0-a48f-31e486c76402")
+    private static let oldCredentials = AccountCredentials(accessToken: "old", refreshToken: "refresh+&=", expiresAt: .distantPast, clientID: "df01d133-3715-49b0-a48f-31e486c76402")
 }

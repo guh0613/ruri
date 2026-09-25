@@ -16,7 +16,7 @@ import subprocess
 import sys
 import tempfile
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 CERTIFICATE = ROOT / "Resources/RuriSigning.cer"
 INTERMEDIATE_CERTIFICATE = ROOT / "Resources/AppleWWDRCAG3.cer"
 SECRET_VARIABLES = ("RURI_SIGN_P12_BASE64", "RURI_SIGN_P12_PASSWORD")

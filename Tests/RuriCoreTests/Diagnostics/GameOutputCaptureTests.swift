@@ -57,14 +57,25 @@ struct GameOutputCaptureTests {
         #expect(capture.writeFailure != nil && capture.snapshot(final: true).contains("final failure"))
     }
 
-    @Test func debugDecodesXMLAndUTF8AcrossArbitraryByteBoundaries() throws {
+    @Test func debugDecodesSplitUTF8AndXMLWithoutLosingStackTracesOrFinalFragments() throws {
         let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try Data().write(to: file); defer { try? FileManager.default.removeItem(at: file) }
         var redactor = GameLogRedactor(); redactor.addSecrets(["private-token"])
         let capture = try GameOutputCapture(redactor: redactor, debugLogURL: file)
-        let text = "<log4j:Event level=\"ERROR\" thread=\"Render thread\">\n<log4j:Message><![CDATA[中文 private-token]]></log4j:Message>\n</log4j:Event>\n"
+        let text = """
+        \u{001B}[32mnative stderr\u{001B}[m
+        <log4j:Event level="ERROR" thread="Render thread">
+        <log4j:Message><![CDATA[中文 private-token]]></log4j:Message>
+        <log4j:Throwable><![CDATA[java.lang.Exception\r\n\tat example.Main]]></log4j:Throwable>
+        </log4j:Event>
+        <log4j:Event logger="incomplete">
+        """
         for byte in text.utf8 { capture.receive(Data([byte])) }
         capture.finish()
-        #expect(try String(contentsOf: file, encoding: .utf8) == "[Render thread/ERROR] 中文 <redacted>\n")
+        let output = try String(contentsOf: file, encoding: .utf8)
+        #expect(output.contains("native stderr") && !output.contains("\u{001B}"))
+        #expect(output.contains("[Render thread/ERROR] 中文 <redacted>") && !output.contains("private-token"))
+        #expect(output.contains("java.lang.Exception\n\tat example.Main"))
+        #expect(output.contains("<log4j:Event logger=\"incomplete\">"))
     }
 }

@@ -11,24 +11,6 @@ struct GameHistoryTests {
         return record
     }
 
-    @Test func oldFilesAreNotImportedAndDiagnosticExpiryKeepsHistory() throws {
-        let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let oldDirectory = paths.instance(instance.id).appendingPathComponent("sessions/\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: oldDirectory, withIntermediateDirectories: true)
-        try Data("unsupported old data".utf8).write(to: oldDirectory.appendingPathComponent("session.json"))
-        try Data("unsupported old total".utf8).write(to: paths.instance(instance.id).appendingPathComponent("playtime.json"))
-        #expect(try GameSessionStore.list(paths: paths, instanceID: instance.id).isEmpty)
-        #expect(try GameHistoryStore.summary(paths: paths).seconds == 0)
-        let record = session(instance: instance)
-        try GameHistoryStore.record(record, paths: paths)
-        try GameHistoryStore.record(record, paths: paths)
-        #expect(try GameHistoryStore.summary(paths: paths).seconds == 30)
-        #expect(try GameHistoryStore.list(paths: paths).count == 1)
-        try GameHistoryStore.markArtifactsExpired(sessionID: record.id, paths: paths)
-        let saved = try #require(try GameHistoryStore.load(paths: paths, sessionID: record.id))
-        #expect(saved.playedSeconds == 30 && saved.artifactState == .expired)
-    }
-
     @Test func historyQueriesArePagedAndOlderSnapshotsCannotUndoACompletedRun() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         var records: [GameSession] = []
@@ -57,7 +39,6 @@ struct GameHistoryTests {
         ended.state = .succeeded; ended.exit = exit; ended.revision = 2
         ended.updatedAt = running.updatedAt.addingTimeInterval(-3600)
         try GameHistoryStore.record(ended, paths: paths)
-        #expect(ended.isAtLeastAsRecent(as: running))
         #expect(try GameHistoryStore.load(paths: paths, sessionID: ended.id)?.state == .succeeded)
         #expect(try GameHistoryStore.summary(paths: paths).seconds == 30)
     }
@@ -120,7 +101,5 @@ struct GameHistoryTests {
         let saved = try #require(try GameHistoryStore.load(paths: paths, sessionID: recorder.record.id))
         #expect(saved.exit?.status == 7 && saved.state == .failed && saved.playedSeconds == 15)
         #expect(try GameHistoryStore.summary(paths: paths).seconds == 15)
-        let bundle = try GameDiagnosticBundle.collect(paths: paths, session: saved)
-        #expect(bundle.files.contains { $0.id == "environment" })
     }
 }

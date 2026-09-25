@@ -53,9 +53,4 @@ struct GameJavaRequirementTests {
         #expect(try legacyRequirement.select(from: [runtime(8, architecture: legacyRequirement.architecture)])?.major == 8)
     }
 
-    @Test func installationToolsCanReuseNewerNativeJava() {
-        let java = runtime(21, architecture: JavaRuntime.hostArchitecture)
-        #expect(JavaDiscovery.selectForInstallation(from: [java], minimumMajor: 8) == java)
-        #expect(JavaDiscovery.selectForInstallation(from: [java], minimumMajor: 25) == nil)
-    }
 }

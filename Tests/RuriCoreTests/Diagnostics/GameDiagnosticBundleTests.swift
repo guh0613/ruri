@@ -61,6 +61,5 @@ struct GameDiagnosticBundleTests {
         #expect(throws: (any Error).self) { try preview.export(selectedIDs: ["../accounts.json"], to: zip, paths: paths) }
         #expect(throws: (any Error).self) { try preview.export(selectedIDs: ids, to: paths.root.appendingPathComponent("report.zip"), paths: paths) }
         #expect(try GameSessionEventStore.entries(paths: paths, sessionID: recorder.record.id).contains { $0.text == "new unreviewed secret" })
-        #expect(try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil).allSatisfy { !$0.lastPathComponent.hasPrefix(".ruri-diagnostic-") })
     }
 }

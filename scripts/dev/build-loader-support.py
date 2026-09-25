@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 import zipfile
 
-root = Path(__file__).resolve().parent.parent
+root = Path(__file__).resolve().parents[2]
 source = root / 'Resources/Java/RuriTransformerDiscoveryService.java'
 target = root / 'Sources/RuriCore/Resources/LoaderSupport/ruri-transformer-discovery-1.0.jar'
 javac = str(Path(os.environ['JAVA_HOME']) / 'bin/javac') if 'JAVA_HOME' in os.environ else 'javac'

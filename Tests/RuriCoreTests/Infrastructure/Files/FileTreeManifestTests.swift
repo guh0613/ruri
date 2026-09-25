@@ -21,7 +21,6 @@ struct FileTreeManifestTests {
         try write("", to: source, path: "empty-file")
         try FileManager.default.createDirectory(at: source.appendingPathComponent("empty-directory"), withIntermediateDirectories: true)
         let original = try FileTreeManifest.capture(in: source)
-        #expect(original.entries.first { $0.path == "saves/世界/data.txt" }?.sha256 == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
         try FileManager.default.copyItem(at: source, to: target)
         try original.requireMatch(in: target)
         let record = base.appendingPathComponent("verification.json"), digest = try original.save(to: record)

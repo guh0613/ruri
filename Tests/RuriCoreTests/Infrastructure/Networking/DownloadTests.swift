@@ -104,23 +104,17 @@ struct DownloadTests {
         #expect(requests.last?.value(forHTTPHeaderField: "Range") == "bytes=200-")
         #expect(requests.last?.value(forHTTPHeaderField: "If-Range") == "\"one\"")
         #expect(progress.values.contains { $0.resumedBytes == 200 })
-        let transfer = try #require(await manager.transfers().first)
-        #expect(transfer.state == .completed); #expect(transfer.receivedBytes == 512)
-        #expect(transfer.attempt == 2); #expect(transfer.resumedBytes == 200)
+        #expect(await manager.transfers().first?.state == .completed)
         #expect(!FileManager.default.fileExists(atPath: DownloadManager.partialFiles(item).data.path))
     }
-    @Test(arguments: [0.0, 0.1])
-    func serverIgnoringRangeRestartsCleanly(responseDelay: TimeInterval) async throws {
+    @Test func serverIgnoringRangeRestartsCleanly() async throws {
         let body = body
         let scenario = HTTPScenario { _, attempt in
             HTTPReply(status: 200, headers: ["Content-Length": "512", "ETag": "\"v\(attempt)\""], data: attempt == 1 ? body.prefix(123) : body, error: attempt == 1 ? .networkConnectionLost : nil)
         }
         let (manager, item, root, host) = try setup(scenario)
         defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
-        try await manager.fetch(item) { progress in
-            // Reproduce a busy runner delaying response acceptance past the old stub timer.
-            if progress.receivedBytes == 0 { Thread.sleep(forTimeInterval: responseDelay) }
-        }
+        try await manager.fetch(item)
         #expect(try Data(contentsOf: item.destination) == body)
         let requests = scenario.receivedRequests
         #expect(requests.count == 2)
@@ -151,9 +145,8 @@ struct DownloadTests {
         }
         let (manager, item, root, host) = try setup(scenario)
         defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
-        let progress = ProgressCapture()
-        let operation = Task { try await manager.fetch(item) { progress.append($0) } }
-        // File writes precede reports. Bound the wait so a broken callback fails.
+        let operation = Task { try await manager.fetch(item) }
+        // Cancel after bytes reach disk so the next manager must resume them.
         let partial = DownloadManager.partialFiles(item)
         for _ in 0..<100 {
             if (try? Data(contentsOf: partial.data).count) == 200 { break }
@@ -191,16 +184,19 @@ struct DownloadTests {
         #expect(DownloadResumeState(identity: "x", etag: "0x8DCB7A74F8D4DDF", lastModified: "date").validator == "date")
         #expect(DownloadResumeState(identity: "x", etag: "bare", lastModified: nil).validator == nil)
     }
-    @Test func simultaneousRequestsShareOneTransfer() async throws {
+    @Test(arguments: [false, true])
+    func concurrentDownloadsToOneFileShareATransfer(separateManagers: Bool) async throws {
         let body = body
         let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }
         let (manager, item, root, host) = try setup(scenario)
         defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
+        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
+        let secondManager = separateManagers ? DownloadManager(configuration: config, retryDelay: .zero) : manager
         async let first: Void = manager.fetch(item)
-        async let second: Void = manager.fetch(item)
+        async let second: Void = secondManager.fetch(item)
         _ = try await (first, second)
         #expect(scenario.receivedRequests.count == 1)
-        #expect(DownloadManager.valid(item.destination, item: item))
+        #expect(try Data(contentsOf: item.destination) == body)
     }
     @Test func verifiedDownloadsAreReusedFromTheCache() async throws {
         let body = body
@@ -241,19 +237,6 @@ struct DownloadTests {
         #expect(scenario.receivedRequests.count == 1)
         first.cancel(); second.cancel()
         _ = await (first.result, second.result)
-    }
-    @Test func separateManagersCannotWriteOnePartialConcurrently() async throws {
-        let body = body
-        let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: ["Content-Length": "512"], data: body) }
-        let (firstManager, item, root, host) = try setup(scenario)
-        defer { StubHTTP.scenarios.set(nil, host: host); try? FileManager.default.removeItem(at: root) }
-        let config = URLSessionConfiguration.ephemeral; config.protocolClasses = [StubHTTP.self]
-        let secondManager = DownloadManager(configuration: config, retryDelay: .zero)
-        async let first: Void = firstManager.fetch(item)
-        async let second: Void = secondManager.fetch(item)
-        _ = try await (first, second)
-        #expect(scenario.receivedRequests.count == 1)
-        #expect(DownloadManager.valid(item.destination, item: item))
     }
     @Test func refusesRedirectedPartialDirectory() async throws {
         let scenario = HTTPScenario { _, _ in HTTPReply(status: 200, headers: [:], data: Data()) }

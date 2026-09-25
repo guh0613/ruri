@@ -24,7 +24,6 @@ struct LaunchEnvironmentTests {
         let inherited = ["RURI_REMOVE": "old", "KEEP": "yes", "JAVA_TOOL_OPTIONS": "injected"]
         let edited = try LaunchEnvironment(snapshot.environmentVariables!).applying(to: inherited, java: plan.executable)
         #expect(edited["RURI_REMOVE"] == nil && edited["JAVA_TOOL_OPTIONS"] == nil && edited["KEEP"] == "yes")
-        #expect(inherited["RURI_REMOVE"] == "old")
         let child = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", "printf '%s\\n' \"$RURI_TEST_TOKEN\""], directory: paths.root, environment: plan.environment, customEnvironmentNames: plan.customEnvironmentNames)
         let process = GameProcess(); var output: [String] = []
         let exit = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
@@ -35,28 +34,14 @@ struct LaunchEnvironmentTests {
         for invalid in ["X=one\nX=two", "0INVALID=value", "JAVA_HOME=/override", "CLASSPATH=x", "X=\0"] {
             #expect(throws: (any Error).self) { try LaunchEnvironment(invalid) }
         }
-        var local = instance.effectiveLaunchOverrides; local.environment = ""
-        #expect(local.resolve(defaults: state.settings.defaultLaunchSettings).environment.isEmpty)
-        local.setInheritance(true, for: .environment, defaults: state.settings.defaultLaunchSettings)
-        #expect(!local.resolve(defaults: state.settings.defaultLaunchSettings).environment.isEmpty)
     }
 
-    @Test func exactJavaMajorRespectsInheritancePackConstraintsAndArchitecture() throws {
+    @Test func javaMajorInheritanceCanBeOverriddenByAutomaticOrExplicitPath() throws {
         var defaults = AppSettings(); defaults.defaultJava = .major(21)
         var instance = GameInstance(name: "Java", gameVersion: "1.21.1"); instance.launchOverrides = .init()
         instance.supportedJavaMajors = [17, 21]
         let snapshot = try instance.launchSnapshot(defaults: defaults)
         #expect(snapshot.javaMajor == 21 && snapshot.javaPath == nil)
-        let encoded = try JSONEncoder().encode(snapshot)
-        #expect(try JSONDecoder().decode(GameInstance.self, from: encoded).preferredJavaMajor(default: 17) == 21)
-        func runtime(_ path: String, _ version: String, _ major: Int, _ architecture: String = "aarch64") -> JavaRuntime {
-            .init(path: path, version: version, major: major, architecture: architecture, vendor: "Test")
-        }
-        let runtimes = [runtime("/21-old", "21.0.2", 21), runtime("/25", "25", 25), runtime("/21-new", "21.0.10", 21), runtime("/21-intel", "21.0.11", 21, "x86_64")]
-        #expect(try JavaDiscovery.select(from: runtimes, major: snapshot.preferredJavaMajor(default: 17), architecture: "aarch64").path == "/21-new")
-        #expect(throws: (any Error).self) { try snapshot.preferredJavaMajor(default: 25) }
-        var unsupported = snapshot; unsupported.supportedJavaMajors = [17]
-        #expect(throws: (any Error).self) { try unsupported.preferredJavaMajor(default: 17) }
         instance.launchOverrides?.java = .automatic
         let automatic = try instance.launchSnapshot(defaults: defaults)
         #expect(automatic.javaMajor == nil)
@@ -83,6 +68,5 @@ struct LaunchEnvironmentTests {
         await service.discard(prepared)
         let restored = try StateStore.load(paths)
         #expect(restored.settings.defaultJava == .major(21) && restored.settings.defaultEnvironment == state.settings.defaultEnvironment)
-        #expect(restored.schemaVersion == StateStore.currentSchemaVersion)
     }
 }

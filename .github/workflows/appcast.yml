@@ -32,7 +32,7 @@ jobs:
       - name: Generate appcast
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/sparkle-update.py appcast --output build/appcast
+        run: python3 scripts/release/sparkle-update.py appcast --output build/appcast
       - name: Push to gh-pages
         working-directory: build/appcast
         env:

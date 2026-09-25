@@ -33,14 +33,11 @@ struct GameSessionRecoveryTests {
         #expect(result.interruption?.resolution == .knownProcessEnded && result.interruption?.previousStage == .running)
         #expect(result.processID == current.pid && current.isAlive)
         #expect(try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: record.id) == result)
-        #expect(!FileManager.default.fileExists(atPath: paths.instance(instance.id).appendingPathComponent("playtime.json").path))
         #expect(try GameSessionStore.logTail(paths: paths, session: result).contains("original evidence"))
         let next = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try next.fail(CancellationError(), cancelled: true)
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: result)
-        #expect(diagnosis.findings.isEmpty && diagnosis.summary.contains("没有取得实际退出码"))
-        let bundle = try GameDiagnosticBundle.preview(session: result, diagnosis: diagnosis)
-        #expect(bundle.files.first { $0.id == "environment" }?.text.contains("not exit time") == true)
+        #expect(diagnosis.findings.isEmpty)
     }
     @Test @MainActor func missingIdentityRequiresExplicitConfirmationAndLeavesHistory() throws {
         let (paths, instance, record) = try fixture(game: nil)

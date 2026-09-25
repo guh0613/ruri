@@ -18,14 +18,21 @@ struct InstanceMoveTests {
         let rootAttributes = try FileExtendedAttributes.capture(paths.instance(source.id))
         let gameAttributes = try FileExtendedAttributes.capture(paths.game(source.id))
         let packAttributes = try FileExtendedAttributes.capture(paths.instance(source.id).appendingPathComponent("modpack-state.json"))
-        if mode == .shared { try fixture.write("dormant world", "minecraft/saves/Old/level.dat", in: paths.instance(source.id)) }
+        if mode == .shared {
+            try fixture.write("dormant world", "minecraft/saves/Old/level.dat", in: paths.instance(source.id))
+            try fixture.write("old registry", "content.json", in: paths.instance(source.id))
+            try fixture.write("old backup", "world-backups/original.zip", in: paths.instance(source.id))
+        }
         let service = InstanceMover(paths: paths)
         let preview = try await service.preview(instanceID: source.id, directoryID: fixture.target.id)
         let originalGame = mode == .isolated ? nil : try FileTreeManifest.capture(in: paths.game(source.id))
         try StateStore.update(paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
         let result = try await service.move(preview), current = paths.configured(with: result.state)
-        #expect(result.state.instances == [preview.moved])
-        #expect(result.state.schemaVersion == StateStore.currentSchemaVersion && result.state.settings.defaultMemorySettings?.maximumMB == 6144)
+        let moved = try #require(result.state.instances.first)
+        #expect(result.state.instances.count == 1 && moved.id == source.id && moved.name == source.name && moved.playTime == source.playTime && moved.favorite == source.favorite)
+        #expect(moved.runDirectory == (mode == .shared ? .isolated : mode))
+        #expect((current.game(source.id) == paths.game(source.id)) == (mode == .custom))
+        #expect(result.state.settings.defaultMemorySettings?.maximumMB == 6144)
         #expect(result.state.selectedInstanceID == source.id && result.state.selectedDirectoryID == fixture.target.id)
         #expect(result.preservedFiles.isEmpty && result.warning == nil)
         #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))
@@ -40,16 +47,17 @@ struct InstanceMoveTests {
         #expect(try FileExtendedAttributes.capture(current.instance(source.id)) == rootAttributes)
         #expect(try FileExtendedAttributes.capture(current.game(source.id)) == gameAttributes)
         #expect(try FileExtendedAttributes.capture(current.instance(source.id).appendingPathComponent("modpack-state.json")) == packAttributes)
-        #expect(!InstanceMoveGuard.hasPending(paths: current, instanceID: source.id))
         #expect(try await service.pending(instanceID: source.id) == nil)
         if let originalGame { try originalGame.requireMatch(in: paths.game(source.id)) }
-        if let prior = preview.preservedPreviousData {
+        if mode == .shared {
+            let prior = try #require(preview.preservedPreviousData)
             #expect(try String(contentsOf: prior.appendingPathComponent("minecraft/saves/Old/level.dat"), encoding: .utf8) == "dormant world")
+            #expect(try String(contentsOf: prior.appendingPathComponent("content.json"), encoding: .utf8) == "old registry")
+            #expect(try String(contentsOf: prior.appendingPathComponent("world-backups/original.zip"), encoding: .utf8) == "old backup")
         }
         let lease = try GameRunLease.acquire(paths: current, instanceID: source.id)
         withExtendedLifetime(lease) {}
         #expect(throws: (any Error).self) { try paths.prepareInstance(source.id) }
-        #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))
     }
 
     @Test(arguments: [InstanceMoveProgress.Phase.copying, .publishing])
@@ -220,7 +228,7 @@ struct InstanceMoveTests {
         #expect(!FileManager.default.fileExists(atPath: preview.sourceDirectory.path))
     }
 
-    @Test func corruptedReceiptsPreventSourceDeletionAndFullPublicationKeepsHiddenFiles() async throws {
+    @Test func corruptedReceiptsPreventSourceDeletion() async throws {
         let fixture = try InstanceMovePreviewTests.Fixture(mode: .isolated); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)
         let preview = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
@@ -231,11 +239,7 @@ struct InstanceMoveTests {
         #expect(result.warning != nil)
         await #expect(throws: (any Error).self) { try await service.recover(instanceID: fixture.source.id, transactionID: preview.id) }
         try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
-        // Force the non-rename path used on ExFAT without a mounted volume.
-        let publication = fixture.root.appendingPathComponent("publication")
-        try RunDirectoryFileCopy.copyForPublication(preview.destination, to: publication, directory: true, ignoringTransientFiles: false, created: { _ in }, validate: {}, progress: { _ in })
-        try FileTreeManifest.capture(in: preview.destination).requireMatch(in: publication)
-        #expect(FileManager.default.fileExists(atPath: publication.appendingPathComponent("minecraft/.ruri-partials/kept.bin").path))
+
     }
 
     @Test(arguments: [false, true])

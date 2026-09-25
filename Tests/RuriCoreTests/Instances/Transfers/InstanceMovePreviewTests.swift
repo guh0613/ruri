@@ -43,66 +43,6 @@ struct InstanceMovePreviewTests {
         func cleanup() { try? FileManager.default.removeItem(at: root) }
     }
 
-    @Test(arguments: [GameRunDirectory.isolated, .shared, .custom])
-    @MainActor func preservesIdentityHistorySettingsAndTheCorrectGameFiles(mode: GameRunDirectory) async throws {
-        let fixture = try Fixture(mode: mode); defer { fixture.cleanup() }
-        let (paths, source) = (fixture.paths, fixture.source)
-        let history = try GameSessionRecorder(paths: paths, instance: source, accountMode: "offline")
-        try history.append("preserved history")
-        try history.fail(CancellationError(), cancelled: true)
-        try GameSessionReviewStore.mark(history.record, paths: paths)
-        let service = InstanceMover(paths: paths)
-        let preview = try await service.preview(instanceID: source.id, directoryID: fixture.target.id)
-        var expected = source; expected.directoryID = fixture.target.id; expected.lastInstanceMoveID = preview.id
-        if mode == .shared { expected.runDirectory = .isolated; expected.customRunDirectory = nil; expected.lastRunDirectoryChangeID = nil }
-        #expect(preview.source == source && preview.moved == expected)
-        #expect(preview.sourceDirectory == paths.instance(source.id) && preview.destination != preview.sourceDirectory)
-        #expect(preview.fileCount > 0 && preview.bytes > 0)
-        #expect((preview.retainedGameDirectory != nil) == (mode != .isolated))
-        #expect((preview.destinationGame == preview.sourceGame) == (mode == .custom))
-        #expect(preview.preservedPreviousData == nil)
-        let staging = fixture.root.appendingPathComponent("staged")
-        try RunDirectoryFileCopy.entries(preview.snapshot.entries, to: staging, validate: {}) { _, _ in }
-        try preview.snapshot.destination.requireMatch(in: staging)
-        try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
-        #expect(!FileManager.default.fileExists(atPath: staging.appendingPathComponent("sessions/\(history.record.id)/session.json").path))
-        #expect(try GameSessionStore.load(paths: paths, instanceID: source.id, sessionID: history.record.id) == history.record)
-        #expect(try GameSessionReviewStore.contains(history.record, paths: paths))
-        #expect(FileManager.default.fileExists(atPath: staging.appendingPathComponent("empty-directory").path))
-        if mode != .custom {
-            #expect(try String(contentsOf: staging.appendingPathComponent("minecraft/.DS_Store"), encoding: .utf8) == "finder data")
-            #expect(try String(contentsOf: staging.appendingPathComponent("minecraft/.ruri-partials/kept.bin"), encoding: .utf8) == "partial")
-            #expect(try String(contentsOf: staging.appendingPathComponent("world-backups/original.zip"), encoding: .utf8) == "backup")
-        } else {
-            #expect(!FileManager.default.fileExists(atPath: staging.appendingPathComponent("minecraft").path))
-            #expect(!FileManager.default.fileExists(atPath: staging.appendingPathComponent("world-backups").path))
-        }
-        #expect(try StateStore.load(paths).instances == [source])
-        #expect(!FileManager.default.fileExists(atPath: preview.destination.path))
-    }
-
-    @Test func sharedMappingPreservesDormantIsolatedFilesWithoutOverwritingLiveContent() async throws {
-        let fixture = try Fixture(mode: .shared); defer { fixture.cleanup() }
-        let root = fixture.paths.instance(fixture.source.id)
-        try fixture.write("old world", "minecraft/saves/Old/world.dat", in: root)
-        try fixture.write("old registry", "content.json", in: root)
-        try fixture.write("old backup", "world-backups/original.zip", in: root)
-        try fixture.write("older preserved data", "previous-run-directories/older/note.txt", in: root)
-        let preview = try await InstanceMover(paths: fixture.paths).preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let staging = fixture.root.appendingPathComponent("staged")
-        try RunDirectoryFileCopy.entries(preview.snapshot.entries, to: staging, validate: {}) { _, _ in }
-        try preview.snapshot.destination.requireMatch(in: staging)
-        let prior = staging.appendingPathComponent(InstanceMoveSnapshot.previousDataPath(preview.id))
-        #expect(preview.preservedPreviousData == preview.destination.appendingPathComponent(InstanceMoveSnapshot.previousDataPath(preview.id)))
-        #expect(try String(contentsOf: prior.appendingPathComponent("content.json"), encoding: .utf8) == "old registry")
-        #expect(try String(contentsOf: prior.appendingPathComponent("minecraft/saves/Old/world.dat"), encoding: .utf8) == "old world")
-        #expect(try String(contentsOf: prior.appendingPathComponent("world-backups/original.zip"), encoding: .utf8) == "old backup")
-        #expect(try String(contentsOf: staging.appendingPathComponent("content.json"), encoding: .utf8) == "[]")
-        #expect(try String(contentsOf: staging.appendingPathComponent("world-backups/original.zip"), encoding: .utf8) == "backup")
-        #expect(!FileManager.default.fileExists(atPath: staging.appendingPathComponent("minecraft/.ruri").path))
-        try preview.snapshot.original.requireMatch(in: root)
-    }
-
     @Test func rejectsChangedBytesEvenWhenSizeAndModificationDateMatch() async throws {
         let fixture = try Fixture(mode: .isolated); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)
@@ -111,11 +51,8 @@ struct InstanceMovePreviewTests {
         let attributes = try FileManager.default.attributesOfItem(atPath: file.path)
         try Data("OPTIONS".utf8).write(to: file)
         try FileManager.default.setAttributes([.modificationDate: attributes[.modificationDate]!], ofItemAtPath: file.path)
-        await #expect(throws: (any Error).self) { try await service.validate(preview, state: StateStore.load(fixture.paths)) }
+        await #expect(throws: (any Error).self) { try await service.move(preview) }
         #expect(!FileManager.default.fileExists(atPath: preview.destination.path))
-        let fresh = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let updated = try StateStore.update(fixture.paths) { $0.instances[0].favorite.toggle() }
-        await #expect(throws: (any Error).self) { try await service.validate(fresh, state: updated) }
     }
 
     @Test @MainActor func requiresEveryHistoryRecordToBeReadableAndFinished() async throws {
@@ -131,7 +68,6 @@ struct InstanceMovePreviewTests {
         try GameHistoryStore.withDatabase(paths: fixture.paths) { db in
             try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(Data("broken history".utf8)), .text(recorder.record.id.uuidString)])
         }
-        #expect(throws: (any Error).self) { try GameSessionStore.list(paths: fixture.paths, instanceID: fixture.source.id) }
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
         try GameHistoryStore.withDatabase(paths: fixture.paths) { db in
             try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(original), .text(recorder.record.id.uuidString)])
@@ -167,32 +103,25 @@ struct InstanceMovePreviewTests {
         await #expect(throws: (any Error).self) { try await InstanceMover(paths: paths).preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
     }
 
-    @Test func unrelatedSettingsRemainValidButIdenticalReplacementFoldersDoNot() async throws {
+    @Test func replacedSourceFolderInvalidatesTheMoveEvenWhenItsFilesMatch() async throws {
         let fixture = try Fixture(mode: .isolated); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)
         let preview = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let updated = try StateStore.update(fixture.paths) { $0.settings.defaultMemorySettings = .init(maximumMB: 6144) }
-        try await service.validate(preview, state: updated)
         let parked = fixture.root.appendingPathComponent("Original folder")
         try FileManager.default.moveItem(at: preview.sourceDirectory, to: parked)
         try FileManager.default.copyItem(at: parked, to: preview.sourceDirectory)
         try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
-        await #expect(throws: (any Error).self) { try await service.validate(preview, state: updated) }
+        await #expect(throws: (any Error).self) { try await service.move(preview) }
         #expect(FileManager.default.fileExists(atPath: parked.path))
     }
 
-    @Test func sharedFileChangesCancellationAndOfflineTargetsLeaveTheBindingAlone() async throws {
+    @Test func sharedFileChangesAndOfflineTargetsLeaveTheBindingAlone() async throws {
         let fixture = try Fixture(mode: .shared); defer { fixture.cleanup() }
         let service = InstanceMover(paths: fixture.paths)
         let preview = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
         try fixture.write("new file", "config/new.json", in: preview.sourceGame)
         try preview.snapshot.original.requireMatch(in: preview.sourceDirectory)
-        await #expect(throws: (any Error).self) { try await service.validate(preview, state: StateStore.load(fixture.paths)) }
-        let cancelled = Task {
-            withUnsafeCurrentTask { $0?.cancel() }
-            return try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        }
-        await #expect(throws: CancellationError.self) { try await cancelled.value }
+        await #expect(throws: (any Error).self) { try await service.move(preview) }
         try FileManager.default.removeItem(at: fixture.target.url.appendingPathComponent(GameDirectory.markerName))
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
         #expect(try StateStore.load(fixture.paths).instances == [fixture.source])

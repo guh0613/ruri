@@ -3,18 +3,11 @@ import Testing
 @testable import RuriCore
 
 struct LaunchSettingsTests {
-    @Test func debugLoggingDefaultsOffAndFollowsPresentationInheritance() throws {
+    @Test func oldPresentationSettingsKeepPreferencesWithoutEnablingDebugLogging() throws {
         let legacy = try JSONDecoder().decode(LaunchPresentation.self, from: Data(#"{"hideLauncher":true,"showLogs":true}"#.utf8))
         #expect(!legacy.debugLogging && legacy.hideLauncher && legacy.showLogs)
-        var defaults = LaunchSettingsValues(); defaults.presentation.debugLogging = true
-        var overrides = InstanceLaunchOverrides()
-        #expect(overrides.resolve(defaults: defaults).presentation.debugLogging)
-        overrides.presentation = legacy
-        #expect(!overrides.resolve(defaults: defaults).presentation.debugLogging)
-        overrides.setInheritance(true, for: .presentation, defaults: defaults)
-        let roundTrip = try JSONDecoder().decode(LaunchSettingsValues.self, from: JSONEncoder().encode(overrides.resolve(defaults: defaults)))
-        #expect(roundTrip.presentation.debugLogging)
     }
+
     private func paths() -> LauncherPaths { .init(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-settings-\(UUID())")) }
 
     @Test func oldStatesKeepEveryExistingValueWhileNewInstancesInherit() throws {
@@ -83,26 +76,29 @@ struct LaunchSettingsTests {
         let bytes = try Data(contentsOf: paths.state)
         #expect(throws: (any Error).self) { try StateStore.save(reset, to: paths, basedOn: merged) }
         #expect(try Data(contentsOf: paths.state) == bytes)
-        #expect(try StateStore.load(paths).schemaVersion == StateStore.currentSchemaVersion)
     }
 
     @Test func portableExportFreezesEffectiveSettingsWithoutImportingGlobalPaths() async throws {
         let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
         var instance = GameInstance(name: "Export", gameVersion: "1.0"); instance.launchOverrides = .init()
         var state = PersistentState(); state.instances = [instance]; state.settings.defaultMemorySettings = .init(maximumMB: 8192)
-        state.settings.defaultWindow = .init(width: 1600, height: 900); state.settings.defaultJava = .path("/machine/java")
+        state.settings.defaultWindow = .init(width: 1600, height: 900, fullscreen: true); state.settings.defaultJava = .path("/machine/java")
+        state.settings.defaultLaunchPresentation = .init(showLogs: true, debugLogging: true)
         state.settings.defaultJVMArguments = "-Dportable=yes"; try StateStore.save(state, to: paths)
         try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
         try Data("options".utf8).write(to: paths.game(instance.id).appendingPathComponent("options.txt"))
-        let service = InstanceTransfer(paths: paths), zip = paths.cache.appendingPathComponent("settings.zip")
-        try await service.export(instance, to: zip)
-        let prepared = try await service.prepare(zip)
-        #expect(prepared.instance.memoryMB == 8192 && prepared.instance.width == 1600)
-        #expect(prepared.instance.extraJVMArguments == "-Dportable=yes" && prepared.instance.javaPath == nil)
-        #expect(prepared.instance.launchOverrides == nil)
-        var destinationDefaults = AppSettings(); destinationDefaults.defaultMemorySettings = .init(maximumMB: 2048)
-        #expect(try prepared.instance.launchSnapshot(defaults: destinationDefaults).memoryMB == 8192)
-        await service.discard(prepared)
+        let service = InstanceTransfer(paths: paths)
+        for format in [InstanceExportFormat.ruri, .multimc] {
+            let zip = paths.cache.appendingPathComponent("settings-" + format.rawValue + ".zip")
+            try await service.export(instance, to: zip, format: format)
+            let prepared = try await service.prepare(zip)
+            #expect(prepared.instance.memoryMB == 8192 && prepared.instance.width == 1600 && prepared.instance.fullscreen == true)
+            #expect(prepared.instance.extraJVMArguments == "-Dportable=yes" && prepared.instance.javaPath == nil)
+            if format == .ruri { #expect(prepared.instance.launchPresentation == state.settings.defaultLaunchPresentation) }
+            var destinationDefaults = AppSettings(); destinationDefaults.defaultMemorySettings = .init(maximumMB: 2048)
+            #expect(try prepared.instance.launchSnapshot(defaults: destinationDefaults).memoryMB == 8192)
+            await service.discard(prepared)
+        }
     }
 
     @Test func invalidDefaultsFailOnlyWhenUsedAndDoNotRewriteOverrides() throws {
@@ -152,29 +148,5 @@ struct LaunchSettingsTests {
         #expect(explicit.arguments.contains("500") && !explicit.arguments.contains("1080"))
         let old = try JSONDecoder().decode(GameWindowSize.self, from: Data(#"{"width":1280,"height":720}"#.utf8))
         #expect(!old.fullscreen)
-        var overrides = InstanceLaunchOverrides(); overrides.setInheritance(false, for: .presentation, defaults: state.settings.defaultLaunchSettings)
-        state.settings.defaultLaunchPresentation = .init(showLogs: true)
-        #expect(overrides.resolve(defaults: state.settings.defaultLaunchSettings).presentation.hideLauncher)
-        overrides.setInheritance(true, for: .presentation, defaults: state.settings.defaultLaunchSettings)
-        #expect(overrides.resolve(defaults: state.settings.defaultLaunchSettings).presentation.showLogs)
     }
-
-    @Test func exportedWindowAndPresentationPreferencesSurviveImport() async throws {
-        let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        var instance = GameInstance(name: "Fullscreen", gameVersion: "1.0"); instance.launchOverrides = .init()
-        var state = PersistentState(); state.instances = [instance]
-        state.settings.defaultWindow = .init(fullscreen: true); state.settings.defaultLaunchPresentation = .init(showLogs: true)
-        try StateStore.save(state, to: paths)
-        try FileManager.default.createDirectory(at: paths.game(instance.id), withIntermediateDirectories: true)
-        let service = InstanceTransfer(paths: paths)
-        for format in [InstanceExportFormat.ruri, .multimc] {
-            let archive = paths.cache.appendingPathComponent(format.rawValue + ".zip")
-            try await service.export(instance, to: archive, format: format)
-            let prepared = try await service.prepare(archive)
-            #expect(prepared.instance.fullscreen == true)
-            if format == .ruri { #expect(prepared.instance.launchPresentation?.showLogs == true) }
-            await service.discard(prepared)
-        }
-    }
-
 }

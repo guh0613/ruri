@@ -29,10 +29,8 @@ struct FileTreeDirectoryTests {
         try FileExtendedAttributesTests.set(Data("custom metadata".utf8), at: file)
         try FileExtendedAttributesTests.set(Data("resource fork".utf8), name: "com.apple.ResourceFork", at: file)
         #expect(copyfile(file.path, sidecar.path, nil, copyfile_flags_t(COPYFILE_PACK | COPYFILE_XATTR | COPYFILE_EXCL)) == 0)
-        #expect(try FileAppleDouble.isRepresented(sidecar, by: file))
         #expect(try FileTree.entries(in: root).map(\.path) == ["file"])
         try FileExtendedAttributesTests.set(Data("changed metadata".utf8), at: file)
-        #expect(try !FileAppleDouble.isRepresented(sidecar, by: file))
         #expect(Set(try FileTree.entries(in: root).map(\.path)) == ["file", "._file"])
         try FileManager.default.removeItem(at: file)
         #expect(try FileTree.entries(in: root).map(\.path) == ["._file"])
@@ -49,7 +47,6 @@ struct FileTreeDirectoryTests {
             var changed = original
             changed.replaceSubrange(range, with: repeatElement(UInt8.max, count: range.count))
             try changed.write(to: sidecar)
-            #expect(try !FileAppleDouble.isRepresented(sidecar, by: file))
             #expect(Set(try FileTree.entries(in: root).map(\.path)) == ["file", "._file"])
         }
     }

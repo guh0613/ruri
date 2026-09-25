@@ -36,7 +36,6 @@ import Testing
         let fixture = try fixture(); defer { try? FileManager.default.removeItem(at: fixture.root) }
         let service = InstanceTransfer(paths: fixture.paths), prepared = try await service.prepare(fixture.source)
         let result = try await service.install(prepared, name: "My Pack", installing: { instance, paths in
-            #expect(paths.game(instance.id).path.contains("/.ruri/imports/"))
             #expect(try paths.resources(for: instance).libraries.path == fixture.repository.appendingPathComponent("libraries").path)
             #expect(!FileManager.default.fileExists(atPath: fixture.repository.appendingPathComponent("versions/My Pack").path))
             #expect(try MinecraftFolderStore.refresh(fixture.directoryID, paths: fixture.paths).instances.isEmpty)
@@ -50,10 +49,6 @@ import Testing
         #expect(FileManager.default.fileExists(atPath: current.versionDirectory(result.id).appendingPathComponent("My Pack.jar").path))
         #expect(try RepositoryImportStore.pending(directoryID: fixture.directoryID, paths: fixture.paths).isEmpty)
         #expect(try MinecraftFolderStore.refresh(fixture.directoryID, paths: fixture.paths).instances.map(\.id) == [result.id])
-        let moved = fixture.root.appendingPathComponent("Moved Minecraft")
-        try FileManager.default.moveItem(at: fixture.repository, to: moved)
-        let relocated = try GameDirectoryStore.relocate(fixture.directoryID, to: moved, paths: fixture.paths)
-        #expect(relocated.gameDirectories?.first?.url.path == moved.path)
         await service.discard(prepared)
     }
 

@@ -30,7 +30,7 @@ struct LaunchCommandsTests {
         #expect(try String(contentsOf: game.appendingPathComponent("trace"), encoding: .utf8) == "before\nwrapper\ngame\nafter\n")
         let log = try GameSessionStore.logTail(paths: paths, session: finished)
         #expect(log.contains("<redacted>") && !log.contains("secret-from-hook-env"))
-        #expect(finished.title.contains("退出后命令") && !GameRunLease.isHeld(paths: paths, instanceID: instance.id))
+        #expect(!GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         commands.before = "exit 11"
         let retry = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let failedPlan = LaunchPlan(executable: plan.executable, arguments: plan.arguments, directory: game, environment: plan.environment, commands: commands)

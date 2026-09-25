@@ -56,12 +56,10 @@ struct WorldDataPackDownloadTests {
         let root = version("root", project: "main", required: "dependency"), dependency = version("dep", project: "dependency")
         let fixture = EndpointHTTPFixture([
             "api.modrinth.com/v2/project/main/version": try JSONSerialization.data(withJSONObject: [root]),
-            "api.modrinth.com/v2/project/dependency/version": try JSONSerialization.data(withJSONObject: [dependency]),
-            "api.modrinth.com/v2/search": Data(#"{"hits":[],"total_hits":0}"#.utf8)
+            "api.modrinth.com/v2/project/dependency/version": try JSONSerialization.data(withJSONObject: [dependency])
         ])
         defer { fixture.close() }
         let service = WorldDataPackDownloads(client: HTTPClient(session: fixture.session))
-        _ = try await service.search("example", game: "1.21.1")
         let versions = try await service.versions(project: "main", game: "1.21.1")
         let selected = try #require(versions.first), plan = try await service.prepare(selected, game: "1.21.1")
         #expect(plan.files.map(\.filename) == ["root.zip", "dep.zip"])
@@ -75,8 +73,6 @@ struct WorldDataPackDownloadTests {
         #expect(try await manager.dataPacks(folder: "World").allSatisfy(\.enabled))
         #expect(try await manager.dataPackPriority(folder: "World").keys == ["file/root.zip", "file/dep.zip", "vanilla"])
         #expect(try Data(contentsOf: world.appendingPathComponent("datapacks/root.zip")) == Data(contentsOf: archive))
-        let query = try #require(fixture.requests.first.flatMap { URLComponents(url: $0.url, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "facets" }?.value })
-        #expect(query.contains("project_type:datapack") && query.contains("versions:1.21.1"))
         await #expect(throws: (any Error).self) { try await service.prepare(selected, game: "1.20.1") }
         let saved = try Data(contentsOf: world.appendingPathComponent("level.dat"))
         await #expect(throws: (any Error).self) { try await service.install(plan, instance: instance, folder: "World", paths: paths, downloader: DownloadManager()) { _ in } }

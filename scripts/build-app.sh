@@ -1,17 +1,11 @@
 #!/bin/zsh
 set -euo pipefail
 cd "${0:A:h:h}"
+source scripts/lib/build.sh
 if [[ "${RURI_SIGNING_ACTIVE:-}" != 1 ]]; then
-  exec python3 scripts/signing.py run -- /bin/zsh scripts/build-app.sh "$@"
+  exec python3 scripts/release/signing.py run -- /bin/zsh scripts/build-app.sh "$@"
 fi
-if [[ -z "${DEVELOPER_DIR:-}" ]]; then
-  for xcode in /Applications/Xcode.app /Applications/Xcode-beta.app; do
-    if [[ -d "$xcode/Contents/Developer" ]]; then
-      export DEVELOPER_DIR="$xcode/Contents/Developer"
-      break
-    fi
-  done
-fi
+select_xcode
 configuration="${1:-release}"
 export RURI_BUILD_DIR="${RURI_BUILD_DIR:-.build/validation}"
 mkdir -p build
@@ -22,10 +16,8 @@ mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 mkdir -p "$app/Contents/Helpers"
 cp Resources/Info.plist "$app/Contents/Info.plist"
 cp Resources/ThirdPartyNotices.txt "$app/Contents/Resources/ThirdPartyNotices.txt"
-python3 scripts/configure-app.py "$app/Contents/Info.plist"
-python3 scripts/configure-services.py "$app/Contents/Resources"
-scripts/swift-build.sh -c "$configuration" --product Ruri
-scripts/swift-build.sh -c "$configuration" --product ruri-monitor
+python3 scripts/lib/app.py bundle "$app"
+scripts/swift-build.sh -c "$configuration"
 binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
 cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
@@ -44,26 +36,12 @@ done
 for bundle in "$binary_dir/"*.bundle(N); do
   ditto "$bundle" "$app/Contents/Resources/${bundle:t}"
 done
-# Compile the layered Liquid Glass icon and the fallback ICNS for macOS 14/15.
-xcrun actool Resources/AppIcon.icon \
-  --compile "$app/Contents/Resources" \
-  --platform macosx --target-device mac \
-  --minimum-deployment-target "$(plutil -extract LSMinimumSystemVersion raw "$app/Contents/Info.plist")" \
-  --app-icon AppIcon --output-format human-readable-text \
-  --output-partial-info-plist "$stage_dir/icon-info.plist"
-python3 - "$app/Contents/Info.plist" "$stage_dir/icon-info.plist" <<'PY'
-import plistlib, sys
-from pathlib import Path
-target, generated = map(Path, sys.argv[1:])
-info = plistlib.loads(target.read_bytes())
-info.update(plistlib.loads(generated.read_bytes()))
-target.write_bytes(plistlib.dumps(info))
-PY
-zsh scripts/build-game-host.sh "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist"
+compile_app_icon "$app" Resources/AppIcon.icon AppIcon "$stage_dir/icon-info.plist"
+build_game_host "$app/Contents/Helpers/RuriGame.app" "$app/Contents/Info.plist"
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app"
 codesign --verify --deep --strict "$app"
-python3 scripts/signing.py verify "$app"
-python3 scripts/check-localization-bundle.py "$app"
+python3 scripts/release/signing.py verify "$app"
+python3 scripts/localization.py --bundle "$app"
 destination="$(pwd)/build/Ruri.app"
 if [[ -e "$destination" ]]; then
   mv "$destination" "$stage_dir/previous.app"
