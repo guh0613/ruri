@@ -48,6 +48,7 @@ struct CLISettingsSection: View {
                     LabeledContent(Messages.CLISetup.location.localized) { Text(link).textSelection(.enabled) }
                         .font(.caption)
                 }
+                Text(Messages.CLISetup.authorizationHint.localized).font(.caption).foregroundStyle(.secondary)
                 HStack {
                     Button(Messages.CLISetup.copyDirectCommand.localized) {
                         if let executable = RuriInstallation.cliExecutable { copy(CLIInstallation.shellQuote(executable.path) + " --help") }

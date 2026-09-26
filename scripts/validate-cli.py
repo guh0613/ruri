@@ -46,7 +46,15 @@ def validate(app):
             return result["data"]
 
         assert command([executable, "--version"], env=environment).decode().strip() == info.get("RuriVersion", info["CFBundleShortVersionString"])
-        command([executable, "--help"], env=environment)
+        for arguments, usage in [
+            (["--help"], "USAGE: ruri <subcommand>"),
+            (["--help", "app"], "USAGE: ruri app <subcommand>"),
+            (["app", "--help"], "USAGE: ruri app <subcommand>"),
+            (["help", "app"], "USAGE: ruri app <subcommand>"),
+            (["app"], "USAGE: ruri app <subcommand>"),
+        ]:
+            help_text = command([executable, *arguments], env=environment).decode()
+            assert usage in help_text and "USAGE: help " not in help_text, help_text
         assert invoke(executable, "schema", "config", "apply")["commands"][0]["path"] == ["config", "apply"]
         assert not data.exists(), "Discovery must not create a state directory"
         invoke(executable, "config", "apply", "--scope", "app", "--file", "-", input=b'{"set":{"concurrentDownloads":7}}')
@@ -64,6 +72,7 @@ def validate(app):
         link = bin_dir / "ruri"
         assert Path(invoke(link, "app", "info")["application"]).resolve() == copied.resolve()
         command([link, "--localization-check"])
+        assert "USAGE: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
         moved = root / "Moved Ruri.app"
         shutil.move(copied, moved)
         relocated = moved / "Contents/Helpers/ruri-cli"

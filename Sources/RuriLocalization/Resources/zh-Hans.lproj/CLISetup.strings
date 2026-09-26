@@ -1,8 +1,8 @@
 /* @symbol CLISetup.title @args - */
-"cliSetup.title" = "在终端和 AI 助手中使用 Ruri";
+"cliSetup.title" = "命令行工具";
 
 /* @symbol CLISetup.introduction @args - */
-"cliSetup.introduction" = "一键安装 ruri 命令，让终端或 AI 助手帮你管理实例、账户和游戏配置。无需手动设置 PATH。";
+"cliSetup.introduction" = "安装后即可在终端使用 ruri，无需配置 PATH。";
 
 /* @symbol CLISetup.install @args - */
 "cliSetup.install" = "安装到终端";
@@ -11,13 +11,13 @@
 "cliSetup.ready" = "命令行工具已安装";
 
 /* @symbol CLISetup.readyDetail @args - */
-"cliSetup.readyDetail" = "新开一个终端窗口，运行下方命令即可开始。已打开的终端或 AI 助手可能需要重新启动。";
+"cliSetup.readyDetail" = "新开终端，运行下方命令即可开始。";
 
 /* @symbol CLISetup.repairTitle @args - */
 "cliSetup.repairTitle" = "命令行工具需要更新";
 
 /* @symbol CLISetup.repairDetail @args - */
-"cliSetup.repairDetail" = "将命令连接到当前 Ruri，并清理旧版安装链接。完成后无需手动配置终端。";
+"cliSetup.repairDetail" = "更新链接，让终端使用当前版本的 Ruri。";
 
 /* @symbol CLISetup.repair @args - */
 "cliSetup.repair" = "修复安装";
@@ -41,7 +41,10 @@
 "cliSetup.copyDirectCommand" = "复制完整调用命令";
 
 /* @symbol CLISetup.footer @args - */
-"cliSetup.footer" = "安装到 macOS 标准命令目录 /usr/local/bin。需要时会弹出系统管理员授权；不会修改你的 shell 配置。移动 Ruri 后，可在此修复安装。";
+"cliSetup.footer" = "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。";
+
+/* @symbol CLISetup.authorizationHint @args - */
+"cliSetup.authorizationHint" = "安装或卸载时，系统可能请求管理员授权。";
 
 /* @symbol CLISetup.authorizationRequired @args - */
 "cliSetup.authorizationRequired" = "安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。";

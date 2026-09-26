@@ -11,15 +11,22 @@ public enum CLIApplication {
         var output = CommandOutput(format: requestedFormat(args), quiet: args.contains("--quiet"), write: write)
         var activeRequest: CommandRequest?
         do {
-            let parsed: any ParsableCommand
-            do { parsed = try RuriCommand.parseAsRoot(args) }
+            let command: any ExecutableCommand
+            do {
+                var parsed = try RuriCommand.parseAsRoot(args)
+                if let executable = parsed as? any ExecutableCommand { command = executable }
+                else {
+                    // ArgumentParser returns a built-in help command carrying
+                    // the requested command stack. Running it produces the
+                    // correct help request, including the root command name.
+                    try parsed.run()
+                    return 0
+                }
+            }
             catch {
                 let code = RuriCommand.exitCode(for: error).rawValue
                 if code == 0 { output.help(RuriCommand.message(for: error)); return 0 }
                 throw OperationFailure("INVALID_ARGUMENT", RuriCommand.message(for: error))
-            }
-            guard let command = parsed as? any ExecutableCommand else {
-                output.help(type(of: parsed).helpMessage()); return 0
             }
             let request = command.request
             try request.validate()
@@ -115,13 +122,13 @@ public enum CLIApplication {
         if let index = options.firstIndex(of: "--output"), let name = options[safe: index + 1], let format = CommandOutput.Format(rawValue: name) { return format }
         return .text
     }
-    /// Leading global options are moved to the leaf command. Options after `--`
-    /// remain literal operands, including strings that resemble global flags.
+    /// Leading global options, including help, move to the leaf command.
+    /// Options after `--` remain literal operands.
     static func normalizeGlobals(_ args: [String]) -> [String] {
         var prefix: [String] = [], remaining = args
         while let first = remaining.first {
             let name = first.split(separator: "=", maxSplits: 1).first.map(String.init) ?? first
-            if ["--json", "--quiet"].contains(name) { prefix.append(remaining.removeFirst()) }
+            if ["--json", "--quiet", "--help", "-h", "--help-hidden"].contains(name) { prefix.append(remaining.removeFirst()) }
             else if ["--output", "--data-dir", "--language"].contains(name) {
                 prefix.append(remaining.removeFirst())
                 if !first.contains("="), let next = remaining.first, !next.hasPrefix("--") { prefix.append(remaining.removeFirst()) }
