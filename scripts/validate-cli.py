@@ -55,12 +55,45 @@ def validate(app):
         ]:
             help_text = command([executable, *arguments], env=environment).decode()
             assert usage in help_text and "USAGE: help " not in help_text, help_text
-        assert invoke(executable, "schema", "config", "apply")["commands"][0]["path"] == ["config", "apply"]
+        grouped = command([executable, "help", "instance"], env=environment).decode()
+        assert "ruri instance component set <id>" in grouped and "--component" in grouped
+        complete = command([executable, "help", "--all"], env=environment)
+        assert len(complete) < 35_000
+        index = invoke(executable, "schema")
+        assert len(json.dumps(index).encode()) < 40_000
+        assert "patchSchemas" not in index
+        for item in index["commands"]:
+            assert item["usage"] in complete.decode()
+            assert "inputSchema" not in item and "resultSchema" not in item
+        leaf = invoke(executable, "schema", "instance", "list")
+        assert len(json.dumps(leaf).encode()) < 5_000
+        assert set(leaf) == {"commands"}
+        patch = invoke(executable, "schema", "config", "apply", "--input", "--scope", "instance")
+        assert set(patch["patchSchemas"]) == {"instance"}
+        assert "resultSchema" not in patch["commands"][0]
         assert not data.exists(), "Discovery must not create a state directory"
         invoke(executable, "config", "apply", "--scope", "app", "--file", "-", input=b'{"set":{"concurrentDownloads":7}}')
         assert invoke(executable, "config", "get", "--scope", "app")["effective"]["concurrentDownloads"] == 7
         created = invoke(executable, "instance", "create", "--name", "Package fixture", "--game", "1.21.1", "--directory", "default", "--no-install")
         assert invoke(executable, "instance", "show", created["instance"]["id"])["name"] == "Package fixture"
+
+        # Default text must be independently usable; JSON/NDJSON retain their contract.
+        readable = command([executable, "instance", "list", "--data-dir", data], env=environment).decode()
+        assert created["instance"]["id"] in readable and "Package fixture" in readable
+        assert not readable.lstrip().startswith("{")
+        original_state = (data / "state.json").read_bytes()
+        preview = command([executable, "config", "set", "concurrentDownloads", "9", "--scope", "app",
+                           "--dry-run", "--data-dir", data], env=environment).decode()
+        assert "7 → 9" in preview and "revision:" in preview
+        assert "before" not in preview and "after" not in preview
+        assert (data / "state.json").read_bytes() == original_state
+        current = command([executable, "config", "get", "concurrentDownloads", "--scope", "app",
+                           "--data-dir", data], env=environment).decode()
+        assert "concurrentDownloads" in current and "7" in current and "source" in current
+        events = command([executable, "app", "info", "--output", "ndjson", "--data-dir", data], env=environment).splitlines()
+        assert len(events) == 1 and json.loads(events[0])["type"] == "result"
+        bad = subprocess.run([executable, "unknown-command"], env=environment, capture_output=True, timeout=45)
+        assert bad.returncode == 2 and not bad.stdout and b"INVALID_ARGUMENT" in bad.stderr
 
         copied = root / "App with spaces" / "Ruri.app"
         copied.parent.mkdir()
@@ -86,7 +119,7 @@ def validate(app):
         assert result["ok"] and result["data"]["healthy"], result
         assert invoke(link, "cli", "uninstall", "--bin-dir", bin_dir, "--yes")["changed"]
         assert not link.is_symlink()
-    print("CLI: version, discovery, stdin, configuration, helpers, relocation and link repair verified")
+    print("CLI: discovery budgets, text/JSON/NDJSON, stdin, configuration, helpers, relocation and link repair verified")
 
 
 if __name__ == "__main__":
