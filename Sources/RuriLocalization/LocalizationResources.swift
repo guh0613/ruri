@@ -21,7 +21,7 @@ public enum LocalizationResources {
     }()
 
     public static func installedBundle(executable: URL, mainResources: URL?) -> Bundle? {
-        let parent = executable.deletingLastPathComponent()
+        let parent = executable.resolvingSymlinksInPath().deletingLastPathComponent()
         var candidates = [mainResources, parent].compactMap { $0 }
         if ["Helpers", "MacOS"].contains(parent.lastPathComponent), parent.deletingLastPathComponent().lastPathComponent == "Contents" {
             candidates.insert(parent.deletingLastPathComponent().appendingPathComponent("Resources"), at: 0)

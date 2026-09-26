@@ -79,6 +79,7 @@ enum MessageCatalog {
         result.merge(Messages.CLIDataPackCommands.definitions) { first, _ in first }
         result.merge(Messages.CLIDirectories.definitions) { first, _ in first }
         result.merge(Messages.CLIInstanceMoves.definitions) { first, _ in first }
+        result.merge(Messages.CLIInterface.definitions) { first, _ in first }
         result.merge(Messages.CLIJavaCommands.definitions) { first, _ in first }
         result.merge(Messages.CLILaunchSettingsCommands.definitions) { first, _ in first }
         result.merge(Messages.CLIMinecraftDirectory.definitions) { first, _ in first }

@@ -65,7 +65,7 @@ enum OptiFineForgeSupport {
     }
 
     private static func discoveryData() throws -> Data {
-        guard let file = Bundle.module.url(forResource: "ruri-transformer-discovery-1.0", withExtension: "jar", subdirectory: "LoaderSupport") else {
+        guard let file = (RuriInstallation.resourceBundle("Ruri_RuriCore") ?? Bundle.module).url(forResource: "ruri-transformer-discovery-1.0", withExtension: "jar", subdirectory: "LoaderSupport") else {
             throw RuriError.message(Messages.LoaderSelection.discoveryLibraryMissing)
         }
         return try Data(contentsOf: file)

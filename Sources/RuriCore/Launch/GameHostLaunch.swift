@@ -23,7 +23,7 @@ struct GameHostLaunch {
     let request: GameHostRequest
 
     static func executable(beside binary: URL? = Bundle.main.executableURL) -> URL? {
-        guard let directory = binary?.deletingLastPathComponent() else { return nil }
+        guard let directory = binary?.resolvingSymlinksInPath().deletingLastPathComponent() else { return nil }
         let relative = "RuriGame.app/Contents/MacOS/ruri-game"
         return [directory.deletingLastPathComponent().appendingPathComponent("Helpers").appendingPathComponent(relative),
                 directory.appendingPathComponent(relative)].first { FileManager.default.isExecutableFile(atPath: $0.path) }

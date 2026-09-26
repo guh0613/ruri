@@ -20,7 +20,7 @@ public enum CurseForgeKeyStore {
         guard let input = try customKey() ?? bundledKey else { throw RuriError.message(Messages.CoreCurseForge.apiKeyMissing) }
         return try validated(input)
     }
-    static func bundledKey(in bundle: Bundle = .main) -> String? {
+    static func bundledKey(in bundle: Bundle = RuriInstallation.application().flatMap(Bundle.init(url:)) ?? .main) -> String? {
         guard let url = bundle.url(forResource: "RuriServices", withExtension: "plist"),
               let data = try? Data(contentsOf: url),
               let info = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: String],

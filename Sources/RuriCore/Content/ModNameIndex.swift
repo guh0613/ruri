@@ -23,7 +23,7 @@ public struct ModNameIndex: Sendable {
         }
     }
     public static let shared: Self = {
-        let text = Bundle.module.url(forResource: "mod_data", withExtension: "txt").flatMap { try? String(contentsOf: $0, encoding: .utf8) } ?? ""
+        let text = (RuriInstallation.resourceBundle("Ruri_RuriCore") ?? Bundle.module).url(forResource: "mod_data", withExtension: "txt").flatMap { try? String(contentsOf: $0, encoding: .utf8) } ?? ""
         return Self(text: text)
     }()
     private var entries: [Entry] = []

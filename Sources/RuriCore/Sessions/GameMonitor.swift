@@ -39,7 +39,7 @@ public enum GameMonitorClient {
     }
     public static func helperExecutable() throws -> URL {
         guard let executable = Bundle.main.executableURL else { throw RuriError.message(Messages.CoreGameMonitor.monitorComponentMissing) }
-        let parent = executable.deletingLastPathComponent()
+        let parent = executable.resolvingSymlinksInPath().deletingLastPathComponent()
         let candidates = [parent.deletingLastPathComponent().appendingPathComponent("Helpers/ruri-monitor"), parent.appendingPathComponent("ruri-monitor")]
         guard let helper = candidates.first(where: { FileManager.default.isExecutableFile(atPath: $0.path) }) else { throw RuriError.message(Messages.CoreGameMonitor.monitorComponentNotFound) }
         return helper

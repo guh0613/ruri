@@ -52,7 +52,7 @@ def check_bundle(app, cli=None):
         root = Path(directory)
         moved = root / 'Ruri.app'
         shutil.copytree(app, moved)
-        binaries = [moved / 'Contents/MacOS/Ruri', moved / 'Contents/Helpers/ruri-monitor']
+        binaries = [moved / 'Contents/MacOS/Ruri', moved / 'Contents/Helpers/ruri-monitor', moved / 'Contents/Helpers/ruri-cli']
         if cli:
             standalone = root / 'bin'
             standalone.mkdir()
@@ -74,7 +74,7 @@ def check_bundle(app, cli=None):
             raise RuntimeError('Resource check unexpectedly initialized launcher data')
         # A missing installed bundle must fail the check, not use the build tree.
         shutil.rmtree(moved / 'Contents/Resources/Ruri_RuriLocalization.bundle')
-        for binary in binaries[:2]:
+        for binary in binaries[:3]:
             result = subprocess.run([str(binary), '--localization-check'], env=environment,
                                     capture_output=True, text=True, timeout=30)
             if result.returncode != 2:

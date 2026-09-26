@@ -6,7 +6,7 @@ public struct BuildConfiguration: Sendable {
     public let microsoftClientID: String
     public let version: String
 
-    public init(info: [String: Any] = Bundle.main.infoDictionary ?? [:]) {
+    public init(info: [String: Any] = RuriInstallation.info) {
         microsoftClientID = (info["RuriMicrosoftClientID"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         version = info["RuriVersion"] as? String ?? info["CFBundleShortVersionString"] as? String ?? Messages.CoreBuildConfiguration.developmentVersion.localized
     }

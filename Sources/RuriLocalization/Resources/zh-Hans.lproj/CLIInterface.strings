@@ -1,0 +1,120 @@
+/* @symbol CLIInterface.t386cf3b4f8ac @args - */
+"cliInterface.t386cf3b4f8ac" = "操作已取消。";
+
+/* @symbol CLIInterface.t066f88703d3a @args - */
+"cliInterface.t066f88703d3a" = "未知命令路径。";
+
+/* @symbol CLIInterface.t55d7eb65faaa @args - */
+"cliInterface.t55d7eb65faaa" = "不支持此语言。";
+
+/* @symbol CLIInterface.t616e37d3d71a @args - */
+"cliInterface.t616e37d3d71a" = "未知命令。";
+
+/* @symbol CLIInterface.t0719f30a146c @args - */
+"cliInterface.t0719f30a146c" = "在标准输出返回一个 JSON 结果。";
+
+/* @symbol CLIInterface.t0232e54a0c07 @args - */
+"cliInterface.t0232e54a0c07" = "输出格式：text、json 或 ndjson。";
+
+/* @symbol CLIInterface.tfeeb5f4ef393 @args - */
+"cliInterface.tfeeb5f4ef393" = "Launcher data directory (overrides RURI_DATA_DIR).";
+
+/* @symbol CLIInterface.t83e479a9529d @args - */
+"cliInterface.t83e479a9529d" = "Language for human messages.";
+
+/* @symbol CLIInterface.t1dfd9c76d588 @args - */
+"cliInterface.t1dfd9c76d588" = "不在标准错误输出显示进度。";
+
+/* @symbol CLIInterface.tc3f4b95955b1 @args text */
+"cliInterface.tc3f4b95955b1" = "缺少 --%1$@。";
+
+/* @symbol CLIInterface.t883e96f211e4 @args text */
+"cliInterface.t883e96f211e4" = "缺少参数 %1$@。";
+
+/* @symbol CLIInterface.t8c27fffd692c @args text,text */
+"cliInterface.t8c27fffd692c" = "Expected %1$@; received %2$@ positional arguments.";
+
+/* @symbol CLIInterface.te36f73cbdb89 @args - */
+"cliInterface.te36f73cbdb89" = "Use --output text|json|ndjson; --json cannot be combined with ndjson.";
+
+/* @symbol CLIInterface.te66506826636 @args text,text */
+"cliInterface.te66506826636" = "--%1$@ must be one of: %2$@.";
+
+/* @symbol CLIInterface.t73e3848bbeee @args - */
+"cliInterface.t73e3848bbeee" = "--limit 必须介于 1 和 1000 之间。";
+
+/* @symbol CLIInterface.td3901a3793d1 @args - */
+"cliInterface.td3901a3793d1" = "--offset 不能为负数。";
+
+/* @symbol CLIInterface.tf2d2570879da @args - */
+"cliInterface.tf2d2570879da" = "此操作需要 --yes，可先使用 --dry-run 预览。";
+
+/* @symbol CLIInterface.tfd63207de5ca @args - */
+"cliInterface.tfd63207de5ca" = "查询命令及其机器接口。";
+
+/* @symbol CLIInterface.t907f38578610 @args - */
+"cliInterface.t907f38578610" = "resource? action? subaction?";
+
+/* @symbol CLIInterface.t04f3e8ad5625 @args - */
+"cliInterface.t04f3e8ad5625" = "显示应用及命令行工具的版本和路径。";
+
+/* @symbol CLIInterface.t0adf2f545bf7 @args - */
+"cliInterface.t0adf2f545bf7" = "读取应用的界面语言。";
+
+/* @symbol CLIInterface.t56774fcdd554 @args - */
+"cliInterface.t56774fcdd554" = "设置应用语言，重启后生效。";
+
+/* @symbol CLIInterface.t6034a698016d @args - */
+"cliInterface.t6034a698016d" = "预览操作，不更改用户数据。";
+
+/* @symbol CLIInterface.tb15b5698e07c @args - */
+"cliInterface.tb15b5698e07c" = "检查命令行工具及 PATH。";
+
+/* @symbol CLIInterface.t05715f352213 @args - */
+"cliInterface.t05715f352213" = "Install a user-owned ruri link without changing shell profiles.";
+
+/* @symbol CLIInterface.t6edc04f9cc0c @args - */
+"cliInterface.t6edc04f9cc0c" = "Directory for the ruri link.";
+
+/* @symbol CLIInterface.t32373072cae3 @args - */
+"cliInterface.t32373072cae3" = "Remove the ruri link only if it belongs to Ruri.";
+
+/* @symbol CLIInterface.t7736b5280e58 @args - */
+"cliInterface.t7736b5280e58" = "Directory containing the ruri link.";
+
+/* @symbol CLIInterface.t3b0368de0fdf @args - */
+"cliInterface.t3b0368de0fdf" = "确认删除或覆盖操作。";
+
+/* @symbol CLIInterface.teaca59ff6999 @args - */
+"cliInterface.teaca59ff6999" = "app language commands";
+
+/* @symbol CLIInterface.t64c4a55a8346 @args - */
+"cliInterface.t64c4a55a8346" = "app commands";
+
+/* @symbol CLIInterface.td9fc3f8ff28d @args - */
+"cliInterface.td9fc3f8ff28d" = "cli commands";
+
+/* @symbol CLIInterface.ta03f160849e6 @args - */
+"cliInterface.ta03f160849e6" = "Ruri 启动器命令行接口。";
+
+/* @symbol CLIInterface.t53102783ab6d @args - */
+"cliInterface.t53102783ab6d" = "找不到应用内的命令行工具。";
+
+/* @symbol CLIInterface.tcef88e8371f1 @args - */
+"cliInterface.tcef88e8371f1" = "命令行工具不存在。";
+
+/* @symbol CLIInterface.t93432f8e8264 @args - */
+"cliInterface.t93432f8e8264" = "目标位置不是 Ruri 创建的链接。";
+
+/* @symbol CLIInterface.t301c72c06b6d @args - */
+"cliInterface.t301c72c06b6d" = "无法安装命令行工具链接。";
+
+/* @symbol CLIInterface.te99b33ffd7c8 @args - */
+"cliInterface.te99b33ffd7c8" = "卸载期间命令行工具链接发生了变化。";
+
+/* @symbol CLIInterface.teff59600ae41 @args - */
+"cliInterface.teff59600ae41" = "无法打开操作锁。";
+
+/* @symbol CLIInterface.tce7693c68759 @args - */
+"cliInterface.tce7693c68759" = "另一个进程正在使用此资源。";
+

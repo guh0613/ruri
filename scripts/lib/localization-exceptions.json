@@ -913,5 +913,61 @@
     "file": "Sources/RuriCore/Launch/MemoryEstimator.swift",
     "literal": "\"Minecraft \\(workload.gameVersion)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/RuriCLI/Legacy/CLI.swift",
+    "literal": "\"\\(p.phase.rawValue) \\(p.completed)/\\(p.total) · \\(p.bytesCopied)/\\(p.totalBytes) bytes\\n\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCLI/Legacy/CLI.swift",
+    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
+    "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCLI/Legacy/InstanceMoves.swift",
+    "literal": "\"\\(value.phase.rawValue) · \\(value.bytesCopied)/\\(value.totalBytes) bytes\\n\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCLI/Legacy/SchematicCommands.swift",
+    "literal": "\"  \\(item.size) bytes\"",
+    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"app info\"",
+    "line": 50,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"app language get\"",
+    "line": 53,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"app language set\"",
+    "line": 53,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"cli status\"",
+    "line": 64,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"cli install\"",
+    "line": 64,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"cli uninstall\"",
+    "line": 64,
+    "reason": "Public command path or invocation syntax; not a translated message."
   }
 ]

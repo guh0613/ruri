@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "RuriCore", targets: ["RuriCore"])
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser.git", exact: "1.8.2"),
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0"),
         .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5"),
@@ -26,9 +27,11 @@ let package = Package(
         .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization", .product(name: "Sparkle", package: "Sparkle")],
                           resources: [.copy("Resources/JavaBrands")],
                           linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
-        .executableTarget(name: "RuriCLI", dependencies: ["RuriCore", "RuriLocalization"]),
+        .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
+        .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"], exclude: ["Legacy"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriLocalization"]),
-        .testTarget(name: "RuriLocalizationTests", dependencies: ["RuriLocalization"])
+        .testTarget(name: "RuriLocalizationTests", dependencies: ["RuriLocalization"]),
+        .testTarget(name: "RuriCLITests", dependencies: ["RuriCommandKit", "RuriCore"])
     ]
 )

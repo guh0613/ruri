@@ -116,7 +116,7 @@ class SigningTests(unittest.TestCase):
             with patch.object(signing, "command", return_value=b"TeamIdentifier=ABCDEFGHIJ\n") as command:
                 signing.verify(self.root / "Ruri.app", {"RURI_SIGN_IDENTITY": signing.fingerprint()})
         checks = [call.args[0] for call in command.call_args_list if "--verify" in call.args[0]]
-        self.assertEqual(len(checks), 7)
+        self.assertEqual(len(checks), 8)
         for arguments in checks:
             requirement = arguments[arguments.index("-R") + 1]
             self.assertIn("anchor apple generic", requirement)

@@ -20,10 +20,12 @@ python3 scripts/lib/app.py bundle "$app"
 scripts/swift-build.sh -c "$configuration"
 binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
+cp "$binary_dir/ruri-cli" "$app/Contents/Helpers/ruri-cli"
 cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
 sign_keychain=()
 if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-monitor"
+codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-cli"
 # Ruri is not sandboxed, so Sparkle installs in-process and its XPC services,
 # which only sandboxed hosts use, are left out. Sign nested code inside-out.
 sparkle="$app/Contents/Frameworks/Sparkle.framework"
