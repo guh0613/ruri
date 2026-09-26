@@ -9,7 +9,9 @@ struct GameConsoleView: View {
     let session: GameSession
     private enum Source: Hashable, Sendable {
         case console, launcher, debug, process
-        var stored: GameSessionStore.LogSource { switch self { case .console: .console; case .launcher: .launcher; case .debug: .nativeDebug; case .process: .fallback } }
+        case report(String)
+        var stored: GameSessionStore.LogSource? { switch self { case .console: .console; case .launcher: .launcher; case .debug: .nativeDebug; case .process: .fallback; case .report: nil } }
+        var isReport: Bool { if case .report = self { true } else { false } }
     }
     @State private var source = Source.console
     @State private var text = ""
@@ -26,8 +28,16 @@ struct GameConsoleView: View {
     @State private var origin: String?
     @State private var processOutput = false
     @State private var liveFallback = false
+    @State private var reports: [GameDiagnosticDocument] = []
+    @State private var reportRevision = 0
+    @State private var reportError: String?
+    private var selectedReport: GameDiagnosticDocument? {
+        guard case .report(let id) = source else { return nil }
+        return reports.first { $0.id == id }
+    }
+    private var reportKey: String { "\(session.id)|\(visible)|\(session.state)|\(session.exit != nil)|\(session.evidence.count)|\(session.artifactState?.rawValue ?? "")|\(retry)" }
     private var key: String {
-        "\(session.id)|\(source)|\(visible)|\(session.controlEndpoint ?? "")|\(session.state.isFinished)|\(session.exit != nil)|\(source == .launcher || session.state.isFinished ? session.updatedAt.timeIntervalSince1970 : 0)|\(retry)"
+        "\(session.id)|\(source)|\(visible)|\(session.controlEndpoint ?? "")|\(session.state.isFinished)|\(session.exit != nil)|\(source == .launcher || session.state.isFinished ? session.updatedAt.timeIntervalSince1970 : 0)|\(retry)|\(reportRevision)"
     }
 
     var body: some View {
@@ -38,16 +48,22 @@ struct GameConsoleView: View {
                     Text(Messages.SessionUI.launcherLog.localized).tag(Source.launcher)
                     Text(Messages.SessionUI.nativeDebugLog.localized).tag(Source.debug)
                     Text(Messages.SessionUI.processOutput.localized).tag(Source.process)
-                }.labelsHidden().frame(width: 155)
+                    if !reports.isEmpty {
+                        Divider()
+                        ForEach(reports) { report in
+                            Text(reportTitle(report)).tag(Source.report(report.id))
+                        }
+                    }
+                }.labelsHidden().frame(width: source.isReport ? 240 : 155)
                 TextField(Messages.SessionUI.logSearch.localized, text: $search).textFieldStyle(.roundedBorder)
-                Toggle(Messages.SessionUI.follow.localized, isOn: $follow).toggleStyle(.checkbox)
+                if !source.isReport { Toggle(Messages.SessionUI.follow.localized, isOn: $follow).toggleStyle(.checkbox) }
             }.padding(.horizontal, 24).padding(.vertical, 14)
             Divider()
-            GameLogTextView(text: displayText, follow: follow, onSelection: { selecting = $0 }).id(source)
+            GameLogTextView(text: displayText, follow: follow && !source.isReport, onSelection: { selecting = $0 }).id(source)
                 .overlay {
                     if text.isEmpty {
                         if loading { ProgressView() }
-                        else { Text(session.state.isFinished && source != .launcher ? Messages.SessionUI.nativeLogUnavailable.localized : Messages.SessionUI.emptyLog.localized).font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center).padding(32) }
+                        else { Text(source.isReport ? Messages.SessionUI.reportNotAvailable.localized : session.state.isFinished && source != .launcher ? Messages.SessionUI.nativeLogUnavailable.localized : Messages.SessionUI.emptyLog.localized).font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center).padding(32) }
                     }
                 }
             Divider()
@@ -60,23 +76,56 @@ struct GameConsoleView: View {
                     }
                 }
                 if let origin { Text(Messages.SessionUI.logOrigin(origin).localized).font(.caption).foregroundStyle(.secondary) }
+                if selectedReport?.truncated == true { Text(Messages.SessionUI.reportExcerpt.localized).font(.caption).foregroundStyle(.secondary) }
+                if let reportError {
+                    HStack {
+                        Text(reportError).font(.caption).foregroundStyle(.orange)
+                        Spacer()
+                        Button(Messages.SessionUI.retry.localized) { retry = UUID() }
+                    }
+                }
                 if processOutput { Text(Messages.SessionUI.fallbackLogHelp.localized).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true) }
                 HStack {
-                    Button(Messages.SessionUI.openGameFolder.localized) { revealLogs() }.disabled(!model.state.instances.contains { $0.id == session.instanceID })
+                    Button(source.isReport ? Messages.SessionUI.showFile.localized : Messages.SessionUI.openGameFolder.localized) { revealLogs() }
+                        .disabled(source.isReport ? reportURL == nil : !model.state.instances.contains { $0.id == session.instanceID })
                     Spacer()
-                    Button(Messages.SessionUI.saveVisibleLog.localized) { export() }.disabled(displayText.isEmpty)
+                    Button(source.isReport ? Messages.SessionUI.saveVisibleReport.localized : Messages.SessionUI.saveVisibleLog.localized) { export() }.disabled(displayText.isEmpty)
                 }.controlSize(.small)
-                Text(session.debugLogging == true ? Messages.MonitorLogging.debugModeHelp.localized : Messages.SessionRuntime.loggingHelp.localized)
-                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if !source.isReport {
+                    Text(session.debugLogging == true ? Messages.MonitorLogging.debugModeHelp.localized : Messages.SessionRuntime.loggingHelp.localized)
+                        .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
             }.padding(.horizontal, 24).padding(.vertical, 14)
         }
         .background(WindowVisibilityReader { visible = $0 })
+        .task(id: reportKey) {
+            guard visible, session.hasPlayed, session.exit != nil || session.state.isFinished else { return }
+            let paths = model.paths, record = session
+            reportError = nil
+            let work = Task.detached(priority: .utility) { try GameEvidenceCollector.reports(paths: paths, session: record) }
+            do {
+                let value = try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
+                try Task.checkCancellation()
+                let previous = selectedReport
+                reports = value
+                reportRevision += 1
+                if source.isReport, selectedReport == nil {
+                    source = reports.first(where: { $0.title == previous?.title && $0.kind == previous?.kind }).map { .report($0.id) } ?? .console
+                }
+            } catch { if !Task.isCancelled { reportError = error.localizedDescription } }
+        }
         .task(id: key) {
             liveFallback = false
             guard visible else { return }
             loading = true; error = nil
             defer { loading = false }
-            let record = session, paths = model.paths, logSource = source.stored
+            if source.isReport {
+                origin = selectedReport?.title; processOutput = false
+                replace(selectedReport?.text ?? "")
+                return
+            }
+            guard let logSource = source.stored else { return }
+            let record = session, paths = model.paths
             do {
                 let cursor = try GameSessionLogCursor(paths: paths, session: record, source: logSource)
                 while !Task.isCancelled {
@@ -123,9 +172,10 @@ struct GameConsoleView: View {
             } else { error = Messages.SessionUI.noLiveConnection.localized }
         }
         .task(id: "\(revision)|\(search)") {
-            let input = text, query = search
+            let input = text, query = search, report = source.isReport
             let value = await Task.detached(priority: .utility) {
-                let lines = input.split(separator: "\n", omittingEmptySubsequences: false).suffix(5000)
+                let all = input.split(separator: "\n", omittingEmptySubsequences: false)
+                let lines = report ? all[...] : all.suffix(5000)
                 return lines.filter { query.isEmpty || $0.localizedCaseInsensitiveContains(query) }.joined(separator: "\n")
             }.value
             if !Task.isCancelled { displayText = value }
@@ -140,14 +190,40 @@ struct GameConsoleView: View {
         guard text != value else { return }
         text = value; revision &+= 1
     }
+    private func reportTitle(_ report: GameDiagnosticDocument) -> String {
+        let title = switch report.kind {
+        case .systemReport: Messages.SessionUI.macosCrashReport.localized
+        case .jvmReport: Messages.SessionUI.jvmCrashReport.localized
+        default: Messages.SessionUI.minecraftCrashReport.localized
+        }
+        return reports.filter { $0.kind == report.kind }.count > 1 ? title + " · " + report.title : title
+    }
+    private var reportURL: URL? {
+        guard let report = selectedReport else { return nil }
+        if let relative = report.relativePath,
+           let directory = try? GameSessionStore.directory(paths: model.paths, instanceID: session.instanceID, sessionID: session.id) {
+            return try? LauncherPaths.safePath(relative, within: directory)
+        }
+        if let relative = report.gameRelativePath {
+            return try? LauncherPaths.safePath(relative, within: session.gameDirectory ?? model.paths.game(session.instanceID))
+        }
+        if report.kind == .systemReport {
+            return try? LauncherPaths.safePath(report.title, within: FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/DiagnosticReports"))
+        }
+        return nil
+    }
     private func revealLogs() {
+        if source.isReport {
+            if let reportURL { NSWorkspace.shared.activateFileViewerSelecting([reportURL]) }
+            return
+        }
         let game = model.paths.game(session.instanceID), logs = model.paths.game(session.instanceID).appendingPathComponent("logs")
         NSWorkspace.shared.activateFileViewerSelecting([FileManager.default.fileExists(atPath: logs.path) ? logs : game])
     }
     private func export() {
         let value = displayText, paths = model.paths, session = session
         let panel = NSSavePanel(); panel.allowedContentTypes = [.plainText]
-        panel.nameFieldStringValue = "ruri-\(session.id.uuidString.prefix(8)).log"
+        panel.nameFieldStringValue = selectedReport.map { $0.title + ".txt" } ?? "ruri-\(session.id.uuidString.prefix(8)).log"
         guard panel.runModal() == .OK, let destination = panel.url else { return }
         Task {
             do { try await Task.detached(priority: .utility) { try GameSessionStore.exportPreview(value, paths: paths, session: session, to: destination) }.value }

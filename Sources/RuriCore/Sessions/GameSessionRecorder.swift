@@ -152,18 +152,34 @@ import OSLog
         try save()
     }
 
-    func preserveEvidence(exit: GameExit) async {
+    func preserveEvidence(exit: GameExit, systemReportRoot: URL = GameSystemReportCollector.defaultRoot,
+                          systemReportRetryDelays: [Duration] = [.seconds(1), .seconds(2), .seconds(4)]) async {
         guard !artifactsCaptured else { return }
         artifactsCaptured = true
         // Successful ordinary runs own no duplicate output files. Native logs
         // stay in the game directory; only failures/debug runs preserve copies.
         guard exit.requiresAttention || record.debugLogging == true else { return }
         do { try saveCapturedOutput() } catch { storageWarning(error) }
-        let paths = paths, record = record, redactor = redactor
+        let paths = paths, redactor = redactor
+        var snapshot = record
+        snapshot.exit = exit
+        let record = snapshot
         do {
             let files = try await Task.detached(priority: .utility) { try GameArtifactCollector.collect(paths: paths, session: record, exit: exit, redactor: redactor) }.value
             self.record.evidence = files; self.record.artifactState = .available; self.record.updatedAt = Date()
             try save()
+        } catch { storageWarning(error) }
+        do {
+            let snapshot = record
+            let files = try await Task.detached(priority: .utility) {
+                let reports = try await GameSystemReportCollector.collectAfterExit(session: snapshot, root: systemReportRoot, retryDelays: systemReportRetryDelays)
+                return try GameArtifactCollector.preserveSystemReports(reports.documents, paths: paths, session: snapshot, redactor: redactor)
+            }.value
+            if !files.isEmpty {
+                self.record.evidence += files
+                self.record.artifactState = .available
+                try save()
+            }
         } catch { storageWarning(error) }
     }
 
@@ -184,6 +200,11 @@ import OSLog
         if !artifactsCaptured && (exit.requiresAttention || record.debugLogging == true) {
             do { record.evidence = try GameArtifactCollector.collect(paths: paths, session: record, exit: exit, redactor: redactor) }
             catch { storageWarning(error) }
+            do {
+                var budget = 6 * 1_048_576
+                let reports = try GameSystemReportCollector.collect(session: record, budget: &budget)
+                record.evidence += try GameArtifactCollector.preserveSystemReports(reports.documents, paths: paths, session: record, redactor: redactor)
+            } catch { storageWarning(error) }
         }
         record.artifactState = FileManager.default.fileExists(atPath: directory.path) ? .available : .unavailable
         // History metadata only, read after the game has written its saves.

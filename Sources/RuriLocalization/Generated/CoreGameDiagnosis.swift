@@ -207,11 +207,11 @@ extension Messages {
         public static func launchPreparationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "coreGameDiagnosis.summaryText6", table: "Diagnostics", fallback: "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。", arguments: [.text(value0)])
         }
-        /// 已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。
+        /// 游戏异常退出，暂时无法确定原因。
         ///
         /// Resource: `Diagnostics.coreGameDiagnosis.summaryText7`.
         public static var confirmedAbnormalExit: LocalizedMessage {
-            .init(key: "coreGameDiagnosis.summaryText7", table: "Diagnostics", fallback: "已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。")
+            .init(key: "coreGameDiagnosis.summaryText7", table: "Diagnostics", fallback: "游戏异常退出，暂时无法确定原因。")
         }
         /// 找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。
         ///
@@ -626,7 +626,7 @@ extension Messages {
             "Diagnostics:coreGameDiagnosis.summaryText4": .init("本次运行已经结束，无需进行崩溃处理。", []),
             "Diagnostics:coreGameDiagnosis.summaryText5": .init("记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。", []),
             "Diagnostics:coreGameDiagnosis.summaryText6": .init("启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。", [.text]),
-            "Diagnostics:coreGameDiagnosis.summaryText7": .init("已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。", []),
+            "Diagnostics:coreGameDiagnosis.summaryText7": .init("游戏异常退出，暂时无法确定原因。", []),
             "Diagnostics:coreGameDiagnosis.summaryText8": .init("找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。", [.integer]),
             "Diagnostics:coreGameDiagnosis.actionText1": .init("%1$@失败", [.text]),
             "Diagnostics:coreGameDiagnosis.actionText2": .init("这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。", []),

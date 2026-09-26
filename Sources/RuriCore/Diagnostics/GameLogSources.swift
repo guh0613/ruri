@@ -108,7 +108,7 @@ enum GameLogSources {
         return sources.compactMap { path, truncated in
             guard let reference = reference(path, within: directory), let url = try? safeFile(path, within: directory) else { return nil }
             let name = url.lastPathComponent
-            let kind: GameDiagnosticDocument.Kind = name.contains("hs_err_pid") ? .jvmReport : name.contains("crash-") ? .gameReport : .output
+            let kind: GameDiagnosticDocument.Kind = path.hasPrefix("reports/macos/") ? .systemReport : name.contains("hs_err_pid") ? .jvmReport : name.contains("crash-") ? .gameReport : .output
             return .init(url: url, reference: reference, kind: kind, gameRelativePath: nil, truncated: truncated)
         }
     }

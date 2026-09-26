@@ -101,7 +101,7 @@
 "coreGameDiagnosis.summaryText6" = "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。";
 
 /* @symbol CoreGameDiagnosis.confirmedAbnormalExit @args - */
-"coreGameDiagnosis.summaryText7" = "已确认本次异常退出，现有证据尚不能定位原因。保留报告，比根据普通警告修改模组更有帮助。";
+"coreGameDiagnosis.summaryText7" = "游戏异常退出，暂时无法确定原因。";
 
 /* @symbol CoreGameDiagnosis.relatedErrorCount @args integer */
 "coreGameDiagnosis.summaryText8" = "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。";

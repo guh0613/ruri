@@ -471,6 +471,42 @@ extension Messages {
         public static var nativeLogUnavailable: LocalizedMessage {
             .init(key: "SessionUI.nativeLogUnavailable", table: "Sessions", fallback: "未找到本次游玩的日志，文件可能已轮转或清理。")
         }
+        /// macOS 崩溃报告
+        ///
+        /// Resource: `Sessions.SessionUI.macosCrashReport`.
+        public static var macosCrashReport: LocalizedMessage {
+            .init(key: "SessionUI.macosCrashReport", table: "Sessions", fallback: "macOS 崩溃报告")
+        }
+        /// Minecraft 崩溃报告
+        ///
+        /// Resource: `Sessions.SessionUI.minecraftCrashReport`.
+        public static var minecraftCrashReport: LocalizedMessage {
+            .init(key: "SessionUI.minecraftCrashReport", table: "Sessions", fallback: "Minecraft 崩溃报告")
+        }
+        /// JVM 崩溃报告
+        ///
+        /// Resource: `Sessions.SessionUI.jvmCrashReport`.
+        public static var jvmCrashReport: LocalizedMessage {
+            .init(key: "SessionUI.jvmCrashReport", table: "Sessions", fallback: "JVM 崩溃报告")
+        }
+        /// 这份崩溃报告已不可用。
+        ///
+        /// Resource: `Sessions.SessionUI.reportNotAvailable`.
+        public static var reportNotAvailable: LocalizedMessage {
+            .init(key: "SessionUI.reportNotAvailable", table: "Sessions", fallback: "这份崩溃报告已不可用。")
+        }
+        /// 此报告仅保留了部分内容，可能缺少上下文。
+        ///
+        /// Resource: `Sessions.SessionUI.reportExcerpt`.
+        public static var reportExcerpt: LocalizedMessage {
+            .init(key: "SessionUI.reportExcerpt", table: "Sessions", fallback: "此报告仅保留了部分内容，可能缺少上下文。")
+        }
+        /// 保存当前报告…
+        ///
+        /// Resource: `Sessions.SessionUI.saveVisibleReport`.
+        public static var saveVisibleReport: LocalizedMessage {
+            .init(key: "SessionUI.saveVisibleReport", table: "Sessions", fallback: "保存当前报告…")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Sessions:SessionUI.history": .init("回顾", []),
             "Sessions:SessionUI.allInstances": .init("所有实例", []),
@@ -550,6 +586,12 @@ extension Messages {
             "Sessions:SessionUI.logOrigin": .init("来源：%1$@", [.text]),
             "Sessions:SessionUI.fallbackLogHelp": .init("未找到游戏日志，当前显示进程输出。", []),
             "Sessions:SessionUI.nativeLogUnavailable": .init("未找到本次游玩的日志，文件可能已轮转或清理。", []),
+            "Sessions:SessionUI.macosCrashReport": .init("macOS 崩溃报告", []),
+            "Sessions:SessionUI.minecraftCrashReport": .init("Minecraft 崩溃报告", []),
+            "Sessions:SessionUI.jvmCrashReport": .init("JVM 崩溃报告", []),
+            "Sessions:SessionUI.reportNotAvailable": .init("这份崩溃报告已不可用。", []),
+            "Sessions:SessionUI.reportExcerpt": .init("此报告仅保留了部分内容，可能缺少上下文。", []),
+            "Sessions:SessionUI.saveVisibleReport": .init("保存当前报告…", []),
         ]
     }
 }

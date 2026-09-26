@@ -4,6 +4,24 @@ import RuriLocalization
 
 /// Capture known files before post-launch commands can replace them.
 enum GameArtifactCollector {
+    static func preserveSystemReports(_ documents: [GameDiagnosticDocument], paths: LauncherPaths, session: GameSession,
+                                      redactor: GameLogRedactor) throws -> [GameSession.Evidence] {
+        guard !documents.isEmpty else { return [] }
+        let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
+        let reports = try GameLogSources.safeFile("reports/macos", within: directory)
+        try FileManager.default.createDirectory(at: reports, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+        return try documents.prefix(3).map { document in
+            try Task.checkCancellation()
+            guard document.kind == .systemReport, document.title == URL(fileURLWithPath: document.title).lastPathComponent,
+                  ["ips", "crash"].contains(URL(fileURLWithPath: document.title).pathExtension.lowercased()) else { throw POSIXError(.EINVAL) }
+            let relative = "reports/macos/" + document.title
+            let destination = try GameLogSources.safeFile(relative, within: directory)
+            try Data(redactor.redact(document.text).utf8).write(to: destination, options: .atomic)
+            try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
+            return .init(relativePath: relative, name: document.title, truncated: document.truncated)
+        }
+    }
+
     static func collect(paths: LauncherPaths, session: GameSession, exit: GameExit, redactor: GameLogRedactor) throws -> [GameSession.Evidence] {
         var evidence: [GameSession.Evidence] = []
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)

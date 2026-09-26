@@ -2,10 +2,30 @@ import Foundation
 import Darwin
 import RuriLocalization
 
-/// Explicit, best-effort collection of OS-generated reports. No debugger attach,
+/// Bounded collection at exit or on an explicit read. No debugger attach,
 /// privileged log access, directory watcher or in-game crash handler is installed.
 enum GameSystemReportCollector {
-    static func collect(session: GameSession, budget: inout Int, root: URL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/DiagnosticReports")) throws -> GameEvidenceSnapshot {
+    static let defaultRoot = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/DiagnosticReports")
+
+    /// macOS writes its report after the process has exited. Only native crash
+    /// signals warrant waiting; ordinary Java failures get one immediate read.
+    static func collectAfterExit(session: GameSession, root: URL = defaultRoot,
+                                 retryDelays: [Duration] = [.seconds(1), .seconds(2), .seconds(4)]) async throws -> GameEvidenceSnapshot {
+        guard let exit = session.exit, exit.requiresAttention else { return .init(documents: [], limitations: []) }
+        var snapshot = session
+        snapshot.state = .failed
+        let retries = exit.reason == .signal && [SIGABRT, SIGBUS, SIGFPE, SIGILL, SIGSEGV, SIGTRAP].contains(exit.status) ? retryDelays : []
+        for attempt in 0...retries.count {
+            try Task.checkCancellation()
+            var budget = 6 * 1_048_576
+            let result = try collect(session: snapshot, budget: &budget, root: root)
+            if !result.documents.isEmpty || attempt == retries.count { return result }
+            try await Task.sleep(for: retries[attempt])
+        }
+        return .init(documents: [], limitations: [])
+    }
+
+    static func collect(session: GameSession, budget: inout Int, root: URL = defaultRoot) throws -> GameEvidenceSnapshot {
         guard session.needsAttention, session.hasPlayed, budget > 0 else { return .init(documents: [], limitations: []) }
         let identities = [session.gameIdentity, session.monitorIdentity].compactMap { $0 }
         let pids = Set(identities.map(\.pid) + (session.exit.map { [$0.processID] } ?? []))
@@ -39,9 +59,19 @@ enum GameSystemReportCollector {
             try handle.seek(toOffset: 0)
             let limit = min(budget, 2 * 1_048_576)
             let data = try handle.read(upToCount: limit) ?? Data()
+            var after = stat()
+            guard fstat(fd, &after) == 0, info.st_size == after.st_size,
+                  info.st_mtimespec.tv_sec == after.st_mtimespec.tv_sec,
+                  info.st_mtimespec.tv_nsec == after.st_mtimespec.tv_nsec else { continue }
             budget -= data.count
             var text = String(decoding: data, as: UTF8.self)
             let truncated = info.st_size > data.count
+            if !truncated, file.pathExtension.lowercased() == "ips" {
+                // IPS has a metadata JSON line followed by the report JSON.
+                // A matching header alone can be visible before writing ends.
+                guard let newline = text.firstIndex(of: "\n"),
+                      (try? JSONSerialization.jsonObject(with: Data(text[text.index(after: newline)...].utf8))) is [String: Any] else { continue }
+            }
             if truncated, let newline = text.lastIndex(of: "\n") { text = String(text[..<newline]) }
             documents.append(.init(id: "system/" + file.lastPathComponent, relativePath: nil, title: file.lastPathComponent,
                                    kind: .systemReport, text: text, truncated: truncated))

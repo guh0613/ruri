@@ -9,6 +9,29 @@ public struct GameEvidenceSnapshot: Sendable {
 /// Explicit collection/analysis, never a periodic in-game activity. Native logs
 /// are primary; database events and bounded process output cover their gaps.
 public enum GameEvidenceCollector {
+    /// The report picker shares the same sources and session matching as export,
+    /// without reading ordinary game logs just to list a few crash reports.
+    public static func reports(paths: LauncherPaths, session: GameSession) throws -> [GameDiagnosticDocument] {
+        var budget = 12 * 1_048_576
+        var documents: [GameDiagnosticDocument] = []
+        var names: Set<String> = []
+        let sources = try GameLogSources.native(paths: paths, session: session) + GameLogSources.saved(paths: paths, session: session)
+        for source in sources where [.gameReport, .jvmReport, .systemReport].contains(source.kind) {
+            let name = session.evidence.first { $0.relativePath == source.reference.relativePath }?.name ?? source.title
+            guard !names.contains(name), budget > 0 else { continue }
+            let parts = try GameNativeLogCollector.read(source, budget: &budget)
+            guard let first = parts.first else { continue }
+            names.insert(name)
+            let text = parts.map(\.text).joined(separator: "\n" + Messages.CoreGameSession.truncatedLogNotice.localized + "\n")
+            documents.append(.init(id: source.id, relativePath: first.relativePath, title: name, kind: source.kind,
+                                   text: text, truncated: parts.contains(where: \.truncated), gameRelativePath: first.gameRelativePath))
+        }
+        if !documents.contains(where: { $0.kind == .systemReport }) {
+            documents += try GameSystemReportCollector.collect(session: session, budget: &budget).documents
+        }
+        return documents
+    }
+
     public static func collect(paths: LauncherPaths, session: GameSession, includeGameLogs: Bool = false) throws -> GameEvidenceSnapshot {
         var documents: [GameDiagnosticDocument] = [], limitations: [String] = []
         if let failure = session.displayFailure {
@@ -60,8 +83,10 @@ public enum GameEvidenceCollector {
                     if !text.isEmpty { documents.append(.init(id: "live-console", relativePath: nil, title: Messages.SessionUI.processOutput.localized, kind: .output, text: text, truncated: true)) }
                 } catch { limitations.append(Messages.SessionUI.noLiveConnection.localized) }
             }
-            let system = try GameSystemReportCollector.collect(session: session, budget: &budget)
-            documents += system.documents; limitations += system.limitations
+            if !documents.contains(where: { $0.kind == .systemReport }) {
+                let system = try GameSystemReportCollector.collect(session: session, budget: &budget)
+                documents += system.documents; limitations += system.limitations
+            }
         }
         return .init(documents: documents, limitations: limitations)
     }

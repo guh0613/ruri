@@ -483,3 +483,20 @@
 
 /* @symbol HomeActivity.dayContribution @args text */
 "HomeActivity.dayContribution" = "当日游玩 %1$@";
+/* @symbol SessionUI.macosCrashReport @args - */
+"SessionUI.macosCrashReport" = "macOS 崩溃报告";
+
+/* @symbol SessionUI.minecraftCrashReport @args - */
+"SessionUI.minecraftCrashReport" = "Minecraft 崩溃报告";
+
+/* @symbol SessionUI.jvmCrashReport @args - */
+"SessionUI.jvmCrashReport" = "JVM 崩溃报告";
+
+/* @symbol SessionUI.reportNotAvailable @args - */
+"SessionUI.reportNotAvailable" = "这份崩溃报告已不可用。";
+
+/* @symbol SessionUI.reportExcerpt @args - */
+"SessionUI.reportExcerpt" = "此报告仅保留了部分内容，可能缺少上下文。";
+
+/* @symbol SessionUI.saveVisibleReport @args - */
+"SessionUI.saveVisibleReport" = "保存当前报告…";
