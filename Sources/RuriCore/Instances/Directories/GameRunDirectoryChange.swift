@@ -97,6 +97,27 @@ public actor GameRunDirectoryChange {
     let paths: LauncherPaths
     public init(paths: LauncherPaths) { self.paths = paths }
 
+    /// Advisory CLI preview. The executing path obtains leases and validates a
+    /// fresh snapshot; this path does not register a previously unknown folder.
+    public func inspect(instanceID: UUID, target: GameRunDirectory, customPath: URL? = nil) throws -> GameRunDirectoryChangePreview {
+        let state = try StateStore.load(paths), current = paths.configured(with: state)
+        let instance = try find(instanceID, in: state)
+        try current.validateBinding(instance)
+        let custom = target == .custom ? try customPath.map { try CustomRunDirectory.inspect(at: $0, paths: current) } ?? instance.customRunDirectory : nil
+        if target == .custom && custom == nil { throw RuriError.message(Messages.CoreGameRunDirectoryChange.requireCustomDirectory) }
+        var changed = instance; changed.runDirectory = target
+        if target == .custom { changed.customRunDirectory = custom }
+        let destination = current.including(changed)
+        try destination.validateDirectoryConfiguration()
+        let source = try RunDirectorySnapshot.read(paths: current, instanceID: instanceID)
+        let result = try RunDirectorySnapshot.read(paths: destination, instanceID: instanceID)
+        let others = state.instances.filter { $0.id != instanceID && current.game($0.id).resolvingSymlinksInPath() == destination.game(instanceID).resolvingSymlinksInPath() }.map(\.name)
+        return .init(id: UUID(), instanceID: instanceID, instanceName: instance.name, source: current.game(instanceID), target: destination.game(instanceID),
+                     sourceMode: instance.runDirectory ?? .isolated, targetMode: target, targetCustomDirectory: custom, createdAt: Date(),
+                     copyIssue: MinecraftGameDataFiles.copyIssue(source: source, sourcePaths: current, targetPaths: destination, instanceID: instanceID),
+                     otherInstances: others, instance: instance, sourceSnapshot: source, targetSnapshot: result)
+    }
+
     public func preview(instanceID: UUID, target: GameRunDirectory, customDirectory: CustomRunDirectory? = nil) async throws -> GameRunDirectoryChangePreview {
         let state = try StateStore.load(paths)
         let current = paths.configured(with: state)

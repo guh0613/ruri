@@ -12,6 +12,18 @@ public struct CustomRunDirectory: Codable, Identifiable, Equatable, Sendable {
     private struct Marker: Codable { let version: Int; let id: UUID }
     private static let markerPath = ".ruri/run-directory.json"
 
+    /// Reads a candidate identity without creating markers, bookmarks or locks.
+    /// An unregistered candidate must still be registered before execution.
+    public static func inspect(at selected: URL, paths: LauncherPaths) throws -> Self {
+        let url = selected.standardizedFileURL.resolvingSymlinksInPath()
+        guard try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw RuriError.message(Messages.CoreCustomRunDirectory.existingGameFolderRequired) }
+        let marker = try LauncherPaths.safePath(markerPath, within: url)
+        let id = FileManager.default.fileExists(atPath: marker.path) ? try readMarker(marker).id : UUID()
+        let candidate = Self(id: id, url: url, bookmark: nil, createdAt: Date())
+        try paths.checkCustomRunDirectory(candidate, readingIdentity: true)
+        return candidate
+    }
+
     /// Registers coordination metadata only. Existing game files are preserved.
     public static func register(at selected: URL, paths: LauncherPaths) throws -> Self {
         let url = selected.standardizedFileURL.resolvingSymlinksInPath()

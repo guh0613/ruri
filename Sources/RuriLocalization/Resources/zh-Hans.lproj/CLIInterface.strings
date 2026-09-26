@@ -214,3 +214,342 @@
 /* @symbol CLIInterface.t15b3dd14487d @args - */
 "cliInterface.t15b3dd14487d" = "java.path is required in path mode.";
 
+/* @symbol CLIInterface.t163f689a3d2f @args - */
+"cliInterface.t163f689a3d2f" = "List managed and registered instances.";
+
+/* @symbol CLIInterface.t61c2b6ad309c @args - */
+"cliInterface.t61c2b6ad309c" = "Filter by exact name.";
+
+/* @symbol CLIInterface.t3a0b2a4eac30 @args - */
+"cliInterface.t3a0b2a4eac30" = "Filter by directory UUID or default.";
+
+/* @symbol CLIInterface.te46ca00ec899 @args - */
+"cliInterface.te46ca00ec899" = "Maximum results (1...1000; default 50).";
+
+/* @symbol CLIInterface.t184bd8d0fe9d @args - */
+"cliInterface.t184bd8d0fe9d" = "Result offset (default 0).";
+
+/* @symbol CLIInterface.ta412189d9e76 @args - */
+"cliInterface.ta412189d9e76" = "Return all results.";
+
+/* @symbol CLIInterface.t1a9316dc0247 @args - */
+"cliInterface.t1a9316dc0247" = "Read the currently selected instance.";
+
+/* @symbol CLIInterface.td25fbbc9aa83 @args - */
+"cliInterface.td25fbbc9aa83" = "Inspect an instance and its locations.";
+
+/* @symbol CLIInterface.t554bb290d490 @args - */
+"cliInterface.t554bb290d490" = "Resolve an exact name instead of a UUID.";
+
+/* @symbol CLIInterface.t309b2060e6e7 @args - */
+"cliInterface.t309b2060e6e7" = "List available Minecraft versions.";
+
+/* @symbol CLIInterface.t0f6dcda14ae4 @args - */
+"cliInterface.t0f6dcda14ae4" = "Include snapshot versions.";
+
+/* @symbol CLIInterface.tea647925f201 @args - */
+"cliInterface.tea647925f201" = "Create and install a named instance.";
+
+/* @symbol CLIInterface.tf78b43b0ee95 @args - */
+"cliInterface.tf78b43b0ee95" = "Instance name.";
+
+/* @symbol CLIInterface.tc32a76745397 @args - */
+"cliInterface.tc32a76745397" = "Minecraft version.";
+
+/* @symbol CLIInterface.tcba396edfba1 @args - */
+"cliInterface.tcba396edfba1" = "Explicit destination directory UUID, or default.";
+
+/* @symbol CLIInterface.tc54f734a37a6 @args - */
+"cliInterface.tc54f734a37a6" = "Loader selection as kind=version; repeat for combinations.";
+
+/* @symbol CLIInterface.td183fd7d75d0 @args - */
+"cliInterface.td183fd7d75d0" = "Create the record without downloading files.";
+
+/* @symbol CLIInterface.tc5757d580bc3 @args - */
+"cliInterface.tc5757d580bc3" = "Install an existing uninstalled instance.";
+
+/* @symbol CLIInterface.te334b8a18014 @args - */
+"cliInterface.te334b8a18014" = "Repair an instance's installation files.";
+
+/* @symbol CLIInterface.ta4178213b601 @args - */
+"cliInterface.ta4178213b601" = "Select an instance.";
+
+/* @symbol CLIInterface.t5ba0c4853561 @args - */
+"cliInterface.t5ba0c4853561" = "Rename an instance.";
+
+/* @symbol CLIInterface.tb19f8bbe0060 @args - */
+"cliInterface.tb19f8bbe0060" = "id name";
+
+/* @symbol CLIInterface.t850a4e6bffbd @args - */
+"cliInterface.t850a4e6bffbd" = "Set an instance's favorite state.";
+
+/* @symbol CLIInterface.t07e88e1b19e9 @args - */
+"cliInterface.t07e88e1b19e9" = "id enabled";
+
+/* @symbol CLIInterface.t1e047c3f4441 @args - */
+"cliInterface.t1e047c3f4441" = "Move instance-owned files to the Trash and remove its record.";
+
+/* @symbol CLIInterface.t2774fd42ed73 @args - */
+"cliInterface.t2774fd42ed73" = "Set or reset the instance icon.";
+
+/* @symbol CLIInterface.tc9dade836bbe @args - */
+"cliInterface.tc9dade836bbe" = "PNG icon file.";
+
+/* @symbol CLIInterface.t4888fb1eb4ed @args - */
+"cliInterface.t4888fb1eb4ed" = "Built-in icon glyph.";
+
+/* @symbol CLIInterface.t44893043de60 @args - */
+"cliInterface.t44893043de60" = "Built-in icon tint.";
+
+/* @symbol CLIInterface.t22cb6cbb2d9e @args - */
+"cliInterface.t22cb6cbb2d9e" = "Restore the default icon.";
+
+/* @symbol CLIInterface.ta496dc81dcac @args - */
+"cliInterface.ta496dc81dcac" = "Copy an instance to a named destination.";
+
+/* @symbol CLIInterface.td52e9c9dbb40 @args - */
+"cliInterface.td52e9c9dbb40" = "New instance name.";
+
+/* @symbol CLIInterface.t874415ccd0ab @args - */
+"cliInterface.t874415ccd0ab" = "Exclude worlds.";
+
+/* @symbol CLIInterface.t4829b4f8f896 @args - */
+"cliInterface.t4829b4f8f896" = "Include world backups.";
+
+/* @symbol CLIInterface.t2aee4e3b9cb2 @args - */
+"cliInterface.t2aee4e3b9cb2" = "Move an instance between directories.";
+
+/* @symbol CLIInterface.t8f4cf0564496 @args - */
+"cliInterface.t8f4cf0564496" = "Export an instance archive.";
+
+/* @symbol CLIInterface.t148d4a105bd2 @args - */
+"cliInterface.t148d4a105bd2" = "ruri, complete, multimc, mcbbs, or mrpack.";
+
+/* @symbol CLIInterface.tc48ebcacc9f3 @args - */
+"cliInterface.tc48ebcacc9f3" = "id file";
+
+/* @symbol CLIInterface.t94761d5853b8 @args - */
+"cliInterface.t94761d5853b8" = "Inspect installed loaders and the component backup.";
+
+/* @symbol CLIInterface.t66e7670cbafe @args - */
+"cliInterface.t66e7670cbafe" = "List loader versions compatible with the game.";
+
+/* @symbol CLIInterface.t8ca25fc9cedc @args - */
+"cliInterface.t8ca25fc9cedc" = "id loader";
+
+/* @symbol CLIInterface.td7622dae9d70 @args - */
+"cliInterface.td7622dae9d70" = "Replace the installed loader combination.";
+
+/* @symbol CLIInterface.t4465e709e830 @args - */
+"cliInterface.t4465e709e830" = "Loader kind=version; omit for vanilla.";
+
+/* @symbol CLIInterface.t3d825619ad66 @args - */
+"cliInterface.t3d825619ad66" = "Restore the previous loader configuration.";
+
+/* @symbol CLIInterface.t336d8b6931f5 @args - */
+"cliInterface.t336d8b6931f5" = "instance component commands";
+
+/* @symbol CLIInterface.tea19eba1f497 @args - */
+"cliInterface.tea19eba1f497" = "instance commands";
+
+/* @symbol CLIInterface.t79f4a3aa9493 @args - */
+"cliInterface.t79f4a3aa9493" = "Specify either an instance UUID or --name.";
+
+/* @symbol CLIInterface.t188ae1e6f458 @args - */
+"cliInterface.t188ae1e6f458" = "Use true or false.";
+
+/* @symbol CLIInterface.tf996e1aeec0d @args - */
+"cliInterface.tf996e1aeec0d" = "Specify --file, --glyph or --reset.";
+
+/* @symbol CLIInterface.te8f93a97f4a5 @args - */
+"cliInterface.te8f93a97f4a5" = "Unknown icon glyph or tint.";
+
+/* @symbol CLIInterface.t6d7d7903a91c @args - */
+"cliInterface.t6d7d7903a91c" = "component list";
+
+/* @symbol CLIInterface.t86da3ee4ed9e @args - */
+"cliInterface.t86da3ee4ed9e" = "component versions";
+
+/* @symbol CLIInterface.tecaf531d009c @args - */
+"cliInterface.tecaf531d009c" = "Unknown loader.";
+
+/* @symbol CLIInterface.t77ee9ed120bf @args - */
+"cliInterface.t77ee9ed120bf" = "component set";
+
+/* @symbol CLIInterface.te280bd4b1756 @args - */
+"cliInterface.te280bd4b1756" = "component restore";
+
+/* @symbol CLIInterface.td578c368dab6 @args - */
+"cliInterface.td578c368dab6" = "Unknown instance action.";
+
+/* @symbol CLIInterface.tc7720bf2a0d4 @args - */
+"cliInterface.tc7720bf2a0d4" = "Components use loader=version syntax; omit components for vanilla.";
+
+/* @symbol CLIInterface.t46989dde4470 @args - */
+"cliInterface.t46989dde4470" = "Duplicate loader selection.";
+
+/* @symbol CLIInterface.t733e25583e8d @args - */
+"cliInterface.t733e25583e8d" = "Invalid RURI_DOWNLOAD_SOURCE.";
+
+/* @symbol CLIInterface.t121c67f22040 @args - */
+"cliInterface.t121c67f22040" = "The output file already exists.";
+
+/* @symbol CLIInterface.tfe6f797e1938 @args - */
+"cliInterface.tfe6f797e1938" = "More than one instance has that name.";
+
+/* @symbol CLIInterface.t79de4634dcb4 @args - */
+"cliInterface.t79de4634dcb4" = "Invalid game version.";
+
+/* @symbol CLIInterface.t70a45a4240d8 @args - */
+"cliInterface.t70a45a4240d8" = "Directory not found.";
+
+/* @symbol CLIInterface.t17574d1bad8e @args - */
+"cliInterface.t17574d1bad8e" = "The target directory was removed.";
+
+/* @symbol CLIInterface.tb199229434bb @args - */
+"cliInterface.tb199229434bb" = "The instance was removed during installation.";
+
+/* @symbol CLIInterface.t7d732629b332 @args - */
+"cliInterface.t7d732629b332" = "The instance location changed.";
+
+/* @symbol CLIInterface.t97013cab62b8 @args - */
+"cliInterface.t97013cab62b8" = "Invalid instance name.";
+
+/* @symbol CLIInterface.tf64fee5acdf0 @args - */
+"cliInterface.tf64fee5acdf0" = "List registered and detached game directories.";
+
+/* @symbol CLIInterface.t13c336f9a11b @args - */
+"cliInterface.t13c336f9a11b" = "Read the selected game directory.";
+
+/* @symbol CLIInterface.t0a77c8493c2e @args - */
+"cliInterface.t0a77c8493c2e" = "Inspect an existing Minecraft folder without registering it.";
+
+/* @symbol CLIInterface.t135973383faa @args - */
+"cliInterface.t135973383faa" = "Register an existing directory.";
+
+/* @symbol CLIInterface.t63c8c08621c5 @args - */
+"cliInterface.t63c8c08621c5" = "Directory display name.";
+
+/* @symbol CLIInterface.t0175170e7603 @args - */
+"cliInterface.t0175170e7603" = "Directory layout.";
+
+/* @symbol CLIInterface.te995381e7764 @args - */
+"cliInterface.te995381e7764" = "Select a registered directory.";
+
+/* @symbol CLIInterface.tac593c150e36 @args - */
+"cliInterface.tac593c150e36" = "Refresh versions in a Minecraft directory.";
+
+/* @symbol CLIInterface.t8592d66b70ee @args - */
+"cliInterface.t8592d66b70ee" = "Unregister a directory while retaining its files.";
+
+/* @symbol CLIInterface.tbbd25ee7fe86 @args - */
+"cliInterface.tbbd25ee7fe86" = "Rename a registered directory.";
+
+/* @symbol CLIInterface.t741d898dfaff @args - */
+"cliInterface.t741d898dfaff" = "Reconnect a registered directory that was moved.";
+
+/* @symbol CLIInterface.te5b3e2aa3520 @args - */
+"cliInterface.te5b3e2aa3520" = "id path";
+
+/* @symbol CLIInterface.teeb75a68ecdc @args - */
+"cliInterface.teeb75a68ecdc" = "Restore a detached Minecraft directory.";
+
+/* @symbol CLIInterface.t72af20234e14 @args - */
+"cliInterface.t72af20234e14" = "Inspect an instance's game directory.";
+
+/* @symbol CLIInterface.t1db840ce735d @args - */
+"cliInterface.t1db840ce735d" = "Change an instance's run directory.";
+
+/* @symbol CLIInterface.t4d6e9b1a4264 @args - */
+"cliInterface.t4d6e9b1a4264" = "Existing custom game directory.";
+
+/* @symbol CLIInterface.ta39f0e134724 @args - */
+"cliInterface.ta39f0e134724" = "Copy game files into the empty destination.";
+
+/* @symbol CLIInterface.tdb3bd307aea7 @args - */
+"cliInterface.tdb3bd307aea7" = "instance mode";
+
+/* @symbol CLIInterface.tfe9e723a6df9 @args - */
+"cliInterface.tfe9e723a6df9" = "Reconnect a moved custom game directory.";
+
+/* @symbol CLIInterface.td41369a235db @args - */
+"cliInterface.td41369a235db" = "instance path";
+
+/* @symbol CLIInterface.t738bb690d8c2 @args - */
+"cliInterface.t738bb690d8c2" = "List local Java runtimes and their origins.";
+
+/* @symbol CLIInterface.t1cd05347cc64 @args - */
+"cliInterface.t1cd05347cc64" = "List installable Java runtimes.";
+
+/* @symbol CLIInterface.teba714b1f2cc @args - */
+"cliInterface.teba714b1f2cc" = "Filter by Java major version.";
+
+/* @symbol CLIInterface.taa6237af9422 @args - */
+"cliInterface.taa6237af9422" = "Filter by architecture.";
+
+/* @symbol CLIInterface.tf3cf2acb7b9a @args - */
+"cliInterface.tf3cf2acb7b9a" = "Register an installed Java runtime.";
+
+/* @symbol CLIInterface.t0ecfbec54289 @args - */
+"cliInterface.t0ecfbec54289" = "Remove Java from the manual list, retaining files and references.";
+
+/* @symbol CLIInterface.tea0c61c73f43 @args - */
+"cliInterface.tea0c61c73f43" = "Set the default Java selection.";
+
+/* @symbol CLIInterface.td99052ac398d @args - */
+"cliInterface.td99052ac398d" = "List settings that reference a managed Java runtime.";
+
+/* @symbol CLIInterface.tb07678654f81 @args - */
+"cliInterface.tb07678654f81" = "Inspect an incomplete installation.";
+
+/* @symbol CLIInterface.t2b2ab103144b @args - */
+"cliInterface.t2b2ab103144b" = "Install a Java runtime by catalog ID.";
+
+/* @symbol CLIInterface.tef883d8efb5c @args - */
+"cliInterface.tef883d8efb5c" = "Repair a managed Java runtime.";
+
+/* @symbol CLIInterface.t355d66c16583 @args - */
+"cliInterface.t355d66c16583" = "Move a managed Java installation to the Trash.";
+
+/* @symbol CLIInterface.t5897a3d49bb5 @args - */
+"cliInterface.t5897a3d49bb5" = "Reset referencing settings to automatic Java.";
+
+/* @symbol CLIInterface.t2a5f80694223 @args - */
+"cliInterface.t2a5f80694223" = "Remove an incomplete installation.";
+
+/* @symbol CLIInterface.tc67f25bb4cc3 @args - */
+"cliInterface.tc67f25bb4cc3" = "directory run commands";
+
+/* @symbol CLIInterface.ta42145487540 @args - */
+"cliInterface.ta42145487540" = "directory commands";
+
+/* @symbol CLIInterface.tcb439480ed22 @args - */
+"cliInterface.tcb439480ed22" = "java commands";
+
+/* @symbol CLIInterface.t5efd67648f0d @args - */
+"cliInterface.t5efd67648f0d" = "Directory name cannot be empty.";
+
+/* @symbol CLIInterface.t8ba03aeb3548 @args - */
+"cliInterface.t8ba03aeb3548" = "A new managed directory must be empty.";
+
+/* @symbol CLIInterface.t3076aed36f7c @args - */
+"cliInterface.t3076aed36f7c" = "run get";
+
+/* @symbol CLIInterface.t8cd571ec9aef @args - */
+"cliInterface.t8cd571ec9aef" = "run set";
+
+/* @symbol CLIInterface.t7dfc3bcc624c @args - */
+"cliInterface.t7dfc3bcc624c" = "run relocate";
+
+/* @symbol CLIInterface.tdc5f6e9debdb @args - */
+"cliInterface.tdc5f6e9debdb" = "Use isolated, shared or custom; --path is only valid for custom.";
+
+/* @symbol CLIInterface.t9a582e74d089 @args - */
+"cliInterface.t9a582e74d089" = "Unknown directory action.";
+
+/* @symbol CLIInterface.t33604425d94f @args - */
+"cliInterface.t33604425d94f" = "Java catalog entry not found.";
+
+/* @symbol CLIInterface.tab6287c24a41 @args - */
+"cliInterface.tab6287c24a41" = "Unknown Java action.";
+

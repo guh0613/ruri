@@ -39,17 +39,8 @@ extension AppModel {
     func trash(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id), !busy else { return }
         do {
-            if instance.repositoryVersionID != nil {
-                save(); guard !readOnly else { return }
-                acceptState(try MinecraftFolderStore.trashVersion(instance.id, paths: basePaths)); return
-            }
-            let lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
-            defer { withExtendedLifetime(lease) {} }
-            let url = paths.instance(instance.id)
-            if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.trashItem(at: url, resultingItemURL: nil) }
-            state.instances.removeAll { $0.id == instance.id }
-            if state.selectedInstanceID == instance.id { state.selectedInstanceID = state.instances.first?.id }
-            save()
+            save(); guard !readOnly else { return }
+            acceptState(try InstanceService(paths: basePaths).remove(instance.id))
         } catch { self.error = error.localizedDescription }
     }
 }

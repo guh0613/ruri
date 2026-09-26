@@ -40,6 +40,9 @@ public enum CLIApplication {
 
     @MainActor static func execute(_ request: CommandRequest, output: CommandOutput) async throws -> Value {
         if request.spec.path.first == "config" { return try configure(request) }
+        if request.spec.path.first == "instance" { return try await manageInstance(request, output: output) }
+        if request.spec.path.first == "directory" { return try await manageDirectory(request, output: output) }
+        if request.spec.path.first == "java" { return try await manageJava(request, output: output) }
         switch request.path {
         case "schema":
             let matching = CommandRegistry.commands.filter { Array($0.path.prefix(request.operands.count)) == request.operands }

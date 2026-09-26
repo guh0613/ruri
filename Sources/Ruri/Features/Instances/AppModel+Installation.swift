@@ -19,23 +19,23 @@ extension AppModel {
     func install(name: String, version: String, selections: [LoaderSelection]) {
         guard !busy, !readOnly else { return }
         if let issue = LoaderCompatibility.combinationIssue(selections.map(\.loader), game: version) { error = issue; return }
-        var instance = GameInstance(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name, gameVersion: version)
-        instance.setLoaderSelections(selections)
-        instance.launchOverrides = .init()
-        instance.directoryID = paths.newInstanceDirectoryID
-        instance.runDirectory = (state.settings.isolationPolicy ?? .always).directory(loader: instance.loader)
-        do { instance = try MinecraftFolderStore.preparingNewInstance(instance, paths: paths) }
-        catch { self.error = error.localizedDescription; return }
-        state.instances.append(instance); select(instance); showCreate = false; page = .activity
+        let instance: GameInstance
+        do {
+            save(); guard !readOnly else { return }
+            instance = try InstanceService(paths: paths).create(name: name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Minecraft \(version)" : name,
+                                                               game: version, selections: selections, directoryID: paths.newInstanceDirectoryID)
+            acceptState(try StateStore.load(basePaths))
+        } catch { self.error = error.localizedDescription; return }
+        select(instance); showCreate = false; page = .activity
         install(instance)
     }
     func install(_ instance: GameInstance) {
         guard !busy, !readOnly else { return }
-        perform(Messages.AppAppModelInstallation.installInstance(instance.name), instanceID: instance.id) { [self] id in
-            let result = try await installer.install(instance, concurrency: state.settings.concurrentDownloads) { [weak self] progress in
+        perform(Messages.AppAppModelInstallation.installInstance(instance.name)) { [self] id in
+            let result = try await InstanceService(paths: paths).install(instance.id, downloader: installer.downloader) { [weak self] progress in
                 await self?.progress(id, progress)
             }
-            try recordInstallation(result, requested: instance); report(Messages.AppAppModelInstallation.installationResult(result.name))
+            acceptState(try StateStore.load(basePaths)); report(Messages.AppAppModelInstallation.installationResult(result.name))
         }
     }
     func recordInstallation(_ result: GameInstance, requested: GameInstance) throws {
@@ -49,8 +49,8 @@ extension AppModel {
     }
     func repair(_ instance: GameInstance) {
         guard !isInstanceInUse(instance.id) else { return }
-        perform(Messages.AppAppModelInstallation.repairInstance(instance.name), instanceID: instance.id) { [self] id in
-            try await installer.repair(instance, concurrency: state.settings.concurrentDownloads) { [weak self] p in await self?.progress(id, p) }
+        perform(Messages.AppAppModelInstallation.repairInstance(instance.name)) { [self] id in
+            _ = try await InstanceService(paths: paths).install(instance.id, repair: true, downloader: installer.downloader) { [weak self] p in await self?.progress(id, p) }
         }
     }
     func changeComponents(_ instance: GameInstance, selections: [LoaderSelection]) {

@@ -435,6 +435,684 @@ extension Messages {
         public static var t15b3dd14487d: LocalizedMessage {
             .init(key: "cliInterface.t15b3dd14487d", table: "CLIInterface", fallback: "java.path is required in path mode.")
         }
+        /// List managed and registered instances.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t163f689a3d2f`.
+        public static var t163f689a3d2f: LocalizedMessage {
+            .init(key: "cliInterface.t163f689a3d2f", table: "CLIInterface", fallback: "List managed and registered instances.")
+        }
+        /// Filter by exact name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t61c2b6ad309c`.
+        public static var t61c2b6ad309c: LocalizedMessage {
+            .init(key: "cliInterface.t61c2b6ad309c", table: "CLIInterface", fallback: "Filter by exact name.")
+        }
+        /// Filter by directory UUID or default.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t3a0b2a4eac30`.
+        public static var t3a0b2a4eac30: LocalizedMessage {
+            .init(key: "cliInterface.t3a0b2a4eac30", table: "CLIInterface", fallback: "Filter by directory UUID or default.")
+        }
+        /// Maximum results (1...1000; default 50).
+        ///
+        /// Resource: `CLIInterface.cliInterface.te46ca00ec899`.
+        public static var te46ca00ec899: LocalizedMessage {
+            .init(key: "cliInterface.te46ca00ec899", table: "CLIInterface", fallback: "Maximum results (1...1000; default 50).")
+        }
+        /// Result offset (default 0).
+        ///
+        /// Resource: `CLIInterface.cliInterface.t184bd8d0fe9d`.
+        public static var t184bd8d0fe9d: LocalizedMessage {
+            .init(key: "cliInterface.t184bd8d0fe9d", table: "CLIInterface", fallback: "Result offset (default 0).")
+        }
+        /// Return all results.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta412189d9e76`.
+        public static var ta412189d9e76: LocalizedMessage {
+            .init(key: "cliInterface.ta412189d9e76", table: "CLIInterface", fallback: "Return all results.")
+        }
+        /// Read the currently selected instance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1a9316dc0247`.
+        public static var t1a9316dc0247: LocalizedMessage {
+            .init(key: "cliInterface.t1a9316dc0247", table: "CLIInterface", fallback: "Read the currently selected instance.")
+        }
+        /// Inspect an instance and its locations.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td25fbbc9aa83`.
+        public static var td25fbbc9aa83: LocalizedMessage {
+            .init(key: "cliInterface.td25fbbc9aa83", table: "CLIInterface", fallback: "Inspect an instance and its locations.")
+        }
+        /// Resolve an exact name instead of a UUID.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t554bb290d490`.
+        public static var t554bb290d490: LocalizedMessage {
+            .init(key: "cliInterface.t554bb290d490", table: "CLIInterface", fallback: "Resolve an exact name instead of a UUID.")
+        }
+        /// List available Minecraft versions.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t309b2060e6e7`.
+        public static var t309b2060e6e7: LocalizedMessage {
+            .init(key: "cliInterface.t309b2060e6e7", table: "CLIInterface", fallback: "List available Minecraft versions.")
+        }
+        /// Include snapshot versions.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0f6dcda14ae4`.
+        public static var t0f6dcda14ae4: LocalizedMessage {
+            .init(key: "cliInterface.t0f6dcda14ae4", table: "CLIInterface", fallback: "Include snapshot versions.")
+        }
+        /// Create and install a named instance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tea647925f201`.
+        public static var tea647925f201: LocalizedMessage {
+            .init(key: "cliInterface.tea647925f201", table: "CLIInterface", fallback: "Create and install a named instance.")
+        }
+        /// Instance name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf78b43b0ee95`.
+        public static var tf78b43b0ee95: LocalizedMessage {
+            .init(key: "cliInterface.tf78b43b0ee95", table: "CLIInterface", fallback: "Instance name.")
+        }
+        /// Minecraft version.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc32a76745397`.
+        public static var tc32a76745397: LocalizedMessage {
+            .init(key: "cliInterface.tc32a76745397", table: "CLIInterface", fallback: "Minecraft version.")
+        }
+        /// Explicit destination directory UUID, or default.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tcba396edfba1`.
+        public static var tcba396edfba1: LocalizedMessage {
+            .init(key: "cliInterface.tcba396edfba1", table: "CLIInterface", fallback: "Explicit destination directory UUID, or default.")
+        }
+        /// Loader selection as kind=version; repeat for combinations.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc54f734a37a6`.
+        public static var tc54f734a37a6: LocalizedMessage {
+            .init(key: "cliInterface.tc54f734a37a6", table: "CLIInterface", fallback: "Loader selection as kind=version; repeat for combinations.")
+        }
+        /// Create the record without downloading files.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td183fd7d75d0`.
+        public static var td183fd7d75d0: LocalizedMessage {
+            .init(key: "cliInterface.td183fd7d75d0", table: "CLIInterface", fallback: "Create the record without downloading files.")
+        }
+        /// Install an existing uninstalled instance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc5757d580bc3`.
+        public static var tc5757d580bc3: LocalizedMessage {
+            .init(key: "cliInterface.tc5757d580bc3", table: "CLIInterface", fallback: "Install an existing uninstalled instance.")
+        }
+        /// Repair an instance's installation files.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te334b8a18014`.
+        public static var te334b8a18014: LocalizedMessage {
+            .init(key: "cliInterface.te334b8a18014", table: "CLIInterface", fallback: "Repair an instance's installation files.")
+        }
+        /// Select an instance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta4178213b601`.
+        public static var ta4178213b601: LocalizedMessage {
+            .init(key: "cliInterface.ta4178213b601", table: "CLIInterface", fallback: "Select an instance.")
+        }
+        /// Rename an instance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5ba0c4853561`.
+        public static var t5ba0c4853561: LocalizedMessage {
+            .init(key: "cliInterface.t5ba0c4853561", table: "CLIInterface", fallback: "Rename an instance.")
+        }
+        /// id name
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb19f8bbe0060`.
+        public static var tb19f8bbe0060: LocalizedMessage {
+            .init(key: "cliInterface.tb19f8bbe0060", table: "CLIInterface", fallback: "id name")
+        }
+        /// Set an instance's favorite state.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t850a4e6bffbd`.
+        public static var t850a4e6bffbd: LocalizedMessage {
+            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "Set an instance's favorite state.")
+        }
+        /// id enabled
+        ///
+        /// Resource: `CLIInterface.cliInterface.t07e88e1b19e9`.
+        public static var t07e88e1b19e9: LocalizedMessage {
+            .init(key: "cliInterface.t07e88e1b19e9", table: "CLIInterface", fallback: "id enabled")
+        }
+        /// Move instance-owned files to the Trash and remove its record.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1e047c3f4441`.
+        public static var t1e047c3f4441: LocalizedMessage {
+            .init(key: "cliInterface.t1e047c3f4441", table: "CLIInterface", fallback: "Move instance-owned files to the Trash and remove its record.")
+        }
+        /// Set or reset the instance icon.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t2774fd42ed73`.
+        public static var t2774fd42ed73: LocalizedMessage {
+            .init(key: "cliInterface.t2774fd42ed73", table: "CLIInterface", fallback: "Set or reset the instance icon.")
+        }
+        /// PNG icon file.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc9dade836bbe`.
+        public static var tc9dade836bbe: LocalizedMessage {
+            .init(key: "cliInterface.tc9dade836bbe", table: "CLIInterface", fallback: "PNG icon file.")
+        }
+        /// Built-in icon glyph.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4888fb1eb4ed`.
+        public static var t4888fb1eb4ed: LocalizedMessage {
+            .init(key: "cliInterface.t4888fb1eb4ed", table: "CLIInterface", fallback: "Built-in icon glyph.")
+        }
+        /// Built-in icon tint.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t44893043de60`.
+        public static var t44893043de60: LocalizedMessage {
+            .init(key: "cliInterface.t44893043de60", table: "CLIInterface", fallback: "Built-in icon tint.")
+        }
+        /// Restore the default icon.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t22cb6cbb2d9e`.
+        public static var t22cb6cbb2d9e: LocalizedMessage {
+            .init(key: "cliInterface.t22cb6cbb2d9e", table: "CLIInterface", fallback: "Restore the default icon.")
+        }
+        /// Copy an instance to a named destination.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta496dc81dcac`.
+        public static var ta496dc81dcac: LocalizedMessage {
+            .init(key: "cliInterface.ta496dc81dcac", table: "CLIInterface", fallback: "Copy an instance to a named destination.")
+        }
+        /// New instance name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td52e9c9dbb40`.
+        public static var td52e9c9dbb40: LocalizedMessage {
+            .init(key: "cliInterface.td52e9c9dbb40", table: "CLIInterface", fallback: "New instance name.")
+        }
+        /// Exclude worlds.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t874415ccd0ab`.
+        public static var t874415ccd0ab: LocalizedMessage {
+            .init(key: "cliInterface.t874415ccd0ab", table: "CLIInterface", fallback: "Exclude worlds.")
+        }
+        /// Include world backups.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4829b4f8f896`.
+        public static var t4829b4f8f896: LocalizedMessage {
+            .init(key: "cliInterface.t4829b4f8f896", table: "CLIInterface", fallback: "Include world backups.")
+        }
+        /// Move an instance between directories.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t2aee4e3b9cb2`.
+        public static var t2aee4e3b9cb2: LocalizedMessage {
+            .init(key: "cliInterface.t2aee4e3b9cb2", table: "CLIInterface", fallback: "Move an instance between directories.")
+        }
+        /// Export an instance archive.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8f4cf0564496`.
+        public static var t8f4cf0564496: LocalizedMessage {
+            .init(key: "cliInterface.t8f4cf0564496", table: "CLIInterface", fallback: "Export an instance archive.")
+        }
+        /// ruri, complete, multimc, mcbbs, or mrpack.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t148d4a105bd2`.
+        public static var t148d4a105bd2: LocalizedMessage {
+            .init(key: "cliInterface.t148d4a105bd2", table: "CLIInterface", fallback: "ruri, complete, multimc, mcbbs, or mrpack.")
+        }
+        /// id file
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc48ebcacc9f3`.
+        public static var tc48ebcacc9f3: LocalizedMessage {
+            .init(key: "cliInterface.tc48ebcacc9f3", table: "CLIInterface", fallback: "id file")
+        }
+        /// Inspect installed loaders and the component backup.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t94761d5853b8`.
+        public static var t94761d5853b8: LocalizedMessage {
+            .init(key: "cliInterface.t94761d5853b8", table: "CLIInterface", fallback: "Inspect installed loaders and the component backup.")
+        }
+        /// List loader versions compatible with the game.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t66e7670cbafe`.
+        public static var t66e7670cbafe: LocalizedMessage {
+            .init(key: "cliInterface.t66e7670cbafe", table: "CLIInterface", fallback: "List loader versions compatible with the game.")
+        }
+        /// id loader
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8ca25fc9cedc`.
+        public static var t8ca25fc9cedc: LocalizedMessage {
+            .init(key: "cliInterface.t8ca25fc9cedc", table: "CLIInterface", fallback: "id loader")
+        }
+        /// Replace the installed loader combination.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td7622dae9d70`.
+        public static var td7622dae9d70: LocalizedMessage {
+            .init(key: "cliInterface.td7622dae9d70", table: "CLIInterface", fallback: "Replace the installed loader combination.")
+        }
+        /// Loader kind=version; omit for vanilla.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4465e709e830`.
+        public static var t4465e709e830: LocalizedMessage {
+            .init(key: "cliInterface.t4465e709e830", table: "CLIInterface", fallback: "Loader kind=version; omit for vanilla.")
+        }
+        /// Restore the previous loader configuration.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t3d825619ad66`.
+        public static var t3d825619ad66: LocalizedMessage {
+            .init(key: "cliInterface.t3d825619ad66", table: "CLIInterface", fallback: "Restore the previous loader configuration.")
+        }
+        /// instance component commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t336d8b6931f5`.
+        public static var t336d8b6931f5: LocalizedMessage {
+            .init(key: "cliInterface.t336d8b6931f5", table: "CLIInterface", fallback: "instance component commands")
+        }
+        /// instance commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.tea19eba1f497`.
+        public static var tea19eba1f497: LocalizedMessage {
+            .init(key: "cliInterface.tea19eba1f497", table: "CLIInterface", fallback: "instance commands")
+        }
+        /// Specify either an instance UUID or --name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t79f4a3aa9493`.
+        public static var t79f4a3aa9493: LocalizedMessage {
+            .init(key: "cliInterface.t79f4a3aa9493", table: "CLIInterface", fallback: "Specify either an instance UUID or --name.")
+        }
+        /// Use true or false.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t188ae1e6f458`.
+        public static var t188ae1e6f458: LocalizedMessage {
+            .init(key: "cliInterface.t188ae1e6f458", table: "CLIInterface", fallback: "Use true or false.")
+        }
+        /// Specify --file, --glyph or --reset.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf996e1aeec0d`.
+        public static var tf996e1aeec0d: LocalizedMessage {
+            .init(key: "cliInterface.tf996e1aeec0d", table: "CLIInterface", fallback: "Specify --file, --glyph or --reset.")
+        }
+        /// Unknown icon glyph or tint.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te8f93a97f4a5`.
+        public static var te8f93a97f4a5: LocalizedMessage {
+            .init(key: "cliInterface.te8f93a97f4a5", table: "CLIInterface", fallback: "Unknown icon glyph or tint.")
+        }
+        /// component list
+        ///
+        /// Resource: `CLIInterface.cliInterface.t6d7d7903a91c`.
+        public static var t6d7d7903a91c: LocalizedMessage {
+            .init(key: "cliInterface.t6d7d7903a91c", table: "CLIInterface", fallback: "component list")
+        }
+        /// component versions
+        ///
+        /// Resource: `CLIInterface.cliInterface.t86da3ee4ed9e`.
+        public static var t86da3ee4ed9e: LocalizedMessage {
+            .init(key: "cliInterface.t86da3ee4ed9e", table: "CLIInterface", fallback: "component versions")
+        }
+        /// Unknown loader.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tecaf531d009c`.
+        public static var tecaf531d009c: LocalizedMessage {
+            .init(key: "cliInterface.tecaf531d009c", table: "CLIInterface", fallback: "Unknown loader.")
+        }
+        /// component set
+        ///
+        /// Resource: `CLIInterface.cliInterface.t77ee9ed120bf`.
+        public static var t77ee9ed120bf: LocalizedMessage {
+            .init(key: "cliInterface.t77ee9ed120bf", table: "CLIInterface", fallback: "component set")
+        }
+        /// component restore
+        ///
+        /// Resource: `CLIInterface.cliInterface.te280bd4b1756`.
+        public static var te280bd4b1756: LocalizedMessage {
+            .init(key: "cliInterface.te280bd4b1756", table: "CLIInterface", fallback: "component restore")
+        }
+        /// Unknown instance action.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td578c368dab6`.
+        public static var td578c368dab6: LocalizedMessage {
+            .init(key: "cliInterface.td578c368dab6", table: "CLIInterface", fallback: "Unknown instance action.")
+        }
+        /// Components use loader=version syntax; omit components for vanilla.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc7720bf2a0d4`.
+        public static var tc7720bf2a0d4: LocalizedMessage {
+            .init(key: "cliInterface.tc7720bf2a0d4", table: "CLIInterface", fallback: "Components use loader=version syntax; omit components for vanilla.")
+        }
+        /// Duplicate loader selection.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t46989dde4470`.
+        public static var t46989dde4470: LocalizedMessage {
+            .init(key: "cliInterface.t46989dde4470", table: "CLIInterface", fallback: "Duplicate loader selection.")
+        }
+        /// Invalid RURI_DOWNLOAD_SOURCE.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t733e25583e8d`.
+        public static var t733e25583e8d: LocalizedMessage {
+            .init(key: "cliInterface.t733e25583e8d", table: "CLIInterface", fallback: "Invalid RURI_DOWNLOAD_SOURCE.")
+        }
+        /// The output file already exists.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t121c67f22040`.
+        public static var t121c67f22040: LocalizedMessage {
+            .init(key: "cliInterface.t121c67f22040", table: "CLIInterface", fallback: "The output file already exists.")
+        }
+        /// More than one instance has that name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tfe6f797e1938`.
+        public static var tfe6f797e1938: LocalizedMessage {
+            .init(key: "cliInterface.tfe6f797e1938", table: "CLIInterface", fallback: "More than one instance has that name.")
+        }
+        /// Invalid game version.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t79de4634dcb4`.
+        public static var t79de4634dcb4: LocalizedMessage {
+            .init(key: "cliInterface.t79de4634dcb4", table: "CLIInterface", fallback: "Invalid game version.")
+        }
+        /// Directory not found.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t70a45a4240d8`.
+        public static var t70a45a4240d8: LocalizedMessage {
+            .init(key: "cliInterface.t70a45a4240d8", table: "CLIInterface", fallback: "Directory not found.")
+        }
+        /// The target directory was removed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t17574d1bad8e`.
+        public static var t17574d1bad8e: LocalizedMessage {
+            .init(key: "cliInterface.t17574d1bad8e", table: "CLIInterface", fallback: "The target directory was removed.")
+        }
+        /// The instance was removed during installation.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb199229434bb`.
+        public static var tb199229434bb: LocalizedMessage {
+            .init(key: "cliInterface.tb199229434bb", table: "CLIInterface", fallback: "The instance was removed during installation.")
+        }
+        /// The instance location changed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t7d732629b332`.
+        public static var t7d732629b332: LocalizedMessage {
+            .init(key: "cliInterface.t7d732629b332", table: "CLIInterface", fallback: "The instance location changed.")
+        }
+        /// Invalid instance name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t97013cab62b8`.
+        public static var t97013cab62b8: LocalizedMessage {
+            .init(key: "cliInterface.t97013cab62b8", table: "CLIInterface", fallback: "Invalid instance name.")
+        }
+        /// List registered and detached game directories.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf64fee5acdf0`.
+        public static var tf64fee5acdf0: LocalizedMessage {
+            .init(key: "cliInterface.tf64fee5acdf0", table: "CLIInterface", fallback: "List registered and detached game directories.")
+        }
+        /// Read the selected game directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t13c336f9a11b`.
+        public static var t13c336f9a11b: LocalizedMessage {
+            .init(key: "cliInterface.t13c336f9a11b", table: "CLIInterface", fallback: "Read the selected game directory.")
+        }
+        /// Inspect an existing Minecraft folder without registering it.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0a77c8493c2e`.
+        public static var t0a77c8493c2e: LocalizedMessage {
+            .init(key: "cliInterface.t0a77c8493c2e", table: "CLIInterface", fallback: "Inspect an existing Minecraft folder without registering it.")
+        }
+        /// Register an existing directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t135973383faa`.
+        public static var t135973383faa: LocalizedMessage {
+            .init(key: "cliInterface.t135973383faa", table: "CLIInterface", fallback: "Register an existing directory.")
+        }
+        /// Directory display name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t63c8c08621c5`.
+        public static var t63c8c08621c5: LocalizedMessage {
+            .init(key: "cliInterface.t63c8c08621c5", table: "CLIInterface", fallback: "Directory display name.")
+        }
+        /// Directory layout.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0175170e7603`.
+        public static var t0175170e7603: LocalizedMessage {
+            .init(key: "cliInterface.t0175170e7603", table: "CLIInterface", fallback: "Directory layout.")
+        }
+        /// Select a registered directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te995381e7764`.
+        public static var te995381e7764: LocalizedMessage {
+            .init(key: "cliInterface.te995381e7764", table: "CLIInterface", fallback: "Select a registered directory.")
+        }
+        /// Refresh versions in a Minecraft directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tac593c150e36`.
+        public static var tac593c150e36: LocalizedMessage {
+            .init(key: "cliInterface.tac593c150e36", table: "CLIInterface", fallback: "Refresh versions in a Minecraft directory.")
+        }
+        /// Unregister a directory while retaining its files.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8592d66b70ee`.
+        public static var t8592d66b70ee: LocalizedMessage {
+            .init(key: "cliInterface.t8592d66b70ee", table: "CLIInterface", fallback: "Unregister a directory while retaining its files.")
+        }
+        /// Rename a registered directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tbbd25ee7fe86`.
+        public static var tbbd25ee7fe86: LocalizedMessage {
+            .init(key: "cliInterface.tbbd25ee7fe86", table: "CLIInterface", fallback: "Rename a registered directory.")
+        }
+        /// Reconnect a registered directory that was moved.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t741d898dfaff`.
+        public static var t741d898dfaff: LocalizedMessage {
+            .init(key: "cliInterface.t741d898dfaff", table: "CLIInterface", fallback: "Reconnect a registered directory that was moved.")
+        }
+        /// id path
+        ///
+        /// Resource: `CLIInterface.cliInterface.te5b3e2aa3520`.
+        public static var te5b3e2aa3520: LocalizedMessage {
+            .init(key: "cliInterface.te5b3e2aa3520", table: "CLIInterface", fallback: "id path")
+        }
+        /// Restore a detached Minecraft directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.teeb75a68ecdc`.
+        public static var teeb75a68ecdc: LocalizedMessage {
+            .init(key: "cliInterface.teeb75a68ecdc", table: "CLIInterface", fallback: "Restore a detached Minecraft directory.")
+        }
+        /// Inspect an instance's game directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t72af20234e14`.
+        public static var t72af20234e14: LocalizedMessage {
+            .init(key: "cliInterface.t72af20234e14", table: "CLIInterface", fallback: "Inspect an instance's game directory.")
+        }
+        /// Change an instance's run directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1db840ce735d`.
+        public static var t1db840ce735d: LocalizedMessage {
+            .init(key: "cliInterface.t1db840ce735d", table: "CLIInterface", fallback: "Change an instance's run directory.")
+        }
+        /// Existing custom game directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4d6e9b1a4264`.
+        public static var t4d6e9b1a4264: LocalizedMessage {
+            .init(key: "cliInterface.t4d6e9b1a4264", table: "CLIInterface", fallback: "Existing custom game directory.")
+        }
+        /// Copy game files into the empty destination.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta39f0e134724`.
+        public static var ta39f0e134724: LocalizedMessage {
+            .init(key: "cliInterface.ta39f0e134724", table: "CLIInterface", fallback: "Copy game files into the empty destination.")
+        }
+        /// instance mode
+        ///
+        /// Resource: `CLIInterface.cliInterface.tdb3bd307aea7`.
+        public static var tdb3bd307aea7: LocalizedMessage {
+            .init(key: "cliInterface.tdb3bd307aea7", table: "CLIInterface", fallback: "instance mode")
+        }
+        /// Reconnect a moved custom game directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tfe9e723a6df9`.
+        public static var tfe9e723a6df9: LocalizedMessage {
+            .init(key: "cliInterface.tfe9e723a6df9", table: "CLIInterface", fallback: "Reconnect a moved custom game directory.")
+        }
+        /// instance path
+        ///
+        /// Resource: `CLIInterface.cliInterface.td41369a235db`.
+        public static var td41369a235db: LocalizedMessage {
+            .init(key: "cliInterface.td41369a235db", table: "CLIInterface", fallback: "instance path")
+        }
+        /// List local Java runtimes and their origins.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t738bb690d8c2`.
+        public static var t738bb690d8c2: LocalizedMessage {
+            .init(key: "cliInterface.t738bb690d8c2", table: "CLIInterface", fallback: "List local Java runtimes and their origins.")
+        }
+        /// List installable Java runtimes.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1cd05347cc64`.
+        public static var t1cd05347cc64: LocalizedMessage {
+            .init(key: "cliInterface.t1cd05347cc64", table: "CLIInterface", fallback: "List installable Java runtimes.")
+        }
+        /// Filter by Java major version.
+        ///
+        /// Resource: `CLIInterface.cliInterface.teba714b1f2cc`.
+        public static var teba714b1f2cc: LocalizedMessage {
+            .init(key: "cliInterface.teba714b1f2cc", table: "CLIInterface", fallback: "Filter by Java major version.")
+        }
+        /// Filter by architecture.
+        ///
+        /// Resource: `CLIInterface.cliInterface.taa6237af9422`.
+        public static var taa6237af9422: LocalizedMessage {
+            .init(key: "cliInterface.taa6237af9422", table: "CLIInterface", fallback: "Filter by architecture.")
+        }
+        /// Register an installed Java runtime.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf3cf2acb7b9a`.
+        public static var tf3cf2acb7b9a: LocalizedMessage {
+            .init(key: "cliInterface.tf3cf2acb7b9a", table: "CLIInterface", fallback: "Register an installed Java runtime.")
+        }
+        /// Remove Java from the manual list, retaining files and references.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0ecfbec54289`.
+        public static var t0ecfbec54289: LocalizedMessage {
+            .init(key: "cliInterface.t0ecfbec54289", table: "CLIInterface", fallback: "Remove Java from the manual list, retaining files and references.")
+        }
+        /// Set the default Java selection.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tea0c61c73f43`.
+        public static var tea0c61c73f43: LocalizedMessage {
+            .init(key: "cliInterface.tea0c61c73f43", table: "CLIInterface", fallback: "Set the default Java selection.")
+        }
+        /// List settings that reference a managed Java runtime.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td99052ac398d`.
+        public static var td99052ac398d: LocalizedMessage {
+            .init(key: "cliInterface.td99052ac398d", table: "CLIInterface", fallback: "List settings that reference a managed Java runtime.")
+        }
+        /// Inspect an incomplete installation.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb07678654f81`.
+        public static var tb07678654f81: LocalizedMessage {
+            .init(key: "cliInterface.tb07678654f81", table: "CLIInterface", fallback: "Inspect an incomplete installation.")
+        }
+        /// Install a Java runtime by catalog ID.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t2b2ab103144b`.
+        public static var t2b2ab103144b: LocalizedMessage {
+            .init(key: "cliInterface.t2b2ab103144b", table: "CLIInterface", fallback: "Install a Java runtime by catalog ID.")
+        }
+        /// Repair a managed Java runtime.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tef883d8efb5c`.
+        public static var tef883d8efb5c: LocalizedMessage {
+            .init(key: "cliInterface.tef883d8efb5c", table: "CLIInterface", fallback: "Repair a managed Java runtime.")
+        }
+        /// Move a managed Java installation to the Trash.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t355d66c16583`.
+        public static var t355d66c16583: LocalizedMessage {
+            .init(key: "cliInterface.t355d66c16583", table: "CLIInterface", fallback: "Move a managed Java installation to the Trash.")
+        }
+        /// Reset referencing settings to automatic Java.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5897a3d49bb5`.
+        public static var t5897a3d49bb5: LocalizedMessage {
+            .init(key: "cliInterface.t5897a3d49bb5", table: "CLIInterface", fallback: "Reset referencing settings to automatic Java.")
+        }
+        /// Remove an incomplete installation.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t2a5f80694223`.
+        public static var t2a5f80694223: LocalizedMessage {
+            .init(key: "cliInterface.t2a5f80694223", table: "CLIInterface", fallback: "Remove an incomplete installation.")
+        }
+        /// directory run commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc67f25bb4cc3`.
+        public static var tc67f25bb4cc3: LocalizedMessage {
+            .init(key: "cliInterface.tc67f25bb4cc3", table: "CLIInterface", fallback: "directory run commands")
+        }
+        /// directory commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta42145487540`.
+        public static var ta42145487540: LocalizedMessage {
+            .init(key: "cliInterface.ta42145487540", table: "CLIInterface", fallback: "directory commands")
+        }
+        /// java commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.tcb439480ed22`.
+        public static var tcb439480ed22: LocalizedMessage {
+            .init(key: "cliInterface.tcb439480ed22", table: "CLIInterface", fallback: "java commands")
+        }
+        /// Directory name cannot be empty.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5efd67648f0d`.
+        public static var t5efd67648f0d: LocalizedMessage {
+            .init(key: "cliInterface.t5efd67648f0d", table: "CLIInterface", fallback: "Directory name cannot be empty.")
+        }
+        /// A new managed directory must be empty.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8ba03aeb3548`.
+        public static var t8ba03aeb3548: LocalizedMessage {
+            .init(key: "cliInterface.t8ba03aeb3548", table: "CLIInterface", fallback: "A new managed directory must be empty.")
+        }
+        /// run get
+        ///
+        /// Resource: `CLIInterface.cliInterface.t3076aed36f7c`.
+        public static var t3076aed36f7c: LocalizedMessage {
+            .init(key: "cliInterface.t3076aed36f7c", table: "CLIInterface", fallback: "run get")
+        }
+        /// run set
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8cd571ec9aef`.
+        public static var t8cd571ec9aef: LocalizedMessage {
+            .init(key: "cliInterface.t8cd571ec9aef", table: "CLIInterface", fallback: "run set")
+        }
+        /// run relocate
+        ///
+        /// Resource: `CLIInterface.cliInterface.t7dfc3bcc624c`.
+        public static var t7dfc3bcc624c: LocalizedMessage {
+            .init(key: "cliInterface.t7dfc3bcc624c", table: "CLIInterface", fallback: "run relocate")
+        }
+        /// Use isolated, shared or custom; --path is only valid for custom.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tdc5f6e9debdb`.
+        public static var tdc5f6e9debdb: LocalizedMessage {
+            .init(key: "cliInterface.tdc5f6e9debdb", table: "CLIInterface", fallback: "Use isolated, shared or custom; --path is only valid for custom.")
+        }
+        /// Unknown directory action.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9a582e74d089`.
+        public static var t9a582e74d089: LocalizedMessage {
+            .init(key: "cliInterface.t9a582e74d089", table: "CLIInterface", fallback: "Unknown directory action.")
+        }
+        /// Java catalog entry not found.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t33604425d94f`.
+        public static var t33604425d94f: LocalizedMessage {
+            .init(key: "cliInterface.t33604425d94f", table: "CLIInterface", fallback: "Java catalog entry not found.")
+        }
+        /// Unknown Java action.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tab6287c24a41`.
+        public static var tab6287c24a41: LocalizedMessage {
+            .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "Unknown Java action.")
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
             "CLIInterface:cliInterface.t066f88703d3a": .init("未知命令路径。", []),
@@ -508,6 +1186,119 @@ extension Messages {
             "CLIInterface:cliInterface.t1f94c2f53310": .init("Microsoft Client ID must be a UUID or an empty string.", []),
             "CLIInterface:cliInterface.t9b199fcf9a1f": .init("java.major is required in major mode.", []),
             "CLIInterface:cliInterface.t15b3dd14487d": .init("java.path is required in path mode.", []),
+            "CLIInterface:cliInterface.t163f689a3d2f": .init("List managed and registered instances.", []),
+            "CLIInterface:cliInterface.t61c2b6ad309c": .init("Filter by exact name.", []),
+            "CLIInterface:cliInterface.t3a0b2a4eac30": .init("Filter by directory UUID or default.", []),
+            "CLIInterface:cliInterface.te46ca00ec899": .init("Maximum results (1...1000; default 50).", []),
+            "CLIInterface:cliInterface.t184bd8d0fe9d": .init("Result offset (default 0).", []),
+            "CLIInterface:cliInterface.ta412189d9e76": .init("Return all results.", []),
+            "CLIInterface:cliInterface.t1a9316dc0247": .init("Read the currently selected instance.", []),
+            "CLIInterface:cliInterface.td25fbbc9aa83": .init("Inspect an instance and its locations.", []),
+            "CLIInterface:cliInterface.t554bb290d490": .init("Resolve an exact name instead of a UUID.", []),
+            "CLIInterface:cliInterface.t309b2060e6e7": .init("List available Minecraft versions.", []),
+            "CLIInterface:cliInterface.t0f6dcda14ae4": .init("Include snapshot versions.", []),
+            "CLIInterface:cliInterface.tea647925f201": .init("Create and install a named instance.", []),
+            "CLIInterface:cliInterface.tf78b43b0ee95": .init("Instance name.", []),
+            "CLIInterface:cliInterface.tc32a76745397": .init("Minecraft version.", []),
+            "CLIInterface:cliInterface.tcba396edfba1": .init("Explicit destination directory UUID, or default.", []),
+            "CLIInterface:cliInterface.tc54f734a37a6": .init("Loader selection as kind=version; repeat for combinations.", []),
+            "CLIInterface:cliInterface.td183fd7d75d0": .init("Create the record without downloading files.", []),
+            "CLIInterface:cliInterface.tc5757d580bc3": .init("Install an existing uninstalled instance.", []),
+            "CLIInterface:cliInterface.te334b8a18014": .init("Repair an instance's installation files.", []),
+            "CLIInterface:cliInterface.ta4178213b601": .init("Select an instance.", []),
+            "CLIInterface:cliInterface.t5ba0c4853561": .init("Rename an instance.", []),
+            "CLIInterface:cliInterface.tb19f8bbe0060": .init("id name", []),
+            "CLIInterface:cliInterface.t850a4e6bffbd": .init("Set an instance's favorite state.", []),
+            "CLIInterface:cliInterface.t07e88e1b19e9": .init("id enabled", []),
+            "CLIInterface:cliInterface.t1e047c3f4441": .init("Move instance-owned files to the Trash and remove its record.", []),
+            "CLIInterface:cliInterface.t2774fd42ed73": .init("Set or reset the instance icon.", []),
+            "CLIInterface:cliInterface.tc9dade836bbe": .init("PNG icon file.", []),
+            "CLIInterface:cliInterface.t4888fb1eb4ed": .init("Built-in icon glyph.", []),
+            "CLIInterface:cliInterface.t44893043de60": .init("Built-in icon tint.", []),
+            "CLIInterface:cliInterface.t22cb6cbb2d9e": .init("Restore the default icon.", []),
+            "CLIInterface:cliInterface.ta496dc81dcac": .init("Copy an instance to a named destination.", []),
+            "CLIInterface:cliInterface.td52e9c9dbb40": .init("New instance name.", []),
+            "CLIInterface:cliInterface.t874415ccd0ab": .init("Exclude worlds.", []),
+            "CLIInterface:cliInterface.t4829b4f8f896": .init("Include world backups.", []),
+            "CLIInterface:cliInterface.t2aee4e3b9cb2": .init("Move an instance between directories.", []),
+            "CLIInterface:cliInterface.t8f4cf0564496": .init("Export an instance archive.", []),
+            "CLIInterface:cliInterface.t148d4a105bd2": .init("ruri, complete, multimc, mcbbs, or mrpack.", []),
+            "CLIInterface:cliInterface.tc48ebcacc9f3": .init("id file", []),
+            "CLIInterface:cliInterface.t94761d5853b8": .init("Inspect installed loaders and the component backup.", []),
+            "CLIInterface:cliInterface.t66e7670cbafe": .init("List loader versions compatible with the game.", []),
+            "CLIInterface:cliInterface.t8ca25fc9cedc": .init("id loader", []),
+            "CLIInterface:cliInterface.td7622dae9d70": .init("Replace the installed loader combination.", []),
+            "CLIInterface:cliInterface.t4465e709e830": .init("Loader kind=version; omit for vanilla.", []),
+            "CLIInterface:cliInterface.t3d825619ad66": .init("Restore the previous loader configuration.", []),
+            "CLIInterface:cliInterface.t336d8b6931f5": .init("instance component commands", []),
+            "CLIInterface:cliInterface.tea19eba1f497": .init("instance commands", []),
+            "CLIInterface:cliInterface.t79f4a3aa9493": .init("Specify either an instance UUID or --name.", []),
+            "CLIInterface:cliInterface.t188ae1e6f458": .init("Use true or false.", []),
+            "CLIInterface:cliInterface.tf996e1aeec0d": .init("Specify --file, --glyph or --reset.", []),
+            "CLIInterface:cliInterface.te8f93a97f4a5": .init("Unknown icon glyph or tint.", []),
+            "CLIInterface:cliInterface.t6d7d7903a91c": .init("component list", []),
+            "CLIInterface:cliInterface.t86da3ee4ed9e": .init("component versions", []),
+            "CLIInterface:cliInterface.tecaf531d009c": .init("Unknown loader.", []),
+            "CLIInterface:cliInterface.t77ee9ed120bf": .init("component set", []),
+            "CLIInterface:cliInterface.te280bd4b1756": .init("component restore", []),
+            "CLIInterface:cliInterface.td578c368dab6": .init("Unknown instance action.", []),
+            "CLIInterface:cliInterface.tc7720bf2a0d4": .init("Components use loader=version syntax; omit components for vanilla.", []),
+            "CLIInterface:cliInterface.t46989dde4470": .init("Duplicate loader selection.", []),
+            "CLIInterface:cliInterface.t733e25583e8d": .init("Invalid RURI_DOWNLOAD_SOURCE.", []),
+            "CLIInterface:cliInterface.t121c67f22040": .init("The output file already exists.", []),
+            "CLIInterface:cliInterface.tfe6f797e1938": .init("More than one instance has that name.", []),
+            "CLIInterface:cliInterface.t79de4634dcb4": .init("Invalid game version.", []),
+            "CLIInterface:cliInterface.t70a45a4240d8": .init("Directory not found.", []),
+            "CLIInterface:cliInterface.t17574d1bad8e": .init("The target directory was removed.", []),
+            "CLIInterface:cliInterface.tb199229434bb": .init("The instance was removed during installation.", []),
+            "CLIInterface:cliInterface.t7d732629b332": .init("The instance location changed.", []),
+            "CLIInterface:cliInterface.t97013cab62b8": .init("Invalid instance name.", []),
+            "CLIInterface:cliInterface.tf64fee5acdf0": .init("List registered and detached game directories.", []),
+            "CLIInterface:cliInterface.t13c336f9a11b": .init("Read the selected game directory.", []),
+            "CLIInterface:cliInterface.t0a77c8493c2e": .init("Inspect an existing Minecraft folder without registering it.", []),
+            "CLIInterface:cliInterface.t135973383faa": .init("Register an existing directory.", []),
+            "CLIInterface:cliInterface.t63c8c08621c5": .init("Directory display name.", []),
+            "CLIInterface:cliInterface.t0175170e7603": .init("Directory layout.", []),
+            "CLIInterface:cliInterface.te995381e7764": .init("Select a registered directory.", []),
+            "CLIInterface:cliInterface.tac593c150e36": .init("Refresh versions in a Minecraft directory.", []),
+            "CLIInterface:cliInterface.t8592d66b70ee": .init("Unregister a directory while retaining its files.", []),
+            "CLIInterface:cliInterface.tbbd25ee7fe86": .init("Rename a registered directory.", []),
+            "CLIInterface:cliInterface.t741d898dfaff": .init("Reconnect a registered directory that was moved.", []),
+            "CLIInterface:cliInterface.te5b3e2aa3520": .init("id path", []),
+            "CLIInterface:cliInterface.teeb75a68ecdc": .init("Restore a detached Minecraft directory.", []),
+            "CLIInterface:cliInterface.t72af20234e14": .init("Inspect an instance's game directory.", []),
+            "CLIInterface:cliInterface.t1db840ce735d": .init("Change an instance's run directory.", []),
+            "CLIInterface:cliInterface.t4d6e9b1a4264": .init("Existing custom game directory.", []),
+            "CLIInterface:cliInterface.ta39f0e134724": .init("Copy game files into the empty destination.", []),
+            "CLIInterface:cliInterface.tdb3bd307aea7": .init("instance mode", []),
+            "CLIInterface:cliInterface.tfe9e723a6df9": .init("Reconnect a moved custom game directory.", []),
+            "CLIInterface:cliInterface.td41369a235db": .init("instance path", []),
+            "CLIInterface:cliInterface.t738bb690d8c2": .init("List local Java runtimes and their origins.", []),
+            "CLIInterface:cliInterface.t1cd05347cc64": .init("List installable Java runtimes.", []),
+            "CLIInterface:cliInterface.teba714b1f2cc": .init("Filter by Java major version.", []),
+            "CLIInterface:cliInterface.taa6237af9422": .init("Filter by architecture.", []),
+            "CLIInterface:cliInterface.tf3cf2acb7b9a": .init("Register an installed Java runtime.", []),
+            "CLIInterface:cliInterface.t0ecfbec54289": .init("Remove Java from the manual list, retaining files and references.", []),
+            "CLIInterface:cliInterface.tea0c61c73f43": .init("Set the default Java selection.", []),
+            "CLIInterface:cliInterface.td99052ac398d": .init("List settings that reference a managed Java runtime.", []),
+            "CLIInterface:cliInterface.tb07678654f81": .init("Inspect an incomplete installation.", []),
+            "CLIInterface:cliInterface.t2b2ab103144b": .init("Install a Java runtime by catalog ID.", []),
+            "CLIInterface:cliInterface.tef883d8efb5c": .init("Repair a managed Java runtime.", []),
+            "CLIInterface:cliInterface.t355d66c16583": .init("Move a managed Java installation to the Trash.", []),
+            "CLIInterface:cliInterface.t5897a3d49bb5": .init("Reset referencing settings to automatic Java.", []),
+            "CLIInterface:cliInterface.t2a5f80694223": .init("Remove an incomplete installation.", []),
+            "CLIInterface:cliInterface.tc67f25bb4cc3": .init("directory run commands", []),
+            "CLIInterface:cliInterface.ta42145487540": .init("directory commands", []),
+            "CLIInterface:cliInterface.tcb439480ed22": .init("java commands", []),
+            "CLIInterface:cliInterface.t5efd67648f0d": .init("Directory name cannot be empty.", []),
+            "CLIInterface:cliInterface.t8ba03aeb3548": .init("A new managed directory must be empty.", []),
+            "CLIInterface:cliInterface.t3076aed36f7c": .init("run get", []),
+            "CLIInterface:cliInterface.t8cd571ec9aef": .init("run set", []),
+            "CLIInterface:cliInterface.t7dfc3bcc624c": .init("run relocate", []),
+            "CLIInterface:cliInterface.tdc5f6e9debdb": .init("Use isolated, shared or custom; --path is only valid for custom.", []),
+            "CLIInterface:cliInterface.t9a582e74d089": .init("Unknown directory action.", []),
+            "CLIInterface:cliInterface.t33604425d94f": .init("Java catalog entry not found.", []),
+            "CLIInterface:cliInterface.tab6287c24a41": .init("Unknown Java action.", []),
         ]
     }
 }
