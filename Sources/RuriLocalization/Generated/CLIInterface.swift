@@ -243,6 +243,198 @@ extension Messages {
         public static var tce7693c68759: LocalizedMessage {
             .init(key: "cliInterface.tce7693c68759", table: "CLIInterface", fallback: "另一个进程正在使用此资源。")
         }
+        /// Read explicit and effective configuration with inheritance sources.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9b80abd0b1ac`.
+        public static var t9b80abd0b1ac: LocalizedMessage {
+            .init(key: "cliInterface.t9b80abd0b1ac", table: "CLIInterface", fallback: "Read explicit and effective configuration with inheritance sources.")
+        }
+        /// app, defaults, or instance:<uuid>.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9f1f1df0e83d`.
+        public static var t9f1f1df0e83d: LocalizedMessage {
+            .init(key: "cliInterface.t9f1f1df0e83d", table: "CLIInterface", fallback: "app, defaults, or instance:<uuid>.")
+        }
+        /// Include environment variable values.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9180c54b32fc`.
+        public static var t9180c54b32fc: LocalizedMessage {
+            .init(key: "cliInterface.t9180c54b32fc", table: "CLIInterface", fallback: "Include environment variable values.")
+        }
+        /// Set one field using a JSON value.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t51d568cf62ef`.
+        public static var t51d568cf62ef: LocalizedMessage {
+            .init(key: "cliInterface.t51d568cf62ef", table: "CLIInterface", fallback: "Set one field using a JSON value.")
+        }
+        /// Require the state revision read earlier.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc865886779a0`.
+        public static var tc865886779a0: LocalizedMessage {
+            .init(key: "cliInterface.tc865886779a0", table: "CLIInterface", fallback: "Require the state revision read earlier.")
+        }
+        /// key value
+        ///
+        /// Resource: `CLIInterface.cliInterface.t3a7dba9c3050`.
+        public static var t3a7dba9c3050: LocalizedMessage {
+            .init(key: "cliInterface.t3a7dba9c3050", table: "CLIInterface", fallback: "key value")
+        }
+        /// Apply an atomic JSON configuration patch.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t22ad2905d16d`.
+        public static var t22ad2905d16d: LocalizedMessage {
+            .init(key: "cliInterface.t22ad2905d16d", table: "CLIInterface", fallback: "Apply an atomic JSON configuration patch.")
+        }
+        /// JSON patch file, or - for stdin.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t149625e63af0`.
+        public static var t149625e63af0: LocalizedMessage {
+            .init(key: "cliInterface.t149625e63af0", table: "CLIInterface", fallback: "JSON patch file, or - for stdin.")
+        }
+        /// Reset a field or group to built-in defaults.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t620fab80a2bb`.
+        public static var t620fab80a2bb: LocalizedMessage {
+            .init(key: "cliInterface.t620fab80a2bb", table: "CLIInterface", fallback: "Reset a field or group to built-in defaults.")
+        }
+        /// Restore an instance setting group's inheritance.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te7f60fe2aebd`.
+        public static var te7f60fe2aebd: LocalizedMessage {
+            .init(key: "cliInterface.te7f60fe2aebd", table: "CLIInterface", fallback: "Restore an instance setting group's inheritance.")
+        }
+        /// config commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1fcd3e7a6ffc`.
+        public static var t1fcd3e7a6ffc: LocalizedMessage {
+            .init(key: "cliInterface.t1fcd3e7a6ffc", table: "CLIInterface", fallback: "config commands")
+        }
+        /// Unknown configuration field.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tdf61274dcc9c`.
+        public static var tdf61274dcc9c: LocalizedMessage {
+            .init(key: "cliInterface.tdf61274dcc9c", table: "CLIInterface", fallback: "Unknown configuration field.")
+        }
+        /// The value must be JSON; quote string values.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te3e619f346d3`.
+        public static var te3e619f346d3: LocalizedMessage {
+            .init(key: "cliInterface.te3e619f346d3", table: "CLIInterface", fallback: "The value must be JSON; quote string values.")
+        }
+        /// Invalid configuration patch JSON.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t64229bd16ecc`.
+        public static var t64229bd16ecc: LocalizedMessage {
+            .init(key: "cliInterface.t64229bd16ecc", table: "CLIInterface", fallback: "Invalid configuration patch JSON.")
+        }
+        /// Expected a UUID.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t332cdb6a53b4`.
+        public static var t332cdb6a53b4: LocalizedMessage {
+            .init(key: "cliInterface.t332cdb6a53b4", table: "CLIInterface", fallback: "Expected a UUID.")
+        }
+        /// Input exceeds the allowed size.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf7eb23752b1e`.
+        public static var tf7eb23752b1e: LocalizedMessage {
+            .init(key: "cliInterface.tf7eb23752b1e", table: "CLIInterface", fallback: "Input exceeds the allowed size.")
+        }
+        /// The state changed since it was read.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te8a7227e2180`.
+        public static var te8a7227e2180: LocalizedMessage {
+            .init(key: "cliInterface.te8a7227e2180", table: "CLIInterface", fallback: "The state changed since it was read.")
+        }
+        /// Unknown patch member; use set, reset or inherit.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8568ceb9ae27`.
+        public static var t8568ceb9ae27: LocalizedMessage {
+            .init(key: "cliInterface.t8568ceb9ae27", table: "CLIInterface", fallback: "Unknown patch member; use set, reset or inherit.")
+        }
+        /// field-to-value object
+        ///
+        /// Resource: `CLIInterface.cliInterface.tba308ed7fb67`.
+        public static var tba308ed7fb67: LocalizedMessage {
+            .init(key: "cliInterface.tba308ed7fb67", table: "CLIInterface", fallback: "field-to-value object")
+        }
+        /// field or group names
+        ///
+        /// Resource: `CLIInterface.cliInterface.tba6d0ed49ef6`.
+        public static var tba6d0ed49ef6: LocalizedMessage {
+            .init(key: "cliInterface.tba6d0ed49ef6", table: "CLIInterface", fallback: "field or group names")
+        }
+        /// instance-only group names
+        ///
+        /// Resource: `CLIInterface.cliInterface.t54e4e046502f`.
+        public static var t54e4e046502f: LocalizedMessage {
+            .init(key: "cliInterface.t54e4e046502f", table: "CLIInterface", fallback: "instance-only group names")
+        }
+        /// Use app, defaults or instance:<uuid> as the scope.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te2e236614526`.
+        public static var te2e236614526: LocalizedMessage {
+            .init(key: "cliInterface.te2e236614526", table: "CLIInterface", fallback: "Use app, defaults or instance:<uuid> as the scope.")
+        }
+        /// Instance not found.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t491b2168687b`.
+        public static var t491b2168687b: LocalizedMessage {
+            .init(key: "cliInterface.t491b2168687b", table: "CLIInterface", fallback: "Instance not found.")
+        }
+        /// Unknown or empty configuration group: %1$@.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t41f1a159c375`.
+        public static func t41f1a159c375(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliInterface.t41f1a159c375", table: "CLIInterface", fallback: "Unknown or empty configuration group: %1$@.", arguments: [.text(value0)])
+        }
+        /// Unknown or duplicated configuration field: %1$@.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0e5f6b9ca429`.
+        public static func t0e5f6b9ca429(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliInterface.t0e5f6b9ca429", table: "CLIInterface", fallback: "Unknown or duplicated configuration field: %1$@.", arguments: [.text(value0)])
+        }
+        /// inherit requires complete instance setting groups.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0199982aa94e`.
+        public static var t0199982aa94e: LocalizedMessage {
+            .init(key: "cliInterface.t0199982aa94e", table: "CLIInterface", fallback: "inherit requires complete instance setting groups.")
+        }
+        /// Unknown configuration field: %1$@.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tca2c20d623be`.
+        public static func tca2c20d623be(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliInterface.tca2c20d623be", table: "CLIInterface", fallback: "Unknown configuration field: %1$@.", arguments: [.text(value0)])
+        }
+        /// Conflicting patch operations for %1$@.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta78e60d41732`.
+        public static func ta78e60d41732(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliInterface.ta78e60d41732", table: "CLIInterface", fallback: "Conflicting patch operations for %1$@.", arguments: [.text(value0)])
+        }
+        /// Invalid value for %1$@.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t62fca6b0b13b`.
+        public static func t62fca6b0b13b(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliInterface.t62fca6b0b13b", table: "CLIInterface", fallback: "Invalid value for %1$@.", arguments: [.text(value0)])
+        }
+        /// Microsoft Client ID must be a UUID or an empty string.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1f94c2f53310`.
+        public static var t1f94c2f53310: LocalizedMessage {
+            .init(key: "cliInterface.t1f94c2f53310", table: "CLIInterface", fallback: "Microsoft Client ID must be a UUID or an empty string.")
+        }
+        /// java.major is required in major mode.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9b199fcf9a1f`.
+        public static var t9b199fcf9a1f: LocalizedMessage {
+            .init(key: "cliInterface.t9b199fcf9a1f", table: "CLIInterface", fallback: "java.major is required in major mode.")
+        }
+        /// java.path is required in path mode.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t15b3dd14487d`.
+        public static var t15b3dd14487d: LocalizedMessage {
+            .init(key: "cliInterface.t15b3dd14487d", table: "CLIInterface", fallback: "java.path is required in path mode.")
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
             "CLIInterface:cliInterface.t066f88703d3a": .init("未知命令路径。", []),
@@ -284,6 +476,38 @@ extension Messages {
             "CLIInterface:cliInterface.te99b33ffd7c8": .init("卸载期间命令行工具链接发生了变化。", []),
             "CLIInterface:cliInterface.teff59600ae41": .init("无法打开操作锁。", []),
             "CLIInterface:cliInterface.tce7693c68759": .init("另一个进程正在使用此资源。", []),
+            "CLIInterface:cliInterface.t9b80abd0b1ac": .init("Read explicit and effective configuration with inheritance sources.", []),
+            "CLIInterface:cliInterface.t9f1f1df0e83d": .init("app, defaults, or instance:<uuid>.", []),
+            "CLIInterface:cliInterface.t9180c54b32fc": .init("Include environment variable values.", []),
+            "CLIInterface:cliInterface.t51d568cf62ef": .init("Set one field using a JSON value.", []),
+            "CLIInterface:cliInterface.tc865886779a0": .init("Require the state revision read earlier.", []),
+            "CLIInterface:cliInterface.t3a7dba9c3050": .init("key value", []),
+            "CLIInterface:cliInterface.t22ad2905d16d": .init("Apply an atomic JSON configuration patch.", []),
+            "CLIInterface:cliInterface.t149625e63af0": .init("JSON patch file, or - for stdin.", []),
+            "CLIInterface:cliInterface.t620fab80a2bb": .init("Reset a field or group to built-in defaults.", []),
+            "CLIInterface:cliInterface.te7f60fe2aebd": .init("Restore an instance setting group's inheritance.", []),
+            "CLIInterface:cliInterface.t1fcd3e7a6ffc": .init("config commands", []),
+            "CLIInterface:cliInterface.tdf61274dcc9c": .init("Unknown configuration field.", []),
+            "CLIInterface:cliInterface.te3e619f346d3": .init("The value must be JSON; quote string values.", []),
+            "CLIInterface:cliInterface.t64229bd16ecc": .init("Invalid configuration patch JSON.", []),
+            "CLIInterface:cliInterface.t332cdb6a53b4": .init("Expected a UUID.", []),
+            "CLIInterface:cliInterface.tf7eb23752b1e": .init("Input exceeds the allowed size.", []),
+            "CLIInterface:cliInterface.te8a7227e2180": .init("The state changed since it was read.", []),
+            "CLIInterface:cliInterface.t8568ceb9ae27": .init("Unknown patch member; use set, reset or inherit.", []),
+            "CLIInterface:cliInterface.tba308ed7fb67": .init("field-to-value object", []),
+            "CLIInterface:cliInterface.tba6d0ed49ef6": .init("field or group names", []),
+            "CLIInterface:cliInterface.t54e4e046502f": .init("instance-only group names", []),
+            "CLIInterface:cliInterface.te2e236614526": .init("Use app, defaults or instance:<uuid> as the scope.", []),
+            "CLIInterface:cliInterface.t491b2168687b": .init("Instance not found.", []),
+            "CLIInterface:cliInterface.t41f1a159c375": .init("Unknown or empty configuration group: %1$@.", [.text]),
+            "CLIInterface:cliInterface.t0e5f6b9ca429": .init("Unknown or duplicated configuration field: %1$@.", [.text]),
+            "CLIInterface:cliInterface.t0199982aa94e": .init("inherit requires complete instance setting groups.", []),
+            "CLIInterface:cliInterface.tca2c20d623be": .init("Unknown configuration field: %1$@.", [.text]),
+            "CLIInterface:cliInterface.ta78e60d41732": .init("Conflicting patch operations for %1$@.", [.text]),
+            "CLIInterface:cliInterface.t62fca6b0b13b": .init("Invalid value for %1$@.", [.text]),
+            "CLIInterface:cliInterface.t1f94c2f53310": .init("Microsoft Client ID must be a UUID or an empty string.", []),
+            "CLIInterface:cliInterface.t9b199fcf9a1f": .init("java.major is required in major mode.", []),
+            "CLIInterface:cliInterface.t15b3dd14487d": .init("java.path is required in path mode.", []),
         ]
     }
 }

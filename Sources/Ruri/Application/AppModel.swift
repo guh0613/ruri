@@ -215,7 +215,12 @@ import RuriCore
             // A local save may have completed while the disk read was running.
             guard operation == nil, persistedState?.revision == baselineRevision, remote.revision != baselineRevision else { return }
             if baselineRevision != nil && remote.revision == nil { throw RuriError.message(Messages.AppAppModel.externalIndexChanged) }
-            if state == persistedState { state = remote; persistedState = remote }
+            if state == persistedState {
+                let prior = state.settings
+                state = remote; persistedState = remote
+                if prior.downloadSource != remote.settings.downloadSource || prior.concurrentDownloads != remote.settings.concurrentDownloads { await applyNetworkSettings() }
+                if prior.defaultJava != remote.settings.defaultJava || prior.javaLocations != remote.settings.javaLocations { await scanJava() }
+            }
             else { save() }
         } catch { readOnly = true; self.error = Messages.AppAppModel.externalChangesDetected(error.localizedDescription).localized }
     }

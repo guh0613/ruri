@@ -118,3 +118,99 @@
 /* @symbol CLIInterface.tce7693c68759 @args - */
 "cliInterface.tce7693c68759" = "另一个进程正在使用此资源。";
 
+/* @symbol CLIInterface.t9b80abd0b1ac @args - */
+"cliInterface.t9b80abd0b1ac" = "Read explicit and effective configuration with inheritance sources.";
+
+/* @symbol CLIInterface.t9f1f1df0e83d @args - */
+"cliInterface.t9f1f1df0e83d" = "app, defaults, or instance:<uuid>.";
+
+/* @symbol CLIInterface.t9180c54b32fc @args - */
+"cliInterface.t9180c54b32fc" = "Include environment variable values.";
+
+/* @symbol CLIInterface.t51d568cf62ef @args - */
+"cliInterface.t51d568cf62ef" = "Set one field using a JSON value.";
+
+/* @symbol CLIInterface.tc865886779a0 @args - */
+"cliInterface.tc865886779a0" = "Require the state revision read earlier.";
+
+/* @symbol CLIInterface.t3a7dba9c3050 @args - */
+"cliInterface.t3a7dba9c3050" = "key value";
+
+/* @symbol CLIInterface.t22ad2905d16d @args - */
+"cliInterface.t22ad2905d16d" = "Apply an atomic JSON configuration patch.";
+
+/* @symbol CLIInterface.t149625e63af0 @args - */
+"cliInterface.t149625e63af0" = "JSON patch file, or - for stdin.";
+
+/* @symbol CLIInterface.t620fab80a2bb @args - */
+"cliInterface.t620fab80a2bb" = "Reset a field or group to built-in defaults.";
+
+/* @symbol CLIInterface.te7f60fe2aebd @args - */
+"cliInterface.te7f60fe2aebd" = "Restore an instance setting group's inheritance.";
+
+/* @symbol CLIInterface.t1fcd3e7a6ffc @args - */
+"cliInterface.t1fcd3e7a6ffc" = "config commands";
+
+/* @symbol CLIInterface.tdf61274dcc9c @args - */
+"cliInterface.tdf61274dcc9c" = "Unknown configuration field.";
+
+/* @symbol CLIInterface.te3e619f346d3 @args - */
+"cliInterface.te3e619f346d3" = "The value must be JSON; quote string values.";
+
+/* @symbol CLIInterface.t64229bd16ecc @args - */
+"cliInterface.t64229bd16ecc" = "Invalid configuration patch JSON.";
+
+/* @symbol CLIInterface.t332cdb6a53b4 @args - */
+"cliInterface.t332cdb6a53b4" = "Expected a UUID.";
+
+/* @symbol CLIInterface.tf7eb23752b1e @args - */
+"cliInterface.tf7eb23752b1e" = "Input exceeds the allowed size.";
+
+/* @symbol CLIInterface.te8a7227e2180 @args - */
+"cliInterface.te8a7227e2180" = "The state changed since it was read.";
+
+/* @symbol CLIInterface.t8568ceb9ae27 @args - */
+"cliInterface.t8568ceb9ae27" = "Unknown patch member; use set, reset or inherit.";
+
+/* @symbol CLIInterface.tba308ed7fb67 @args - */
+"cliInterface.tba308ed7fb67" = "field-to-value object";
+
+/* @symbol CLIInterface.tba6d0ed49ef6 @args - */
+"cliInterface.tba6d0ed49ef6" = "field or group names";
+
+/* @symbol CLIInterface.t54e4e046502f @args - */
+"cliInterface.t54e4e046502f" = "instance-only group names";
+
+/* @symbol CLIInterface.te2e236614526 @args - */
+"cliInterface.te2e236614526" = "Use app, defaults or instance:<uuid> as the scope.";
+
+/* @symbol CLIInterface.t491b2168687b @args - */
+"cliInterface.t491b2168687b" = "Instance not found.";
+
+/* @symbol CLIInterface.t41f1a159c375 @args text */
+"cliInterface.t41f1a159c375" = "Unknown or empty configuration group: %1$@.";
+
+/* @symbol CLIInterface.t0e5f6b9ca429 @args text */
+"cliInterface.t0e5f6b9ca429" = "Unknown or duplicated configuration field: %1$@.";
+
+/* @symbol CLIInterface.t0199982aa94e @args - */
+"cliInterface.t0199982aa94e" = "inherit requires complete instance setting groups.";
+
+/* @symbol CLIInterface.tca2c20d623be @args text */
+"cliInterface.tca2c20d623be" = "Unknown configuration field: %1$@.";
+
+/* @symbol CLIInterface.ta78e60d41732 @args text */
+"cliInterface.ta78e60d41732" = "Conflicting patch operations for %1$@.";
+
+/* @symbol CLIInterface.t62fca6b0b13b @args text */
+"cliInterface.t62fca6b0b13b" = "Invalid value for %1$@.";
+
+/* @symbol CLIInterface.t1f94c2f53310 @args - */
+"cliInterface.t1f94c2f53310" = "Microsoft Client ID must be a UUID or an empty string.";
+
+/* @symbol CLIInterface.t9b199fcf9a1f @args - */
+"cliInterface.t9b199fcf9a1f" = "java.major is required in major mode.";
+
+/* @symbol CLIInterface.t15b3dd14487d @args - */
+"cliInterface.t15b3dd14487d" = "java.path is required in path mode.";
+

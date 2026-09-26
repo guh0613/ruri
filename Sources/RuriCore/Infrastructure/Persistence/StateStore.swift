@@ -34,6 +34,18 @@ public enum StateStore {
         try mutation(&state)
         return try write(state, paths: paths)
     }
+    /// CLI and shared services use this for idempotent, revision-checked edits.
+    @discardableResult public static func updateIfChanged(_ paths: LauncherPaths, expectedRevision: UUID? = nil, _ mutation: (inout PersistentState) throws -> Void) throws -> PersistentState {
+        let fd = try acquire(paths); defer { close(fd) }
+        let original = try load(paths)
+        if let expectedRevision, original.revision != expectedRevision {
+            throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.te8a7227e2180.localized, retryable: true)
+        }
+        var state = original
+        try mutation(&state)
+        guard state != original else { return original }
+        return try write(state, paths: paths)
+    }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
         try JavaRuntimeStore.validate(state.settings.javaLocations ?? [])
         guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message(Messages.CoreStateStore.snapshotCannotOverwriteSettings) }

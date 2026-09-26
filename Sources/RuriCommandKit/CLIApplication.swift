@@ -39,6 +39,7 @@ public enum CLIApplication {
     }
 
     @MainActor static func execute(_ request: CommandRequest, output: CommandOutput) async throws -> Value {
+        if request.spec.path.first == "config" { return try configure(request) }
         switch request.path {
         case "schema":
             let matching = CommandRegistry.commands.filter { Array($0.path.prefix(request.operands.count)) == request.operands }
@@ -46,7 +47,8 @@ public enum CLIApplication {
             return .object(["commands": try .encode(matching), "output": .object(["schemaVersion": .integer(1), "formats": .array(["text", "json", "ndjson"].map(Value.string)),
                 "result": .array(["schemaVersion", "ok", "data", "warnings", "error"].map(Value.string)),
                 "error": .array(["code", "message", "retryable", "nextActions", "details"].map(Value.string))]),
-                "globalOptions": .array(["--json", "--output", "--data-dir", "--language", "--quiet"].map(Value.string))])
+                "globalOptions": .array(["--json", "--output", "--data-dir", "--language", "--quiet"].map(Value.string)),
+                "configuration": try ConfigurationService.schema()])
         case "app info":
             return .object(["version": .string(BuildConfiguration().version), "schemaVersion": .integer(1), "application": .text(RuriInstallation.application()?.path),
                 "cli": .text(RuriInstallation.cliExecutable?.path), "dataDirectory": .string(basePaths(request).root.path)])
