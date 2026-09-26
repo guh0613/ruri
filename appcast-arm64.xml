@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>Ruri (arm64)</title>
+    <link>https://github.com/guh0613/ruri/releases</link>
+    <item>
+      <title>Ruri 0.9.0-beta</title>
+      <pubDate>Sat, 26 Sep 2026 12:05:35 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.0-beta</link>
+      <sparkle:version>23</sparkle:version>
+      <sparkle:shortVersionString>0.9.0-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.0-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- test(cli): respect the resolved authorization language (d9b8e0a)
+- chore(release): bump version to 0.9.0-beta (14df357)
+- feat(cli): offer compact first-launch installation (918ccb7)
+- test(cli): verify English defaults in the distributed app (36abbf9)
+- feat(cli): default to English independently of the app language (cf498af)
+- test(cli): verify concise discovery and text output in packaged apps (7bbe33c)
+- feat(cli): render concise text results and actionable diagnostics (94b81f6)
+- feat(cli): add grouped command help and focused schema discovery (6c2e034)
+- fix(settings): clarify CLI copy and space installation details (c19c07f)
+- fix(cli): render requested command help and simplify installation copy (2110780)
+- fix(cli): install into the standard command path with guided authorization (ee29003)
+- fix(app): refresh derived settings after shared state commits (bcd0c3c)
+- fix(cli): include actionable recovery details in failed operations (94dab94)
+- test(cli): verify signed packages on both supported architectures (e486f28)
+- fix(core): preserve concurrent CLI edits in GUI configuration drafts (c16793e)
+- feat(cli): finalize discovery installation UI and packaged acceptance checks (b6117c7)
+- feat(cli): add resource pack world and recovery commands (2ff1bff)
+- feat(cli): share account authentication and monitored game launching (d7c783e)
+- feat(cli): expose instance directory and Java management (7c5b046)
+- feat(cli): add atomic configuration patches and inheritance inspection (ed1ee07)
+- feat(cli): add typed command protocol and bundled CLI infrastructure (7eb468c)
+- chore: streamline tests and build tooling (f9904b6)
+- fix(update): publish the appcast through a gh-pages branch (85909a2)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.0-beta/Ruri-0.9.0-beta-macOS-arm64.dmg" length="34689013" type="application/octet-stream" sparkle:edSignature="QCU7dBrru2s760WJ5/zsOy1dkiabU94L7FJUGBs9lLWNJZy/3Px229+a0IZvsNJu6Yp6oth3uxqogafLH7nOAQ==" />
+    </item>
+    <item>
+      <title>Ruri 0.8.6-beta</title>
+      <pubDate>Wed, 23 Sep 2026 10:53:23 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.8.6-beta</link>
+      <sparkle:version>21</sparkle:version>
+      <sparkle:shortVersionString>0.8.6-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.8.6-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.8.6-beta (c6659ae)
+- feat(update): check for and install updates with Sparkle (49c82c0)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.8.6-beta/Ruri-0.8.6-beta-macOS-arm64.dmg" length="26722725" type="application/octet-stream" sparkle:edSignature="ER8DsnCfW1aR8NcVgBLQnRzHVar9FKRqP51qe7Vun9EdGGlp8qifgTWZv3lbYYikwYf0Ogmmd+Bwy0jg+vJvCA==" />
+    </item>
+  </channel>
+</rss>
