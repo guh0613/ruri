@@ -73,7 +73,7 @@ struct CLIInstallationTests {
         let service = try CLIInstallation(executable: moved, binDirectory: bin)
         let (code, output) = try ProcessRunner.run(URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", service.authorizationCommand(.uninstall)])
         #expect(code == 0)
-        #expect(output == ["cli", "uninstall", "--bin-dir", bin.path, "--json", "--quiet", "--yes", ""].joined(separator: "\n"))
+        #expect(output == ["cli", "uninstall", "--bin-dir", bin.path, "--json", "--quiet", "--language", "zh-Hans", "--yes", ""].joined(separator: "\n"))
         let command = service.authorizationCommand(.install)
         let result = try ProcessRunner.run(URL(fileURLWithPath: "/usr/bin/osascript"), arguments: ["-e", "return " + CLIInstallation.appleScriptString(command)])
         #expect(result.0 == 0 && result.1 == command + "\n")

@@ -8,18 +8,19 @@ public final class CommandOutput: @unchecked Sendable {
     private let write: @Sendable (Data, Bool) -> Void
     private let format: Format
     private let quiet: Bool
+    private let localization = LocalizationContext.current
     private var finished = false
     private var redactor = GameLogRedactor()
     private var request: CommandRequest?
     private var lastProgress: Value?
     private var lastProgressTime = Date.distantPast
-    func setRequest(_ request: CommandRequest) { lock.withLock { self.request = request } }
+    func setRequest(_ request: CommandRequest) { withOutputContext { self.request = request } }
     public init(format: Format, quiet: Bool = false, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
         try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data)
     }) { self.format = format; self.quiet = quiet; self.write = write }
-    public func addSecrets(_ values: [String]) { lock.withLock { redactor.addSecrets(values) } }
+    public func addSecrets(_ values: [String]) { withOutputContext { redactor.addSecrets(values) } }
     public func event(_ type: String, _ value: Value) {
-        lock.withLock {
+        withOutputContext {
             guard !finished else { return }
             if format == .ndjson { emit(.object(["schemaVersion": .integer(1), "type": .string(type), "data": clean(value)])) }
             else if format == .text && type == "log" { write(Data((clean(value)["text"].string ?? "").utf8), false) }
@@ -37,7 +38,7 @@ public final class CommandOutput: @unchecked Sendable {
     }
     public func progress(_ progress: InstallProgress) { event("progress", .object(["stage": .string(progress.stage), "completed": .integer(progress.completed), "total": .integer(progress.total)])) }
     public func result(_ data: Value = .null, error: OperationFailure? = nil, warnings: [String] = []) {
-        lock.withLock {
+        withOutputContext {
             guard !finished else { return }; finished = true
             let value: Value = .object(["schemaVersion": .integer(1), "ok": .bool(error == nil), "data": clean(data),
                 "warnings": .array(warnings.map { .string(redactor.redact($0)) }), "error": error.flatMap { try? Value.encode($0) }.map(clean) ?? .null])
@@ -50,7 +51,7 @@ public final class CommandOutput: @unchecked Sendable {
             else { emit(value) }
         }
     }
-    func help(_ text: String) { lock.withLock { write(Data((text + "\n").utf8), false) } }
+    func help(_ text: String) { withOutputContext { write(Data((text + "\n").utf8), false) } }
     private func clean(_ value: Value) -> Value {
         switch value {
         case .string(let s): .string(redactor.redact(s))
@@ -58,6 +59,9 @@ public final class CommandOutput: @unchecked Sendable {
         case .object(let values): .object(values.mapValues(clean))
         default: value
         }
+    }
+    private func withOutputContext(_ body: () -> Void) {
+        lock.withLock { LocalizationContext.$current.withValue(localization, operation: body) }
     }
     private func emit(_ value: Value) {
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]

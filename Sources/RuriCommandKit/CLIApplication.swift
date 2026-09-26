@@ -8,6 +8,19 @@ public enum CLIApplication {
         try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data)
     }) async -> Int32 {
         let args = normalizeGlobals(arguments)
+        let options = Array(args.prefix { $0 != "--" })
+        var language: String?
+        for (index, argument) in options.enumerated() {
+            if argument.hasPrefix("--language=") { language = String(argument.dropFirst(11)) }
+            else if argument == "--language" { language = options[safe: index + 1] }
+        }
+        let context = LocalizationContext.commandLine(language: language)
+        return await LocalizationContext.$current.withValue(context) {
+            await runLocalized(args, write: write)
+        }
+    }
+
+    @MainActor private static func runLocalized(_ args: [String], write: @escaping @Sendable (Data, Bool) -> Void) async -> Int32 {
         var output = CommandOutput(format: requestedFormat(args), quiet: args.contains("--quiet"), write: write)
         var activeRequest: CommandRequest?
         do {
@@ -23,8 +36,7 @@ public enum CLIApplication {
                 guard ["text", "json", "ndjson"].contains(query.common.output), !query.common.json || ["text", "json"].contains(query.common.output) else {
                     throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te36f73cbdb89.localized)
                 }
-                let context = query.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
-                let help = try LocalizationContext.$current.withValue(context) { try CommandHelp.render(path: query.path, all: query.all) }
+                let help = try CommandHelp.render(path: query.path, all: query.all)
                 if requestedFormat(args) == .text { output.help(help) }
                 else { output.result(.string(help)) }
                 return 0
@@ -59,11 +71,8 @@ public enum CLIApplication {
             activeRequest = request
             output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write)
             output.setRequest(request)
-            let context = request.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
-            let result = try await LocalizationContext.$current.withValue(context) {
-                try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {
-                    try await execute(request, output: output)
-                }
+            let result = try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {
+                try await execute(request, output: output)
             }
             var payload = result
             if request.spec.mutation, var fields = result.object {

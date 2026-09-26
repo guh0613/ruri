@@ -120,7 +120,7 @@ public struct CLIInstallation: Sendable {
 
     public enum Action: String, Sendable { case install, uninstall }
     public func authorizationCommand(_ action: Action) -> String {
-        ([executable.path, "cli", action.rawValue, "--bin-dir", binDirectory.path, "--json", "--quiet"] + (action == .uninstall ? ["--yes"] : []))
+        ([executable.path, "cli", action.rawValue, "--bin-dir", binDirectory.path, "--json", "--quiet", "--language", LocalizationContext.current.language] + (action == .uninstall ? ["--yes"] : []))
             .map(Self.shellQuote).joined(separator: " ")
     }
     public func authorizationScript(_ action: Action) -> String {

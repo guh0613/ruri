@@ -85,6 +85,17 @@ def run(check):
             symbols.add((group, name))
             catalogs[identity] = (value, kinds)
             groups.setdefault(group, []).append((name, kinds, key, value, table))
+    # CLI English is scoped to command-line tasks, not an incomplete GUI locale.
+    cli_english = json.loads((RESOURCES / 'CommandLine.en.json').read_text())
+    cli_tables = {'CLIInterface', 'CLIExperience', 'CLISetup', 'Progress'}
+    required_cli = {key for key in catalogs if key.split(':', 1)[0] in cli_tables}
+    if not required_cli.issubset(cli_english):
+        raise ValueError('Missing CLI English translations: ' + str(sorted(required_cli - cli_english.keys())))
+    for key, value in cli_english.items():
+        if key not in catalogs:
+            raise ValueError('Unknown CLI English translation: ' + key)
+        if not isinstance(value, str) or signature(value) != signature(catalogs[key][0]):
+            raise ValueError('CLI English translation changes parameters: ' + key)
     languages = sorted(RESOURCES.glob('*.lproj'))
     for language in languages:
         translated_keys = set()

@@ -39,17 +39,17 @@ extension Messages {
         public static var t0232e54a0c07: LocalizedMessage {
             .init(key: "cliInterface.t0232e54a0c07", table: "CLIInterface", fallback: "输出格式：text、json 或 ndjson。")
         }
-        /// Launcher data directory (overrides RURI_DATA_DIR).
+        /// 启动器数据目录，优先于 RURI_DATA_DIR。
         ///
         /// Resource: `CLIInterface.cliInterface.tfeeb5f4ef393`.
         public static var tfeeb5f4ef393: LocalizedMessage {
-            .init(key: "cliInterface.tfeeb5f4ef393", table: "CLIInterface", fallback: "Launcher data directory (overrides RURI_DATA_DIR).")
+            .init(key: "cliInterface.tfeeb5f4ef393", table: "CLIInterface", fallback: "启动器数据目录，优先于 RURI_DATA_DIR。")
         }
-        /// Language for human messages.
+        /// 说明和提示使用的语言。
         ///
         /// Resource: `CLIInterface.cliInterface.t83e479a9529d`.
         public static var t83e479a9529d: LocalizedMessage {
-            .init(key: "cliInterface.t83e479a9529d", table: "CLIInterface", fallback: "Language for human messages.")
+            .init(key: "cliInterface.t83e479a9529d", table: "CLIInterface", fallback: "说明和提示使用的语言。")
         }
         /// 不在标准错误输出显示进度。
         ///
@@ -69,23 +69,23 @@ extension Messages {
         public static func t883e96f211e4(_ value0: String) -> LocalizedMessage {
             .init(key: "cliInterface.t883e96f211e4", table: "CLIInterface", fallback: "缺少参数 %1$@。", arguments: [.text(value0)])
         }
-        /// Expected %1$@; received %2$@ positional arguments.
+        /// 需要位置参数 %1$@，实际收到 %2$@ 个。
         ///
         /// Resource: `CLIInterface.cliInterface.t8c27fffd692c`.
         public static func t8c27fffd692c(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t8c27fffd692c", table: "CLIInterface", fallback: "Expected %1$@; received %2$@ positional arguments.", arguments: [.text(value0), .text(value1)])
+            .init(key: "cliInterface.t8c27fffd692c", table: "CLIInterface", fallback: "需要位置参数 %1$@，实际收到 %2$@ 个。", arguments: [.text(value0), .text(value1)])
         }
-        /// Use --output text|json|ndjson; --json cannot be combined with ndjson.
+        /// 请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。
         ///
         /// Resource: `CLIInterface.cliInterface.te36f73cbdb89`.
         public static var te36f73cbdb89: LocalizedMessage {
-            .init(key: "cliInterface.te36f73cbdb89", table: "CLIInterface", fallback: "Use --output text|json|ndjson; --json cannot be combined with ndjson.")
+            .init(key: "cliInterface.te36f73cbdb89", table: "CLIInterface", fallback: "请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。")
         }
-        /// --%1$@ must be one of: %2$@.
+        /// --%1$@ 必须为以下值之一：%2$@。
         ///
         /// Resource: `CLIInterface.cliInterface.te66506826636`.
         public static func te66506826636(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "cliInterface.te66506826636", table: "CLIInterface", fallback: "--%1$@ must be one of: %2$@.", arguments: [.text(value0), .text(value1)])
+            .init(key: "cliInterface.te66506826636", table: "CLIInterface", fallback: "--%1$@ 必须为以下值之一：%2$@。", arguments: [.text(value0), .text(value1)])
         }
         /// --limit 必须介于 1 和 1000 之间。
         ///
@@ -111,11 +111,11 @@ extension Messages {
         public static var tfd63207de5ca: LocalizedMessage {
             .init(key: "cliInterface.tfd63207de5ca", table: "CLIInterface", fallback: "查询命令及其机器接口。")
         }
-        /// resource? action? subaction?
+        /// 可选的资源、动作和子动作。
         ///
         /// Resource: `CLIInterface.cliInterface.t907f38578610`.
         public static var t907f38578610: LocalizedMessage {
-            .init(key: "cliInterface.t907f38578610", table: "CLIInterface", fallback: "resource? action? subaction?")
+            .init(key: "cliInterface.t907f38578610", table: "CLIInterface", fallback: "可选的资源、动作和子动作。")
         }
         /// 显示应用及命令行工具的版本和路径。
         ///
@@ -159,11 +159,11 @@ extension Messages {
         public static var t6edc04f9cc0c: LocalizedMessage {
             .init(key: "cliInterface.t6edc04f9cc0c", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
         }
-        /// Remove the ruri link only if it belongs to Ruri.
+        /// 卸载命令链接，仅移除属于 Ruri 的链接。
         ///
         /// Resource: `CLIInterface.cliInterface.t32373072cae3`.
         public static var t32373072cae3: LocalizedMessage {
-            .init(key: "cliInterface.t32373072cae3", table: "CLIInterface", fallback: "Remove the ruri link only if it belongs to Ruri.")
+            .init(key: "cliInterface.t32373072cae3", table: "CLIInterface", fallback: "卸载命令链接，仅移除属于 Ruri 的链接。")
         }
         /// 命令安装目录，默认为 /usr/local/bin。
         ///
@@ -177,23 +177,23 @@ extension Messages {
         public static var t3b0368de0fdf: LocalizedMessage {
             .init(key: "cliInterface.t3b0368de0fdf", table: "CLIInterface", fallback: "确认删除或覆盖操作。")
         }
-        /// app language commands
+        /// 应用界面语言
         ///
         /// Resource: `CLIInterface.cliInterface.teaca59ff6999`.
         public static var teaca59ff6999: LocalizedMessage {
-            .init(key: "cliInterface.teaca59ff6999", table: "CLIInterface", fallback: "app language commands")
+            .init(key: "cliInterface.teaca59ff6999", table: "CLIInterface", fallback: "应用界面语言")
         }
-        /// app commands
+        /// 应用信息与语言设置
         ///
         /// Resource: `CLIInterface.cliInterface.t64c4a55a8346`.
         public static var t64c4a55a8346: LocalizedMessage {
-            .init(key: "cliInterface.t64c4a55a8346", table: "CLIInterface", fallback: "app commands")
+            .init(key: "cliInterface.t64c4a55a8346", table: "CLIInterface", fallback: "应用信息与语言设置")
         }
-        /// cli commands
+        /// 命令行工具的安装与卸载
         ///
         /// Resource: `CLIInterface.cliInterface.td9fc3f8ff28d`.
         public static var td9fc3f8ff28d: LocalizedMessage {
-            .init(key: "cliInterface.td9fc3f8ff28d", table: "CLIInterface", fallback: "cli commands")
+            .init(key: "cliInterface.td9fc3f8ff28d", table: "CLIInterface", fallback: "命令行工具的安装与卸载")
         }
         /// Ruri 启动器命令行接口。
         ///
@@ -243,2063 +243,2063 @@ extension Messages {
         public static var tce7693c68759: LocalizedMessage {
             .init(key: "cliInterface.tce7693c68759", table: "CLIInterface", fallback: "另一个进程正在使用此资源。")
         }
-        /// Read explicit and effective configuration with inheritance sources.
+        /// 查询显式配置、有效配置及继承来源。
         ///
         /// Resource: `CLIInterface.cliInterface.t9b80abd0b1ac`.
         public static var t9b80abd0b1ac: LocalizedMessage {
-            .init(key: "cliInterface.t9b80abd0b1ac", table: "CLIInterface", fallback: "Read explicit and effective configuration with inheritance sources.")
+            .init(key: "cliInterface.t9b80abd0b1ac", table: "CLIInterface", fallback: "查询显式配置、有效配置及继承来源。")
         }
-        /// app, defaults, or instance:<uuid>.
+        /// 配置作用域：app、defaults 或 instance:<uuid>。
         ///
         /// Resource: `CLIInterface.cliInterface.t9f1f1df0e83d`.
         public static var t9f1f1df0e83d: LocalizedMessage {
-            .init(key: "cliInterface.t9f1f1df0e83d", table: "CLIInterface", fallback: "app, defaults, or instance:<uuid>.")
+            .init(key: "cliInterface.t9f1f1df0e83d", table: "CLIInterface", fallback: "配置作用域：app、defaults 或 instance:<uuid>。")
         }
-        /// Include environment variable values.
+        /// 显示环境变量的值。
         ///
         /// Resource: `CLIInterface.cliInterface.t9180c54b32fc`.
         public static var t9180c54b32fc: LocalizedMessage {
-            .init(key: "cliInterface.t9180c54b32fc", table: "CLIInterface", fallback: "Include environment variable values.")
+            .init(key: "cliInterface.t9180c54b32fc", table: "CLIInterface", fallback: "显示环境变量的值。")
         }
-        /// Set one field using a JSON value.
+        /// 使用 JSON 值设置一个配置字段。
         ///
         /// Resource: `CLIInterface.cliInterface.t51d568cf62ef`.
         public static var t51d568cf62ef: LocalizedMessage {
-            .init(key: "cliInterface.t51d568cf62ef", table: "CLIInterface", fallback: "Set one field using a JSON value.")
+            .init(key: "cliInterface.t51d568cf62ef", table: "CLIInterface", fallback: "使用 JSON 值设置一个配置字段。")
         }
-        /// Require the state revision read earlier.
+        /// 仅当状态版本与此前读取的一致时提交。
         ///
         /// Resource: `CLIInterface.cliInterface.tc865886779a0`.
         public static var tc865886779a0: LocalizedMessage {
-            .init(key: "cliInterface.tc865886779a0", table: "CLIInterface", fallback: "Require the state revision read earlier.")
+            .init(key: "cliInterface.tc865886779a0", table: "CLIInterface", fallback: "仅当状态版本与此前读取的一致时提交。")
         }
-        /// key value
+        /// 配置字段及 JSON 值。
         ///
         /// Resource: `CLIInterface.cliInterface.t3a7dba9c3050`.
         public static var t3a7dba9c3050: LocalizedMessage {
-            .init(key: "cliInterface.t3a7dba9c3050", table: "CLIInterface", fallback: "key value")
+            .init(key: "cliInterface.t3a7dba9c3050", table: "CLIInterface", fallback: "配置字段及 JSON 值。")
         }
-        /// Apply an atomic JSON configuration patch.
+        /// 原子应用 JSON 配置补丁。
         ///
         /// Resource: `CLIInterface.cliInterface.t22ad2905d16d`.
         public static var t22ad2905d16d: LocalizedMessage {
-            .init(key: "cliInterface.t22ad2905d16d", table: "CLIInterface", fallback: "Apply an atomic JSON configuration patch.")
+            .init(key: "cliInterface.t22ad2905d16d", table: "CLIInterface", fallback: "原子应用 JSON 配置补丁。")
         }
-        /// JSON patch file, or - for stdin.
+        /// JSON 补丁文件；使用 - 从标准输入读取。
         ///
         /// Resource: `CLIInterface.cliInterface.t149625e63af0`.
         public static var t149625e63af0: LocalizedMessage {
-            .init(key: "cliInterface.t149625e63af0", table: "CLIInterface", fallback: "JSON patch file, or - for stdin.")
+            .init(key: "cliInterface.t149625e63af0", table: "CLIInterface", fallback: "JSON 补丁文件；使用 - 从标准输入读取。")
         }
-        /// Reset a field or group to built-in defaults.
+        /// 将配置字段或组重置为内置默认值。
         ///
         /// Resource: `CLIInterface.cliInterface.t620fab80a2bb`.
         public static var t620fab80a2bb: LocalizedMessage {
-            .init(key: "cliInterface.t620fab80a2bb", table: "CLIInterface", fallback: "Reset a field or group to built-in defaults.")
+            .init(key: "cliInterface.t620fab80a2bb", table: "CLIInterface", fallback: "将配置字段或组重置为内置默认值。")
         }
-        /// Restore an instance setting group's inheritance.
+        /// 恢复实例配置组的继承。
         ///
         /// Resource: `CLIInterface.cliInterface.te7f60fe2aebd`.
         public static var te7f60fe2aebd: LocalizedMessage {
-            .init(key: "cliInterface.te7f60fe2aebd", table: "CLIInterface", fallback: "Restore an instance setting group's inheritance.")
+            .init(key: "cliInterface.te7f60fe2aebd", table: "CLIInterface", fallback: "恢复实例配置组的继承。")
         }
-        /// config commands
+        /// 全局设置、默认配置与实例覆盖
         ///
         /// Resource: `CLIInterface.cliInterface.t1fcd3e7a6ffc`.
         public static var t1fcd3e7a6ffc: LocalizedMessage {
-            .init(key: "cliInterface.t1fcd3e7a6ffc", table: "CLIInterface", fallback: "config commands")
+            .init(key: "cliInterface.t1fcd3e7a6ffc", table: "CLIInterface", fallback: "全局设置、默认配置与实例覆盖")
         }
-        /// Unknown configuration field.
+        /// 未知配置字段。
         ///
         /// Resource: `CLIInterface.cliInterface.tdf61274dcc9c`.
         public static var tdf61274dcc9c: LocalizedMessage {
-            .init(key: "cliInterface.tdf61274dcc9c", table: "CLIInterface", fallback: "Unknown configuration field.")
+            .init(key: "cliInterface.tdf61274dcc9c", table: "CLIInterface", fallback: "未知配置字段。")
         }
-        /// The value must be JSON; quote string values.
+        /// 配置值必须是 JSON；字符串值需要保留双引号。
         ///
         /// Resource: `CLIInterface.cliInterface.te3e619f346d3`.
         public static var te3e619f346d3: LocalizedMessage {
-            .init(key: "cliInterface.te3e619f346d3", table: "CLIInterface", fallback: "The value must be JSON; quote string values.")
+            .init(key: "cliInterface.te3e619f346d3", table: "CLIInterface", fallback: "配置值必须是 JSON；字符串值需要保留双引号。")
         }
-        /// Invalid configuration patch JSON.
+        /// 配置补丁不是有效的 JSON。
         ///
         /// Resource: `CLIInterface.cliInterface.t64229bd16ecc`.
         public static var t64229bd16ecc: LocalizedMessage {
-            .init(key: "cliInterface.t64229bd16ecc", table: "CLIInterface", fallback: "Invalid configuration patch JSON.")
+            .init(key: "cliInterface.t64229bd16ecc", table: "CLIInterface", fallback: "配置补丁不是有效的 JSON。")
         }
-        /// Expected a UUID.
+        /// 需要有效的 UUID。
         ///
         /// Resource: `CLIInterface.cliInterface.t332cdb6a53b4`.
         public static var t332cdb6a53b4: LocalizedMessage {
-            .init(key: "cliInterface.t332cdb6a53b4", table: "CLIInterface", fallback: "Expected a UUID.")
+            .init(key: "cliInterface.t332cdb6a53b4", table: "CLIInterface", fallback: "需要有效的 UUID。")
         }
-        /// Input exceeds the allowed size.
+        /// 输入超过允许的大小。
         ///
         /// Resource: `CLIInterface.cliInterface.tf7eb23752b1e`.
         public static var tf7eb23752b1e: LocalizedMessage {
-            .init(key: "cliInterface.tf7eb23752b1e", table: "CLIInterface", fallback: "Input exceeds the allowed size.")
+            .init(key: "cliInterface.tf7eb23752b1e", table: "CLIInterface", fallback: "输入超过允许的大小。")
         }
-        /// The state changed since it was read.
+        /// 读取后状态已发生变化。
         ///
         /// Resource: `CLIInterface.cliInterface.te8a7227e2180`.
         public static var te8a7227e2180: LocalizedMessage {
-            .init(key: "cliInterface.te8a7227e2180", table: "CLIInterface", fallback: "The state changed since it was read.")
+            .init(key: "cliInterface.te8a7227e2180", table: "CLIInterface", fallback: "读取后状态已发生变化。")
         }
-        /// Unknown patch member; use set, reset or inherit.
+        /// 补丁包含未知操作，请使用 set、reset 或 inherit。
         ///
         /// Resource: `CLIInterface.cliInterface.t8568ceb9ae27`.
         public static var t8568ceb9ae27: LocalizedMessage {
-            .init(key: "cliInterface.t8568ceb9ae27", table: "CLIInterface", fallback: "Unknown patch member; use set, reset or inherit.")
+            .init(key: "cliInterface.t8568ceb9ae27", table: "CLIInterface", fallback: "补丁包含未知操作，请使用 set、reset 或 inherit。")
         }
-        /// field-to-value object
+        /// 配置字段到值的映射对象
         ///
         /// Resource: `CLIInterface.cliInterface.tba308ed7fb67`.
         public static var tba308ed7fb67: LocalizedMessage {
-            .init(key: "cliInterface.tba308ed7fb67", table: "CLIInterface", fallback: "field-to-value object")
+            .init(key: "cliInterface.tba308ed7fb67", table: "CLIInterface", fallback: "配置字段到值的映射对象")
         }
-        /// field or group names
+        /// 配置字段或组的名称
         ///
         /// Resource: `CLIInterface.cliInterface.tba6d0ed49ef6`.
         public static var tba6d0ed49ef6: LocalizedMessage {
-            .init(key: "cliInterface.tba6d0ed49ef6", table: "CLIInterface", fallback: "field or group names")
+            .init(key: "cliInterface.tba6d0ed49ef6", table: "CLIInterface", fallback: "配置字段或组的名称")
         }
-        /// instance-only group names
+        /// 实例配置组的名称，仅适用于实例
         ///
         /// Resource: `CLIInterface.cliInterface.t54e4e046502f`.
         public static var t54e4e046502f: LocalizedMessage {
-            .init(key: "cliInterface.t54e4e046502f", table: "CLIInterface", fallback: "instance-only group names")
+            .init(key: "cliInterface.t54e4e046502f", table: "CLIInterface", fallback: "实例配置组的名称，仅适用于实例")
         }
-        /// Use app, defaults or instance:<uuid> as the scope.
+        /// 配置作用域必须为 app、defaults 或 instance:<uuid>。
         ///
         /// Resource: `CLIInterface.cliInterface.te2e236614526`.
         public static var te2e236614526: LocalizedMessage {
-            .init(key: "cliInterface.te2e236614526", table: "CLIInterface", fallback: "Use app, defaults or instance:<uuid> as the scope.")
+            .init(key: "cliInterface.te2e236614526", table: "CLIInterface", fallback: "配置作用域必须为 app、defaults 或 instance:<uuid>。")
         }
-        /// Instance not found.
+        /// 找不到实例。
         ///
         /// Resource: `CLIInterface.cliInterface.t491b2168687b`.
         public static var t491b2168687b: LocalizedMessage {
-            .init(key: "cliInterface.t491b2168687b", table: "CLIInterface", fallback: "Instance not found.")
+            .init(key: "cliInterface.t491b2168687b", table: "CLIInterface", fallback: "找不到实例。")
         }
-        /// Unknown or empty configuration group: %1$@.
+        /// 未知或空的配置组：%1$@。
         ///
         /// Resource: `CLIInterface.cliInterface.t41f1a159c375`.
         public static func t41f1a159c375(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t41f1a159c375", table: "CLIInterface", fallback: "Unknown or empty configuration group: %1$@.", arguments: [.text(value0)])
+            .init(key: "cliInterface.t41f1a159c375", table: "CLIInterface", fallback: "未知或空的配置组：%1$@。", arguments: [.text(value0)])
         }
-        /// Unknown or duplicated configuration field: %1$@.
+        /// 未知或重复的配置字段：%1$@。
         ///
         /// Resource: `CLIInterface.cliInterface.t0e5f6b9ca429`.
         public static func t0e5f6b9ca429(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t0e5f6b9ca429", table: "CLIInterface", fallback: "Unknown or duplicated configuration field: %1$@.", arguments: [.text(value0)])
+            .init(key: "cliInterface.t0e5f6b9ca429", table: "CLIInterface", fallback: "未知或重复的配置字段：%1$@。", arguments: [.text(value0)])
         }
-        /// inherit requires complete instance setting groups.
+        /// inherit 仅适用于完整的实例配置组。
         ///
         /// Resource: `CLIInterface.cliInterface.t0199982aa94e`.
         public static var t0199982aa94e: LocalizedMessage {
-            .init(key: "cliInterface.t0199982aa94e", table: "CLIInterface", fallback: "inherit requires complete instance setting groups.")
+            .init(key: "cliInterface.t0199982aa94e", table: "CLIInterface", fallback: "inherit 仅适用于完整的实例配置组。")
         }
-        /// Unknown configuration field: %1$@.
+        /// 未知配置字段：%1$@。
         ///
         /// Resource: `CLIInterface.cliInterface.tca2c20d623be`.
         public static func tca2c20d623be(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.tca2c20d623be", table: "CLIInterface", fallback: "Unknown configuration field: %1$@.", arguments: [.text(value0)])
+            .init(key: "cliInterface.tca2c20d623be", table: "CLIInterface", fallback: "未知配置字段：%1$@。", arguments: [.text(value0)])
         }
-        /// Conflicting patch operations for %1$@.
+        /// 针对 %1$@ 的补丁操作相互冲突。
         ///
         /// Resource: `CLIInterface.cliInterface.ta78e60d41732`.
         public static func ta78e60d41732(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.ta78e60d41732", table: "CLIInterface", fallback: "Conflicting patch operations for %1$@.", arguments: [.text(value0)])
+            .init(key: "cliInterface.ta78e60d41732", table: "CLIInterface", fallback: "针对 %1$@ 的补丁操作相互冲突。", arguments: [.text(value0)])
         }
-        /// Invalid value for %1$@.
+        /// %1$@ 的值无效。
         ///
         /// Resource: `CLIInterface.cliInterface.t62fca6b0b13b`.
         public static func t62fca6b0b13b(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t62fca6b0b13b", table: "CLIInterface", fallback: "Invalid value for %1$@.", arguments: [.text(value0)])
+            .init(key: "cliInterface.t62fca6b0b13b", table: "CLIInterface", fallback: "%1$@ 的值无效。", arguments: [.text(value0)])
         }
-        /// Microsoft Client ID must be a UUID or an empty string.
+        /// Microsoft Client ID 必须为 UUID 或空字符串。
         ///
         /// Resource: `CLIInterface.cliInterface.t1f94c2f53310`.
         public static var t1f94c2f53310: LocalizedMessage {
-            .init(key: "cliInterface.t1f94c2f53310", table: "CLIInterface", fallback: "Microsoft Client ID must be a UUID or an empty string.")
+            .init(key: "cliInterface.t1f94c2f53310", table: "CLIInterface", fallback: "Microsoft Client ID 必须为 UUID 或空字符串。")
         }
-        /// java.major is required in major mode.
+        /// major 模式需要设置 java.major。
         ///
         /// Resource: `CLIInterface.cliInterface.t9b199fcf9a1f`.
         public static var t9b199fcf9a1f: LocalizedMessage {
-            .init(key: "cliInterface.t9b199fcf9a1f", table: "CLIInterface", fallback: "java.major is required in major mode.")
+            .init(key: "cliInterface.t9b199fcf9a1f", table: "CLIInterface", fallback: "major 模式需要设置 java.major。")
         }
-        /// java.path is required in path mode.
+        /// path 模式需要设置 java.path。
         ///
         /// Resource: `CLIInterface.cliInterface.t15b3dd14487d`.
         public static var t15b3dd14487d: LocalizedMessage {
-            .init(key: "cliInterface.t15b3dd14487d", table: "CLIInterface", fallback: "java.path is required in path mode.")
+            .init(key: "cliInterface.t15b3dd14487d", table: "CLIInterface", fallback: "path 模式需要设置 java.path。")
         }
-        /// List managed and registered instances.
+        /// 列出托管及已注册的实例。
         ///
         /// Resource: `CLIInterface.cliInterface.t163f689a3d2f`.
         public static var t163f689a3d2f: LocalizedMessage {
-            .init(key: "cliInterface.t163f689a3d2f", table: "CLIInterface", fallback: "List managed and registered instances.")
+            .init(key: "cliInterface.t163f689a3d2f", table: "CLIInterface", fallback: "列出托管及已注册的实例。")
         }
-        /// Filter by exact name.
+        /// 按完整名称筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t61c2b6ad309c`.
         public static var t61c2b6ad309c: LocalizedMessage {
-            .init(key: "cliInterface.t61c2b6ad309c", table: "CLIInterface", fallback: "Filter by exact name.")
+            .init(key: "cliInterface.t61c2b6ad309c", table: "CLIInterface", fallback: "按完整名称筛选。")
         }
-        /// Filter by directory UUID or default.
+        /// 按目录 UUID 或 default 筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t3a0b2a4eac30`.
         public static var t3a0b2a4eac30: LocalizedMessage {
-            .init(key: "cliInterface.t3a0b2a4eac30", table: "CLIInterface", fallback: "Filter by directory UUID or default.")
+            .init(key: "cliInterface.t3a0b2a4eac30", table: "CLIInterface", fallback: "按目录 UUID 或 default 筛选。")
         }
-        /// Maximum results (1...1000; default 50).
+        /// 最多返回的数量，范围为 1 至 1000，默认 50。
         ///
         /// Resource: `CLIInterface.cliInterface.te46ca00ec899`.
         public static var te46ca00ec899: LocalizedMessage {
-            .init(key: "cliInterface.te46ca00ec899", table: "CLIInterface", fallback: "Maximum results (1...1000; default 50).")
+            .init(key: "cliInterface.te46ca00ec899", table: "CLIInterface", fallback: "最多返回的数量，范围为 1 至 1000，默认 50。")
         }
-        /// Result offset (default 0).
+        /// 跳过的结果数量，默认 0。
         ///
         /// Resource: `CLIInterface.cliInterface.t184bd8d0fe9d`.
         public static var t184bd8d0fe9d: LocalizedMessage {
-            .init(key: "cliInterface.t184bd8d0fe9d", table: "CLIInterface", fallback: "Result offset (default 0).")
+            .init(key: "cliInterface.t184bd8d0fe9d", table: "CLIInterface", fallback: "跳过的结果数量，默认 0。")
         }
-        /// Return all results.
+        /// 返回全部结果。
         ///
         /// Resource: `CLIInterface.cliInterface.ta412189d9e76`.
         public static var ta412189d9e76: LocalizedMessage {
-            .init(key: "cliInterface.ta412189d9e76", table: "CLIInterface", fallback: "Return all results.")
+            .init(key: "cliInterface.ta412189d9e76", table: "CLIInterface", fallback: "返回全部结果。")
         }
-        /// Read the currently selected instance.
+        /// 查询当前选中的实例。
         ///
         /// Resource: `CLIInterface.cliInterface.t1a9316dc0247`.
         public static var t1a9316dc0247: LocalizedMessage {
-            .init(key: "cliInterface.t1a9316dc0247", table: "CLIInterface", fallback: "Read the currently selected instance.")
+            .init(key: "cliInterface.t1a9316dc0247", table: "CLIInterface", fallback: "查询当前选中的实例。")
         }
-        /// Inspect an instance and its locations.
+        /// 查询实例详情及文件位置。
         ///
         /// Resource: `CLIInterface.cliInterface.td25fbbc9aa83`.
         public static var td25fbbc9aa83: LocalizedMessage {
-            .init(key: "cliInterface.td25fbbc9aa83", table: "CLIInterface", fallback: "Inspect an instance and its locations.")
+            .init(key: "cliInterface.td25fbbc9aa83", table: "CLIInterface", fallback: "查询实例详情及文件位置。")
         }
-        /// Resolve an exact name instead of a UUID.
+        /// 通过完整名称查找实例，代替 UUID。
         ///
         /// Resource: `CLIInterface.cliInterface.t554bb290d490`.
         public static var t554bb290d490: LocalizedMessage {
-            .init(key: "cliInterface.t554bb290d490", table: "CLIInterface", fallback: "Resolve an exact name instead of a UUID.")
+            .init(key: "cliInterface.t554bb290d490", table: "CLIInterface", fallback: "通过完整名称查找实例，代替 UUID。")
         }
-        /// List available Minecraft versions.
+        /// 列出可用的 Minecraft 版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t309b2060e6e7`.
         public static var t309b2060e6e7: LocalizedMessage {
-            .init(key: "cliInterface.t309b2060e6e7", table: "CLIInterface", fallback: "List available Minecraft versions.")
+            .init(key: "cliInterface.t309b2060e6e7", table: "CLIInterface", fallback: "列出可用的 Minecraft 版本。")
         }
-        /// Include snapshot versions.
+        /// 包含快照版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t0f6dcda14ae4`.
         public static var t0f6dcda14ae4: LocalizedMessage {
-            .init(key: "cliInterface.t0f6dcda14ae4", table: "CLIInterface", fallback: "Include snapshot versions.")
+            .init(key: "cliInterface.t0f6dcda14ae4", table: "CLIInterface", fallback: "包含快照版本。")
         }
-        /// Create and install a named instance.
+        /// 创建并安装指定名称的实例。
         ///
         /// Resource: `CLIInterface.cliInterface.tea647925f201`.
         public static var tea647925f201: LocalizedMessage {
-            .init(key: "cliInterface.tea647925f201", table: "CLIInterface", fallback: "Create and install a named instance.")
+            .init(key: "cliInterface.tea647925f201", table: "CLIInterface", fallback: "创建并安装指定名称的实例。")
         }
-        /// Instance name.
+        /// 实例名称。
         ///
         /// Resource: `CLIInterface.cliInterface.tf78b43b0ee95`.
         public static var tf78b43b0ee95: LocalizedMessage {
-            .init(key: "cliInterface.tf78b43b0ee95", table: "CLIInterface", fallback: "Instance name.")
+            .init(key: "cliInterface.tf78b43b0ee95", table: "CLIInterface", fallback: "实例名称。")
         }
-        /// Minecraft version.
+        /// Minecraft 版本。
         ///
         /// Resource: `CLIInterface.cliInterface.tc32a76745397`.
         public static var tc32a76745397: LocalizedMessage {
-            .init(key: "cliInterface.tc32a76745397", table: "CLIInterface", fallback: "Minecraft version.")
+            .init(key: "cliInterface.tc32a76745397", table: "CLIInterface", fallback: "Minecraft 版本。")
         }
-        /// Explicit destination directory UUID, or default.
+        /// 明确指定目标目录 UUID 或 default。
         ///
         /// Resource: `CLIInterface.cliInterface.tcba396edfba1`.
         public static var tcba396edfba1: LocalizedMessage {
-            .init(key: "cliInterface.tcba396edfba1", table: "CLIInterface", fallback: "Explicit destination directory UUID, or default.")
+            .init(key: "cliInterface.tcba396edfba1", table: "CLIInterface", fallback: "明确指定目标目录 UUID 或 default。")
         }
-        /// Loader selection as kind=version; repeat for combinations.
+        /// 加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。
         ///
         /// Resource: `CLIInterface.cliInterface.tc54f734a37a6`.
         public static var tc54f734a37a6: LocalizedMessage {
-            .init(key: "cliInterface.tc54f734a37a6", table: "CLIInterface", fallback: "Loader selection as kind=version; repeat for combinations.")
+            .init(key: "cliInterface.tc54f734a37a6", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。")
         }
-        /// Create the record without downloading files.
+        /// 仅创建实例记录，不下载文件。
         ///
         /// Resource: `CLIInterface.cliInterface.td183fd7d75d0`.
         public static var td183fd7d75d0: LocalizedMessage {
-            .init(key: "cliInterface.td183fd7d75d0", table: "CLIInterface", fallback: "Create the record without downloading files.")
+            .init(key: "cliInterface.td183fd7d75d0", table: "CLIInterface", fallback: "仅创建实例记录，不下载文件。")
         }
-        /// Install an existing uninstalled instance.
+        /// 安装尚未完成安装的实例。
         ///
         /// Resource: `CLIInterface.cliInterface.tc5757d580bc3`.
         public static var tc5757d580bc3: LocalizedMessage {
-            .init(key: "cliInterface.tc5757d580bc3", table: "CLIInterface", fallback: "Install an existing uninstalled instance.")
+            .init(key: "cliInterface.tc5757d580bc3", table: "CLIInterface", fallback: "安装尚未完成安装的实例。")
         }
-        /// Repair an instance's installation files.
+        /// 修复实例的安装文件。
         ///
         /// Resource: `CLIInterface.cliInterface.te334b8a18014`.
         public static var te334b8a18014: LocalizedMessage {
-            .init(key: "cliInterface.te334b8a18014", table: "CLIInterface", fallback: "Repair an instance's installation files.")
+            .init(key: "cliInterface.te334b8a18014", table: "CLIInterface", fallback: "修复实例的安装文件。")
         }
-        /// Select an instance.
+        /// 选择实例。
         ///
         /// Resource: `CLIInterface.cliInterface.ta4178213b601`.
         public static var ta4178213b601: LocalizedMessage {
-            .init(key: "cliInterface.ta4178213b601", table: "CLIInterface", fallback: "Select an instance.")
+            .init(key: "cliInterface.ta4178213b601", table: "CLIInterface", fallback: "选择实例。")
         }
-        /// Rename an instance.
+        /// 重命名实例。
         ///
         /// Resource: `CLIInterface.cliInterface.t5ba0c4853561`.
         public static var t5ba0c4853561: LocalizedMessage {
-            .init(key: "cliInterface.t5ba0c4853561", table: "CLIInterface", fallback: "Rename an instance.")
+            .init(key: "cliInterface.t5ba0c4853561", table: "CLIInterface", fallback: "重命名实例。")
         }
-        /// id name
+        /// 实例 ID 和新名称。
         ///
         /// Resource: `CLIInterface.cliInterface.tb19f8bbe0060`.
         public static var tb19f8bbe0060: LocalizedMessage {
-            .init(key: "cliInterface.tb19f8bbe0060", table: "CLIInterface", fallback: "id name")
+            .init(key: "cliInterface.tb19f8bbe0060", table: "CLIInterface", fallback: "实例 ID 和新名称。")
         }
-        /// Set an instance's favorite state.
+        /// 设置实例的收藏状态。
         ///
         /// Resource: `CLIInterface.cliInterface.t850a4e6bffbd`.
         public static var t850a4e6bffbd: LocalizedMessage {
-            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "Set an instance's favorite state.")
+            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "设置实例的收藏状态。")
         }
-        /// id enabled
+        /// 实例 ID 和收藏状态，状态为 true 或 false。
         ///
         /// Resource: `CLIInterface.cliInterface.t07e88e1b19e9`.
         public static var t07e88e1b19e9: LocalizedMessage {
-            .init(key: "cliInterface.t07e88e1b19e9", table: "CLIInterface", fallback: "id enabled")
+            .init(key: "cliInterface.t07e88e1b19e9", table: "CLIInterface", fallback: "实例 ID 和收藏状态，状态为 true 或 false。")
         }
-        /// Move instance-owned files to the Trash and remove its record.
+        /// 将实例自有文件移到废纸篓，并移除实例记录。
         ///
         /// Resource: `CLIInterface.cliInterface.t1e047c3f4441`.
         public static var t1e047c3f4441: LocalizedMessage {
-            .init(key: "cliInterface.t1e047c3f4441", table: "CLIInterface", fallback: "Move instance-owned files to the Trash and remove its record.")
+            .init(key: "cliInterface.t1e047c3f4441", table: "CLIInterface", fallback: "将实例自有文件移到废纸篓，并移除实例记录。")
         }
-        /// Set or reset the instance icon.
+        /// 设置或重置实例图标。
         ///
         /// Resource: `CLIInterface.cliInterface.t2774fd42ed73`.
         public static var t2774fd42ed73: LocalizedMessage {
-            .init(key: "cliInterface.t2774fd42ed73", table: "CLIInterface", fallback: "Set or reset the instance icon.")
+            .init(key: "cliInterface.t2774fd42ed73", table: "CLIInterface", fallback: "设置或重置实例图标。")
         }
-        /// PNG icon file.
+        /// PNG 图标文件。
         ///
         /// Resource: `CLIInterface.cliInterface.tc9dade836bbe`.
         public static var tc9dade836bbe: LocalizedMessage {
-            .init(key: "cliInterface.tc9dade836bbe", table: "CLIInterface", fallback: "PNG icon file.")
+            .init(key: "cliInterface.tc9dade836bbe", table: "CLIInterface", fallback: "PNG 图标文件。")
         }
-        /// Built-in icon glyph.
+        /// 内置图标形状。
         ///
         /// Resource: `CLIInterface.cliInterface.t4888fb1eb4ed`.
         public static var t4888fb1eb4ed: LocalizedMessage {
-            .init(key: "cliInterface.t4888fb1eb4ed", table: "CLIInterface", fallback: "Built-in icon glyph.")
+            .init(key: "cliInterface.t4888fb1eb4ed", table: "CLIInterface", fallback: "内置图标形状。")
         }
-        /// Built-in icon tint.
+        /// 内置图标颜色。
         ///
         /// Resource: `CLIInterface.cliInterface.t44893043de60`.
         public static var t44893043de60: LocalizedMessage {
-            .init(key: "cliInterface.t44893043de60", table: "CLIInterface", fallback: "Built-in icon tint.")
+            .init(key: "cliInterface.t44893043de60", table: "CLIInterface", fallback: "内置图标颜色。")
         }
-        /// Restore the default icon.
+        /// 恢复默认图标。
         ///
         /// Resource: `CLIInterface.cliInterface.t22cb6cbb2d9e`.
         public static var t22cb6cbb2d9e: LocalizedMessage {
-            .init(key: "cliInterface.t22cb6cbb2d9e", table: "CLIInterface", fallback: "Restore the default icon.")
+            .init(key: "cliInterface.t22cb6cbb2d9e", table: "CLIInterface", fallback: "恢复默认图标。")
         }
-        /// Copy an instance to a named destination.
+        /// 将实例复制到指定目录并命名。
         ///
         /// Resource: `CLIInterface.cliInterface.ta496dc81dcac`.
         public static var ta496dc81dcac: LocalizedMessage {
-            .init(key: "cliInterface.ta496dc81dcac", table: "CLIInterface", fallback: "Copy an instance to a named destination.")
+            .init(key: "cliInterface.ta496dc81dcac", table: "CLIInterface", fallback: "将实例复制到指定目录并命名。")
         }
-        /// New instance name.
+        /// 新实例名称。
         ///
         /// Resource: `CLIInterface.cliInterface.td52e9c9dbb40`.
         public static var td52e9c9dbb40: LocalizedMessage {
-            .init(key: "cliInterface.td52e9c9dbb40", table: "CLIInterface", fallback: "New instance name.")
+            .init(key: "cliInterface.td52e9c9dbb40", table: "CLIInterface", fallback: "新实例名称。")
         }
-        /// Exclude worlds.
+        /// 不包含世界存档。
         ///
         /// Resource: `CLIInterface.cliInterface.t874415ccd0ab`.
         public static var t874415ccd0ab: LocalizedMessage {
-            .init(key: "cliInterface.t874415ccd0ab", table: "CLIInterface", fallback: "Exclude worlds.")
+            .init(key: "cliInterface.t874415ccd0ab", table: "CLIInterface", fallback: "不包含世界存档。")
         }
-        /// Include world backups.
+        /// 包含世界备份。
         ///
         /// Resource: `CLIInterface.cliInterface.t4829b4f8f896`.
         public static var t4829b4f8f896: LocalizedMessage {
-            .init(key: "cliInterface.t4829b4f8f896", table: "CLIInterface", fallback: "Include world backups.")
+            .init(key: "cliInterface.t4829b4f8f896", table: "CLIInterface", fallback: "包含世界备份。")
         }
-        /// Move an instance between directories.
+        /// 将实例移动到另一目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t2aee4e3b9cb2`.
         public static var t2aee4e3b9cb2: LocalizedMessage {
-            .init(key: "cliInterface.t2aee4e3b9cb2", table: "CLIInterface", fallback: "Move an instance between directories.")
+            .init(key: "cliInterface.t2aee4e3b9cb2", table: "CLIInterface", fallback: "将实例移动到另一目录。")
         }
-        /// Export an instance archive.
+        /// 导出实例归档。
         ///
         /// Resource: `CLIInterface.cliInterface.t8f4cf0564496`.
         public static var t8f4cf0564496: LocalizedMessage {
-            .init(key: "cliInterface.t8f4cf0564496", table: "CLIInterface", fallback: "Export an instance archive.")
+            .init(key: "cliInterface.t8f4cf0564496", table: "CLIInterface", fallback: "导出实例归档。")
         }
-        /// ruri, complete, multimc, mcbbs, or mrpack.
+        /// 归档格式：ruri、complete、multimc、mcbbs 或 mrpack。
         ///
         /// Resource: `CLIInterface.cliInterface.t148d4a105bd2`.
         public static var t148d4a105bd2: LocalizedMessage {
-            .init(key: "cliInterface.t148d4a105bd2", table: "CLIInterface", fallback: "ruri, complete, multimc, mcbbs, or mrpack.")
+            .init(key: "cliInterface.t148d4a105bd2", table: "CLIInterface", fallback: "归档格式：ruri、complete、multimc、mcbbs 或 mrpack。")
         }
-        /// id file
+        /// 实例 ID 和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.tc48ebcacc9f3`.
         public static var tc48ebcacc9f3: LocalizedMessage {
-            .init(key: "cliInterface.tc48ebcacc9f3", table: "CLIInterface", fallback: "id file")
+            .init(key: "cliInterface.tc48ebcacc9f3", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
         }
-        /// Inspect installed loaders and the component backup.
+        /// 查询已安装的加载器及组件备份。
         ///
         /// Resource: `CLIInterface.cliInterface.t94761d5853b8`.
         public static var t94761d5853b8: LocalizedMessage {
-            .init(key: "cliInterface.t94761d5853b8", table: "CLIInterface", fallback: "Inspect installed loaders and the component backup.")
+            .init(key: "cliInterface.t94761d5853b8", table: "CLIInterface", fallback: "查询已安装的加载器及组件备份。")
         }
-        /// List loader versions compatible with the game.
+        /// 列出与游戏兼容的加载器版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t66e7670cbafe`.
         public static var t66e7670cbafe: LocalizedMessage {
-            .init(key: "cliInterface.t66e7670cbafe", table: "CLIInterface", fallback: "List loader versions compatible with the game.")
+            .init(key: "cliInterface.t66e7670cbafe", table: "CLIInterface", fallback: "列出与游戏兼容的加载器版本。")
         }
-        /// id loader
+        /// 实例 ID 和加载器类型。
         ///
         /// Resource: `CLIInterface.cliInterface.t8ca25fc9cedc`.
         public static var t8ca25fc9cedc: LocalizedMessage {
-            .init(key: "cliInterface.t8ca25fc9cedc", table: "CLIInterface", fallback: "id loader")
+            .init(key: "cliInterface.t8ca25fc9cedc", table: "CLIInterface", fallback: "实例 ID 和加载器类型。")
         }
-        /// Replace the installed loader combination.
+        /// 替换已安装的加载器组合。
         ///
         /// Resource: `CLIInterface.cliInterface.td7622dae9d70`.
         public static var td7622dae9d70: LocalizedMessage {
-            .init(key: "cliInterface.td7622dae9d70", table: "CLIInterface", fallback: "Replace the installed loader combination.")
+            .init(key: "cliInterface.td7622dae9d70", table: "CLIInterface", fallback: "替换已安装的加载器组合。")
         }
-        /// Loader kind=version; omit for vanilla.
+        /// 加载器及版本，格式为 kind=version；省略时使用原版。
         ///
         /// Resource: `CLIInterface.cliInterface.t4465e709e830`.
         public static var t4465e709e830: LocalizedMessage {
-            .init(key: "cliInterface.t4465e709e830", table: "CLIInterface", fallback: "Loader kind=version; omit for vanilla.")
+            .init(key: "cliInterface.t4465e709e830", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；省略时使用原版。")
         }
-        /// Restore the previous loader configuration.
+        /// 恢复上一次加载器配置。
         ///
         /// Resource: `CLIInterface.cliInterface.t3d825619ad66`.
         public static var t3d825619ad66: LocalizedMessage {
-            .init(key: "cliInterface.t3d825619ad66", table: "CLIInterface", fallback: "Restore the previous loader configuration.")
+            .init(key: "cliInterface.t3d825619ad66", table: "CLIInterface", fallback: "恢复上一次加载器配置。")
         }
-        /// instance component commands
+        /// 实例加载器与组件
         ///
         /// Resource: `CLIInterface.cliInterface.t336d8b6931f5`.
         public static var t336d8b6931f5: LocalizedMessage {
-            .init(key: "cliInterface.t336d8b6931f5", table: "CLIInterface", fallback: "instance component commands")
+            .init(key: "cliInterface.t336d8b6931f5", table: "CLIInterface", fallback: "实例加载器与组件")
         }
-        /// instance commands
+        /// 实例管理与游戏安装
         ///
         /// Resource: `CLIInterface.cliInterface.tea19eba1f497`.
         public static var tea19eba1f497: LocalizedMessage {
-            .init(key: "cliInterface.tea19eba1f497", table: "CLIInterface", fallback: "instance commands")
+            .init(key: "cliInterface.tea19eba1f497", table: "CLIInterface", fallback: "实例管理与游戏安装")
         }
-        /// Specify either an instance UUID or --name.
+        /// 请指定实例 UUID 或 --name，两者只能选一个。
         ///
         /// Resource: `CLIInterface.cliInterface.t79f4a3aa9493`.
         public static var t79f4a3aa9493: LocalizedMessage {
-            .init(key: "cliInterface.t79f4a3aa9493", table: "CLIInterface", fallback: "Specify either an instance UUID or --name.")
+            .init(key: "cliInterface.t79f4a3aa9493", table: "CLIInterface", fallback: "请指定实例 UUID 或 --name，两者只能选一个。")
         }
-        /// Use true or false.
+        /// 请使用 true 或 false。
         ///
         /// Resource: `CLIInterface.cliInterface.t188ae1e6f458`.
         public static var t188ae1e6f458: LocalizedMessage {
-            .init(key: "cliInterface.t188ae1e6f458", table: "CLIInterface", fallback: "Use true or false.")
+            .init(key: "cliInterface.t188ae1e6f458", table: "CLIInterface", fallback: "请使用 true 或 false。")
         }
-        /// Specify --file, --glyph or --reset.
+        /// 请指定 --file、--glyph 或 --reset。
         ///
         /// Resource: `CLIInterface.cliInterface.tf996e1aeec0d`.
         public static var tf996e1aeec0d: LocalizedMessage {
-            .init(key: "cliInterface.tf996e1aeec0d", table: "CLIInterface", fallback: "Specify --file, --glyph or --reset.")
+            .init(key: "cliInterface.tf996e1aeec0d", table: "CLIInterface", fallback: "请指定 --file、--glyph 或 --reset。")
         }
-        /// Unknown icon glyph or tint.
+        /// 未知图标形状或颜色。
         ///
         /// Resource: `CLIInterface.cliInterface.te8f93a97f4a5`.
         public static var te8f93a97f4a5: LocalizedMessage {
-            .init(key: "cliInterface.te8f93a97f4a5", table: "CLIInterface", fallback: "Unknown icon glyph or tint.")
+            .init(key: "cliInterface.te8f93a97f4a5", table: "CLIInterface", fallback: "未知图标形状或颜色。")
         }
-        /// Unknown loader.
+        /// 未知加载器。
         ///
         /// Resource: `CLIInterface.cliInterface.tecaf531d009c`.
         public static var tecaf531d009c: LocalizedMessage {
-            .init(key: "cliInterface.tecaf531d009c", table: "CLIInterface", fallback: "Unknown loader.")
+            .init(key: "cliInterface.tecaf531d009c", table: "CLIInterface", fallback: "未知加载器。")
         }
-        /// Unknown instance action.
+        /// 未知实例操作。
         ///
         /// Resource: `CLIInterface.cliInterface.td578c368dab6`.
         public static var td578c368dab6: LocalizedMessage {
-            .init(key: "cliInterface.td578c368dab6", table: "CLIInterface", fallback: "Unknown instance action.")
+            .init(key: "cliInterface.td578c368dab6", table: "CLIInterface", fallback: "未知实例操作。")
         }
-        /// Components use loader=version syntax; omit components for vanilla.
+        /// 组件使用 loader=version 格式；原版无需指定组件。
         ///
         /// Resource: `CLIInterface.cliInterface.tc7720bf2a0d4`.
         public static var tc7720bf2a0d4: LocalizedMessage {
-            .init(key: "cliInterface.tc7720bf2a0d4", table: "CLIInterface", fallback: "Components use loader=version syntax; omit components for vanilla.")
+            .init(key: "cliInterface.tc7720bf2a0d4", table: "CLIInterface", fallback: "组件使用 loader=version 格式；原版无需指定组件。")
         }
-        /// Duplicate loader selection.
+        /// 重复指定了加载器。
         ///
         /// Resource: `CLIInterface.cliInterface.t46989dde4470`.
         public static var t46989dde4470: LocalizedMessage {
-            .init(key: "cliInterface.t46989dde4470", table: "CLIInterface", fallback: "Duplicate loader selection.")
+            .init(key: "cliInterface.t46989dde4470", table: "CLIInterface", fallback: "重复指定了加载器。")
         }
-        /// Invalid RURI_DOWNLOAD_SOURCE.
+        /// RURI_DOWNLOAD_SOURCE 的值无效。
         ///
         /// Resource: `CLIInterface.cliInterface.t733e25583e8d`.
         public static var t733e25583e8d: LocalizedMessage {
-            .init(key: "cliInterface.t733e25583e8d", table: "CLIInterface", fallback: "Invalid RURI_DOWNLOAD_SOURCE.")
+            .init(key: "cliInterface.t733e25583e8d", table: "CLIInterface", fallback: "RURI_DOWNLOAD_SOURCE 的值无效。")
         }
-        /// The output file already exists.
+        /// 输出文件已存在。
         ///
         /// Resource: `CLIInterface.cliInterface.t121c67f22040`.
         public static var t121c67f22040: LocalizedMessage {
-            .init(key: "cliInterface.t121c67f22040", table: "CLIInterface", fallback: "The output file already exists.")
+            .init(key: "cliInterface.t121c67f22040", table: "CLIInterface", fallback: "输出文件已存在。")
         }
-        /// More than one instance has that name.
+        /// 有多个实例使用此名称。
         ///
         /// Resource: `CLIInterface.cliInterface.tfe6f797e1938`.
         public static var tfe6f797e1938: LocalizedMessage {
-            .init(key: "cliInterface.tfe6f797e1938", table: "CLIInterface", fallback: "More than one instance has that name.")
+            .init(key: "cliInterface.tfe6f797e1938", table: "CLIInterface", fallback: "有多个实例使用此名称。")
         }
-        /// Invalid game version.
+        /// 游戏版本无效。
         ///
         /// Resource: `CLIInterface.cliInterface.t79de4634dcb4`.
         public static var t79de4634dcb4: LocalizedMessage {
-            .init(key: "cliInterface.t79de4634dcb4", table: "CLIInterface", fallback: "Invalid game version.")
+            .init(key: "cliInterface.t79de4634dcb4", table: "CLIInterface", fallback: "游戏版本无效。")
         }
-        /// Directory not found.
+        /// 找不到目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t70a45a4240d8`.
         public static var t70a45a4240d8: LocalizedMessage {
-            .init(key: "cliInterface.t70a45a4240d8", table: "CLIInterface", fallback: "Directory not found.")
+            .init(key: "cliInterface.t70a45a4240d8", table: "CLIInterface", fallback: "找不到目录。")
         }
-        /// The target directory was removed.
+        /// 目标目录已被移除。
         ///
         /// Resource: `CLIInterface.cliInterface.t17574d1bad8e`.
         public static var t17574d1bad8e: LocalizedMessage {
-            .init(key: "cliInterface.t17574d1bad8e", table: "CLIInterface", fallback: "The target directory was removed.")
+            .init(key: "cliInterface.t17574d1bad8e", table: "CLIInterface", fallback: "目标目录已被移除。")
         }
-        /// The instance was removed during installation.
+        /// 实例在安装期间被移除。
         ///
         /// Resource: `CLIInterface.cliInterface.tb199229434bb`.
         public static var tb199229434bb: LocalizedMessage {
-            .init(key: "cliInterface.tb199229434bb", table: "CLIInterface", fallback: "The instance was removed during installation.")
+            .init(key: "cliInterface.tb199229434bb", table: "CLIInterface", fallback: "实例在安装期间被移除。")
         }
-        /// The instance location changed.
+        /// 实例位置已发生变化。
         ///
         /// Resource: `CLIInterface.cliInterface.t7d732629b332`.
         public static var t7d732629b332: LocalizedMessage {
-            .init(key: "cliInterface.t7d732629b332", table: "CLIInterface", fallback: "The instance location changed.")
+            .init(key: "cliInterface.t7d732629b332", table: "CLIInterface", fallback: "实例位置已发生变化。")
         }
-        /// Invalid instance name.
+        /// 实例名称无效。
         ///
         /// Resource: `CLIInterface.cliInterface.t97013cab62b8`.
         public static var t97013cab62b8: LocalizedMessage {
-            .init(key: "cliInterface.t97013cab62b8", table: "CLIInterface", fallback: "Invalid instance name.")
+            .init(key: "cliInterface.t97013cab62b8", table: "CLIInterface", fallback: "实例名称无效。")
         }
-        /// List registered and detached game directories.
+        /// 列出已注册和已断开连接的游戏目录。
         ///
         /// Resource: `CLIInterface.cliInterface.tf64fee5acdf0`.
         public static var tf64fee5acdf0: LocalizedMessage {
-            .init(key: "cliInterface.tf64fee5acdf0", table: "CLIInterface", fallback: "List registered and detached game directories.")
+            .init(key: "cliInterface.tf64fee5acdf0", table: "CLIInterface", fallback: "列出已注册和已断开连接的游戏目录。")
         }
-        /// Read the selected game directory.
+        /// 查询当前选中的游戏目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t13c336f9a11b`.
         public static var t13c336f9a11b: LocalizedMessage {
-            .init(key: "cliInterface.t13c336f9a11b", table: "CLIInterface", fallback: "Read the selected game directory.")
+            .init(key: "cliInterface.t13c336f9a11b", table: "CLIInterface", fallback: "查询当前选中的游戏目录。")
         }
-        /// Inspect an existing Minecraft folder without registering it.
+        /// 检查已有 Minecraft 文件夹，不注册目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t0a77c8493c2e`.
         public static var t0a77c8493c2e: LocalizedMessage {
-            .init(key: "cliInterface.t0a77c8493c2e", table: "CLIInterface", fallback: "Inspect an existing Minecraft folder without registering it.")
+            .init(key: "cliInterface.t0a77c8493c2e", table: "CLIInterface", fallback: "检查已有 Minecraft 文件夹，不注册目录。")
         }
-        /// Register an existing directory.
+        /// 注册已有目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t135973383faa`.
         public static var t135973383faa: LocalizedMessage {
-            .init(key: "cliInterface.t135973383faa", table: "CLIInterface", fallback: "Register an existing directory.")
+            .init(key: "cliInterface.t135973383faa", table: "CLIInterface", fallback: "注册已有目录。")
         }
-        /// Directory display name.
+        /// 目录显示名称。
         ///
         /// Resource: `CLIInterface.cliInterface.t63c8c08621c5`.
         public static var t63c8c08621c5: LocalizedMessage {
-            .init(key: "cliInterface.t63c8c08621c5", table: "CLIInterface", fallback: "Directory display name.")
+            .init(key: "cliInterface.t63c8c08621c5", table: "CLIInterface", fallback: "目录显示名称。")
         }
-        /// Directory layout.
+        /// 目录布局。
         ///
         /// Resource: `CLIInterface.cliInterface.t0175170e7603`.
         public static var t0175170e7603: LocalizedMessage {
-            .init(key: "cliInterface.t0175170e7603", table: "CLIInterface", fallback: "Directory layout.")
+            .init(key: "cliInterface.t0175170e7603", table: "CLIInterface", fallback: "目录布局。")
         }
-        /// Select a registered directory.
+        /// 选择已注册的目录。
         ///
         /// Resource: `CLIInterface.cliInterface.te995381e7764`.
         public static var te995381e7764: LocalizedMessage {
-            .init(key: "cliInterface.te995381e7764", table: "CLIInterface", fallback: "Select a registered directory.")
+            .init(key: "cliInterface.te995381e7764", table: "CLIInterface", fallback: "选择已注册的目录。")
         }
-        /// Refresh versions in a Minecraft directory.
+        /// 刷新 Minecraft 目录中的版本。
         ///
         /// Resource: `CLIInterface.cliInterface.tac593c150e36`.
         public static var tac593c150e36: LocalizedMessage {
-            .init(key: "cliInterface.tac593c150e36", table: "CLIInterface", fallback: "Refresh versions in a Minecraft directory.")
+            .init(key: "cliInterface.tac593c150e36", table: "CLIInterface", fallback: "刷新 Minecraft 目录中的版本。")
         }
-        /// Unregister a directory while retaining its files.
+        /// 移除目录注册，保留文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t8592d66b70ee`.
         public static var t8592d66b70ee: LocalizedMessage {
-            .init(key: "cliInterface.t8592d66b70ee", table: "CLIInterface", fallback: "Unregister a directory while retaining its files.")
+            .init(key: "cliInterface.t8592d66b70ee", table: "CLIInterface", fallback: "移除目录注册，保留文件。")
         }
-        /// Rename a registered directory.
+        /// 重命名已注册的目录。
         ///
         /// Resource: `CLIInterface.cliInterface.tbbd25ee7fe86`.
         public static var tbbd25ee7fe86: LocalizedMessage {
-            .init(key: "cliInterface.tbbd25ee7fe86", table: "CLIInterface", fallback: "Rename a registered directory.")
+            .init(key: "cliInterface.tbbd25ee7fe86", table: "CLIInterface", fallback: "重命名已注册的目录。")
         }
-        /// Reconnect a registered directory that was moved.
+        /// 重新关联已移动的注册目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t741d898dfaff`.
         public static var t741d898dfaff: LocalizedMessage {
-            .init(key: "cliInterface.t741d898dfaff", table: "CLIInterface", fallback: "Reconnect a registered directory that was moved.")
+            .init(key: "cliInterface.t741d898dfaff", table: "CLIInterface", fallback: "重新关联已移动的注册目录。")
         }
-        /// id path
+        /// 目录 ID 和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.te5b3e2aa3520`.
         public static var te5b3e2aa3520: LocalizedMessage {
-            .init(key: "cliInterface.te5b3e2aa3520", table: "CLIInterface", fallback: "id path")
+            .init(key: "cliInterface.te5b3e2aa3520", table: "CLIInterface", fallback: "目录 ID 和文件路径。")
         }
-        /// Restore a detached Minecraft directory.
+        /// 恢复已断开连接的 Minecraft 目录。
         ///
         /// Resource: `CLIInterface.cliInterface.teeb75a68ecdc`.
         public static var teeb75a68ecdc: LocalizedMessage {
-            .init(key: "cliInterface.teeb75a68ecdc", table: "CLIInterface", fallback: "Restore a detached Minecraft directory.")
+            .init(key: "cliInterface.teeb75a68ecdc", table: "CLIInterface", fallback: "恢复已断开连接的 Minecraft 目录。")
         }
-        /// Inspect an instance's game directory.
+        /// 查询实例的游戏目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t72af20234e14`.
         public static var t72af20234e14: LocalizedMessage {
-            .init(key: "cliInterface.t72af20234e14", table: "CLIInterface", fallback: "Inspect an instance's game directory.")
+            .init(key: "cliInterface.t72af20234e14", table: "CLIInterface", fallback: "查询实例的游戏目录。")
         }
-        /// Change an instance's run directory.
+        /// 切换实例的运行目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t1db840ce735d`.
         public static var t1db840ce735d: LocalizedMessage {
-            .init(key: "cliInterface.t1db840ce735d", table: "CLIInterface", fallback: "Change an instance's run directory.")
+            .init(key: "cliInterface.t1db840ce735d", table: "CLIInterface", fallback: "切换实例的运行目录。")
         }
-        /// Existing custom game directory.
+        /// 已有的自定义游戏目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t4d6e9b1a4264`.
         public static var t4d6e9b1a4264: LocalizedMessage {
-            .init(key: "cliInterface.t4d6e9b1a4264", table: "CLIInterface", fallback: "Existing custom game directory.")
+            .init(key: "cliInterface.t4d6e9b1a4264", table: "CLIInterface", fallback: "已有的自定义游戏目录。")
         }
-        /// Copy game files into the empty destination.
+        /// 将游戏文件复制到空的目标目录。
         ///
         /// Resource: `CLIInterface.cliInterface.ta39f0e134724`.
         public static var ta39f0e134724: LocalizedMessage {
-            .init(key: "cliInterface.ta39f0e134724", table: "CLIInterface", fallback: "Copy game files into the empty destination.")
+            .init(key: "cliInterface.ta39f0e134724", table: "CLIInterface", fallback: "将游戏文件复制到空的目标目录。")
         }
-        /// instance mode
+        /// 实例 ID 和目录模式。
         ///
         /// Resource: `CLIInterface.cliInterface.tdb3bd307aea7`.
         public static var tdb3bd307aea7: LocalizedMessage {
-            .init(key: "cliInterface.tdb3bd307aea7", table: "CLIInterface", fallback: "instance mode")
+            .init(key: "cliInterface.tdb3bd307aea7", table: "CLIInterface", fallback: "实例 ID 和目录模式。")
         }
-        /// Reconnect a moved custom game directory.
+        /// 重新关联已移动的自定义游戏目录。
         ///
         /// Resource: `CLIInterface.cliInterface.tfe9e723a6df9`.
         public static var tfe9e723a6df9: LocalizedMessage {
-            .init(key: "cliInterface.tfe9e723a6df9", table: "CLIInterface", fallback: "Reconnect a moved custom game directory.")
+            .init(key: "cliInterface.tfe9e723a6df9", table: "CLIInterface", fallback: "重新关联已移动的自定义游戏目录。")
         }
-        /// instance path
+        /// 实例 ID 和目录路径。
         ///
         /// Resource: `CLIInterface.cliInterface.td41369a235db`.
         public static var td41369a235db: LocalizedMessage {
-            .init(key: "cliInterface.td41369a235db", table: "CLIInterface", fallback: "instance path")
+            .init(key: "cliInterface.td41369a235db", table: "CLIInterface", fallback: "实例 ID 和目录路径。")
         }
-        /// List local Java runtimes and their origins.
+        /// 列出本地 Java 运行时及其来源。
         ///
         /// Resource: `CLIInterface.cliInterface.t738bb690d8c2`.
         public static var t738bb690d8c2: LocalizedMessage {
-            .init(key: "cliInterface.t738bb690d8c2", table: "CLIInterface", fallback: "List local Java runtimes and their origins.")
+            .init(key: "cliInterface.t738bb690d8c2", table: "CLIInterface", fallback: "列出本地 Java 运行时及其来源。")
         }
-        /// List installable Java runtimes.
+        /// 列出可安装的 Java 运行时。
         ///
         /// Resource: `CLIInterface.cliInterface.t1cd05347cc64`.
         public static var t1cd05347cc64: LocalizedMessage {
-            .init(key: "cliInterface.t1cd05347cc64", table: "CLIInterface", fallback: "List installable Java runtimes.")
+            .init(key: "cliInterface.t1cd05347cc64", table: "CLIInterface", fallback: "列出可安装的 Java 运行时。")
         }
-        /// Filter by Java major version.
+        /// 按 Java 主版本筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.teba714b1f2cc`.
         public static var teba714b1f2cc: LocalizedMessage {
-            .init(key: "cliInterface.teba714b1f2cc", table: "CLIInterface", fallback: "Filter by Java major version.")
+            .init(key: "cliInterface.teba714b1f2cc", table: "CLIInterface", fallback: "按 Java 主版本筛选。")
         }
-        /// Filter by architecture.
+        /// 按架构筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.taa6237af9422`.
         public static var taa6237af9422: LocalizedMessage {
-            .init(key: "cliInterface.taa6237af9422", table: "CLIInterface", fallback: "Filter by architecture.")
+            .init(key: "cliInterface.taa6237af9422", table: "CLIInterface", fallback: "按架构筛选。")
         }
-        /// Register an installed Java runtime.
+        /// 注册已安装的 Java 运行时。
         ///
         /// Resource: `CLIInterface.cliInterface.tf3cf2acb7b9a`.
         public static var tf3cf2acb7b9a: LocalizedMessage {
-            .init(key: "cliInterface.tf3cf2acb7b9a", table: "CLIInterface", fallback: "Register an installed Java runtime.")
+            .init(key: "cliInterface.tf3cf2acb7b9a", table: "CLIInterface", fallback: "注册已安装的 Java 运行时。")
         }
-        /// Remove Java from the manual list, retaining files and references.
+        /// 从手动列表中移除 Java，保留文件及配置引用。
         ///
         /// Resource: `CLIInterface.cliInterface.t0ecfbec54289`.
         public static var t0ecfbec54289: LocalizedMessage {
-            .init(key: "cliInterface.t0ecfbec54289", table: "CLIInterface", fallback: "Remove Java from the manual list, retaining files and references.")
+            .init(key: "cliInterface.t0ecfbec54289", table: "CLIInterface", fallback: "从手动列表中移除 Java，保留文件及配置引用。")
         }
-        /// Set the default Java selection.
+        /// 设置默认 Java 选择。
         ///
         /// Resource: `CLIInterface.cliInterface.tea0c61c73f43`.
         public static var tea0c61c73f43: LocalizedMessage {
-            .init(key: "cliInterface.tea0c61c73f43", table: "CLIInterface", fallback: "Set the default Java selection.")
+            .init(key: "cliInterface.tea0c61c73f43", table: "CLIInterface", fallback: "设置默认 Java 选择。")
         }
-        /// List settings that reference a managed Java runtime.
+        /// 列出引用指定托管 Java 的配置。
         ///
         /// Resource: `CLIInterface.cliInterface.td99052ac398d`.
         public static var td99052ac398d: LocalizedMessage {
-            .init(key: "cliInterface.td99052ac398d", table: "CLIInterface", fallback: "List settings that reference a managed Java runtime.")
+            .init(key: "cliInterface.td99052ac398d", table: "CLIInterface", fallback: "列出引用指定托管 Java 的配置。")
         }
-        /// Inspect an incomplete installation.
+        /// 检查未完成的安装。
         ///
         /// Resource: `CLIInterface.cliInterface.tb07678654f81`.
         public static var tb07678654f81: LocalizedMessage {
-            .init(key: "cliInterface.tb07678654f81", table: "CLIInterface", fallback: "Inspect an incomplete installation.")
+            .init(key: "cliInterface.tb07678654f81", table: "CLIInterface", fallback: "检查未完成的安装。")
         }
-        /// Install a Java runtime by catalog ID.
+        /// 按目录中的 ID 安装 Java 运行时。
         ///
         /// Resource: `CLIInterface.cliInterface.t2b2ab103144b`.
         public static var t2b2ab103144b: LocalizedMessage {
-            .init(key: "cliInterface.t2b2ab103144b", table: "CLIInterface", fallback: "Install a Java runtime by catalog ID.")
+            .init(key: "cliInterface.t2b2ab103144b", table: "CLIInterface", fallback: "按目录中的 ID 安装 Java 运行时。")
         }
-        /// Repair a managed Java runtime.
+        /// 修复托管的 Java 运行时。
         ///
         /// Resource: `CLIInterface.cliInterface.tef883d8efb5c`.
         public static var tef883d8efb5c: LocalizedMessage {
-            .init(key: "cliInterface.tef883d8efb5c", table: "CLIInterface", fallback: "Repair a managed Java runtime.")
+            .init(key: "cliInterface.tef883d8efb5c", table: "CLIInterface", fallback: "修复托管的 Java 运行时。")
         }
-        /// Move a managed Java installation to the Trash.
+        /// 将托管的 Java 移到废纸篓。
         ///
         /// Resource: `CLIInterface.cliInterface.t355d66c16583`.
         public static var t355d66c16583: LocalizedMessage {
-            .init(key: "cliInterface.t355d66c16583", table: "CLIInterface", fallback: "Move a managed Java installation to the Trash.")
+            .init(key: "cliInterface.t355d66c16583", table: "CLIInterface", fallback: "将托管的 Java 移到废纸篓。")
         }
-        /// Reset referencing settings to automatic Java.
+        /// 将引用此 Java 的配置重置为自动选择。
         ///
         /// Resource: `CLIInterface.cliInterface.t5897a3d49bb5`.
         public static var t5897a3d49bb5: LocalizedMessage {
-            .init(key: "cliInterface.t5897a3d49bb5", table: "CLIInterface", fallback: "Reset referencing settings to automatic Java.")
+            .init(key: "cliInterface.t5897a3d49bb5", table: "CLIInterface", fallback: "将引用此 Java 的配置重置为自动选择。")
         }
-        /// Remove an incomplete installation.
+        /// 移除未完成的安装。
         ///
         /// Resource: `CLIInterface.cliInterface.t2a5f80694223`.
         public static var t2a5f80694223: LocalizedMessage {
-            .init(key: "cliInterface.t2a5f80694223", table: "CLIInterface", fallback: "Remove an incomplete installation.")
+            .init(key: "cliInterface.t2a5f80694223", table: "CLIInterface", fallback: "移除未完成的安装。")
         }
-        /// directory run commands
+        /// 实例运行目录
         ///
         /// Resource: `CLIInterface.cliInterface.tc67f25bb4cc3`.
         public static var tc67f25bb4cc3: LocalizedMessage {
-            .init(key: "cliInterface.tc67f25bb4cc3", table: "CLIInterface", fallback: "directory run commands")
+            .init(key: "cliInterface.tc67f25bb4cc3", table: "CLIInterface", fallback: "实例运行目录")
         }
-        /// directory commands
+        /// 游戏目录的注册、迁移与恢复
         ///
         /// Resource: `CLIInterface.cliInterface.ta42145487540`.
         public static var ta42145487540: LocalizedMessage {
-            .init(key: "cliInterface.ta42145487540", table: "CLIInterface", fallback: "directory commands")
+            .init(key: "cliInterface.ta42145487540", table: "CLIInterface", fallback: "游戏目录的注册、迁移与恢复")
         }
-        /// java commands
+        /// Java 发现、安装与管理
         ///
         /// Resource: `CLIInterface.cliInterface.tcb439480ed22`.
         public static var tcb439480ed22: LocalizedMessage {
-            .init(key: "cliInterface.tcb439480ed22", table: "CLIInterface", fallback: "java commands")
+            .init(key: "cliInterface.tcb439480ed22", table: "CLIInterface", fallback: "Java 发现、安装与管理")
         }
-        /// Directory name cannot be empty.
+        /// 目录名称不能为空。
         ///
         /// Resource: `CLIInterface.cliInterface.t5efd67648f0d`.
         public static var t5efd67648f0d: LocalizedMessage {
-            .init(key: "cliInterface.t5efd67648f0d", table: "CLIInterface", fallback: "Directory name cannot be empty.")
+            .init(key: "cliInterface.t5efd67648f0d", table: "CLIInterface", fallback: "目录名称不能为空。")
         }
-        /// A new managed directory must be empty.
+        /// 新建的托管目录必须为空。
         ///
         /// Resource: `CLIInterface.cliInterface.t8ba03aeb3548`.
         public static var t8ba03aeb3548: LocalizedMessage {
-            .init(key: "cliInterface.t8ba03aeb3548", table: "CLIInterface", fallback: "A new managed directory must be empty.")
+            .init(key: "cliInterface.t8ba03aeb3548", table: "CLIInterface", fallback: "新建的托管目录必须为空。")
         }
-        /// Use isolated, shared or custom; --path is only valid for custom.
+        /// 目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。
         ///
         /// Resource: `CLIInterface.cliInterface.tdc5f6e9debdb`.
         public static var tdc5f6e9debdb: LocalizedMessage {
-            .init(key: "cliInterface.tdc5f6e9debdb", table: "CLIInterface", fallback: "Use isolated, shared or custom; --path is only valid for custom.")
+            .init(key: "cliInterface.tdc5f6e9debdb", table: "CLIInterface", fallback: "目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。")
         }
-        /// Unknown directory action.
+        /// 未知目录操作。
         ///
         /// Resource: `CLIInterface.cliInterface.t9a582e74d089`.
         public static var t9a582e74d089: LocalizedMessage {
-            .init(key: "cliInterface.t9a582e74d089", table: "CLIInterface", fallback: "Unknown directory action.")
+            .init(key: "cliInterface.t9a582e74d089", table: "CLIInterface", fallback: "未知目录操作。")
         }
-        /// Java catalog entry not found.
+        /// 找不到指定的 Java 版本条目。
         ///
         /// Resource: `CLIInterface.cliInterface.t33604425d94f`.
         public static var t33604425d94f: LocalizedMessage {
-            .init(key: "cliInterface.t33604425d94f", table: "CLIInterface", fallback: "Java catalog entry not found.")
+            .init(key: "cliInterface.t33604425d94f", table: "CLIInterface", fallback: "找不到指定的 Java 版本条目。")
         }
-        /// Unknown Java action.
+        /// 未知 Java 操作。
         ///
         /// Resource: `CLIInterface.cliInterface.tab6287c24a41`.
         public static var tab6287c24a41: LocalizedMessage {
-            .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "Unknown Java action.")
+            .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "未知 Java 操作。")
         }
-        /// Microsoft login uses browser authorization, not a password.
+        /// Microsoft 登录通过浏览器授权，无需密码。
         ///
         /// Resource: `CLIInterface.cliInterface.tc6b87186027e`.
         public static var tc6b87186027e: LocalizedMessage {
-            .init(key: "cliInterface.tc6b87186027e", table: "CLIInterface", fallback: "Microsoft login uses browser authorization, not a password.")
+            .init(key: "cliInterface.tc6b87186027e", table: "CLIInterface", fallback: "Microsoft 登录通过浏览器授权，无需密码。")
         }
-        /// External login requires --password-stdin.
+        /// 外置登录需要 --password-stdin。
         ///
         /// Resource: `CLIInterface.cliInterface.tb34236db1721`.
         public static var tb34236db1721: LocalizedMessage {
-            .init(key: "cliInterface.tb34236db1721", table: "CLIInterface", fallback: "External login requires --password-stdin.")
+            .init(key: "cliInterface.tb34236db1721", table: "CLIInterface", fallback: "外置登录需要 --password-stdin。")
         }
-        /// Provide --stdin to read the API key.
+        /// 请使用 --stdin 从标准输入读取 API Key。
         ///
         /// Resource: `CLIInterface.cliInterface.t05b618061083`.
         public static var t05b618061083: LocalizedMessage {
-            .init(key: "cliInterface.t05b618061083", table: "CLIInterface", fallback: "Provide --stdin to read the API key.")
+            .init(key: "cliInterface.t05b618061083", table: "CLIInterface", fallback: "请使用 --stdin 从标准输入读取 API Key。")
         }
-        /// Unknown account action.
+        /// 未知账户操作。
         ///
         /// Resource: `CLIInterface.cliInterface.tfffe65605bf6`.
         public static var tfffe65605bf6: LocalizedMessage {
-            .init(key: "cliInterface.tfffe65605bf6", table: "CLIInterface", fallback: "Unknown account action.")
+            .init(key: "cliInterface.tfffe65605bf6", table: "CLIInterface", fallback: "未知账户操作。")
         }
-        /// List accounts without exposing credentials.
+        /// 列出账户，不显示凭据。
         ///
         /// Resource: `CLIInterface.cliInterface.t347c8e743183`.
         public static var t347c8e743183: LocalizedMessage {
-            .init(key: "cliInterface.t347c8e743183", table: "CLIInterface", fallback: "List accounts without exposing credentials.")
+            .init(key: "cliInterface.t347c8e743183", table: "CLIInterface", fallback: "列出账户，不显示凭据。")
         }
-        /// Read the active account ID.
+        /// 查询当前账户 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.t60065624116e`.
         public static var t60065624116e: LocalizedMessage {
-            .init(key: "cliInterface.t60065624116e", table: "CLIInterface", fallback: "Read the active account ID.")
+            .init(key: "cliInterface.t60065624116e", table: "CLIInterface", fallback: "查询当前账户 ID。")
         }
-        /// Inspect an account.
+        /// 查询账户详情。
         ///
         /// Resource: `CLIInterface.cliInterface.t29349e23e1f2`.
         public static var t29349e23e1f2: LocalizedMessage {
-            .init(key: "cliInterface.t29349e23e1f2", table: "CLIInterface", fallback: "Inspect an account.")
+            .init(key: "cliInterface.t29349e23e1f2", table: "CLIInterface", fallback: "查询账户详情。")
         }
-        /// Add or reuse an offline player account.
+        /// 添加或复用离线账户。
         ///
         /// Resource: `CLIInterface.cliInterface.t5e3954fd00e4`.
         public static var t5e3954fd00e4: LocalizedMessage {
-            .init(key: "cliInterface.t5e3954fd00e4", table: "CLIInterface", fallback: "Add or reuse an offline player account.")
+            .init(key: "cliInterface.t5e3954fd00e4", table: "CLIInterface", fallback: "添加或复用离线账户。")
         }
-        /// Keep the current active account.
+        /// 保留当前选中的账户。
         ///
         /// Resource: `CLIInterface.cliInterface.t4fbd66e4df1d`.
         public static var t4fbd66e4df1d: LocalizedMessage {
-            .init(key: "cliInterface.t4fbd66e4df1d", table: "CLIInterface", fallback: "Keep the current active account.")
+            .init(key: "cliInterface.t4fbd66e4df1d", table: "CLIInterface", fallback: "保留当前选中的账户。")
         }
-        /// Select the active account.
+        /// 选择当前使用的账户。
         ///
         /// Resource: `CLIInterface.cliInterface.ta88c8f0fa07b`.
         public static var ta88c8f0fa07b: LocalizedMessage {
-            .init(key: "cliInterface.ta88c8f0fa07b", table: "CLIInterface", fallback: "Select the active account.")
+            .init(key: "cliInterface.ta88c8f0fa07b", table: "CLIInterface", fallback: "选择当前使用的账户。")
         }
-        /// Refresh a saved account's credentials.
+        /// 刷新已保存账户的凭据。
         ///
         /// Resource: `CLIInterface.cliInterface.te68622e3a4c1`.
         public static var te68622e3a4c1: LocalizedMessage {
-            .init(key: "cliInterface.te68622e3a4c1", table: "CLIInterface", fallback: "Refresh a saved account's credentials.")
+            .init(key: "cliInterface.te68622e3a4c1", table: "CLIInterface", fallback: "刷新已保存账户的凭据。")
         }
-        /// Remove an account and its local credentials.
+        /// 移除账户及其本地凭据。
         ///
         /// Resource: `CLIInterface.cliInterface.t222e7542a935`.
         public static var t222e7542a935: LocalizedMessage {
-            .init(key: "cliInterface.t222e7542a935", table: "CLIInterface", fallback: "Remove an account and its local credentials.")
+            .init(key: "cliInterface.t222e7542a935", table: "CLIInterface", fallback: "移除账户及其本地凭据。")
         }
-        /// Invalidate external credentials and remove the account.
+        /// 注销外置登录凭据并移除账户。
         ///
         /// Resource: `CLIInterface.cliInterface.t9de45ca5dfe9`.
         public static var t9de45ca5dfe9: LocalizedMessage {
-            .init(key: "cliInterface.t9de45ca5dfe9", table: "CLIInterface", fallback: "Invalidate external credentials and remove the account.")
+            .init(key: "cliInterface.t9de45ca5dfe9", table: "CLIInterface", fallback: "注销外置登录凭据并移除账户。")
         }
-        /// Start a two-step Microsoft or external login.
+        /// 开始分步完成的 Microsoft 或外置登录。
         ///
         /// Resource: `CLIInterface.cliInterface.t5e3d504d2f33`.
         public static var t5e3d504d2f33: LocalizedMessage {
-            .init(key: "cliInterface.t5e3d504d2f33", table: "CLIInterface", fallback: "Start a two-step Microsoft or external login.")
+            .init(key: "cliInterface.t5e3d504d2f33", table: "CLIInterface", fallback: "开始分步完成的 Microsoft 或外置登录。")
         }
-        /// Authentication provider.
+        /// 登录服务类型。
         ///
         /// Resource: `CLIInterface.cliInterface.t35f41c8dfeb7`.
         public static var t35f41c8dfeb7: LocalizedMessage {
-            .init(key: "cliInterface.t35f41c8dfeb7", table: "CLIInterface", fallback: "Authentication provider.")
+            .init(key: "cliInterface.t35f41c8dfeb7", table: "CLIInterface", fallback: "登录服务类型。")
         }
-        /// Existing account to reauthenticate.
+        /// 需要重新登录的已有账户。
         ///
         /// Resource: `CLIInterface.cliInterface.t06b9c339e88c`.
         public static var t06b9c339e88c: LocalizedMessage {
-            .init(key: "cliInterface.t06b9c339e88c", table: "CLIInterface", fallback: "Existing account to reauthenticate.")
+            .init(key: "cliInterface.t06b9c339e88c", table: "CLIInterface", fallback: "需要重新登录的已有账户。")
         }
-        /// External authentication server.
+        /// 外置登录服务器。
         ///
         /// Resource: `CLIInterface.cliInterface.tda3d5eaa9c6b`.
         public static var tda3d5eaa9c6b: LocalizedMessage {
-            .init(key: "cliInterface.tda3d5eaa9c6b", table: "CLIInterface", fallback: "External authentication server.")
+            .init(key: "cliInterface.tda3d5eaa9c6b", table: "CLIInterface", fallback: "外置登录服务器。")
         }
-        /// External login identity.
+        /// 外置登录的用户名或邮箱。
         ///
         /// Resource: `CLIInterface.cliInterface.t598bd6abd203`.
         public static var t598bd6abd203: LocalizedMessage {
-            .init(key: "cliInterface.t598bd6abd203", table: "CLIInterface", fallback: "External login identity.")
+            .init(key: "cliInterface.t598bd6abd203", table: "CLIInterface", fallback: "外置登录的用户名或邮箱。")
         }
-        /// Read the password from stdin.
+        /// 从标准输入读取密码。
         ///
         /// Resource: `CLIInterface.cliInterface.tae550ce2501b`.
         public static var tae550ce2501b: LocalizedMessage {
-            .init(key: "cliInterface.tae550ce2501b", table: "CLIInterface", fallback: "Read the password from stdin.")
+            .init(key: "cliInterface.tae550ce2501b", table: "CLIInterface", fallback: "从标准输入读取密码。")
         }
-        /// Wait for authorization and save the selected identity.
+        /// 等待授权完成并保存所选角色。
         ///
         /// Resource: `CLIInterface.cliInterface.td905be5334b1`.
         public static var td905be5334b1: LocalizedMessage {
-            .init(key: "cliInterface.td905be5334b1", table: "CLIInterface", fallback: "Wait for authorization and save the selected identity.")
+            .init(key: "cliInterface.td905be5334b1", table: "CLIInterface", fallback: "等待授权完成并保存所选角色。")
         }
-        /// External profile ID returned by login start.
+        /// login start 返回的外置登录角色 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.taa3d1bfbf09d`.
         public static var taa3d1bfbf09d: LocalizedMessage {
-            .init(key: "cliInterface.taa3d1bfbf09d", table: "CLIInterface", fallback: "External profile ID returned by login start.")
+            .init(key: "cliInterface.taa3d1bfbf09d", table: "CLIInterface", fallback: "login start 返回的外置登录角色 ID。")
         }
-        /// Remove a pending login flow.
+        /// 取消待完成的登录流程。
         ///
         /// Resource: `CLIInterface.cliInterface.t7bac79515ad0`.
         public static var t7bac79515ad0: LocalizedMessage {
-            .init(key: "cliInterface.t7bac79515ad0", table: "CLIInterface", fallback: "Remove a pending login flow.")
+            .init(key: "cliInterface.t7bac79515ad0", table: "CLIInterface", fallback: "取消待完成的登录流程。")
         }
-        /// Check CurseForge API key availability.
+        /// 检查 CurseForge API Key 是否可用。
         ///
         /// Resource: `CLIInterface.cliInterface.t075c8839f62a`.
         public static var t075c8839f62a: LocalizedMessage {
-            .init(key: "cliInterface.t075c8839f62a", table: "CLIInterface", fallback: "Check CurseForge API key availability.")
+            .init(key: "cliInterface.t075c8839f62a", table: "CLIInterface", fallback: "检查 CurseForge API Key 是否可用。")
         }
-        /// Set the CurseForge API key from stdin.
+        /// 从标准输入设置 CurseForge API Key。
         ///
         /// Resource: `CLIInterface.cliInterface.tb513f67f0661`.
         public static var tb513f67f0661: LocalizedMessage {
-            .init(key: "cliInterface.tb513f67f0661", table: "CLIInterface", fallback: "Set the CurseForge API key from stdin.")
+            .init(key: "cliInterface.tb513f67f0661", table: "CLIInterface", fallback: "从标准输入设置 CurseForge API Key。")
         }
-        /// Read the key from stdin.
+        /// 从标准输入读取 API Key。
         ///
         /// Resource: `CLIInterface.cliInterface.tbee9e14cb9c8`.
         public static var tbee9e14cb9c8: LocalizedMessage {
-            .init(key: "cliInterface.tbee9e14cb9c8", table: "CLIInterface", fallback: "Read the key from stdin.")
+            .init(key: "cliInterface.tbee9e14cb9c8", table: "CLIInterface", fallback: "从标准输入读取 API Key。")
         }
-        /// Remove the custom CurseForge API key.
+        /// 移除自定义 CurseForge API Key。
         ///
         /// Resource: `CLIInterface.cliInterface.tb412547b5de8`.
         public static var tb412547b5de8: LocalizedMessage {
-            .init(key: "cliInterface.tb412547b5de8", table: "CLIInterface", fallback: "Remove the custom CurseForge API key.")
+            .init(key: "cliInterface.tb412547b5de8", table: "CLIInterface", fallback: "移除自定义 CurseForge API Key。")
         }
-        /// account service-key commands
+        /// 平台服务凭据
         ///
         /// Resource: `CLIInterface.cliInterface.td9b80535359b`.
         public static var td9b80535359b: LocalizedMessage {
-            .init(key: "cliInterface.td9b80535359b", table: "CLIInterface", fallback: "account service-key commands")
+            .init(key: "cliInterface.td9b80535359b", table: "CLIInterface", fallback: "平台服务凭据")
         }
-        /// account login commands
+        /// Microsoft 与外置登录
         ///
         /// Resource: `CLIInterface.cliInterface.t463334485f56`.
         public static var t463334485f56: LocalizedMessage {
-            .init(key: "cliInterface.t463334485f56", table: "CLIInterface", fallback: "account login commands")
+            .init(key: "cliInterface.t463334485f56", table: "CLIInterface", fallback: "Microsoft 与外置登录")
         }
-        /// account commands
+        /// 账户管理与登录
         ///
         /// Resource: `CLIInterface.cliInterface.t52f4179738c0`.
         public static var t52f4179738c0: LocalizedMessage {
-            .init(key: "cliInterface.t52f4179738c0", table: "CLIInterface", fallback: "account commands")
+            .init(key: "cliInterface.t52f4179738c0", table: "CLIInterface", fallback: "账户管理与登录")
         }
-        /// Account provider does not match.
+        /// 账户的登录服务类型不匹配。
         ///
         /// Resource: `CLIInterface.cliInterface.t646f7af4624c`.
         public static var t646f7af4624c: LocalizedMessage {
-            .init(key: "cliInterface.t646f7af4624c", table: "CLIInterface", fallback: "Account provider does not match.")
+            .init(key: "cliInterface.t646f7af4624c", table: "CLIInterface", fallback: "账户的登录服务类型不匹配。")
         }
-        /// The authentication server or login identity changed.
+        /// 登录服务器或登录身份已发生变化。
         ///
         /// Resource: `CLIInterface.cliInterface.t3a1a6178fec9`.
         public static var t3a1a6178fec9: LocalizedMessage {
-            .init(key: "cliInterface.t3a1a6178fec9", table: "CLIInterface", fallback: "The authentication server or login identity changed.")
+            .init(key: "cliInterface.t3a1a6178fec9", table: "CLIInterface", fallback: "登录服务器或登录身份已发生变化。")
         }
-        /// Complete the login in the same data directory.
+        /// 请在同一数据目录中完成登录。
         ///
         /// Resource: `CLIInterface.cliInterface.t000e28c5735c`.
         public static var t000e28c5735c: LocalizedMessage {
-            .init(key: "cliInterface.t000e28c5735c", table: "CLIInterface", fallback: "Complete the login in the same data directory.")
+            .init(key: "cliInterface.t000e28c5735c", table: "CLIInterface", fallback: "请在同一数据目录中完成登录。")
         }
-        /// The login flow expired; start again.
+        /// 登录流程已过期，请重新开始。
         ///
         /// Resource: `CLIInterface.cliInterface.tf873deb7e49d`.
         public static var tf873deb7e49d: LocalizedMessage {
-            .init(key: "cliInterface.tf873deb7e49d", table: "CLIInterface", fallback: "The login flow expired; start again.")
+            .init(key: "cliInterface.tf873deb7e49d", table: "CLIInterface", fallback: "登录流程已过期，请重新开始。")
         }
-        /// Choose a profile returned by login start.
+        /// 请选择 login start 返回的角色。
         ///
         /// Resource: `CLIInterface.cliInterface.ta4020b2f41c3`.
         public static var ta4020b2f41c3: LocalizedMessage {
-            .init(key: "cliInterface.ta4020b2f41c3", table: "CLIInterface", fallback: "Choose a profile returned by login start.")
+            .init(key: "cliInterface.ta4020b2f41c3", table: "CLIInterface", fallback: "请选择 login start 返回的角色。")
         }
-        /// The login already selected a different profile.
+        /// 此登录流程已选择另一角色。
         ///
         /// Resource: `CLIInterface.cliInterface.t0ce4aa2e33ec`.
         public static var t0ce4aa2e33ec: LocalizedMessage {
-            .init(key: "cliInterface.t0ce4aa2e33ec", table: "CLIInterface", fallback: "The login already selected a different profile.")
+            .init(key: "cliInterface.t0ce4aa2e33ec", table: "CLIInterface", fallback: "此登录流程已选择另一角色。")
         }
-        /// Invalid login flow; start again.
+        /// 登录流程无效，请重新开始。
         ///
         /// Resource: `CLIInterface.cliInterface.t6176d717fcb9`.
         public static var t6176d717fcb9: LocalizedMessage {
-            .init(key: "cliInterface.t6176d717fcb9", table: "CLIInterface", fallback: "Invalid login flow; start again.")
+            .init(key: "cliInterface.t6176d717fcb9", table: "CLIInterface", fallback: "登录流程无效，请重新开始。")
         }
-        /// Account not found.
+        /// 找不到账户。
         ///
         /// Resource: `CLIInterface.cliInterface.te9b1e0403a1e`.
         public static var te9b1e0403a1e: LocalizedMessage {
-            .init(key: "cliInterface.te9b1e0403a1e", table: "CLIInterface", fallback: "Account not found.")
+            .init(key: "cliInterface.te9b1e0403a1e", table: "CLIInterface", fallback: "找不到账户。")
         }
-        /// The account was removed or replaced.
+        /// 账户已被移除或替换。
         ///
         /// Resource: `CLIInterface.cliInterface.tb0b930baf0cc`.
         public static var tb0b930baf0cc: LocalizedMessage {
-            .init(key: "cliInterface.tb0b930baf0cc", table: "CLIInterface", fallback: "The account was removed or replaced.")
+            .init(key: "cliInterface.tb0b930baf0cc", table: "CLIInterface", fallback: "账户已被移除或替换。")
         }
-        /// The account identity changed.
+        /// 账户身份已发生变化。
         ///
         /// Resource: `CLIInterface.cliInterface.t9b5e04245098`.
         public static var t9b5e04245098: LocalizedMessage {
-            .init(key: "cliInterface.t9b5e04245098", table: "CLIInterface", fallback: "The account identity changed.")
+            .init(key: "cliInterface.t9b5e04245098", table: "CLIInterface", fallback: "账户身份已发生变化。")
         }
-        /// The account was removed.
+        /// 账户已被移除。
         ///
         /// Resource: `CLIInterface.cliInterface.td9ca8e4b44c6`.
         public static var td9ca8e4b44c6: LocalizedMessage {
-            .init(key: "cliInterface.td9ca8e4b44c6", table: "CLIInterface", fallback: "The account was removed.")
+            .init(key: "cliInterface.td9ca8e4b44c6", table: "CLIInterface", fallback: "账户已被移除。")
         }
-        /// The account was removed; credential or appearance cleanup failed.
+        /// 账户已移除，但凭据或外观数据清理失败。
         ///
         /// Resource: `CLIInterface.cliInterface.tf4c5f25a3baf`.
         public static var tf4c5f25a3baf: LocalizedMessage {
-            .init(key: "cliInterface.tf4c5f25a3baf", table: "CLIInterface", fallback: "The account was removed; credential or appearance cleanup failed.")
+            .init(key: "cliInterface.tf4c5f25a3baf", table: "CLIInterface", fallback: "账户已移除，但凭据或外观数据清理失败。")
         }
-        /// Install this instance before launching.
+        /// 请先安装此实例，再启动游戏。
         ///
         /// Resource: `CLIInterface.cliInterface.t1914c0297b34`.
         public static var t1914c0297b34: LocalizedMessage {
-            .init(key: "cliInterface.t1914c0297b34", table: "CLIInterface", fallback: "Install this instance before launching.")
+            .init(key: "cliInterface.t1914c0297b34", table: "CLIInterface", fallback: "请先安装此实例，再启动游戏。")
         }
-        /// Select an account or pass --account.
+        /// 请选择账户，或通过 --account 指定账户。
         ///
         /// Resource: `CLIInterface.cliInterface.t46ce3acb0041`.
         public static var t46ce3acb0041: LocalizedMessage {
-            .init(key: "cliInterface.t46ce3acb0041", table: "CLIInterface", fallback: "Select an account or pass --account.")
+            .init(key: "cliInterface.t46ce3acb0041", table: "CLIInterface", fallback: "请选择账户，或通过 --account 指定账户。")
         }
-        /// Validate an instance's launch settings without starting the game.
+        /// 检查实例启动配置，不启动游戏。
         ///
         /// Resource: `CLIInterface.cliInterface.tbd6842eb578e`.
         public static var tbd6842eb578e: LocalizedMessage {
-            .init(key: "cliInterface.tbd6842eb578e", table: "CLIInterface", fallback: "Validate an instance's launch settings without starting the game.")
+            .init(key: "cliInterface.tbd6842eb578e", table: "CLIInterface", fallback: "检查实例启动配置，不启动游戏。")
         }
-        /// Account UUID; defaults to the active account.
+        /// 账户 UUID，默认使用当前账户。
         ///
         /// Resource: `CLIInterface.cliInterface.tc7d16a18216b`.
         public static var tc7d16a18216b: LocalizedMessage {
-            .init(key: "cliInterface.tc7d16a18216b", table: "CLIInterface", fallback: "Account UUID; defaults to the active account.")
+            .init(key: "cliInterface.tc7d16a18216b", table: "CLIInterface", fallback: "账户 UUID，默认使用当前账户。")
         }
-        /// World folder for Quick Play.
+        /// 用于快速游玩的世界文件夹。
         ///
         /// Resource: `CLIInterface.cliInterface.t7650c678063f`.
         public static var t7650c678063f: LocalizedMessage {
-            .init(key: "cliInterface.t7650c678063f", table: "CLIInterface", fallback: "World folder for Quick Play.")
+            .init(key: "cliInterface.t7650c678063f", table: "CLIInterface", fallback: "用于快速游玩的世界文件夹。")
         }
-        /// Start the game and return after monitor handoff.
+        /// 启动游戏，监控接管后返回。
         ///
         /// Resource: `CLIInterface.cliInterface.tb27f0522d834`.
         public static var tb27f0522d834: LocalizedMessage {
-            .init(key: "cliInterface.tb27f0522d834", table: "CLIInterface", fallback: "Start the game and return after monitor handoff.")
+            .init(key: "cliInterface.tb27f0522d834", table: "CLIInterface", fallback: "启动游戏，监控接管后返回。")
         }
-        /// List game sessions.
+        /// 列出游戏会话。
         ///
         /// Resource: `CLIInterface.cliInterface.t75aa2ae95dbf`.
         public static var t75aa2ae95dbf: LocalizedMessage {
-            .init(key: "cliInterface.t75aa2ae95dbf", table: "CLIInterface", fallback: "List game sessions.")
+            .init(key: "cliInterface.t75aa2ae95dbf", table: "CLIInterface", fallback: "列出游戏会话。")
         }
-        /// Filter by instance UUID.
+        /// 按实例 UUID 筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t397da266f14b`.
         public static var t397da266f14b: LocalizedMessage {
-            .init(key: "cliInterface.t397da266f14b", table: "CLIInterface", fallback: "Filter by instance UUID.")
+            .init(key: "cliInterface.t397da266f14b", table: "CLIInterface", fallback: "按实例 UUID 筛选。")
         }
-        /// Filter by instance name.
+        /// 按实例名称筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t1dc55f419cc4`.
         public static var t1dc55f419cc4: LocalizedMessage {
-            .init(key: "cliInterface.t1dc55f419cc4", table: "CLIInterface", fallback: "Filter by instance name.")
+            .init(key: "cliInterface.t1dc55f419cc4", table: "CLIInterface", fallback: "按实例名称筛选。")
         }
-        /// Only show sessions with problems.
+        /// 仅显示存在问题的会话。
         ///
         /// Resource: `CLIInterface.cliInterface.tb23f885979d4`.
         public static var tb23f885979d4: LocalizedMessage {
-            .init(key: "cliInterface.tb23f885979d4", table: "CLIInterface", fallback: "Only show sessions with problems.")
+            .init(key: "cliInterface.tb23f885979d4", table: "CLIInterface", fallback: "仅显示存在问题的会话。")
         }
-        /// Read a game session.
+        /// 查询游戏会话详情。
         ///
         /// Resource: `CLIInterface.cliInterface.t1c27c266a051`.
         public static var t1c27c266a051: LocalizedMessage {
-            .init(key: "cliInterface.t1c27c266a051", table: "CLIInterface", fallback: "Read a game session.")
+            .init(key: "cliInterface.t1c27c266a051", table: "CLIInterface", fallback: "查询游戏会话详情。")
         }
-        /// instance session
+        /// 实例 ID 和会话 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.t7de41631eebc`.
         public static var t7de41631eebc: LocalizedMessage {
-            .init(key: "cliInterface.t7de41631eebc", table: "CLIInterface", fallback: "instance session")
+            .init(key: "cliInterface.t7de41631eebc", table: "CLIInterface", fallback: "实例 ID 和会话 ID。")
         }
-        /// Wait for the monitor to record the game's exit.
+        /// 等待监控记录游戏退出。
         ///
         /// Resource: `CLIInterface.cliInterface.ta977bdb2d5a4`.
         public static var ta977bdb2d5a4: LocalizedMessage {
-            .init(key: "cliInterface.ta977bdb2d5a4", table: "CLIInterface", fallback: "Wait for the monitor to record the game's exit.")
+            .init(key: "cliInterface.ta977bdb2d5a4", table: "CLIInterface", fallback: "等待监控记录游戏退出。")
         }
-        /// Request normal game exit.
+        /// 请求游戏正常退出。
         ///
         /// Resource: `CLIInterface.cliInterface.t6bbce4221048`.
         public static var t6bbce4221048: LocalizedMessage {
-            .init(key: "cliInterface.t6bbce4221048", table: "CLIInterface", fallback: "Request normal game exit.")
+            .init(key: "cliInterface.t6bbce4221048", table: "CLIInterface", fallback: "请求游戏正常退出。")
         }
-        /// Force the game process to stop.
+        /// 强制停止游戏进程。
         ///
         /// Resource: `CLIInterface.cliInterface.t886efc49f631`.
         public static var t886efc49f631: LocalizedMessage {
-            .init(key: "cliInterface.t886efc49f631", table: "CLIInterface", fallback: "Force the game process to stop.")
+            .init(key: "cliInterface.t886efc49f631", table: "CLIInterface", fallback: "强制停止游戏进程。")
         }
-        /// Read or follow a session log.
+        /// 读取或持续跟随会话日志。
         ///
         /// Resource: `CLIInterface.cliInterface.t03a5e858530a`.
         public static var t03a5e858530a: LocalizedMessage {
-            .init(key: "cliInterface.t03a5e858530a", table: "CLIInterface", fallback: "Read or follow a session log.")
+            .init(key: "cliInterface.t03a5e858530a", table: "CLIInterface", fallback: "读取或持续跟随会话日志。")
         }
-        /// Follow until the session ends; use text or ndjson.
+        /// 跟随日志直到会话结束，使用 text 或 ndjson 格式。
         ///
         /// Resource: `CLIInterface.cliInterface.t61dffc7832ee`.
         public static var t61dffc7832ee: LocalizedMessage {
-            .init(key: "cliInterface.t61dffc7832ee", table: "CLIInterface", fallback: "Follow until the session ends; use text or ndjson.")
+            .init(key: "cliInterface.t61dffc7832ee", table: "CLIInterface", fallback: "跟随日志直到会话结束，使用 text 或 ndjson 格式。")
         }
-        /// Log source.
+        /// 日志来源。
         ///
         /// Resource: `CLIInterface.cliInterface.tdae2c9ca76ca`.
         public static var tdae2c9ca76ca: LocalizedMessage {
-            .init(key: "cliInterface.tdae2c9ca76ca", table: "CLIInterface", fallback: "Log source.")
+            .init(key: "cliInterface.tdae2c9ca76ca", table: "CLIInterface", fallback: "日志来源。")
         }
-        /// Maximum tail lines (default 200).
+        /// 最多读取的末尾行数，默认 200。
         ///
         /// Resource: `CLIInterface.cliInterface.t602d83ce6e9a`.
         public static var t602d83ce6e9a: LocalizedMessage {
-            .init(key: "cliInterface.t602d83ce6e9a", table: "CLIInterface", fallback: "Maximum tail lines (default 200).")
+            .init(key: "cliInterface.t602d83ce6e9a", table: "CLIInterface", fallback: "最多读取的末尾行数，默认 200。")
         }
-        /// Analyze recorded launch and game evidence.
+        /// 分析已记录的启动与游戏诊断信息。
         ///
         /// Resource: `CLIInterface.cliInterface.t5cf1cb615468`.
         public static var t5cf1cb615468: LocalizedMessage {
-            .init(key: "cliInterface.t5cf1cb615468", table: "CLIInterface", fallback: "Analyze recorded launch and game evidence.")
+            .init(key: "cliInterface.t5cf1cb615468", table: "CLIInterface", fallback: "分析已记录的启动与游戏诊断信息。")
         }
-        /// Export a redacted diagnostic bundle.
+        /// 导出脱敏后的诊断包。
         ///
         /// Resource: `CLIInterface.cliInterface.t33ed51c9688b`.
         public static var t33ed51c9688b: LocalizedMessage {
-            .init(key: "cliInterface.t33ed51c9688b", table: "CLIInterface", fallback: "Export a redacted diagnostic bundle.")
+            .init(key: "cliInterface.t33ed51c9688b", table: "CLIInterface", fallback: "导出脱敏后的诊断包。")
         }
-        /// instance session file
+        /// 实例 ID、会话 ID 和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.t4e51dca76f06`.
         public static var t4e51dca76f06: LocalizedMessage {
-            .init(key: "cliInterface.t4e51dca76f06", table: "CLIInterface", fallback: "instance session file")
+            .init(key: "cliInterface.t4e51dca76f06", table: "CLIInterface", fallback: "实例 ID、会话 ID 和文件路径。")
         }
-        /// session commands
+        /// 游戏会话、日志与诊断
         ///
         /// Resource: `CLIInterface.cliInterface.t03b417601a2c`.
         public static var t03b417601a2c: LocalizedMessage {
-            .init(key: "cliInterface.t03b417601a2c", table: "CLIInterface", fallback: "session commands")
+            .init(key: "cliInterface.t03b417601a2c", table: "CLIInterface", fallback: "游戏会话、日志与诊断")
         }
-        /// launch commands
+        /// 启动检查与游戏启动
         ///
         /// Resource: `CLIInterface.cliInterface.t91806a3a3cd3`.
         public static var t91806a3a3cd3: LocalizedMessage {
-            .init(key: "cliInterface.t91806a3a3cd3", table: "CLIInterface", fallback: "launch commands")
+            .init(key: "cliInterface.t91806a3a3cd3", table: "CLIInterface", fallback: "启动检查与游戏启动")
         }
-        /// The game did not exit successfully.
+        /// 游戏未正常退出。
         ///
         /// Resource: `CLIInterface.cliInterface.tadc93d3bb50c`.
         public static var tadc93d3bb50c: LocalizedMessage {
-            .init(key: "cliInterface.tadc93d3bb50c", table: "CLIInterface", fallback: "The game did not exit successfully.")
+            .init(key: "cliInterface.tadc93d3bb50c", table: "CLIInterface", fallback: "游戏未正常退出。")
         }
-        /// Use --output ndjson or text with --follow.
+        /// --follow 需要使用 --output ndjson 或 text。
         ///
         /// Resource: `CLIInterface.cliInterface.t28723ddb22d1`.
         public static var t28723ddb22d1: LocalizedMessage {
-            .init(key: "cliInterface.t28723ddb22d1", table: "CLIInterface", fallback: "Use --output ndjson or text with --follow.")
+            .init(key: "cliInterface.t28723ddb22d1", table: "CLIInterface", fallback: "--follow 需要使用 --output ndjson 或 text。")
         }
-        /// --lines must be between 1 and 10000.
+        /// --lines 必须介于 1 和 10000 之间。
         ///
         /// Resource: `CLIInterface.cliInterface.tafd6142d30ec`.
         public static var tafd6142d30ec: LocalizedMessage {
-            .init(key: "cliInterface.tafd6142d30ec", table: "CLIInterface", fallback: "--lines must be between 1 and 10000.")
+            .init(key: "cliInterface.tafd6142d30ec", table: "CLIInterface", fallback: "--lines 必须介于 1 和 10000 之间。")
         }
-        /// The monitor is no longer available.
+        /// 监控进程已不可用。
         ///
         /// Resource: `CLIInterface.cliInterface.t043b9f54ca4c`.
         public static var t043b9f54ca4c: LocalizedMessage {
-            .init(key: "cliInterface.t043b9f54ca4c", table: "CLIInterface", fallback: "The monitor is no longer available.")
+            .init(key: "cliInterface.t043b9f54ca4c", table: "CLIInterface", fallback: "监控进程已不可用。")
         }
-        /// Unknown session action.
+        /// 未知会话操作。
         ///
         /// Resource: `CLIInterface.cliInterface.te5e3bed93ff1`.
         public static var te5e3bed93ff1: LocalizedMessage {
-            .init(key: "cliInterface.te5e3bed93ff1", table: "CLIInterface", fallback: "Unknown session action.")
+            .init(key: "cliInterface.te5e3bed93ff1", table: "CLIInterface", fallback: "未知会话操作。")
         }
-        /// Search Modrinth or CurseForge.
+        /// 搜索 Modrinth 或 CurseForge。
         ///
         /// Resource: `CLIInterface.cliInterface.t9585ae182d36`.
         public static var t9585ae182d36: LocalizedMessage {
-            .init(key: "cliInterface.t9585ae182d36", table: "CLIInterface", fallback: "Search Modrinth or CurseForge.")
+            .init(key: "cliInterface.t9585ae182d36", table: "CLIInterface", fallback: "搜索 Modrinth 或 CurseForge。")
         }
-        /// Content provider.
+        /// 内容平台。
         ///
         /// Resource: `CLIInterface.cliInterface.t54d62b370b12`.
         public static var t54d62b370b12: LocalizedMessage {
-            .init(key: "cliInterface.t54d62b370b12", table: "CLIInterface", fallback: "Content provider.")
+            .init(key: "cliInterface.t54d62b370b12", table: "CLIInterface", fallback: "内容平台。")
         }
-        /// Project type.
+        /// 项目类型。
         ///
         /// Resource: `CLIInterface.cliInterface.t9c7c66e1cb97`.
         public static var t9c7c66e1cb97: LocalizedMessage {
-            .init(key: "cliInterface.t9c7c66e1cb97", table: "CLIInterface", fallback: "Project type.")
+            .init(key: "cliInterface.t9c7c66e1cb97", table: "CLIInterface", fallback: "项目类型。")
         }
-        /// Minecraft version filter.
+        /// 按 Minecraft 版本筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t97bb290079c0`.
         public static var t97bb290079c0: LocalizedMessage {
-            .init(key: "cliInterface.t97bb290079c0", table: "CLIInterface", fallback: "Minecraft version filter.")
+            .init(key: "cliInterface.t97bb290079c0", table: "CLIInterface", fallback: "按 Minecraft 版本筛选。")
         }
-        /// Loader filter.
+        /// 按加载器筛选。
         ///
         /// Resource: `CLIInterface.cliInterface.t6cd3985335f5`.
         public static var t6cd3985335f5: LocalizedMessage {
-            .init(key: "cliInterface.t6cd3985335f5", table: "CLIInterface", fallback: "Loader filter.")
+            .init(key: "cliInterface.t6cd3985335f5", table: "CLIInterface", fallback: "按加载器筛选。")
         }
-        /// Provider category.
+        /// 内容平台的分类。
         ///
         /// Resource: `CLIInterface.cliInterface.tba245c5c5887`.
         public static var tba245c5c5887: LocalizedMessage {
-            .init(key: "cliInterface.tba245c5c5887", table: "CLIInterface", fallback: "Provider category.")
+            .init(key: "cliInterface.tba245c5c5887", table: "CLIInterface", fallback: "内容平台的分类。")
         }
-        /// Sort order.
+        /// 排序方式。
         ///
         /// Resource: `CLIInterface.cliInterface.tffbd359b4372`.
         public static var tffbd359b4372: LocalizedMessage {
-            .init(key: "cliInterface.tffbd359b4372", table: "CLIInterface", fallback: "Sort order.")
+            .init(key: "cliInterface.tffbd359b4372", table: "CLIInterface", fallback: "排序方式。")
         }
-        /// Read a project description and metadata.
+        /// 查询项目描述及元数据。
         ///
         /// Resource: `CLIInterface.cliInterface.tef252f7e18ac`.
         public static var tef252f7e18ac: LocalizedMessage {
-            .init(key: "cliInterface.tef252f7e18ac", table: "CLIInterface", fallback: "Read a project description and metadata.")
+            .init(key: "cliInterface.tef252f7e18ac", table: "CLIInterface", fallback: "查询项目描述及元数据。")
         }
-        /// List a project's published versions.
+        /// 列出项目已发布的版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t2015ae2ed51d`.
         public static var t2015ae2ed51d: LocalizedMessage {
-            .init(key: "cliInterface.t2015ae2ed51d", table: "CLIInterface", fallback: "List a project's published versions.")
+            .init(key: "cliInterface.t2015ae2ed51d", table: "CLIInterface", fallback: "列出项目已发布的版本。")
         }
-        /// List the provider's categories.
+        /// 列出内容平台的分类。
         ///
         /// Resource: `CLIInterface.cliInterface.t96729fb469a0`.
         public static var t96729fb469a0: LocalizedMessage {
-            .init(key: "cliInterface.t96729fb469a0", table: "CLIInterface", fallback: "List the provider's categories.")
+            .init(key: "cliInterface.t96729fb469a0", table: "CLIInterface", fallback: "列出内容平台的分类。")
         }
-        /// List installed mods, resource packs, or shaders.
+        /// 列出已安装的模组、资源包或光影。
         ///
         /// Resource: `CLIInterface.cliInterface.t31b908b482c0`.
         public static var t31b908b482c0: LocalizedMessage {
-            .init(key: "cliInterface.t31b908b482c0", table: "CLIInterface", fallback: "List installed mods, resource packs, or shaders.")
+            .init(key: "cliInterface.t31b908b482c0", table: "CLIInterface", fallback: "列出已安装的模组、资源包或光影。")
         }
-        /// Content kind.
+        /// 内容类型。
         ///
         /// Resource: `CLIInterface.cliInterface.t1615f94ae45c`.
         public static var t1615f94ae45c: LocalizedMessage {
-            .init(key: "cliInterface.t1615f94ae45c", table: "CLIInterface", fallback: "Content kind.")
+            .init(key: "cliInterface.t1615f94ae45c", table: "CLIInterface", fallback: "内容类型。")
         }
-        /// Import a local content file.
+        /// 导入本地内容文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t0adabdb41fc9`.
         public static var t0adabdb41fc9: LocalizedMessage {
-            .init(key: "cliInterface.t0adabdb41fc9", table: "CLIInterface", fallback: "Import a local content file.")
+            .init(key: "cliInterface.t0adabdb41fc9", table: "CLIInterface", fallback: "导入本地内容文件。")
         }
-        /// instance file
+        /// 实例 ID 和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.t1221c915a9ab`.
         public static var t1221c915a9ab: LocalizedMessage {
-            .init(key: "cliInterface.t1221c915a9ab", table: "CLIInterface", fallback: "instance file")
+            .init(key: "cliInterface.t1221c915a9ab", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
         }
-        /// Install a compatible project and its required dependencies.
+        /// 安装兼容的项目及其必需依赖。
         ///
         /// Resource: `CLIInterface.cliInterface.t6f5c9d328e9f`.
         public static var t6f5c9d328e9f: LocalizedMessage {
-            .init(key: "cliInterface.t6f5c9d328e9f", table: "CLIInterface", fallback: "Install a compatible project and its required dependencies.")
+            .init(key: "cliInterface.t6f5c9d328e9f", table: "CLIInterface", fallback: "安装兼容的项目及其必需依赖。")
         }
-        /// Exact provider version ID; otherwise latest stable.
+        /// 指定平台版本 ID，默认选择最新稳定版。
         ///
         /// Resource: `CLIInterface.cliInterface.t3adc46ef11f2`.
         public static var t3adc46ef11f2: LocalizedMessage {
-            .init(key: "cliInterface.t3adc46ef11f2", table: "CLIInterface", fallback: "Exact provider version ID; otherwise latest stable.")
+            .init(key: "cliInterface.t3adc46ef11f2", table: "CLIInterface", fallback: "指定平台版本 ID，默认选择最新稳定版。")
         }
-        /// Manually downloaded CurseForge file as fileID=path.
+        /// 手动下载的 CurseForge 文件，格式为 fileID=path。
         ///
         /// Resource: `CLIInterface.cliInterface.t6937c4e2d52d`.
         public static var t6937c4e2d52d: LocalizedMessage {
-            .init(key: "cliInterface.t6937c4e2d52d", table: "CLIInterface", fallback: "Manually downloaded CurseForge file as fileID=path.")
+            .init(key: "cliInterface.t6937c4e2d52d", table: "CLIInterface", fallback: "手动下载的 CurseForge 文件，格式为 fileID=path。")
         }
-        /// instance project
+        /// 实例 ID 和项目 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.tc9423b403749`.
         public static var tc9423b403749: LocalizedMessage {
-            .init(key: "cliInterface.tc9423b403749", table: "CLIInterface", fallback: "instance project")
+            .init(key: "cliInterface.tc9423b403749", table: "CLIInterface", fallback: "实例 ID 和项目 ID。")
         }
-        /// Enable selected content.
+        /// 启用所选内容。
         ///
         /// Resource: `CLIInterface.cliInterface.tcb22bf7cdc22`.
         public static var tcb22bf7cdc22: LocalizedMessage {
-            .init(key: "cliInterface.tcb22bf7cdc22", table: "CLIInterface", fallback: "Enable selected content.")
+            .init(key: "cliInterface.tcb22bf7cdc22", table: "CLIInterface", fallback: "启用所选内容。")
         }
-        /// Exact installed filename; repeat to select several.
+        /// 已安装文件的完整名称，可重复传入以选择多个文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t0571cf34f7e5`.
         public static var t0571cf34f7e5: LocalizedMessage {
-            .init(key: "cliInterface.t0571cf34f7e5", table: "CLIInterface", fallback: "Exact installed filename; repeat to select several.")
+            .init(key: "cliInterface.t0571cf34f7e5", table: "CLIInterface", fallback: "已安装文件的完整名称，可重复传入以选择多个文件。")
         }
-        /// Select every file of the chosen kind.
+        /// 选择该类型的全部文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t7a83bde60a43`.
         public static var t7a83bde60a43: LocalizedMessage {
-            .init(key: "cliInterface.t7a83bde60a43", table: "CLIInterface", fallback: "Select every file of the chosen kind.")
+            .init(key: "cliInterface.t7a83bde60a43", table: "CLIInterface", fallback: "选择该类型的全部文件。")
         }
-        /// Disable selected content.
+        /// 禁用所选内容。
         ///
         /// Resource: `CLIInterface.cliInterface.t835a12065b6b`.
         public static var t835a12065b6b: LocalizedMessage {
-            .init(key: "cliInterface.t835a12065b6b", table: "CLIInterface", fallback: "Disable selected content.")
+            .init(key: "cliInterface.t835a12065b6b", table: "CLIInterface", fallback: "禁用所选内容。")
         }
-        /// Move selected content to the Trash.
+        /// 将所选内容移到废纸篓。
         ///
         /// Resource: `CLIInterface.cliInterface.tbddc7b97257e`.
         public static var tbddc7b97257e: LocalizedMessage {
-            .init(key: "cliInterface.tbddc7b97257e", table: "CLIInterface", fallback: "Move selected content to the Trash.")
+            .init(key: "cliInterface.tbddc7b97257e", table: "CLIInterface", fallback: "将所选内容移到废纸篓。")
         }
-        /// Check compatible updates for installed content.
+        /// 检查已安装内容的兼容更新。
         ///
         /// Resource: `CLIInterface.cliInterface.t2648b2127df6`.
         public static var t2648b2127df6: LocalizedMessage {
-            .init(key: "cliInterface.t2648b2127df6", table: "CLIInterface", fallback: "Check compatible updates for installed content.")
+            .init(key: "cliInterface.t2648b2127df6", table: "CLIInterface", fallback: "检查已安装内容的兼容更新。")
         }
-        /// Update selected content and dependencies.
+        /// 更新所选内容及依赖。
         ///
         /// Resource: `CLIInterface.cliInterface.t41cfb5271f5e`.
         public static var t41cfb5271f5e: LocalizedMessage {
-            .init(key: "cliInterface.t41cfb5271f5e", table: "CLIInterface", fallback: "Update selected content and dependencies.")
+            .init(key: "cliInterface.t41cfb5271f5e", table: "CLIInterface", fallback: "更新所选内容及依赖。")
         }
-        /// Update every file of the chosen kind.
+        /// 更新该类型的全部文件。
         ///
         /// Resource: `CLIInterface.cliInterface.tf53d1d120842`.
         public static var tf53d1d120842: LocalizedMessage {
-            .init(key: "cliInterface.tf53d1d120842", table: "CLIInterface", fallback: "Update every file of the chosen kind.")
+            .init(key: "cliInterface.tf53d1d120842", table: "CLIInterface", fallback: "更新该类型的全部文件。")
         }
-        /// List worlds in an instance.
+        /// 列出实例中的世界。
         ///
         /// Resource: `CLIInterface.cliInterface.t0182348543ec`.
         public static var t0182348543ec: LocalizedMessage {
-            .init(key: "cliInterface.t0182348543ec", table: "CLIInterface", fallback: "List worlds in an instance.")
+            .init(key: "cliInterface.t0182348543ec", table: "CLIInterface", fallback: "列出实例中的世界。")
         }
-        /// Inspect a world.
+        /// 查询世界详情。
         ///
         /// Resource: `CLIInterface.cliInterface.tc62375cad94f`.
         public static var tc62375cad94f: LocalizedMessage {
-            .init(key: "cliInterface.tc62375cad94f", table: "CLIInterface", fallback: "Inspect a world.")
+            .init(key: "cliInterface.tc62375cad94f", table: "CLIInterface", fallback: "查询世界详情。")
         }
-        /// instance folder
+        /// 实例 ID 和世界文件夹。
         ///
         /// Resource: `CLIInterface.cliInterface.t3cc465fee86f`.
         public static var t3cc465fee86f: LocalizedMessage {
-            .init(key: "cliInterface.t3cc465fee86f", table: "CLIInterface", fallback: "instance folder")
+            .init(key: "cliInterface.t3cc465fee86f", table: "CLIInterface", fallback: "实例 ID 和世界文件夹。")
         }
-        /// Import a world archive or directory.
+        /// 导入世界归档或目录。
         ///
         /// Resource: `CLIInterface.cliInterface.td02c3799e5f3`.
         public static var td02c3799e5f3: LocalizedMessage {
-            .init(key: "cliInterface.td02c3799e5f3", table: "CLIInterface", fallback: "Import a world archive or directory.")
+            .init(key: "cliInterface.td02c3799e5f3", table: "CLIInterface", fallback: "导入世界归档或目录。")
         }
-        /// Export a world archive.
+        /// 导出世界归档。
         ///
         /// Resource: `CLIInterface.cliInterface.t79b53bfe32d0`.
         public static var t79b53bfe32d0: LocalizedMessage {
-            .init(key: "cliInterface.t79b53bfe32d0", table: "CLIInterface", fallback: "Export a world archive.")
+            .init(key: "cliInterface.t79b53bfe32d0", table: "CLIInterface", fallback: "导出世界归档。")
         }
-        /// instance folder file
+        /// 实例 ID、世界文件夹和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.tbb4df9d7ac3a`.
         public static var tbb4df9d7ac3a: LocalizedMessage {
-            .init(key: "cliInterface.tbb4df9d7ac3a", table: "CLIInterface", fallback: "instance folder file")
+            .init(key: "cliInterface.tbb4df9d7ac3a", table: "CLIInterface", fallback: "实例 ID、世界文件夹和文件路径。")
         }
-        /// Move a world to the Trash.
+        /// 将世界移到废纸篓。
         ///
         /// Resource: `CLIInterface.cliInterface.t1f3b65ed9678`.
         public static var t1f3b65ed9678: LocalizedMessage {
-            .init(key: "cliInterface.t1f3b65ed9678", table: "CLIInterface", fallback: "Move a world to the Trash.")
+            .init(key: "cliInterface.t1f3b65ed9678", table: "CLIInterface", fallback: "将世界移到废纸篓。")
         }
-        /// Back up a world.
+        /// 备份世界。
         ///
         /// Resource: `CLIInterface.cliInterface.t687aa81ce15b`.
         public static var t687aa81ce15b: LocalizedMessage {
-            .init(key: "cliInterface.t687aa81ce15b", table: "CLIInterface", fallback: "Back up a world.")
+            .init(key: "cliInterface.t687aa81ce15b", table: "CLIInterface", fallback: "备份世界。")
         }
-        /// Optional backup reason.
+        /// 可选的备份原因。
         ///
         /// Resource: `CLIInterface.cliInterface.t243960f924a4`.
         public static var t243960f924a4: LocalizedMessage {
-            .init(key: "cliInterface.t243960f924a4", table: "CLIInterface", fallback: "Optional backup reason.")
+            .init(key: "cliInterface.t243960f924a4", table: "CLIInterface", fallback: "可选的备份原因。")
         }
-        /// List world backups.
+        /// 列出世界备份。
         ///
         /// Resource: `CLIInterface.cliInterface.t82358ac73619`.
         public static var t82358ac73619: LocalizedMessage {
-            .init(key: "cliInterface.t82358ac73619", table: "CLIInterface", fallback: "List world backups.")
+            .init(key: "cliInterface.t82358ac73619", table: "CLIInterface", fallback: "列出世界备份。")
         }
-        /// Restore a backup; replacement must be explicit.
+        /// 恢复备份，覆盖已有世界时需要明确确认。
         ///
         /// Resource: `CLIInterface.cliInterface.t5b12f1ab5a68`.
         public static var t5b12f1ab5a68: LocalizedMessage {
-            .init(key: "cliInterface.t5b12f1ab5a68", table: "CLIInterface", fallback: "Restore a backup; replacement must be explicit.")
+            .init(key: "cliInterface.t5b12f1ab5a68", table: "CLIInterface", fallback: "恢复备份，覆盖已有世界时需要明确确认。")
         }
-        /// Replace the existing world.
+        /// 覆盖已有世界。
         ///
         /// Resource: `CLIInterface.cliInterface.td2c29dd5d868`.
         public static var td2c29dd5d868: LocalizedMessage {
-            .init(key: "cliInterface.td2c29dd5d868", table: "CLIInterface", fallback: "Replace the existing world.")
+            .init(key: "cliInterface.td2c29dd5d868", table: "CLIInterface", fallback: "覆盖已有世界。")
         }
-        /// instance backup
+        /// 实例 ID 和备份 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.teaf6d847cc14`.
         public static var teaf6d847cc14: LocalizedMessage {
-            .init(key: "cliInterface.teaf6d847cc14", table: "CLIInterface", fallback: "instance backup")
+            .init(key: "cliInterface.teaf6d847cc14", table: "CLIInterface", fallback: "实例 ID 和备份 ID。")
         }
-        /// Move a world backup to the Trash.
+        /// 将世界备份移到废纸篓。
         ///
         /// Resource: `CLIInterface.cliInterface.t79d8f9c1b13b`.
         public static var t79d8f9c1b13b: LocalizedMessage {
-            .init(key: "cliInterface.t79d8f9c1b13b", table: "CLIInterface", fallback: "Move a world backup to the Trash.")
+            .init(key: "cliInterface.t79d8f9c1b13b", table: "CLIInterface", fallback: "将世界备份移到废纸篓。")
         }
-        /// List a world's data packs.
+        /// 列出世界的数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.t5baea7450859`.
         public static var t5baea7450859: LocalizedMessage {
-            .init(key: "cliInterface.t5baea7450859", table: "CLIInterface", fallback: "List a world's data packs.")
+            .init(key: "cliInterface.t5baea7450859", table: "CLIInterface", fallback: "列出世界的数据包。")
         }
-        /// instance world
+        /// 实例 ID 和世界名称。
         ///
         /// Resource: `CLIInterface.cliInterface.t3f8f11058c17`.
         public static var t3f8f11058c17: LocalizedMessage {
-            .init(key: "cliInterface.t3f8f11058c17", table: "CLIInterface", fallback: "instance world")
+            .init(key: "cliInterface.t3f8f11058c17", table: "CLIInterface", fallback: "实例 ID 和世界名称。")
         }
-        /// Read data-pack priority from highest to lowest.
+        /// 按优先级从高到低查询数据包顺序。
         ///
         /// Resource: `CLIInterface.cliInterface.t8e719af86d09`.
         public static var t8e719af86d09: LocalizedMessage {
-            .init(key: "cliInterface.t8e719af86d09", table: "CLIInterface", fallback: "Read data-pack priority from highest to lowest.")
+            .init(key: "cliInterface.t8e719af86d09", table: "CLIInterface", fallback: "按优先级从高到低查询数据包顺序。")
         }
-        /// Replace the complete data-pack priority order.
+        /// 替换完整的数据包优先级顺序。
         ///
         /// Resource: `CLIInterface.cliInterface.tc4ef4044f6a8`.
         public static var tc4ef4044f6a8: LocalizedMessage {
-            .init(key: "cliInterface.tc4ef4044f6a8", table: "CLIInterface", fallback: "Replace the complete data-pack priority order.")
+            .init(key: "cliInterface.tc4ef4044f6a8", table: "CLIInterface", fallback: "替换完整的数据包优先级顺序。")
         }
-        /// Complete priority list, highest first.
+        /// 完整优先级列表，优先级最高的在前。
         ///
         /// Resource: `CLIInterface.cliInterface.tcc64529d6ae6`.
         public static var tcc64529d6ae6: LocalizedMessage {
-            .init(key: "cliInterface.tcc64529d6ae6", table: "CLIInterface", fallback: "Complete priority list, highest first.")
+            .init(key: "cliInterface.tcc64529d6ae6", table: "CLIInterface", fallback: "完整优先级列表，优先级最高的在前。")
         }
-        /// Import a data pack into a world.
+        /// 将数据包导入世界。
         ///
         /// Resource: `CLIInterface.cliInterface.td44435e60acc`.
         public static var td44435e60acc: LocalizedMessage {
-            .init(key: "cliInterface.td44435e60acc", table: "CLIInterface", fallback: "Import a data pack into a world.")
+            .init(key: "cliInterface.td44435e60acc", table: "CLIInterface", fallback: "将数据包导入世界。")
         }
-        /// instance world file
+        /// 实例 ID、世界名称和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.t027258d65380`.
         public static var t027258d65380: LocalizedMessage {
-            .init(key: "cliInterface.t027258d65380", table: "CLIInterface", fallback: "instance world file")
+            .init(key: "cliInterface.t027258d65380", table: "CLIInterface", fallback: "实例 ID、世界名称和文件路径。")
         }
-        /// Enable a world's data pack.
+        /// 启用世界的数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.t8c443e635faf`.
         public static var t8c443e635faf: LocalizedMessage {
-            .init(key: "cliInterface.t8c443e635faf", table: "CLIInterface", fallback: "Enable a world's data pack.")
+            .init(key: "cliInterface.t8c443e635faf", table: "CLIInterface", fallback: "启用世界的数据包。")
         }
-        /// instance world name
+        /// 实例 ID、世界名称和数据包名称。
         ///
         /// Resource: `CLIInterface.cliInterface.t25b74fe94bbb`.
         public static var t25b74fe94bbb: LocalizedMessage {
-            .init(key: "cliInterface.t25b74fe94bbb", table: "CLIInterface", fallback: "instance world name")
+            .init(key: "cliInterface.t25b74fe94bbb", table: "CLIInterface", fallback: "实例 ID、世界名称和数据包名称。")
         }
-        /// Disable a world's data pack.
+        /// 禁用世界的数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.tc7d244ea5a4c`.
         public static var tc7d244ea5a4c: LocalizedMessage {
-            .init(key: "cliInterface.tc7d244ea5a4c", table: "CLIInterface", fallback: "Disable a world's data pack.")
+            .init(key: "cliInterface.tc7d244ea5a4c", table: "CLIInterface", fallback: "禁用世界的数据包。")
         }
-        /// Remove a world's data pack.
+        /// 移除世界的数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.t08f738b1e5ca`.
         public static var t08f738b1e5ca: LocalizedMessage {
-            .init(key: "cliInterface.t08f738b1e5ca", table: "CLIInterface", fallback: "Remove a world's data pack.")
+            .init(key: "cliInterface.t08f738b1e5ca", table: "CLIInterface", fallback: "移除世界的数据包。")
         }
-        /// Search compatible Modrinth data packs.
+        /// 搜索兼容的 Modrinth 数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.t64d56130fbdf`.
         public static var t64d56130fbdf: LocalizedMessage {
-            .init(key: "cliInterface.t64d56130fbdf", table: "CLIInterface", fallback: "Search compatible Modrinth data packs.")
+            .init(key: "cliInterface.t64d56130fbdf", table: "CLIInterface", fallback: "搜索兼容的 Modrinth 数据包。")
         }
-        /// instance query
+        /// 实例 ID 和搜索关键词。
         ///
         /// Resource: `CLIInterface.cliInterface.t9abc5f05470e`.
         public static var t9abc5f05470e: LocalizedMessage {
-            .init(key: "cliInterface.t9abc5f05470e", table: "CLIInterface", fallback: "instance query")
+            .init(key: "cliInterface.t9abc5f05470e", table: "CLIInterface", fallback: "实例 ID 和搜索关键词。")
         }
-        /// List compatible data-pack versions.
+        /// 列出兼容的数据包版本。
         ///
         /// Resource: `CLIInterface.cliInterface.tb511553d589f`.
         public static var tb511553d589f: LocalizedMessage {
-            .init(key: "cliInterface.tb511553d589f", table: "CLIInterface", fallback: "List compatible data-pack versions.")
+            .init(key: "cliInterface.tb511553d589f", table: "CLIInterface", fallback: "列出兼容的数据包版本。")
         }
-        /// Install a data pack and its dependencies.
+        /// 安装数据包及其依赖。
         ///
         /// Resource: `CLIInterface.cliInterface.t37b2077e3554`.
         public static var t37b2077e3554: LocalizedMessage {
-            .init(key: "cliInterface.t37b2077e3554", table: "CLIInterface", fallback: "Install a data pack and its dependencies.")
+            .init(key: "cliInterface.t37b2077e3554", table: "CLIInterface", fallback: "安装数据包及其依赖。")
         }
-        /// Exact version ID; otherwise latest stable.
+        /// 指定版本 ID，默认选择最新稳定版。
         ///
         /// Resource: `CLIInterface.cliInterface.t5e7708f69f60`.
         public static var t5e7708f69f60: LocalizedMessage {
-            .init(key: "cliInterface.t5e7708f69f60", table: "CLIInterface", fallback: "Exact version ID; otherwise latest stable.")
+            .init(key: "cliInterface.t5e7708f69f60", table: "CLIInterface", fallback: "指定版本 ID，默认选择最新稳定版。")
         }
-        /// instance world project
+        /// 实例 ID、世界名称和项目 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.t4d5a09c55c8c`.
         public static var t4d5a09c55c8c: LocalizedMessage {
-            .init(key: "cliInterface.t4d5a09c55c8c", table: "CLIInterface", fallback: "instance world project")
+            .init(key: "cliInterface.t4d5a09c55c8c", table: "CLIInterface", fallback: "实例 ID、世界名称和项目 ID。")
         }
-        /// List schematic files and folders.
+        /// 列出投影文件及文件夹。
         ///
         /// Resource: `CLIInterface.cliInterface.t45ce4d2add4d`.
         public static var t45ce4d2add4d: LocalizedMessage {
-            .init(key: "cliInterface.t45ce4d2add4d", table: "CLIInterface", fallback: "List schematic files and folders.")
+            .init(key: "cliInterface.t45ce4d2add4d", table: "CLIInterface", fallback: "列出投影文件及文件夹。")
         }
-        /// Relative schematic directory.
+        /// 投影目录的相对路径。
         ///
         /// Resource: `CLIInterface.cliInterface.tc48ff6cbe772`.
         public static var tc48ff6cbe772: LocalizedMessage {
-            .init(key: "cliInterface.tc48ff6cbe772", table: "CLIInterface", fallback: "Relative schematic directory.")
+            .init(key: "cliInterface.tc48ff6cbe772", table: "CLIInterface", fallback: "投影目录的相对路径。")
         }
-        /// Inspect a schematic's metadata.
+        /// 查询投影文件的元数据。
         ///
         /// Resource: `CLIInterface.cliInterface.t9691b8cb26ac`.
         public static var t9691b8cb26ac: LocalizedMessage {
-            .init(key: "cliInterface.t9691b8cb26ac", table: "CLIInterface", fallback: "Inspect a schematic's metadata.")
+            .init(key: "cliInterface.t9691b8cb26ac", table: "CLIInterface", fallback: "查询投影文件的元数据。")
         }
-        /// Import a schematic file.
+        /// 导入投影文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t006d1cafc637`.
         public static var t006d1cafc637: LocalizedMessage {
-            .init(key: "cliInterface.t006d1cafc637", table: "CLIInterface", fallback: "Import a schematic file.")
+            .init(key: "cliInterface.t006d1cafc637", table: "CLIInterface", fallback: "导入投影文件。")
         }
-        /// Create a schematic folder.
+        /// 创建投影文件夹。
         ///
         /// Resource: `CLIInterface.cliInterface.tf32e6e0f57a1`.
         public static var tf32e6e0f57a1: LocalizedMessage {
-            .init(key: "cliInterface.tf32e6e0f57a1", table: "CLIInterface", fallback: "Create a schematic folder.")
+            .init(key: "cliInterface.tf32e6e0f57a1", table: "CLIInterface", fallback: "创建投影文件夹。")
         }
-        /// Relative parent directory.
+        /// 父目录的相对路径。
         ///
         /// Resource: `CLIInterface.cliInterface.t4af5860f6aeb`.
         public static var t4af5860f6aeb: LocalizedMessage {
-            .init(key: "cliInterface.t4af5860f6aeb", table: "CLIInterface", fallback: "Relative parent directory.")
+            .init(key: "cliInterface.t4af5860f6aeb", table: "CLIInterface", fallback: "父目录的相对路径。")
         }
-        /// instance name
+        /// 实例 ID 和文件夹名称。
         ///
         /// Resource: `CLIInterface.cliInterface.t0d2ff8c9a278`.
         public static var t0d2ff8c9a278: LocalizedMessage {
-            .init(key: "cliInterface.t0d2ff8c9a278", table: "CLIInterface", fallback: "instance name")
+            .init(key: "cliInterface.t0d2ff8c9a278", table: "CLIInterface", fallback: "实例 ID 和文件夹名称。")
         }
-        /// Export a schematic.
+        /// 导出投影文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t7e11030c3d95`.
         public static var t7e11030c3d95: LocalizedMessage {
-            .init(key: "cliInterface.t7e11030c3d95", table: "CLIInterface", fallback: "Export a schematic.")
+            .init(key: "cliInterface.t7e11030c3d95", table: "CLIInterface", fallback: "导出投影文件。")
         }
-        /// instance path file
+        /// 实例 ID、投影路径和导出文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.tf0b7b313a90b`.
         public static var tf0b7b313a90b: LocalizedMessage {
-            .init(key: "cliInterface.tf0b7b313a90b", table: "CLIInterface", fallback: "instance path file")
+            .init(key: "cliInterface.tf0b7b313a90b", table: "CLIInterface", fallback: "实例 ID、投影路径和导出文件路径。")
         }
-        /// Move a schematic file or folder to the Trash.
+        /// 将投影文件或文件夹移到废纸篓。
         ///
         /// Resource: `CLIInterface.cliInterface.tc7d49c67a14a`.
         public static var tc7d49c67a14a: LocalizedMessage {
-            .init(key: "cliInterface.tc7d49c67a14a", table: "CLIInterface", fallback: "Move a schematic file or folder to the Trash.")
+            .init(key: "cliInterface.tc7d49c67a14a", table: "CLIInterface", fallback: "将投影文件或文件夹移到废纸篓。")
         }
-        /// datapack order commands
+        /// 数据包优先级
         ///
         /// Resource: `CLIInterface.cliInterface.tb9f8304a17cd`.
         public static var tb9f8304a17cd: LocalizedMessage {
-            .init(key: "cliInterface.tb9f8304a17cd", table: "CLIInterface", fallback: "datapack order commands")
+            .init(key: "cliInterface.tb9f8304a17cd", table: "CLIInterface", fallback: "数据包优先级")
         }
-        /// world backup commands
+        /// 世界备份与恢复
         ///
         /// Resource: `CLIInterface.cliInterface.t1870161676bc`.
         public static var t1870161676bc: LocalizedMessage {
-            .init(key: "cliInterface.t1870161676bc", table: "CLIInterface", fallback: "world backup commands")
+            .init(key: "cliInterface.t1870161676bc", table: "CLIInterface", fallback: "世界备份与恢复")
         }
-        /// schematic commands
+        /// 投影文件管理
         ///
         /// Resource: `CLIInterface.cliInterface.tb977dca13b5f`.
         public static var tb977dca13b5f: LocalizedMessage {
-            .init(key: "cliInterface.tb977dca13b5f", table: "CLIInterface", fallback: "schematic commands")
+            .init(key: "cliInterface.tb977dca13b5f", table: "CLIInterface", fallback: "投影文件管理")
         }
-        /// datapack commands
+        /// 数据包管理与排序
         ///
         /// Resource: `CLIInterface.cliInterface.t8c1e16e1c7f6`.
         public static var t8c1e16e1c7f6: LocalizedMessage {
-            .init(key: "cliInterface.t8c1e16e1c7f6", table: "CLIInterface", fallback: "datapack commands")
+            .init(key: "cliInterface.t8c1e16e1c7f6", table: "CLIInterface", fallback: "数据包管理与排序")
         }
-        /// catalog commands
+        /// 内容搜索与版本查询
         ///
         /// Resource: `CLIInterface.cliInterface.t28a32d5bd18e`.
         public static var t28a32d5bd18e: LocalizedMessage {
-            .init(key: "cliInterface.t28a32d5bd18e", table: "CLIInterface", fallback: "catalog commands")
+            .init(key: "cliInterface.t28a32d5bd18e", table: "CLIInterface", fallback: "内容搜索与版本查询")
         }
-        /// content commands
+        /// 模组、资源包与光影管理
         ///
         /// Resource: `CLIInterface.cliInterface.t7f93a6deea4d`.
         public static var t7f93a6deea4d: LocalizedMessage {
-            .init(key: "cliInterface.t7f93a6deea4d", table: "CLIInterface", fallback: "content commands")
+            .init(key: "cliInterface.t7f93a6deea4d", table: "CLIInterface", fallback: "模组、资源包与光影管理")
         }
-        /// world commands
+        /// 世界管理、导入导出与备份
         ///
         /// Resource: `CLIInterface.cliInterface.tc96234263475`.
         public static var tc96234263475: LocalizedMessage {
-            .init(key: "cliInterface.tc96234263475", table: "CLIInterface", fallback: "world commands")
+            .init(key: "cliInterface.tc96234263475", table: "CLIInterface", fallback: "世界管理、导入导出与备份")
         }
-        /// Input file not found.
+        /// 找不到输入文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t68a342df34e2`.
         public static var t68a342df34e2: LocalizedMessage {
-            .init(key: "cliInterface.t68a342df34e2", table: "CLIInterface", fallback: "Input file not found.")
+            .init(key: "cliInterface.t68a342df34e2", table: "CLIInterface", fallback: "找不到输入文件。")
         }
-        /// Select --file entries or explicitly use --all.
+        /// 请使用 --file 选择文件，或明确指定 --all。
         ///
         /// Resource: `CLIInterface.cliInterface.t1474aa1131be`.
         public static var t1474aa1131be: LocalizedMessage {
-            .init(key: "cliInterface.t1474aa1131be", table: "CLIInterface", fallback: "Select --file entries or explicitly use --all.")
+            .init(key: "cliInterface.t1474aa1131be", table: "CLIInterface", fallback: "请使用 --file 选择文件，或明确指定 --all。")
         }
-        /// One or more selected filenames are missing.
+        /// 找不到部分所选文件。
         ///
         /// Resource: `CLIInterface.cliInterface.tcf02f30209a6`.
         public static var tcf02f30209a6: LocalizedMessage {
-            .init(key: "cliInterface.tcf02f30209a6", table: "CLIInterface", fallback: "One or more selected filenames are missing.")
+            .init(key: "cliInterface.tcf02f30209a6", table: "CLIInterface", fallback: "找不到部分所选文件。")
         }
-        /// Unknown content action.
+        /// 未知内容操作。
         ///
         /// Resource: `CLIInterface.cliInterface.t1fb9146947a6`.
         public static var t1fb9146947a6: LocalizedMessage {
-            .init(key: "cliInterface.t1fb9146947a6", table: "CLIInterface", fallback: "Unknown content action.")
+            .init(key: "cliInterface.t1fb9146947a6", table: "CLIInterface", fallback: "未知内容操作。")
         }
-        /// Manual files use unique fileID=path entries.
+        /// 手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。
         ///
         /// Resource: `CLIInterface.cliInterface.tcf80472afe71`.
         public static var tcf80472afe71: LocalizedMessage {
-            .init(key: "cliInterface.tcf80472afe71", table: "CLIInterface", fallback: "Manual files use unique fileID=path entries.")
+            .init(key: "cliInterface.tcf80472afe71", table: "CLIInterface", fallback: "手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。")
         }
-        /// Download the listed files, then repeat the command with --manual fileID=path.
+        /// 请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。
         ///
         /// Resource: `CLIInterface.cliInterface.t22d3a8371f53`.
         public static var t22d3a8371f53: LocalizedMessage {
-            .init(key: "cliInterface.t22d3a8371f53", table: "CLIInterface", fallback: "Download the listed files, then repeat the command with --manual fileID=path.")
+            .init(key: "cliInterface.t22d3a8371f53", table: "CLIInterface", fallback: "请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。")
         }
-        /// The selected version is incompatible with the instance.
+        /// 所选版本与实例不兼容。
         ///
         /// Resource: `CLIInterface.cliInterface.t5c54141389e9`.
         public static var t5c54141389e9: LocalizedMessage {
-            .init(key: "cliInterface.t5c54141389e9", table: "CLIInterface", fallback: "The selected version is incompatible with the instance.")
+            .init(key: "cliInterface.t5c54141389e9", table: "CLIInterface", fallback: "所选版本与实例不兼容。")
         }
-        /// No matching compatible version was found.
+        /// 找不到匹配的兼容版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t56f6acfec799`.
         public static var t56f6acfec799: LocalizedMessage {
-            .init(key: "cliInterface.t56f6acfec799", table: "CLIInterface", fallback: "No matching compatible version was found.")
+            .init(key: "cliInterface.t56f6acfec799", table: "CLIInterface", fallback: "找不到匹配的兼容版本。")
         }
-        /// Backup not found.
+        /// 找不到备份。
         ///
         /// Resource: `CLIInterface.cliInterface.t813a5dd4816c`.
         public static var t813a5dd4816c: LocalizedMessage {
-            .init(key: "cliInterface.t813a5dd4816c", table: "CLIInterface", fallback: "Backup not found.")
+            .init(key: "cliInterface.t813a5dd4816c", table: "CLIInterface", fallback: "找不到备份。")
         }
-        /// World not found.
+        /// 找不到世界。
         ///
         /// Resource: `CLIInterface.cliInterface.t90c2d3c97aae`.
         public static var t90c2d3c97aae: LocalizedMessage {
-            .init(key: "cliInterface.t90c2d3c97aae", table: "CLIInterface", fallback: "World not found.")
+            .init(key: "cliInterface.t90c2d3c97aae", table: "CLIInterface", fallback: "找不到世界。")
         }
-        /// Unknown world action.
+        /// 未知世界操作。
         ///
         /// Resource: `CLIInterface.cliInterface.ta7cd75ee2906`.
         public static var ta7cd75ee2906: LocalizedMessage {
-            .init(key: "cliInterface.ta7cd75ee2906", table: "CLIInterface", fallback: "Unknown world action.")
+            .init(key: "cliInterface.ta7cd75ee2906", table: "CLIInterface", fallback: "未知世界操作。")
         }
-        /// Provide the complete priority list exactly once.
+        /// 请提供完整的优先级列表，每项只能出现一次。
         ///
         /// Resource: `CLIInterface.cliInterface.tcaf18c90c73d`.
         public static var tcaf18c90c73d: LocalizedMessage {
-            .init(key: "cliInterface.tcaf18c90c73d", table: "CLIInterface", fallback: "Provide the complete priority list exactly once.")
+            .init(key: "cliInterface.tcaf18c90c73d", table: "CLIInterface", fallback: "请提供完整的优先级列表，每项只能出现一次。")
         }
-        /// No compatible data-pack version found.
+        /// 找不到兼容的数据包版本。
         ///
         /// Resource: `CLIInterface.cliInterface.tdd5661a06a84`.
         public static var tdd5661a06a84: LocalizedMessage {
-            .init(key: "cliInterface.tdd5661a06a84", table: "CLIInterface", fallback: "No compatible data-pack version found.")
+            .init(key: "cliInterface.tdd5661a06a84", table: "CLIInterface", fallback: "找不到兼容的数据包版本。")
         }
-        /// Data pack not found.
+        /// 找不到数据包。
         ///
         /// Resource: `CLIInterface.cliInterface.t921d4db04b98`.
         public static var t921d4db04b98: LocalizedMessage {
-            .init(key: "cliInterface.t921d4db04b98", table: "CLIInterface", fallback: "Data pack not found.")
+            .init(key: "cliInterface.t921d4db04b98", table: "CLIInterface", fallback: "找不到数据包。")
         }
-        /// Unknown data-pack action.
+        /// 未知数据包操作。
         ///
         /// Resource: `CLIInterface.cliInterface.t31dc407e9871`.
         public static var t31dc407e9871: LocalizedMessage {
-            .init(key: "cliInterface.t31dc407e9871", table: "CLIInterface", fallback: "Unknown data-pack action.")
+            .init(key: "cliInterface.t31dc407e9871", table: "CLIInterface", fallback: "未知数据包操作。")
         }
-        /// Schematic not found.
+        /// 找不到投影文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t90e3b5019ad0`.
         public static var t90e3b5019ad0: LocalizedMessage {
-            .init(key: "cliInterface.t90e3b5019ad0", table: "CLIInterface", fallback: "Schematic not found.")
+            .init(key: "cliInterface.t90e3b5019ad0", table: "CLIInterface", fallback: "找不到投影文件。")
         }
-        /// Import an instance archive into an explicit directory.
+        /// 将实例归档导入指定目录。
         ///
         /// Resource: `CLIInterface.cliInterface.tdb74aa2f7d3b`.
         public static var tdb74aa2f7d3b: LocalizedMessage {
-            .init(key: "cliInterface.tdb74aa2f7d3b", table: "CLIInterface", fallback: "Import an instance archive into an explicit directory.")
+            .init(key: "cliInterface.tdb74aa2f7d3b", table: "CLIInterface", fallback: "将实例归档导入指定目录。")
         }
-        /// Destination directory UUID or default.
+        /// 目标目录 UUID 或 default。
         ///
         /// Resource: `CLIInterface.cliInterface.tddd82092eded`.
         public static var tddd82092eded: LocalizedMessage {
-            .init(key: "cliInterface.tddd82092eded", table: "CLIInterface", fallback: "Destination directory UUID or default.")
+            .init(key: "cliInterface.tddd82092eded", table: "CLIInterface", fallback: "目标目录 UUID 或 default。")
         }
-        /// Import JVM arguments supplied by the pack.
+        /// 导入整合包提供的 JVM 参数。
         ///
         /// Resource: `CLIInterface.cliInterface.tb86fa4ea53ac`.
         public static var tb86fa4ea53ac: LocalizedMessage {
-            .init(key: "cliInterface.tb86fa4ea53ac", table: "CLIInterface", fallback: "Import JVM arguments supplied by the pack.")
+            .init(key: "cliInterface.tb86fa4ea53ac", table: "CLIInterface", fallback: "导入整合包提供的 JVM 参数。")
         }
-        /// Import a local modpack archive.
+        /// 导入本地整合包归档。
         ///
         /// Resource: `CLIInterface.cliInterface.tc5c676ace213`.
         public static var tc5c676ace213: LocalizedMessage {
-            .init(key: "cliInterface.tc5c676ace213", table: "CLIInterface", fallback: "Import a local modpack archive.")
+            .init(key: "cliInterface.tc5c676ace213", table: "CLIInterface", fallback: "导入本地整合包归档。")
         }
-        /// Download and install a catalog modpack.
+        /// 下载并安装内容平台上的整合包。
         ///
         /// Resource: `CLIInterface.cliInterface.td48597adbed9`.
         public static var td48597adbed9: LocalizedMessage {
-            .init(key: "cliInterface.td48597adbed9", table: "CLIInterface", fallback: "Download and install a catalog modpack.")
+            .init(key: "cliInterface.td48597adbed9", table: "CLIInterface", fallback: "下载并安装内容平台上的整合包。")
         }
-        /// Manually downloaded pack archive.
+        /// 手动下载的整合包归档。
         ///
         /// Resource: `CLIInterface.cliInterface.t2280d783f7cb`.
         public static var t2280d783f7cb: LocalizedMessage {
-            .init(key: "cliInterface.t2280d783f7cb", table: "CLIInterface", fallback: "Manually downloaded pack archive.")
+            .init(key: "cliInterface.t2280d783f7cb", table: "CLIInterface", fallback: "手动下载的整合包归档。")
         }
-        /// Inspect installed modpack metadata.
+        /// 查询已安装整合包的元数据。
         ///
         /// Resource: `CLIInterface.cliInterface.t1d9fc0c70e58`.
         public static var t1d9fc0c70e58: LocalizedMessage {
-            .init(key: "cliInterface.t1d9fc0c70e58", table: "CLIInterface", fallback: "Inspect installed modpack metadata.")
+            .init(key: "cliInterface.t1d9fc0c70e58", table: "CLIInterface", fallback: "查询已安装整合包的元数据。")
         }
-        /// List available releases for an installed modpack.
+        /// 列出已安装整合包的可用版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t0e0ee827fcda`.
         public static var t0e0ee827fcda: LocalizedMessage {
-            .init(key: "cliInterface.t0e0ee827fcda", table: "CLIInterface", fallback: "List available releases for an installed modpack.")
+            .init(key: "cliInterface.t0e0ee827fcda", table: "CLIInterface", fallback: "列出已安装整合包的可用版本。")
         }
-        /// Preview or apply a modpack update.
+        /// 预览或执行整合包更新。
         ///
         /// Resource: `CLIInterface.cliInterface.t7dd4704843e2`.
         public static var t7dd4704843e2: LocalizedMessage {
-            .init(key: "cliInterface.t7dd4704843e2", table: "CLIInterface", fallback: "Preview or apply a modpack update.")
+            .init(key: "cliInterface.t7dd4704843e2", table: "CLIInterface", fallback: "预览或执行整合包更新。")
         }
-        /// Local update archive.
+        /// 本地更新归档。
         ///
         /// Resource: `CLIInterface.cliInterface.te3ce5542c760`.
         public static var te3ce5542c760: LocalizedMessage {
-            .init(key: "cliInterface.te3ce5542c760", table: "CLIInterface", fallback: "Local update archive.")
+            .init(key: "cliInterface.te3ce5542c760", table: "CLIInterface", fallback: "本地更新归档。")
         }
-        /// Exact remote release ID.
+        /// 指定远程发布版本 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.tadff65d82cd8`.
         public static var tadff65d82cd8: LocalizedMessage {
-            .init(key: "cliInterface.tadff65d82cd8", table: "CLIInterface", fallback: "Exact remote release ID.")
+            .init(key: "cliInterface.tadff65d82cd8", table: "CLIInterface", fallback: "指定远程发布版本 ID。")
         }
-        /// Manually downloaded remote release archive.
+        /// 手动下载的远程版本归档。
         ///
         /// Resource: `CLIInterface.cliInterface.t33673a17c78a`.
         public static var t33673a17c78a: LocalizedMessage {
-            .init(key: "cliInterface.t33673a17c78a", table: "CLIInterface", fallback: "Manually downloaded remote release archive.")
+            .init(key: "cliInterface.t33673a17c78a", table: "CLIInterface", fallback: "手动下载的远程版本归档。")
         }
-        /// Replace locally modified files instead of retaining them.
+        /// 覆盖本地修改过的文件，不保留本地修改。
         ///
         /// Resource: `CLIInterface.cliInterface.tfa5924a2e888`.
         public static var tfa5924a2e888: LocalizedMessage {
-            .init(key: "cliInterface.tfa5924a2e888", table: "CLIInterface", fallback: "Replace locally modified files instead of retaining them.")
+            .init(key: "cliInterface.tfa5924a2e888", table: "CLIInterface", fallback: "覆盖本地修改过的文件，不保留本地修改。")
         }
-        /// Confirm replacement of local modifications.
+        /// 确认覆盖本地修改。
         ///
         /// Resource: `CLIInterface.cliInterface.tf986137b0dee`.
         public static var tf986137b0dee: LocalizedMessage {
-            .init(key: "cliInterface.tf986137b0dee", table: "CLIInterface", fallback: "Confirm replacement of local modifications.")
+            .init(key: "cliInterface.tf986137b0dee", table: "CLIInterface", fallback: "确认覆盖本地修改。")
         }
-        /// Roll back the previous pack update while retaining later local edits.
+        /// 回退上一次整合包更新，保留更新后的本地修改。
         ///
         /// Resource: `CLIInterface.cliInterface.t8951a110d64d`.
         public static var t8951a110d64d: LocalizedMessage {
-            .init(key: "cliInterface.t8951a110d64d", table: "CLIInterface", fallback: "Roll back the previous pack update while retaining later local edits.")
+            .init(key: "cliInterface.t8951a110d64d", table: "CLIInterface", fallback: "回退上一次整合包更新，保留更新后的本地修改。")
         }
-        /// Download a file and verify its SHA-1 and size.
+        /// 下载文件并校验 SHA-1 和大小。
         ///
         /// Resource: `CLIInterface.cliInterface.t869f83eac4a5`.
         public static var t869f83eac4a5: LocalizedMessage {
-            .init(key: "cliInterface.t869f83eac4a5", table: "CLIInterface", fallback: "Download a file and verify its SHA-1 and size.")
+            .init(key: "cliInterface.t869f83eac4a5", table: "CLIInterface", fallback: "下载文件并校验 SHA-1 和大小。")
         }
-        /// Expected SHA-1 digest.
+        /// 预期的 SHA-1 校验值。
         ///
         /// Resource: `CLIInterface.cliInterface.t91bde8e5fa30`.
         public static var t91bde8e5fa30: LocalizedMessage {
-            .init(key: "cliInterface.t91bde8e5fa30", table: "CLIInterface", fallback: "Expected SHA-1 digest.")
+            .init(key: "cliInterface.t91bde8e5fa30", table: "CLIInterface", fallback: "预期的 SHA-1 校验值。")
         }
-        /// Expected byte count.
+        /// 预期的字节数。
         ///
         /// Resource: `CLIInterface.cliInterface.t8e1d27b3966c`.
         public static var t8e1d27b3966c: LocalizedMessage {
-            .init(key: "cliInterface.t8e1d27b3966c", table: "CLIInterface", fallback: "Expected byte count.")
+            .init(key: "cliInterface.t8e1d27b3966c", table: "CLIInterface", fallback: "预期的字节数。")
         }
-        /// url file
+        /// 下载地址和文件路径。
         ///
         /// Resource: `CLIInterface.cliInterface.tff2b9d62fa33`.
         public static var tff2b9d62fa33: LocalizedMessage {
-            .init(key: "cliInterface.tff2b9d62fa33", table: "CLIInterface", fallback: "url file")
+            .init(key: "cliInterface.tff2b9d62fa33", table: "CLIInterface", fallback: "下载地址和文件路径。")
         }
-        /// download commands
+        /// 文件下载与校验
         ///
         /// Resource: `CLIInterface.cliInterface.ta16b7c00b2ba`.
         public static var ta16b7c00b2ba: LocalizedMessage {
-            .init(key: "cliInterface.ta16b7c00b2ba", table: "CLIInterface", fallback: "download commands")
+            .init(key: "cliInterface.ta16b7c00b2ba", table: "CLIInterface", fallback: "文件下载与校验")
         }
-        /// pack commands
+        /// 整合包安装、更新与回退
         ///
         /// Resource: `CLIInterface.cliInterface.t31f0b68ea764`.
         public static var t31f0b68ea764: LocalizedMessage {
-            .init(key: "cliInterface.t31f0b68ea764", table: "CLIInterface", fallback: "pack commands")
+            .init(key: "cliInterface.t31f0b68ea764", table: "CLIInterface", fallback: "整合包安装、更新与回退")
         }
-        /// Destination directory not found.
+        /// 找不到目标目录。
         ///
         /// Resource: `CLIInterface.cliInterface.t4c0ebc2810f1`.
         public static var t4c0ebc2810f1: LocalizedMessage {
-            .init(key: "cliInterface.t4c0ebc2810f1", table: "CLIInterface", fallback: "Destination directory not found.")
+            .init(key: "cliInterface.t4c0ebc2810f1", table: "CLIInterface", fallback: "找不到目标目录。")
         }
-        /// This instance has no installed modpack metadata.
+        /// 此实例没有已安装整合包的元数据。
         ///
         /// Resource: `CLIInterface.cliInterface.te28b99d2f4f4`.
         public static var te28b99d2f4f4: LocalizedMessage {
-            .init(key: "cliInterface.te28b99d2f4f4", table: "CLIInterface", fallback: "This instance has no installed modpack metadata.")
+            .init(key: "cliInterface.te28b99d2f4f4", table: "CLIInterface", fallback: "此实例没有已安装整合包的元数据。")
         }
-        /// No pack update backup is available.
+        /// 没有可用于回退的整合包更新备份。
         ///
         /// Resource: `CLIInterface.cliInterface.tf47c36a30379`.
         public static var tf47c36a30379: LocalizedMessage {
-            .init(key: "cliInterface.tf47c36a30379", table: "CLIInterface", fallback: "No pack update backup is available.")
+            .init(key: "cliInterface.tf47c36a30379", table: "CLIInterface", fallback: "没有可用于回退的整合包更新备份。")
         }
-        /// Replacing local modifications requires --replace --yes.
+        /// 覆盖本地修改需要同时指定 --replace --yes。
         ///
         /// Resource: `CLIInterface.cliInterface.tc94ca55edbe4`.
         public static var tc94ca55edbe4: LocalizedMessage {
-            .init(key: "cliInterface.tc94ca55edbe4", table: "CLIInterface", fallback: "Replacing local modifications requires --replace --yes.")
+            .init(key: "cliInterface.tc94ca55edbe4", table: "CLIInterface", fallback: "覆盖本地修改需要同时指定 --replace --yes。")
         }
-        /// Choose a local --file or a remote --version.
+        /// 请选择本地 --file 或远程 --version。
         ///
         /// Resource: `CLIInterface.cliInterface.t886cba0bd15a`.
         public static var t886cba0bd15a: LocalizedMessage {
-            .init(key: "cliInterface.t886cba0bd15a", table: "CLIInterface", fallback: "Choose a local --file or a remote --version.")
+            .init(key: "cliInterface.t886cba0bd15a", table: "CLIInterface", fallback: "请选择本地 --file 或远程 --version。")
         }
-        /// Pack release not found.
+        /// 找不到整合包发布版本。
         ///
         /// Resource: `CLIInterface.cliInterface.t092095eba967`.
         public static var t092095eba967: LocalizedMessage {
-            .init(key: "cliInterface.t092095eba967", table: "CLIInterface", fallback: "Pack release not found.")
+            .init(key: "cliInterface.t092095eba967", table: "CLIInterface", fallback: "找不到整合包发布版本。")
         }
-        /// Download the pack archive and repeat with --archive path.
+        /// 请下载整合包归档，然后添加 --archive path 再次执行。
         ///
         /// Resource: `CLIInterface.cliInterface.t75d07f6960ff`.
         public static var t75d07f6960ff: LocalizedMessage {
-            .init(key: "cliInterface.t75d07f6960ff", table: "CLIInterface", fallback: "Download the pack archive and repeat with --archive path.")
+            .init(key: "cliInterface.t75d07f6960ff", table: "CLIInterface", fallback: "请下载整合包归档，然后添加 --archive path 再次执行。")
         }
-        /// Provide an HTTP URL, nonnegative --size and a 40-digit --sha1.
+        /// 请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。
         ///
         /// Resource: `CLIInterface.cliInterface.tca976a5cf5f9`.
         public static var tca976a5cf5f9: LocalizedMessage {
-            .init(key: "cliInterface.tca976a5cf5f9", table: "CLIInterface", fallback: "Provide an HTTP URL, nonnegative --size and a 40-digit --sha1.")
+            .init(key: "cliInterface.tca976a5cf5f9", table: "CLIInterface", fallback: "请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。")
         }
-        /// The destination already contains a different file.
+        /// 目标位置已存在内容不同的文件。
         ///
         /// Resource: `CLIInterface.cliInterface.tb634c8d3959d`.
         public static var tb634c8d3959d: LocalizedMessage {
-            .init(key: "cliInterface.tb634c8d3959d", table: "CLIInterface", fallback: "The destination already contains a different file.")
+            .init(key: "cliInterface.tb634c8d3959d", table: "CLIInterface", fallback: "目标位置已存在内容不同的文件。")
         }
-        /// List unfinished data operations and sessions.
+        /// 列出未完成的数据操作及会话。
         ///
         /// Resource: `CLIInterface.cliInterface.tbff4f0f5e780`.
         public static var tbff4f0f5e780: LocalizedMessage {
-            .init(key: "cliInterface.tbff4f0f5e780", table: "CLIInterface", fallback: "List unfinished data operations and sessions.")
+            .init(key: "cliInterface.tbff4f0f5e780", table: "CLIInterface", fallback: "列出未完成的数据操作及会话。")
         }
-        /// Restrict inspection to one instance.
+        /// 仅检查指定实例。
         ///
         /// Resource: `CLIInterface.cliInterface.tc16fc65ec610`.
         public static var tc16fc65ec610: LocalizedMessage {
-            .init(key: "cliInterface.tc16fc65ec610", table: "CLIInterface", fallback: "Restrict inspection to one instance.")
+            .init(key: "cliInterface.tc16fc65ec610", table: "CLIInterface", fallback: "仅检查指定实例。")
         }
-        /// Recover a specific unfinished operation.
+        /// 恢复指定的未完成操作。
         ///
         /// Resource: `CLIInterface.cliInterface.t25597cca30a1`.
         public static var t25597cca30a1: LocalizedMessage {
-            .init(key: "cliInterface.t25597cca30a1", table: "CLIInterface", fallback: "Recover a specific unfinished operation.")
+            .init(key: "cliInterface.t25597cca30a1", table: "CLIInterface", fallback: "恢复指定的未完成操作。")
         }
-        /// Transaction UUID, or session UUID.
+        /// 事务 UUID 或会话 UUID。
         ///
         /// Resource: `CLIInterface.cliInterface.t617ad9bacfae`.
         public static var t617ad9bacfae: LocalizedMessage {
-            .init(key: "cliInterface.t617ad9bacfae", table: "CLIInterface", fallback: "Transaction UUID, or session UUID.")
+            .init(key: "cliInterface.t617ad9bacfae", table: "CLIInterface", fallback: "事务 UUID 或会话 UUID。")
         }
-        /// Repository import recovery mode.
+        /// 游戏库导入的恢复方式。
         ///
         /// Resource: `CLIInterface.cliInterface.ta51e4f921383`.
         public static var ta51e4f921383: LocalizedMessage {
-            .init(key: "cliInterface.ta51e4f921383", table: "CLIInterface", fallback: "Repository import recovery mode.")
+            .init(key: "cliInterface.ta51e4f921383", table: "CLIInterface", fallback: "游戏库导入的恢复方式。")
         }
-        /// Keep the original source after a committed move.
+        /// 移动已提交后保留原始文件。
         ///
         /// Resource: `CLIInterface.cliInterface.t709f4fc13c7d`.
         public static var t709f4fc13c7d: LocalizedMessage {
-            .init(key: "cliInterface.t709f4fc13c7d", table: "CLIInterface", fallback: "Keep the original source after a committed move.")
+            .init(key: "cliInterface.t709f4fc13c7d", table: "CLIInterface", fallback: "移动已提交后保留原始文件。")
         }
-        /// Confirm that an unmonitored game has ended.
+        /// 确认失去监控的游戏已结束。
         ///
         /// Resource: `CLIInterface.cliInterface.ta42e19194027`.
         public static var ta42e19194027: LocalizedMessage {
-            .init(key: "cliInterface.ta42e19194027", table: "CLIInterface", fallback: "Confirm that an unmonitored game has ended.")
+            .init(key: "cliInterface.ta42e19194027", table: "CLIInterface", fallback: "确认失去监控的游戏已结束。")
         }
-        /// kind target
+        /// 恢复类型和目标 ID。
         ///
         /// Resource: `CLIInterface.cliInterface.t28237d41435e`.
         public static var t28237d41435e: LocalizedMessage {
-            .init(key: "cliInterface.t28237d41435e", table: "CLIInterface", fallback: "kind target")
+            .init(key: "cliInterface.t28237d41435e", table: "CLIInterface", fallback: "恢复类型和目标 ID。")
         }
-        /// Check state, paths, Java, account credentials and bundled helpers.
+        /// 检查状态、路径、Java、账户凭据及内置辅助程序。
         ///
         /// Resource: `CLIInterface.cliInterface.tc168cea3e30b`.
         public static var tc168cea3e30b: LocalizedMessage {
-            .init(key: "cliInterface.tc168cea3e30b", table: "CLIInterface", fallback: "Check state, paths, Java, account credentials and bundled helpers.")
+            .init(key: "cliInterface.tc168cea3e30b", table: "CLIInterface", fallback: "检查状态、路径、Java、账户凭据及内置辅助程序。")
         }
-        /// Inspect a particular instance.
+        /// 检查指定实例。
         ///
         /// Resource: `CLIInterface.cliInterface.tcfab76824678`.
         public static var tcfab76824678: LocalizedMessage {
-            .init(key: "cliInterface.tcfab76824678", table: "CLIInterface", fallback: "Inspect a particular instance.")
+            .init(key: "cliInterface.tcfab76824678", table: "CLIInterface", fallback: "检查指定实例。")
         }
-        /// recovery commands
+        /// 未完成操作的查询与恢复
         ///
         /// Resource: `CLIInterface.cliInterface.t2b167c0c4363`.
         public static var t2b167c0c4363: LocalizedMessage {
-            .init(key: "cliInterface.t2b167c0c4363", table: "CLIInterface", fallback: "recovery commands")
+            .init(key: "cliInterface.t2b167c0c4363", table: "CLIInterface", fallback: "未完成操作的查询与恢复")
         }
-        /// Unknown recovery kind.
+        /// 未知恢复类型。
         ///
         /// Resource: `CLIInterface.cliInterface.t1e2f741698a1`.
         public static var t1e2f741698a1: LocalizedMessage {
-            .init(key: "cliInterface.t1e2f741698a1", table: "CLIInterface", fallback: "Unknown recovery kind.")
+            .init(key: "cliInterface.t1e2f741698a1", table: "CLIInterface", fallback: "未知恢复类型。")
         }
-        /// This recovery requires --transaction from recovery list.
+        /// 此恢复操作需要指定 recovery list 返回的 --transaction。
         ///
         /// Resource: `CLIInterface.cliInterface.t7f8c861b7d62`.
         public static var t7f8c861b7d62: LocalizedMessage {
-            .init(key: "cliInterface.t7f8c861b7d62", table: "CLIInterface", fallback: "This recovery requires --transaction from recovery list.")
+            .init(key: "cliInterface.t7f8c861b7d62", table: "CLIInterface", fallback: "此恢复操作需要指定 recovery list 返回的 --transaction。")
         }
-        /// One or more checks failed.
+        /// 一项或多项检查未通过。
         ///
         /// Resource: `CLIInterface.cliInterface.tf19d497be38f`.
         public static var tf19d497be38f: LocalizedMessage {
-            .init(key: "cliInterface.tf19d497be38f", table: "CLIInterface", fallback: "One or more checks failed.")
+            .init(key: "cliInterface.tf19d497be38f", table: "CLIInterface", fallback: "一项或多项检查未通过。")
         }
-        /// An unfinished operation must be recovered before inspecting this data.
+        /// 检查此数据前，必须先恢复未完成的操作。
         ///
         /// Resource: `CLIInterface.cliInterface.tff19ae82a321`.
         public static var tff19ae82a321: LocalizedMessage {
-            .init(key: "cliInterface.tff19ae82a321", table: "CLIInterface", fallback: "An unfinished operation must be recovered before inspecting this data.")
+            .init(key: "cliInterface.tff19ae82a321", table: "CLIInterface", fallback: "检查此数据前，必须先恢复未完成的操作。")
         }
         /// 卸载
         ///
@@ -2320,19 +2320,19 @@ extension Messages {
             "CLIInterface:cliInterface.t616e37d3d71a": .init("未知命令。", []),
             "CLIInterface:cliInterface.t0719f30a146c": .init("在标准输出返回一个 JSON 结果。", []),
             "CLIInterface:cliInterface.t0232e54a0c07": .init("输出格式：text、json 或 ndjson。", []),
-            "CLIInterface:cliInterface.tfeeb5f4ef393": .init("Launcher data directory (overrides RURI_DATA_DIR).", []),
-            "CLIInterface:cliInterface.t83e479a9529d": .init("Language for human messages.", []),
+            "CLIInterface:cliInterface.tfeeb5f4ef393": .init("启动器数据目录，优先于 RURI_DATA_DIR。", []),
+            "CLIInterface:cliInterface.t83e479a9529d": .init("说明和提示使用的语言。", []),
             "CLIInterface:cliInterface.t1dfd9c76d588": .init("不在标准错误输出显示进度。", []),
             "CLIInterface:cliInterface.tc3f4b95955b1": .init("缺少 --%1$@。", [.text]),
             "CLIInterface:cliInterface.t883e96f211e4": .init("缺少参数 %1$@。", [.text]),
-            "CLIInterface:cliInterface.t8c27fffd692c": .init("Expected %1$@; received %2$@ positional arguments.", [.text, .text]),
-            "CLIInterface:cliInterface.te36f73cbdb89": .init("Use --output text|json|ndjson; --json cannot be combined with ndjson.", []),
-            "CLIInterface:cliInterface.te66506826636": .init("--%1$@ must be one of: %2$@.", [.text, .text]),
+            "CLIInterface:cliInterface.t8c27fffd692c": .init("需要位置参数 %1$@，实际收到 %2$@ 个。", [.text, .text]),
+            "CLIInterface:cliInterface.te36f73cbdb89": .init("请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。", []),
+            "CLIInterface:cliInterface.te66506826636": .init("--%1$@ 必须为以下值之一：%2$@。", [.text, .text]),
             "CLIInterface:cliInterface.t73e3848bbeee": .init("--limit 必须介于 1 和 1000 之间。", []),
             "CLIInterface:cliInterface.td3901a3793d1": .init("--offset 不能为负数。", []),
             "CLIInterface:cliInterface.tf2d2570879da": .init("此操作需要 --yes，可先使用 --dry-run 预览。", []),
             "CLIInterface:cliInterface.tfd63207de5ca": .init("查询命令及其机器接口。", []),
-            "CLIInterface:cliInterface.t907f38578610": .init("resource? action? subaction?", []),
+            "CLIInterface:cliInterface.t907f38578610": .init("可选的资源、动作和子动作。", []),
             "CLIInterface:cliInterface.t04f3e8ad5625": .init("显示应用及命令行工具的版本和路径。", []),
             "CLIInterface:cliInterface.t0adf2f545bf7": .init("读取应用的界面语言。", []),
             "CLIInterface:cliInterface.t56774fcdd554": .init("设置应用语言，重启后生效。", []),
@@ -2340,12 +2340,12 @@ extension Messages {
             "CLIInterface:cliInterface.tb15b5698e07c": .init("检查命令行工具及 PATH。", []),
             "CLIInterface:cliInterface.t05715f352213": .init("安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。", []),
             "CLIInterface:cliInterface.t6edc04f9cc0c": .init("命令安装目录，默认为 /usr/local/bin。", []),
-            "CLIInterface:cliInterface.t32373072cae3": .init("Remove the ruri link only if it belongs to Ruri.", []),
+            "CLIInterface:cliInterface.t32373072cae3": .init("卸载命令链接，仅移除属于 Ruri 的链接。", []),
             "CLIInterface:cliInterface.t7736b5280e58": .init("命令安装目录，默认为 /usr/local/bin。", []),
             "CLIInterface:cliInterface.t3b0368de0fdf": .init("确认删除或覆盖操作。", []),
-            "CLIInterface:cliInterface.teaca59ff6999": .init("app language commands", []),
-            "CLIInterface:cliInterface.t64c4a55a8346": .init("app commands", []),
-            "CLIInterface:cliInterface.td9fc3f8ff28d": .init("cli commands", []),
+            "CLIInterface:cliInterface.teaca59ff6999": .init("应用界面语言", []),
+            "CLIInterface:cliInterface.t64c4a55a8346": .init("应用信息与语言设置", []),
+            "CLIInterface:cliInterface.td9fc3f8ff28d": .init("命令行工具的安装与卸载", []),
             "CLIInterface:cliInterface.ta03f160849e6": .init("Ruri 启动器命令行接口。", []),
             "CLIInterface:cliInterface.t53102783ab6d": .init("找不到应用内的命令行工具。", []),
             "CLIInterface:cliInterface.tcef88e8371f1": .init("命令行工具不存在。", []),
@@ -2354,349 +2354,349 @@ extension Messages {
             "CLIInterface:cliInterface.te99b33ffd7c8": .init("卸载期间命令行工具链接发生了变化。", []),
             "CLIInterface:cliInterface.teff59600ae41": .init("无法打开操作锁。", []),
             "CLIInterface:cliInterface.tce7693c68759": .init("另一个进程正在使用此资源。", []),
-            "CLIInterface:cliInterface.t9b80abd0b1ac": .init("Read explicit and effective configuration with inheritance sources.", []),
-            "CLIInterface:cliInterface.t9f1f1df0e83d": .init("app, defaults, or instance:<uuid>.", []),
-            "CLIInterface:cliInterface.t9180c54b32fc": .init("Include environment variable values.", []),
-            "CLIInterface:cliInterface.t51d568cf62ef": .init("Set one field using a JSON value.", []),
-            "CLIInterface:cliInterface.tc865886779a0": .init("Require the state revision read earlier.", []),
-            "CLIInterface:cliInterface.t3a7dba9c3050": .init("key value", []),
-            "CLIInterface:cliInterface.t22ad2905d16d": .init("Apply an atomic JSON configuration patch.", []),
-            "CLIInterface:cliInterface.t149625e63af0": .init("JSON patch file, or - for stdin.", []),
-            "CLIInterface:cliInterface.t620fab80a2bb": .init("Reset a field or group to built-in defaults.", []),
-            "CLIInterface:cliInterface.te7f60fe2aebd": .init("Restore an instance setting group's inheritance.", []),
-            "CLIInterface:cliInterface.t1fcd3e7a6ffc": .init("config commands", []),
-            "CLIInterface:cliInterface.tdf61274dcc9c": .init("Unknown configuration field.", []),
-            "CLIInterface:cliInterface.te3e619f346d3": .init("The value must be JSON; quote string values.", []),
-            "CLIInterface:cliInterface.t64229bd16ecc": .init("Invalid configuration patch JSON.", []),
-            "CLIInterface:cliInterface.t332cdb6a53b4": .init("Expected a UUID.", []),
-            "CLIInterface:cliInterface.tf7eb23752b1e": .init("Input exceeds the allowed size.", []),
-            "CLIInterface:cliInterface.te8a7227e2180": .init("The state changed since it was read.", []),
-            "CLIInterface:cliInterface.t8568ceb9ae27": .init("Unknown patch member; use set, reset or inherit.", []),
-            "CLIInterface:cliInterface.tba308ed7fb67": .init("field-to-value object", []),
-            "CLIInterface:cliInterface.tba6d0ed49ef6": .init("field or group names", []),
-            "CLIInterface:cliInterface.t54e4e046502f": .init("instance-only group names", []),
-            "CLIInterface:cliInterface.te2e236614526": .init("Use app, defaults or instance:<uuid> as the scope.", []),
-            "CLIInterface:cliInterface.t491b2168687b": .init("Instance not found.", []),
-            "CLIInterface:cliInterface.t41f1a159c375": .init("Unknown or empty configuration group: %1$@.", [.text]),
-            "CLIInterface:cliInterface.t0e5f6b9ca429": .init("Unknown or duplicated configuration field: %1$@.", [.text]),
-            "CLIInterface:cliInterface.t0199982aa94e": .init("inherit requires complete instance setting groups.", []),
-            "CLIInterface:cliInterface.tca2c20d623be": .init("Unknown configuration field: %1$@.", [.text]),
-            "CLIInterface:cliInterface.ta78e60d41732": .init("Conflicting patch operations for %1$@.", [.text]),
-            "CLIInterface:cliInterface.t62fca6b0b13b": .init("Invalid value for %1$@.", [.text]),
-            "CLIInterface:cliInterface.t1f94c2f53310": .init("Microsoft Client ID must be a UUID or an empty string.", []),
-            "CLIInterface:cliInterface.t9b199fcf9a1f": .init("java.major is required in major mode.", []),
-            "CLIInterface:cliInterface.t15b3dd14487d": .init("java.path is required in path mode.", []),
-            "CLIInterface:cliInterface.t163f689a3d2f": .init("List managed and registered instances.", []),
-            "CLIInterface:cliInterface.t61c2b6ad309c": .init("Filter by exact name.", []),
-            "CLIInterface:cliInterface.t3a0b2a4eac30": .init("Filter by directory UUID or default.", []),
-            "CLIInterface:cliInterface.te46ca00ec899": .init("Maximum results (1...1000; default 50).", []),
-            "CLIInterface:cliInterface.t184bd8d0fe9d": .init("Result offset (default 0).", []),
-            "CLIInterface:cliInterface.ta412189d9e76": .init("Return all results.", []),
-            "CLIInterface:cliInterface.t1a9316dc0247": .init("Read the currently selected instance.", []),
-            "CLIInterface:cliInterface.td25fbbc9aa83": .init("Inspect an instance and its locations.", []),
-            "CLIInterface:cliInterface.t554bb290d490": .init("Resolve an exact name instead of a UUID.", []),
-            "CLIInterface:cliInterface.t309b2060e6e7": .init("List available Minecraft versions.", []),
-            "CLIInterface:cliInterface.t0f6dcda14ae4": .init("Include snapshot versions.", []),
-            "CLIInterface:cliInterface.tea647925f201": .init("Create and install a named instance.", []),
-            "CLIInterface:cliInterface.tf78b43b0ee95": .init("Instance name.", []),
-            "CLIInterface:cliInterface.tc32a76745397": .init("Minecraft version.", []),
-            "CLIInterface:cliInterface.tcba396edfba1": .init("Explicit destination directory UUID, or default.", []),
-            "CLIInterface:cliInterface.tc54f734a37a6": .init("Loader selection as kind=version; repeat for combinations.", []),
-            "CLIInterface:cliInterface.td183fd7d75d0": .init("Create the record without downloading files.", []),
-            "CLIInterface:cliInterface.tc5757d580bc3": .init("Install an existing uninstalled instance.", []),
-            "CLIInterface:cliInterface.te334b8a18014": .init("Repair an instance's installation files.", []),
-            "CLIInterface:cliInterface.ta4178213b601": .init("Select an instance.", []),
-            "CLIInterface:cliInterface.t5ba0c4853561": .init("Rename an instance.", []),
-            "CLIInterface:cliInterface.tb19f8bbe0060": .init("id name", []),
-            "CLIInterface:cliInterface.t850a4e6bffbd": .init("Set an instance's favorite state.", []),
-            "CLIInterface:cliInterface.t07e88e1b19e9": .init("id enabled", []),
-            "CLIInterface:cliInterface.t1e047c3f4441": .init("Move instance-owned files to the Trash and remove its record.", []),
-            "CLIInterface:cliInterface.t2774fd42ed73": .init("Set or reset the instance icon.", []),
-            "CLIInterface:cliInterface.tc9dade836bbe": .init("PNG icon file.", []),
-            "CLIInterface:cliInterface.t4888fb1eb4ed": .init("Built-in icon glyph.", []),
-            "CLIInterface:cliInterface.t44893043de60": .init("Built-in icon tint.", []),
-            "CLIInterface:cliInterface.t22cb6cbb2d9e": .init("Restore the default icon.", []),
-            "CLIInterface:cliInterface.ta496dc81dcac": .init("Copy an instance to a named destination.", []),
-            "CLIInterface:cliInterface.td52e9c9dbb40": .init("New instance name.", []),
-            "CLIInterface:cliInterface.t874415ccd0ab": .init("Exclude worlds.", []),
-            "CLIInterface:cliInterface.t4829b4f8f896": .init("Include world backups.", []),
-            "CLIInterface:cliInterface.t2aee4e3b9cb2": .init("Move an instance between directories.", []),
-            "CLIInterface:cliInterface.t8f4cf0564496": .init("Export an instance archive.", []),
-            "CLIInterface:cliInterface.t148d4a105bd2": .init("ruri, complete, multimc, mcbbs, or mrpack.", []),
-            "CLIInterface:cliInterface.tc48ebcacc9f3": .init("id file", []),
-            "CLIInterface:cliInterface.t94761d5853b8": .init("Inspect installed loaders and the component backup.", []),
-            "CLIInterface:cliInterface.t66e7670cbafe": .init("List loader versions compatible with the game.", []),
-            "CLIInterface:cliInterface.t8ca25fc9cedc": .init("id loader", []),
-            "CLIInterface:cliInterface.td7622dae9d70": .init("Replace the installed loader combination.", []),
-            "CLIInterface:cliInterface.t4465e709e830": .init("Loader kind=version; omit for vanilla.", []),
-            "CLIInterface:cliInterface.t3d825619ad66": .init("Restore the previous loader configuration.", []),
-            "CLIInterface:cliInterface.t336d8b6931f5": .init("instance component commands", []),
-            "CLIInterface:cliInterface.tea19eba1f497": .init("instance commands", []),
-            "CLIInterface:cliInterface.t79f4a3aa9493": .init("Specify either an instance UUID or --name.", []),
-            "CLIInterface:cliInterface.t188ae1e6f458": .init("Use true or false.", []),
-            "CLIInterface:cliInterface.tf996e1aeec0d": .init("Specify --file, --glyph or --reset.", []),
-            "CLIInterface:cliInterface.te8f93a97f4a5": .init("Unknown icon glyph or tint.", []),
-            "CLIInterface:cliInterface.tecaf531d009c": .init("Unknown loader.", []),
-            "CLIInterface:cliInterface.td578c368dab6": .init("Unknown instance action.", []),
-            "CLIInterface:cliInterface.tc7720bf2a0d4": .init("Components use loader=version syntax; omit components for vanilla.", []),
-            "CLIInterface:cliInterface.t46989dde4470": .init("Duplicate loader selection.", []),
-            "CLIInterface:cliInterface.t733e25583e8d": .init("Invalid RURI_DOWNLOAD_SOURCE.", []),
-            "CLIInterface:cliInterface.t121c67f22040": .init("The output file already exists.", []),
-            "CLIInterface:cliInterface.tfe6f797e1938": .init("More than one instance has that name.", []),
-            "CLIInterface:cliInterface.t79de4634dcb4": .init("Invalid game version.", []),
-            "CLIInterface:cliInterface.t70a45a4240d8": .init("Directory not found.", []),
-            "CLIInterface:cliInterface.t17574d1bad8e": .init("The target directory was removed.", []),
-            "CLIInterface:cliInterface.tb199229434bb": .init("The instance was removed during installation.", []),
-            "CLIInterface:cliInterface.t7d732629b332": .init("The instance location changed.", []),
-            "CLIInterface:cliInterface.t97013cab62b8": .init("Invalid instance name.", []),
-            "CLIInterface:cliInterface.tf64fee5acdf0": .init("List registered and detached game directories.", []),
-            "CLIInterface:cliInterface.t13c336f9a11b": .init("Read the selected game directory.", []),
-            "CLIInterface:cliInterface.t0a77c8493c2e": .init("Inspect an existing Minecraft folder without registering it.", []),
-            "CLIInterface:cliInterface.t135973383faa": .init("Register an existing directory.", []),
-            "CLIInterface:cliInterface.t63c8c08621c5": .init("Directory display name.", []),
-            "CLIInterface:cliInterface.t0175170e7603": .init("Directory layout.", []),
-            "CLIInterface:cliInterface.te995381e7764": .init("Select a registered directory.", []),
-            "CLIInterface:cliInterface.tac593c150e36": .init("Refresh versions in a Minecraft directory.", []),
-            "CLIInterface:cliInterface.t8592d66b70ee": .init("Unregister a directory while retaining its files.", []),
-            "CLIInterface:cliInterface.tbbd25ee7fe86": .init("Rename a registered directory.", []),
-            "CLIInterface:cliInterface.t741d898dfaff": .init("Reconnect a registered directory that was moved.", []),
-            "CLIInterface:cliInterface.te5b3e2aa3520": .init("id path", []),
-            "CLIInterface:cliInterface.teeb75a68ecdc": .init("Restore a detached Minecraft directory.", []),
-            "CLIInterface:cliInterface.t72af20234e14": .init("Inspect an instance's game directory.", []),
-            "CLIInterface:cliInterface.t1db840ce735d": .init("Change an instance's run directory.", []),
-            "CLIInterface:cliInterface.t4d6e9b1a4264": .init("Existing custom game directory.", []),
-            "CLIInterface:cliInterface.ta39f0e134724": .init("Copy game files into the empty destination.", []),
-            "CLIInterface:cliInterface.tdb3bd307aea7": .init("instance mode", []),
-            "CLIInterface:cliInterface.tfe9e723a6df9": .init("Reconnect a moved custom game directory.", []),
-            "CLIInterface:cliInterface.td41369a235db": .init("instance path", []),
-            "CLIInterface:cliInterface.t738bb690d8c2": .init("List local Java runtimes and their origins.", []),
-            "CLIInterface:cliInterface.t1cd05347cc64": .init("List installable Java runtimes.", []),
-            "CLIInterface:cliInterface.teba714b1f2cc": .init("Filter by Java major version.", []),
-            "CLIInterface:cliInterface.taa6237af9422": .init("Filter by architecture.", []),
-            "CLIInterface:cliInterface.tf3cf2acb7b9a": .init("Register an installed Java runtime.", []),
-            "CLIInterface:cliInterface.t0ecfbec54289": .init("Remove Java from the manual list, retaining files and references.", []),
-            "CLIInterface:cliInterface.tea0c61c73f43": .init("Set the default Java selection.", []),
-            "CLIInterface:cliInterface.td99052ac398d": .init("List settings that reference a managed Java runtime.", []),
-            "CLIInterface:cliInterface.tb07678654f81": .init("Inspect an incomplete installation.", []),
-            "CLIInterface:cliInterface.t2b2ab103144b": .init("Install a Java runtime by catalog ID.", []),
-            "CLIInterface:cliInterface.tef883d8efb5c": .init("Repair a managed Java runtime.", []),
-            "CLIInterface:cliInterface.t355d66c16583": .init("Move a managed Java installation to the Trash.", []),
-            "CLIInterface:cliInterface.t5897a3d49bb5": .init("Reset referencing settings to automatic Java.", []),
-            "CLIInterface:cliInterface.t2a5f80694223": .init("Remove an incomplete installation.", []),
-            "CLIInterface:cliInterface.tc67f25bb4cc3": .init("directory run commands", []),
-            "CLIInterface:cliInterface.ta42145487540": .init("directory commands", []),
-            "CLIInterface:cliInterface.tcb439480ed22": .init("java commands", []),
-            "CLIInterface:cliInterface.t5efd67648f0d": .init("Directory name cannot be empty.", []),
-            "CLIInterface:cliInterface.t8ba03aeb3548": .init("A new managed directory must be empty.", []),
-            "CLIInterface:cliInterface.tdc5f6e9debdb": .init("Use isolated, shared or custom; --path is only valid for custom.", []),
-            "CLIInterface:cliInterface.t9a582e74d089": .init("Unknown directory action.", []),
-            "CLIInterface:cliInterface.t33604425d94f": .init("Java catalog entry not found.", []),
-            "CLIInterface:cliInterface.tab6287c24a41": .init("Unknown Java action.", []),
-            "CLIInterface:cliInterface.tc6b87186027e": .init("Microsoft login uses browser authorization, not a password.", []),
-            "CLIInterface:cliInterface.tb34236db1721": .init("External login requires --password-stdin.", []),
-            "CLIInterface:cliInterface.t05b618061083": .init("Provide --stdin to read the API key.", []),
-            "CLIInterface:cliInterface.tfffe65605bf6": .init("Unknown account action.", []),
-            "CLIInterface:cliInterface.t347c8e743183": .init("List accounts without exposing credentials.", []),
-            "CLIInterface:cliInterface.t60065624116e": .init("Read the active account ID.", []),
-            "CLIInterface:cliInterface.t29349e23e1f2": .init("Inspect an account.", []),
-            "CLIInterface:cliInterface.t5e3954fd00e4": .init("Add or reuse an offline player account.", []),
-            "CLIInterface:cliInterface.t4fbd66e4df1d": .init("Keep the current active account.", []),
-            "CLIInterface:cliInterface.ta88c8f0fa07b": .init("Select the active account.", []),
-            "CLIInterface:cliInterface.te68622e3a4c1": .init("Refresh a saved account's credentials.", []),
-            "CLIInterface:cliInterface.t222e7542a935": .init("Remove an account and its local credentials.", []),
-            "CLIInterface:cliInterface.t9de45ca5dfe9": .init("Invalidate external credentials and remove the account.", []),
-            "CLIInterface:cliInterface.t5e3d504d2f33": .init("Start a two-step Microsoft or external login.", []),
-            "CLIInterface:cliInterface.t35f41c8dfeb7": .init("Authentication provider.", []),
-            "CLIInterface:cliInterface.t06b9c339e88c": .init("Existing account to reauthenticate.", []),
-            "CLIInterface:cliInterface.tda3d5eaa9c6b": .init("External authentication server.", []),
-            "CLIInterface:cliInterface.t598bd6abd203": .init("External login identity.", []),
-            "CLIInterface:cliInterface.tae550ce2501b": .init("Read the password from stdin.", []),
-            "CLIInterface:cliInterface.td905be5334b1": .init("Wait for authorization and save the selected identity.", []),
-            "CLIInterface:cliInterface.taa3d1bfbf09d": .init("External profile ID returned by login start.", []),
-            "CLIInterface:cliInterface.t7bac79515ad0": .init("Remove a pending login flow.", []),
-            "CLIInterface:cliInterface.t075c8839f62a": .init("Check CurseForge API key availability.", []),
-            "CLIInterface:cliInterface.tb513f67f0661": .init("Set the CurseForge API key from stdin.", []),
-            "CLIInterface:cliInterface.tbee9e14cb9c8": .init("Read the key from stdin.", []),
-            "CLIInterface:cliInterface.tb412547b5de8": .init("Remove the custom CurseForge API key.", []),
-            "CLIInterface:cliInterface.td9b80535359b": .init("account service-key commands", []),
-            "CLIInterface:cliInterface.t463334485f56": .init("account login commands", []),
-            "CLIInterface:cliInterface.t52f4179738c0": .init("account commands", []),
-            "CLIInterface:cliInterface.t646f7af4624c": .init("Account provider does not match.", []),
-            "CLIInterface:cliInterface.t3a1a6178fec9": .init("The authentication server or login identity changed.", []),
-            "CLIInterface:cliInterface.t000e28c5735c": .init("Complete the login in the same data directory.", []),
-            "CLIInterface:cliInterface.tf873deb7e49d": .init("The login flow expired; start again.", []),
-            "CLIInterface:cliInterface.ta4020b2f41c3": .init("Choose a profile returned by login start.", []),
-            "CLIInterface:cliInterface.t0ce4aa2e33ec": .init("The login already selected a different profile.", []),
-            "CLIInterface:cliInterface.t6176d717fcb9": .init("Invalid login flow; start again.", []),
-            "CLIInterface:cliInterface.te9b1e0403a1e": .init("Account not found.", []),
-            "CLIInterface:cliInterface.tb0b930baf0cc": .init("The account was removed or replaced.", []),
-            "CLIInterface:cliInterface.t9b5e04245098": .init("The account identity changed.", []),
-            "CLIInterface:cliInterface.td9ca8e4b44c6": .init("The account was removed.", []),
-            "CLIInterface:cliInterface.tf4c5f25a3baf": .init("The account was removed; credential or appearance cleanup failed.", []),
-            "CLIInterface:cliInterface.t1914c0297b34": .init("Install this instance before launching.", []),
-            "CLIInterface:cliInterface.t46ce3acb0041": .init("Select an account or pass --account.", []),
-            "CLIInterface:cliInterface.tbd6842eb578e": .init("Validate an instance's launch settings without starting the game.", []),
-            "CLIInterface:cliInterface.tc7d16a18216b": .init("Account UUID; defaults to the active account.", []),
-            "CLIInterface:cliInterface.t7650c678063f": .init("World folder for Quick Play.", []),
-            "CLIInterface:cliInterface.tb27f0522d834": .init("Start the game and return after monitor handoff.", []),
-            "CLIInterface:cliInterface.t75aa2ae95dbf": .init("List game sessions.", []),
-            "CLIInterface:cliInterface.t397da266f14b": .init("Filter by instance UUID.", []),
-            "CLIInterface:cliInterface.t1dc55f419cc4": .init("Filter by instance name.", []),
-            "CLIInterface:cliInterface.tb23f885979d4": .init("Only show sessions with problems.", []),
-            "CLIInterface:cliInterface.t1c27c266a051": .init("Read a game session.", []),
-            "CLIInterface:cliInterface.t7de41631eebc": .init("instance session", []),
-            "CLIInterface:cliInterface.ta977bdb2d5a4": .init("Wait for the monitor to record the game's exit.", []),
-            "CLIInterface:cliInterface.t6bbce4221048": .init("Request normal game exit.", []),
-            "CLIInterface:cliInterface.t886efc49f631": .init("Force the game process to stop.", []),
-            "CLIInterface:cliInterface.t03a5e858530a": .init("Read or follow a session log.", []),
-            "CLIInterface:cliInterface.t61dffc7832ee": .init("Follow until the session ends; use text or ndjson.", []),
-            "CLIInterface:cliInterface.tdae2c9ca76ca": .init("Log source.", []),
-            "CLIInterface:cliInterface.t602d83ce6e9a": .init("Maximum tail lines (default 200).", []),
-            "CLIInterface:cliInterface.t5cf1cb615468": .init("Analyze recorded launch and game evidence.", []),
-            "CLIInterface:cliInterface.t33ed51c9688b": .init("Export a redacted diagnostic bundle.", []),
-            "CLIInterface:cliInterface.t4e51dca76f06": .init("instance session file", []),
-            "CLIInterface:cliInterface.t03b417601a2c": .init("session commands", []),
-            "CLIInterface:cliInterface.t91806a3a3cd3": .init("launch commands", []),
-            "CLIInterface:cliInterface.tadc93d3bb50c": .init("The game did not exit successfully.", []),
-            "CLIInterface:cliInterface.t28723ddb22d1": .init("Use --output ndjson or text with --follow.", []),
-            "CLIInterface:cliInterface.tafd6142d30ec": .init("--lines must be between 1 and 10000.", []),
-            "CLIInterface:cliInterface.t043b9f54ca4c": .init("The monitor is no longer available.", []),
-            "CLIInterface:cliInterface.te5e3bed93ff1": .init("Unknown session action.", []),
-            "CLIInterface:cliInterface.t9585ae182d36": .init("Search Modrinth or CurseForge.", []),
-            "CLIInterface:cliInterface.t54d62b370b12": .init("Content provider.", []),
-            "CLIInterface:cliInterface.t9c7c66e1cb97": .init("Project type.", []),
-            "CLIInterface:cliInterface.t97bb290079c0": .init("Minecraft version filter.", []),
-            "CLIInterface:cliInterface.t6cd3985335f5": .init("Loader filter.", []),
-            "CLIInterface:cliInterface.tba245c5c5887": .init("Provider category.", []),
-            "CLIInterface:cliInterface.tffbd359b4372": .init("Sort order.", []),
-            "CLIInterface:cliInterface.tef252f7e18ac": .init("Read a project description and metadata.", []),
-            "CLIInterface:cliInterface.t2015ae2ed51d": .init("List a project's published versions.", []),
-            "CLIInterface:cliInterface.t96729fb469a0": .init("List the provider's categories.", []),
-            "CLIInterface:cliInterface.t31b908b482c0": .init("List installed mods, resource packs, or shaders.", []),
-            "CLIInterface:cliInterface.t1615f94ae45c": .init("Content kind.", []),
-            "CLIInterface:cliInterface.t0adabdb41fc9": .init("Import a local content file.", []),
-            "CLIInterface:cliInterface.t1221c915a9ab": .init("instance file", []),
-            "CLIInterface:cliInterface.t6f5c9d328e9f": .init("Install a compatible project and its required dependencies.", []),
-            "CLIInterface:cliInterface.t3adc46ef11f2": .init("Exact provider version ID; otherwise latest stable.", []),
-            "CLIInterface:cliInterface.t6937c4e2d52d": .init("Manually downloaded CurseForge file as fileID=path.", []),
-            "CLIInterface:cliInterface.tc9423b403749": .init("instance project", []),
-            "CLIInterface:cliInterface.tcb22bf7cdc22": .init("Enable selected content.", []),
-            "CLIInterface:cliInterface.t0571cf34f7e5": .init("Exact installed filename; repeat to select several.", []),
-            "CLIInterface:cliInterface.t7a83bde60a43": .init("Select every file of the chosen kind.", []),
-            "CLIInterface:cliInterface.t835a12065b6b": .init("Disable selected content.", []),
-            "CLIInterface:cliInterface.tbddc7b97257e": .init("Move selected content to the Trash.", []),
-            "CLIInterface:cliInterface.t2648b2127df6": .init("Check compatible updates for installed content.", []),
-            "CLIInterface:cliInterface.t41cfb5271f5e": .init("Update selected content and dependencies.", []),
-            "CLIInterface:cliInterface.tf53d1d120842": .init("Update every file of the chosen kind.", []),
-            "CLIInterface:cliInterface.t0182348543ec": .init("List worlds in an instance.", []),
-            "CLIInterface:cliInterface.tc62375cad94f": .init("Inspect a world.", []),
-            "CLIInterface:cliInterface.t3cc465fee86f": .init("instance folder", []),
-            "CLIInterface:cliInterface.td02c3799e5f3": .init("Import a world archive or directory.", []),
-            "CLIInterface:cliInterface.t79b53bfe32d0": .init("Export a world archive.", []),
-            "CLIInterface:cliInterface.tbb4df9d7ac3a": .init("instance folder file", []),
-            "CLIInterface:cliInterface.t1f3b65ed9678": .init("Move a world to the Trash.", []),
-            "CLIInterface:cliInterface.t687aa81ce15b": .init("Back up a world.", []),
-            "CLIInterface:cliInterface.t243960f924a4": .init("Optional backup reason.", []),
-            "CLIInterface:cliInterface.t82358ac73619": .init("List world backups.", []),
-            "CLIInterface:cliInterface.t5b12f1ab5a68": .init("Restore a backup; replacement must be explicit.", []),
-            "CLIInterface:cliInterface.td2c29dd5d868": .init("Replace the existing world.", []),
-            "CLIInterface:cliInterface.teaf6d847cc14": .init("instance backup", []),
-            "CLIInterface:cliInterface.t79d8f9c1b13b": .init("Move a world backup to the Trash.", []),
-            "CLIInterface:cliInterface.t5baea7450859": .init("List a world's data packs.", []),
-            "CLIInterface:cliInterface.t3f8f11058c17": .init("instance world", []),
-            "CLIInterface:cliInterface.t8e719af86d09": .init("Read data-pack priority from highest to lowest.", []),
-            "CLIInterface:cliInterface.tc4ef4044f6a8": .init("Replace the complete data-pack priority order.", []),
-            "CLIInterface:cliInterface.tcc64529d6ae6": .init("Complete priority list, highest first.", []),
-            "CLIInterface:cliInterface.td44435e60acc": .init("Import a data pack into a world.", []),
-            "CLIInterface:cliInterface.t027258d65380": .init("instance world file", []),
-            "CLIInterface:cliInterface.t8c443e635faf": .init("Enable a world's data pack.", []),
-            "CLIInterface:cliInterface.t25b74fe94bbb": .init("instance world name", []),
-            "CLIInterface:cliInterface.tc7d244ea5a4c": .init("Disable a world's data pack.", []),
-            "CLIInterface:cliInterface.t08f738b1e5ca": .init("Remove a world's data pack.", []),
-            "CLIInterface:cliInterface.t64d56130fbdf": .init("Search compatible Modrinth data packs.", []),
-            "CLIInterface:cliInterface.t9abc5f05470e": .init("instance query", []),
-            "CLIInterface:cliInterface.tb511553d589f": .init("List compatible data-pack versions.", []),
-            "CLIInterface:cliInterface.t37b2077e3554": .init("Install a data pack and its dependencies.", []),
-            "CLIInterface:cliInterface.t5e7708f69f60": .init("Exact version ID; otherwise latest stable.", []),
-            "CLIInterface:cliInterface.t4d5a09c55c8c": .init("instance world project", []),
-            "CLIInterface:cliInterface.t45ce4d2add4d": .init("List schematic files and folders.", []),
-            "CLIInterface:cliInterface.tc48ff6cbe772": .init("Relative schematic directory.", []),
-            "CLIInterface:cliInterface.t9691b8cb26ac": .init("Inspect a schematic's metadata.", []),
-            "CLIInterface:cliInterface.t006d1cafc637": .init("Import a schematic file.", []),
-            "CLIInterface:cliInterface.tf32e6e0f57a1": .init("Create a schematic folder.", []),
-            "CLIInterface:cliInterface.t4af5860f6aeb": .init("Relative parent directory.", []),
-            "CLIInterface:cliInterface.t0d2ff8c9a278": .init("instance name", []),
-            "CLIInterface:cliInterface.t7e11030c3d95": .init("Export a schematic.", []),
-            "CLIInterface:cliInterface.tf0b7b313a90b": .init("instance path file", []),
-            "CLIInterface:cliInterface.tc7d49c67a14a": .init("Move a schematic file or folder to the Trash.", []),
-            "CLIInterface:cliInterface.tb9f8304a17cd": .init("datapack order commands", []),
-            "CLIInterface:cliInterface.t1870161676bc": .init("world backup commands", []),
-            "CLIInterface:cliInterface.tb977dca13b5f": .init("schematic commands", []),
-            "CLIInterface:cliInterface.t8c1e16e1c7f6": .init("datapack commands", []),
-            "CLIInterface:cliInterface.t28a32d5bd18e": .init("catalog commands", []),
-            "CLIInterface:cliInterface.t7f93a6deea4d": .init("content commands", []),
-            "CLIInterface:cliInterface.tc96234263475": .init("world commands", []),
-            "CLIInterface:cliInterface.t68a342df34e2": .init("Input file not found.", []),
-            "CLIInterface:cliInterface.t1474aa1131be": .init("Select --file entries or explicitly use --all.", []),
-            "CLIInterface:cliInterface.tcf02f30209a6": .init("One or more selected filenames are missing.", []),
-            "CLIInterface:cliInterface.t1fb9146947a6": .init("Unknown content action.", []),
-            "CLIInterface:cliInterface.tcf80472afe71": .init("Manual files use unique fileID=path entries.", []),
-            "CLIInterface:cliInterface.t22d3a8371f53": .init("Download the listed files, then repeat the command with --manual fileID=path.", []),
-            "CLIInterface:cliInterface.t5c54141389e9": .init("The selected version is incompatible with the instance.", []),
-            "CLIInterface:cliInterface.t56f6acfec799": .init("No matching compatible version was found.", []),
-            "CLIInterface:cliInterface.t813a5dd4816c": .init("Backup not found.", []),
-            "CLIInterface:cliInterface.t90c2d3c97aae": .init("World not found.", []),
-            "CLIInterface:cliInterface.ta7cd75ee2906": .init("Unknown world action.", []),
-            "CLIInterface:cliInterface.tcaf18c90c73d": .init("Provide the complete priority list exactly once.", []),
-            "CLIInterface:cliInterface.tdd5661a06a84": .init("No compatible data-pack version found.", []),
-            "CLIInterface:cliInterface.t921d4db04b98": .init("Data pack not found.", []),
-            "CLIInterface:cliInterface.t31dc407e9871": .init("Unknown data-pack action.", []),
-            "CLIInterface:cliInterface.t90e3b5019ad0": .init("Schematic not found.", []),
-            "CLIInterface:cliInterface.tdb74aa2f7d3b": .init("Import an instance archive into an explicit directory.", []),
-            "CLIInterface:cliInterface.tddd82092eded": .init("Destination directory UUID or default.", []),
-            "CLIInterface:cliInterface.tb86fa4ea53ac": .init("Import JVM arguments supplied by the pack.", []),
-            "CLIInterface:cliInterface.tc5c676ace213": .init("Import a local modpack archive.", []),
-            "CLIInterface:cliInterface.td48597adbed9": .init("Download and install a catalog modpack.", []),
-            "CLIInterface:cliInterface.t2280d783f7cb": .init("Manually downloaded pack archive.", []),
-            "CLIInterface:cliInterface.t1d9fc0c70e58": .init("Inspect installed modpack metadata.", []),
-            "CLIInterface:cliInterface.t0e0ee827fcda": .init("List available releases for an installed modpack.", []),
-            "CLIInterface:cliInterface.t7dd4704843e2": .init("Preview or apply a modpack update.", []),
-            "CLIInterface:cliInterface.te3ce5542c760": .init("Local update archive.", []),
-            "CLIInterface:cliInterface.tadff65d82cd8": .init("Exact remote release ID.", []),
-            "CLIInterface:cliInterface.t33673a17c78a": .init("Manually downloaded remote release archive.", []),
-            "CLIInterface:cliInterface.tfa5924a2e888": .init("Replace locally modified files instead of retaining them.", []),
-            "CLIInterface:cliInterface.tf986137b0dee": .init("Confirm replacement of local modifications.", []),
-            "CLIInterface:cliInterface.t8951a110d64d": .init("Roll back the previous pack update while retaining later local edits.", []),
-            "CLIInterface:cliInterface.t869f83eac4a5": .init("Download a file and verify its SHA-1 and size.", []),
-            "CLIInterface:cliInterface.t91bde8e5fa30": .init("Expected SHA-1 digest.", []),
-            "CLIInterface:cliInterface.t8e1d27b3966c": .init("Expected byte count.", []),
-            "CLIInterface:cliInterface.tff2b9d62fa33": .init("url file", []),
-            "CLIInterface:cliInterface.ta16b7c00b2ba": .init("download commands", []),
-            "CLIInterface:cliInterface.t31f0b68ea764": .init("pack commands", []),
-            "CLIInterface:cliInterface.t4c0ebc2810f1": .init("Destination directory not found.", []),
-            "CLIInterface:cliInterface.te28b99d2f4f4": .init("This instance has no installed modpack metadata.", []),
-            "CLIInterface:cliInterface.tf47c36a30379": .init("No pack update backup is available.", []),
-            "CLIInterface:cliInterface.tc94ca55edbe4": .init("Replacing local modifications requires --replace --yes.", []),
-            "CLIInterface:cliInterface.t886cba0bd15a": .init("Choose a local --file or a remote --version.", []),
-            "CLIInterface:cliInterface.t092095eba967": .init("Pack release not found.", []),
-            "CLIInterface:cliInterface.t75d07f6960ff": .init("Download the pack archive and repeat with --archive path.", []),
-            "CLIInterface:cliInterface.tca976a5cf5f9": .init("Provide an HTTP URL, nonnegative --size and a 40-digit --sha1.", []),
-            "CLIInterface:cliInterface.tb634c8d3959d": .init("The destination already contains a different file.", []),
-            "CLIInterface:cliInterface.tbff4f0f5e780": .init("List unfinished data operations and sessions.", []),
-            "CLIInterface:cliInterface.tc16fc65ec610": .init("Restrict inspection to one instance.", []),
-            "CLIInterface:cliInterface.t25597cca30a1": .init("Recover a specific unfinished operation.", []),
-            "CLIInterface:cliInterface.t617ad9bacfae": .init("Transaction UUID, or session UUID.", []),
-            "CLIInterface:cliInterface.ta51e4f921383": .init("Repository import recovery mode.", []),
-            "CLIInterface:cliInterface.t709f4fc13c7d": .init("Keep the original source after a committed move.", []),
-            "CLIInterface:cliInterface.ta42e19194027": .init("Confirm that an unmonitored game has ended.", []),
-            "CLIInterface:cliInterface.t28237d41435e": .init("kind target", []),
-            "CLIInterface:cliInterface.tc168cea3e30b": .init("Check state, paths, Java, account credentials and bundled helpers.", []),
-            "CLIInterface:cliInterface.tcfab76824678": .init("Inspect a particular instance.", []),
-            "CLIInterface:cliInterface.t2b167c0c4363": .init("recovery commands", []),
-            "CLIInterface:cliInterface.t1e2f741698a1": .init("Unknown recovery kind.", []),
-            "CLIInterface:cliInterface.t7f8c861b7d62": .init("This recovery requires --transaction from recovery list.", []),
-            "CLIInterface:cliInterface.tf19d497be38f": .init("One or more checks failed.", []),
-            "CLIInterface:cliInterface.tff19ae82a321": .init("An unfinished operation must be recovered before inspecting this data.", []),
+            "CLIInterface:cliInterface.t9b80abd0b1ac": .init("查询显式配置、有效配置及继承来源。", []),
+            "CLIInterface:cliInterface.t9f1f1df0e83d": .init("配置作用域：app、defaults 或 instance:<uuid>。", []),
+            "CLIInterface:cliInterface.t9180c54b32fc": .init("显示环境变量的值。", []),
+            "CLIInterface:cliInterface.t51d568cf62ef": .init("使用 JSON 值设置一个配置字段。", []),
+            "CLIInterface:cliInterface.tc865886779a0": .init("仅当状态版本与此前读取的一致时提交。", []),
+            "CLIInterface:cliInterface.t3a7dba9c3050": .init("配置字段及 JSON 值。", []),
+            "CLIInterface:cliInterface.t22ad2905d16d": .init("原子应用 JSON 配置补丁。", []),
+            "CLIInterface:cliInterface.t149625e63af0": .init("JSON 补丁文件；使用 - 从标准输入读取。", []),
+            "CLIInterface:cliInterface.t620fab80a2bb": .init("将配置字段或组重置为内置默认值。", []),
+            "CLIInterface:cliInterface.te7f60fe2aebd": .init("恢复实例配置组的继承。", []),
+            "CLIInterface:cliInterface.t1fcd3e7a6ffc": .init("全局设置、默认配置与实例覆盖", []),
+            "CLIInterface:cliInterface.tdf61274dcc9c": .init("未知配置字段。", []),
+            "CLIInterface:cliInterface.te3e619f346d3": .init("配置值必须是 JSON；字符串值需要保留双引号。", []),
+            "CLIInterface:cliInterface.t64229bd16ecc": .init("配置补丁不是有效的 JSON。", []),
+            "CLIInterface:cliInterface.t332cdb6a53b4": .init("需要有效的 UUID。", []),
+            "CLIInterface:cliInterface.tf7eb23752b1e": .init("输入超过允许的大小。", []),
+            "CLIInterface:cliInterface.te8a7227e2180": .init("读取后状态已发生变化。", []),
+            "CLIInterface:cliInterface.t8568ceb9ae27": .init("补丁包含未知操作，请使用 set、reset 或 inherit。", []),
+            "CLIInterface:cliInterface.tba308ed7fb67": .init("配置字段到值的映射对象", []),
+            "CLIInterface:cliInterface.tba6d0ed49ef6": .init("配置字段或组的名称", []),
+            "CLIInterface:cliInterface.t54e4e046502f": .init("实例配置组的名称，仅适用于实例", []),
+            "CLIInterface:cliInterface.te2e236614526": .init("配置作用域必须为 app、defaults 或 instance:<uuid>。", []),
+            "CLIInterface:cliInterface.t491b2168687b": .init("找不到实例。", []),
+            "CLIInterface:cliInterface.t41f1a159c375": .init("未知或空的配置组：%1$@。", [.text]),
+            "CLIInterface:cliInterface.t0e5f6b9ca429": .init("未知或重复的配置字段：%1$@。", [.text]),
+            "CLIInterface:cliInterface.t0199982aa94e": .init("inherit 仅适用于完整的实例配置组。", []),
+            "CLIInterface:cliInterface.tca2c20d623be": .init("未知配置字段：%1$@。", [.text]),
+            "CLIInterface:cliInterface.ta78e60d41732": .init("针对 %1$@ 的补丁操作相互冲突。", [.text]),
+            "CLIInterface:cliInterface.t62fca6b0b13b": .init("%1$@ 的值无效。", [.text]),
+            "CLIInterface:cliInterface.t1f94c2f53310": .init("Microsoft Client ID 必须为 UUID 或空字符串。", []),
+            "CLIInterface:cliInterface.t9b199fcf9a1f": .init("major 模式需要设置 java.major。", []),
+            "CLIInterface:cliInterface.t15b3dd14487d": .init("path 模式需要设置 java.path。", []),
+            "CLIInterface:cliInterface.t163f689a3d2f": .init("列出托管及已注册的实例。", []),
+            "CLIInterface:cliInterface.t61c2b6ad309c": .init("按完整名称筛选。", []),
+            "CLIInterface:cliInterface.t3a0b2a4eac30": .init("按目录 UUID 或 default 筛选。", []),
+            "CLIInterface:cliInterface.te46ca00ec899": .init("最多返回的数量，范围为 1 至 1000，默认 50。", []),
+            "CLIInterface:cliInterface.t184bd8d0fe9d": .init("跳过的结果数量，默认 0。", []),
+            "CLIInterface:cliInterface.ta412189d9e76": .init("返回全部结果。", []),
+            "CLIInterface:cliInterface.t1a9316dc0247": .init("查询当前选中的实例。", []),
+            "CLIInterface:cliInterface.td25fbbc9aa83": .init("查询实例详情及文件位置。", []),
+            "CLIInterface:cliInterface.t554bb290d490": .init("通过完整名称查找实例，代替 UUID。", []),
+            "CLIInterface:cliInterface.t309b2060e6e7": .init("列出可用的 Minecraft 版本。", []),
+            "CLIInterface:cliInterface.t0f6dcda14ae4": .init("包含快照版本。", []),
+            "CLIInterface:cliInterface.tea647925f201": .init("创建并安装指定名称的实例。", []),
+            "CLIInterface:cliInterface.tf78b43b0ee95": .init("实例名称。", []),
+            "CLIInterface:cliInterface.tc32a76745397": .init("Minecraft 版本。", []),
+            "CLIInterface:cliInterface.tcba396edfba1": .init("明确指定目标目录 UUID 或 default。", []),
+            "CLIInterface:cliInterface.tc54f734a37a6": .init("加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。", []),
+            "CLIInterface:cliInterface.td183fd7d75d0": .init("仅创建实例记录，不下载文件。", []),
+            "CLIInterface:cliInterface.tc5757d580bc3": .init("安装尚未完成安装的实例。", []),
+            "CLIInterface:cliInterface.te334b8a18014": .init("修复实例的安装文件。", []),
+            "CLIInterface:cliInterface.ta4178213b601": .init("选择实例。", []),
+            "CLIInterface:cliInterface.t5ba0c4853561": .init("重命名实例。", []),
+            "CLIInterface:cliInterface.tb19f8bbe0060": .init("实例 ID 和新名称。", []),
+            "CLIInterface:cliInterface.t850a4e6bffbd": .init("设置实例的收藏状态。", []),
+            "CLIInterface:cliInterface.t07e88e1b19e9": .init("实例 ID 和收藏状态，状态为 true 或 false。", []),
+            "CLIInterface:cliInterface.t1e047c3f4441": .init("将实例自有文件移到废纸篓，并移除实例记录。", []),
+            "CLIInterface:cliInterface.t2774fd42ed73": .init("设置或重置实例图标。", []),
+            "CLIInterface:cliInterface.tc9dade836bbe": .init("PNG 图标文件。", []),
+            "CLIInterface:cliInterface.t4888fb1eb4ed": .init("内置图标形状。", []),
+            "CLIInterface:cliInterface.t44893043de60": .init("内置图标颜色。", []),
+            "CLIInterface:cliInterface.t22cb6cbb2d9e": .init("恢复默认图标。", []),
+            "CLIInterface:cliInterface.ta496dc81dcac": .init("将实例复制到指定目录并命名。", []),
+            "CLIInterface:cliInterface.td52e9c9dbb40": .init("新实例名称。", []),
+            "CLIInterface:cliInterface.t874415ccd0ab": .init("不包含世界存档。", []),
+            "CLIInterface:cliInterface.t4829b4f8f896": .init("包含世界备份。", []),
+            "CLIInterface:cliInterface.t2aee4e3b9cb2": .init("将实例移动到另一目录。", []),
+            "CLIInterface:cliInterface.t8f4cf0564496": .init("导出实例归档。", []),
+            "CLIInterface:cliInterface.t148d4a105bd2": .init("归档格式：ruri、complete、multimc、mcbbs 或 mrpack。", []),
+            "CLIInterface:cliInterface.tc48ebcacc9f3": .init("实例 ID 和文件路径。", []),
+            "CLIInterface:cliInterface.t94761d5853b8": .init("查询已安装的加载器及组件备份。", []),
+            "CLIInterface:cliInterface.t66e7670cbafe": .init("列出与游戏兼容的加载器版本。", []),
+            "CLIInterface:cliInterface.t8ca25fc9cedc": .init("实例 ID 和加载器类型。", []),
+            "CLIInterface:cliInterface.td7622dae9d70": .init("替换已安装的加载器组合。", []),
+            "CLIInterface:cliInterface.t4465e709e830": .init("加载器及版本，格式为 kind=version；省略时使用原版。", []),
+            "CLIInterface:cliInterface.t3d825619ad66": .init("恢复上一次加载器配置。", []),
+            "CLIInterface:cliInterface.t336d8b6931f5": .init("实例加载器与组件", []),
+            "CLIInterface:cliInterface.tea19eba1f497": .init("实例管理与游戏安装", []),
+            "CLIInterface:cliInterface.t79f4a3aa9493": .init("请指定实例 UUID 或 --name，两者只能选一个。", []),
+            "CLIInterface:cliInterface.t188ae1e6f458": .init("请使用 true 或 false。", []),
+            "CLIInterface:cliInterface.tf996e1aeec0d": .init("请指定 --file、--glyph 或 --reset。", []),
+            "CLIInterface:cliInterface.te8f93a97f4a5": .init("未知图标形状或颜色。", []),
+            "CLIInterface:cliInterface.tecaf531d009c": .init("未知加载器。", []),
+            "CLIInterface:cliInterface.td578c368dab6": .init("未知实例操作。", []),
+            "CLIInterface:cliInterface.tc7720bf2a0d4": .init("组件使用 loader=version 格式；原版无需指定组件。", []),
+            "CLIInterface:cliInterface.t46989dde4470": .init("重复指定了加载器。", []),
+            "CLIInterface:cliInterface.t733e25583e8d": .init("RURI_DOWNLOAD_SOURCE 的值无效。", []),
+            "CLIInterface:cliInterface.t121c67f22040": .init("输出文件已存在。", []),
+            "CLIInterface:cliInterface.tfe6f797e1938": .init("有多个实例使用此名称。", []),
+            "CLIInterface:cliInterface.t79de4634dcb4": .init("游戏版本无效。", []),
+            "CLIInterface:cliInterface.t70a45a4240d8": .init("找不到目录。", []),
+            "CLIInterface:cliInterface.t17574d1bad8e": .init("目标目录已被移除。", []),
+            "CLIInterface:cliInterface.tb199229434bb": .init("实例在安装期间被移除。", []),
+            "CLIInterface:cliInterface.t7d732629b332": .init("实例位置已发生变化。", []),
+            "CLIInterface:cliInterface.t97013cab62b8": .init("实例名称无效。", []),
+            "CLIInterface:cliInterface.tf64fee5acdf0": .init("列出已注册和已断开连接的游戏目录。", []),
+            "CLIInterface:cliInterface.t13c336f9a11b": .init("查询当前选中的游戏目录。", []),
+            "CLIInterface:cliInterface.t0a77c8493c2e": .init("检查已有 Minecraft 文件夹，不注册目录。", []),
+            "CLIInterface:cliInterface.t135973383faa": .init("注册已有目录。", []),
+            "CLIInterface:cliInterface.t63c8c08621c5": .init("目录显示名称。", []),
+            "CLIInterface:cliInterface.t0175170e7603": .init("目录布局。", []),
+            "CLIInterface:cliInterface.te995381e7764": .init("选择已注册的目录。", []),
+            "CLIInterface:cliInterface.tac593c150e36": .init("刷新 Minecraft 目录中的版本。", []),
+            "CLIInterface:cliInterface.t8592d66b70ee": .init("移除目录注册，保留文件。", []),
+            "CLIInterface:cliInterface.tbbd25ee7fe86": .init("重命名已注册的目录。", []),
+            "CLIInterface:cliInterface.t741d898dfaff": .init("重新关联已移动的注册目录。", []),
+            "CLIInterface:cliInterface.te5b3e2aa3520": .init("目录 ID 和文件路径。", []),
+            "CLIInterface:cliInterface.teeb75a68ecdc": .init("恢复已断开连接的 Minecraft 目录。", []),
+            "CLIInterface:cliInterface.t72af20234e14": .init("查询实例的游戏目录。", []),
+            "CLIInterface:cliInterface.t1db840ce735d": .init("切换实例的运行目录。", []),
+            "CLIInterface:cliInterface.t4d6e9b1a4264": .init("已有的自定义游戏目录。", []),
+            "CLIInterface:cliInterface.ta39f0e134724": .init("将游戏文件复制到空的目标目录。", []),
+            "CLIInterface:cliInterface.tdb3bd307aea7": .init("实例 ID 和目录模式。", []),
+            "CLIInterface:cliInterface.tfe9e723a6df9": .init("重新关联已移动的自定义游戏目录。", []),
+            "CLIInterface:cliInterface.td41369a235db": .init("实例 ID 和目录路径。", []),
+            "CLIInterface:cliInterface.t738bb690d8c2": .init("列出本地 Java 运行时及其来源。", []),
+            "CLIInterface:cliInterface.t1cd05347cc64": .init("列出可安装的 Java 运行时。", []),
+            "CLIInterface:cliInterface.teba714b1f2cc": .init("按 Java 主版本筛选。", []),
+            "CLIInterface:cliInterface.taa6237af9422": .init("按架构筛选。", []),
+            "CLIInterface:cliInterface.tf3cf2acb7b9a": .init("注册已安装的 Java 运行时。", []),
+            "CLIInterface:cliInterface.t0ecfbec54289": .init("从手动列表中移除 Java，保留文件及配置引用。", []),
+            "CLIInterface:cliInterface.tea0c61c73f43": .init("设置默认 Java 选择。", []),
+            "CLIInterface:cliInterface.td99052ac398d": .init("列出引用指定托管 Java 的配置。", []),
+            "CLIInterface:cliInterface.tb07678654f81": .init("检查未完成的安装。", []),
+            "CLIInterface:cliInterface.t2b2ab103144b": .init("按目录中的 ID 安装 Java 运行时。", []),
+            "CLIInterface:cliInterface.tef883d8efb5c": .init("修复托管的 Java 运行时。", []),
+            "CLIInterface:cliInterface.t355d66c16583": .init("将托管的 Java 移到废纸篓。", []),
+            "CLIInterface:cliInterface.t5897a3d49bb5": .init("将引用此 Java 的配置重置为自动选择。", []),
+            "CLIInterface:cliInterface.t2a5f80694223": .init("移除未完成的安装。", []),
+            "CLIInterface:cliInterface.tc67f25bb4cc3": .init("实例运行目录", []),
+            "CLIInterface:cliInterface.ta42145487540": .init("游戏目录的注册、迁移与恢复", []),
+            "CLIInterface:cliInterface.tcb439480ed22": .init("Java 发现、安装与管理", []),
+            "CLIInterface:cliInterface.t5efd67648f0d": .init("目录名称不能为空。", []),
+            "CLIInterface:cliInterface.t8ba03aeb3548": .init("新建的托管目录必须为空。", []),
+            "CLIInterface:cliInterface.tdc5f6e9debdb": .init("目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。", []),
+            "CLIInterface:cliInterface.t9a582e74d089": .init("未知目录操作。", []),
+            "CLIInterface:cliInterface.t33604425d94f": .init("找不到指定的 Java 版本条目。", []),
+            "CLIInterface:cliInterface.tab6287c24a41": .init("未知 Java 操作。", []),
+            "CLIInterface:cliInterface.tc6b87186027e": .init("Microsoft 登录通过浏览器授权，无需密码。", []),
+            "CLIInterface:cliInterface.tb34236db1721": .init("外置登录需要 --password-stdin。", []),
+            "CLIInterface:cliInterface.t05b618061083": .init("请使用 --stdin 从标准输入读取 API Key。", []),
+            "CLIInterface:cliInterface.tfffe65605bf6": .init("未知账户操作。", []),
+            "CLIInterface:cliInterface.t347c8e743183": .init("列出账户，不显示凭据。", []),
+            "CLIInterface:cliInterface.t60065624116e": .init("查询当前账户 ID。", []),
+            "CLIInterface:cliInterface.t29349e23e1f2": .init("查询账户详情。", []),
+            "CLIInterface:cliInterface.t5e3954fd00e4": .init("添加或复用离线账户。", []),
+            "CLIInterface:cliInterface.t4fbd66e4df1d": .init("保留当前选中的账户。", []),
+            "CLIInterface:cliInterface.ta88c8f0fa07b": .init("选择当前使用的账户。", []),
+            "CLIInterface:cliInterface.te68622e3a4c1": .init("刷新已保存账户的凭据。", []),
+            "CLIInterface:cliInterface.t222e7542a935": .init("移除账户及其本地凭据。", []),
+            "CLIInterface:cliInterface.t9de45ca5dfe9": .init("注销外置登录凭据并移除账户。", []),
+            "CLIInterface:cliInterface.t5e3d504d2f33": .init("开始分步完成的 Microsoft 或外置登录。", []),
+            "CLIInterface:cliInterface.t35f41c8dfeb7": .init("登录服务类型。", []),
+            "CLIInterface:cliInterface.t06b9c339e88c": .init("需要重新登录的已有账户。", []),
+            "CLIInterface:cliInterface.tda3d5eaa9c6b": .init("外置登录服务器。", []),
+            "CLIInterface:cliInterface.t598bd6abd203": .init("外置登录的用户名或邮箱。", []),
+            "CLIInterface:cliInterface.tae550ce2501b": .init("从标准输入读取密码。", []),
+            "CLIInterface:cliInterface.td905be5334b1": .init("等待授权完成并保存所选角色。", []),
+            "CLIInterface:cliInterface.taa3d1bfbf09d": .init("login start 返回的外置登录角色 ID。", []),
+            "CLIInterface:cliInterface.t7bac79515ad0": .init("取消待完成的登录流程。", []),
+            "CLIInterface:cliInterface.t075c8839f62a": .init("检查 CurseForge API Key 是否可用。", []),
+            "CLIInterface:cliInterface.tb513f67f0661": .init("从标准输入设置 CurseForge API Key。", []),
+            "CLIInterface:cliInterface.tbee9e14cb9c8": .init("从标准输入读取 API Key。", []),
+            "CLIInterface:cliInterface.tb412547b5de8": .init("移除自定义 CurseForge API Key。", []),
+            "CLIInterface:cliInterface.td9b80535359b": .init("平台服务凭据", []),
+            "CLIInterface:cliInterface.t463334485f56": .init("Microsoft 与外置登录", []),
+            "CLIInterface:cliInterface.t52f4179738c0": .init("账户管理与登录", []),
+            "CLIInterface:cliInterface.t646f7af4624c": .init("账户的登录服务类型不匹配。", []),
+            "CLIInterface:cliInterface.t3a1a6178fec9": .init("登录服务器或登录身份已发生变化。", []),
+            "CLIInterface:cliInterface.t000e28c5735c": .init("请在同一数据目录中完成登录。", []),
+            "CLIInterface:cliInterface.tf873deb7e49d": .init("登录流程已过期，请重新开始。", []),
+            "CLIInterface:cliInterface.ta4020b2f41c3": .init("请选择 login start 返回的角色。", []),
+            "CLIInterface:cliInterface.t0ce4aa2e33ec": .init("此登录流程已选择另一角色。", []),
+            "CLIInterface:cliInterface.t6176d717fcb9": .init("登录流程无效，请重新开始。", []),
+            "CLIInterface:cliInterface.te9b1e0403a1e": .init("找不到账户。", []),
+            "CLIInterface:cliInterface.tb0b930baf0cc": .init("账户已被移除或替换。", []),
+            "CLIInterface:cliInterface.t9b5e04245098": .init("账户身份已发生变化。", []),
+            "CLIInterface:cliInterface.td9ca8e4b44c6": .init("账户已被移除。", []),
+            "CLIInterface:cliInterface.tf4c5f25a3baf": .init("账户已移除，但凭据或外观数据清理失败。", []),
+            "CLIInterface:cliInterface.t1914c0297b34": .init("请先安装此实例，再启动游戏。", []),
+            "CLIInterface:cliInterface.t46ce3acb0041": .init("请选择账户，或通过 --account 指定账户。", []),
+            "CLIInterface:cliInterface.tbd6842eb578e": .init("检查实例启动配置，不启动游戏。", []),
+            "CLIInterface:cliInterface.tc7d16a18216b": .init("账户 UUID，默认使用当前账户。", []),
+            "CLIInterface:cliInterface.t7650c678063f": .init("用于快速游玩的世界文件夹。", []),
+            "CLIInterface:cliInterface.tb27f0522d834": .init("启动游戏，监控接管后返回。", []),
+            "CLIInterface:cliInterface.t75aa2ae95dbf": .init("列出游戏会话。", []),
+            "CLIInterface:cliInterface.t397da266f14b": .init("按实例 UUID 筛选。", []),
+            "CLIInterface:cliInterface.t1dc55f419cc4": .init("按实例名称筛选。", []),
+            "CLIInterface:cliInterface.tb23f885979d4": .init("仅显示存在问题的会话。", []),
+            "CLIInterface:cliInterface.t1c27c266a051": .init("查询游戏会话详情。", []),
+            "CLIInterface:cliInterface.t7de41631eebc": .init("实例 ID 和会话 ID。", []),
+            "CLIInterface:cliInterface.ta977bdb2d5a4": .init("等待监控记录游戏退出。", []),
+            "CLIInterface:cliInterface.t6bbce4221048": .init("请求游戏正常退出。", []),
+            "CLIInterface:cliInterface.t886efc49f631": .init("强制停止游戏进程。", []),
+            "CLIInterface:cliInterface.t03a5e858530a": .init("读取或持续跟随会话日志。", []),
+            "CLIInterface:cliInterface.t61dffc7832ee": .init("跟随日志直到会话结束，使用 text 或 ndjson 格式。", []),
+            "CLIInterface:cliInterface.tdae2c9ca76ca": .init("日志来源。", []),
+            "CLIInterface:cliInterface.t602d83ce6e9a": .init("最多读取的末尾行数，默认 200。", []),
+            "CLIInterface:cliInterface.t5cf1cb615468": .init("分析已记录的启动与游戏诊断信息。", []),
+            "CLIInterface:cliInterface.t33ed51c9688b": .init("导出脱敏后的诊断包。", []),
+            "CLIInterface:cliInterface.t4e51dca76f06": .init("实例 ID、会话 ID 和文件路径。", []),
+            "CLIInterface:cliInterface.t03b417601a2c": .init("游戏会话、日志与诊断", []),
+            "CLIInterface:cliInterface.t91806a3a3cd3": .init("启动检查与游戏启动", []),
+            "CLIInterface:cliInterface.tadc93d3bb50c": .init("游戏未正常退出。", []),
+            "CLIInterface:cliInterface.t28723ddb22d1": .init("--follow 需要使用 --output ndjson 或 text。", []),
+            "CLIInterface:cliInterface.tafd6142d30ec": .init("--lines 必须介于 1 和 10000 之间。", []),
+            "CLIInterface:cliInterface.t043b9f54ca4c": .init("监控进程已不可用。", []),
+            "CLIInterface:cliInterface.te5e3bed93ff1": .init("未知会话操作。", []),
+            "CLIInterface:cliInterface.t9585ae182d36": .init("搜索 Modrinth 或 CurseForge。", []),
+            "CLIInterface:cliInterface.t54d62b370b12": .init("内容平台。", []),
+            "CLIInterface:cliInterface.t9c7c66e1cb97": .init("项目类型。", []),
+            "CLIInterface:cliInterface.t97bb290079c0": .init("按 Minecraft 版本筛选。", []),
+            "CLIInterface:cliInterface.t6cd3985335f5": .init("按加载器筛选。", []),
+            "CLIInterface:cliInterface.tba245c5c5887": .init("内容平台的分类。", []),
+            "CLIInterface:cliInterface.tffbd359b4372": .init("排序方式。", []),
+            "CLIInterface:cliInterface.tef252f7e18ac": .init("查询项目描述及元数据。", []),
+            "CLIInterface:cliInterface.t2015ae2ed51d": .init("列出项目已发布的版本。", []),
+            "CLIInterface:cliInterface.t96729fb469a0": .init("列出内容平台的分类。", []),
+            "CLIInterface:cliInterface.t31b908b482c0": .init("列出已安装的模组、资源包或光影。", []),
+            "CLIInterface:cliInterface.t1615f94ae45c": .init("内容类型。", []),
+            "CLIInterface:cliInterface.t0adabdb41fc9": .init("导入本地内容文件。", []),
+            "CLIInterface:cliInterface.t1221c915a9ab": .init("实例 ID 和文件路径。", []),
+            "CLIInterface:cliInterface.t6f5c9d328e9f": .init("安装兼容的项目及其必需依赖。", []),
+            "CLIInterface:cliInterface.t3adc46ef11f2": .init("指定平台版本 ID，默认选择最新稳定版。", []),
+            "CLIInterface:cliInterface.t6937c4e2d52d": .init("手动下载的 CurseForge 文件，格式为 fileID=path。", []),
+            "CLIInterface:cliInterface.tc9423b403749": .init("实例 ID 和项目 ID。", []),
+            "CLIInterface:cliInterface.tcb22bf7cdc22": .init("启用所选内容。", []),
+            "CLIInterface:cliInterface.t0571cf34f7e5": .init("已安装文件的完整名称，可重复传入以选择多个文件。", []),
+            "CLIInterface:cliInterface.t7a83bde60a43": .init("选择该类型的全部文件。", []),
+            "CLIInterface:cliInterface.t835a12065b6b": .init("禁用所选内容。", []),
+            "CLIInterface:cliInterface.tbddc7b97257e": .init("将所选内容移到废纸篓。", []),
+            "CLIInterface:cliInterface.t2648b2127df6": .init("检查已安装内容的兼容更新。", []),
+            "CLIInterface:cliInterface.t41cfb5271f5e": .init("更新所选内容及依赖。", []),
+            "CLIInterface:cliInterface.tf53d1d120842": .init("更新该类型的全部文件。", []),
+            "CLIInterface:cliInterface.t0182348543ec": .init("列出实例中的世界。", []),
+            "CLIInterface:cliInterface.tc62375cad94f": .init("查询世界详情。", []),
+            "CLIInterface:cliInterface.t3cc465fee86f": .init("实例 ID 和世界文件夹。", []),
+            "CLIInterface:cliInterface.td02c3799e5f3": .init("导入世界归档或目录。", []),
+            "CLIInterface:cliInterface.t79b53bfe32d0": .init("导出世界归档。", []),
+            "CLIInterface:cliInterface.tbb4df9d7ac3a": .init("实例 ID、世界文件夹和文件路径。", []),
+            "CLIInterface:cliInterface.t1f3b65ed9678": .init("将世界移到废纸篓。", []),
+            "CLIInterface:cliInterface.t687aa81ce15b": .init("备份世界。", []),
+            "CLIInterface:cliInterface.t243960f924a4": .init("可选的备份原因。", []),
+            "CLIInterface:cliInterface.t82358ac73619": .init("列出世界备份。", []),
+            "CLIInterface:cliInterface.t5b12f1ab5a68": .init("恢复备份，覆盖已有世界时需要明确确认。", []),
+            "CLIInterface:cliInterface.td2c29dd5d868": .init("覆盖已有世界。", []),
+            "CLIInterface:cliInterface.teaf6d847cc14": .init("实例 ID 和备份 ID。", []),
+            "CLIInterface:cliInterface.t79d8f9c1b13b": .init("将世界备份移到废纸篓。", []),
+            "CLIInterface:cliInterface.t5baea7450859": .init("列出世界的数据包。", []),
+            "CLIInterface:cliInterface.t3f8f11058c17": .init("实例 ID 和世界名称。", []),
+            "CLIInterface:cliInterface.t8e719af86d09": .init("按优先级从高到低查询数据包顺序。", []),
+            "CLIInterface:cliInterface.tc4ef4044f6a8": .init("替换完整的数据包优先级顺序。", []),
+            "CLIInterface:cliInterface.tcc64529d6ae6": .init("完整优先级列表，优先级最高的在前。", []),
+            "CLIInterface:cliInterface.td44435e60acc": .init("将数据包导入世界。", []),
+            "CLIInterface:cliInterface.t027258d65380": .init("实例 ID、世界名称和文件路径。", []),
+            "CLIInterface:cliInterface.t8c443e635faf": .init("启用世界的数据包。", []),
+            "CLIInterface:cliInterface.t25b74fe94bbb": .init("实例 ID、世界名称和数据包名称。", []),
+            "CLIInterface:cliInterface.tc7d244ea5a4c": .init("禁用世界的数据包。", []),
+            "CLIInterface:cliInterface.t08f738b1e5ca": .init("移除世界的数据包。", []),
+            "CLIInterface:cliInterface.t64d56130fbdf": .init("搜索兼容的 Modrinth 数据包。", []),
+            "CLIInterface:cliInterface.t9abc5f05470e": .init("实例 ID 和搜索关键词。", []),
+            "CLIInterface:cliInterface.tb511553d589f": .init("列出兼容的数据包版本。", []),
+            "CLIInterface:cliInterface.t37b2077e3554": .init("安装数据包及其依赖。", []),
+            "CLIInterface:cliInterface.t5e7708f69f60": .init("指定版本 ID，默认选择最新稳定版。", []),
+            "CLIInterface:cliInterface.t4d5a09c55c8c": .init("实例 ID、世界名称和项目 ID。", []),
+            "CLIInterface:cliInterface.t45ce4d2add4d": .init("列出投影文件及文件夹。", []),
+            "CLIInterface:cliInterface.tc48ff6cbe772": .init("投影目录的相对路径。", []),
+            "CLIInterface:cliInterface.t9691b8cb26ac": .init("查询投影文件的元数据。", []),
+            "CLIInterface:cliInterface.t006d1cafc637": .init("导入投影文件。", []),
+            "CLIInterface:cliInterface.tf32e6e0f57a1": .init("创建投影文件夹。", []),
+            "CLIInterface:cliInterface.t4af5860f6aeb": .init("父目录的相对路径。", []),
+            "CLIInterface:cliInterface.t0d2ff8c9a278": .init("实例 ID 和文件夹名称。", []),
+            "CLIInterface:cliInterface.t7e11030c3d95": .init("导出投影文件。", []),
+            "CLIInterface:cliInterface.tf0b7b313a90b": .init("实例 ID、投影路径和导出文件路径。", []),
+            "CLIInterface:cliInterface.tc7d49c67a14a": .init("将投影文件或文件夹移到废纸篓。", []),
+            "CLIInterface:cliInterface.tb9f8304a17cd": .init("数据包优先级", []),
+            "CLIInterface:cliInterface.t1870161676bc": .init("世界备份与恢复", []),
+            "CLIInterface:cliInterface.tb977dca13b5f": .init("投影文件管理", []),
+            "CLIInterface:cliInterface.t8c1e16e1c7f6": .init("数据包管理与排序", []),
+            "CLIInterface:cliInterface.t28a32d5bd18e": .init("内容搜索与版本查询", []),
+            "CLIInterface:cliInterface.t7f93a6deea4d": .init("模组、资源包与光影管理", []),
+            "CLIInterface:cliInterface.tc96234263475": .init("世界管理、导入导出与备份", []),
+            "CLIInterface:cliInterface.t68a342df34e2": .init("找不到输入文件。", []),
+            "CLIInterface:cliInterface.t1474aa1131be": .init("请使用 --file 选择文件，或明确指定 --all。", []),
+            "CLIInterface:cliInterface.tcf02f30209a6": .init("找不到部分所选文件。", []),
+            "CLIInterface:cliInterface.t1fb9146947a6": .init("未知内容操作。", []),
+            "CLIInterface:cliInterface.tcf80472afe71": .init("手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。", []),
+            "CLIInterface:cliInterface.t22d3a8371f53": .init("请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。", []),
+            "CLIInterface:cliInterface.t5c54141389e9": .init("所选版本与实例不兼容。", []),
+            "CLIInterface:cliInterface.t56f6acfec799": .init("找不到匹配的兼容版本。", []),
+            "CLIInterface:cliInterface.t813a5dd4816c": .init("找不到备份。", []),
+            "CLIInterface:cliInterface.t90c2d3c97aae": .init("找不到世界。", []),
+            "CLIInterface:cliInterface.ta7cd75ee2906": .init("未知世界操作。", []),
+            "CLIInterface:cliInterface.tcaf18c90c73d": .init("请提供完整的优先级列表，每项只能出现一次。", []),
+            "CLIInterface:cliInterface.tdd5661a06a84": .init("找不到兼容的数据包版本。", []),
+            "CLIInterface:cliInterface.t921d4db04b98": .init("找不到数据包。", []),
+            "CLIInterface:cliInterface.t31dc407e9871": .init("未知数据包操作。", []),
+            "CLIInterface:cliInterface.t90e3b5019ad0": .init("找不到投影文件。", []),
+            "CLIInterface:cliInterface.tdb74aa2f7d3b": .init("将实例归档导入指定目录。", []),
+            "CLIInterface:cliInterface.tddd82092eded": .init("目标目录 UUID 或 default。", []),
+            "CLIInterface:cliInterface.tb86fa4ea53ac": .init("导入整合包提供的 JVM 参数。", []),
+            "CLIInterface:cliInterface.tc5c676ace213": .init("导入本地整合包归档。", []),
+            "CLIInterface:cliInterface.td48597adbed9": .init("下载并安装内容平台上的整合包。", []),
+            "CLIInterface:cliInterface.t2280d783f7cb": .init("手动下载的整合包归档。", []),
+            "CLIInterface:cliInterface.t1d9fc0c70e58": .init("查询已安装整合包的元数据。", []),
+            "CLIInterface:cliInterface.t0e0ee827fcda": .init("列出已安装整合包的可用版本。", []),
+            "CLIInterface:cliInterface.t7dd4704843e2": .init("预览或执行整合包更新。", []),
+            "CLIInterface:cliInterface.te3ce5542c760": .init("本地更新归档。", []),
+            "CLIInterface:cliInterface.tadff65d82cd8": .init("指定远程发布版本 ID。", []),
+            "CLIInterface:cliInterface.t33673a17c78a": .init("手动下载的远程版本归档。", []),
+            "CLIInterface:cliInterface.tfa5924a2e888": .init("覆盖本地修改过的文件，不保留本地修改。", []),
+            "CLIInterface:cliInterface.tf986137b0dee": .init("确认覆盖本地修改。", []),
+            "CLIInterface:cliInterface.t8951a110d64d": .init("回退上一次整合包更新，保留更新后的本地修改。", []),
+            "CLIInterface:cliInterface.t869f83eac4a5": .init("下载文件并校验 SHA-1 和大小。", []),
+            "CLIInterface:cliInterface.t91bde8e5fa30": .init("预期的 SHA-1 校验值。", []),
+            "CLIInterface:cliInterface.t8e1d27b3966c": .init("预期的字节数。", []),
+            "CLIInterface:cliInterface.tff2b9d62fa33": .init("下载地址和文件路径。", []),
+            "CLIInterface:cliInterface.ta16b7c00b2ba": .init("文件下载与校验", []),
+            "CLIInterface:cliInterface.t31f0b68ea764": .init("整合包安装、更新与回退", []),
+            "CLIInterface:cliInterface.t4c0ebc2810f1": .init("找不到目标目录。", []),
+            "CLIInterface:cliInterface.te28b99d2f4f4": .init("此实例没有已安装整合包的元数据。", []),
+            "CLIInterface:cliInterface.tf47c36a30379": .init("没有可用于回退的整合包更新备份。", []),
+            "CLIInterface:cliInterface.tc94ca55edbe4": .init("覆盖本地修改需要同时指定 --replace --yes。", []),
+            "CLIInterface:cliInterface.t886cba0bd15a": .init("请选择本地 --file 或远程 --version。", []),
+            "CLIInterface:cliInterface.t092095eba967": .init("找不到整合包发布版本。", []),
+            "CLIInterface:cliInterface.t75d07f6960ff": .init("请下载整合包归档，然后添加 --archive path 再次执行。", []),
+            "CLIInterface:cliInterface.tca976a5cf5f9": .init("请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。", []),
+            "CLIInterface:cliInterface.tb634c8d3959d": .init("目标位置已存在内容不同的文件。", []),
+            "CLIInterface:cliInterface.tbff4f0f5e780": .init("列出未完成的数据操作及会话。", []),
+            "CLIInterface:cliInterface.tc16fc65ec610": .init("仅检查指定实例。", []),
+            "CLIInterface:cliInterface.t25597cca30a1": .init("恢复指定的未完成操作。", []),
+            "CLIInterface:cliInterface.t617ad9bacfae": .init("事务 UUID 或会话 UUID。", []),
+            "CLIInterface:cliInterface.ta51e4f921383": .init("游戏库导入的恢复方式。", []),
+            "CLIInterface:cliInterface.t709f4fc13c7d": .init("移动已提交后保留原始文件。", []),
+            "CLIInterface:cliInterface.ta42e19194027": .init("确认失去监控的游戏已结束。", []),
+            "CLIInterface:cliInterface.t28237d41435e": .init("恢复类型和目标 ID。", []),
+            "CLIInterface:cliInterface.tc168cea3e30b": .init("检查状态、路径、Java、账户凭据及内置辅助程序。", []),
+            "CLIInterface:cliInterface.tcfab76824678": .init("检查指定实例。", []),
+            "CLIInterface:cliInterface.t2b167c0c4363": .init("未完成操作的查询与恢复", []),
+            "CLIInterface:cliInterface.t1e2f741698a1": .init("未知恢复类型。", []),
+            "CLIInterface:cliInterface.t7f8c861b7d62": .init("此恢复操作需要指定 recovery list 返回的 --transaction。", []),
+            "CLIInterface:cliInterface.tf19d497be38f": .init("一项或多项检查未通过。", []),
+            "CLIInterface:cliInterface.tff19ae82a321": .init("检查此数据前，必须先恢复未完成的操作。", []),
             "CLIInterface:cliInterface.t06bc14b60f35": .init("卸载", []),
             "CLIInterface:cliInterface.t56f8e5b9417c": .init("命令行与自动化", []),
         ]

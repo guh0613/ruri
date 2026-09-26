@@ -17,10 +17,10 @@
 "cliInterface.t0232e54a0c07" = "输出格式：text、json 或 ndjson。";
 
 /* @symbol CLIInterface.tfeeb5f4ef393 @args - */
-"cliInterface.tfeeb5f4ef393" = "Launcher data directory (overrides RURI_DATA_DIR).";
+"cliInterface.tfeeb5f4ef393" = "启动器数据目录，优先于 RURI_DATA_DIR。";
 
 /* @symbol CLIInterface.t83e479a9529d @args - */
-"cliInterface.t83e479a9529d" = "Language for human messages.";
+"cliInterface.t83e479a9529d" = "说明和提示使用的语言。";
 
 /* @symbol CLIInterface.t1dfd9c76d588 @args - */
 "cliInterface.t1dfd9c76d588" = "不在标准错误输出显示进度。";
@@ -32,13 +32,13 @@
 "cliInterface.t883e96f211e4" = "缺少参数 %1$@。";
 
 /* @symbol CLIInterface.t8c27fffd692c @args text,text */
-"cliInterface.t8c27fffd692c" = "Expected %1$@; received %2$@ positional arguments.";
+"cliInterface.t8c27fffd692c" = "需要位置参数 %1$@，实际收到 %2$@ 个。";
 
 /* @symbol CLIInterface.te36f73cbdb89 @args - */
-"cliInterface.te36f73cbdb89" = "Use --output text|json|ndjson; --json cannot be combined with ndjson.";
+"cliInterface.te36f73cbdb89" = "请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。";
 
 /* @symbol CLIInterface.te66506826636 @args text,text */
-"cliInterface.te66506826636" = "--%1$@ must be one of: %2$@.";
+"cliInterface.te66506826636" = "--%1$@ 必须为以下值之一：%2$@。";
 
 /* @symbol CLIInterface.t73e3848bbeee @args - */
 "cliInterface.t73e3848bbeee" = "--limit 必须介于 1 和 1000 之间。";
@@ -53,7 +53,7 @@
 "cliInterface.tfd63207de5ca" = "查询命令及其机器接口。";
 
 /* @symbol CLIInterface.t907f38578610 @args - */
-"cliInterface.t907f38578610" = "resource? action? subaction?";
+"cliInterface.t907f38578610" = "可选的资源、动作和子动作。";
 
 /* @symbol CLIInterface.t04f3e8ad5625 @args - */
 "cliInterface.t04f3e8ad5625" = "显示应用及命令行工具的版本和路径。";
@@ -77,7 +77,7 @@
 "cliInterface.t6edc04f9cc0c" = "命令安装目录，默认为 /usr/local/bin。";
 
 /* @symbol CLIInterface.t32373072cae3 @args - */
-"cliInterface.t32373072cae3" = "Remove the ruri link only if it belongs to Ruri.";
+"cliInterface.t32373072cae3" = "卸载命令链接，仅移除属于 Ruri 的链接。";
 
 /* @symbol CLIInterface.t7736b5280e58 @args - */
 "cliInterface.t7736b5280e58" = "命令安装目录，默认为 /usr/local/bin。";
@@ -86,13 +86,13 @@
 "cliInterface.t3b0368de0fdf" = "确认删除或覆盖操作。";
 
 /* @symbol CLIInterface.teaca59ff6999 @args - */
-"cliInterface.teaca59ff6999" = "app language commands";
+"cliInterface.teaca59ff6999" = "应用界面语言";
 
 /* @symbol CLIInterface.t64c4a55a8346 @args - */
-"cliInterface.t64c4a55a8346" = "app commands";
+"cliInterface.t64c4a55a8346" = "应用信息与语言设置";
 
 /* @symbol CLIInterface.td9fc3f8ff28d @args - */
-"cliInterface.td9fc3f8ff28d" = "cli commands";
+"cliInterface.td9fc3f8ff28d" = "命令行工具的安装与卸载";
 
 /* @symbol CLIInterface.ta03f160849e6 @args - */
 "cliInterface.ta03f160849e6" = "Ruri 启动器命令行接口。";
@@ -119,1033 +119,1033 @@
 "cliInterface.tce7693c68759" = "另一个进程正在使用此资源。";
 
 /* @symbol CLIInterface.t9b80abd0b1ac @args - */
-"cliInterface.t9b80abd0b1ac" = "Read explicit and effective configuration with inheritance sources.";
+"cliInterface.t9b80abd0b1ac" = "查询显式配置、有效配置及继承来源。";
 
 /* @symbol CLIInterface.t9f1f1df0e83d @args - */
-"cliInterface.t9f1f1df0e83d" = "app, defaults, or instance:<uuid>.";
+"cliInterface.t9f1f1df0e83d" = "配置作用域：app、defaults 或 instance:<uuid>。";
 
 /* @symbol CLIInterface.t9180c54b32fc @args - */
-"cliInterface.t9180c54b32fc" = "Include environment variable values.";
+"cliInterface.t9180c54b32fc" = "显示环境变量的值。";
 
 /* @symbol CLIInterface.t51d568cf62ef @args - */
-"cliInterface.t51d568cf62ef" = "Set one field using a JSON value.";
+"cliInterface.t51d568cf62ef" = "使用 JSON 值设置一个配置字段。";
 
 /* @symbol CLIInterface.tc865886779a0 @args - */
-"cliInterface.tc865886779a0" = "Require the state revision read earlier.";
+"cliInterface.tc865886779a0" = "仅当状态版本与此前读取的一致时提交。";
 
 /* @symbol CLIInterface.t3a7dba9c3050 @args - */
-"cliInterface.t3a7dba9c3050" = "key value";
+"cliInterface.t3a7dba9c3050" = "配置字段及 JSON 值。";
 
 /* @symbol CLIInterface.t22ad2905d16d @args - */
-"cliInterface.t22ad2905d16d" = "Apply an atomic JSON configuration patch.";
+"cliInterface.t22ad2905d16d" = "原子应用 JSON 配置补丁。";
 
 /* @symbol CLIInterface.t149625e63af0 @args - */
-"cliInterface.t149625e63af0" = "JSON patch file, or - for stdin.";
+"cliInterface.t149625e63af0" = "JSON 补丁文件；使用 - 从标准输入读取。";
 
 /* @symbol CLIInterface.t620fab80a2bb @args - */
-"cliInterface.t620fab80a2bb" = "Reset a field or group to built-in defaults.";
+"cliInterface.t620fab80a2bb" = "将配置字段或组重置为内置默认值。";
 
 /* @symbol CLIInterface.te7f60fe2aebd @args - */
-"cliInterface.te7f60fe2aebd" = "Restore an instance setting group's inheritance.";
+"cliInterface.te7f60fe2aebd" = "恢复实例配置组的继承。";
 
 /* @symbol CLIInterface.t1fcd3e7a6ffc @args - */
-"cliInterface.t1fcd3e7a6ffc" = "config commands";
+"cliInterface.t1fcd3e7a6ffc" = "全局设置、默认配置与实例覆盖";
 
 /* @symbol CLIInterface.tdf61274dcc9c @args - */
-"cliInterface.tdf61274dcc9c" = "Unknown configuration field.";
+"cliInterface.tdf61274dcc9c" = "未知配置字段。";
 
 /* @symbol CLIInterface.te3e619f346d3 @args - */
-"cliInterface.te3e619f346d3" = "The value must be JSON; quote string values.";
+"cliInterface.te3e619f346d3" = "配置值必须是 JSON；字符串值需要保留双引号。";
 
 /* @symbol CLIInterface.t64229bd16ecc @args - */
-"cliInterface.t64229bd16ecc" = "Invalid configuration patch JSON.";
+"cliInterface.t64229bd16ecc" = "配置补丁不是有效的 JSON。";
 
 /* @symbol CLIInterface.t332cdb6a53b4 @args - */
-"cliInterface.t332cdb6a53b4" = "Expected a UUID.";
+"cliInterface.t332cdb6a53b4" = "需要有效的 UUID。";
 
 /* @symbol CLIInterface.tf7eb23752b1e @args - */
-"cliInterface.tf7eb23752b1e" = "Input exceeds the allowed size.";
+"cliInterface.tf7eb23752b1e" = "输入超过允许的大小。";
 
 /* @symbol CLIInterface.te8a7227e2180 @args - */
-"cliInterface.te8a7227e2180" = "The state changed since it was read.";
+"cliInterface.te8a7227e2180" = "读取后状态已发生变化。";
 
 /* @symbol CLIInterface.t8568ceb9ae27 @args - */
-"cliInterface.t8568ceb9ae27" = "Unknown patch member; use set, reset or inherit.";
+"cliInterface.t8568ceb9ae27" = "补丁包含未知操作，请使用 set、reset 或 inherit。";
 
 /* @symbol CLIInterface.tba308ed7fb67 @args - */
-"cliInterface.tba308ed7fb67" = "field-to-value object";
+"cliInterface.tba308ed7fb67" = "配置字段到值的映射对象";
 
 /* @symbol CLIInterface.tba6d0ed49ef6 @args - */
-"cliInterface.tba6d0ed49ef6" = "field or group names";
+"cliInterface.tba6d0ed49ef6" = "配置字段或组的名称";
 
 /* @symbol CLIInterface.t54e4e046502f @args - */
-"cliInterface.t54e4e046502f" = "instance-only group names";
+"cliInterface.t54e4e046502f" = "实例配置组的名称，仅适用于实例";
 
 /* @symbol CLIInterface.te2e236614526 @args - */
-"cliInterface.te2e236614526" = "Use app, defaults or instance:<uuid> as the scope.";
+"cliInterface.te2e236614526" = "配置作用域必须为 app、defaults 或 instance:<uuid>。";
 
 /* @symbol CLIInterface.t491b2168687b @args - */
-"cliInterface.t491b2168687b" = "Instance not found.";
+"cliInterface.t491b2168687b" = "找不到实例。";
 
 /* @symbol CLIInterface.t41f1a159c375 @args text */
-"cliInterface.t41f1a159c375" = "Unknown or empty configuration group: %1$@.";
+"cliInterface.t41f1a159c375" = "未知或空的配置组：%1$@。";
 
 /* @symbol CLIInterface.t0e5f6b9ca429 @args text */
-"cliInterface.t0e5f6b9ca429" = "Unknown or duplicated configuration field: %1$@.";
+"cliInterface.t0e5f6b9ca429" = "未知或重复的配置字段：%1$@。";
 
 /* @symbol CLIInterface.t0199982aa94e @args - */
-"cliInterface.t0199982aa94e" = "inherit requires complete instance setting groups.";
+"cliInterface.t0199982aa94e" = "inherit 仅适用于完整的实例配置组。";
 
 /* @symbol CLIInterface.tca2c20d623be @args text */
-"cliInterface.tca2c20d623be" = "Unknown configuration field: %1$@.";
+"cliInterface.tca2c20d623be" = "未知配置字段：%1$@。";
 
 /* @symbol CLIInterface.ta78e60d41732 @args text */
-"cliInterface.ta78e60d41732" = "Conflicting patch operations for %1$@.";
+"cliInterface.ta78e60d41732" = "针对 %1$@ 的补丁操作相互冲突。";
 
 /* @symbol CLIInterface.t62fca6b0b13b @args text */
-"cliInterface.t62fca6b0b13b" = "Invalid value for %1$@.";
+"cliInterface.t62fca6b0b13b" = "%1$@ 的值无效。";
 
 /* @symbol CLIInterface.t1f94c2f53310 @args - */
-"cliInterface.t1f94c2f53310" = "Microsoft Client ID must be a UUID or an empty string.";
+"cliInterface.t1f94c2f53310" = "Microsoft Client ID 必须为 UUID 或空字符串。";
 
 /* @symbol CLIInterface.t9b199fcf9a1f @args - */
-"cliInterface.t9b199fcf9a1f" = "java.major is required in major mode.";
+"cliInterface.t9b199fcf9a1f" = "major 模式需要设置 java.major。";
 
 /* @symbol CLIInterface.t15b3dd14487d @args - */
-"cliInterface.t15b3dd14487d" = "java.path is required in path mode.";
+"cliInterface.t15b3dd14487d" = "path 模式需要设置 java.path。";
 
 /* @symbol CLIInterface.t163f689a3d2f @args - */
-"cliInterface.t163f689a3d2f" = "List managed and registered instances.";
+"cliInterface.t163f689a3d2f" = "列出托管及已注册的实例。";
 
 /* @symbol CLIInterface.t61c2b6ad309c @args - */
-"cliInterface.t61c2b6ad309c" = "Filter by exact name.";
+"cliInterface.t61c2b6ad309c" = "按完整名称筛选。";
 
 /* @symbol CLIInterface.t3a0b2a4eac30 @args - */
-"cliInterface.t3a0b2a4eac30" = "Filter by directory UUID or default.";
+"cliInterface.t3a0b2a4eac30" = "按目录 UUID 或 default 筛选。";
 
 /* @symbol CLIInterface.te46ca00ec899 @args - */
-"cliInterface.te46ca00ec899" = "Maximum results (1...1000; default 50).";
+"cliInterface.te46ca00ec899" = "最多返回的数量，范围为 1 至 1000，默认 50。";
 
 /* @symbol CLIInterface.t184bd8d0fe9d @args - */
-"cliInterface.t184bd8d0fe9d" = "Result offset (default 0).";
+"cliInterface.t184bd8d0fe9d" = "跳过的结果数量，默认 0。";
 
 /* @symbol CLIInterface.ta412189d9e76 @args - */
-"cliInterface.ta412189d9e76" = "Return all results.";
+"cliInterface.ta412189d9e76" = "返回全部结果。";
 
 /* @symbol CLIInterface.t1a9316dc0247 @args - */
-"cliInterface.t1a9316dc0247" = "Read the currently selected instance.";
+"cliInterface.t1a9316dc0247" = "查询当前选中的实例。";
 
 /* @symbol CLIInterface.td25fbbc9aa83 @args - */
-"cliInterface.td25fbbc9aa83" = "Inspect an instance and its locations.";
+"cliInterface.td25fbbc9aa83" = "查询实例详情及文件位置。";
 
 /* @symbol CLIInterface.t554bb290d490 @args - */
-"cliInterface.t554bb290d490" = "Resolve an exact name instead of a UUID.";
+"cliInterface.t554bb290d490" = "通过完整名称查找实例，代替 UUID。";
 
 /* @symbol CLIInterface.t309b2060e6e7 @args - */
-"cliInterface.t309b2060e6e7" = "List available Minecraft versions.";
+"cliInterface.t309b2060e6e7" = "列出可用的 Minecraft 版本。";
 
 /* @symbol CLIInterface.t0f6dcda14ae4 @args - */
-"cliInterface.t0f6dcda14ae4" = "Include snapshot versions.";
+"cliInterface.t0f6dcda14ae4" = "包含快照版本。";
 
 /* @symbol CLIInterface.tea647925f201 @args - */
-"cliInterface.tea647925f201" = "Create and install a named instance.";
+"cliInterface.tea647925f201" = "创建并安装指定名称的实例。";
 
 /* @symbol CLIInterface.tf78b43b0ee95 @args - */
-"cliInterface.tf78b43b0ee95" = "Instance name.";
+"cliInterface.tf78b43b0ee95" = "实例名称。";
 
 /* @symbol CLIInterface.tc32a76745397 @args - */
-"cliInterface.tc32a76745397" = "Minecraft version.";
+"cliInterface.tc32a76745397" = "Minecraft 版本。";
 
 /* @symbol CLIInterface.tcba396edfba1 @args - */
-"cliInterface.tcba396edfba1" = "Explicit destination directory UUID, or default.";
+"cliInterface.tcba396edfba1" = "明确指定目标目录 UUID 或 default。";
 
 /* @symbol CLIInterface.tc54f734a37a6 @args - */
-"cliInterface.tc54f734a37a6" = "Loader selection as kind=version; repeat for combinations.";
+"cliInterface.tc54f734a37a6" = "加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。";
 
 /* @symbol CLIInterface.td183fd7d75d0 @args - */
-"cliInterface.td183fd7d75d0" = "Create the record without downloading files.";
+"cliInterface.td183fd7d75d0" = "仅创建实例记录，不下载文件。";
 
 /* @symbol CLIInterface.tc5757d580bc3 @args - */
-"cliInterface.tc5757d580bc3" = "Install an existing uninstalled instance.";
+"cliInterface.tc5757d580bc3" = "安装尚未完成安装的实例。";
 
 /* @symbol CLIInterface.te334b8a18014 @args - */
-"cliInterface.te334b8a18014" = "Repair an instance's installation files.";
+"cliInterface.te334b8a18014" = "修复实例的安装文件。";
 
 /* @symbol CLIInterface.ta4178213b601 @args - */
-"cliInterface.ta4178213b601" = "Select an instance.";
+"cliInterface.ta4178213b601" = "选择实例。";
 
 /* @symbol CLIInterface.t5ba0c4853561 @args - */
-"cliInterface.t5ba0c4853561" = "Rename an instance.";
+"cliInterface.t5ba0c4853561" = "重命名实例。";
 
 /* @symbol CLIInterface.tb19f8bbe0060 @args - */
-"cliInterface.tb19f8bbe0060" = "id name";
+"cliInterface.tb19f8bbe0060" = "实例 ID 和新名称。";
 
 /* @symbol CLIInterface.t850a4e6bffbd @args - */
-"cliInterface.t850a4e6bffbd" = "Set an instance's favorite state.";
+"cliInterface.t850a4e6bffbd" = "设置实例的收藏状态。";
 
 /* @symbol CLIInterface.t07e88e1b19e9 @args - */
-"cliInterface.t07e88e1b19e9" = "id enabled";
+"cliInterface.t07e88e1b19e9" = "实例 ID 和收藏状态，状态为 true 或 false。";
 
 /* @symbol CLIInterface.t1e047c3f4441 @args - */
-"cliInterface.t1e047c3f4441" = "Move instance-owned files to the Trash and remove its record.";
+"cliInterface.t1e047c3f4441" = "将实例自有文件移到废纸篓，并移除实例记录。";
 
 /* @symbol CLIInterface.t2774fd42ed73 @args - */
-"cliInterface.t2774fd42ed73" = "Set or reset the instance icon.";
+"cliInterface.t2774fd42ed73" = "设置或重置实例图标。";
 
 /* @symbol CLIInterface.tc9dade836bbe @args - */
-"cliInterface.tc9dade836bbe" = "PNG icon file.";
+"cliInterface.tc9dade836bbe" = "PNG 图标文件。";
 
 /* @symbol CLIInterface.t4888fb1eb4ed @args - */
-"cliInterface.t4888fb1eb4ed" = "Built-in icon glyph.";
+"cliInterface.t4888fb1eb4ed" = "内置图标形状。";
 
 /* @symbol CLIInterface.t44893043de60 @args - */
-"cliInterface.t44893043de60" = "Built-in icon tint.";
+"cliInterface.t44893043de60" = "内置图标颜色。";
 
 /* @symbol CLIInterface.t22cb6cbb2d9e @args - */
-"cliInterface.t22cb6cbb2d9e" = "Restore the default icon.";
+"cliInterface.t22cb6cbb2d9e" = "恢复默认图标。";
 
 /* @symbol CLIInterface.ta496dc81dcac @args - */
-"cliInterface.ta496dc81dcac" = "Copy an instance to a named destination.";
+"cliInterface.ta496dc81dcac" = "将实例复制到指定目录并命名。";
 
 /* @symbol CLIInterface.td52e9c9dbb40 @args - */
-"cliInterface.td52e9c9dbb40" = "New instance name.";
+"cliInterface.td52e9c9dbb40" = "新实例名称。";
 
 /* @symbol CLIInterface.t874415ccd0ab @args - */
-"cliInterface.t874415ccd0ab" = "Exclude worlds.";
+"cliInterface.t874415ccd0ab" = "不包含世界存档。";
 
 /* @symbol CLIInterface.t4829b4f8f896 @args - */
-"cliInterface.t4829b4f8f896" = "Include world backups.";
+"cliInterface.t4829b4f8f896" = "包含世界备份。";
 
 /* @symbol CLIInterface.t2aee4e3b9cb2 @args - */
-"cliInterface.t2aee4e3b9cb2" = "Move an instance between directories.";
+"cliInterface.t2aee4e3b9cb2" = "将实例移动到另一目录。";
 
 /* @symbol CLIInterface.t8f4cf0564496 @args - */
-"cliInterface.t8f4cf0564496" = "Export an instance archive.";
+"cliInterface.t8f4cf0564496" = "导出实例归档。";
 
 /* @symbol CLIInterface.t148d4a105bd2 @args - */
-"cliInterface.t148d4a105bd2" = "ruri, complete, multimc, mcbbs, or mrpack.";
+"cliInterface.t148d4a105bd2" = "归档格式：ruri、complete、multimc、mcbbs 或 mrpack。";
 
 /* @symbol CLIInterface.tc48ebcacc9f3 @args - */
-"cliInterface.tc48ebcacc9f3" = "id file";
+"cliInterface.tc48ebcacc9f3" = "实例 ID 和文件路径。";
 
 /* @symbol CLIInterface.t94761d5853b8 @args - */
-"cliInterface.t94761d5853b8" = "Inspect installed loaders and the component backup.";
+"cliInterface.t94761d5853b8" = "查询已安装的加载器及组件备份。";
 
 /* @symbol CLIInterface.t66e7670cbafe @args - */
-"cliInterface.t66e7670cbafe" = "List loader versions compatible with the game.";
+"cliInterface.t66e7670cbafe" = "列出与游戏兼容的加载器版本。";
 
 /* @symbol CLIInterface.t8ca25fc9cedc @args - */
-"cliInterface.t8ca25fc9cedc" = "id loader";
+"cliInterface.t8ca25fc9cedc" = "实例 ID 和加载器类型。";
 
 /* @symbol CLIInterface.td7622dae9d70 @args - */
-"cliInterface.td7622dae9d70" = "Replace the installed loader combination.";
+"cliInterface.td7622dae9d70" = "替换已安装的加载器组合。";
 
 /* @symbol CLIInterface.t4465e709e830 @args - */
-"cliInterface.t4465e709e830" = "Loader kind=version; omit for vanilla.";
+"cliInterface.t4465e709e830" = "加载器及版本，格式为 kind=version；省略时使用原版。";
 
 /* @symbol CLIInterface.t3d825619ad66 @args - */
-"cliInterface.t3d825619ad66" = "Restore the previous loader configuration.";
+"cliInterface.t3d825619ad66" = "恢复上一次加载器配置。";
 
 /* @symbol CLIInterface.t336d8b6931f5 @args - */
-"cliInterface.t336d8b6931f5" = "instance component commands";
+"cliInterface.t336d8b6931f5" = "实例加载器与组件";
 
 /* @symbol CLIInterface.tea19eba1f497 @args - */
-"cliInterface.tea19eba1f497" = "instance commands";
+"cliInterface.tea19eba1f497" = "实例管理与游戏安装";
 
 /* @symbol CLIInterface.t79f4a3aa9493 @args - */
-"cliInterface.t79f4a3aa9493" = "Specify either an instance UUID or --name.";
+"cliInterface.t79f4a3aa9493" = "请指定实例 UUID 或 --name，两者只能选一个。";
 
 /* @symbol CLIInterface.t188ae1e6f458 @args - */
-"cliInterface.t188ae1e6f458" = "Use true or false.";
+"cliInterface.t188ae1e6f458" = "请使用 true 或 false。";
 
 /* @symbol CLIInterface.tf996e1aeec0d @args - */
-"cliInterface.tf996e1aeec0d" = "Specify --file, --glyph or --reset.";
+"cliInterface.tf996e1aeec0d" = "请指定 --file、--glyph 或 --reset。";
 
 /* @symbol CLIInterface.te8f93a97f4a5 @args - */
-"cliInterface.te8f93a97f4a5" = "Unknown icon glyph or tint.";
+"cliInterface.te8f93a97f4a5" = "未知图标形状或颜色。";
 
 /* @symbol CLIInterface.tecaf531d009c @args - */
-"cliInterface.tecaf531d009c" = "Unknown loader.";
+"cliInterface.tecaf531d009c" = "未知加载器。";
 
 /* @symbol CLIInterface.td578c368dab6 @args - */
-"cliInterface.td578c368dab6" = "Unknown instance action.";
+"cliInterface.td578c368dab6" = "未知实例操作。";
 
 /* @symbol CLIInterface.tc7720bf2a0d4 @args - */
-"cliInterface.tc7720bf2a0d4" = "Components use loader=version syntax; omit components for vanilla.";
+"cliInterface.tc7720bf2a0d4" = "组件使用 loader=version 格式；原版无需指定组件。";
 
 /* @symbol CLIInterface.t46989dde4470 @args - */
-"cliInterface.t46989dde4470" = "Duplicate loader selection.";
+"cliInterface.t46989dde4470" = "重复指定了加载器。";
 
 /* @symbol CLIInterface.t733e25583e8d @args - */
-"cliInterface.t733e25583e8d" = "Invalid RURI_DOWNLOAD_SOURCE.";
+"cliInterface.t733e25583e8d" = "RURI_DOWNLOAD_SOURCE 的值无效。";
 
 /* @symbol CLIInterface.t121c67f22040 @args - */
-"cliInterface.t121c67f22040" = "The output file already exists.";
+"cliInterface.t121c67f22040" = "输出文件已存在。";
 
 /* @symbol CLIInterface.tfe6f797e1938 @args - */
-"cliInterface.tfe6f797e1938" = "More than one instance has that name.";
+"cliInterface.tfe6f797e1938" = "有多个实例使用此名称。";
 
 /* @symbol CLIInterface.t79de4634dcb4 @args - */
-"cliInterface.t79de4634dcb4" = "Invalid game version.";
+"cliInterface.t79de4634dcb4" = "游戏版本无效。";
 
 /* @symbol CLIInterface.t70a45a4240d8 @args - */
-"cliInterface.t70a45a4240d8" = "Directory not found.";
+"cliInterface.t70a45a4240d8" = "找不到目录。";
 
 /* @symbol CLIInterface.t17574d1bad8e @args - */
-"cliInterface.t17574d1bad8e" = "The target directory was removed.";
+"cliInterface.t17574d1bad8e" = "目标目录已被移除。";
 
 /* @symbol CLIInterface.tb199229434bb @args - */
-"cliInterface.tb199229434bb" = "The instance was removed during installation.";
+"cliInterface.tb199229434bb" = "实例在安装期间被移除。";
 
 /* @symbol CLIInterface.t7d732629b332 @args - */
-"cliInterface.t7d732629b332" = "The instance location changed.";
+"cliInterface.t7d732629b332" = "实例位置已发生变化。";
 
 /* @symbol CLIInterface.t97013cab62b8 @args - */
-"cliInterface.t97013cab62b8" = "Invalid instance name.";
+"cliInterface.t97013cab62b8" = "实例名称无效。";
 
 /* @symbol CLIInterface.tf64fee5acdf0 @args - */
-"cliInterface.tf64fee5acdf0" = "List registered and detached game directories.";
+"cliInterface.tf64fee5acdf0" = "列出已注册和已断开连接的游戏目录。";
 
 /* @symbol CLIInterface.t13c336f9a11b @args - */
-"cliInterface.t13c336f9a11b" = "Read the selected game directory.";
+"cliInterface.t13c336f9a11b" = "查询当前选中的游戏目录。";
 
 /* @symbol CLIInterface.t0a77c8493c2e @args - */
-"cliInterface.t0a77c8493c2e" = "Inspect an existing Minecraft folder without registering it.";
+"cliInterface.t0a77c8493c2e" = "检查已有 Minecraft 文件夹，不注册目录。";
 
 /* @symbol CLIInterface.t135973383faa @args - */
-"cliInterface.t135973383faa" = "Register an existing directory.";
+"cliInterface.t135973383faa" = "注册已有目录。";
 
 /* @symbol CLIInterface.t63c8c08621c5 @args - */
-"cliInterface.t63c8c08621c5" = "Directory display name.";
+"cliInterface.t63c8c08621c5" = "目录显示名称。";
 
 /* @symbol CLIInterface.t0175170e7603 @args - */
-"cliInterface.t0175170e7603" = "Directory layout.";
+"cliInterface.t0175170e7603" = "目录布局。";
 
 /* @symbol CLIInterface.te995381e7764 @args - */
-"cliInterface.te995381e7764" = "Select a registered directory.";
+"cliInterface.te995381e7764" = "选择已注册的目录。";
 
 /* @symbol CLIInterface.tac593c150e36 @args - */
-"cliInterface.tac593c150e36" = "Refresh versions in a Minecraft directory.";
+"cliInterface.tac593c150e36" = "刷新 Minecraft 目录中的版本。";
 
 /* @symbol CLIInterface.t8592d66b70ee @args - */
-"cliInterface.t8592d66b70ee" = "Unregister a directory while retaining its files.";
+"cliInterface.t8592d66b70ee" = "移除目录注册，保留文件。";
 
 /* @symbol CLIInterface.tbbd25ee7fe86 @args - */
-"cliInterface.tbbd25ee7fe86" = "Rename a registered directory.";
+"cliInterface.tbbd25ee7fe86" = "重命名已注册的目录。";
 
 /* @symbol CLIInterface.t741d898dfaff @args - */
-"cliInterface.t741d898dfaff" = "Reconnect a registered directory that was moved.";
+"cliInterface.t741d898dfaff" = "重新关联已移动的注册目录。";
 
 /* @symbol CLIInterface.te5b3e2aa3520 @args - */
-"cliInterface.te5b3e2aa3520" = "id path";
+"cliInterface.te5b3e2aa3520" = "目录 ID 和文件路径。";
 
 /* @symbol CLIInterface.teeb75a68ecdc @args - */
-"cliInterface.teeb75a68ecdc" = "Restore a detached Minecraft directory.";
+"cliInterface.teeb75a68ecdc" = "恢复已断开连接的 Minecraft 目录。";
 
 /* @symbol CLIInterface.t72af20234e14 @args - */
-"cliInterface.t72af20234e14" = "Inspect an instance's game directory.";
+"cliInterface.t72af20234e14" = "查询实例的游戏目录。";
 
 /* @symbol CLIInterface.t1db840ce735d @args - */
-"cliInterface.t1db840ce735d" = "Change an instance's run directory.";
+"cliInterface.t1db840ce735d" = "切换实例的运行目录。";
 
 /* @symbol CLIInterface.t4d6e9b1a4264 @args - */
-"cliInterface.t4d6e9b1a4264" = "Existing custom game directory.";
+"cliInterface.t4d6e9b1a4264" = "已有的自定义游戏目录。";
 
 /* @symbol CLIInterface.ta39f0e134724 @args - */
-"cliInterface.ta39f0e134724" = "Copy game files into the empty destination.";
+"cliInterface.ta39f0e134724" = "将游戏文件复制到空的目标目录。";
 
 /* @symbol CLIInterface.tdb3bd307aea7 @args - */
-"cliInterface.tdb3bd307aea7" = "instance mode";
+"cliInterface.tdb3bd307aea7" = "实例 ID 和目录模式。";
 
 /* @symbol CLIInterface.tfe9e723a6df9 @args - */
-"cliInterface.tfe9e723a6df9" = "Reconnect a moved custom game directory.";
+"cliInterface.tfe9e723a6df9" = "重新关联已移动的自定义游戏目录。";
 
 /* @symbol CLIInterface.td41369a235db @args - */
-"cliInterface.td41369a235db" = "instance path";
+"cliInterface.td41369a235db" = "实例 ID 和目录路径。";
 
 /* @symbol CLIInterface.t738bb690d8c2 @args - */
-"cliInterface.t738bb690d8c2" = "List local Java runtimes and their origins.";
+"cliInterface.t738bb690d8c2" = "列出本地 Java 运行时及其来源。";
 
 /* @symbol CLIInterface.t1cd05347cc64 @args - */
-"cliInterface.t1cd05347cc64" = "List installable Java runtimes.";
+"cliInterface.t1cd05347cc64" = "列出可安装的 Java 运行时。";
 
 /* @symbol CLIInterface.teba714b1f2cc @args - */
-"cliInterface.teba714b1f2cc" = "Filter by Java major version.";
+"cliInterface.teba714b1f2cc" = "按 Java 主版本筛选。";
 
 /* @symbol CLIInterface.taa6237af9422 @args - */
-"cliInterface.taa6237af9422" = "Filter by architecture.";
+"cliInterface.taa6237af9422" = "按架构筛选。";
 
 /* @symbol CLIInterface.tf3cf2acb7b9a @args - */
-"cliInterface.tf3cf2acb7b9a" = "Register an installed Java runtime.";
+"cliInterface.tf3cf2acb7b9a" = "注册已安装的 Java 运行时。";
 
 /* @symbol CLIInterface.t0ecfbec54289 @args - */
-"cliInterface.t0ecfbec54289" = "Remove Java from the manual list, retaining files and references.";
+"cliInterface.t0ecfbec54289" = "从手动列表中移除 Java，保留文件及配置引用。";
 
 /* @symbol CLIInterface.tea0c61c73f43 @args - */
-"cliInterface.tea0c61c73f43" = "Set the default Java selection.";
+"cliInterface.tea0c61c73f43" = "设置默认 Java 选择。";
 
 /* @symbol CLIInterface.td99052ac398d @args - */
-"cliInterface.td99052ac398d" = "List settings that reference a managed Java runtime.";
+"cliInterface.td99052ac398d" = "列出引用指定托管 Java 的配置。";
 
 /* @symbol CLIInterface.tb07678654f81 @args - */
-"cliInterface.tb07678654f81" = "Inspect an incomplete installation.";
+"cliInterface.tb07678654f81" = "检查未完成的安装。";
 
 /* @symbol CLIInterface.t2b2ab103144b @args - */
-"cliInterface.t2b2ab103144b" = "Install a Java runtime by catalog ID.";
+"cliInterface.t2b2ab103144b" = "按目录中的 ID 安装 Java 运行时。";
 
 /* @symbol CLIInterface.tef883d8efb5c @args - */
-"cliInterface.tef883d8efb5c" = "Repair a managed Java runtime.";
+"cliInterface.tef883d8efb5c" = "修复托管的 Java 运行时。";
 
 /* @symbol CLIInterface.t355d66c16583 @args - */
-"cliInterface.t355d66c16583" = "Move a managed Java installation to the Trash.";
+"cliInterface.t355d66c16583" = "将托管的 Java 移到废纸篓。";
 
 /* @symbol CLIInterface.t5897a3d49bb5 @args - */
-"cliInterface.t5897a3d49bb5" = "Reset referencing settings to automatic Java.";
+"cliInterface.t5897a3d49bb5" = "将引用此 Java 的配置重置为自动选择。";
 
 /* @symbol CLIInterface.t2a5f80694223 @args - */
-"cliInterface.t2a5f80694223" = "Remove an incomplete installation.";
+"cliInterface.t2a5f80694223" = "移除未完成的安装。";
 
 /* @symbol CLIInterface.tc67f25bb4cc3 @args - */
-"cliInterface.tc67f25bb4cc3" = "directory run commands";
+"cliInterface.tc67f25bb4cc3" = "实例运行目录";
 
 /* @symbol CLIInterface.ta42145487540 @args - */
-"cliInterface.ta42145487540" = "directory commands";
+"cliInterface.ta42145487540" = "游戏目录的注册、迁移与恢复";
 
 /* @symbol CLIInterface.tcb439480ed22 @args - */
-"cliInterface.tcb439480ed22" = "java commands";
+"cliInterface.tcb439480ed22" = "Java 发现、安装与管理";
 
 /* @symbol CLIInterface.t5efd67648f0d @args - */
-"cliInterface.t5efd67648f0d" = "Directory name cannot be empty.";
+"cliInterface.t5efd67648f0d" = "目录名称不能为空。";
 
 /* @symbol CLIInterface.t8ba03aeb3548 @args - */
-"cliInterface.t8ba03aeb3548" = "A new managed directory must be empty.";
+"cliInterface.t8ba03aeb3548" = "新建的托管目录必须为空。";
 
 /* @symbol CLIInterface.tdc5f6e9debdb @args - */
-"cliInterface.tdc5f6e9debdb" = "Use isolated, shared or custom; --path is only valid for custom.";
+"cliInterface.tdc5f6e9debdb" = "目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。";
 
 /* @symbol CLIInterface.t9a582e74d089 @args - */
-"cliInterface.t9a582e74d089" = "Unknown directory action.";
+"cliInterface.t9a582e74d089" = "未知目录操作。";
 
 /* @symbol CLIInterface.t33604425d94f @args - */
-"cliInterface.t33604425d94f" = "Java catalog entry not found.";
+"cliInterface.t33604425d94f" = "找不到指定的 Java 版本条目。";
 
 /* @symbol CLIInterface.tab6287c24a41 @args - */
-"cliInterface.tab6287c24a41" = "Unknown Java action.";
+"cliInterface.tab6287c24a41" = "未知 Java 操作。";
 
 /* @symbol CLIInterface.tc6b87186027e @args - */
-"cliInterface.tc6b87186027e" = "Microsoft login uses browser authorization, not a password.";
+"cliInterface.tc6b87186027e" = "Microsoft 登录通过浏览器授权，无需密码。";
 
 /* @symbol CLIInterface.tb34236db1721 @args - */
-"cliInterface.tb34236db1721" = "External login requires --password-stdin.";
+"cliInterface.tb34236db1721" = "外置登录需要 --password-stdin。";
 
 /* @symbol CLIInterface.t05b618061083 @args - */
-"cliInterface.t05b618061083" = "Provide --stdin to read the API key.";
+"cliInterface.t05b618061083" = "请使用 --stdin 从标准输入读取 API Key。";
 
 /* @symbol CLIInterface.tfffe65605bf6 @args - */
-"cliInterface.tfffe65605bf6" = "Unknown account action.";
+"cliInterface.tfffe65605bf6" = "未知账户操作。";
 
 /* @symbol CLIInterface.t347c8e743183 @args - */
-"cliInterface.t347c8e743183" = "List accounts without exposing credentials.";
+"cliInterface.t347c8e743183" = "列出账户，不显示凭据。";
 
 /* @symbol CLIInterface.t60065624116e @args - */
-"cliInterface.t60065624116e" = "Read the active account ID.";
+"cliInterface.t60065624116e" = "查询当前账户 ID。";
 
 /* @symbol CLIInterface.t29349e23e1f2 @args - */
-"cliInterface.t29349e23e1f2" = "Inspect an account.";
+"cliInterface.t29349e23e1f2" = "查询账户详情。";
 
 /* @symbol CLIInterface.t5e3954fd00e4 @args - */
-"cliInterface.t5e3954fd00e4" = "Add or reuse an offline player account.";
+"cliInterface.t5e3954fd00e4" = "添加或复用离线账户。";
 
 /* @symbol CLIInterface.t4fbd66e4df1d @args - */
-"cliInterface.t4fbd66e4df1d" = "Keep the current active account.";
+"cliInterface.t4fbd66e4df1d" = "保留当前选中的账户。";
 
 /* @symbol CLIInterface.ta88c8f0fa07b @args - */
-"cliInterface.ta88c8f0fa07b" = "Select the active account.";
+"cliInterface.ta88c8f0fa07b" = "选择当前使用的账户。";
 
 /* @symbol CLIInterface.te68622e3a4c1 @args - */
-"cliInterface.te68622e3a4c1" = "Refresh a saved account's credentials.";
+"cliInterface.te68622e3a4c1" = "刷新已保存账户的凭据。";
 
 /* @symbol CLIInterface.t222e7542a935 @args - */
-"cliInterface.t222e7542a935" = "Remove an account and its local credentials.";
+"cliInterface.t222e7542a935" = "移除账户及其本地凭据。";
 
 /* @symbol CLIInterface.t9de45ca5dfe9 @args - */
-"cliInterface.t9de45ca5dfe9" = "Invalidate external credentials and remove the account.";
+"cliInterface.t9de45ca5dfe9" = "注销外置登录凭据并移除账户。";
 
 /* @symbol CLIInterface.t5e3d504d2f33 @args - */
-"cliInterface.t5e3d504d2f33" = "Start a two-step Microsoft or external login.";
+"cliInterface.t5e3d504d2f33" = "开始分步完成的 Microsoft 或外置登录。";
 
 /* @symbol CLIInterface.t35f41c8dfeb7 @args - */
-"cliInterface.t35f41c8dfeb7" = "Authentication provider.";
+"cliInterface.t35f41c8dfeb7" = "登录服务类型。";
 
 /* @symbol CLIInterface.t06b9c339e88c @args - */
-"cliInterface.t06b9c339e88c" = "Existing account to reauthenticate.";
+"cliInterface.t06b9c339e88c" = "需要重新登录的已有账户。";
 
 /* @symbol CLIInterface.tda3d5eaa9c6b @args - */
-"cliInterface.tda3d5eaa9c6b" = "External authentication server.";
+"cliInterface.tda3d5eaa9c6b" = "外置登录服务器。";
 
 /* @symbol CLIInterface.t598bd6abd203 @args - */
-"cliInterface.t598bd6abd203" = "External login identity.";
+"cliInterface.t598bd6abd203" = "外置登录的用户名或邮箱。";
 
 /* @symbol CLIInterface.tae550ce2501b @args - */
-"cliInterface.tae550ce2501b" = "Read the password from stdin.";
+"cliInterface.tae550ce2501b" = "从标准输入读取密码。";
 
 /* @symbol CLIInterface.td905be5334b1 @args - */
-"cliInterface.td905be5334b1" = "Wait for authorization and save the selected identity.";
+"cliInterface.td905be5334b1" = "等待授权完成并保存所选角色。";
 
 /* @symbol CLIInterface.taa3d1bfbf09d @args - */
-"cliInterface.taa3d1bfbf09d" = "External profile ID returned by login start.";
+"cliInterface.taa3d1bfbf09d" = "login start 返回的外置登录角色 ID。";
 
 /* @symbol CLIInterface.t7bac79515ad0 @args - */
-"cliInterface.t7bac79515ad0" = "Remove a pending login flow.";
+"cliInterface.t7bac79515ad0" = "取消待完成的登录流程。";
 
 /* @symbol CLIInterface.t075c8839f62a @args - */
-"cliInterface.t075c8839f62a" = "Check CurseForge API key availability.";
+"cliInterface.t075c8839f62a" = "检查 CurseForge API Key 是否可用。";
 
 /* @symbol CLIInterface.tb513f67f0661 @args - */
-"cliInterface.tb513f67f0661" = "Set the CurseForge API key from stdin.";
+"cliInterface.tb513f67f0661" = "从标准输入设置 CurseForge API Key。";
 
 /* @symbol CLIInterface.tbee9e14cb9c8 @args - */
-"cliInterface.tbee9e14cb9c8" = "Read the key from stdin.";
+"cliInterface.tbee9e14cb9c8" = "从标准输入读取 API Key。";
 
 /* @symbol CLIInterface.tb412547b5de8 @args - */
-"cliInterface.tb412547b5de8" = "Remove the custom CurseForge API key.";
+"cliInterface.tb412547b5de8" = "移除自定义 CurseForge API Key。";
 
 /* @symbol CLIInterface.td9b80535359b @args - */
-"cliInterface.td9b80535359b" = "account service-key commands";
+"cliInterface.td9b80535359b" = "平台服务凭据";
 
 /* @symbol CLIInterface.t463334485f56 @args - */
-"cliInterface.t463334485f56" = "account login commands";
+"cliInterface.t463334485f56" = "Microsoft 与外置登录";
 
 /* @symbol CLIInterface.t52f4179738c0 @args - */
-"cliInterface.t52f4179738c0" = "account commands";
+"cliInterface.t52f4179738c0" = "账户管理与登录";
 
 /* @symbol CLIInterface.t646f7af4624c @args - */
-"cliInterface.t646f7af4624c" = "Account provider does not match.";
+"cliInterface.t646f7af4624c" = "账户的登录服务类型不匹配。";
 
 /* @symbol CLIInterface.t3a1a6178fec9 @args - */
-"cliInterface.t3a1a6178fec9" = "The authentication server or login identity changed.";
+"cliInterface.t3a1a6178fec9" = "登录服务器或登录身份已发生变化。";
 
 /* @symbol CLIInterface.t000e28c5735c @args - */
-"cliInterface.t000e28c5735c" = "Complete the login in the same data directory.";
+"cliInterface.t000e28c5735c" = "请在同一数据目录中完成登录。";
 
 /* @symbol CLIInterface.tf873deb7e49d @args - */
-"cliInterface.tf873deb7e49d" = "The login flow expired; start again.";
+"cliInterface.tf873deb7e49d" = "登录流程已过期，请重新开始。";
 
 /* @symbol CLIInterface.ta4020b2f41c3 @args - */
-"cliInterface.ta4020b2f41c3" = "Choose a profile returned by login start.";
+"cliInterface.ta4020b2f41c3" = "请选择 login start 返回的角色。";
 
 /* @symbol CLIInterface.t0ce4aa2e33ec @args - */
-"cliInterface.t0ce4aa2e33ec" = "The login already selected a different profile.";
+"cliInterface.t0ce4aa2e33ec" = "此登录流程已选择另一角色。";
 
 /* @symbol CLIInterface.t6176d717fcb9 @args - */
-"cliInterface.t6176d717fcb9" = "Invalid login flow; start again.";
+"cliInterface.t6176d717fcb9" = "登录流程无效，请重新开始。";
 
 /* @symbol CLIInterface.te9b1e0403a1e @args - */
-"cliInterface.te9b1e0403a1e" = "Account not found.";
+"cliInterface.te9b1e0403a1e" = "找不到账户。";
 
 /* @symbol CLIInterface.tb0b930baf0cc @args - */
-"cliInterface.tb0b930baf0cc" = "The account was removed or replaced.";
+"cliInterface.tb0b930baf0cc" = "账户已被移除或替换。";
 
 /* @symbol CLIInterface.t9b5e04245098 @args - */
-"cliInterface.t9b5e04245098" = "The account identity changed.";
+"cliInterface.t9b5e04245098" = "账户身份已发生变化。";
 
 /* @symbol CLIInterface.td9ca8e4b44c6 @args - */
-"cliInterface.td9ca8e4b44c6" = "The account was removed.";
+"cliInterface.td9ca8e4b44c6" = "账户已被移除。";
 
 /* @symbol CLIInterface.tf4c5f25a3baf @args - */
-"cliInterface.tf4c5f25a3baf" = "The account was removed; credential or appearance cleanup failed.";
+"cliInterface.tf4c5f25a3baf" = "账户已移除，但凭据或外观数据清理失败。";
 
 /* @symbol CLIInterface.t1914c0297b34 @args - */
-"cliInterface.t1914c0297b34" = "Install this instance before launching.";
+"cliInterface.t1914c0297b34" = "请先安装此实例，再启动游戏。";
 
 /* @symbol CLIInterface.t46ce3acb0041 @args - */
-"cliInterface.t46ce3acb0041" = "Select an account or pass --account.";
+"cliInterface.t46ce3acb0041" = "请选择账户，或通过 --account 指定账户。";
 
 /* @symbol CLIInterface.tbd6842eb578e @args - */
-"cliInterface.tbd6842eb578e" = "Validate an instance's launch settings without starting the game.";
+"cliInterface.tbd6842eb578e" = "检查实例启动配置，不启动游戏。";
 
 /* @symbol CLIInterface.tc7d16a18216b @args - */
-"cliInterface.tc7d16a18216b" = "Account UUID; defaults to the active account.";
+"cliInterface.tc7d16a18216b" = "账户 UUID，默认使用当前账户。";
 
 /* @symbol CLIInterface.t7650c678063f @args - */
-"cliInterface.t7650c678063f" = "World folder for Quick Play.";
+"cliInterface.t7650c678063f" = "用于快速游玩的世界文件夹。";
 
 /* @symbol CLIInterface.tb27f0522d834 @args - */
-"cliInterface.tb27f0522d834" = "Start the game and return after monitor handoff.";
+"cliInterface.tb27f0522d834" = "启动游戏，监控接管后返回。";
 
 /* @symbol CLIInterface.t75aa2ae95dbf @args - */
-"cliInterface.t75aa2ae95dbf" = "List game sessions.";
+"cliInterface.t75aa2ae95dbf" = "列出游戏会话。";
 
 /* @symbol CLIInterface.t397da266f14b @args - */
-"cliInterface.t397da266f14b" = "Filter by instance UUID.";
+"cliInterface.t397da266f14b" = "按实例 UUID 筛选。";
 
 /* @symbol CLIInterface.t1dc55f419cc4 @args - */
-"cliInterface.t1dc55f419cc4" = "Filter by instance name.";
+"cliInterface.t1dc55f419cc4" = "按实例名称筛选。";
 
 /* @symbol CLIInterface.tb23f885979d4 @args - */
-"cliInterface.tb23f885979d4" = "Only show sessions with problems.";
+"cliInterface.tb23f885979d4" = "仅显示存在问题的会话。";
 
 /* @symbol CLIInterface.t1c27c266a051 @args - */
-"cliInterface.t1c27c266a051" = "Read a game session.";
+"cliInterface.t1c27c266a051" = "查询游戏会话详情。";
 
 /* @symbol CLIInterface.t7de41631eebc @args - */
-"cliInterface.t7de41631eebc" = "instance session";
+"cliInterface.t7de41631eebc" = "实例 ID 和会话 ID。";
 
 /* @symbol CLIInterface.ta977bdb2d5a4 @args - */
-"cliInterface.ta977bdb2d5a4" = "Wait for the monitor to record the game's exit.";
+"cliInterface.ta977bdb2d5a4" = "等待监控记录游戏退出。";
 
 /* @symbol CLIInterface.t6bbce4221048 @args - */
-"cliInterface.t6bbce4221048" = "Request normal game exit.";
+"cliInterface.t6bbce4221048" = "请求游戏正常退出。";
 
 /* @symbol CLIInterface.t886efc49f631 @args - */
-"cliInterface.t886efc49f631" = "Force the game process to stop.";
+"cliInterface.t886efc49f631" = "强制停止游戏进程。";
 
 /* @symbol CLIInterface.t03a5e858530a @args - */
-"cliInterface.t03a5e858530a" = "Read or follow a session log.";
+"cliInterface.t03a5e858530a" = "读取或持续跟随会话日志。";
 
 /* @symbol CLIInterface.t61dffc7832ee @args - */
-"cliInterface.t61dffc7832ee" = "Follow until the session ends; use text or ndjson.";
+"cliInterface.t61dffc7832ee" = "跟随日志直到会话结束，使用 text 或 ndjson 格式。";
 
 /* @symbol CLIInterface.tdae2c9ca76ca @args - */
-"cliInterface.tdae2c9ca76ca" = "Log source.";
+"cliInterface.tdae2c9ca76ca" = "日志来源。";
 
 /* @symbol CLIInterface.t602d83ce6e9a @args - */
-"cliInterface.t602d83ce6e9a" = "Maximum tail lines (default 200).";
+"cliInterface.t602d83ce6e9a" = "最多读取的末尾行数，默认 200。";
 
 /* @symbol CLIInterface.t5cf1cb615468 @args - */
-"cliInterface.t5cf1cb615468" = "Analyze recorded launch and game evidence.";
+"cliInterface.t5cf1cb615468" = "分析已记录的启动与游戏诊断信息。";
 
 /* @symbol CLIInterface.t33ed51c9688b @args - */
-"cliInterface.t33ed51c9688b" = "Export a redacted diagnostic bundle.";
+"cliInterface.t33ed51c9688b" = "导出脱敏后的诊断包。";
 
 /* @symbol CLIInterface.t4e51dca76f06 @args - */
-"cliInterface.t4e51dca76f06" = "instance session file";
+"cliInterface.t4e51dca76f06" = "实例 ID、会话 ID 和文件路径。";
 
 /* @symbol CLIInterface.t03b417601a2c @args - */
-"cliInterface.t03b417601a2c" = "session commands";
+"cliInterface.t03b417601a2c" = "游戏会话、日志与诊断";
 
 /* @symbol CLIInterface.t91806a3a3cd3 @args - */
-"cliInterface.t91806a3a3cd3" = "launch commands";
+"cliInterface.t91806a3a3cd3" = "启动检查与游戏启动";
 
 /* @symbol CLIInterface.tadc93d3bb50c @args - */
-"cliInterface.tadc93d3bb50c" = "The game did not exit successfully.";
+"cliInterface.tadc93d3bb50c" = "游戏未正常退出。";
 
 /* @symbol CLIInterface.t28723ddb22d1 @args - */
-"cliInterface.t28723ddb22d1" = "Use --output ndjson or text with --follow.";
+"cliInterface.t28723ddb22d1" = "--follow 需要使用 --output ndjson 或 text。";
 
 /* @symbol CLIInterface.tafd6142d30ec @args - */
-"cliInterface.tafd6142d30ec" = "--lines must be between 1 and 10000.";
+"cliInterface.tafd6142d30ec" = "--lines 必须介于 1 和 10000 之间。";
 
 /* @symbol CLIInterface.t043b9f54ca4c @args - */
-"cliInterface.t043b9f54ca4c" = "The monitor is no longer available.";
+"cliInterface.t043b9f54ca4c" = "监控进程已不可用。";
 
 /* @symbol CLIInterface.te5e3bed93ff1 @args - */
-"cliInterface.te5e3bed93ff1" = "Unknown session action.";
+"cliInterface.te5e3bed93ff1" = "未知会话操作。";
 
 /* @symbol CLIInterface.t9585ae182d36 @args - */
-"cliInterface.t9585ae182d36" = "Search Modrinth or CurseForge.";
+"cliInterface.t9585ae182d36" = "搜索 Modrinth 或 CurseForge。";
 
 /* @symbol CLIInterface.t54d62b370b12 @args - */
-"cliInterface.t54d62b370b12" = "Content provider.";
+"cliInterface.t54d62b370b12" = "内容平台。";
 
 /* @symbol CLIInterface.t9c7c66e1cb97 @args - */
-"cliInterface.t9c7c66e1cb97" = "Project type.";
+"cliInterface.t9c7c66e1cb97" = "项目类型。";
 
 /* @symbol CLIInterface.t97bb290079c0 @args - */
-"cliInterface.t97bb290079c0" = "Minecraft version filter.";
+"cliInterface.t97bb290079c0" = "按 Minecraft 版本筛选。";
 
 /* @symbol CLIInterface.t6cd3985335f5 @args - */
-"cliInterface.t6cd3985335f5" = "Loader filter.";
+"cliInterface.t6cd3985335f5" = "按加载器筛选。";
 
 /* @symbol CLIInterface.tba245c5c5887 @args - */
-"cliInterface.tba245c5c5887" = "Provider category.";
+"cliInterface.tba245c5c5887" = "内容平台的分类。";
 
 /* @symbol CLIInterface.tffbd359b4372 @args - */
-"cliInterface.tffbd359b4372" = "Sort order.";
+"cliInterface.tffbd359b4372" = "排序方式。";
 
 /* @symbol CLIInterface.tef252f7e18ac @args - */
-"cliInterface.tef252f7e18ac" = "Read a project description and metadata.";
+"cliInterface.tef252f7e18ac" = "查询项目描述及元数据。";
 
 /* @symbol CLIInterface.t2015ae2ed51d @args - */
-"cliInterface.t2015ae2ed51d" = "List a project's published versions.";
+"cliInterface.t2015ae2ed51d" = "列出项目已发布的版本。";
 
 /* @symbol CLIInterface.t96729fb469a0 @args - */
-"cliInterface.t96729fb469a0" = "List the provider's categories.";
+"cliInterface.t96729fb469a0" = "列出内容平台的分类。";
 
 /* @symbol CLIInterface.t31b908b482c0 @args - */
-"cliInterface.t31b908b482c0" = "List installed mods, resource packs, or shaders.";
+"cliInterface.t31b908b482c0" = "列出已安装的模组、资源包或光影。";
 
 /* @symbol CLIInterface.t1615f94ae45c @args - */
-"cliInterface.t1615f94ae45c" = "Content kind.";
+"cliInterface.t1615f94ae45c" = "内容类型。";
 
 /* @symbol CLIInterface.t0adabdb41fc9 @args - */
-"cliInterface.t0adabdb41fc9" = "Import a local content file.";
+"cliInterface.t0adabdb41fc9" = "导入本地内容文件。";
 
 /* @symbol CLIInterface.t1221c915a9ab @args - */
-"cliInterface.t1221c915a9ab" = "instance file";
+"cliInterface.t1221c915a9ab" = "实例 ID 和文件路径。";
 
 /* @symbol CLIInterface.t6f5c9d328e9f @args - */
-"cliInterface.t6f5c9d328e9f" = "Install a compatible project and its required dependencies.";
+"cliInterface.t6f5c9d328e9f" = "安装兼容的项目及其必需依赖。";
 
 /* @symbol CLIInterface.t3adc46ef11f2 @args - */
-"cliInterface.t3adc46ef11f2" = "Exact provider version ID; otherwise latest stable.";
+"cliInterface.t3adc46ef11f2" = "指定平台版本 ID，默认选择最新稳定版。";
 
 /* @symbol CLIInterface.t6937c4e2d52d @args - */
-"cliInterface.t6937c4e2d52d" = "Manually downloaded CurseForge file as fileID=path.";
+"cliInterface.t6937c4e2d52d" = "手动下载的 CurseForge 文件，格式为 fileID=path。";
 
 /* @symbol CLIInterface.tc9423b403749 @args - */
-"cliInterface.tc9423b403749" = "instance project";
+"cliInterface.tc9423b403749" = "实例 ID 和项目 ID。";
 
 /* @symbol CLIInterface.tcb22bf7cdc22 @args - */
-"cliInterface.tcb22bf7cdc22" = "Enable selected content.";
+"cliInterface.tcb22bf7cdc22" = "启用所选内容。";
 
 /* @symbol CLIInterface.t0571cf34f7e5 @args - */
-"cliInterface.t0571cf34f7e5" = "Exact installed filename; repeat to select several.";
+"cliInterface.t0571cf34f7e5" = "已安装文件的完整名称，可重复传入以选择多个文件。";
 
 /* @symbol CLIInterface.t7a83bde60a43 @args - */
-"cliInterface.t7a83bde60a43" = "Select every file of the chosen kind.";
+"cliInterface.t7a83bde60a43" = "选择该类型的全部文件。";
 
 /* @symbol CLIInterface.t835a12065b6b @args - */
-"cliInterface.t835a12065b6b" = "Disable selected content.";
+"cliInterface.t835a12065b6b" = "禁用所选内容。";
 
 /* @symbol CLIInterface.tbddc7b97257e @args - */
-"cliInterface.tbddc7b97257e" = "Move selected content to the Trash.";
+"cliInterface.tbddc7b97257e" = "将所选内容移到废纸篓。";
 
 /* @symbol CLIInterface.t2648b2127df6 @args - */
-"cliInterface.t2648b2127df6" = "Check compatible updates for installed content.";
+"cliInterface.t2648b2127df6" = "检查已安装内容的兼容更新。";
 
 /* @symbol CLIInterface.t41cfb5271f5e @args - */
-"cliInterface.t41cfb5271f5e" = "Update selected content and dependencies.";
+"cliInterface.t41cfb5271f5e" = "更新所选内容及依赖。";
 
 /* @symbol CLIInterface.tf53d1d120842 @args - */
-"cliInterface.tf53d1d120842" = "Update every file of the chosen kind.";
+"cliInterface.tf53d1d120842" = "更新该类型的全部文件。";
 
 /* @symbol CLIInterface.t0182348543ec @args - */
-"cliInterface.t0182348543ec" = "List worlds in an instance.";
+"cliInterface.t0182348543ec" = "列出实例中的世界。";
 
 /* @symbol CLIInterface.tc62375cad94f @args - */
-"cliInterface.tc62375cad94f" = "Inspect a world.";
+"cliInterface.tc62375cad94f" = "查询世界详情。";
 
 /* @symbol CLIInterface.t3cc465fee86f @args - */
-"cliInterface.t3cc465fee86f" = "instance folder";
+"cliInterface.t3cc465fee86f" = "实例 ID 和世界文件夹。";
 
 /* @symbol CLIInterface.td02c3799e5f3 @args - */
-"cliInterface.td02c3799e5f3" = "Import a world archive or directory.";
+"cliInterface.td02c3799e5f3" = "导入世界归档或目录。";
 
 /* @symbol CLIInterface.t79b53bfe32d0 @args - */
-"cliInterface.t79b53bfe32d0" = "Export a world archive.";
+"cliInterface.t79b53bfe32d0" = "导出世界归档。";
 
 /* @symbol CLIInterface.tbb4df9d7ac3a @args - */
-"cliInterface.tbb4df9d7ac3a" = "instance folder file";
+"cliInterface.tbb4df9d7ac3a" = "实例 ID、世界文件夹和文件路径。";
 
 /* @symbol CLIInterface.t1f3b65ed9678 @args - */
-"cliInterface.t1f3b65ed9678" = "Move a world to the Trash.";
+"cliInterface.t1f3b65ed9678" = "将世界移到废纸篓。";
 
 /* @symbol CLIInterface.t687aa81ce15b @args - */
-"cliInterface.t687aa81ce15b" = "Back up a world.";
+"cliInterface.t687aa81ce15b" = "备份世界。";
 
 /* @symbol CLIInterface.t243960f924a4 @args - */
-"cliInterface.t243960f924a4" = "Optional backup reason.";
+"cliInterface.t243960f924a4" = "可选的备份原因。";
 
 /* @symbol CLIInterface.t82358ac73619 @args - */
-"cliInterface.t82358ac73619" = "List world backups.";
+"cliInterface.t82358ac73619" = "列出世界备份。";
 
 /* @symbol CLIInterface.t5b12f1ab5a68 @args - */
-"cliInterface.t5b12f1ab5a68" = "Restore a backup; replacement must be explicit.";
+"cliInterface.t5b12f1ab5a68" = "恢复备份，覆盖已有世界时需要明确确认。";
 
 /* @symbol CLIInterface.td2c29dd5d868 @args - */
-"cliInterface.td2c29dd5d868" = "Replace the existing world.";
+"cliInterface.td2c29dd5d868" = "覆盖已有世界。";
 
 /* @symbol CLIInterface.teaf6d847cc14 @args - */
-"cliInterface.teaf6d847cc14" = "instance backup";
+"cliInterface.teaf6d847cc14" = "实例 ID 和备份 ID。";
 
 /* @symbol CLIInterface.t79d8f9c1b13b @args - */
-"cliInterface.t79d8f9c1b13b" = "Move a world backup to the Trash.";
+"cliInterface.t79d8f9c1b13b" = "将世界备份移到废纸篓。";
 
 /* @symbol CLIInterface.t5baea7450859 @args - */
-"cliInterface.t5baea7450859" = "List a world's data packs.";
+"cliInterface.t5baea7450859" = "列出世界的数据包。";
 
 /* @symbol CLIInterface.t3f8f11058c17 @args - */
-"cliInterface.t3f8f11058c17" = "instance world";
+"cliInterface.t3f8f11058c17" = "实例 ID 和世界名称。";
 
 /* @symbol CLIInterface.t8e719af86d09 @args - */
-"cliInterface.t8e719af86d09" = "Read data-pack priority from highest to lowest.";
+"cliInterface.t8e719af86d09" = "按优先级从高到低查询数据包顺序。";
 
 /* @symbol CLIInterface.tc4ef4044f6a8 @args - */
-"cliInterface.tc4ef4044f6a8" = "Replace the complete data-pack priority order.";
+"cliInterface.tc4ef4044f6a8" = "替换完整的数据包优先级顺序。";
 
 /* @symbol CLIInterface.tcc64529d6ae6 @args - */
-"cliInterface.tcc64529d6ae6" = "Complete priority list, highest first.";
+"cliInterface.tcc64529d6ae6" = "完整优先级列表，优先级最高的在前。";
 
 /* @symbol CLIInterface.td44435e60acc @args - */
-"cliInterface.td44435e60acc" = "Import a data pack into a world.";
+"cliInterface.td44435e60acc" = "将数据包导入世界。";
 
 /* @symbol CLIInterface.t027258d65380 @args - */
-"cliInterface.t027258d65380" = "instance world file";
+"cliInterface.t027258d65380" = "实例 ID、世界名称和文件路径。";
 
 /* @symbol CLIInterface.t8c443e635faf @args - */
-"cliInterface.t8c443e635faf" = "Enable a world's data pack.";
+"cliInterface.t8c443e635faf" = "启用世界的数据包。";
 
 /* @symbol CLIInterface.t25b74fe94bbb @args - */
-"cliInterface.t25b74fe94bbb" = "instance world name";
+"cliInterface.t25b74fe94bbb" = "实例 ID、世界名称和数据包名称。";
 
 /* @symbol CLIInterface.tc7d244ea5a4c @args - */
-"cliInterface.tc7d244ea5a4c" = "Disable a world's data pack.";
+"cliInterface.tc7d244ea5a4c" = "禁用世界的数据包。";
 
 /* @symbol CLIInterface.t08f738b1e5ca @args - */
-"cliInterface.t08f738b1e5ca" = "Remove a world's data pack.";
+"cliInterface.t08f738b1e5ca" = "移除世界的数据包。";
 
 /* @symbol CLIInterface.t64d56130fbdf @args - */
-"cliInterface.t64d56130fbdf" = "Search compatible Modrinth data packs.";
+"cliInterface.t64d56130fbdf" = "搜索兼容的 Modrinth 数据包。";
 
 /* @symbol CLIInterface.t9abc5f05470e @args - */
-"cliInterface.t9abc5f05470e" = "instance query";
+"cliInterface.t9abc5f05470e" = "实例 ID 和搜索关键词。";
 
 /* @symbol CLIInterface.tb511553d589f @args - */
-"cliInterface.tb511553d589f" = "List compatible data-pack versions.";
+"cliInterface.tb511553d589f" = "列出兼容的数据包版本。";
 
 /* @symbol CLIInterface.t37b2077e3554 @args - */
-"cliInterface.t37b2077e3554" = "Install a data pack and its dependencies.";
+"cliInterface.t37b2077e3554" = "安装数据包及其依赖。";
 
 /* @symbol CLIInterface.t5e7708f69f60 @args - */
-"cliInterface.t5e7708f69f60" = "Exact version ID; otherwise latest stable.";
+"cliInterface.t5e7708f69f60" = "指定版本 ID，默认选择最新稳定版。";
 
 /* @symbol CLIInterface.t4d5a09c55c8c @args - */
-"cliInterface.t4d5a09c55c8c" = "instance world project";
+"cliInterface.t4d5a09c55c8c" = "实例 ID、世界名称和项目 ID。";
 
 /* @symbol CLIInterface.t45ce4d2add4d @args - */
-"cliInterface.t45ce4d2add4d" = "List schematic files and folders.";
+"cliInterface.t45ce4d2add4d" = "列出投影文件及文件夹。";
 
 /* @symbol CLIInterface.tc48ff6cbe772 @args - */
-"cliInterface.tc48ff6cbe772" = "Relative schematic directory.";
+"cliInterface.tc48ff6cbe772" = "投影目录的相对路径。";
 
 /* @symbol CLIInterface.t9691b8cb26ac @args - */
-"cliInterface.t9691b8cb26ac" = "Inspect a schematic's metadata.";
+"cliInterface.t9691b8cb26ac" = "查询投影文件的元数据。";
 
 /* @symbol CLIInterface.t006d1cafc637 @args - */
-"cliInterface.t006d1cafc637" = "Import a schematic file.";
+"cliInterface.t006d1cafc637" = "导入投影文件。";
 
 /* @symbol CLIInterface.tf32e6e0f57a1 @args - */
-"cliInterface.tf32e6e0f57a1" = "Create a schematic folder.";
+"cliInterface.tf32e6e0f57a1" = "创建投影文件夹。";
 
 /* @symbol CLIInterface.t4af5860f6aeb @args - */
-"cliInterface.t4af5860f6aeb" = "Relative parent directory.";
+"cliInterface.t4af5860f6aeb" = "父目录的相对路径。";
 
 /* @symbol CLIInterface.t0d2ff8c9a278 @args - */
-"cliInterface.t0d2ff8c9a278" = "instance name";
+"cliInterface.t0d2ff8c9a278" = "实例 ID 和文件夹名称。";
 
 /* @symbol CLIInterface.t7e11030c3d95 @args - */
-"cliInterface.t7e11030c3d95" = "Export a schematic.";
+"cliInterface.t7e11030c3d95" = "导出投影文件。";
 
 /* @symbol CLIInterface.tf0b7b313a90b @args - */
-"cliInterface.tf0b7b313a90b" = "instance path file";
+"cliInterface.tf0b7b313a90b" = "实例 ID、投影路径和导出文件路径。";
 
 /* @symbol CLIInterface.tc7d49c67a14a @args - */
-"cliInterface.tc7d49c67a14a" = "Move a schematic file or folder to the Trash.";
+"cliInterface.tc7d49c67a14a" = "将投影文件或文件夹移到废纸篓。";
 
 /* @symbol CLIInterface.tb9f8304a17cd @args - */
-"cliInterface.tb9f8304a17cd" = "datapack order commands";
+"cliInterface.tb9f8304a17cd" = "数据包优先级";
 
 /* @symbol CLIInterface.t1870161676bc @args - */
-"cliInterface.t1870161676bc" = "world backup commands";
+"cliInterface.t1870161676bc" = "世界备份与恢复";
 
 /* @symbol CLIInterface.tb977dca13b5f @args - */
-"cliInterface.tb977dca13b5f" = "schematic commands";
+"cliInterface.tb977dca13b5f" = "投影文件管理";
 
 /* @symbol CLIInterface.t8c1e16e1c7f6 @args - */
-"cliInterface.t8c1e16e1c7f6" = "datapack commands";
+"cliInterface.t8c1e16e1c7f6" = "数据包管理与排序";
 
 /* @symbol CLIInterface.t28a32d5bd18e @args - */
-"cliInterface.t28a32d5bd18e" = "catalog commands";
+"cliInterface.t28a32d5bd18e" = "内容搜索与版本查询";
 
 /* @symbol CLIInterface.t7f93a6deea4d @args - */
-"cliInterface.t7f93a6deea4d" = "content commands";
+"cliInterface.t7f93a6deea4d" = "模组、资源包与光影管理";
 
 /* @symbol CLIInterface.tc96234263475 @args - */
-"cliInterface.tc96234263475" = "world commands";
+"cliInterface.tc96234263475" = "世界管理、导入导出与备份";
 
 /* @symbol CLIInterface.t68a342df34e2 @args - */
-"cliInterface.t68a342df34e2" = "Input file not found.";
+"cliInterface.t68a342df34e2" = "找不到输入文件。";
 
 /* @symbol CLIInterface.t1474aa1131be @args - */
-"cliInterface.t1474aa1131be" = "Select --file entries or explicitly use --all.";
+"cliInterface.t1474aa1131be" = "请使用 --file 选择文件，或明确指定 --all。";
 
 /* @symbol CLIInterface.tcf02f30209a6 @args - */
-"cliInterface.tcf02f30209a6" = "One or more selected filenames are missing.";
+"cliInterface.tcf02f30209a6" = "找不到部分所选文件。";
 
 /* @symbol CLIInterface.t1fb9146947a6 @args - */
-"cliInterface.t1fb9146947a6" = "Unknown content action.";
+"cliInterface.t1fb9146947a6" = "未知内容操作。";
 
 /* @symbol CLIInterface.tcf80472afe71 @args - */
-"cliInterface.tcf80472afe71" = "Manual files use unique fileID=path entries.";
+"cliInterface.tcf80472afe71" = "手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。";
 
 /* @symbol CLIInterface.t22d3a8371f53 @args - */
-"cliInterface.t22d3a8371f53" = "Download the listed files, then repeat the command with --manual fileID=path.";
+"cliInterface.t22d3a8371f53" = "请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。";
 
 /* @symbol CLIInterface.t5c54141389e9 @args - */
-"cliInterface.t5c54141389e9" = "The selected version is incompatible with the instance.";
+"cliInterface.t5c54141389e9" = "所选版本与实例不兼容。";
 
 /* @symbol CLIInterface.t56f6acfec799 @args - */
-"cliInterface.t56f6acfec799" = "No matching compatible version was found.";
+"cliInterface.t56f6acfec799" = "找不到匹配的兼容版本。";
 
 /* @symbol CLIInterface.t813a5dd4816c @args - */
-"cliInterface.t813a5dd4816c" = "Backup not found.";
+"cliInterface.t813a5dd4816c" = "找不到备份。";
 
 /* @symbol CLIInterface.t90c2d3c97aae @args - */
-"cliInterface.t90c2d3c97aae" = "World not found.";
+"cliInterface.t90c2d3c97aae" = "找不到世界。";
 
 /* @symbol CLIInterface.ta7cd75ee2906 @args - */
-"cliInterface.ta7cd75ee2906" = "Unknown world action.";
+"cliInterface.ta7cd75ee2906" = "未知世界操作。";
 
 /* @symbol CLIInterface.tcaf18c90c73d @args - */
-"cliInterface.tcaf18c90c73d" = "Provide the complete priority list exactly once.";
+"cliInterface.tcaf18c90c73d" = "请提供完整的优先级列表，每项只能出现一次。";
 
 /* @symbol CLIInterface.tdd5661a06a84 @args - */
-"cliInterface.tdd5661a06a84" = "No compatible data-pack version found.";
+"cliInterface.tdd5661a06a84" = "找不到兼容的数据包版本。";
 
 /* @symbol CLIInterface.t921d4db04b98 @args - */
-"cliInterface.t921d4db04b98" = "Data pack not found.";
+"cliInterface.t921d4db04b98" = "找不到数据包。";
 
 /* @symbol CLIInterface.t31dc407e9871 @args - */
-"cliInterface.t31dc407e9871" = "Unknown data-pack action.";
+"cliInterface.t31dc407e9871" = "未知数据包操作。";
 
 /* @symbol CLIInterface.t90e3b5019ad0 @args - */
-"cliInterface.t90e3b5019ad0" = "Schematic not found.";
+"cliInterface.t90e3b5019ad0" = "找不到投影文件。";
 
 /* @symbol CLIInterface.tdb74aa2f7d3b @args - */
-"cliInterface.tdb74aa2f7d3b" = "Import an instance archive into an explicit directory.";
+"cliInterface.tdb74aa2f7d3b" = "将实例归档导入指定目录。";
 
 /* @symbol CLIInterface.tddd82092eded @args - */
-"cliInterface.tddd82092eded" = "Destination directory UUID or default.";
+"cliInterface.tddd82092eded" = "目标目录 UUID 或 default。";
 
 /* @symbol CLIInterface.tb86fa4ea53ac @args - */
-"cliInterface.tb86fa4ea53ac" = "Import JVM arguments supplied by the pack.";
+"cliInterface.tb86fa4ea53ac" = "导入整合包提供的 JVM 参数。";
 
 /* @symbol CLIInterface.tc5c676ace213 @args - */
-"cliInterface.tc5c676ace213" = "Import a local modpack archive.";
+"cliInterface.tc5c676ace213" = "导入本地整合包归档。";
 
 /* @symbol CLIInterface.td48597adbed9 @args - */
-"cliInterface.td48597adbed9" = "Download and install a catalog modpack.";
+"cliInterface.td48597adbed9" = "下载并安装内容平台上的整合包。";
 
 /* @symbol CLIInterface.t2280d783f7cb @args - */
-"cliInterface.t2280d783f7cb" = "Manually downloaded pack archive.";
+"cliInterface.t2280d783f7cb" = "手动下载的整合包归档。";
 
 /* @symbol CLIInterface.t1d9fc0c70e58 @args - */
-"cliInterface.t1d9fc0c70e58" = "Inspect installed modpack metadata.";
+"cliInterface.t1d9fc0c70e58" = "查询已安装整合包的元数据。";
 
 /* @symbol CLIInterface.t0e0ee827fcda @args - */
-"cliInterface.t0e0ee827fcda" = "List available releases for an installed modpack.";
+"cliInterface.t0e0ee827fcda" = "列出已安装整合包的可用版本。";
 
 /* @symbol CLIInterface.t7dd4704843e2 @args - */
-"cliInterface.t7dd4704843e2" = "Preview or apply a modpack update.";
+"cliInterface.t7dd4704843e2" = "预览或执行整合包更新。";
 
 /* @symbol CLIInterface.te3ce5542c760 @args - */
-"cliInterface.te3ce5542c760" = "Local update archive.";
+"cliInterface.te3ce5542c760" = "本地更新归档。";
 
 /* @symbol CLIInterface.tadff65d82cd8 @args - */
-"cliInterface.tadff65d82cd8" = "Exact remote release ID.";
+"cliInterface.tadff65d82cd8" = "指定远程发布版本 ID。";
 
 /* @symbol CLIInterface.t33673a17c78a @args - */
-"cliInterface.t33673a17c78a" = "Manually downloaded remote release archive.";
+"cliInterface.t33673a17c78a" = "手动下载的远程版本归档。";
 
 /* @symbol CLIInterface.tfa5924a2e888 @args - */
-"cliInterface.tfa5924a2e888" = "Replace locally modified files instead of retaining them.";
+"cliInterface.tfa5924a2e888" = "覆盖本地修改过的文件，不保留本地修改。";
 
 /* @symbol CLIInterface.tf986137b0dee @args - */
-"cliInterface.tf986137b0dee" = "Confirm replacement of local modifications.";
+"cliInterface.tf986137b0dee" = "确认覆盖本地修改。";
 
 /* @symbol CLIInterface.t8951a110d64d @args - */
-"cliInterface.t8951a110d64d" = "Roll back the previous pack update while retaining later local edits.";
+"cliInterface.t8951a110d64d" = "回退上一次整合包更新，保留更新后的本地修改。";
 
 /* @symbol CLIInterface.t869f83eac4a5 @args - */
-"cliInterface.t869f83eac4a5" = "Download a file and verify its SHA-1 and size.";
+"cliInterface.t869f83eac4a5" = "下载文件并校验 SHA-1 和大小。";
 
 /* @symbol CLIInterface.t91bde8e5fa30 @args - */
-"cliInterface.t91bde8e5fa30" = "Expected SHA-1 digest.";
+"cliInterface.t91bde8e5fa30" = "预期的 SHA-1 校验值。";
 
 /* @symbol CLIInterface.t8e1d27b3966c @args - */
-"cliInterface.t8e1d27b3966c" = "Expected byte count.";
+"cliInterface.t8e1d27b3966c" = "预期的字节数。";
 
 /* @symbol CLIInterface.tff2b9d62fa33 @args - */
-"cliInterface.tff2b9d62fa33" = "url file";
+"cliInterface.tff2b9d62fa33" = "下载地址和文件路径。";
 
 /* @symbol CLIInterface.ta16b7c00b2ba @args - */
-"cliInterface.ta16b7c00b2ba" = "download commands";
+"cliInterface.ta16b7c00b2ba" = "文件下载与校验";
 
 /* @symbol CLIInterface.t31f0b68ea764 @args - */
-"cliInterface.t31f0b68ea764" = "pack commands";
+"cliInterface.t31f0b68ea764" = "整合包安装、更新与回退";
 
 /* @symbol CLIInterface.t4c0ebc2810f1 @args - */
-"cliInterface.t4c0ebc2810f1" = "Destination directory not found.";
+"cliInterface.t4c0ebc2810f1" = "找不到目标目录。";
 
 /* @symbol CLIInterface.te28b99d2f4f4 @args - */
-"cliInterface.te28b99d2f4f4" = "This instance has no installed modpack metadata.";
+"cliInterface.te28b99d2f4f4" = "此实例没有已安装整合包的元数据。";
 
 /* @symbol CLIInterface.tf47c36a30379 @args - */
-"cliInterface.tf47c36a30379" = "No pack update backup is available.";
+"cliInterface.tf47c36a30379" = "没有可用于回退的整合包更新备份。";
 
 /* @symbol CLIInterface.tc94ca55edbe4 @args - */
-"cliInterface.tc94ca55edbe4" = "Replacing local modifications requires --replace --yes.";
+"cliInterface.tc94ca55edbe4" = "覆盖本地修改需要同时指定 --replace --yes。";
 
 /* @symbol CLIInterface.t886cba0bd15a @args - */
-"cliInterface.t886cba0bd15a" = "Choose a local --file or a remote --version.";
+"cliInterface.t886cba0bd15a" = "请选择本地 --file 或远程 --version。";
 
 /* @symbol CLIInterface.t092095eba967 @args - */
-"cliInterface.t092095eba967" = "Pack release not found.";
+"cliInterface.t092095eba967" = "找不到整合包发布版本。";
 
 /* @symbol CLIInterface.t75d07f6960ff @args - */
-"cliInterface.t75d07f6960ff" = "Download the pack archive and repeat with --archive path.";
+"cliInterface.t75d07f6960ff" = "请下载整合包归档，然后添加 --archive path 再次执行。";
 
 /* @symbol CLIInterface.tca976a5cf5f9 @args - */
-"cliInterface.tca976a5cf5f9" = "Provide an HTTP URL, nonnegative --size and a 40-digit --sha1.";
+"cliInterface.tca976a5cf5f9" = "请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。";
 
 /* @symbol CLIInterface.tb634c8d3959d @args - */
-"cliInterface.tb634c8d3959d" = "The destination already contains a different file.";
+"cliInterface.tb634c8d3959d" = "目标位置已存在内容不同的文件。";
 
 /* @symbol CLIInterface.tbff4f0f5e780 @args - */
-"cliInterface.tbff4f0f5e780" = "List unfinished data operations and sessions.";
+"cliInterface.tbff4f0f5e780" = "列出未完成的数据操作及会话。";
 
 /* @symbol CLIInterface.tc16fc65ec610 @args - */
-"cliInterface.tc16fc65ec610" = "Restrict inspection to one instance.";
+"cliInterface.tc16fc65ec610" = "仅检查指定实例。";
 
 /* @symbol CLIInterface.t25597cca30a1 @args - */
-"cliInterface.t25597cca30a1" = "Recover a specific unfinished operation.";
+"cliInterface.t25597cca30a1" = "恢复指定的未完成操作。";
 
 /* @symbol CLIInterface.t617ad9bacfae @args - */
-"cliInterface.t617ad9bacfae" = "Transaction UUID, or session UUID.";
+"cliInterface.t617ad9bacfae" = "事务 UUID 或会话 UUID。";
 
 /* @symbol CLIInterface.ta51e4f921383 @args - */
-"cliInterface.ta51e4f921383" = "Repository import recovery mode.";
+"cliInterface.ta51e4f921383" = "游戏库导入的恢复方式。";
 
 /* @symbol CLIInterface.t709f4fc13c7d @args - */
-"cliInterface.t709f4fc13c7d" = "Keep the original source after a committed move.";
+"cliInterface.t709f4fc13c7d" = "移动已提交后保留原始文件。";
 
 /* @symbol CLIInterface.ta42e19194027 @args - */
-"cliInterface.ta42e19194027" = "Confirm that an unmonitored game has ended.";
+"cliInterface.ta42e19194027" = "确认失去监控的游戏已结束。";
 
 /* @symbol CLIInterface.t28237d41435e @args - */
-"cliInterface.t28237d41435e" = "kind target";
+"cliInterface.t28237d41435e" = "恢复类型和目标 ID。";
 
 /* @symbol CLIInterface.tc168cea3e30b @args - */
-"cliInterface.tc168cea3e30b" = "Check state, paths, Java, account credentials and bundled helpers.";
+"cliInterface.tc168cea3e30b" = "检查状态、路径、Java、账户凭据及内置辅助程序。";
 
 /* @symbol CLIInterface.tcfab76824678 @args - */
-"cliInterface.tcfab76824678" = "Inspect a particular instance.";
+"cliInterface.tcfab76824678" = "检查指定实例。";
 
 /* @symbol CLIInterface.t2b167c0c4363 @args - */
-"cliInterface.t2b167c0c4363" = "recovery commands";
+"cliInterface.t2b167c0c4363" = "未完成操作的查询与恢复";
 
 /* @symbol CLIInterface.t1e2f741698a1 @args - */
-"cliInterface.t1e2f741698a1" = "Unknown recovery kind.";
+"cliInterface.t1e2f741698a1" = "未知恢复类型。";
 
 /* @symbol CLIInterface.t7f8c861b7d62 @args - */
-"cliInterface.t7f8c861b7d62" = "This recovery requires --transaction from recovery list.";
+"cliInterface.t7f8c861b7d62" = "此恢复操作需要指定 recovery list 返回的 --transaction。";
 
 /* @symbol CLIInterface.tf19d497be38f @args - */
-"cliInterface.tf19d497be38f" = "One or more checks failed.";
+"cliInterface.tf19d497be38f" = "一项或多项检查未通过。";
 
 /* @symbol CLIInterface.tff19ae82a321 @args - */
-"cliInterface.tff19ae82a321" = "An unfinished operation must be recovered before inspecting this data.";
+"cliInterface.tff19ae82a321" = "检查此数据前，必须先恢复未完成的操作。";
 
 /* @symbol CLIInterface.t06bc14b60f35 @args - */
 "cliInterface.t06bc14b60f35" = "卸载";

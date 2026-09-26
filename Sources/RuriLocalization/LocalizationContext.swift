@@ -12,6 +12,19 @@ public struct LocalizationContext: Sendable {
     private let translated: Bundle?
     private let base: Bundle?
     public let pseudolocalized: Bool
+    private let commandLineEnglish: Bool
+
+    /// CLI language is independent of the application's saved UI preference.
+    /// Partial CLI translations do not advertise another GUI language.
+    public static func commandLine(language: String? = nil) -> LocalizationContext {
+        .init(language: language ?? "en", commandLine: true)
+    }
+    private static let englishCLI: [String: String] = {
+        guard let url = LocalizationResources.bundle?.url(forResource: "CommandLine.en", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let messages = try? JSONDecoder().decode([String: String].self, from: data) else { return [:] }
+        return messages
+    }()
 
     /// The default is immutable for the process. Tasks may scope a different
     /// context without changing another window, monitor, or concurrent test.
@@ -33,9 +46,10 @@ public struct LocalizationContext: Sendable {
 
     public init(language requested: String? = nil, region: String = Locale.current.identifier,
                 preferences: [String] = Locale.preferredLanguages, resources: Bundle? = LocalizationResources.bundle,
-                pseudolocalized: Bool = false) {
+                pseudolocalized: Bool = false, commandLine: Bool = false) {
         self.resources = resources
-        self.language = Self.resolve(requested, available: resources?.localizations ?? [Self.baseLanguage], preferences: preferences)
+        self.language = Self.resolve(requested, available: commandLine ? ["en", Self.baseLanguage] : resources?.localizations ?? [Self.baseLanguage], preferences: preferences)
+        self.commandLineEnglish = commandLine && self.language == "en"
         self.regionIdentifier = region
         self.pseudolocalized = pseudolocalized
         self.translated = Self.localizationBundle(language, in: resources)
@@ -73,7 +87,8 @@ public struct LocalizationContext: Sendable {
         let missing = "__RURI_MISSING_LOCALIZATION_817995BA__"
         let value = translated?.localizedString(forKey: message.key, value: missing, table: message.table)
         let fallback = base?.localizedString(forKey: message.key, value: definition.fallback, table: message.table) ?? definition.fallback
-        let template = value == nil || value == missing ? fallback : value!
+        let english = commandLineEnglish ? Self.englishCLI[message.table + ":" + message.key] : nil
+        let template = english ?? (value == nil || value == missing ? fallback : value!)
         let rendered = message.format(template, context: self)
         return pseudolocalized ? "⟦" + rendered + " " + String(repeating: "ø", count: min(80, max(8, template.count))) + "⟧" : rendered
     }
