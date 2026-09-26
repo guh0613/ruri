@@ -79,7 +79,9 @@ enum CommandSchemas {
         options.merge(["json": boolean, "output": .object(["enum": .array(["text", "json", "ndjson"].map(Value.string))]), "data-dir": string, "language": string, "quiet": boolean]) { old, _ in old }
         var optionSchema = object(options, required: spec.options.filter(\.required).map(\.name)).object!
         optionSchema["additionalProperties"] = .bool(false)
-        return object(["operands": .object(["type": .string("array"), "prefixItems": .array(spec.operands.map(parameter)), "minItems": .integer(spec.operands.filter(\.required).count), "maxItems": .integer(spec.operands.count)]), "options": .object(optionSchema)])
+        var operands: [String: Value] = ["type": .string("array"), "minItems": .integer(spec.operands.filter(\.required).count), "maxItems": .integer(spec.operands.count)]
+        if !spec.operands.isEmpty { operands["prefixItems"] = .array(spec.operands.map(parameter)) }
+        return object(["operands": .object(operands), "options": .object(optionSchema)])
     }
     private static func parameter(_ p: ParameterSpec) -> Value {
         var result: [String: Value] = ["type": .string(["bool": "boolean", "int": "integer", "strings": "array"][p.type] ?? p.type), "description": .string(p.help)]

@@ -23,6 +23,7 @@ struct SchemaContractTests {
             #expect(Set(input.object!.keys) == Set(spec.options.map(\.name) + ["json", "output", "data-dir", "language", "quiet"]))
             #expect(descriptor["resultSchema"]["properties"]["schemaVersion"]["const"] == .integer(1))
             #expect(descriptor["resultSchema"]["properties"]["error"]["anyOf"] != .null)
+            if spec.operands.isEmpty { #expect(descriptor["inputSchema"]["properties"]["operands"]["prefixItems"] == .null) }
         }
     }
     @MainActor @Test func configurationSchemaDescribesPatchFieldsAndInheritance() async throws {

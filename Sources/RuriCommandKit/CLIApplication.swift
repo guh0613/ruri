@@ -9,6 +9,7 @@ public enum CLIApplication {
     }) async -> Int32 {
         let args = normalizeGlobals(arguments)
         var output = CommandOutput(format: requestedFormat(args), quiet: args.contains("--quiet"), write: write)
+        var activeRequest: CommandRequest?
         do {
             let parsed: any ParsableCommand
             do { parsed = try RuriCommand.parseAsRoot(args) }
@@ -22,6 +23,7 @@ public enum CLIApplication {
             }
             let request = command.request
             try request.validate()
+            activeRequest = request
             output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write)
             let context = request.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
             let result = try await LocalizationContext.$current.withValue(context) {
@@ -36,8 +38,11 @@ public enum CLIApplication {
             let warnings = (try? result["warnings"].decode([String].self)) ?? []
             output.result(payload, warnings: warnings); return 0
         } catch {
-            let failure: OperationFailure
-            if error is CancellationError || Task.isCancelled { failure = .init("CANCELLED", Messages.CLIInterface.t386cf3b4f8ac.localized) }
+            var failure: OperationFailure
+            if error is CancellationError || Task.isCancelled || (error as? InstanceMoveFailure)?.cancelled == true || (error as? RunDirectoryCopyFailure)?.cancelled == true {
+                let original = error as? OperationFailure
+                failure = .init("CANCELLED", Messages.CLIInterface.t386cf3b4f8ac.localized, nextActions: original?.nextActions ?? [], details: original?.details ?? .null)
+            }
             else if let value = error as? OperationFailure { failure = value }
             else if let value = error as? RuriError {
                 if case .httpResponse(let status, let host) = value {
@@ -46,6 +51,7 @@ public enum CLIApplication {
             } else if let value = error as? URLError {
                 failure = .init("NETWORK_ERROR", value.localizedDescription, retryable: true)
             } else { failure = .init("IO_ERROR", error.localizedDescription) }
+            if let request = activeRequest { failure = await addingRecovery(to: failure, underlying: error, request: request, output: output) }
             output.result(error: failure)
             return failure.code == "INVALID_ARGUMENT" ? 2 : failure.code == "CANCELLED" ? 130 : 1
         }

@@ -43,6 +43,22 @@ import RuriCore
         #expect(try await invoke(["recovery", "apply", "content", instance.id.uuidString, "--yes"], paths).0 == 0)
         #expect(!FileManager.default.fileExists(atPath: pending.path))
     }
+    @Test func mutationFailureReturnsRecoveryTargetsWithoutTouchingTheJournal() async throws {
+        let (paths, instance) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let pending = paths.instance(instance.id).appendingPathComponent("content-transaction")
+        try FileManager.default.createDirectory(at: pending, withIntermediateDirectories: true)
+        let marker = pending.appendingPathComponent("committed")
+        try Data("marker".utf8).write(to: marker)
+        var common = CommonOptions(); common.dataDir = paths.root.path
+        let request = CommandRequest(spec: ContentInstallCommand.spec, common: common, operands: [instance.id.uuidString, "fixture"], options: [:])
+        let underlying = OperationFailure("IO_ERROR", "fixture")
+        let failure = await CLIApplication.addingRecovery(to: underlying, underlying: underlying, request: request, output: CommandOutput(format: .json, write: { _, _ in }))
+        #expect(failure.code == "IO_ERROR")
+        #expect(failure.nextActions.contains { $0.command == ["recovery", "apply", "content", instance.id.uuidString] })
+        let pendingItems = try failure.details["recovery"].decode([Value].self)
+        #expect(pendingItems.count == 1 && pendingItems[0]["target"] == .string(instance.id.uuidString))
+        #expect(try Data(contentsOf: marker) == Data("marker".utf8))
+    }
     @Test func worldBackupRestoreAndDataPackPriorityRoundTrip() async throws {
         let (paths, instance) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         func string(_ s: String) -> Data { let data = Data(s.utf8); return Data([UInt8(data.count >> 8), UInt8(data.count & 255)]) + data }

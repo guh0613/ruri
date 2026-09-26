@@ -28,7 +28,7 @@ extension CLIApplication {
             }
             if action == "update-check" {
                 let key = saved.origin?.provider == .curseforge ? try CurseForgeKeyStore.load() : ""
-                let limit = request.integer("limit") ?? 50, start = request.integer("offset") ?? 0
+                let limit = request.integer("limit") ?? 50, start = request.flag("all") ? 0 : request.integer("offset") ?? 0
                 var offset = start, items: [ModpackRelease] = [], more = false
                 repeat {
                     let response = try await releases.versions(for: saved, curseForgeKey: key, offset: offset)

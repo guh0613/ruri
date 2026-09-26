@@ -108,3 +108,35 @@ extension CLIApplication {
         return report
     }
 }
+
+extension CLIApplication {
+    /// Failure discovery is read-only, and must never replace the original
+    /// error when a damaged journal or unavailable directory cannot be read.
+    @MainActor static func addingRecovery(to failure: OperationFailure, underlying: any Error, request: CommandRequest, output: CommandOutput) async -> OperationFailure {
+        guard request.spec.mutation, ["instance", "directory", "pack", "content", "world", "datapack", "launch", "recovery"].contains(request.spec.path.first ?? ""),
+              !["INVALID_ARGUMENT", "CONFIRMATION_REQUIRED", "NOT_FOUND"].contains(failure.code) else { return failure }
+        let instanceID = request.operands.first.flatMap(UUID.init(uuidString:)) ?? failure.details["instanceID"].string.flatMap(UUID.init(uuidString:))
+        var options: [String: Value] = ["all": .bool(true)]
+        if let instanceID { options["instance"] = .string(instanceID.uuidString) }
+        let query = CommandRequest(spec: RecoveryListCommand.spec, common: request.common, operands: [], options: options)
+        let snapshot = try? await OperationReadPolicy.$protectedDataRoot.withValue(basePaths(request).root) { try await manageRecovery(query, output: output) }
+        var items = (try? snapshot?["items"].decode([Value].self)) ?? []
+        if instanceID == nil, let directory = request.string("directory").flatMap({ try? directoryID($0) }) {
+            items = items.filter { $0["target"].string == directory.uuidString }
+        }
+        var preserved: [String] = []
+        if let error = underlying as? InstanceMoveFailure { preserved = error.preservedFiles.map(\.path) }
+        if let error = underlying as? RunDirectoryCopyFailure, let path = error.preservedCopy?.path { preserved = [path] }
+        if let error = underlying as? RepositoryImportFailure, let path = error.preservedFiles?.path { preserved = [path] }
+        guard !items.isEmpty || !preserved.isEmpty || failure.code == "CANCELLED" else { return failure }
+        var details = failure.details.object ?? (failure.details == .null ? [:] : ["cause": failure.details])
+        details["recovery"] = .array(items)
+        if !preserved.isEmpty { details["preservedFiles"] = .array(preserved.map(Value.string)) }
+        var actions = failure.nextActions
+        for item in items {
+            if let command = try? item["nextAction"].decode([String].self) { actions.append(.init(command)) }
+        }
+        if actions.isEmpty { actions = [.init(["recovery", "list"] + (instanceID.map { ["--instance", $0.uuidString] } ?? []) + ["--json"])] }
+        return .init(failure.code, failure.message, retryable: failure.retryable, nextActions: actions, details: .object(details))
+    }
+}
