@@ -2,7 +2,7 @@
 "cliSetup.title" = "命令行工具";
 
 /* @symbol CLISetup.introduction @args - */
-"cliSetup.introduction" = "安装后即可在终端使用 ruri，无需配置 PATH。";
+"cliSetup.introduction" = "安装后即可在终端使用 Ruri CLI，无需配置 PATH。";
 
 /* @symbol CLISetup.install @args - */
 "cliSetup.install" = "安装到终端";
@@ -11,7 +11,7 @@
 "cliSetup.ready" = "命令行工具已安装";
 
 /* @symbol CLISetup.readyDetail @args - */
-"cliSetup.readyDetail" = "新开终端，运行下方命令即可开始。";
+"cliSetup.readyDetail" = "打开新的终端窗口，运行下方命令即可开始。";
 
 /* @symbol CLISetup.repairTitle @args - */
 "cliSetup.repairTitle" = "命令行工具需要更新";
@@ -32,16 +32,16 @@
 "cliSetup.location" = "命令位置";
 
 /* @symbol CLISetup.copyCommand @args - */
-"cliSetup.copyCommand" = "复制入门命令";
+"cliSetup.copyCommand" = "复制命令";
 
 /* @symbol CLISetup.copied @args - */
 "cliSetup.copied" = "已复制";
 
 /* @symbol CLISetup.copyDirectCommand @args - */
-"cliSetup.copyDirectCommand" = "复制完整调用命令";
+"cliSetup.copyDirectCommand" = "复制完整命令";
 
 /* @symbol CLISetup.footer @args - */
-"cliSetup.footer" = "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。";
+"cliSetup.footer" = "通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。";
 
 /* @symbol CLISetup.authorizationHint @args - */
 "cliSetup.authorizationHint" = "安装或卸载时，系统可能请求管理员授权。";

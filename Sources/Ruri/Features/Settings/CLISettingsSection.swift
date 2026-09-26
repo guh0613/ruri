@@ -44,21 +44,36 @@ struct CLISettingsSection: View {
             }
             if let issue { Text(issue).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
             DisclosureGroup(Messages.CLISetup.details.localized) {
-                if !link.isEmpty {
-                    LabeledContent(Messages.CLISetup.location.localized) { Text(link).textSelection(.enabled) }
-                        .font(.caption)
-                }
-                Text(Messages.CLISetup.authorizationHint.localized).font(.caption).foregroundStyle(.secondary)
-                HStack {
-                    Button(Messages.CLISetup.copyDirectCommand.localized) {
-                        if let executable = RuriInstallation.cliExecutable { copy(CLIInstallation.shellQuote(executable.path) + " --help") }
+                VStack(alignment: .leading, spacing: 16) {
+                    if !link.isEmpty {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(Messages.CLISetup.location.localized)
+                                .font(.caption).foregroundStyle(.secondary)
+                            Text(verbatim: link)
+                                .font(.system(.callout, design: .monospaced))
+                                .textSelection(.enabled)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                     }
-                    Spacer()
-                    if ready { Button(Messages.CLISetup.reinstall.localized) { change(.install) } }
-                    if owned || legacyLink != nil {
-                        Button(Messages.CLIInterface.t06bc14b60f35.localized, role: .destructive) { change(.uninstall) }
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(spacing: 8) {
+                            Button(Messages.CLISetup.copyDirectCommand.localized) {
+                                if let executable = RuriInstallation.cliExecutable { copy(CLIInstallation.shellQuote(executable.path) + " --help") }
+                            }
+                            if ready { Button(Messages.CLISetup.reinstall.localized) { change(.install) } }
+                            if owned || legacyLink != nil {
+                                Button(Messages.CLIInterface.t06bc14b60f35.localized, role: .destructive) { change(.uninstall) }
+                            }
+                        }
+                        .controlSize(.small)
+                        Text(Messages.CLISetup.authorizationHint.localized)
+                            .font(.caption).foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 12)
+                .padding(.bottom, 8)
             }
         } header: { Text(Messages.CLIInterface.t56f8e5b9417c.localized) } footer: {
             Text(Messages.CLISetup.footer.localized)

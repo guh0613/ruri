@@ -9,11 +9,11 @@ extension Messages {
         public static var title: LocalizedMessage {
             .init(key: "cliSetup.title", table: "CLISetup", fallback: "命令行工具")
         }
-        /// 安装后即可在终端使用 ruri，无需配置 PATH。
+        /// 安装后即可在终端使用 Ruri CLI，无需配置 PATH。
         ///
         /// Resource: `CLISetup.cliSetup.introduction`.
         public static var introduction: LocalizedMessage {
-            .init(key: "cliSetup.introduction", table: "CLISetup", fallback: "安装后即可在终端使用 ruri，无需配置 PATH。")
+            .init(key: "cliSetup.introduction", table: "CLISetup", fallback: "安装后即可在终端使用 Ruri CLI，无需配置 PATH。")
         }
         /// 安装到终端
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static var ready: LocalizedMessage {
             .init(key: "cliSetup.ready", table: "CLISetup", fallback: "命令行工具已安装")
         }
-        /// 新开终端，运行下方命令即可开始。
+        /// 打开新的终端窗口，运行下方命令即可开始。
         ///
         /// Resource: `CLISetup.cliSetup.readyDetail`.
         public static var readyDetail: LocalizedMessage {
-            .init(key: "cliSetup.readyDetail", table: "CLISetup", fallback: "新开终端，运行下方命令即可开始。")
+            .init(key: "cliSetup.readyDetail", table: "CLISetup", fallback: "打开新的终端窗口，运行下方命令即可开始。")
         }
         /// 命令行工具需要更新
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var location: LocalizedMessage {
             .init(key: "cliSetup.location", table: "CLISetup", fallback: "命令位置")
         }
-        /// 复制入门命令
+        /// 复制命令
         ///
         /// Resource: `CLISetup.cliSetup.copyCommand`.
         public static var copyCommand: LocalizedMessage {
-            .init(key: "cliSetup.copyCommand", table: "CLISetup", fallback: "复制入门命令")
+            .init(key: "cliSetup.copyCommand", table: "CLISetup", fallback: "复制命令")
         }
         /// 已复制
         ///
@@ -81,17 +81,17 @@ extension Messages {
         public static var copied: LocalizedMessage {
             .init(key: "cliSetup.copied", table: "CLISetup", fallback: "已复制")
         }
-        /// 复制完整调用命令
+        /// 复制完整命令
         ///
         /// Resource: `CLISetup.cliSetup.copyDirectCommand`.
         public static var copyDirectCommand: LocalizedMessage {
-            .init(key: "cliSetup.copyDirectCommand", table: "CLISetup", fallback: "复制完整调用命令")
+            .init(key: "cliSetup.copyDirectCommand", table: "CLISetup", fallback: "复制完整命令")
         }
-        /// 通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。
+        /// 通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。
         ///
         /// Resource: `CLISetup.cliSetup.footer`.
         public static var footer: LocalizedMessage {
-            .init(key: "cliSetup.footer", table: "CLISetup", fallback: "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。")
+            .init(key: "cliSetup.footer", table: "CLISetup", fallback: "通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。")
         }
         /// 安装或卸载时，系统可能请求管理员授权。
         ///
@@ -125,20 +125,20 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "CLISetup:cliSetup.title": .init("命令行工具", []),
-            "CLISetup:cliSetup.introduction": .init("安装后即可在终端使用 ruri，无需配置 PATH。", []),
+            "CLISetup:cliSetup.introduction": .init("安装后即可在终端使用 Ruri CLI，无需配置 PATH。", []),
             "CLISetup:cliSetup.install": .init("安装到终端", []),
             "CLISetup:cliSetup.ready": .init("命令行工具已安装", []),
-            "CLISetup:cliSetup.readyDetail": .init("新开终端，运行下方命令即可开始。", []),
+            "CLISetup:cliSetup.readyDetail": .init("打开新的终端窗口，运行下方命令即可开始。", []),
             "CLISetup:cliSetup.repairTitle": .init("命令行工具需要更新", []),
             "CLISetup:cliSetup.repairDetail": .init("更新链接，让终端使用当前版本的 Ruri。", []),
             "CLISetup:cliSetup.repair": .init("修复安装", []),
             "CLISetup:cliSetup.reinstall": .init("重新安装", []),
             "CLISetup:cliSetup.details": .init("安装详情", []),
             "CLISetup:cliSetup.location": .init("命令位置", []),
-            "CLISetup:cliSetup.copyCommand": .init("复制入门命令", []),
+            "CLISetup:cliSetup.copyCommand": .init("复制命令", []),
             "CLISetup:cliSetup.copied": .init("已复制", []),
-            "CLISetup:cliSetup.copyDirectCommand": .init("复制完整调用命令", []),
-            "CLISetup:cliSetup.footer": .init("通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。", []),
+            "CLISetup:cliSetup.copyDirectCommand": .init("复制完整命令", []),
+            "CLISetup:cliSetup.footer": .init("通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。", []),
             "CLISetup:cliSetup.authorizationHint": .init("安装或卸载时，系统可能请求管理员授权。", []),
             "CLISetup:cliSetup.authorizationRequired": .init("安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。", []),
             "CLISetup:cliSetup.authorizeInstall": .init("Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。", []),
