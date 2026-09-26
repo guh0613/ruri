@@ -75,6 +75,7 @@ enum MessageCatalog {
         result.merge(Messages.AppWorldDataPacksView.definitions) { first, _ in first }
         result.merge(Messages.AppWorldManagerView.definitions) { first, _ in first }
         result.merge(Messages.CLIInterface.definitions) { first, _ in first }
+        result.merge(Messages.CLISetup.definitions) { first, _ in first }
         result.merge(Messages.Common.definitions) { first, _ in first }
         result.merge(Messages.ContentDetails.definitions) { first, _ in first }
         result.merge(Messages.ContentImport.definitions) { first, _ in first }

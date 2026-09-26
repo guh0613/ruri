@@ -147,17 +147,17 @@ extension Messages {
         public static var tb15b5698e07c: LocalizedMessage {
             .init(key: "cliInterface.tb15b5698e07c", table: "CLIInterface", fallback: "检查命令行工具及 PATH。")
         }
-        /// Install a user-owned ruri link without changing shell profiles.
+        /// 安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。
         ///
         /// Resource: `CLIInterface.cliInterface.t05715f352213`.
         public static var t05715f352213: LocalizedMessage {
-            .init(key: "cliInterface.t05715f352213", table: "CLIInterface", fallback: "Install a user-owned ruri link without changing shell profiles.")
+            .init(key: "cliInterface.t05715f352213", table: "CLIInterface", fallback: "安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。")
         }
-        /// Directory for the ruri link.
+        /// 命令安装目录，默认为 /usr/local/bin。
         ///
         /// Resource: `CLIInterface.cliInterface.t6edc04f9cc0c`.
         public static var t6edc04f9cc0c: LocalizedMessage {
-            .init(key: "cliInterface.t6edc04f9cc0c", table: "CLIInterface", fallback: "Directory for the ruri link.")
+            .init(key: "cliInterface.t6edc04f9cc0c", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
         }
         /// Remove the ruri link only if it belongs to Ruri.
         ///
@@ -165,11 +165,11 @@ extension Messages {
         public static var t32373072cae3: LocalizedMessage {
             .init(key: "cliInterface.t32373072cae3", table: "CLIInterface", fallback: "Remove the ruri link only if it belongs to Ruri.")
         }
-        /// Directory containing the ruri link.
+        /// 命令安装目录，默认为 /usr/local/bin。
         ///
         /// Resource: `CLIInterface.cliInterface.t7736b5280e58`.
         public static var t7736b5280e58: LocalizedMessage {
-            .init(key: "cliInterface.t7736b5280e58", table: "CLIInterface", fallback: "Directory containing the ruri link.")
+            .init(key: "cliInterface.t7736b5280e58", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
         }
         /// 确认删除或覆盖操作。
         ///
@@ -2301,47 +2301,17 @@ extension Messages {
         public static var tff19ae82a321: LocalizedMessage {
             .init(key: "cliInterface.tff19ae82a321", table: "CLIInterface", fallback: "An unfinished operation must be recovered before inspecting this data.")
         }
-        /// 命令行工具
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta3dc8fc730b8`.
-        public static var ta3dc8fc730b8: LocalizedMessage {
-            .init(key: "cliInterface.ta3dc8fc730b8", table: "CLIInterface", fallback: "命令行工具")
-        }
         /// 卸载
         ///
         /// Resource: `CLIInterface.cliInterface.t06bc14b60f35`.
         public static var t06bc14b60f35: LocalizedMessage {
             .init(key: "cliInterface.t06bc14b60f35", table: "CLIInterface", fallback: "卸载")
         }
-        /// 安装
-        ///
-        /// Resource: `CLIInterface.cliInterface.te8f88f51ccb0`.
-        public static var te8f88f51ccb0: LocalizedMessage {
-            .init(key: "cliInterface.te8f88f51ccb0", table: "CLIInterface", fallback: "安装")
-        }
-        /// 已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t20255da83a92`.
-        public static var t20255da83a92: LocalizedMessage {
-            .init(key: "cliInterface.t20255da83a92", table: "CLIInterface", fallback: "已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。")
-        }
-        /// 复制应用内 CLI 路径
-        ///
-        /// Resource: `CLIInterface.cliInterface.t80cc6a4f6c96`.
-        public static var t80cc6a4f6c96: LocalizedMessage {
-            .init(key: "cliInterface.t80cc6a4f6c96", table: "CLIInterface", fallback: "复制应用内 CLI 路径")
-        }
         /// 命令行与自动化
         ///
         /// Resource: `CLIInterface.cliInterface.t56f8e5b9417c`.
         public static var t56f8e5b9417c: LocalizedMessage {
             .init(key: "cliInterface.t56f8e5b9417c", table: "CLIInterface", fallback: "命令行与自动化")
-        }
-        /// 通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9401df17eb2f`.
-        public static var t9401df17eb2f: LocalizedMessage {
-            .init(key: "cliInterface.t9401df17eb2f", table: "CLIInterface", fallback: "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。")
         }
         static let definitions: [String: MessageDefinition] = [
             "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
@@ -2368,10 +2338,10 @@ extension Messages {
             "CLIInterface:cliInterface.t56774fcdd554": .init("设置应用语言，重启后生效。", []),
             "CLIInterface:cliInterface.t6034a698016d": .init("预览操作，不更改用户数据。", []),
             "CLIInterface:cliInterface.tb15b5698e07c": .init("检查命令行工具及 PATH。", []),
-            "CLIInterface:cliInterface.t05715f352213": .init("Install a user-owned ruri link without changing shell profiles.", []),
-            "CLIInterface:cliInterface.t6edc04f9cc0c": .init("Directory for the ruri link.", []),
+            "CLIInterface:cliInterface.t05715f352213": .init("安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。", []),
+            "CLIInterface:cliInterface.t6edc04f9cc0c": .init("命令安装目录，默认为 /usr/local/bin。", []),
             "CLIInterface:cliInterface.t32373072cae3": .init("Remove the ruri link only if it belongs to Ruri.", []),
-            "CLIInterface:cliInterface.t7736b5280e58": .init("Directory containing the ruri link.", []),
+            "CLIInterface:cliInterface.t7736b5280e58": .init("命令安装目录，默认为 /usr/local/bin。", []),
             "CLIInterface:cliInterface.t3b0368de0fdf": .init("确认删除或覆盖操作。", []),
             "CLIInterface:cliInterface.teaca59ff6999": .init("app language commands", []),
             "CLIInterface:cliInterface.t64c4a55a8346": .init("app commands", []),
@@ -2727,13 +2697,8 @@ extension Messages {
             "CLIInterface:cliInterface.t7f8c861b7d62": .init("This recovery requires --transaction from recovery list.", []),
             "CLIInterface:cliInterface.tf19d497be38f": .init("One or more checks failed.", []),
             "CLIInterface:cliInterface.tff19ae82a321": .init("An unfinished operation must be recovered before inspecting this data.", []),
-            "CLIInterface:cliInterface.ta3dc8fc730b8": .init("命令行工具", []),
             "CLIInterface:cliInterface.t06bc14b60f35": .init("卸载", []),
-            "CLIInterface:cliInterface.te8f88f51ccb0": .init("安装", []),
-            "CLIInterface:cliInterface.t20255da83a92": .init("已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。", []),
-            "CLIInterface:cliInterface.t80cc6a4f6c96": .init("复制应用内 CLI 路径", []),
             "CLIInterface:cliInterface.t56f8e5b9417c": .init("命令行与自动化", []),
-            "CLIInterface:cliInterface.t9401df17eb2f": .init("通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。", []),
         ]
     }
 }

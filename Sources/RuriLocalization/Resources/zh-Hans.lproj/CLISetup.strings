@@ -1,0 +1,56 @@
+/* @symbol CLISetup.title @args - */
+"cliSetup.title" = "在终端和 AI 助手中使用 Ruri";
+
+/* @symbol CLISetup.introduction @args - */
+"cliSetup.introduction" = "一键安装 ruri 命令，让终端或 AI 助手帮你管理实例、账户和游戏配置。无需手动设置 PATH。";
+
+/* @symbol CLISetup.install @args - */
+"cliSetup.install" = "安装到终端";
+
+/* @symbol CLISetup.ready @args - */
+"cliSetup.ready" = "命令行工具已安装";
+
+/* @symbol CLISetup.readyDetail @args - */
+"cliSetup.readyDetail" = "新开一个终端窗口，运行下方命令即可开始。已打开的终端或 AI 助手可能需要重新启动。";
+
+/* @symbol CLISetup.repairTitle @args - */
+"cliSetup.repairTitle" = "命令行工具需要更新";
+
+/* @symbol CLISetup.repairDetail @args - */
+"cliSetup.repairDetail" = "将命令连接到当前 Ruri，并清理旧版安装链接。完成后无需手动配置终端。";
+
+/* @symbol CLISetup.repair @args - */
+"cliSetup.repair" = "修复安装";
+
+/* @symbol CLISetup.reinstall @args - */
+"cliSetup.reinstall" = "重新安装";
+
+/* @symbol CLISetup.details @args - */
+"cliSetup.details" = "安装详情";
+
+/* @symbol CLISetup.location @args - */
+"cliSetup.location" = "命令位置";
+
+/* @symbol CLISetup.copyCommand @args - */
+"cliSetup.copyCommand" = "复制入门命令";
+
+/* @symbol CLISetup.copied @args - */
+"cliSetup.copied" = "已复制";
+
+/* @symbol CLISetup.copyDirectCommand @args - */
+"cliSetup.copyDirectCommand" = "复制完整调用命令";
+
+/* @symbol CLISetup.footer @args - */
+"cliSetup.footer" = "安装到 macOS 标准命令目录 /usr/local/bin。需要时会弹出系统管理员授权；不会修改你的 shell 配置。移动 Ruri 后，可在此修复安装。";
+
+/* @symbol CLISetup.authorizationRequired @args - */
+"cliSetup.authorizationRequired" = "安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。";
+
+/* @symbol CLISetup.authorizeInstall @args - */
+"cliSetup.authorizeInstall" = "Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。";
+
+/* @symbol CLISetup.authorizeUninstall @args - */
+"cliSetup.authorizeUninstall" = "Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。";
+
+/* @symbol CLISetup.authorizationFailed @args text */
+"cliSetup.authorizationFailed" = "未能完成系统授权操作：%@";

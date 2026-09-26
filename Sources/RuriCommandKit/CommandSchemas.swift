@@ -31,7 +31,7 @@ enum CommandSchemas {
     static let directory = object(fields("id,name,path,layout").merging(["detached": boolean, "available": boolean]) { _, new in new })
     static let java = object(fields("id,path,version,architecture,vendor", type: nullable(string)).merging(["major": integer]) { _, new in new })
     static let configReport = object(["scope": string, "revision": nullable(string), "explicit": .object([:]), "effective": .object([:]), "sources": object([:]), "key": string, "source": nullable(string)])
-    static let installation = object(fields("executable,link,target", type: nullable(string)).merging(["installed": boolean, "owned": boolean, "onPath": boolean]) { _, new in new })
+    static let installation = object(fields("executable,link,target,legacyLink", type: nullable(string)).merging(["installed": boolean, "owned": boolean, "onPath": boolean, "requiresAuthorization": boolean]) { _, new in new })
 
     static var patches: Value {
         .object(["app": patch(ConfigurationService.appFields, inherits: false), "defaults": patch(ConfigurationService.launchFields, inherits: false), "instance": patch(ConfigurationService.launchFields, inherits: true)])

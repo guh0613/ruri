@@ -78,7 +78,7 @@ struct CliInstallCommand: ExecutableCommand {
     ], options: [
         .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t6edc04f9cc0c.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: true, examples: [])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
     @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t6edc04f9cc0c.localized)) var optionBinDir: String?
@@ -96,7 +96,7 @@ struct CliUninstallCommand: ExecutableCommand {
         .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t7736b5280e58.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
-    ], mutation: true, confirmation: true, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: true, userParticipation: true, examples: [])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
     @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t7736b5280e58.localized)) var optionBinDir: String?

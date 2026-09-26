@@ -1108,5 +1108,30 @@
     "file": "Sources/RuriCommandKit/InstanceCommands.swift",
     "literal": "\"component restore\"",
     "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/CLISettingsSection.swift",
+    "literal": "\"ruri --help\"",
+    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/CLISettingsSection.swift",
+    "literal": "\"ruri --help\"",
+    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/CLISettingsSection.swift",
+    "literal": "\" --help\"",
+    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
+  },
+  {
+    "file": "Sources/RuriCore/Operations/CLIInstallation.swift",
+    "literal": "\"\"\"\n        try\n            return do shell script \\(Self.appleScriptString(authorizationCommand(action) + \" 2>&1 || true\")) with administrator privileges with prompt \\(Self.appleScriptString(prompt))\n        on error number -128\n            return \"__RURI_AUTH_CANCELLED__\"\n        end try\n        \"\"\"",
+    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
+  },
+  {
+    "file": "Sources/RuriCore/Operations/CLIInstallation.swift",
+    "literal": "\" 2>&1 || true\"",
+    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
   }
 ]

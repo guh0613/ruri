@@ -71,16 +71,16 @@
 "cliInterface.tb15b5698e07c" = "检查命令行工具及 PATH。";
 
 /* @symbol CLIInterface.t05715f352213 @args - */
-"cliInterface.t05715f352213" = "Install a user-owned ruri link without changing shell profiles.";
+"cliInterface.t05715f352213" = "安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。";
 
 /* @symbol CLIInterface.t6edc04f9cc0c @args - */
-"cliInterface.t6edc04f9cc0c" = "Directory for the ruri link.";
+"cliInterface.t6edc04f9cc0c" = "命令安装目录，默认为 /usr/local/bin。";
 
 /* @symbol CLIInterface.t32373072cae3 @args - */
 "cliInterface.t32373072cae3" = "Remove the ruri link only if it belongs to Ruri.";
 
 /* @symbol CLIInterface.t7736b5280e58 @args - */
-"cliInterface.t7736b5280e58" = "Directory containing the ruri link.";
+"cliInterface.t7736b5280e58" = "命令安装目录，默认为 /usr/local/bin。";
 
 /* @symbol CLIInterface.t3b0368de0fdf @args - */
 "cliInterface.t3b0368de0fdf" = "确认删除或覆盖操作。";
@@ -1147,24 +1147,9 @@
 /* @symbol CLIInterface.tff19ae82a321 @args - */
 "cliInterface.tff19ae82a321" = "An unfinished operation must be recovered before inspecting this data.";
 
-/* @symbol CLIInterface.ta3dc8fc730b8 @args - */
-"cliInterface.ta3dc8fc730b8" = "命令行工具";
-
 /* @symbol CLIInterface.t06bc14b60f35 @args - */
 "cliInterface.t06bc14b60f35" = "卸载";
 
-/* @symbol CLIInterface.te8f88f51ccb0 @args - */
-"cliInterface.te8f88f51ccb0" = "安装";
-
-/* @symbol CLIInterface.t20255da83a92 @args - */
-"cliInterface.t20255da83a92" = "已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。";
-
-/* @symbol CLIInterface.t80cc6a4f6c96 @args - */
-"cliInterface.t80cc6a4f6c96" = "复制应用内 CLI 路径";
-
 /* @symbol CLIInterface.t56f8e5b9417c @args - */
 "cliInterface.t56f8e5b9417c" = "命令行与自动化";
-
-/* @symbol CLIInterface.t9401df17eb2f @args - */
-"cliInterface.t9401df17eb2f" = "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。";
 

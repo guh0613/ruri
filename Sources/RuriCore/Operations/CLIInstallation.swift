@@ -24,59 +24,118 @@ public enum RuriInstallation {
 }
 
 public struct CLIInstallation: Sendable {
+    public static let defaultBinDirectory = URL(fileURLWithPath: "/usr/local/bin", isDirectory: true)
     public let executable: URL
     public let binDirectory: URL
+    private let homeDirectory: URL
+    private let migrateLegacyLink: Bool
     public var link: URL { binDirectory.appendingPathComponent("ruri") }
     private var receipt: URL { binDirectory.appendingPathComponent(".ruri-cli-install.json") }
-    public init(executable: URL? = RuriInstallation.cliExecutable, binDirectory: URL? = nil) throws {
+    private var lockFile: URL { binDirectory.appendingPathComponent(".ruri-cli-install.lock") }
+    public init(executable: URL? = RuriInstallation.cliExecutable, binDirectory: URL? = nil,
+                homeDirectory: URL = FileManager.default.homeDirectoryForCurrentUser) throws {
         guard let executable else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.t53102783ab6d.localized) }
         self.executable = executable.resolvingSymlinksInPath()
-        self.binDirectory = (binDirectory ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".local/bin")).standardizedFileURL
+        self.binDirectory = (binDirectory ?? Self.defaultBinDirectory).standardizedFileURL
+        self.homeDirectory = homeDirectory
+        self.migrateLegacyLink = binDirectory == nil
     }
     private var destination: String? { try? FileManager.default.destinationOfSymbolicLink(atPath: link.path) }
+    private var exists: Bool { FileManager.default.fileExists(atPath: link.path) || destination != nil }
     private var owned: Bool {
         guard let destination else { return false }
         if destination == executable.path { return true }
         guard let data = try? Data(contentsOf: receipt), let prior = try? JSONDecoder().decode(String.self, from: data) else { return false }
         return destination == prior
     }
+    private var legacy: CLIInstallation? {
+        guard migrateLegacyLink else { return nil }
+        let prior = try? CLIInstallation(executable: executable, binDirectory: homeDirectory.appendingPathComponent(".local/bin"), homeDirectory: homeDirectory)
+        return prior?.owned == true ? prior : nil
+    }
+    private var needsAuthorization: Bool {
+        let fm = FileManager.default
+        var parent = binDirectory
+        while !fm.fileExists(atPath: parent.path), parent.path != "/" { parent.deleteLastPathComponent() }
+        return !fm.isWritableFile(atPath: parent.path) || (fm.fileExists(atPath: lockFile.path) && !fm.isWritableFile(atPath: lockFile.path))
+    }
     public func status(environment: [String: String] = ProcessInfo.processInfo.environment) -> OperationValue {
-        .object(["executable": .string(executable.path), "link": .string(link.path), "target": .text(destination),
-                 "installed": .bool(owned && destination == executable.path && FileManager.default.isExecutableFile(atPath: executable.path)),
-                 "owned": .bool(owned), "onPath": .bool((environment["PATH"] ?? "").split(separator: ":").contains { URL(fileURLWithPath: String($0)).standardizedFileURL == binDirectory })])
+        let installed = owned && destination == executable.path && FileManager.default.isExecutableFile(atPath: executable.path)
+        return .object(["executable": .string(executable.path), "link": .string(link.path), "target": .text(destination),
+                 "installed": .bool(installed), "owned": .bool(owned), "legacyLink": .text(legacy?.link.path),
+                 "requiresAuthorization": .bool(!installed && needsAuthorization),
+                 "onPath": .bool((environment["PATH"] ?? "").split(separator: ":").contains { URL(fileURLWithPath: String($0)).standardizedFileURL == binDirectory })])
+    }
+    private func validateOwnership() throws {
+        if exists && !owned { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.t93432f8e8264.localized, details: .object(["path": .string(link.path)])) }
+    }
+    private func requireWriteAccess() throws {
+        guard !needsAuthorization else {
+            throw OperationFailure("AUTHORIZATION_REQUIRED", Messages.CLISetup.authorizationRequired.localized, details: .object(["path": .string(link.path), "installationMethod": .string("appSettings")]))
+        }
     }
     public func install(dryRun: Bool = false) throws -> OperationValue {
         guard FileManager.default.isExecutableFile(atPath: executable.path) else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.tcef88e8371f1.localized) }
-        func validate() throws {
-            if (FileManager.default.fileExists(atPath: link.path) || destination != nil) && !owned {
-                throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.t93432f8e8264.localized, details: .object(["path": .string(link.path)]))
+        try validateOwnership()
+        let needsLink = destination != executable.path, oldLink = legacy
+        if dryRun { return .object(["dryRun": .bool(true), "changed": .bool(needsLink || oldLink != nil), "status": status()]) }
+        var changed = false
+        // A current installation needs no privileged write. In particular, a
+        // normal user can query or repeat an administrator-owned installation.
+        if needsLink {
+            try requireWriteAccess()
+            let lease = try OperationLease.acquire(directory: binDirectory, name: lockFile.lastPathComponent)
+            defer { withExtendedLifetime(lease) {} }
+            try validateOwnership()
+            if destination != executable.path {
+                let temporary = binDirectory.appendingPathComponent(".ruri-link-\(UUID())")
+                defer { try? FileManager.default.removeItem(at: temporary) }
+                try FileManager.default.createSymbolicLink(atPath: temporary.path, withDestinationPath: executable.path)
+                guard rename(temporary.path, link.path) == 0 else { throw OperationFailure("IO_ERROR", Messages.CLIInterface.t301c72c06b6d.localized) }
+                try JSONEncoder().encode(executable.path).write(to: receipt, options: .atomic)
+                changed = true
             }
         }
-        try validate()
-        if dryRun { return .object(["dryRun": .bool(true), "changed": .bool(destination != executable.path), "status": status()]) }
-        let lease = try OperationLease.acquire(directory: binDirectory, name: ".ruri-cli-install.lock")
-        defer { withExtendedLifetime(lease) {} }
-        try validate()
-        let changed = destination != executable.path
-        if changed {
-            let temporary = binDirectory.appendingPathComponent(".ruri-link-\(UUID())")
-            defer { try? FileManager.default.removeItem(at: temporary) }
-            try FileManager.default.createSymbolicLink(atPath: temporary.path, withDestinationPath: executable.path)
-            // rename replaces only the directory entry, never a symlink target.
-            guard rename(temporary.path, link.path) == 0 else { throw OperationFailure("IO_ERROR", Messages.CLIInterface.t301c72c06b6d.localized) }
-        }
-        try JSONEncoder().encode(executable.path).write(to: receipt, options: .atomic)
+        if let oldLink { _ = try oldLink.uninstall(); changed = true }
         return .object(["changed": .bool(changed), "status": status()])
     }
     public func uninstall(dryRun: Bool = false) throws -> OperationValue {
-        let exists = FileManager.default.fileExists(atPath: link.path) || destination != nil
-        guard !exists || owned else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.t93432f8e8264.localized) }
-        guard !dryRun, exists else { return .object(["changed": .bool(exists), "dryRun": .bool(dryRun), "status": status()]) }
-        let lease = try OperationLease.acquire(directory: binDirectory, name: ".ruri-cli-install.lock")
-        defer { withExtendedLifetime(lease) {} }
-        guard owned else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.te99b33ffd7c8.localized) }
-        try FileManager.default.removeItem(at: link)
-        if FileManager.default.fileExists(atPath: receipt.path) { try FileManager.default.removeItem(at: receipt) }
-        return .object(["changed": .bool(true), "status": status()])
+        try validateOwnership()
+        let oldLink = legacy, wasInstalled = exists
+        if dryRun { return .object(["changed": .bool(wasInstalled || oldLink != nil), "dryRun": .bool(true), "status": status()]) }
+        if wasInstalled {
+            try requireWriteAccess()
+            let lease = try OperationLease.acquire(directory: binDirectory, name: lockFile.lastPathComponent)
+            defer { withExtendedLifetime(lease) {} }
+            guard owned else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.te99b33ffd7c8.localized) }
+            try FileManager.default.removeItem(at: link)
+            if FileManager.default.fileExists(atPath: receipt.path) { try FileManager.default.removeItem(at: receipt) }
+        }
+        if let oldLink { _ = try oldLink.uninstall() }
+        return .object(["changed": .bool(wasInstalled || oldLink != nil), "status": status()])
+    }
+    /// After the GUI's privileged worker exits, remove only this user's old
+    /// Ruri-owned link. The administrator worker has a different home directory.
+    public func removeLegacyLink() throws { if let legacy { _ = try legacy.uninstall() } }
+
+    public enum Action: String, Sendable { case install, uninstall }
+    public func authorizationCommand(_ action: Action) -> String {
+        ([executable.path, "cli", action.rawValue, "--bin-dir", binDirectory.path, "--json", "--quiet"] + (action == .uninstall ? ["--yes"] : []))
+            .map(Self.shellQuote).joined(separator: " ")
+    }
+    public func authorizationScript(_ action: Action) -> String {
+        let prompt = action == .install ? Messages.CLISetup.authorizeInstall.localized : Messages.CLISetup.authorizeUninstall.localized
+        return """
+        try
+            return do shell script \(Self.appleScriptString(authorizationCommand(action) + " 2>&1 || true")) with administrator privileges with prompt \(Self.appleScriptString(prompt))
+        on error number -128
+            return "__RURI_AUTH_CANCELLED__"
+        end try
+        """
+    }
+    public static func shellQuote(_ value: String) -> String { "'" + value.replacingOccurrences(of: "'", with: "'\\''") + "'" }
+    public static func appleScriptString(_ value: String) -> String {
+        "\"" + value.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
+            .replacingOccurrences(of: "\r", with: "\\r").replacingOccurrences(of: "\n", with: "\\n") + "\""
     }
 }
