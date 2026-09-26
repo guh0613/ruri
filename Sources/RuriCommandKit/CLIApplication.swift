@@ -58,6 +58,7 @@ public enum CLIApplication {
             try request.validate()
             activeRequest = request
             output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write)
+            output.setRequest(request)
             let context = request.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
             let result = try await LocalizationContext.$current.withValue(context) {
                 try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {

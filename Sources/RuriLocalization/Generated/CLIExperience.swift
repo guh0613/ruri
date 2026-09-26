@@ -87,6 +87,96 @@ extension Messages {
         public static func unknownHelp(_ value0: String) -> LocalizedMessage {
             .init(key: "cliExperience.unknownHelp", table: "CLIExperience", fallback: "找不到命令：%@。使用 ruri help --all 查看命令目录。", arguments: [.text(value0)])
         }
+        /// 没有匹配的结果。
+        ///
+        /// Resource: `CLIExperience.cliExperience.empty`.
+        public static var empty: LocalizedMessage {
+            .init(key: "cliExperience.empty", table: "CLIExperience", fallback: "没有匹配的结果。")
+        }
+        /// 显示 %lld 项；起始位置 %lld。
+        ///
+        /// Resource: `CLIExperience.cliExperience.page`.
+        public static func page(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "cliExperience.page", table: "CLIExperience", fallback: "显示 %lld 项；起始位置 %lld。", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 共 %lld 项。
+        ///
+        /// Resource: `CLIExperience.cliExperience.total`.
+        public static func total(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "cliExperience.total", table: "CLIExperience", fallback: "共 %lld 项。", arguments: [.integer(value0)])
+        }
+        /// 还有更多：%@
+        ///
+        /// Resource: `CLIExperience.cliExperience.more`.
+        public static func more(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliExperience.more", table: "CLIExperience", fallback: "还有更多：%@", arguments: [.text(value0)])
+        }
+        /// 使用 --json 查看完整字段。
+        ///
+        /// Resource: `CLIExperience.cliExperience.fullDetails`.
+        public static var fullDetails: LocalizedMessage {
+            .init(key: "cliExperience.fullDetails", table: "CLIExperience", fallback: "使用 --json 查看完整字段。")
+        }
+        /// 预览（未执行）
+        ///
+        /// Resource: `CLIExperience.cliExperience.preview`.
+        public static var preview: LocalizedMessage {
+            .init(key: "cliExperience.preview", table: "CLIExperience", fallback: "预览（未执行）")
+        }
+        /// 已完成
+        ///
+        /// Resource: `CLIExperience.cliExperience.completed`.
+        public static var completed: LocalizedMessage {
+            .init(key: "cliExperience.completed", table: "CLIExperience", fallback: "已完成")
+        }
+        /// 未变化
+        ///
+        /// Resource: `CLIExperience.cliExperience.unchanged`.
+        public static var unchanged: LocalizedMessage {
+            .init(key: "cliExperience.unchanged", table: "CLIExperience", fallback: "未变化")
+        }
+        /// 配置已更新
+        ///
+        /// Resource: `CLIExperience.cliExperience.configUpdated`.
+        public static var configUpdated: LocalizedMessage {
+            .init(key: "cliExperience.configUpdated", table: "CLIExperience", fallback: "配置已更新")
+        }
+        /// 预览：将更新配置
+        ///
+        /// Resource: `CLIExperience.cliExperience.configPreview`.
+        public static var configPreview: LocalizedMessage {
+            .init(key: "cliExperience.configPreview", table: "CLIExperience", fallback: "预览：将更新配置")
+        }
+        /// 配置未变化
+        ///
+        /// Resource: `CLIExperience.cliExperience.configUnchanged`.
+        public static var configUnchanged: LocalizedMessage {
+            .init(key: "cliExperience.configUnchanged", table: "CLIExperience", fallback: "配置未变化")
+        }
+        /// 脱敏后无可显示的差异。
+        ///
+        /// Resource: `CLIExperience.cliExperience.hiddenChanges`.
+        public static var hiddenChanges: LocalizedMessage {
+            .init(key: "cliExperience.hiddenChanges", table: "CLIExperience", fallback: "脱敏后无可显示的差异。")
+        }
+        /// 警告：%@
+        ///
+        /// Resource: `CLIExperience.cliExperience.warning`.
+        public static func warning(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliExperience.warning", table: "CLIExperience", fallback: "警告：%@", arguments: [.text(value0)])
+        }
+        /// 此操作可以重试。
+        ///
+        /// Resource: `CLIExperience.cliExperience.retryable`.
+        public static var retryable: LocalizedMessage {
+            .init(key: "cliExperience.retryable", table: "CLIExperience", fallback: "此操作可以重试。")
+        }
+        /// 下一步：%@
+        ///
+        /// Resource: `CLIExperience.cliExperience.nextAction`.
+        public static func nextAction(_ value0: String) -> LocalizedMessage {
+            .init(key: "cliExperience.nextAction", table: "CLIExperience", fallback: "下一步：%@", arguments: [.text(value0)])
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIExperience:cliExperience.helpAll": .init("列出全部命令的精简用法", []),
             "CLIExperience:cliExperience.discovery": .init("发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。", []),
@@ -102,6 +192,21 @@ extension Messages {
             "CLIExperience:cliExperience.fullSchema": .init("展开目录中所有命令的完整结构，输出可能很长", []),
             "CLIExperience:cliExperience.schemaSelection": .init("--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。", []),
             "CLIExperience:cliExperience.unknownHelp": .init("找不到命令：%@。使用 ruri help --all 查看命令目录。", [.text]),
+            "CLIExperience:cliExperience.empty": .init("没有匹配的结果。", []),
+            "CLIExperience:cliExperience.page": .init("显示 %lld 项；起始位置 %lld。", [.integer, .integer]),
+            "CLIExperience:cliExperience.total": .init("共 %lld 项。", [.integer]),
+            "CLIExperience:cliExperience.more": .init("还有更多：%@", [.text]),
+            "CLIExperience:cliExperience.fullDetails": .init("使用 --json 查看完整字段。", []),
+            "CLIExperience:cliExperience.preview": .init("预览（未执行）", []),
+            "CLIExperience:cliExperience.completed": .init("已完成", []),
+            "CLIExperience:cliExperience.unchanged": .init("未变化", []),
+            "CLIExperience:cliExperience.configUpdated": .init("配置已更新", []),
+            "CLIExperience:cliExperience.configPreview": .init("预览：将更新配置", []),
+            "CLIExperience:cliExperience.configUnchanged": .init("配置未变化", []),
+            "CLIExperience:cliExperience.hiddenChanges": .init("脱敏后无可显示的差异。", []),
+            "CLIExperience:cliExperience.warning": .init("警告：%@", [.text]),
+            "CLIExperience:cliExperience.retryable": .init("此操作可以重试。", []),
+            "CLIExperience:cliExperience.nextAction": .init("下一步：%@", [.text]),
         ]
     }
 }

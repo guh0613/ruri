@@ -1153,5 +1153,25 @@
     "file": "Sources/RuriCommandKit/Commands.swift",
     "literal": "\"ruri schema config apply --input --scope instance --json\"",
     "reason": "CLI usage syntax and stable command/parameter identifiers."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
+    "literal": "\"session logs\"",
+    "reason": "Stable CLI command or configuration field identifier in text output."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
+    "literal": "\"scope: \"",
+    "reason": "Stable CLI command or configuration field identifier in text output."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
+    "literal": "\"revision: \"",
+    "reason": "Stable CLI command or configuration field identifier in text output."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
+    "literal": "\".source: \"",
+    "reason": "Stable CLI command or configuration field identifier in text output."
   }
 ]

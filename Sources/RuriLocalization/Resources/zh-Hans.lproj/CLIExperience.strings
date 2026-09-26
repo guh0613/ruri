@@ -26,3 +26,33 @@
 "cliExperience.schemaSelection" = "--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。";
 /* @symbol CLIExperience.unknownHelp @args text */
 "cliExperience.unknownHelp" = "找不到命令：%@。使用 ruri help --all 查看命令目录。";
+/* @symbol CLIExperience.empty @args - */
+"cliExperience.empty" = "没有匹配的结果。";
+/* @symbol CLIExperience.page @args integer,integer */
+"cliExperience.page" = "显示 %lld 项；起始位置 %lld。";
+/* @symbol CLIExperience.total @args integer */
+"cliExperience.total" = "共 %lld 项。";
+/* @symbol CLIExperience.more @args text */
+"cliExperience.more" = "还有更多：%@";
+/* @symbol CLIExperience.fullDetails @args - */
+"cliExperience.fullDetails" = "使用 --json 查看完整字段。";
+/* @symbol CLIExperience.preview @args - */
+"cliExperience.preview" = "预览（未执行）";
+/* @symbol CLIExperience.completed @args - */
+"cliExperience.completed" = "已完成";
+/* @symbol CLIExperience.unchanged @args - */
+"cliExperience.unchanged" = "未变化";
+/* @symbol CLIExperience.configUpdated @args - */
+"cliExperience.configUpdated" = "配置已更新";
+/* @symbol CLIExperience.configPreview @args - */
+"cliExperience.configPreview" = "预览：将更新配置";
+/* @symbol CLIExperience.configUnchanged @args - */
+"cliExperience.configUnchanged" = "配置未变化";
+/* @symbol CLIExperience.hiddenChanges @args - */
+"cliExperience.hiddenChanges" = "脱敏后无可显示的差异。";
+/* @symbol CLIExperience.warning @args text */
+"cliExperience.warning" = "警告：%@";
+/* @symbol CLIExperience.retryable @args - */
+"cliExperience.retryable" = "此操作可以重试。";
+/* @symbol CLIExperience.nextAction @args text */
+"cliExperience.nextAction" = "下一步：%@";
