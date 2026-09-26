@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import plistlib
+import re
 import shutil
 import subprocess
 import sys
@@ -36,7 +37,7 @@ def validate(app):
     with tempfile.TemporaryDirectory(prefix="ruri cli package ") as temporary:
         root = Path(temporary)
         data = root / "data directory"
-        environment = dict(os.environ, RURI_DATA_DIR=str(root / "wrong data directory"))
+        environment = dict(os.environ, RURI_DATA_DIR=str(root / "wrong data directory"), RURI_LANGUAGE="zh-Hans")
         Path(environment["RURI_DATA_DIR"]).mkdir()
         (Path(environment["RURI_DATA_DIR"]) / "state.json").write_text("invalid")
 
@@ -57,6 +58,9 @@ def validate(app):
             assert usage in help_text and "USAGE: help " not in help_text, help_text
         grouped = command([executable, "help", "instance"], env=environment).decode()
         assert "ruri instance component set <id>" in grouped and "--component" in grouped
+        assert not re.search(r"[\u3400-\u9fff]", grouped), "CLI help must default to English"
+        chinese = command([executable, "help", "instance", "--language", "zh-Hans"], env=environment).decode()
+        assert "列出托管及已注册的实例" in chinese
         complete = command([executable, "help", "--all"], env=environment)
         assert len(complete) < 35_000
         index = invoke(executable, "schema")
@@ -86,6 +90,8 @@ def validate(app):
                            "--dry-run", "--data-dir", data], env=environment).decode()
         assert "7 → 9" in preview and "revision:" in preview
         assert "before" not in preview and "after" not in preview
+        assert "Preview: configuration changes" in preview
+        assert not re.search(r"[\u3400-\u9fff]", preview)
         assert (data / "state.json").read_bytes() == original_state
         current = command([executable, "config", "get", "concurrentDownloads", "--scope", "app",
                            "--data-dir", data], env=environment).decode()
