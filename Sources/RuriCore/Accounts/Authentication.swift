@@ -1,6 +1,7 @@
 import RuriLocalization
 import Foundation
 import Security
+import LocalAuthentication
 
 public struct AccountCredentials: Codable, Sendable {
     public var accessToken: String
@@ -26,6 +27,20 @@ public enum CredentialStore {
         try JSONDecoder().decode(ExternalAccountCredentials.self, from: loadData(for: id, service: externalService))
     }
     public static func removeExternal(for id: UUID) throws { try removeData(for: id, service: externalService) }
+    /// Read metadata only and never prompt for Keychain access during a check.
+    public static func availability(for id: UUID, kind: Account.Kind) -> String {
+        if kind == .offline { return "notRequired" }
+        let context = LAContext(); context.interactionNotAllowed = true
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: kind == .microsoft ? service : externalService,
+            kSecAttrAccount as String: id.uuidString, kSecReturnAttributes as String: true, kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecUseAuthenticationContext as String: context]
+        var result: CFTypeRef?
+        switch SecItemCopyMatching(query as CFDictionary, &result) {
+        case errSecSuccess: return "available"
+        case errSecItemNotFound: return "missing"
+        default: return "unavailable"
+        }
+    }
     static func saveFlow(_ data: Data, for id: UUID) throws { try saveData(data, for: id, service: "dev.ruri.launcher.login-flow") }
     static func loadFlow(for id: UUID) throws -> Data { try loadData(for: id, service: "dev.ruri.launcher.login-flow") }
     static func removeFlow(for id: UUID) throws { try removeData(for: id, service: "dev.ruri.launcher.login-flow") }

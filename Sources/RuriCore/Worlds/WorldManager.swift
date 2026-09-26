@@ -155,6 +155,7 @@ public actor WorldManager {
         }
     }
     public func recover() throws {
+        if FileManager.default.fileExists(atPath: transaction.path) { try OperationReadPolicy.requireRecoveryPermission(paths: paths, kind: "world", instanceID: instanceID) }
         try paths.validateInstanceLocation(instanceID)
         try lock(); defer { unlock() }
         let fm = FileManager.default

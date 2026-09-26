@@ -24,14 +24,22 @@ public enum CLIApplication {
             try request.validate()
             output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write)
             let context = request.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
-            let result = try await LocalizationContext.$current.withValue(context) { try await execute(request, output: output) }
+            let result = try await LocalizationContext.$current.withValue(context) {
+                try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {
+                    try await execute(request, output: output)
+                }
+            }
             output.result(result); return 0
         } catch {
             let failure: OperationFailure
             if error is CancellationError || Task.isCancelled { failure = .init("CANCELLED", Messages.CLIInterface.t386cf3b4f8ac.localized) }
             else if let value = error as? OperationFailure { failure = value }
             else if let value = error as? RuriError {
-                failure = .init("SERVICE_ERROR", value.localizedDescription, details: .object(["messageID": .text(value.messageID)]))
+                if case .httpResponse(let status, let host) = value {
+                    failure = .init("NETWORK_ERROR", value.localizedDescription, retryable: status == 429 || status >= 500, details: .object(["httpStatus": .integer(status), "host": .string(host)]))
+                } else { failure = .init("SERVICE_ERROR", value.localizedDescription, details: .object(["messageID": .text(value.messageID)])) }
+            } else if let value = error as? URLError {
+                failure = .init("NETWORK_ERROR", value.localizedDescription, retryable: true)
             } else { failure = .init("IO_ERROR", error.localizedDescription) }
             output.result(error: failure)
             return failure.code == "INVALID_ARGUMENT" ? 2 : failure.code == "CANCELLED" ? 130 : 1
@@ -40,12 +48,21 @@ public enum CLIApplication {
 
     @MainActor static func execute(_ request: CommandRequest, output: CommandOutput) async throws -> Value {
         if request.spec.path.first == "config" { return try configure(request) }
+        if request.spec.path.first == "doctor" { return try await doctor(request) }
+        if request.spec.path.first == "recovery" { return try await manageRecovery(request, output: output) }
+        if request.spec.path == ["instance", "import"] || request.spec.path.first == "pack" { return try await managePack(request, output: output) }
+        if request.spec.path.first == "download" { return try await fetch(request, output: output) }
         if request.spec.path.first == "instance" { return try await manageInstance(request, output: output) }
         if request.spec.path.first == "directory" { return try await manageDirectory(request, output: output) }
         if request.spec.path.first == "java" { return try await manageJava(request, output: output) }
         if request.spec.path.first == "account" { return try await manageAccount(request, output: output) }
         if request.spec.path.first == "launch" { return try await manageLaunch(request, output: output) }
         if request.spec.path.first == "session" { return try await manageSession(request, output: output) }
+        if request.spec.path.first == "catalog" { return try await manageCatalog(request) }
+        if request.spec.path.first == "content" { return try await manageContent(request, output: output) }
+        if request.spec.path.first == "world" { return try await manageWorld(request, output: output) }
+        if request.spec.path.first == "datapack" { return try await manageDataPack(request, output: output) }
+        if request.spec.path.first == "schematic" { return try await manageSchematic(request) }
         switch request.path {
         case "schema":
             let matching = CommandRegistry.commands.filter { Array($0.path.prefix(request.operands.count)) == request.operands }

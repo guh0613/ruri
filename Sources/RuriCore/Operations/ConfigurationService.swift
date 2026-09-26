@@ -123,7 +123,8 @@ public struct ConfigurationService: Sendable {
             if scope == "app" { try Self.applyApp(values, to: &state.settings) }
             else {
                 let resolved = try Self.decodeLaunch(values)
-                try resolved.validate()
+                do { try resolved.validate() }
+                catch { throw OperationFailure("INVALID_ARGUMENT", error.localizedDescription) }
                 if let id, let index = state.instances.firstIndex(where: { $0.id == id }) {
                     var next = overrides!
                     let fixed = InstanceLaunchOverrides(fixing: resolved)
@@ -131,7 +132,8 @@ public struct ConfigurationService: Sendable {
                         Self.copyGroup(group, from: fixed, into: &next)
                     }
                     for group in patch.inherit { next.setInheritance(true, for: LaunchSettingKey(rawValue: group)!, defaults: state.settings.defaultLaunchSettings) }
-                    try next.resolve(defaults: state.settings.defaultLaunchSettings).validate()
+                    do { try next.resolve(defaults: state.settings.defaultLaunchSettings).validate() }
+                    catch { throw OperationFailure("INVALID_ARGUMENT", error.localizedDescription) }
                     if next != state.instances[index].effectiveLaunchOverrides { state.instances[index].launchOverrides = next }
                 } else if resolved != state.settings.defaultLaunchSettings { state.settings.defaultLaunchSettings = resolved }
             }

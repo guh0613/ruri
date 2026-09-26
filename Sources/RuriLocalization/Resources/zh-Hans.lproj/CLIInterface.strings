@@ -781,3 +781,426 @@
 /* @symbol CLIInterface.te5e3bed93ff1 @args - */
 "cliInterface.te5e3bed93ff1" = "Unknown session action.";
 
+/* @symbol CLIInterface.t9585ae182d36 @args - */
+"cliInterface.t9585ae182d36" = "Search Modrinth or CurseForge.";
+
+/* @symbol CLIInterface.t54d62b370b12 @args - */
+"cliInterface.t54d62b370b12" = "Content provider.";
+
+/* @symbol CLIInterface.t9c7c66e1cb97 @args - */
+"cliInterface.t9c7c66e1cb97" = "Project type.";
+
+/* @symbol CLIInterface.t97bb290079c0 @args - */
+"cliInterface.t97bb290079c0" = "Minecraft version filter.";
+
+/* @symbol CLIInterface.t6cd3985335f5 @args - */
+"cliInterface.t6cd3985335f5" = "Loader filter.";
+
+/* @symbol CLIInterface.tba245c5c5887 @args - */
+"cliInterface.tba245c5c5887" = "Provider category.";
+
+/* @symbol CLIInterface.tffbd359b4372 @args - */
+"cliInterface.tffbd359b4372" = "Sort order.";
+
+/* @symbol CLIInterface.tef252f7e18ac @args - */
+"cliInterface.tef252f7e18ac" = "Read a project description and metadata.";
+
+/* @symbol CLIInterface.t2015ae2ed51d @args - */
+"cliInterface.t2015ae2ed51d" = "List a project's published versions.";
+
+/* @symbol CLIInterface.t96729fb469a0 @args - */
+"cliInterface.t96729fb469a0" = "List the provider's categories.";
+
+/* @symbol CLIInterface.t31b908b482c0 @args - */
+"cliInterface.t31b908b482c0" = "List installed mods, resource packs, or shaders.";
+
+/* @symbol CLIInterface.t1615f94ae45c @args - */
+"cliInterface.t1615f94ae45c" = "Content kind.";
+
+/* @symbol CLIInterface.t0adabdb41fc9 @args - */
+"cliInterface.t0adabdb41fc9" = "Import a local content file.";
+
+/* @symbol CLIInterface.t1221c915a9ab @args - */
+"cliInterface.t1221c915a9ab" = "instance file";
+
+/* @symbol CLIInterface.t6f5c9d328e9f @args - */
+"cliInterface.t6f5c9d328e9f" = "Install a compatible project and its required dependencies.";
+
+/* @symbol CLIInterface.t3adc46ef11f2 @args - */
+"cliInterface.t3adc46ef11f2" = "Exact provider version ID; otherwise latest stable.";
+
+/* @symbol CLIInterface.t6937c4e2d52d @args - */
+"cliInterface.t6937c4e2d52d" = "Manually downloaded CurseForge file as fileID=path.";
+
+/* @symbol CLIInterface.tc9423b403749 @args - */
+"cliInterface.tc9423b403749" = "instance project";
+
+/* @symbol CLIInterface.tcb22bf7cdc22 @args - */
+"cliInterface.tcb22bf7cdc22" = "Enable selected content.";
+
+/* @symbol CLIInterface.t0571cf34f7e5 @args - */
+"cliInterface.t0571cf34f7e5" = "Exact installed filename; repeat to select several.";
+
+/* @symbol CLIInterface.t7a83bde60a43 @args - */
+"cliInterface.t7a83bde60a43" = "Select every file of the chosen kind.";
+
+/* @symbol CLIInterface.t835a12065b6b @args - */
+"cliInterface.t835a12065b6b" = "Disable selected content.";
+
+/* @symbol CLIInterface.tbddc7b97257e @args - */
+"cliInterface.tbddc7b97257e" = "Move selected content to the Trash.";
+
+/* @symbol CLIInterface.t2648b2127df6 @args - */
+"cliInterface.t2648b2127df6" = "Check compatible updates for installed content.";
+
+/* @symbol CLIInterface.t41cfb5271f5e @args - */
+"cliInterface.t41cfb5271f5e" = "Update selected content and dependencies.";
+
+/* @symbol CLIInterface.tf53d1d120842 @args - */
+"cliInterface.tf53d1d120842" = "Update every file of the chosen kind.";
+
+/* @symbol CLIInterface.t0182348543ec @args - */
+"cliInterface.t0182348543ec" = "List worlds in an instance.";
+
+/* @symbol CLIInterface.tc62375cad94f @args - */
+"cliInterface.tc62375cad94f" = "Inspect a world.";
+
+/* @symbol CLIInterface.t3cc465fee86f @args - */
+"cliInterface.t3cc465fee86f" = "instance folder";
+
+/* @symbol CLIInterface.td02c3799e5f3 @args - */
+"cliInterface.td02c3799e5f3" = "Import a world archive or directory.";
+
+/* @symbol CLIInterface.t79b53bfe32d0 @args - */
+"cliInterface.t79b53bfe32d0" = "Export a world archive.";
+
+/* @symbol CLIInterface.tbb4df9d7ac3a @args - */
+"cliInterface.tbb4df9d7ac3a" = "instance folder file";
+
+/* @symbol CLIInterface.t1f3b65ed9678 @args - */
+"cliInterface.t1f3b65ed9678" = "Move a world to the Trash.";
+
+/* @symbol CLIInterface.t687aa81ce15b @args - */
+"cliInterface.t687aa81ce15b" = "Back up a world.";
+
+/* @symbol CLIInterface.t243960f924a4 @args - */
+"cliInterface.t243960f924a4" = "Optional backup reason.";
+
+/* @symbol CLIInterface.t82358ac73619 @args - */
+"cliInterface.t82358ac73619" = "List world backups.";
+
+/* @symbol CLIInterface.t5b12f1ab5a68 @args - */
+"cliInterface.t5b12f1ab5a68" = "Restore a backup; replacement must be explicit.";
+
+/* @symbol CLIInterface.td2c29dd5d868 @args - */
+"cliInterface.td2c29dd5d868" = "Replace the existing world.";
+
+/* @symbol CLIInterface.teaf6d847cc14 @args - */
+"cliInterface.teaf6d847cc14" = "instance backup";
+
+/* @symbol CLIInterface.t79d8f9c1b13b @args - */
+"cliInterface.t79d8f9c1b13b" = "Move a world backup to the Trash.";
+
+/* @symbol CLIInterface.t5baea7450859 @args - */
+"cliInterface.t5baea7450859" = "List a world's data packs.";
+
+/* @symbol CLIInterface.t3f8f11058c17 @args - */
+"cliInterface.t3f8f11058c17" = "instance world";
+
+/* @symbol CLIInterface.t8e719af86d09 @args - */
+"cliInterface.t8e719af86d09" = "Read data-pack priority from highest to lowest.";
+
+/* @symbol CLIInterface.tc4ef4044f6a8 @args - */
+"cliInterface.tc4ef4044f6a8" = "Replace the complete data-pack priority order.";
+
+/* @symbol CLIInterface.tcc64529d6ae6 @args - */
+"cliInterface.tcc64529d6ae6" = "Complete priority list, highest first.";
+
+/* @symbol CLIInterface.td44435e60acc @args - */
+"cliInterface.td44435e60acc" = "Import a data pack into a world.";
+
+/* @symbol CLIInterface.t027258d65380 @args - */
+"cliInterface.t027258d65380" = "instance world file";
+
+/* @symbol CLIInterface.t8c443e635faf @args - */
+"cliInterface.t8c443e635faf" = "Enable a world's data pack.";
+
+/* @symbol CLIInterface.t25b74fe94bbb @args - */
+"cliInterface.t25b74fe94bbb" = "instance world name";
+
+/* @symbol CLIInterface.tc7d244ea5a4c @args - */
+"cliInterface.tc7d244ea5a4c" = "Disable a world's data pack.";
+
+/* @symbol CLIInterface.t08f738b1e5ca @args - */
+"cliInterface.t08f738b1e5ca" = "Remove a world's data pack.";
+
+/* @symbol CLIInterface.t64d56130fbdf @args - */
+"cliInterface.t64d56130fbdf" = "Search compatible Modrinth data packs.";
+
+/* @symbol CLIInterface.t9abc5f05470e @args - */
+"cliInterface.t9abc5f05470e" = "instance query";
+
+/* @symbol CLIInterface.tb511553d589f @args - */
+"cliInterface.tb511553d589f" = "List compatible data-pack versions.";
+
+/* @symbol CLIInterface.t37b2077e3554 @args - */
+"cliInterface.t37b2077e3554" = "Install a data pack and its dependencies.";
+
+/* @symbol CLIInterface.t5e7708f69f60 @args - */
+"cliInterface.t5e7708f69f60" = "Exact version ID; otherwise latest stable.";
+
+/* @symbol CLIInterface.t4d5a09c55c8c @args - */
+"cliInterface.t4d5a09c55c8c" = "instance world project";
+
+/* @symbol CLIInterface.t45ce4d2add4d @args - */
+"cliInterface.t45ce4d2add4d" = "List schematic files and folders.";
+
+/* @symbol CLIInterface.tc48ff6cbe772 @args - */
+"cliInterface.tc48ff6cbe772" = "Relative schematic directory.";
+
+/* @symbol CLIInterface.t9691b8cb26ac @args - */
+"cliInterface.t9691b8cb26ac" = "Inspect a schematic's metadata.";
+
+/* @symbol CLIInterface.t006d1cafc637 @args - */
+"cliInterface.t006d1cafc637" = "Import a schematic file.";
+
+/* @symbol CLIInterface.tf32e6e0f57a1 @args - */
+"cliInterface.tf32e6e0f57a1" = "Create a schematic folder.";
+
+/* @symbol CLIInterface.t4af5860f6aeb @args - */
+"cliInterface.t4af5860f6aeb" = "Relative parent directory.";
+
+/* @symbol CLIInterface.t0d2ff8c9a278 @args - */
+"cliInterface.t0d2ff8c9a278" = "instance name";
+
+/* @symbol CLIInterface.t7e11030c3d95 @args - */
+"cliInterface.t7e11030c3d95" = "Export a schematic.";
+
+/* @symbol CLIInterface.tf0b7b313a90b @args - */
+"cliInterface.tf0b7b313a90b" = "instance path file";
+
+/* @symbol CLIInterface.tc7d49c67a14a @args - */
+"cliInterface.tc7d49c67a14a" = "Move a schematic file or folder to the Trash.";
+
+/* @symbol CLIInterface.tb9f8304a17cd @args - */
+"cliInterface.tb9f8304a17cd" = "datapack order commands";
+
+/* @symbol CLIInterface.t1870161676bc @args - */
+"cliInterface.t1870161676bc" = "world backup commands";
+
+/* @symbol CLIInterface.tb977dca13b5f @args - */
+"cliInterface.tb977dca13b5f" = "schematic commands";
+
+/* @symbol CLIInterface.t8c1e16e1c7f6 @args - */
+"cliInterface.t8c1e16e1c7f6" = "datapack commands";
+
+/* @symbol CLIInterface.t28a32d5bd18e @args - */
+"cliInterface.t28a32d5bd18e" = "catalog commands";
+
+/* @symbol CLIInterface.t7f93a6deea4d @args - */
+"cliInterface.t7f93a6deea4d" = "content commands";
+
+/* @symbol CLIInterface.tc96234263475 @args - */
+"cliInterface.tc96234263475" = "world commands";
+
+/* @symbol CLIInterface.t68a342df34e2 @args - */
+"cliInterface.t68a342df34e2" = "Input file not found.";
+
+/* @symbol CLIInterface.t1474aa1131be @args - */
+"cliInterface.t1474aa1131be" = "Select --file entries or explicitly use --all.";
+
+/* @symbol CLIInterface.tcf02f30209a6 @args - */
+"cliInterface.tcf02f30209a6" = "One or more selected filenames are missing.";
+
+/* @symbol CLIInterface.t1fb9146947a6 @args - */
+"cliInterface.t1fb9146947a6" = "Unknown content action.";
+
+/* @symbol CLIInterface.tcf80472afe71 @args - */
+"cliInterface.tcf80472afe71" = "Manual files use unique fileID=path entries.";
+
+/* @symbol CLIInterface.t22d3a8371f53 @args - */
+"cliInterface.t22d3a8371f53" = "Download the listed files, then repeat the command with --manual fileID=path.";
+
+/* @symbol CLIInterface.t5c54141389e9 @args - */
+"cliInterface.t5c54141389e9" = "The selected version is incompatible with the instance.";
+
+/* @symbol CLIInterface.t56f6acfec799 @args - */
+"cliInterface.t56f6acfec799" = "No matching compatible version was found.";
+
+/* @symbol CLIInterface.te2cdbe92a0c7 @args - */
+"cliInterface.te2cdbe92a0c7" = "backup list";
+
+/* @symbol CLIInterface.t1b8effc90c68 @args - */
+"cliInterface.t1b8effc90c68" = "backup restore";
+
+/* @symbol CLIInterface.t741c3180946d @args - */
+"cliInterface.t741c3180946d" = "backup remove";
+
+/* @symbol CLIInterface.t813a5dd4816c @args - */
+"cliInterface.t813a5dd4816c" = "Backup not found.";
+
+/* @symbol CLIInterface.t90c2d3c97aae @args - */
+"cliInterface.t90c2d3c97aae" = "World not found.";
+
+/* @symbol CLIInterface.t8ee474107a6f @args - */
+"cliInterface.t8ee474107a6f" = "backup create";
+
+/* @symbol CLIInterface.ta7cd75ee2906 @args - */
+"cliInterface.ta7cd75ee2906" = "Unknown world action.";
+
+/* @symbol CLIInterface.tee60e235e97a @args - */
+"cliInterface.tee60e235e97a" = "order get";
+
+/* @symbol CLIInterface.tcc3d1a4da37b @args - */
+"cliInterface.tcc3d1a4da37b" = "order set";
+
+/* @symbol CLIInterface.tcaf18c90c73d @args - */
+"cliInterface.tcaf18c90c73d" = "Provide the complete priority list exactly once.";
+
+/* @symbol CLIInterface.tdd5661a06a84 @args - */
+"cliInterface.tdd5661a06a84" = "No compatible data-pack version found.";
+
+/* @symbol CLIInterface.t921d4db04b98 @args - */
+"cliInterface.t921d4db04b98" = "Data pack not found.";
+
+/* @symbol CLIInterface.t31dc407e9871 @args - */
+"cliInterface.t31dc407e9871" = "Unknown data-pack action.";
+
+/* @symbol CLIInterface.t90e3b5019ad0 @args - */
+"cliInterface.t90e3b5019ad0" = "Schematic not found.";
+
+/* @symbol CLIInterface.tdb74aa2f7d3b @args - */
+"cliInterface.tdb74aa2f7d3b" = "Import an instance archive into an explicit directory.";
+
+/* @symbol CLIInterface.tddd82092eded @args - */
+"cliInterface.tddd82092eded" = "Destination directory UUID or default.";
+
+/* @symbol CLIInterface.tb86fa4ea53ac @args - */
+"cliInterface.tb86fa4ea53ac" = "Import JVM arguments supplied by the pack.";
+
+/* @symbol CLIInterface.tc5c676ace213 @args - */
+"cliInterface.tc5c676ace213" = "Import a local modpack archive.";
+
+/* @symbol CLIInterface.td48597adbed9 @args - */
+"cliInterface.td48597adbed9" = "Download and install a catalog modpack.";
+
+/* @symbol CLIInterface.t2280d783f7cb @args - */
+"cliInterface.t2280d783f7cb" = "Manually downloaded pack archive.";
+
+/* @symbol CLIInterface.t1d9fc0c70e58 @args - */
+"cliInterface.t1d9fc0c70e58" = "Inspect installed modpack metadata.";
+
+/* @symbol CLIInterface.t0e0ee827fcda @args - */
+"cliInterface.t0e0ee827fcda" = "List available releases for an installed modpack.";
+
+/* @symbol CLIInterface.t7dd4704843e2 @args - */
+"cliInterface.t7dd4704843e2" = "Preview or apply a modpack update.";
+
+/* @symbol CLIInterface.te3ce5542c760 @args - */
+"cliInterface.te3ce5542c760" = "Local update archive.";
+
+/* @symbol CLIInterface.tadff65d82cd8 @args - */
+"cliInterface.tadff65d82cd8" = "Exact remote release ID.";
+
+/* @symbol CLIInterface.t33673a17c78a @args - */
+"cliInterface.t33673a17c78a" = "Manually downloaded remote release archive.";
+
+/* @symbol CLIInterface.tfa5924a2e888 @args - */
+"cliInterface.tfa5924a2e888" = "Replace locally modified files instead of retaining them.";
+
+/* @symbol CLIInterface.tf986137b0dee @args - */
+"cliInterface.tf986137b0dee" = "Confirm replacement of local modifications.";
+
+/* @symbol CLIInterface.t8951a110d64d @args - */
+"cliInterface.t8951a110d64d" = "Roll back the previous pack update while retaining later local edits.";
+
+/* @symbol CLIInterface.t869f83eac4a5 @args - */
+"cliInterface.t869f83eac4a5" = "Download a file and verify its SHA-1 and size.";
+
+/* @symbol CLIInterface.t91bde8e5fa30 @args - */
+"cliInterface.t91bde8e5fa30" = "Expected SHA-1 digest.";
+
+/* @symbol CLIInterface.t8e1d27b3966c @args - */
+"cliInterface.t8e1d27b3966c" = "Expected byte count.";
+
+/* @symbol CLIInterface.tff2b9d62fa33 @args - */
+"cliInterface.tff2b9d62fa33" = "url file";
+
+/* @symbol CLIInterface.ta16b7c00b2ba @args - */
+"cliInterface.ta16b7c00b2ba" = "download commands";
+
+/* @symbol CLIInterface.t31f0b68ea764 @args - */
+"cliInterface.t31f0b68ea764" = "pack commands";
+
+/* @symbol CLIInterface.t4c0ebc2810f1 @args - */
+"cliInterface.t4c0ebc2810f1" = "Destination directory not found.";
+
+/* @symbol CLIInterface.te28b99d2f4f4 @args - */
+"cliInterface.te28b99d2f4f4" = "This instance has no installed modpack metadata.";
+
+/* @symbol CLIInterface.tf47c36a30379 @args - */
+"cliInterface.tf47c36a30379" = "No pack update backup is available.";
+
+/* @symbol CLIInterface.tc94ca55edbe4 @args - */
+"cliInterface.tc94ca55edbe4" = "Replacing local modifications requires --replace --yes.";
+
+/* @symbol CLIInterface.t886cba0bd15a @args - */
+"cliInterface.t886cba0bd15a" = "Choose a local --file or a remote --version.";
+
+/* @symbol CLIInterface.t092095eba967 @args - */
+"cliInterface.t092095eba967" = "Pack release not found.";
+
+/* @symbol CLIInterface.t75d07f6960ff @args - */
+"cliInterface.t75d07f6960ff" = "Download the pack archive and repeat with --archive path.";
+
+/* @symbol CLIInterface.tca976a5cf5f9 @args - */
+"cliInterface.tca976a5cf5f9" = "Provide an HTTP URL, nonnegative --size and a 40-digit --sha1.";
+
+/* @symbol CLIInterface.tb634c8d3959d @args - */
+"cliInterface.tb634c8d3959d" = "The destination already contains a different file.";
+
+/* @symbol CLIInterface.tbff4f0f5e780 @args - */
+"cliInterface.tbff4f0f5e780" = "List unfinished data operations and sessions.";
+
+/* @symbol CLIInterface.tc16fc65ec610 @args - */
+"cliInterface.tc16fc65ec610" = "Restrict inspection to one instance.";
+
+/* @symbol CLIInterface.t25597cca30a1 @args - */
+"cliInterface.t25597cca30a1" = "Recover a specific unfinished operation.";
+
+/* @symbol CLIInterface.t617ad9bacfae @args - */
+"cliInterface.t617ad9bacfae" = "Transaction UUID, or session UUID.";
+
+/* @symbol CLIInterface.ta51e4f921383 @args - */
+"cliInterface.ta51e4f921383" = "Repository import recovery mode.";
+
+/* @symbol CLIInterface.t709f4fc13c7d @args - */
+"cliInterface.t709f4fc13c7d" = "Keep the original source after a committed move.";
+
+/* @symbol CLIInterface.ta42e19194027 @args - */
+"cliInterface.ta42e19194027" = "Confirm that an unmonitored game has ended.";
+
+/* @symbol CLIInterface.t28237d41435e @args - */
+"cliInterface.t28237d41435e" = "kind target";
+
+/* @symbol CLIInterface.tc168cea3e30b @args - */
+"cliInterface.tc168cea3e30b" = "Check state, paths, Java, account credentials and bundled helpers.";
+
+/* @symbol CLIInterface.tcfab76824678 @args - */
+"cliInterface.tcfab76824678" = "Inspect a particular instance.";
+
+/* @symbol CLIInterface.t2b167c0c4363 @args - */
+"cliInterface.t2b167c0c4363" = "recovery commands";
+
+/* @symbol CLIInterface.t1e2f741698a1 @args - */
+"cliInterface.t1e2f741698a1" = "Unknown recovery kind.";
+
+/* @symbol CLIInterface.t7f8c861b7d62 @args - */
+"cliInterface.t7f8c861b7d62" = "This recovery requires --transaction from recovery list.";
+
+/* @symbol CLIInterface.tf19d497be38f @args - */
+"cliInterface.tf19d497be38f" = "One or more checks failed.";
+
+/* @symbol CLIInterface.tff19ae82a321 @args - */
+"cliInterface.tff19ae82a321" = "An unfinished operation must be recovered before inspecting this data.";
+

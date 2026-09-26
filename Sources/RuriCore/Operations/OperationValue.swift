@@ -1,3 +1,4 @@
+import RuriLocalization
 import Foundation
 
 /// The public command boundary deliberately does not expose persistence models.
@@ -40,6 +41,16 @@ public enum OperationValue: Codable, Equatable, Sendable {
 public struct OperationAction: Codable, Equatable, Sendable {
     public let command: [String]
     public init(_ command: [String]) { self.command = command }
+}
+
+public enum OperationReadPolicy {
+    @TaskLocal public static var protectedDataRoot: URL?
+    static func requireRecoveryPermission(paths: LauncherPaths, kind: String, instanceID: UUID) throws {
+        if protectedDataRoot?.standardizedFileURL == paths.root.standardizedFileURL {
+            throw OperationFailure("RECOVERY_REQUIRED", Messages.CLIInterface.tff19ae82a321.localized,
+                nextActions: [.init(["recovery", "apply", kind, instanceID.uuidString, "--yes"])])
+        }
+    }
 }
 
 public struct OperationFailure: LocalizedError, Codable, Sendable {

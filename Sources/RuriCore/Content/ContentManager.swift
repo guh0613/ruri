@@ -180,6 +180,7 @@ public actor ContentManager {
         try lock(); defer { unlock() }
         let fm = FileManager.default
         guard fm.fileExists(atPath: transactionURL.path) else { return }
+        try OperationReadPolicy.requireRecoveryPermission(paths: paths, kind: "content", instanceID: instanceID)
         let journalURL = transactionURL.appendingPathComponent("journal.json")
         if fm.fileExists(atPath: transactionURL.appendingPathComponent("committed").path) || !fm.fileExists(atPath: journalURL.path) {
             try fm.removeItem(at: transactionURL); return

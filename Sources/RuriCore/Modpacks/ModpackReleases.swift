@@ -24,6 +24,23 @@ public struct ModpackReleases: Sendable {
 
 public actor ModpackReleaseService {
     public init() {}
+    public static func release(project: CatalogProject, version: CatalogVersion) throws -> ModpackRelease {
+        guard project.type == "modpack" else { throw RuriError.message(Messages.CoreModpackReleases.projectIsNotModpack) }
+        switch (project, version) {
+        case (.modrinth(let project), .modrinth(let version)) where version.project_id == project.id:
+            let archives = version.files.filter { $0.filename.lowercased().hasSuffix(".mrpack") }
+            guard let file = archives.first(where: \.primary) ?? archives.first else { throw RuriError.message(Messages.CoreModpackReleases.missingReleaseChecksum) }
+            return .init(id: version.id, title: version.name, gameVersions: version.game_versions, publishedAt: version.date_published,
+                stable: version.version_type == nil || version.version_type == "release", page: project.pageURL, requiresManualDownload: false,
+                origin: .init(provider: .modrinth, projectID: project.id, versionID: version.id), filename: file.filename, url: file.url,
+                sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], md5: nil, size: file.size)
+        case (.curseforge(let project), .curseforge(let file)) where file.modId == project.id:
+            return .init(id: String(file.id), title: file.displayName, gameVersions: file.gameVersions, publishedAt: file.fileDate, stable: file.releaseType == 1,
+                page: project.page(for: file.id), requiresManualDownload: file.downloadURL == nil, origin: .init(provider: .curseforge, projectID: String(project.id), versionID: String(file.id)),
+                filename: file.fileName, url: file.downloadURL, sha1: file.sha1, sha512: nil, md5: file.md5, size: file.fileLength)
+        default: throw RuriError.message(Messages.Discovery.versionProjectMismatch)
+        }
+    }
     public func versions(for pack: InstalledModpack, curseForgeKey: String = "", offset: Int = 0) async throws -> ModpackReleases {
         guard let origin = pack.origin, let projectID = origin.projectID else { return .init(items: [], nextOffset: nil) }
         switch origin.provider {
