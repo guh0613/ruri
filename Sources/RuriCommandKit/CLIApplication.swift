@@ -43,6 +43,9 @@ public enum CLIApplication {
         if request.spec.path.first == "instance" { return try await manageInstance(request, output: output) }
         if request.spec.path.first == "directory" { return try await manageDirectory(request, output: output) }
         if request.spec.path.first == "java" { return try await manageJava(request, output: output) }
+        if request.spec.path.first == "account" { return try await manageAccount(request, output: output) }
+        if request.spec.path.first == "launch" { return try await manageLaunch(request, output: output) }
+        if request.spec.path.first == "session" { return try await manageSession(request, output: output) }
         switch request.path {
         case "schema":
             let matching = CommandRegistry.commands.filter { Array($0.path.prefix(request.operands.count)) == request.operands }

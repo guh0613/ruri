@@ -17,6 +17,7 @@ public final class CommandOutput: @unchecked Sendable {
         lock.withLock {
             guard !finished else { return }
             if format == .ndjson { emit(.object(["schemaVersion": .integer(1), "type": .string(type), "data": clean(value)])) }
+            else if format == .text && type == "log" { write(Data((clean(value)["text"].string ?? "").utf8), false) }
             else if !quiet { write(Data((render(clean(value)) + "\n").utf8), true) }
         }
     }

@@ -26,6 +26,17 @@ public enum CredentialStore {
         try JSONDecoder().decode(ExternalAccountCredentials.self, from: loadData(for: id, service: externalService))
     }
     public static func removeExternal(for id: UUID) throws { try removeData(for: id, service: externalService) }
+    static func saveFlow(_ data: Data, for id: UUID) throws { try saveData(data, for: id, service: "dev.ruri.launcher.login-flow") }
+    static func loadFlow(for id: UUID) throws -> Data { try loadData(for: id, service: "dev.ruri.launcher.login-flow") }
+    static func removeFlow(for id: UUID) throws { try removeData(for: id, service: "dev.ruri.launcher.login-flow") }
+    static func flowIDs() throws -> [UUID] {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: "dev.ruri.launcher.login-flow", kSecReturnAttributes as String: true, kSecMatchLimit as String: kSecMatchLimitAll]
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        if status == errSecItemNotFound { return [] }
+        guard status == errSecSuccess else { throw failure(status) }
+        return (result as? [[String: Any]] ?? []).compactMap { ($0[kSecAttrAccount as String] as? String).flatMap(UUID.init(uuidString:)) }
+    }
     private static func saveData(_ data: Data, for id: UUID, service: String) throws {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: id.uuidString]
         let update = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
@@ -49,7 +60,7 @@ public enum CredentialStore {
     private static func failure(_ status: OSStatus) -> RuriError { .message(Messages.CoreAuthentication.keychainAccessFailed(String(describing: status))) }
 }
 
-public struct DeviceCode: Decodable, Sendable {
+public struct DeviceCode: Codable, Sendable {
     public let device_code: String
     public let user_code: String
     public let verification_uri: URL
@@ -70,8 +81,8 @@ public actor MicrosoftAuth {
     private struct OAuthToken: Decodable, Sendable {
         let access_token: String?; let refresh_token: String?; let error: String?
     }
-    public func finish(_ code: DeviceCode) async throws -> (Account, AccountCredentials) {
-        let deadline = Date().addingTimeInterval(TimeInterval(code.expires_in))
+    public func finish(_ code: DeviceCode, expiresAt: Date? = nil) async throws -> (Account, AccountCredentials) {
+        let deadline = expiresAt ?? Date().addingTimeInterval(TimeInterval(code.expires_in))
         var interval = max(code.interval ?? 5, 1)
         while Date() < deadline {
             try await Task.sleep(for: .seconds(interval)); try Task.checkCancellation()

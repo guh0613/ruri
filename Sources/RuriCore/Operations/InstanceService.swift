@@ -63,6 +63,10 @@ public struct InstanceService: Sendable {
         let installer = GameInstaller(paths: paths, downloader: downloader)
         if repair { try await installer.repair(requested, concurrency: state.settings.concurrentDownloads, progress: progress); return requested }
         let result = try await installer.install(requested, concurrency: state.settings.concurrentDownloads, progress: progress)
+        return try recordInstallation(result, requested: requested)
+    }
+    public func recordInstallation(_ result: GameInstance, requested: GameInstance) throws -> GameInstance {
+        let id = requested.id
         let saved = try StateStore.updateIfChanged(paths) { state in
             guard let index = state.instances.firstIndex(where: { $0.id == id }) else { throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.tb199229434bb.localized) }
             state.instances[index] = try state.instances[index].applyingInstallation(result, requested: requested)

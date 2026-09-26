@@ -57,7 +57,7 @@ public struct ExternalAccountCredentials: Codable, Sendable {
     public let user: ExternalAuthUser?
 }
 
-public struct ExternalAuthSession: Decodable, Sendable {
+public struct ExternalAuthSession: Codable, Sendable {
     public let accessToken: String
     public let clientToken: String
     public let availableProfiles: [ExternalAuthProfile]?

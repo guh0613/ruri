@@ -553,3 +553,231 @@
 /* @symbol CLIInterface.tab6287c24a41 @args - */
 "cliInterface.tab6287c24a41" = "Unknown Java action.";
 
+/* @symbol CLIInterface.t57b6d748b829 @args - */
+"cliInterface.t57b6d748b829" = "login start";
+
+/* @symbol CLIInterface.tc6b87186027e @args - */
+"cliInterface.tc6b87186027e" = "Microsoft login uses browser authorization, not a password.";
+
+/* @symbol CLIInterface.tb34236db1721 @args - */
+"cliInterface.tb34236db1721" = "External login requires --password-stdin.";
+
+/* @symbol CLIInterface.te307d3e2aed4 @args - */
+"cliInterface.te307d3e2aed4" = "login complete";
+
+/* @symbol CLIInterface.taf7c81279d63 @args - */
+"cliInterface.taf7c81279d63" = "login cancel";
+
+/* @symbol CLIInterface.t2b2389f27e52 @args - */
+"cliInterface.t2b2389f27e52" = "service-key status";
+
+/* @symbol CLIInterface.t8ed19e29eef4 @args - */
+"cliInterface.t8ed19e29eef4" = "service-key set";
+
+/* @symbol CLIInterface.t05b618061083 @args - */
+"cliInterface.t05b618061083" = "Provide --stdin to read the API key.";
+
+/* @symbol CLIInterface.tc68fadc33f5d @args - */
+"cliInterface.tc68fadc33f5d" = "service-key remove";
+
+/* @symbol CLIInterface.tfffe65605bf6 @args - */
+"cliInterface.tfffe65605bf6" = "Unknown account action.";
+
+/* @symbol CLIInterface.t347c8e743183 @args - */
+"cliInterface.t347c8e743183" = "List accounts without exposing credentials.";
+
+/* @symbol CLIInterface.t60065624116e @args - */
+"cliInterface.t60065624116e" = "Read the active account ID.";
+
+/* @symbol CLIInterface.t29349e23e1f2 @args - */
+"cliInterface.t29349e23e1f2" = "Inspect an account.";
+
+/* @symbol CLIInterface.t5e3954fd00e4 @args - */
+"cliInterface.t5e3954fd00e4" = "Add or reuse an offline player account.";
+
+/* @symbol CLIInterface.t4fbd66e4df1d @args - */
+"cliInterface.t4fbd66e4df1d" = "Keep the current active account.";
+
+/* @symbol CLIInterface.ta88c8f0fa07b @args - */
+"cliInterface.ta88c8f0fa07b" = "Select the active account.";
+
+/* @symbol CLIInterface.te68622e3a4c1 @args - */
+"cliInterface.te68622e3a4c1" = "Refresh a saved account's credentials.";
+
+/* @symbol CLIInterface.t222e7542a935 @args - */
+"cliInterface.t222e7542a935" = "Remove an account and its local credentials.";
+
+/* @symbol CLIInterface.t9de45ca5dfe9 @args - */
+"cliInterface.t9de45ca5dfe9" = "Invalidate external credentials and remove the account.";
+
+/* @symbol CLIInterface.t5e3d504d2f33 @args - */
+"cliInterface.t5e3d504d2f33" = "Start a two-step Microsoft or external login.";
+
+/* @symbol CLIInterface.t35f41c8dfeb7 @args - */
+"cliInterface.t35f41c8dfeb7" = "Authentication provider.";
+
+/* @symbol CLIInterface.t06b9c339e88c @args - */
+"cliInterface.t06b9c339e88c" = "Existing account to reauthenticate.";
+
+/* @symbol CLIInterface.tda3d5eaa9c6b @args - */
+"cliInterface.tda3d5eaa9c6b" = "External authentication server.";
+
+/* @symbol CLIInterface.t598bd6abd203 @args - */
+"cliInterface.t598bd6abd203" = "External login identity.";
+
+/* @symbol CLIInterface.tae550ce2501b @args - */
+"cliInterface.tae550ce2501b" = "Read the password from stdin.";
+
+/* @symbol CLIInterface.td905be5334b1 @args - */
+"cliInterface.td905be5334b1" = "Wait for authorization and save the selected identity.";
+
+/* @symbol CLIInterface.taa3d1bfbf09d @args - */
+"cliInterface.taa3d1bfbf09d" = "External profile ID returned by login start.";
+
+/* @symbol CLIInterface.t7bac79515ad0 @args - */
+"cliInterface.t7bac79515ad0" = "Remove a pending login flow.";
+
+/* @symbol CLIInterface.t075c8839f62a @args - */
+"cliInterface.t075c8839f62a" = "Check CurseForge API key availability.";
+
+/* @symbol CLIInterface.tb513f67f0661 @args - */
+"cliInterface.tb513f67f0661" = "Set the CurseForge API key from stdin.";
+
+/* @symbol CLIInterface.tbee9e14cb9c8 @args - */
+"cliInterface.tbee9e14cb9c8" = "Read the key from stdin.";
+
+/* @symbol CLIInterface.tb412547b5de8 @args - */
+"cliInterface.tb412547b5de8" = "Remove the custom CurseForge API key.";
+
+/* @symbol CLIInterface.td9b80535359b @args - */
+"cliInterface.td9b80535359b" = "account service-key commands";
+
+/* @symbol CLIInterface.t463334485f56 @args - */
+"cliInterface.t463334485f56" = "account login commands";
+
+/* @symbol CLIInterface.t52f4179738c0 @args - */
+"cliInterface.t52f4179738c0" = "account commands";
+
+/* @symbol CLIInterface.t646f7af4624c @args - */
+"cliInterface.t646f7af4624c" = "Account provider does not match.";
+
+/* @symbol CLIInterface.t3a1a6178fec9 @args - */
+"cliInterface.t3a1a6178fec9" = "The authentication server or login identity changed.";
+
+/* @symbol CLIInterface.t000e28c5735c @args - */
+"cliInterface.t000e28c5735c" = "Complete the login in the same data directory.";
+
+/* @symbol CLIInterface.tf873deb7e49d @args - */
+"cliInterface.tf873deb7e49d" = "The login flow expired; start again.";
+
+/* @symbol CLIInterface.ta4020b2f41c3 @args - */
+"cliInterface.ta4020b2f41c3" = "Choose a profile returned by login start.";
+
+/* @symbol CLIInterface.t0ce4aa2e33ec @args - */
+"cliInterface.t0ce4aa2e33ec" = "The login already selected a different profile.";
+
+/* @symbol CLIInterface.t6176d717fcb9 @args - */
+"cliInterface.t6176d717fcb9" = "Invalid login flow; start again.";
+
+/* @symbol CLIInterface.te9b1e0403a1e @args - */
+"cliInterface.te9b1e0403a1e" = "Account not found.";
+
+/* @symbol CLIInterface.tb0b930baf0cc @args - */
+"cliInterface.tb0b930baf0cc" = "The account was removed or replaced.";
+
+/* @symbol CLIInterface.t9b5e04245098 @args - */
+"cliInterface.t9b5e04245098" = "The account identity changed.";
+
+/* @symbol CLIInterface.td9ca8e4b44c6 @args - */
+"cliInterface.td9ca8e4b44c6" = "The account was removed.";
+
+/* @symbol CLIInterface.tf4c5f25a3baf @args - */
+"cliInterface.tf4c5f25a3baf" = "The account was removed; credential or appearance cleanup failed.";
+
+/* @symbol CLIInterface.t1914c0297b34 @args - */
+"cliInterface.t1914c0297b34" = "Install this instance before launching.";
+
+/* @symbol CLIInterface.t46ce3acb0041 @args - */
+"cliInterface.t46ce3acb0041" = "Select an account or pass --account.";
+
+/* @symbol CLIInterface.tbd6842eb578e @args - */
+"cliInterface.tbd6842eb578e" = "Validate an instance's launch settings without starting the game.";
+
+/* @symbol CLIInterface.tc7d16a18216b @args - */
+"cliInterface.tc7d16a18216b" = "Account UUID; defaults to the active account.";
+
+/* @symbol CLIInterface.t7650c678063f @args - */
+"cliInterface.t7650c678063f" = "World folder for Quick Play.";
+
+/* @symbol CLIInterface.tb27f0522d834 @args - */
+"cliInterface.tb27f0522d834" = "Start the game and return after monitor handoff.";
+
+/* @symbol CLIInterface.t75aa2ae95dbf @args - */
+"cliInterface.t75aa2ae95dbf" = "List game sessions.";
+
+/* @symbol CLIInterface.t397da266f14b @args - */
+"cliInterface.t397da266f14b" = "Filter by instance UUID.";
+
+/* @symbol CLIInterface.t1dc55f419cc4 @args - */
+"cliInterface.t1dc55f419cc4" = "Filter by instance name.";
+
+/* @symbol CLIInterface.tb23f885979d4 @args - */
+"cliInterface.tb23f885979d4" = "Only show sessions with problems.";
+
+/* @symbol CLIInterface.t1c27c266a051 @args - */
+"cliInterface.t1c27c266a051" = "Read a game session.";
+
+/* @symbol CLIInterface.t7de41631eebc @args - */
+"cliInterface.t7de41631eebc" = "instance session";
+
+/* @symbol CLIInterface.ta977bdb2d5a4 @args - */
+"cliInterface.ta977bdb2d5a4" = "Wait for the monitor to record the game's exit.";
+
+/* @symbol CLIInterface.t6bbce4221048 @args - */
+"cliInterface.t6bbce4221048" = "Request normal game exit.";
+
+/* @symbol CLIInterface.t886efc49f631 @args - */
+"cliInterface.t886efc49f631" = "Force the game process to stop.";
+
+/* @symbol CLIInterface.t03a5e858530a @args - */
+"cliInterface.t03a5e858530a" = "Read or follow a session log.";
+
+/* @symbol CLIInterface.t61dffc7832ee @args - */
+"cliInterface.t61dffc7832ee" = "Follow until the session ends; use text or ndjson.";
+
+/* @symbol CLIInterface.tdae2c9ca76ca @args - */
+"cliInterface.tdae2c9ca76ca" = "Log source.";
+
+/* @symbol CLIInterface.t602d83ce6e9a @args - */
+"cliInterface.t602d83ce6e9a" = "Maximum tail lines (default 200).";
+
+/* @symbol CLIInterface.t5cf1cb615468 @args - */
+"cliInterface.t5cf1cb615468" = "Analyze recorded launch and game evidence.";
+
+/* @symbol CLIInterface.t33ed51c9688b @args - */
+"cliInterface.t33ed51c9688b" = "Export a redacted diagnostic bundle.";
+
+/* @symbol CLIInterface.t4e51dca76f06 @args - */
+"cliInterface.t4e51dca76f06" = "instance session file";
+
+/* @symbol CLIInterface.t03b417601a2c @args - */
+"cliInterface.t03b417601a2c" = "session commands";
+
+/* @symbol CLIInterface.t91806a3a3cd3 @args - */
+"cliInterface.t91806a3a3cd3" = "launch commands";
+
+/* @symbol CLIInterface.tadc93d3bb50c @args - */
+"cliInterface.tadc93d3bb50c" = "The game did not exit successfully.";
+
+/* @symbol CLIInterface.t28723ddb22d1 @args - */
+"cliInterface.t28723ddb22d1" = "Use --output ndjson or text with --follow.";
+
+/* @symbol CLIInterface.tafd6142d30ec @args - */
+"cliInterface.tafd6142d30ec" = "--lines must be between 1 and 10000.";
+
+/* @symbol CLIInterface.t043b9f54ca4c @args - */
+"cliInterface.t043b9f54ca4c" = "The monitor is no longer available.";
+
+/* @symbol CLIInterface.te5e3bed93ff1 @args - */
+"cliInterface.te5e3bed93ff1" = "Unknown session action.";
+

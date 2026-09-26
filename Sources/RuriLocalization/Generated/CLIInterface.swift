@@ -1113,6 +1113,462 @@ extension Messages {
         public static var tab6287c24a41: LocalizedMessage {
             .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "Unknown Java action.")
         }
+        /// login start
+        ///
+        /// Resource: `CLIInterface.cliInterface.t57b6d748b829`.
+        public static var t57b6d748b829: LocalizedMessage {
+            .init(key: "cliInterface.t57b6d748b829", table: "CLIInterface", fallback: "login start")
+        }
+        /// Microsoft login uses browser authorization, not a password.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc6b87186027e`.
+        public static var tc6b87186027e: LocalizedMessage {
+            .init(key: "cliInterface.tc6b87186027e", table: "CLIInterface", fallback: "Microsoft login uses browser authorization, not a password.")
+        }
+        /// External login requires --password-stdin.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb34236db1721`.
+        public static var tb34236db1721: LocalizedMessage {
+            .init(key: "cliInterface.tb34236db1721", table: "CLIInterface", fallback: "External login requires --password-stdin.")
+        }
+        /// login complete
+        ///
+        /// Resource: `CLIInterface.cliInterface.te307d3e2aed4`.
+        public static var te307d3e2aed4: LocalizedMessage {
+            .init(key: "cliInterface.te307d3e2aed4", table: "CLIInterface", fallback: "login complete")
+        }
+        /// login cancel
+        ///
+        /// Resource: `CLIInterface.cliInterface.taf7c81279d63`.
+        public static var taf7c81279d63: LocalizedMessage {
+            .init(key: "cliInterface.taf7c81279d63", table: "CLIInterface", fallback: "login cancel")
+        }
+        /// service-key status
+        ///
+        /// Resource: `CLIInterface.cliInterface.t2b2389f27e52`.
+        public static var t2b2389f27e52: LocalizedMessage {
+            .init(key: "cliInterface.t2b2389f27e52", table: "CLIInterface", fallback: "service-key status")
+        }
+        /// service-key set
+        ///
+        /// Resource: `CLIInterface.cliInterface.t8ed19e29eef4`.
+        public static var t8ed19e29eef4: LocalizedMessage {
+            .init(key: "cliInterface.t8ed19e29eef4", table: "CLIInterface", fallback: "service-key set")
+        }
+        /// Provide --stdin to read the API key.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t05b618061083`.
+        public static var t05b618061083: LocalizedMessage {
+            .init(key: "cliInterface.t05b618061083", table: "CLIInterface", fallback: "Provide --stdin to read the API key.")
+        }
+        /// service-key remove
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc68fadc33f5d`.
+        public static var tc68fadc33f5d: LocalizedMessage {
+            .init(key: "cliInterface.tc68fadc33f5d", table: "CLIInterface", fallback: "service-key remove")
+        }
+        /// Unknown account action.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tfffe65605bf6`.
+        public static var tfffe65605bf6: LocalizedMessage {
+            .init(key: "cliInterface.tfffe65605bf6", table: "CLIInterface", fallback: "Unknown account action.")
+        }
+        /// List accounts without exposing credentials.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t347c8e743183`.
+        public static var t347c8e743183: LocalizedMessage {
+            .init(key: "cliInterface.t347c8e743183", table: "CLIInterface", fallback: "List accounts without exposing credentials.")
+        }
+        /// Read the active account ID.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t60065624116e`.
+        public static var t60065624116e: LocalizedMessage {
+            .init(key: "cliInterface.t60065624116e", table: "CLIInterface", fallback: "Read the active account ID.")
+        }
+        /// Inspect an account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t29349e23e1f2`.
+        public static var t29349e23e1f2: LocalizedMessage {
+            .init(key: "cliInterface.t29349e23e1f2", table: "CLIInterface", fallback: "Inspect an account.")
+        }
+        /// Add or reuse an offline player account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5e3954fd00e4`.
+        public static var t5e3954fd00e4: LocalizedMessage {
+            .init(key: "cliInterface.t5e3954fd00e4", table: "CLIInterface", fallback: "Add or reuse an offline player account.")
+        }
+        /// Keep the current active account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4fbd66e4df1d`.
+        public static var t4fbd66e4df1d: LocalizedMessage {
+            .init(key: "cliInterface.t4fbd66e4df1d", table: "CLIInterface", fallback: "Keep the current active account.")
+        }
+        /// Select the active account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta88c8f0fa07b`.
+        public static var ta88c8f0fa07b: LocalizedMessage {
+            .init(key: "cliInterface.ta88c8f0fa07b", table: "CLIInterface", fallback: "Select the active account.")
+        }
+        /// Refresh a saved account's credentials.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te68622e3a4c1`.
+        public static var te68622e3a4c1: LocalizedMessage {
+            .init(key: "cliInterface.te68622e3a4c1", table: "CLIInterface", fallback: "Refresh a saved account's credentials.")
+        }
+        /// Remove an account and its local credentials.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t222e7542a935`.
+        public static var t222e7542a935: LocalizedMessage {
+            .init(key: "cliInterface.t222e7542a935", table: "CLIInterface", fallback: "Remove an account and its local credentials.")
+        }
+        /// Invalidate external credentials and remove the account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9de45ca5dfe9`.
+        public static var t9de45ca5dfe9: LocalizedMessage {
+            .init(key: "cliInterface.t9de45ca5dfe9", table: "CLIInterface", fallback: "Invalidate external credentials and remove the account.")
+        }
+        /// Start a two-step Microsoft or external login.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5e3d504d2f33`.
+        public static var t5e3d504d2f33: LocalizedMessage {
+            .init(key: "cliInterface.t5e3d504d2f33", table: "CLIInterface", fallback: "Start a two-step Microsoft or external login.")
+        }
+        /// Authentication provider.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t35f41c8dfeb7`.
+        public static var t35f41c8dfeb7: LocalizedMessage {
+            .init(key: "cliInterface.t35f41c8dfeb7", table: "CLIInterface", fallback: "Authentication provider.")
+        }
+        /// Existing account to reauthenticate.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t06b9c339e88c`.
+        public static var t06b9c339e88c: LocalizedMessage {
+            .init(key: "cliInterface.t06b9c339e88c", table: "CLIInterface", fallback: "Existing account to reauthenticate.")
+        }
+        /// External authentication server.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tda3d5eaa9c6b`.
+        public static var tda3d5eaa9c6b: LocalizedMessage {
+            .init(key: "cliInterface.tda3d5eaa9c6b", table: "CLIInterface", fallback: "External authentication server.")
+        }
+        /// External login identity.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t598bd6abd203`.
+        public static var t598bd6abd203: LocalizedMessage {
+            .init(key: "cliInterface.t598bd6abd203", table: "CLIInterface", fallback: "External login identity.")
+        }
+        /// Read the password from stdin.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tae550ce2501b`.
+        public static var tae550ce2501b: LocalizedMessage {
+            .init(key: "cliInterface.tae550ce2501b", table: "CLIInterface", fallback: "Read the password from stdin.")
+        }
+        /// Wait for authorization and save the selected identity.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td905be5334b1`.
+        public static var td905be5334b1: LocalizedMessage {
+            .init(key: "cliInterface.td905be5334b1", table: "CLIInterface", fallback: "Wait for authorization and save the selected identity.")
+        }
+        /// External profile ID returned by login start.
+        ///
+        /// Resource: `CLIInterface.cliInterface.taa3d1bfbf09d`.
+        public static var taa3d1bfbf09d: LocalizedMessage {
+            .init(key: "cliInterface.taa3d1bfbf09d", table: "CLIInterface", fallback: "External profile ID returned by login start.")
+        }
+        /// Remove a pending login flow.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t7bac79515ad0`.
+        public static var t7bac79515ad0: LocalizedMessage {
+            .init(key: "cliInterface.t7bac79515ad0", table: "CLIInterface", fallback: "Remove a pending login flow.")
+        }
+        /// Check CurseForge API key availability.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t075c8839f62a`.
+        public static var t075c8839f62a: LocalizedMessage {
+            .init(key: "cliInterface.t075c8839f62a", table: "CLIInterface", fallback: "Check CurseForge API key availability.")
+        }
+        /// Set the CurseForge API key from stdin.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb513f67f0661`.
+        public static var tb513f67f0661: LocalizedMessage {
+            .init(key: "cliInterface.tb513f67f0661", table: "CLIInterface", fallback: "Set the CurseForge API key from stdin.")
+        }
+        /// Read the key from stdin.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tbee9e14cb9c8`.
+        public static var tbee9e14cb9c8: LocalizedMessage {
+            .init(key: "cliInterface.tbee9e14cb9c8", table: "CLIInterface", fallback: "Read the key from stdin.")
+        }
+        /// Remove the custom CurseForge API key.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb412547b5de8`.
+        public static var tb412547b5de8: LocalizedMessage {
+            .init(key: "cliInterface.tb412547b5de8", table: "CLIInterface", fallback: "Remove the custom CurseForge API key.")
+        }
+        /// account service-key commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.td9b80535359b`.
+        public static var td9b80535359b: LocalizedMessage {
+            .init(key: "cliInterface.td9b80535359b", table: "CLIInterface", fallback: "account service-key commands")
+        }
+        /// account login commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t463334485f56`.
+        public static var t463334485f56: LocalizedMessage {
+            .init(key: "cliInterface.t463334485f56", table: "CLIInterface", fallback: "account login commands")
+        }
+        /// account commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t52f4179738c0`.
+        public static var t52f4179738c0: LocalizedMessage {
+            .init(key: "cliInterface.t52f4179738c0", table: "CLIInterface", fallback: "account commands")
+        }
+        /// Account provider does not match.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t646f7af4624c`.
+        public static var t646f7af4624c: LocalizedMessage {
+            .init(key: "cliInterface.t646f7af4624c", table: "CLIInterface", fallback: "Account provider does not match.")
+        }
+        /// The authentication server or login identity changed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t3a1a6178fec9`.
+        public static var t3a1a6178fec9: LocalizedMessage {
+            .init(key: "cliInterface.t3a1a6178fec9", table: "CLIInterface", fallback: "The authentication server or login identity changed.")
+        }
+        /// Complete the login in the same data directory.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t000e28c5735c`.
+        public static var t000e28c5735c: LocalizedMessage {
+            .init(key: "cliInterface.t000e28c5735c", table: "CLIInterface", fallback: "Complete the login in the same data directory.")
+        }
+        /// The login flow expired; start again.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf873deb7e49d`.
+        public static var tf873deb7e49d: LocalizedMessage {
+            .init(key: "cliInterface.tf873deb7e49d", table: "CLIInterface", fallback: "The login flow expired; start again.")
+        }
+        /// Choose a profile returned by login start.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta4020b2f41c3`.
+        public static var ta4020b2f41c3: LocalizedMessage {
+            .init(key: "cliInterface.ta4020b2f41c3", table: "CLIInterface", fallback: "Choose a profile returned by login start.")
+        }
+        /// The login already selected a different profile.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t0ce4aa2e33ec`.
+        public static var t0ce4aa2e33ec: LocalizedMessage {
+            .init(key: "cliInterface.t0ce4aa2e33ec", table: "CLIInterface", fallback: "The login already selected a different profile.")
+        }
+        /// Invalid login flow; start again.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t6176d717fcb9`.
+        public static var t6176d717fcb9: LocalizedMessage {
+            .init(key: "cliInterface.t6176d717fcb9", table: "CLIInterface", fallback: "Invalid login flow; start again.")
+        }
+        /// Account not found.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te9b1e0403a1e`.
+        public static var te9b1e0403a1e: LocalizedMessage {
+            .init(key: "cliInterface.te9b1e0403a1e", table: "CLIInterface", fallback: "Account not found.")
+        }
+        /// The account was removed or replaced.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb0b930baf0cc`.
+        public static var tb0b930baf0cc: LocalizedMessage {
+            .init(key: "cliInterface.tb0b930baf0cc", table: "CLIInterface", fallback: "The account was removed or replaced.")
+        }
+        /// The account identity changed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9b5e04245098`.
+        public static var t9b5e04245098: LocalizedMessage {
+            .init(key: "cliInterface.t9b5e04245098", table: "CLIInterface", fallback: "The account identity changed.")
+        }
+        /// The account was removed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.td9ca8e4b44c6`.
+        public static var td9ca8e4b44c6: LocalizedMessage {
+            .init(key: "cliInterface.td9ca8e4b44c6", table: "CLIInterface", fallback: "The account was removed.")
+        }
+        /// The account was removed; credential or appearance cleanup failed.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tf4c5f25a3baf`.
+        public static var tf4c5f25a3baf: LocalizedMessage {
+            .init(key: "cliInterface.tf4c5f25a3baf", table: "CLIInterface", fallback: "The account was removed; credential or appearance cleanup failed.")
+        }
+        /// Install this instance before launching.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1914c0297b34`.
+        public static var t1914c0297b34: LocalizedMessage {
+            .init(key: "cliInterface.t1914c0297b34", table: "CLIInterface", fallback: "Install this instance before launching.")
+        }
+        /// Select an account or pass --account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t46ce3acb0041`.
+        public static var t46ce3acb0041: LocalizedMessage {
+            .init(key: "cliInterface.t46ce3acb0041", table: "CLIInterface", fallback: "Select an account or pass --account.")
+        }
+        /// Validate an instance's launch settings without starting the game.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tbd6842eb578e`.
+        public static var tbd6842eb578e: LocalizedMessage {
+            .init(key: "cliInterface.tbd6842eb578e", table: "CLIInterface", fallback: "Validate an instance's launch settings without starting the game.")
+        }
+        /// Account UUID; defaults to the active account.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tc7d16a18216b`.
+        public static var tc7d16a18216b: LocalizedMessage {
+            .init(key: "cliInterface.tc7d16a18216b", table: "CLIInterface", fallback: "Account UUID; defaults to the active account.")
+        }
+        /// World folder for Quick Play.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t7650c678063f`.
+        public static var t7650c678063f: LocalizedMessage {
+            .init(key: "cliInterface.t7650c678063f", table: "CLIInterface", fallback: "World folder for Quick Play.")
+        }
+        /// Start the game and return after monitor handoff.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb27f0522d834`.
+        public static var tb27f0522d834: LocalizedMessage {
+            .init(key: "cliInterface.tb27f0522d834", table: "CLIInterface", fallback: "Start the game and return after monitor handoff.")
+        }
+        /// List game sessions.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t75aa2ae95dbf`.
+        public static var t75aa2ae95dbf: LocalizedMessage {
+            .init(key: "cliInterface.t75aa2ae95dbf", table: "CLIInterface", fallback: "List game sessions.")
+        }
+        /// Filter by instance UUID.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t397da266f14b`.
+        public static var t397da266f14b: LocalizedMessage {
+            .init(key: "cliInterface.t397da266f14b", table: "CLIInterface", fallback: "Filter by instance UUID.")
+        }
+        /// Filter by instance name.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1dc55f419cc4`.
+        public static var t1dc55f419cc4: LocalizedMessage {
+            .init(key: "cliInterface.t1dc55f419cc4", table: "CLIInterface", fallback: "Filter by instance name.")
+        }
+        /// Only show sessions with problems.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tb23f885979d4`.
+        public static var tb23f885979d4: LocalizedMessage {
+            .init(key: "cliInterface.tb23f885979d4", table: "CLIInterface", fallback: "Only show sessions with problems.")
+        }
+        /// Read a game session.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t1c27c266a051`.
+        public static var t1c27c266a051: LocalizedMessage {
+            .init(key: "cliInterface.t1c27c266a051", table: "CLIInterface", fallback: "Read a game session.")
+        }
+        /// instance session
+        ///
+        /// Resource: `CLIInterface.cliInterface.t7de41631eebc`.
+        public static var t7de41631eebc: LocalizedMessage {
+            .init(key: "cliInterface.t7de41631eebc", table: "CLIInterface", fallback: "instance session")
+        }
+        /// Wait for the monitor to record the game's exit.
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta977bdb2d5a4`.
+        public static var ta977bdb2d5a4: LocalizedMessage {
+            .init(key: "cliInterface.ta977bdb2d5a4", table: "CLIInterface", fallback: "Wait for the monitor to record the game's exit.")
+        }
+        /// Request normal game exit.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t6bbce4221048`.
+        public static var t6bbce4221048: LocalizedMessage {
+            .init(key: "cliInterface.t6bbce4221048", table: "CLIInterface", fallback: "Request normal game exit.")
+        }
+        /// Force the game process to stop.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t886efc49f631`.
+        public static var t886efc49f631: LocalizedMessage {
+            .init(key: "cliInterface.t886efc49f631", table: "CLIInterface", fallback: "Force the game process to stop.")
+        }
+        /// Read or follow a session log.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t03a5e858530a`.
+        public static var t03a5e858530a: LocalizedMessage {
+            .init(key: "cliInterface.t03a5e858530a", table: "CLIInterface", fallback: "Read or follow a session log.")
+        }
+        /// Follow until the session ends; use text or ndjson.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t61dffc7832ee`.
+        public static var t61dffc7832ee: LocalizedMessage {
+            .init(key: "cliInterface.t61dffc7832ee", table: "CLIInterface", fallback: "Follow until the session ends; use text or ndjson.")
+        }
+        /// Log source.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tdae2c9ca76ca`.
+        public static var tdae2c9ca76ca: LocalizedMessage {
+            .init(key: "cliInterface.tdae2c9ca76ca", table: "CLIInterface", fallback: "Log source.")
+        }
+        /// Maximum tail lines (default 200).
+        ///
+        /// Resource: `CLIInterface.cliInterface.t602d83ce6e9a`.
+        public static var t602d83ce6e9a: LocalizedMessage {
+            .init(key: "cliInterface.t602d83ce6e9a", table: "CLIInterface", fallback: "Maximum tail lines (default 200).")
+        }
+        /// Analyze recorded launch and game evidence.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t5cf1cb615468`.
+        public static var t5cf1cb615468: LocalizedMessage {
+            .init(key: "cliInterface.t5cf1cb615468", table: "CLIInterface", fallback: "Analyze recorded launch and game evidence.")
+        }
+        /// Export a redacted diagnostic bundle.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t33ed51c9688b`.
+        public static var t33ed51c9688b: LocalizedMessage {
+            .init(key: "cliInterface.t33ed51c9688b", table: "CLIInterface", fallback: "Export a redacted diagnostic bundle.")
+        }
+        /// instance session file
+        ///
+        /// Resource: `CLIInterface.cliInterface.t4e51dca76f06`.
+        public static var t4e51dca76f06: LocalizedMessage {
+            .init(key: "cliInterface.t4e51dca76f06", table: "CLIInterface", fallback: "instance session file")
+        }
+        /// session commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t03b417601a2c`.
+        public static var t03b417601a2c: LocalizedMessage {
+            .init(key: "cliInterface.t03b417601a2c", table: "CLIInterface", fallback: "session commands")
+        }
+        /// launch commands
+        ///
+        /// Resource: `CLIInterface.cliInterface.t91806a3a3cd3`.
+        public static var t91806a3a3cd3: LocalizedMessage {
+            .init(key: "cliInterface.t91806a3a3cd3", table: "CLIInterface", fallback: "launch commands")
+        }
+        /// The game did not exit successfully.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tadc93d3bb50c`.
+        public static var tadc93d3bb50c: LocalizedMessage {
+            .init(key: "cliInterface.tadc93d3bb50c", table: "CLIInterface", fallback: "The game did not exit successfully.")
+        }
+        /// Use --output ndjson or text with --follow.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t28723ddb22d1`.
+        public static var t28723ddb22d1: LocalizedMessage {
+            .init(key: "cliInterface.t28723ddb22d1", table: "CLIInterface", fallback: "Use --output ndjson or text with --follow.")
+        }
+        /// --lines must be between 1 and 10000.
+        ///
+        /// Resource: `CLIInterface.cliInterface.tafd6142d30ec`.
+        public static var tafd6142d30ec: LocalizedMessage {
+            .init(key: "cliInterface.tafd6142d30ec", table: "CLIInterface", fallback: "--lines must be between 1 and 10000.")
+        }
+        /// The monitor is no longer available.
+        ///
+        /// Resource: `CLIInterface.cliInterface.t043b9f54ca4c`.
+        public static var t043b9f54ca4c: LocalizedMessage {
+            .init(key: "cliInterface.t043b9f54ca4c", table: "CLIInterface", fallback: "The monitor is no longer available.")
+        }
+        /// Unknown session action.
+        ///
+        /// Resource: `CLIInterface.cliInterface.te5e3bed93ff1`.
+        public static var te5e3bed93ff1: LocalizedMessage {
+            .init(key: "cliInterface.te5e3bed93ff1", table: "CLIInterface", fallback: "Unknown session action.")
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
             "CLIInterface:cliInterface.t066f88703d3a": .init("未知命令路径。", []),
@@ -1299,6 +1755,82 @@ extension Messages {
             "CLIInterface:cliInterface.t9a582e74d089": .init("Unknown directory action.", []),
             "CLIInterface:cliInterface.t33604425d94f": .init("Java catalog entry not found.", []),
             "CLIInterface:cliInterface.tab6287c24a41": .init("Unknown Java action.", []),
+            "CLIInterface:cliInterface.t57b6d748b829": .init("login start", []),
+            "CLIInterface:cliInterface.tc6b87186027e": .init("Microsoft login uses browser authorization, not a password.", []),
+            "CLIInterface:cliInterface.tb34236db1721": .init("External login requires --password-stdin.", []),
+            "CLIInterface:cliInterface.te307d3e2aed4": .init("login complete", []),
+            "CLIInterface:cliInterface.taf7c81279d63": .init("login cancel", []),
+            "CLIInterface:cliInterface.t2b2389f27e52": .init("service-key status", []),
+            "CLIInterface:cliInterface.t8ed19e29eef4": .init("service-key set", []),
+            "CLIInterface:cliInterface.t05b618061083": .init("Provide --stdin to read the API key.", []),
+            "CLIInterface:cliInterface.tc68fadc33f5d": .init("service-key remove", []),
+            "CLIInterface:cliInterface.tfffe65605bf6": .init("Unknown account action.", []),
+            "CLIInterface:cliInterface.t347c8e743183": .init("List accounts without exposing credentials.", []),
+            "CLIInterface:cliInterface.t60065624116e": .init("Read the active account ID.", []),
+            "CLIInterface:cliInterface.t29349e23e1f2": .init("Inspect an account.", []),
+            "CLIInterface:cliInterface.t5e3954fd00e4": .init("Add or reuse an offline player account.", []),
+            "CLIInterface:cliInterface.t4fbd66e4df1d": .init("Keep the current active account.", []),
+            "CLIInterface:cliInterface.ta88c8f0fa07b": .init("Select the active account.", []),
+            "CLIInterface:cliInterface.te68622e3a4c1": .init("Refresh a saved account's credentials.", []),
+            "CLIInterface:cliInterface.t222e7542a935": .init("Remove an account and its local credentials.", []),
+            "CLIInterface:cliInterface.t9de45ca5dfe9": .init("Invalidate external credentials and remove the account.", []),
+            "CLIInterface:cliInterface.t5e3d504d2f33": .init("Start a two-step Microsoft or external login.", []),
+            "CLIInterface:cliInterface.t35f41c8dfeb7": .init("Authentication provider.", []),
+            "CLIInterface:cliInterface.t06b9c339e88c": .init("Existing account to reauthenticate.", []),
+            "CLIInterface:cliInterface.tda3d5eaa9c6b": .init("External authentication server.", []),
+            "CLIInterface:cliInterface.t598bd6abd203": .init("External login identity.", []),
+            "CLIInterface:cliInterface.tae550ce2501b": .init("Read the password from stdin.", []),
+            "CLIInterface:cliInterface.td905be5334b1": .init("Wait for authorization and save the selected identity.", []),
+            "CLIInterface:cliInterface.taa3d1bfbf09d": .init("External profile ID returned by login start.", []),
+            "CLIInterface:cliInterface.t7bac79515ad0": .init("Remove a pending login flow.", []),
+            "CLIInterface:cliInterface.t075c8839f62a": .init("Check CurseForge API key availability.", []),
+            "CLIInterface:cliInterface.tb513f67f0661": .init("Set the CurseForge API key from stdin.", []),
+            "CLIInterface:cliInterface.tbee9e14cb9c8": .init("Read the key from stdin.", []),
+            "CLIInterface:cliInterface.tb412547b5de8": .init("Remove the custom CurseForge API key.", []),
+            "CLIInterface:cliInterface.td9b80535359b": .init("account service-key commands", []),
+            "CLIInterface:cliInterface.t463334485f56": .init("account login commands", []),
+            "CLIInterface:cliInterface.t52f4179738c0": .init("account commands", []),
+            "CLIInterface:cliInterface.t646f7af4624c": .init("Account provider does not match.", []),
+            "CLIInterface:cliInterface.t3a1a6178fec9": .init("The authentication server or login identity changed.", []),
+            "CLIInterface:cliInterface.t000e28c5735c": .init("Complete the login in the same data directory.", []),
+            "CLIInterface:cliInterface.tf873deb7e49d": .init("The login flow expired; start again.", []),
+            "CLIInterface:cliInterface.ta4020b2f41c3": .init("Choose a profile returned by login start.", []),
+            "CLIInterface:cliInterface.t0ce4aa2e33ec": .init("The login already selected a different profile.", []),
+            "CLIInterface:cliInterface.t6176d717fcb9": .init("Invalid login flow; start again.", []),
+            "CLIInterface:cliInterface.te9b1e0403a1e": .init("Account not found.", []),
+            "CLIInterface:cliInterface.tb0b930baf0cc": .init("The account was removed or replaced.", []),
+            "CLIInterface:cliInterface.t9b5e04245098": .init("The account identity changed.", []),
+            "CLIInterface:cliInterface.td9ca8e4b44c6": .init("The account was removed.", []),
+            "CLIInterface:cliInterface.tf4c5f25a3baf": .init("The account was removed; credential or appearance cleanup failed.", []),
+            "CLIInterface:cliInterface.t1914c0297b34": .init("Install this instance before launching.", []),
+            "CLIInterface:cliInterface.t46ce3acb0041": .init("Select an account or pass --account.", []),
+            "CLIInterface:cliInterface.tbd6842eb578e": .init("Validate an instance's launch settings without starting the game.", []),
+            "CLIInterface:cliInterface.tc7d16a18216b": .init("Account UUID; defaults to the active account.", []),
+            "CLIInterface:cliInterface.t7650c678063f": .init("World folder for Quick Play.", []),
+            "CLIInterface:cliInterface.tb27f0522d834": .init("Start the game and return after monitor handoff.", []),
+            "CLIInterface:cliInterface.t75aa2ae95dbf": .init("List game sessions.", []),
+            "CLIInterface:cliInterface.t397da266f14b": .init("Filter by instance UUID.", []),
+            "CLIInterface:cliInterface.t1dc55f419cc4": .init("Filter by instance name.", []),
+            "CLIInterface:cliInterface.tb23f885979d4": .init("Only show sessions with problems.", []),
+            "CLIInterface:cliInterface.t1c27c266a051": .init("Read a game session.", []),
+            "CLIInterface:cliInterface.t7de41631eebc": .init("instance session", []),
+            "CLIInterface:cliInterface.ta977bdb2d5a4": .init("Wait for the monitor to record the game's exit.", []),
+            "CLIInterface:cliInterface.t6bbce4221048": .init("Request normal game exit.", []),
+            "CLIInterface:cliInterface.t886efc49f631": .init("Force the game process to stop.", []),
+            "CLIInterface:cliInterface.t03a5e858530a": .init("Read or follow a session log.", []),
+            "CLIInterface:cliInterface.t61dffc7832ee": .init("Follow until the session ends; use text or ndjson.", []),
+            "CLIInterface:cliInterface.tdae2c9ca76ca": .init("Log source.", []),
+            "CLIInterface:cliInterface.t602d83ce6e9a": .init("Maximum tail lines (default 200).", []),
+            "CLIInterface:cliInterface.t5cf1cb615468": .init("Analyze recorded launch and game evidence.", []),
+            "CLIInterface:cliInterface.t33ed51c9688b": .init("Export a redacted diagnostic bundle.", []),
+            "CLIInterface:cliInterface.t4e51dca76f06": .init("instance session file", []),
+            "CLIInterface:cliInterface.t03b417601a2c": .init("session commands", []),
+            "CLIInterface:cliInterface.t91806a3a3cd3": .init("launch commands", []),
+            "CLIInterface:cliInterface.tadc93d3bb50c": .init("The game did not exit successfully.", []),
+            "CLIInterface:cliInterface.t28723ddb22d1": .init("Use --output ndjson or text with --follow.", []),
+            "CLIInterface:cliInterface.tafd6142d30ec": .init("--lines must be between 1 and 10000.", []),
+            "CLIInterface:cliInterface.t043b9f54ca4c": .init("The monitor is no longer available.", []),
+            "CLIInterface:cliInterface.te5e3bed93ff1": .init("Unknown session action.", []),
         ]
     }
 }
