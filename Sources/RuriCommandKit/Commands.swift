@@ -9,13 +9,18 @@ struct SchemaCommand: ExecutableCommand {
         .init(name: "action", type: "string", required: false, help: "action"),
         .init(name: "subaction", type: "string", required: false, help: "subaction")
     ], options: [
-
-    ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri schema config apply --json"])
+        .init(name: "input", type: "bool", required: false, help: Messages.CLIExperience.inputSchema.localized),
+        .init(name: "output-schema", type: "bool", required: false, help: Messages.CLIExperience.outputSchema.localized),
+        .init(name: "scope", type: "string", required: false, help: Messages.CLIExperience.schemaScope.localized, values: ["app", "defaults", "instance"]),
+        .init(name: "full", type: "bool", required: false, help: Messages.CLIExperience.fullSchema.localized)
+    ], examples: ["ruri schema config apply --input --scope instance --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: ArgumentHelp(Messages.CLIInterface.t907f38578610.localized)) var operands: [String] = []
-    var parameters: [String: Value] { [
-        :
-    ].filter { $0.value != .null } }
+    @Flag(help: ArgumentHelp(Messages.CLIExperience.inputSchema.localized)) var input = false
+    @Flag(name: .customLong("output-schema"), help: ArgumentHelp(Messages.CLIExperience.outputSchema.localized)) var outputSchema = false
+    @Option(help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized)) var scope: String?
+    @Flag(help: ArgumentHelp(Messages.CLIExperience.fullSchema.localized)) var full = false
+    var parameters: [String: Value] { ["input": .bool(input), "output-schema": .bool(outputSchema), "scope": .text(scope), "full": .bool(full)].filter { $0.value != .null } }
 }
 
 struct AppInfoCommand: ExecutableCommand {

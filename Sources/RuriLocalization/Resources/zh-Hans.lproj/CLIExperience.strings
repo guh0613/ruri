@@ -1,0 +1,28 @@
+/* @symbol CLIExperience.helpAll @args - */
+"cliExperience.helpAll" = "列出全部命令的精简用法";
+/* @symbol CLIExperience.discovery @args - */
+"cliExperience.discovery" = "发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。";
+/* @symbol CLIExperience.rules @args - */
+"cliExperience.rules" = "目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。";
+/* @symbol CLIExperience.formats @args - */
+"cliExperience.formats" = "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。";
+/* @symbol CLIExperience.listRules @args - */
+"cliExperience.listRules" = "列表默认最多 50 项，--limit <1…1000> / --offset <数量> 分页，--all 返回全部。";
+/* @symbol CLIExperience.schemaHint @args - */
+"cliExperience.schemaHint" = "严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。";
+/* @symbol CLIExperience.configRules @args - */
+"cliExperience.configRules" = "配置作用域：app、defaults、instance:<uuid>。set 的值使用 JSON 字面量（字符串需保留双引号）；apply --file - 从 stdin 读取补丁。inherit 按组恢复继承，--if-revision 防止覆盖并发修改。";
+/* @symbol CLIExperience.configFields @args - */
+"cliExperience.configFields" = "配置字段（? 表示允许 null；空字符串与 null 不同）：";
+/* @symbol CLIExperience.inputSchema @args - */
+"cliExperience.inputSchema" = "只返回命令输入结构；config apply 同时包含补丁结构";
+/* @symbol CLIExperience.outputSchema @args - */
+"cliExperience.outputSchema" = "只返回命令结果结构";
+/* @symbol CLIExperience.schemaScope @args - */
+"cliExperience.schemaScope" = "只查询指定配置作用域的字段：app、defaults 或 instance";
+/* @symbol CLIExperience.fullSchema @args - */
+"cliExperience.fullSchema" = "展开目录中所有命令的完整结构，输出可能很长";
+/* @symbol CLIExperience.schemaSelection @args - */
+"cliExperience.schemaSelection" = "--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。";
+/* @symbol CLIExperience.unknownHelp @args text */
+"cliExperience.unknownHelp" = "找不到命令：%@。使用 ruri help --all 查看命令目录。";

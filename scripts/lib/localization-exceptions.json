@@ -1133,5 +1133,25 @@
     "file": "Sources/RuriCore/Operations/CLIInstallation.swift",
     "literal": "\" 2>&1 || true\"",
     "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"USAGE: \"",
+    "reason": "CLI usage syntax and stable command/parameter identifiers."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\" [options]\"",
+    "reason": "CLI usage syntax and stable command/parameter identifiers."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"defaults / instance:<uuid>\"",
+    "reason": "CLI usage syntax and stable command/parameter identifiers."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schema config apply --input --scope instance --json\"",
+    "reason": "CLI usage syntax and stable command/parameter identifiers."
   }
 ]

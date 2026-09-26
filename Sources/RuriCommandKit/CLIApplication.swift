@@ -11,6 +11,24 @@ public enum CLIApplication {
         var output = CommandOutput(format: requestedFormat(args), quiet: args.contains("--quiet"), write: write)
         var activeRequest: CommandRequest?
         do {
+            if args.first == "help" {
+                let query: CommandHelp.Query
+                do { query = try CommandHelp.Query.parse(Array(args.dropFirst())) }
+                catch {
+                    if CommandHelp.Query.exitCode(for: error).rawValue == 0 {
+                        output.help(try CommandHelp.render(path: [])); return 0
+                    }
+                    throw OperationFailure("INVALID_ARGUMENT", CommandHelp.Query.message(for: error))
+                }
+                guard ["text", "json", "ndjson"].contains(query.common.output), !query.common.json || ["text", "json"].contains(query.common.output) else {
+                    throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te36f73cbdb89.localized)
+                }
+                let context = query.common.language.map { LocalizationContext(language: $0) } ?? .processDefault
+                let help = try LocalizationContext.$current.withValue(context) { try CommandHelp.render(path: query.path, all: query.all) }
+                if requestedFormat(args) == .text { output.help(help) }
+                else { output.result(.string(help)) }
+                return 0
+            }
             let command: any ExecutableCommand
             do {
                 var parsed = try RuriCommand.parseAsRoot(args)
@@ -25,7 +43,15 @@ public enum CLIApplication {
             }
             catch {
                 let code = RuriCommand.exitCode(for: error).rawValue
-                if code == 0 { output.help(RuriCommand.message(for: error)); return 0 }
+                if code == 0 {
+                    let options = args.prefix { $0 != "--" }
+                    if options.contains("--version") || options.contains("--experimental-dump-help") {
+                        output.help(RuriCommand.message(for: error))
+                    } else {
+                        output.help(try CommandHelp.render(path: CommandHelp.prefix(in: args)))
+                    }
+                    return 0
+                }
                 throw OperationFailure("INVALID_ARGUMENT", RuriCommand.message(for: error))
             }
             let request = command.request
@@ -83,13 +109,7 @@ public enum CLIApplication {
         if request.spec.path.first == "schematic" { return try await manageSchematic(request) }
         switch request.path {
         case "schema":
-            let matching = CommandRegistry.commands.filter { Array($0.path.prefix(request.operands.count)) == request.operands }
-            guard !matching.isEmpty else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t066f88703d3a.localized) }
-            return .object(["commands": try .encode(matching), "output": .object(["schemaVersion": .integer(1), "formats": .array(["text", "json", "ndjson"].map(Value.string)),
-                "result": .array(["schemaVersion", "ok", "data", "warnings", "error"].map(Value.string)),
-                "error": .array(["code", "message", "retryable", "nextActions", "details"].map(Value.string))]),
-                "globalOptions": .array(["--json", "--output", "--data-dir", "--language", "--quiet"].map(Value.string)),
-                "configuration": try ConfigurationService.schema(), "patchSchemas": CommandSchemas.patches])
+            return try CommandDiscovery.schema(request)
         case "app info":
             return .object(["version": .string(BuildConfiguration().version), "schemaVersion": .integer(1), "application": .text(RuriInstallation.application()?.path),
                 "cli": .text(RuriInstallation.cliExecutable?.path), "dataDirectory": .string(basePaths(request).root.path)])
