@@ -70,8 +70,8 @@ def validate(app):
         assert not invoke(relocated, "cli", "status", "--bin-dir", bin_dir)["installed"]
         assert invoke(relocated, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
         assert Path(invoke(link, "app", "info")["application"]).resolve() == moved.resolve()
-        # Remove the fixture instance before checking helpers, so doctor needs no
-        # Java installation, network access, credentials, or game download.
+        # Check helpers with fresh data so doctor needs no Java installation,
+        # network access, credentials, or game download.
         clean_data = root / "doctor data"
         result = json.loads(command([link, "doctor", "--data-dir", clean_data, "--json"], env=environment))
         assert result["ok"] and result["data"]["healthy"], result

@@ -46,3 +46,5 @@ jobs:
       - name: Test
         # Process/timeout fixtures need prompt scheduling on shared runners.
         run: scripts/swift-build.sh test --no-parallel --force-resolved-versions
+      - name: Verify packaged CLI
+        run: scripts/build-app.sh debug --force-resolved-versions

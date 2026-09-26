@@ -7,6 +7,7 @@ if [[ "${RURI_SIGNING_ACTIVE:-}" != 1 ]]; then
 fi
 select_xcode
 configuration="${1:-release}"
+if (( $# )); then shift; fi
 export RURI_BUILD_DIR="${RURI_BUILD_DIR:-.build/validation}"
 mkdir -p build
 stage_dir="$(mktemp -d "$(pwd)/build/.ruri-build.XXXXXX")"
@@ -17,8 +18,8 @@ mkdir -p "$app/Contents/Helpers"
 cp Resources/Info.plist "$app/Contents/Info.plist"
 cp Resources/ThirdPartyNotices.txt "$app/Contents/Resources/ThirdPartyNotices.txt"
 python3 scripts/lib/app.py bundle "$app"
-scripts/swift-build.sh -c "$configuration"
-binary_dir="$(scripts/swift-build.sh -c "$configuration" --show-bin-path)"
+scripts/swift-build.sh -c "$configuration" "$@"
+binary_dir="$(scripts/swift-build.sh -c "$configuration" "$@" --show-bin-path)"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
 cp "$binary_dir/ruri-cli" "$app/Contents/Helpers/ruri-cli"
 cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"

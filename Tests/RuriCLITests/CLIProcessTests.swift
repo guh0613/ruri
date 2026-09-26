@@ -5,7 +5,10 @@ import RuriCore
 private final class CLIProcessBundleMarker: NSObject {}
 
 struct CLIProcessTests {
-    private var executable: URL { Bundle(for: CLIProcessBundleMarker.self).bundleURL.deletingLastPathComponent().appendingPathComponent("ruri-cli") }
+    private var executable: URL {
+        ProcessInfo.processInfo.environment["RURI_TEST_CLI"].map { URL(fileURLWithPath: $0) }
+            ?? Bundle(for: CLIProcessBundleMarker.self).bundleURL.deletingLastPathComponent().appendingPathComponent("ruri-cli")
+    }
     private func run(_ args: [String], paths: LauncherPaths) throws -> (Int32, OperationValue) {
         let process = Process(), output = Pipe()
         process.executableURL = executable
