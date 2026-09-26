@@ -28,7 +28,6 @@ extension CLIApplication {
         case "show": return sessionValue(record)
         case "wait":
             let finished = try await GameMonitorClient.wait(paths: paths, instanceID: instanceID, sessionID: id)
-            guard let exit = finished.exit, exit.shellStatus == 0 else { throw OperationFailure("GAME_FAILED", Messages.CLIInterface.tadc93d3bb50c.localized, details: sessionValue(finished)) }
             return sessionValue(finished)
         case "quit", "stop":
             if !request.dryRun {

@@ -70,26 +70,6 @@
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/RuriCLI/CLI.swift",
-    "literal": "\"\\(p.phase.rawValue) \\(p.completed)/\\(p.total) · \\(p.bytesCopied)/\\(p.totalBytes) bytes\\n\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
-    "file": "Sources/RuriCLI/CLI.swift",
-    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCLI/InstanceMoves.swift",
-    "literal": "\"\\(value.phase.rawValue) · \\(value.bytesCopied)/\\(value.totalBytes) bytes\\n\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
-    "file": "Sources/RuriCLI/SchematicCommands.swift",
-    "literal": "\"  \\(item.size) bytes\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
     "file": "Sources/RuriCore/Accounts/AccountAppearance.swift",
     "literal": "\"--\\(boundary)\\r\\nContent-Disposition: form-data; name=\\\"\\(field)\\\"\\r\\n\\r\\n\\(value)\\r\\n\"",
     "reason": "Authentication protocol header, MIME syntax, OAuth scope, or public-key delimiter."
@@ -915,26 +895,6 @@
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/RuriCLI/Legacy/CLI.swift",
-    "literal": "\"\\(p.phase.rawValue) \\(p.completed)/\\(p.total) · \\(p.bytesCopied)/\\(p.totalBytes) bytes\\n\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
-    "file": "Sources/RuriCLI/Legacy/CLI.swift",
-    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/RuriCLI/Legacy/InstanceMoves.swift",
-    "literal": "\"\\(value.phase.rawValue) · \\(value.bytesCopied)/\\(value.totalBytes) bytes\\n\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
-    "file": "Sources/RuriCLI/Legacy/SchematicCommands.swift",
-    "literal": "\"  \\(item.size) bytes\"",
-    "reason": "Existing structured CLI progress/list output; preserve byte units and field syntax for scripts."
-  },
-  {
     "file": "Sources/RuriCommandKit/CLIApplication.swift",
     "literal": "\"app info\"",
     "line": 50,
@@ -969,5 +929,184 @@
     "literal": "\"cli uninstall\"",
     "line": 64,
     "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandSchemas.swift",
+    "literal": "\"app info\"",
+    "line": 63,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandSchemas.swift",
+    "literal": "\"instance import\"",
+    "line": 121,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandSchemas.swift",
+    "literal": "\"instance list\"",
+    "line": 137,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandSchemas.swift",
+    "literal": "\"instance versions\"",
+    "line": 138,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandSchemas.swift",
+    "literal": "\"instance component versions\"",
+    "line": 139,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schema config apply --json\"",
+    "line": 12,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config set memory.maximumMB 6144 --scope defaults --json\"",
+    "line": 136,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config apply --scope instance:<uuid> --file patch.json --dry-run --json\"",
+    "line": 157,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config inherit memory --scope instance:<uuid> --json\"",
+    "line": 199,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance create --name Survival --game 1.21.1 --directory default --json\"",
+    "line": 298,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account login start --provider microsoft --json\"",
+    "line": 1073,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri launch start <instance-uuid> --account <account-uuid> --json\"",
+    "line": 1194,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session logs <instance-uuid> <session-uuid> --follow --output ndjson\"",
+    "line": 1305,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content install <instance-uuid> sodium --provider modrinth --dry-run --json\"",
+    "line": 1502,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"login start\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"login complete\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"login cancel\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"service-key status\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"service-key set\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/AccountCommands.swift",
+    "literal": "\"service-key remove\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/DirectoryCommands.swift",
+    "literal": "\"run get\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/DirectoryCommands.swift",
+    "literal": "\"run set\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/DirectoryCommands.swift",
+    "literal": "\"run relocate\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"backup list\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"backup restore\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"backup remove\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"backup create\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"order get\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/WorldCommands.swift",
+    "literal": "\"order set\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/InstanceCommands.swift",
+    "literal": "\"component list\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/InstanceCommands.swift",
+    "literal": "\"component versions\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/InstanceCommands.swift",
+    "literal": "\"component set\"",
+    "reason": "Stable command action; independent of display language."
+  },
+  {
+    "file": "Sources/RuriCommandKit/InstanceCommands.swift",
+    "literal": "\"component restore\"",
+    "reason": "Stable command action; independent of display language."
   }
 ]

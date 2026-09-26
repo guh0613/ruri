@@ -13,7 +13,7 @@ extension CLIApplication {
             let username = try request.operand()
             if request.dryRun { return .object(["dryRun": .bool(true), "account": accountValue(try Account(username: username))]) }
             return accountValue(try service.addOffline(username, activate: !request.flag("no-select")))
-        case Messages.CLIInterface.t57b6d748b829.localized:
+        case "login start":
             let provider = try request.required("provider"), id = try request.string("account").map(uuid)
             if request.dryRun { return .object(["dryRun": .bool(true), "provider": .string(provider), "userParticipation": .bool(true)]) }
             if provider == "microsoft" {
@@ -24,20 +24,20 @@ extension CLIApplication {
             let password = String(decoding: try readInput("-", maximumBytes: 65536), as: UTF8.self).trimmingCharacters(in: .newlines)
             output.addSecrets([password])
             return try await service.startExternal(server: request.required("server"), username: request.required("username"), password: password, accountID: id)
-        case Messages.CLIInterface.te307d3e2aed4.localized, Messages.CLIInterface.taf7c81279d63.localized:
+        case "login complete", "login cancel":
             let id = try uuid(request.operand())
             if request.dryRun { return .object(["dryRun": .bool(true), "flowID": .string(id.uuidString)]) }
-            if action == Messages.CLIInterface.taf7c81279d63.localized { try service.cancelLogin(id); return .object(["cancelled": .bool(true), "flowID": .string(id.uuidString)]) }
+            if action == "login cancel" { try service.cancelLogin(id); return .object(["cancelled": .bool(true), "flowID": .string(id.uuidString)]) }
             return accountValue(try await service.completeLogin(id, profile: request.string("profile")))
-        case Messages.CLIInterface.t2b2389f27e52.localized: return .object(["provider": .string("curseforge"), "custom": .bool(CurseForgeKeyStore.hasCustomKey()), "bundled": .bool(CurseForgeKeyStore.hasBundledKey)])
-        case Messages.CLIInterface.t8ed19e29eef4.localized:
+        case "service-key status": return .object(["provider": .string("curseforge"), "custom": .bool(CurseForgeKeyStore.hasCustomKey()), "bundled": .bool(CurseForgeKeyStore.hasBundledKey)])
+        case "service-key set":
             guard request.flag("stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t05b618061083.localized) }
             if !request.dryRun {
                 let key = String(decoding: try readInput("-", maximumBytes: 65536), as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
                 output.addSecrets([key]); try CurseForgeKeyStore.save(key)
             }
             return .object(["provider": .string("curseforge"), "dryRun": .bool(request.dryRun)])
-        case Messages.CLIInterface.tc68fadc33f5d.localized:
+        case "service-key remove":
             if !request.dryRun { try CurseForgeKeyStore.remove() }
             return .object(["provider": .string("curseforge"), "dryRun": .bool(request.dryRun)])
         default: break

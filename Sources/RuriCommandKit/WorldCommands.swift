@@ -8,7 +8,7 @@ extension CLIApplication {
         _ = try InstanceService(paths: paths).resolve(id: id)
         let manager = WorldManager(paths: paths, instanceID: id), action = request.spec.path.dropFirst().joined(separator: " ")
         if action == "list" { return request.page(try await manager.worlds().map(worldValue)) }
-        if action == Messages.CLIInterface.te2cdbe92a0c7.localized { return request.page(try await manager.backups().map(backupValue)) }
+        if action == "backup list" { return request.page(try await manager.backups().map(backupValue)) }
         if action == "import" {
             let file = URL(fileURLWithPath: try request.operand(1))
             guard FileManager.default.fileExists(atPath: file.path) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t68a342df34e2.localized) }
@@ -17,12 +17,12 @@ extension CLIApplication {
             let folder = try await manager.importWorld(from: file) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) }
             return .object(["folder": .string(folder)])
         }
-        if action == Messages.CLIInterface.t1b8effc90c68.localized || action == Messages.CLIInterface.t741c3180946d.localized {
+        if action == "backup restore" || action == "backup remove" {
             let name = try request.operand(1)
             guard let backup = try await manager.backups().first(where: { $0.id == name }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t813a5dd4816c.localized) }
             if request.dryRun { return .object(["dryRun": .bool(true), "backup": backupValue(backup), "replace": .bool(request.flag("replace"))]) }
             let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
-            if action == Messages.CLIInterface.t741c3180946d.localized { try await manager.removeBackup(backup); return .object(["removed": .string(backup.id)]) }
+            if action == "backup remove" { try await manager.removeBackup(backup); return .object(["removed": .string(backup.id)]) }
             let folder = try await manager.restore(backup, replaceExisting: request.flag("replace")) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) }
             return .object(["folder": .string(folder)])
         }
@@ -36,7 +36,7 @@ extension CLIApplication {
         switch action {
         case "remove": try await manager.removeWorld(folder: folder)
         case "export": try await manager.exportWorld(folder: folder, to: file!) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) }
-        case Messages.CLIInterface.t8ee474107a6f.localized: return backupValue(try await manager.backup(folder: folder, reason: request.string("reason")) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) })
+        case "backup create": return backupValue(try await manager.backup(folder: folder, reason: request.string("reason")) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) })
         default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.ta7cd75ee2906.localized)
         }
         return .object(["folder": .string(folder), "action": .string(action), "file": .text(file?.path)])
@@ -47,18 +47,28 @@ extension CLIApplication {
         let action = request.spec.path.dropFirst().joined(separator: " "), target = try request.operand(1)
         let downloads = WorldDataPackDownloads()
         if action == "search" {
-            let page = try await downloads.search(target, game: instance.gameVersion)
-            var result = request.page(page.hits.map { projectValue(.modrinth($0)) }).object!
-            result["providerTotal"] = .integer(page.total_hits); return .object(result)
+            let start = request.flag("all") ? 0 : request.integer("offset") ?? 0
+            let limit = request.integer("limit") ?? 50
+            var offset = start, total = 0, values: [Value] = []
+            repeat {
+                try Task.checkCancellation()
+                let page = try await downloads.search(target, game: instance.gameVersion, offset: offset)
+                total = page.total_hits
+                values += page.hits.map { projectValue(.modrinth($0)) }
+                offset += page.hits.count
+                if page.hits.isEmpty { break }
+            } while offset < total && (request.flag("all") || values.count < limit)
+            let items = request.flag("all") ? values : Array(values.prefix(limit))
+            return .object(["items": .array(items), "total": .integer(total), "providerTotal": .integer(total), "offset": .integer(start), "hasMore": .bool(start + items.count < total)])
         }
         if action == "versions" { return request.page(try await downloads.versions(project: target, game: instance.gameVersion).map { versionValue(.modrinth($0)) }) }
         if action == "list" {
             return request.page(try await manager.dataPacks(folder: target).map { .object(["id": .string($0.id), "enabled": .bool($0.enabled), "description": .string($0.description), "error": .text($0.error)]) })
         }
-        if action == Messages.CLIInterface.tee60e235e97a.localized || action == Messages.CLIInterface.tcc3d1a4da37b.localized {
+        if action == "order get" || action == "order set" {
             let priority = try await manager.dataPackPriority(folder: target)
-            let keys = action == Messages.CLIInterface.tcc3d1a4da37b.localized ? strings(request, "key") : priority.keys
-            if action == Messages.CLIInterface.tcc3d1a4da37b.localized {
+            let keys = action == "order set" ? strings(request, "key") : priority.keys
+            if action == "order set" {
                 guard keys.count == priority.keys.count, Set(keys) == Set(priority.keys), Set(keys).count == keys.count else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tcaf18c90c73d.localized) }
                 if !request.dryRun {
                     let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }

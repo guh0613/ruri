@@ -30,10 +30,10 @@ extension CLIApplication {
             }
             let saved = try minecraft ? MinecraftFolderStore.add(name: name, url: url, paths: paths) : GameDirectoryStore.add(name: name, url: url, paths: paths)
             return .object(["selectedDirectoryID": .text(saved.selectedDirectoryID?.uuidString), "directories": .array(entries(saved))])
-        case Messages.CLIInterface.t3076aed36f7c.localized, Messages.CLIInterface.t8cd571ec9aef.localized, Messages.CLIInterface.t7dfc3bcc624c.localized:
+        case "run get", "run set", "run relocate":
             let id = try uuid(request.operand()), instance = try InstanceService(paths: paths).resolve(id: id)
-            if action == Messages.CLIInterface.t3076aed36f7c.localized { return .object(["id": .string(id.uuidString), "mode": .string((instance.runDirectory ?? .isolated).rawValue), "path": .string(paths.game(id).path), "customDirectory": .text(instance.customRunDirectory?.url.path)]) }
-            if action == Messages.CLIInterface.t7dfc3bcc624c.localized {
+            if action == "run get" { return .object(["id": .string(id.uuidString), "mode": .string((instance.runDirectory ?? .isolated).rawValue), "path": .string(paths.game(id).path), "customDirectory": .text(instance.customRunDirectory?.url.path)]) }
+            if action == "run relocate" {
                 let service = CustomRunDirectoryRelocation(paths: paths), preview = try await service.preview(instanceID: id, target: URL(fileURLWithPath: request.operand(1)))
                 if !request.dryRun { _ = try await service.apply(preview) }
                 return .object(["dryRun": .bool(request.dryRun), "source": .string(preview.source.path), "target": .string(preview.target.path), "instances": .array(preview.instances.map { .string($0.id.uuidString) })])

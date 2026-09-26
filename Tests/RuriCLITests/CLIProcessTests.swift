@@ -15,6 +15,23 @@ struct CLIProcessTests {
         let data = output.fileHandleForReading.readDataToEndOfFile(); process.waitUntilExit()
         return (process.terminationStatus, try JSONDecoder().decode(OperationValue.self, from: data))
     }
+    @Test(.timeLimit(.minutes(1))) func stdinPatchWaitsForAllFragments() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri stdin \(UUID())")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let process = Process(), input = Pipe(), output = Pipe()
+        process.executableURL = executable
+        process.arguments = ["config", "apply", "--scope", "app", "--file", "-", "--data-dir", root.path, "--json"]
+        process.standardInput = input; process.standardOutput = output; process.standardError = FileHandle.nullDevice
+        try process.run()
+        try input.fileHandleForWriting.write(contentsOf: Data("{\"set\":".utf8))
+        try await Task.sleep(for: .milliseconds(100))
+        try input.fileHandleForWriting.write(contentsOf: Data("{\"concurrentDownloads\":7}}".utf8))
+        try input.fileHandleForWriting.close()
+        let result = try JSONDecoder().decode(OperationValue.self, from: output.fileHandleForReading.readDataToEndOfFile())
+        process.waitUntilExit()
+        #expect(process.terminationStatus == 0)
+        #expect(result["data"]["after"]["effective"]["concurrentDownloads"] == .integer(7))
+    }
     @Test(.timeLimit(.minutes(1))) func detachedGameSurvivesCLIAndCanBeStoppedByAnotherInvocation() async throws {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri cli \(UUID())"))
         defer { try? FileManager.default.removeItem(at: paths.root) }
@@ -59,7 +76,7 @@ struct CLIProcessTests {
         #expect(record.monitorIdentity?.isAlive == true)
         #expect(record.gameIdentity?.isAlive == true)
         #expect(try run(["session", "stop", id.uuidString, sessionID.uuidString, "--yes"], paths: paths).0 == 0)
-        _ = try run(["session", "wait", id.uuidString, sessionID.uuidString], paths: paths)
+        #expect(try run(["session", "wait", id.uuidString, sessionID.uuidString], paths: paths).0 == 0)
         #expect(try GameSessionStore.load(paths: paths, instanceID: id, sessionID: sessionID).state.isFinished)
     }
 }

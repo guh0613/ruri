@@ -11,7 +11,7 @@ extension CLIApplication {
             let project = try await repository.project(source: provider, id: request.operand()), detail = try await repository.detail(project)
             return .object(["project": projectValue(project), "description": .string(String(detail.body.prefix(32000))), "descriptionTruncated": .bool(detail.body.count > 32000), "isHTML": .bool(detail.isHTML), "license": .text(detail.license)])
         }
-        let start = request.integer("offset") ?? 0, limit = request.integer("limit") ?? 50
+        let start = request.flag("all") ? 0 : request.integer("offset") ?? 0, limit = request.integer("limit") ?? 50
         var offset = start, total = 0, values: [Value] = []
         let project = action == "versions" ? try await repository.project(source: provider, id: request.operand()) : nil
         while true {

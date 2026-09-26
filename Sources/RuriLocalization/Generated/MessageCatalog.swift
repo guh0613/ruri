@@ -74,17 +74,7 @@ enum MessageCatalog {
         result.merge(Messages.AppWorldDataPackSearchView.definitions) { first, _ in first }
         result.merge(Messages.AppWorldDataPacksView.definitions) { first, _ in first }
         result.merge(Messages.AppWorldManagerView.definitions) { first, _ in first }
-        result.merge(Messages.CLICLI.definitions) { first, _ in first }
-        result.merge(Messages.CLIContentCommands.definitions) { first, _ in first }
-        result.merge(Messages.CLIDataPackCommands.definitions) { first, _ in first }
-        result.merge(Messages.CLIDirectories.definitions) { first, _ in first }
-        result.merge(Messages.CLIInstanceMoves.definitions) { first, _ in first }
         result.merge(Messages.CLIInterface.definitions) { first, _ in first }
-        result.merge(Messages.CLIJavaCommands.definitions) { first, _ in first }
-        result.merge(Messages.CLILaunchSettingsCommands.definitions) { first, _ in first }
-        result.merge(Messages.CLIMinecraftDirectory.definitions) { first, _ in first }
-        result.merge(Messages.CLIModpackCommands.definitions) { first, _ in first }
-        result.merge(Messages.CLISchematicCommands.definitions) { first, _ in first }
         result.merge(Messages.Common.definitions) { first, _ in first }
         result.merge(Messages.ContentDetails.definitions) { first, _ in first }
         result.merge(Messages.ContentImport.definitions) { first, _ in first }

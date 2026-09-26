@@ -735,35 +735,11 @@ extension Messages {
         public static var te8f93a97f4a5: LocalizedMessage {
             .init(key: "cliInterface.te8f93a97f4a5", table: "CLIInterface", fallback: "Unknown icon glyph or tint.")
         }
-        /// component list
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6d7d7903a91c`.
-        public static var t6d7d7903a91c: LocalizedMessage {
-            .init(key: "cliInterface.t6d7d7903a91c", table: "CLIInterface", fallback: "component list")
-        }
-        /// component versions
-        ///
-        /// Resource: `CLIInterface.cliInterface.t86da3ee4ed9e`.
-        public static var t86da3ee4ed9e: LocalizedMessage {
-            .init(key: "cliInterface.t86da3ee4ed9e", table: "CLIInterface", fallback: "component versions")
-        }
         /// Unknown loader.
         ///
         /// Resource: `CLIInterface.cliInterface.tecaf531d009c`.
         public static var tecaf531d009c: LocalizedMessage {
             .init(key: "cliInterface.tecaf531d009c", table: "CLIInterface", fallback: "Unknown loader.")
-        }
-        /// component set
-        ///
-        /// Resource: `CLIInterface.cliInterface.t77ee9ed120bf`.
-        public static var t77ee9ed120bf: LocalizedMessage {
-            .init(key: "cliInterface.t77ee9ed120bf", table: "CLIInterface", fallback: "component set")
-        }
-        /// component restore
-        ///
-        /// Resource: `CLIInterface.cliInterface.te280bd4b1756`.
-        public static var te280bd4b1756: LocalizedMessage {
-            .init(key: "cliInterface.te280bd4b1756", table: "CLIInterface", fallback: "component restore")
         }
         /// Unknown instance action.
         ///
@@ -1071,24 +1047,6 @@ extension Messages {
         public static var t8ba03aeb3548: LocalizedMessage {
             .init(key: "cliInterface.t8ba03aeb3548", table: "CLIInterface", fallback: "A new managed directory must be empty.")
         }
-        /// run get
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3076aed36f7c`.
-        public static var t3076aed36f7c: LocalizedMessage {
-            .init(key: "cliInterface.t3076aed36f7c", table: "CLIInterface", fallback: "run get")
-        }
-        /// run set
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8cd571ec9aef`.
-        public static var t8cd571ec9aef: LocalizedMessage {
-            .init(key: "cliInterface.t8cd571ec9aef", table: "CLIInterface", fallback: "run set")
-        }
-        /// run relocate
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7dfc3bcc624c`.
-        public static var t7dfc3bcc624c: LocalizedMessage {
-            .init(key: "cliInterface.t7dfc3bcc624c", table: "CLIInterface", fallback: "run relocate")
-        }
         /// Use isolated, shared or custom; --path is only valid for custom.
         ///
         /// Resource: `CLIInterface.cliInterface.tdc5f6e9debdb`.
@@ -1113,12 +1071,6 @@ extension Messages {
         public static var tab6287c24a41: LocalizedMessage {
             .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "Unknown Java action.")
         }
-        /// login start
-        ///
-        /// Resource: `CLIInterface.cliInterface.t57b6d748b829`.
-        public static var t57b6d748b829: LocalizedMessage {
-            .init(key: "cliInterface.t57b6d748b829", table: "CLIInterface", fallback: "login start")
-        }
         /// Microsoft login uses browser authorization, not a password.
         ///
         /// Resource: `CLIInterface.cliInterface.tc6b87186027e`.
@@ -1131,41 +1083,11 @@ extension Messages {
         public static var tb34236db1721: LocalizedMessage {
             .init(key: "cliInterface.tb34236db1721", table: "CLIInterface", fallback: "External login requires --password-stdin.")
         }
-        /// login complete
-        ///
-        /// Resource: `CLIInterface.cliInterface.te307d3e2aed4`.
-        public static var te307d3e2aed4: LocalizedMessage {
-            .init(key: "cliInterface.te307d3e2aed4", table: "CLIInterface", fallback: "login complete")
-        }
-        /// login cancel
-        ///
-        /// Resource: `CLIInterface.cliInterface.taf7c81279d63`.
-        public static var taf7c81279d63: LocalizedMessage {
-            .init(key: "cliInterface.taf7c81279d63", table: "CLIInterface", fallback: "login cancel")
-        }
-        /// service-key status
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2b2389f27e52`.
-        public static var t2b2389f27e52: LocalizedMessage {
-            .init(key: "cliInterface.t2b2389f27e52", table: "CLIInterface", fallback: "service-key status")
-        }
-        /// service-key set
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8ed19e29eef4`.
-        public static var t8ed19e29eef4: LocalizedMessage {
-            .init(key: "cliInterface.t8ed19e29eef4", table: "CLIInterface", fallback: "service-key set")
-        }
         /// Provide --stdin to read the API key.
         ///
         /// Resource: `CLIInterface.cliInterface.t05b618061083`.
         public static var t05b618061083: LocalizedMessage {
             .init(key: "cliInterface.t05b618061083", table: "CLIInterface", fallback: "Provide --stdin to read the API key.")
-        }
-        /// service-key remove
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc68fadc33f5d`.
-        public static var tc68fadc33f5d: LocalizedMessage {
-            .init(key: "cliInterface.tc68fadc33f5d", table: "CLIInterface", fallback: "service-key remove")
         }
         /// Unknown account action.
         ///
@@ -2061,24 +1983,6 @@ extension Messages {
         public static var t56f6acfec799: LocalizedMessage {
             .init(key: "cliInterface.t56f6acfec799", table: "CLIInterface", fallback: "No matching compatible version was found.")
         }
-        /// backup list
-        ///
-        /// Resource: `CLIInterface.cliInterface.te2cdbe92a0c7`.
-        public static var te2cdbe92a0c7: LocalizedMessage {
-            .init(key: "cliInterface.te2cdbe92a0c7", table: "CLIInterface", fallback: "backup list")
-        }
-        /// backup restore
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1b8effc90c68`.
-        public static var t1b8effc90c68: LocalizedMessage {
-            .init(key: "cliInterface.t1b8effc90c68", table: "CLIInterface", fallback: "backup restore")
-        }
-        /// backup remove
-        ///
-        /// Resource: `CLIInterface.cliInterface.t741c3180946d`.
-        public static var t741c3180946d: LocalizedMessage {
-            .init(key: "cliInterface.t741c3180946d", table: "CLIInterface", fallback: "backup remove")
-        }
         /// Backup not found.
         ///
         /// Resource: `CLIInterface.cliInterface.t813a5dd4816c`.
@@ -2091,29 +1995,11 @@ extension Messages {
         public static var t90c2d3c97aae: LocalizedMessage {
             .init(key: "cliInterface.t90c2d3c97aae", table: "CLIInterface", fallback: "World not found.")
         }
-        /// backup create
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8ee474107a6f`.
-        public static var t8ee474107a6f: LocalizedMessage {
-            .init(key: "cliInterface.t8ee474107a6f", table: "CLIInterface", fallback: "backup create")
-        }
         /// Unknown world action.
         ///
         /// Resource: `CLIInterface.cliInterface.ta7cd75ee2906`.
         public static var ta7cd75ee2906: LocalizedMessage {
             .init(key: "cliInterface.ta7cd75ee2906", table: "CLIInterface", fallback: "Unknown world action.")
-        }
-        /// order get
-        ///
-        /// Resource: `CLIInterface.cliInterface.tee60e235e97a`.
-        public static var tee60e235e97a: LocalizedMessage {
-            .init(key: "cliInterface.tee60e235e97a", table: "CLIInterface", fallback: "order get")
-        }
-        /// order set
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcc3d1a4da37b`.
-        public static var tcc3d1a4da37b: LocalizedMessage {
-            .init(key: "cliInterface.tcc3d1a4da37b", table: "CLIInterface", fallback: "order set")
         }
         /// Provide the complete priority list exactly once.
         ///
@@ -2415,6 +2301,48 @@ extension Messages {
         public static var tff19ae82a321: LocalizedMessage {
             .init(key: "cliInterface.tff19ae82a321", table: "CLIInterface", fallback: "An unfinished operation must be recovered before inspecting this data.")
         }
+        /// 命令行工具
+        ///
+        /// Resource: `CLIInterface.cliInterface.ta3dc8fc730b8`.
+        public static var ta3dc8fc730b8: LocalizedMessage {
+            .init(key: "cliInterface.ta3dc8fc730b8", table: "CLIInterface", fallback: "命令行工具")
+        }
+        /// 卸载
+        ///
+        /// Resource: `CLIInterface.cliInterface.t06bc14b60f35`.
+        public static var t06bc14b60f35: LocalizedMessage {
+            .init(key: "cliInterface.t06bc14b60f35", table: "CLIInterface", fallback: "卸载")
+        }
+        /// 安装
+        ///
+        /// Resource: `CLIInterface.cliInterface.te8f88f51ccb0`.
+        public static var te8f88f51ccb0: LocalizedMessage {
+            .init(key: "cliInterface.te8f88f51ccb0", table: "CLIInterface", fallback: "安装")
+        }
+        /// 已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。
+        ///
+        /// Resource: `CLIInterface.cliInterface.t20255da83a92`.
+        public static var t20255da83a92: LocalizedMessage {
+            .init(key: "cliInterface.t20255da83a92", table: "CLIInterface", fallback: "已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。")
+        }
+        /// 复制应用内 CLI 路径
+        ///
+        /// Resource: `CLIInterface.cliInterface.t80cc6a4f6c96`.
+        public static var t80cc6a4f6c96: LocalizedMessage {
+            .init(key: "cliInterface.t80cc6a4f6c96", table: "CLIInterface", fallback: "复制应用内 CLI 路径")
+        }
+        /// 命令行与自动化
+        ///
+        /// Resource: `CLIInterface.cliInterface.t56f8e5b9417c`.
+        public static var t56f8e5b9417c: LocalizedMessage {
+            .init(key: "cliInterface.t56f8e5b9417c", table: "CLIInterface", fallback: "命令行与自动化")
+        }
+        /// 通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。
+        ///
+        /// Resource: `CLIInterface.cliInterface.t9401df17eb2f`.
+        public static var t9401df17eb2f: LocalizedMessage {
+            .init(key: "cliInterface.t9401df17eb2f", table: "CLIInterface", fallback: "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。")
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
             "CLIInterface:cliInterface.t066f88703d3a": .init("未知命令路径。", []),
@@ -2538,11 +2466,7 @@ extension Messages {
             "CLIInterface:cliInterface.t188ae1e6f458": .init("Use true or false.", []),
             "CLIInterface:cliInterface.tf996e1aeec0d": .init("Specify --file, --glyph or --reset.", []),
             "CLIInterface:cliInterface.te8f93a97f4a5": .init("Unknown icon glyph or tint.", []),
-            "CLIInterface:cliInterface.t6d7d7903a91c": .init("component list", []),
-            "CLIInterface:cliInterface.t86da3ee4ed9e": .init("component versions", []),
             "CLIInterface:cliInterface.tecaf531d009c": .init("Unknown loader.", []),
-            "CLIInterface:cliInterface.t77ee9ed120bf": .init("component set", []),
-            "CLIInterface:cliInterface.te280bd4b1756": .init("component restore", []),
             "CLIInterface:cliInterface.td578c368dab6": .init("Unknown instance action.", []),
             "CLIInterface:cliInterface.tc7720bf2a0d4": .init("Components use loader=version syntax; omit components for vanilla.", []),
             "CLIInterface:cliInterface.t46989dde4470": .init("Duplicate loader selection.", []),
@@ -2594,22 +2518,13 @@ extension Messages {
             "CLIInterface:cliInterface.tcb439480ed22": .init("java commands", []),
             "CLIInterface:cliInterface.t5efd67648f0d": .init("Directory name cannot be empty.", []),
             "CLIInterface:cliInterface.t8ba03aeb3548": .init("A new managed directory must be empty.", []),
-            "CLIInterface:cliInterface.t3076aed36f7c": .init("run get", []),
-            "CLIInterface:cliInterface.t8cd571ec9aef": .init("run set", []),
-            "CLIInterface:cliInterface.t7dfc3bcc624c": .init("run relocate", []),
             "CLIInterface:cliInterface.tdc5f6e9debdb": .init("Use isolated, shared or custom; --path is only valid for custom.", []),
             "CLIInterface:cliInterface.t9a582e74d089": .init("Unknown directory action.", []),
             "CLIInterface:cliInterface.t33604425d94f": .init("Java catalog entry not found.", []),
             "CLIInterface:cliInterface.tab6287c24a41": .init("Unknown Java action.", []),
-            "CLIInterface:cliInterface.t57b6d748b829": .init("login start", []),
             "CLIInterface:cliInterface.tc6b87186027e": .init("Microsoft login uses browser authorization, not a password.", []),
             "CLIInterface:cliInterface.tb34236db1721": .init("External login requires --password-stdin.", []),
-            "CLIInterface:cliInterface.te307d3e2aed4": .init("login complete", []),
-            "CLIInterface:cliInterface.taf7c81279d63": .init("login cancel", []),
-            "CLIInterface:cliInterface.t2b2389f27e52": .init("service-key status", []),
-            "CLIInterface:cliInterface.t8ed19e29eef4": .init("service-key set", []),
             "CLIInterface:cliInterface.t05b618061083": .init("Provide --stdin to read the API key.", []),
-            "CLIInterface:cliInterface.tc68fadc33f5d": .init("service-key remove", []),
             "CLIInterface:cliInterface.tfffe65605bf6": .init("Unknown account action.", []),
             "CLIInterface:cliInterface.t347c8e743183": .init("List accounts without exposing credentials.", []),
             "CLIInterface:cliInterface.t60065624116e": .init("Read the active account ID.", []),
@@ -2759,15 +2674,9 @@ extension Messages {
             "CLIInterface:cliInterface.t22d3a8371f53": .init("Download the listed files, then repeat the command with --manual fileID=path.", []),
             "CLIInterface:cliInterface.t5c54141389e9": .init("The selected version is incompatible with the instance.", []),
             "CLIInterface:cliInterface.t56f6acfec799": .init("No matching compatible version was found.", []),
-            "CLIInterface:cliInterface.te2cdbe92a0c7": .init("backup list", []),
-            "CLIInterface:cliInterface.t1b8effc90c68": .init("backup restore", []),
-            "CLIInterface:cliInterface.t741c3180946d": .init("backup remove", []),
             "CLIInterface:cliInterface.t813a5dd4816c": .init("Backup not found.", []),
             "CLIInterface:cliInterface.t90c2d3c97aae": .init("World not found.", []),
-            "CLIInterface:cliInterface.t8ee474107a6f": .init("backup create", []),
             "CLIInterface:cliInterface.ta7cd75ee2906": .init("Unknown world action.", []),
-            "CLIInterface:cliInterface.tee60e235e97a": .init("order get", []),
-            "CLIInterface:cliInterface.tcc3d1a4da37b": .init("order set", []),
             "CLIInterface:cliInterface.tcaf18c90c73d": .init("Provide the complete priority list exactly once.", []),
             "CLIInterface:cliInterface.tdd5661a06a84": .init("No compatible data-pack version found.", []),
             "CLIInterface:cliInterface.t921d4db04b98": .init("Data pack not found.", []),
@@ -2818,6 +2727,13 @@ extension Messages {
             "CLIInterface:cliInterface.t7f8c861b7d62": .init("This recovery requires --transaction from recovery list.", []),
             "CLIInterface:cliInterface.tf19d497be38f": .init("One or more checks failed.", []),
             "CLIInterface:cliInterface.tff19ae82a321": .init("An unfinished operation must be recovered before inspecting this data.", []),
+            "CLIInterface:cliInterface.ta3dc8fc730b8": .init("命令行工具", []),
+            "CLIInterface:cliInterface.t06bc14b60f35": .init("卸载", []),
+            "CLIInterface:cliInterface.te8f88f51ccb0": .init("安装", []),
+            "CLIInterface:cliInterface.t20255da83a92": .init("已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。", []),
+            "CLIInterface:cliInterface.t80cc6a4f6c96": .init("复制应用内 CLI 路径", []),
+            "CLIInterface:cliInterface.t56f8e5b9417c": .init("命令行与自动化", []),
+            "CLIInterface:cliInterface.t9401df17eb2f": .init("通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。", []),
         ]
     }
 }

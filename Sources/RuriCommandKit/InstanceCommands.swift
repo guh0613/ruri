@@ -54,17 +54,17 @@ extension CLIApplication {
         case "install", "repair":
             if request.dryRun { return .object(["dryRun": .bool(true), "instance": instanceValue(instance, paths: paths)]) }
             return instanceValue(try await service.install(id, repair: action == "repair", downloader: downloader, progress: { output.progress($0) }), paths: paths)
-        case Messages.CLIInterface.t6d7d7903a91c.localized:
+        case "component list":
             let backup = try await InstanceComponents(paths: paths).backup(for: id)
             return .object(["components": .array(instance.loaderSelections.map { .object(["loader": .string($0.loader.rawValue), "version": .string($0.version)]) }), "backup": .text(backup?.title), "unavailableReason": .text(InstanceComponents.unavailableReason(instance))])
-        case Messages.CLIInterface.t86da3ee4ed9e.localized:
+        case "component versions":
             guard let loader = LoaderKind(rawValue: try request.operand(1)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tecaf531d009c.localized) }
             return request.page(try await GameInstaller(paths: paths).loaderVersions(loader, game: instance.gameVersion).map(Value.string))
-        case Messages.CLIInterface.t77ee9ed120bf.localized, Messages.CLIInterface.te280bd4b1756.localized:
+        case "component set", "component restore":
             let service = InstanceComponents(paths: paths, downloader: downloader), selected = try selections(request)
-            if action == Messages.CLIInterface.t77ee9ed120bf.localized, let issue = LoaderCompatibility.combinationIssue(selected.map(\.loader), game: instance.gameVersion) { throw OperationFailure("INVALID_ARGUMENT", issue) }
+            if action == "component set", let issue = LoaderCompatibility.combinationIssue(selected.map(\.loader), game: instance.gameVersion) { throw OperationFailure("INVALID_ARGUMENT", issue) }
             if request.dryRun { return .object(["dryRun": .bool(true), "id": .string(id.uuidString), "components": .array(selected.map { .object(["loader": .string($0.loader.rawValue), "version": .string($0.version)]) })]) }
-            let saved = try await action == Messages.CLIInterface.te280bd4b1756.localized ? service.restore(instance) : service.change(instance, selections: selected, concurrency: state.settings.concurrentDownloads, progress: { output.progress($0) })
+            let saved = try await action == "component restore" ? service.restore(instance) : service.change(instance, selections: selected, concurrency: state.settings.concurrentDownloads, progress: { output.progress($0) })
             return instanceValue(saved.instances.first { $0.id == id }!, paths: paths)
         case "copy":
             let copier = InstanceCopier(paths: paths)

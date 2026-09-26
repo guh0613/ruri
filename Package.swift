@@ -28,7 +28,7 @@ let package = Package(
                           resources: [.copy("Resources/JavaBrands")],
                           linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
-        .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"], exclude: ["Legacy"]),
+        .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriLocalization"]),
         .testTarget(name: "RuriLocalizationTests", dependencies: ["RuriLocalization"]),

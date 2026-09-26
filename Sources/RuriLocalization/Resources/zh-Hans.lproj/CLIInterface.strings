@@ -364,20 +364,8 @@
 /* @symbol CLIInterface.te8f93a97f4a5 @args - */
 "cliInterface.te8f93a97f4a5" = "Unknown icon glyph or tint.";
 
-/* @symbol CLIInterface.t6d7d7903a91c @args - */
-"cliInterface.t6d7d7903a91c" = "component list";
-
-/* @symbol CLIInterface.t86da3ee4ed9e @args - */
-"cliInterface.t86da3ee4ed9e" = "component versions";
-
 /* @symbol CLIInterface.tecaf531d009c @args - */
 "cliInterface.tecaf531d009c" = "Unknown loader.";
-
-/* @symbol CLIInterface.t77ee9ed120bf @args - */
-"cliInterface.t77ee9ed120bf" = "component set";
-
-/* @symbol CLIInterface.te280bd4b1756 @args - */
-"cliInterface.te280bd4b1756" = "component restore";
 
 /* @symbol CLIInterface.td578c368dab6 @args - */
 "cliInterface.td578c368dab6" = "Unknown instance action.";
@@ -532,15 +520,6 @@
 /* @symbol CLIInterface.t8ba03aeb3548 @args - */
 "cliInterface.t8ba03aeb3548" = "A new managed directory must be empty.";
 
-/* @symbol CLIInterface.t3076aed36f7c @args - */
-"cliInterface.t3076aed36f7c" = "run get";
-
-/* @symbol CLIInterface.t8cd571ec9aef @args - */
-"cliInterface.t8cd571ec9aef" = "run set";
-
-/* @symbol CLIInterface.t7dfc3bcc624c @args - */
-"cliInterface.t7dfc3bcc624c" = "run relocate";
-
 /* @symbol CLIInterface.tdc5f6e9debdb @args - */
 "cliInterface.tdc5f6e9debdb" = "Use isolated, shared or custom; --path is only valid for custom.";
 
@@ -553,32 +532,14 @@
 /* @symbol CLIInterface.tab6287c24a41 @args - */
 "cliInterface.tab6287c24a41" = "Unknown Java action.";
 
-/* @symbol CLIInterface.t57b6d748b829 @args - */
-"cliInterface.t57b6d748b829" = "login start";
-
 /* @symbol CLIInterface.tc6b87186027e @args - */
 "cliInterface.tc6b87186027e" = "Microsoft login uses browser authorization, not a password.";
 
 /* @symbol CLIInterface.tb34236db1721 @args - */
 "cliInterface.tb34236db1721" = "External login requires --password-stdin.";
 
-/* @symbol CLIInterface.te307d3e2aed4 @args - */
-"cliInterface.te307d3e2aed4" = "login complete";
-
-/* @symbol CLIInterface.taf7c81279d63 @args - */
-"cliInterface.taf7c81279d63" = "login cancel";
-
-/* @symbol CLIInterface.t2b2389f27e52 @args - */
-"cliInterface.t2b2389f27e52" = "service-key status";
-
-/* @symbol CLIInterface.t8ed19e29eef4 @args - */
-"cliInterface.t8ed19e29eef4" = "service-key set";
-
 /* @symbol CLIInterface.t05b618061083 @args - */
 "cliInterface.t05b618061083" = "Provide --stdin to read the API key.";
-
-/* @symbol CLIInterface.tc68fadc33f5d @args - */
-"cliInterface.tc68fadc33f5d" = "service-key remove";
 
 /* @symbol CLIInterface.tfffe65605bf6 @args - */
 "cliInterface.tfffe65605bf6" = "Unknown account action.";
@@ -1027,32 +988,14 @@
 /* @symbol CLIInterface.t56f6acfec799 @args - */
 "cliInterface.t56f6acfec799" = "No matching compatible version was found.";
 
-/* @symbol CLIInterface.te2cdbe92a0c7 @args - */
-"cliInterface.te2cdbe92a0c7" = "backup list";
-
-/* @symbol CLIInterface.t1b8effc90c68 @args - */
-"cliInterface.t1b8effc90c68" = "backup restore";
-
-/* @symbol CLIInterface.t741c3180946d @args - */
-"cliInterface.t741c3180946d" = "backup remove";
-
 /* @symbol CLIInterface.t813a5dd4816c @args - */
 "cliInterface.t813a5dd4816c" = "Backup not found.";
 
 /* @symbol CLIInterface.t90c2d3c97aae @args - */
 "cliInterface.t90c2d3c97aae" = "World not found.";
 
-/* @symbol CLIInterface.t8ee474107a6f @args - */
-"cliInterface.t8ee474107a6f" = "backup create";
-
 /* @symbol CLIInterface.ta7cd75ee2906 @args - */
 "cliInterface.ta7cd75ee2906" = "Unknown world action.";
-
-/* @symbol CLIInterface.tee60e235e97a @args - */
-"cliInterface.tee60e235e97a" = "order get";
-
-/* @symbol CLIInterface.tcc3d1a4da37b @args - */
-"cliInterface.tcc3d1a4da37b" = "order set";
 
 /* @symbol CLIInterface.tcaf18c90c73d @args - */
 "cliInterface.tcaf18c90c73d" = "Provide the complete priority list exactly once.";
@@ -1203,4 +1146,25 @@
 
 /* @symbol CLIInterface.tff19ae82a321 @args - */
 "cliInterface.tff19ae82a321" = "An unfinished operation must be recovered before inspecting this data.";
+
+/* @symbol CLIInterface.ta3dc8fc730b8 @args - */
+"cliInterface.ta3dc8fc730b8" = "命令行工具";
+
+/* @symbol CLIInterface.t06bc14b60f35 @args - */
+"cliInterface.t06bc14b60f35" = "卸载";
+
+/* @symbol CLIInterface.te8f88f51ccb0 @args - */
+"cliInterface.te8f88f51ccb0" = "安装";
+
+/* @symbol CLIInterface.t20255da83a92 @args - */
+"cliInterface.t20255da83a92" = "已安装。请将 ~/.local/bin 加入 shell 的 PATH，或直接使用上方完整路径调用 ruri。";
+
+/* @symbol CLIInterface.t80cc6a4f6c96 @args - */
+"cliInterface.t80cc6a4f6c96" = "复制应用内 CLI 路径";
+
+/* @symbol CLIInterface.t56f8e5b9417c @args - */
+"cliInterface.t56f8e5b9417c" = "命令行与自动化";
+
+/* @symbol CLIInterface.t9401df17eb2f @args - */
+"cliInterface.t9401df17eb2f" = "通过 ruri 管理实例、账户和配置，也可供 AI agent 调用。安装仅创建用户目录链接，不修改 shell 配置。";
 

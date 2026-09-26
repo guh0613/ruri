@@ -37,7 +37,10 @@ extension CLIApplication {
     static func readInput(_ file: String, maximumBytes: Int = 1_048_576) throws -> Data {
         let handle = try file == "-" ? FileHandle.standardInput : FileHandle(forReadingFrom: URL(fileURLWithPath: file))
         defer { if file != "-" { try? handle.close() } }
-        let data = try handle.read(upToCount: maximumBytes + 1) ?? Data()
+        var data = Data()
+        while data.count <= maximumBytes, let chunk = try handle.read(upToCount: min(65_536, maximumBytes + 1 - data.count)), !chunk.isEmpty {
+            data.append(chunk)
+        }
         guard data.count <= maximumBytes else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tf7eb23752b1e.localized) }; return data
     }
 }

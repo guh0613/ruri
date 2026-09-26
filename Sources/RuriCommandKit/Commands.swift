@@ -10,7 +10,7 @@ struct SchemaCommand: ExecutableCommand {
         .init(name: "subaction", type: "string", required: false, help: "subaction")
     ], options: [
 
-    ], mutation: false, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri schema config apply --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: ArgumentHelp(Messages.CLIInterface.t907f38578610.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
@@ -62,12 +62,13 @@ struct CliStatusCommand: ExecutableCommand {
     static let spec = CommandSpec(path: ["cli","status"], summary: Messages.CLIInterface.tb15b5698e07c.localized, operands: [
 
     ], options: [
-
+        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t7736b5280e58.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: [])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t7736b5280e58.localized)) var optionBinDir: String?
     var parameters: [String: Value] { [
-        :
+        "bin-dir": .text(optionBinDir)
     ].filter { $0.value != .null } }
 }
 
@@ -133,7 +134,7 @@ struct ConfigSetCommand: ExecutableCommand {
         .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
         .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config set memory.maximumMB 6144 --scope defaults --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: ArgumentHelp(Messages.CLIInterface.t3a7dba9c3050.localized)) var operands: [String] = []
     @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
@@ -154,7 +155,7 @@ struct ConfigApplyCommand: ExecutableCommand {
         .init(name: "file", type: "string", required: true, help: Messages.CLIInterface.t149625e63af0.localized, values: []),
         .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config apply --scope instance:<uuid> --file patch.json --dry-run --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
     @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
@@ -196,7 +197,7 @@ struct ConfigInheritCommand: ExecutableCommand {
         .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
         .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config inherit memory --scope instance:<uuid> --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: "key") var operands: [String] = []
     @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
@@ -295,7 +296,7 @@ struct InstanceCreateCommand: ExecutableCommand {
         .init(name: "component", type: "strings", required: false, help: Messages.CLIInterface.tc54f734a37a6.localized, values: []),
         .init(name: "no-install", type: "bool", required: false, help: Messages.CLIInterface.td183fd7d75d0.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance create --name Survival --game 1.21.1 --directory default --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
     @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.tf78b43b0ee95.localized)) var optionName: String?
@@ -1070,7 +1071,7 @@ struct AccountLoginStartCommand: ExecutableCommand {
         .init(name: "username", type: "string", required: false, help: Messages.CLIInterface.t598bd6abd203.localized, values: []),
         .init(name: "password-stdin", type: "bool", required: false, help: Messages.CLIInterface.tae550ce2501b.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: true, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: true, examples: ["ruri account login start --provider microsoft --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
     @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t35f41c8dfeb7.localized)) var optionProvider: String?
@@ -1191,7 +1192,7 @@ struct LaunchStartCommand: ExecutableCommand {
         .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.tc7d16a18216b.localized, values: []),
         .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.t7650c678063f.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri launch start <instance-uuid> --account <account-uuid> --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
     @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.tc7d16a18216b.localized)) var optionAccount: String?
@@ -1302,7 +1303,7 @@ struct SessionLogsCommand: ExecutableCommand {
         .init(name: "follow", type: "bool", required: false, help: Messages.CLIInterface.t61dffc7832ee.localized, values: []),
         .init(name: "source", type: "string", required: false, help: Messages.CLIInterface.tdae2c9ca76ca.localized, values: ["output","preparation","latest","debug"]),
         .init(name: "lines", type: "int", required: false, help: Messages.CLIInterface.t602d83ce6e9a.localized, values: [])
-    ], mutation: false, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session logs <instance-uuid> <session-uuid> --follow --output ndjson"])
     @OptionGroup var common: CommonOptions
     @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
     @Flag(name: .customLong("follow"), help: ArgumentHelp(Messages.CLIInterface.t61dffc7832ee.localized)) var optionFollow = false
@@ -1499,7 +1500,7 @@ struct ContentInstallCommand: ExecutableCommand {
         .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.t3adc46ef11f2.localized, values: []),
         .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
-    ], mutation: true, confirmation: false, userParticipation: false, examples: [])
+    ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content install <instance-uuid> sodium --provider modrinth --dry-run --json"])
     @OptionGroup var common: CommonOptions
     @Argument(help: ArgumentHelp(Messages.CLIInterface.tc9423b403749.localized)) var operands: [String] = []
     @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?

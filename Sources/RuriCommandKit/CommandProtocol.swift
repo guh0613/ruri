@@ -32,7 +32,7 @@ struct CommandSpec: Encodable, Sendable {
     var examples: [String] = []
     var supportsDryRun: Bool { options.contains { $0.name == "dry-run" } }
     var configuration: CommandConfiguration { .init(commandName: path.last!, abstract: summary) }
-    enum CodingKeys: String, CodingKey { case path, summary, operands, options, mutation, confirmation, userParticipation, examples, supportsDryRun }
+    enum CodingKeys: String, CodingKey { case path, summary, operands, options, mutation, confirmation, userParticipation, examples, supportsDryRun, inputSchema, resultSchema, sideEffects }
     func encode(to encoder: Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(path, forKey: .path); try c.encode(summary, forKey: .summary)
@@ -40,6 +40,9 @@ struct CommandSpec: Encodable, Sendable {
         try c.encode(mutation, forKey: .mutation); try c.encode(confirmation, forKey: .confirmation)
         try c.encode(userParticipation, forKey: .userParticipation); try c.encode(examples, forKey: .examples)
         try c.encode(supportsDryRun, forKey: .supportsDryRun)
+        try c.encode(CommandSchemas.input(self), forKey: .inputSchema)
+        try c.encode(CommandSchemas.result(self), forKey: .resultSchema)
+        try c.encode(CommandSchemas.sideEffects(self), forKey: .sideEffects)
     }
 }
 
@@ -82,7 +85,15 @@ struct CommandRequest: Sendable {
             throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te36f73cbdb89.localized)
         }
         for option in spec.options {
-            if option.required && options[option.name] == nil { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc3f4b95955b1(String(describing: option.name)).localized) }
+            if option.required {
+                let missing: Bool
+                switch option.type {
+                case "bool": missing = !flag(option.name)
+                case "strings": missing = options[option.name] == nil || options[option.name] == .array([])
+                default: missing = options[option.name] == nil || options[option.name] == .string("")
+                }
+                if missing { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc3f4b95955b1(String(describing: option.name)).localized) }
+            }
             if !option.values.isEmpty, let value = string(option.name), !option.values.contains(value) {
                 throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te66506826636(String(describing: option.name), String(describing: option.values.joined(separator: ", "))).localized)
             }

@@ -29,7 +29,12 @@ public enum CLIApplication {
                     try await execute(request, output: output)
                 }
             }
-            output.result(result); return 0
+            var payload = result
+            if request.spec.mutation, var fields = result.object {
+                fields["dryRun"] = .bool(request.dryRun); payload = .object(fields)
+            }
+            let warnings = (try? result["warnings"].decode([String].self)) ?? []
+            output.result(payload, warnings: warnings); return 0
         } catch {
             let failure: OperationFailure
             if error is CancellationError || Task.isCancelled { failure = .init("CANCELLED", Messages.CLIInterface.t386cf3b4f8ac.localized) }
@@ -71,7 +76,7 @@ public enum CLIApplication {
                 "result": .array(["schemaVersion", "ok", "data", "warnings", "error"].map(Value.string)),
                 "error": .array(["code", "message", "retryable", "nextActions", "details"].map(Value.string))]),
                 "globalOptions": .array(["--json", "--output", "--data-dir", "--language", "--quiet"].map(Value.string)),
-                "configuration": try ConfigurationService.schema()])
+                "configuration": try ConfigurationService.schema(), "patchSchemas": CommandSchemas.patches])
         case "app info":
             return .object(["version": .string(BuildConfiguration().version), "schemaVersion": .integer(1), "application": .text(RuriInstallation.application()?.path),
                 "cli": .text(RuriInstallation.cliExecutable?.path), "dataDirectory": .string(basePaths(request).root.path)])

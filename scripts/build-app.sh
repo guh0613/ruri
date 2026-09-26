@@ -25,7 +25,10 @@ cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
 sign_keychain=()
 if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-monitor"
-codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-cli"
+# The CLI acts as the same launcher principal. Its signing identifier preserves
+# the designated requirement of existing GUI-created Keychain entries; it is a
+# standalone helper, not another app bundle registered with Launch Services.
+codesign --force --identifier dev.ruri.launcher --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-cli"
 # Ruri is not sandboxed, so Sparkle installs in-process and its XPC services,
 # which only sandboxed hosts use, are left out. Sign nested code inside-out.
 sparkle="$app/Contents/Frameworks/Sparkle.framework"
@@ -44,6 +47,7 @@ codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app"
 codesign --verify --deep --strict "$app"
 python3 scripts/release/signing.py verify "$app"
 python3 scripts/localization.py --bundle "$app"
+python3 scripts/validate-cli.py "$app"
 destination="$(pwd)/build/Ruri.app"
 if [[ -e "$destination" ]]; then
   mv "$destination" "$stage_dir/previous.app"

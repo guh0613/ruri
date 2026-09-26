@@ -14,6 +14,7 @@ struct PreferencesView: View {
             launchDefaults
             newInstances
             network
+            CLISettingsSection()
             if updater.isAvailable { softwareUpdate }
             dataAndAbout
         }
