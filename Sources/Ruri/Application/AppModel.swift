@@ -128,7 +128,7 @@ import RuriCore
     }
     func save() {
         guard !readOnly, state != persistedState else { return }
-        do { state = try StateStore.save(state, to: paths, basedOn: persistedState); persistedState = state }
+        do { acceptState(try StateStore.save(state, to: paths, basedOn: persistedState)) }
         catch {
             readOnly = true
             retryPersistence = (error as? OperationFailure).map { ["STATE_CONFLICT", "RESOURCE_BUSY"].contains($0.code) } ?? false
@@ -221,7 +221,6 @@ import RuriCore
                     acceptState(try StateStore.load(basePaths))
                 }
                 readOnly = false; retryPersistence = false
-                await applyNetworkSettings(); await scanJava()
             } catch {
                 retryPersistence = (error as? OperationFailure)?.code == "RESOURCE_BUSY"
             }
@@ -234,10 +233,7 @@ import RuriCore
             guard operation == nil, persistedState?.revision == baselineRevision, remote.revision != baselineRevision else { return }
             if baselineRevision != nil && remote.revision == nil { throw RuriError.message(Messages.AppAppModel.externalIndexChanged) }
             if state == persistedState {
-                let prior = state.settings
-                state = remote; persistedState = remote
-                if prior.downloadSource != remote.settings.downloadSource || prior.concurrentDownloads != remote.settings.concurrentDownloads { await applyNetworkSettings() }
-                if prior.defaultJava != remote.settings.defaultJava || prior.javaLocations != remote.settings.javaLocations { await scanJava() }
+                acceptState(remote)
             }
             else { save() }
         } catch { readOnly = true; self.error = Messages.AppAppModel.externalChangesDetected(error.localizedDescription).localized }
@@ -245,7 +241,13 @@ import RuriCore
     /// Accept a state already committed by a core service, keeping the merge
     /// baseline in sync without exposing a writable baseline to feature code.
     func acceptState(_ saved: PersistentState) {
+        let networkChanged = state.settings.downloadSource != saved.settings.downloadSource || state.settings.concurrentDownloads != saved.settings.concurrentDownloads
+        let previousJava = Set(state.instances.compactMap { $0.resolvedLaunchSettings(defaults: state.settings).java.path })
+        let nextJava = Set(saved.instances.compactMap { $0.resolvedLaunchSettings(defaults: saved.settings).java.path })
+        let javaChanged = previousJava != nextJava || state.settings.defaultJava != saved.settings.defaultJava || state.settings.javaLocations != saved.settings.javaLocations
         state = saved
         persistedState = saved
+        if networkChanged { Task { await applyNetworkSettings() } }
+        if javaChanged { Task { await scanJava() } }
     }
 }
