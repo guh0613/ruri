@@ -76,12 +76,15 @@ public enum StateStore {
         let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
         guard fd >= 0 else { throw RuriError.message(Messages.CoreStateStore.settingsLockFailed) }
         var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw RuriError.message(Messages.CoreStateStore.saveInProgress)
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG else {
+            close(fd); throw RuriError.message(Messages.CoreStateStore.settingsLockFailed)
+        }
+        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
+            close(fd); throw OperationFailure("RESOURCE_BUSY", Messages.CoreStateStore.saveInProgress.localized, retryable: true)
         }
         return fd
     }
-    private static func conflict(_ field: String) -> RuriError {
+    private static func conflict(_ field: String) -> OperationFailure {
         let parts = field.split(separator: ".").map(String.init)
         let labels = ["instances": Messages.CoreStateStore.sameInstance.localized, "accounts": Messages.CoreStateStore.sameAccount.localized, "gameDirectories": Messages.CoreStateStore.sameInstanceDirectory.localized, "detachedMinecraftFolders": Messages.CoreStateStore.retainedFolderRecord.localized, "settings": Messages.CoreStateStore.launcherSettings.localized,
                       "name": Messages.CoreStateStore.name.localized, "favorite": Messages.CoreStateStore.favoriteStatus.localized, "memoryMB": Messages.CoreStateStore.memory.localized, "javaPath": Messages.CoreStateStore.javaSelection.localized,
@@ -99,7 +102,7 @@ public enum StateStore {
             }
         } else if ["selectedInstanceID", "selectedDirectoryID", "activeAccountID"].contains(field) { description = Messages.CoreStateStore.selectionChangedElsewhere.localized }
         else { description = field }
-        return .message(Messages.CoreStateStore.saveConflictPreservingOriginal(String(describing: description)).localized)
+        return .init("STATE_CONFLICT", Messages.CoreStateStore.saveConflictPreservingOriginal(String(describing: description)).localized, retryable: true)
     }
 
     private static func merge(base: PersistentState, local: PersistentState, remote: PersistentState) throws -> PersistentState {

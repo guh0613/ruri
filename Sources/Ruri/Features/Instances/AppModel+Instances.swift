@@ -3,25 +3,21 @@ import AppKit
 import RuriCore
 
 extension AppModel {
-    func select(_ instance: GameInstance) { state.selectedInstanceID = instance.id; save() }
-    func update(_ instance: GameInstance) {
-        guard let index = state.instances.firstIndex(where: { $0.id == instance.id }) else { return }
-        state.instances[index] = instance; save()
+    func select(_ instance: GameInstance) {
+        do { acceptState(try InstanceService(paths: basePaths).select(instance.id)) }
+        catch { self.error = error.localizedDescription }
+    }
+    func setFavorite(_ favorite: Bool, for instance: GameInstance) {
+        guard !readOnly else { return }
+        do {
+            _ = try InstanceService(paths: basePaths).edit(instance.id, favorite: favorite)
+            acceptState(try StateStore.load(basePaths))
+        } catch { self.error = error.localizedDescription }
     }
     @discardableResult func updateSettings(_ draft: GameInstance, basedOn original: GameInstance) -> Bool {
-        guard !readOnly, var current = state.instances.first(where: { $0.id == draft.id }) else { return false }
-        func apply<Value: Equatable>(_ key: WritableKeyPath<GameInstance, Value>) {
-            if draft[keyPath: key] != original[keyPath: key] { current[keyPath: key] = draft[keyPath: key] }
-        }
-        apply(\.name); apply(\.favorite); apply(\.iconPNG); apply(\.iconStyle)
-        var overrides = current.effectiveLaunchOverrides
-        let desired = draft.effectiveLaunchOverrides, baseline = original.effectiveLaunchOverrides
-        func setting<Value: Equatable>(_ key: WritableKeyPath<InstanceLaunchOverrides, Value>) {
-            if desired[keyPath: key] != baseline[keyPath: key] { overrides[keyPath: key] = desired[keyPath: key] }
-        }
-        setting(\.memory); setting(\.java); setting(\.jvmArguments); setting(\.gameArguments); setting(\.window); setting(\.presentation); setting(\.environment); setting(\.commands); setting(\.macOS)
-        if overrides != current.effectiveLaunchOverrides { current.launchOverrides = overrides }
-        update(current)
+        guard !readOnly else { return false }
+        do { acceptState(try ConfigurationService(paths: basePaths).saveInstanceSettings(draft, basedOn: original)) }
+        catch { self.error = error.localizedDescription; return false }
         Task { await scanJava() }
         return !readOnly
     }

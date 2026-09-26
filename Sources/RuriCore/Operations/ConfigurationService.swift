@@ -148,7 +148,7 @@ public struct ConfigurationService: Sendable {
                         "after": try report(scope: scope, state: after, showSecrets: showSecrets)])
     }
     public static func get(_ value: OperationValue, _ path: String) -> OperationValue { path.split(separator: ".").reduce(value) { $0[String($1)] } }
-    private static func assign(_ root: inout OperationValue, path: [String], value: OperationValue) {
+    static func assign(_ root: inout OperationValue, path: [String], value: OperationValue) {
         guard let key = path.first else { root = value; return }
         var object = root.object ?? [:], child = object[key] ?? .null
         assign(&child, path: Array(path.dropFirst()), value: value); object[key] = child; root = .object(object)
@@ -191,7 +191,7 @@ public struct ConfigurationService: Sendable {
             "commands": .object(["enabled": .bool(v.commands.enabled), "before": .string(v.commands.before), "after": .string(v.commands.after), "wrapper": .string(v.commands.wrapper), "timeoutSeconds": .integer(v.commands.timeoutSeconds)]),
             "macOS": .object(["enabled": .bool(v.macOS.enabled), "instanceAppearance": .bool(v.macOS.instanceAppearance), "nativeFullscreen": .bool(v.macOS.nativeFullscreen)])])
     }
-    private static func decodeLaunch(_ v: OperationValue) throws -> LaunchSettingsValues {
+    static func decodeLaunch(_ v: OperationValue) throws -> LaunchSettingsValues {
         for field in launchFields { try validate(get(v, field.name), field: field) }
         var result = LaunchSettingsValues()
         result.memory = .init(mode: MemorySettings.Mode(rawValue: v["memory"]["mode"].string!)!, maximumMB: v["memory"]["maximumMB"].int!, initialMB: v["memory"]["initialMB"].int, metaspaceMB: v["memory"]["metaspaceMB"].int)
@@ -207,7 +207,7 @@ public struct ConfigurationService: Sendable {
         result.commands = try v["commands"].decode(LaunchCommands.self); result.macOS = try v["macOS"].decode(MacOSGameSettings.self)
         return result
     }
-    private static func copyGroup(_ group: String, from v: InstanceLaunchOverrides, into target: inout InstanceLaunchOverrides) {
+    static func copyGroup(_ group: String, from v: InstanceLaunchOverrides, into target: inout InstanceLaunchOverrides) {
         switch LaunchSettingKey(rawValue: group)! {
         case .memory: target.memory = v.memory; case .java: target.java = v.java; case .window: target.window = v.window
         case .jvmArguments: target.jvmArguments = v.jvmArguments; case .gameArguments: target.gameArguments = v.gameArguments

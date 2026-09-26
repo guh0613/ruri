@@ -93,7 +93,7 @@ public struct InstanceService: Sendable {
             throw error
         }
     }
-    private static func validateName(_ name: String) throws {
+    static func validateName(_ name: String) throws {
         guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, name.utf8.count <= 1024, !name.contains("\0") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t97013cab62b8.localized) }
     }
 }

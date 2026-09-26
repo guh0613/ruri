@@ -90,6 +90,7 @@ import RuriCore
         }
     }
     private(set) var readOnly = false
+    private var retryPersistence = false
     private(set) var persistedState: PersistentState?
     var sessionRecorder: GameSessionRecorder?
     var recordingErrorShown = false
@@ -126,10 +127,11 @@ import RuriCore
         persistJournal()
     }
     func save() {
-        guard !readOnly else { return }
+        guard !readOnly, state != persistedState else { return }
         do { state = try StateStore.save(state, to: paths, basedOn: persistedState); persistedState = state }
         catch {
             readOnly = true
+            retryPersistence = (error as? OperationFailure).map { ["STATE_CONFLICT", "RESOURCE_BUSY"].contains($0.code) } ?? false
             self.error = Messages.AppAppModel.savePaused(error.localizedDescription).localized
         }
     }
@@ -208,7 +210,23 @@ import RuriCore
         }
     }
     func synchronizeExternalState() async {
-        guard !readOnly, operation == nil else { return }
+        guard operation == nil else { return }
+        if readOnly {
+            guard retryPersistence else { return }
+            do {
+                do { acceptState(try StateStore.save(state, to: paths, basedOn: persistedState)) }
+                catch let failure as OperationFailure where failure.code == "STATE_CONFLICT" {
+                    // Keep the conflict message visible, but accept the latest
+                    // valid state so the user can retry the edit immediately.
+                    acceptState(try StateStore.load(basePaths))
+                }
+                readOnly = false; retryPersistence = false
+                await applyNetworkSettings(); await scanJava()
+            } catch {
+                retryPersistence = (error as? OperationFailure)?.code == "RESOURCE_BUSY"
+            }
+            return
+        }
         let baselineRevision = persistedState?.revision, basePaths = basePaths
         do {
             let remote = try await Task.detached(priority: .utility) { try StateStore.load(basePaths) }.value

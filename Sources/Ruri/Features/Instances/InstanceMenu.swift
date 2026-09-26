@@ -19,7 +19,7 @@ struct InstanceMenu<Content: View>: View {
             // Style the items themselves so macOS 27 marks their images visible.
             Group {
                 if showsSelect { Button(Messages.AppInstanceMenu.showOnHome.localized, systemImage: "house") { model.select(instance) } }
-                Button(instance.favorite ? Messages.AppInstanceMenu.unfavorite.localized : Messages.AppInstanceMenu.favorite.localized, systemImage: instance.favorite ? "star.slash" : "star") { var value = instance; value.favorite.toggle(); model.update(value) }
+                Button(instance.favorite ? Messages.AppInstanceMenu.unfavorite.localized : Messages.AppInstanceMenu.favorite.localized, systemImage: instance.favorite ? "star.slash" : "star") { model.setFavorite(!instance.favorite, for: instance) }
                 Divider()
                 Button(Messages.AppInstanceMenu.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                 Button(Messages.AppInstanceMenu.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
