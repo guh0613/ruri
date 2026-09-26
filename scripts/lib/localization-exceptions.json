@@ -1110,12 +1110,7 @@
     "reason": "Stable command action; independent of display language."
   },
   {
-    "file": "Sources/Ruri/Features/Settings/CLISettingsSection.swift",
-    "literal": "\"ruri --help\"",
-    "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
-  },
-  {
-    "file": "Sources/Ruri/Features/Settings/CLISettingsSection.swift",
+    "file": "Sources/Ruri/Features/Settings/CLISetupModel.swift",
     "literal": "\"ruri --help\"",
     "reason": "Executable command or AppleScript syntax; localized prompt text is escaped separately."
   },

@@ -5,6 +5,8 @@ import RuriCore
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.scenePhase) private var scenePhase
+    @AppStorage(CLISetupModel.onboardingSeenKey) private var cliSetupSeen = false
     @State private var columns = NavigationSplitViewVisibility.automatic
     @State private var sidebarWidth: CGFloat = 236
     @State private var collectionWidth: CGFloat = 280
@@ -73,6 +75,7 @@ struct RootView: View {
         }
         .frame(minWidth: minimumWindowWidth, minHeight: 600)
         .preferredColorScheme(model.colorScheme)
+        .sheet(isPresented: Bindable(model).showCLISetup) { CLIOnboardingView() }
         .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }
         .sheet(isPresented: Binding(get: { model.showDirectories || model.showAddDirectory }, set: {
             if !$0 { model.showDirectories = false; model.showAddDirectory = false }
@@ -98,6 +101,28 @@ struct RootView: View {
         .sheet(item: Bindable(model).movingInstance) { instance in InstanceMoveView(instance: instance) }
         .alert(Messages.AppRootView.operationIncomplete.localized, isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) { Button(Messages.AppRootView.ok.localized, role: .cancel) { model.error = nil } } message: { Text(model.error ?? "") }
         .task { await model.boot() }
+        .task(id: canOfferCLISetup) {
+            guard canOfferCLISetup else { return }
+            // Let startup URL imports and window restoration take priority.
+            do { try await Task.sleep(for: .milliseconds(700)) } catch { return }
+            while canOfferCLISetup && !Task.isCancelled {
+                // Native dialogs (including the updater) aren't represented in AppModel.
+                if NSApp.mainWindow?.attachedSheet != nil || NSApp.modalWindow != nil {
+                    do { try await Task.sleep(for: .milliseconds(250)) } catch { return }
+                    continue
+                }
+                guard let service = try? CLIInstallation(),
+                      FileManager.default.isExecutableFile(atPath: service.executable.path) else { return }
+                cliSetupSeen = true
+                if service.status()["installed"] != .bool(true) { model.showCLISetup = true }
+                return
+            }
+        }
+    }
+
+    private var canOfferCLISetup: Bool {
+        !cliSetupSeen && scenePhase == .active && model.page == .home && !model.busy && !model.readOnly
+            && !model.isPresentingSheet && model.error == nil && model.pendingOpenURLs.isEmpty
     }
 }
 

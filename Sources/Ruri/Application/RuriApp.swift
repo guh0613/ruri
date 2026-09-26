@@ -25,9 +25,9 @@ import RuriCore
             CommandGroup(replacing: .newItem) {
                 Button(Messages.AppRuriApp.showMainWindow.localized) { model.openMainWindow?() }.keyboardShortcut("0")
                 Divider()
-                Button(Messages.AppRuriApp.newInstance.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy)
-                Button(Messages.AppRuriApp.importInstance.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy)
-                Button(Messages.AppRuriApp.addGameFolder.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy)
+                Button(Messages.AppRuriApp.newInstance.localized) { model.openMainWindow?(); model.showCreate = true }.keyboardShortcut("n").disabled(model.busy || model.showCLISetup)
+                Button(Messages.AppRuriApp.importInstance.localized) { model.openMainWindow?(); model.chooseInstanceImport() }.keyboardShortcut("i").disabled(model.busy || model.showCLISetup)
+                Button(Messages.AppRuriApp.addGameFolder.localized) { model.openMainWindow?(); model.chooseMinecraftDirectory() }.keyboardShortcut("i", modifiers: [.command, .shift]).disabled(model.busy || model.showCLISetup)
                 Divider()
                 Button(Messages.SessionUI.launcherActivity.localized) { model.openMainWindow?(); model.showLauncherLog() }.keyboardShortcut("l", modifiers: [.command, .shift])
             }
@@ -73,7 +73,7 @@ private struct MainWindowContent: View {
             }
             .task(id: model.pendingOpenURLs.first) {
                 guard model.pendingOpenURLs.first != nil else { return }
-                while model.busy || model.showLogs || model.showCreate || model.showAccount || model.showDirectories || model.showAddDirectory || model.importingInstance != nil || model.exportingInstance != nil {
+                while model.busy || model.isPresentingSheet || model.error != nil {
                     do { try await Task.sleep(for: .milliseconds(200)) } catch { return }
                 }
                 guard !Task.isCancelled, let url = model.pendingOpenURLs.first else { return }

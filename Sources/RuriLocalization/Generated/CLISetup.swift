@@ -123,6 +123,37 @@ extension Messages {
         public static func authorizationFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "cliSetup.authorizationFailed", table: "CLISetup", fallback: "未能完成系统授权操作：%@", arguments: [.text(value0)])
         }
+        /// 在终端中使用 Ruri
+        ///
+        /// Resource: `CLISetup.cliSetup.onboardingTitle`.
+        public static var onboardingTitle: LocalizedMessage {
+            .init(key: "cliSetup.onboardingTitle", table: "CLISetup", fallback: "在终端中使用 Ruri")
+        }
+        /// 通过命令行管理实例、账户和配置，也可供 AI agent 调用。
+        ///
+        /// Resource: `CLISetup.cliSetup.onboardingDetail`.
+        public static var onboardingDetail: LocalizedMessage {
+            .init(key: "cliSetup.onboardingDetail", table: "CLISetup", fallback: "通过命令行管理实例、账户和配置，也可供 AI agent 调用。")
+        }
+        /// 安装时可能需要管理员授权。
+        /// 也可稍后前往「设置 → 命令行与自动化」安装。
+        ///
+        /// Resource: `CLISetup.cliSetup.onboardingHint`.
+        public static var onboardingHint: LocalizedMessage {
+            .init(key: "cliSetup.onboardingHint", table: "CLISetup", fallback: "安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。")
+        }
+        /// 暂时跳过
+        ///
+        /// Resource: `CLISetup.cliSetup.skip`.
+        public static var skip: LocalizedMessage {
+            .init(key: "cliSetup.skip", table: "CLISetup", fallback: "暂时跳过")
+        }
+        /// 正在安装…
+        ///
+        /// Resource: `CLISetup.cliSetup.installing`.
+        public static var installing: LocalizedMessage {
+            .init(key: "cliSetup.installing", table: "CLISetup", fallback: "正在安装…")
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLISetup:cliSetup.title": .init("命令行工具", []),
             "CLISetup:cliSetup.introduction": .init("安装后即可在终端使用 Ruri CLI，无需配置 PATH。", []),
@@ -144,6 +175,11 @@ extension Messages {
             "CLISetup:cliSetup.authorizeInstall": .init("Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。", []),
             "CLISetup:cliSetup.authorizeUninstall": .init("Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。", []),
             "CLISetup:cliSetup.authorizationFailed": .init("未能完成系统授权操作：%@", [.text]),
+            "CLISetup:cliSetup.onboardingTitle": .init("在终端中使用 Ruri", []),
+            "CLISetup:cliSetup.onboardingDetail": .init("通过命令行管理实例、账户和配置，也可供 AI agent 调用。", []),
+            "CLISetup:cliSetup.onboardingHint": .init("安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。", []),
+            "CLISetup:cliSetup.skip": .init("暂时跳过", []),
+            "CLISetup:cliSetup.installing": .init("正在安装…", []),
         ]
     }
 }

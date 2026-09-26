@@ -53,6 +53,7 @@ import RuriCore
     @ObservationIgnored var launchPresentations: [UUID: LaunchPresentation] = [:]
     @ObservationIgnored var automaticallyHiddenSessions: Set<UUID> = []
     @ObservationIgnored var bootTask: Task<Void, Never>?
+    var showCLISetup = false
     var showCreate = false
     var showDirectories = false
     var showAddDirectory = false
@@ -97,6 +98,11 @@ import RuriCore
     var selected: GameInstance? { directoryInstances.first(where: { $0.id == state.selectedInstanceID }) ?? directoryInstances.first }
     var activeAccount: Account? { state.accounts.first { $0.id == state.activeAccountID } }
     var busy: Bool { operation != nil || restoringGames || isQuitting }
+    var isPresentingSheet: Bool {
+        showCLISetup || showCreate || showDirectories || showAddDirectory || showAccount || showLogs
+            || editingInstance != nil || contentPresentation != nil || worldInstance != nil || schematicInstance != nil
+            || importingInstance != nil || exportingInstance != nil || copyingInstance != nil || movingInstance != nil
+    }
     var activeActivity: LauncherLogEntry? { journal.entries.first { $0.status == .running } }
     var selectedDirectoryID: UUID { state.selectedDirectoryID ?? GameDirectory.defaultID }
     var selectedDirectoryName: String { state.gameDirectories?.first(where: { $0.id == selectedDirectoryID })?.name ?? Messages.AppAppModel.defaultInstanceDirectory.localized }

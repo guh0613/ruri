@@ -57,3 +57,18 @@
 
 /* @symbol CLISetup.authorizationFailed @args text */
 "cliSetup.authorizationFailed" = "未能完成系统授权操作：%@";
+
+/* @symbol CLISetup.onboardingTitle @args - */
+"cliSetup.onboardingTitle" = "在终端中使用 Ruri";
+
+/* @symbol CLISetup.onboardingDetail @args - */
+"cliSetup.onboardingDetail" = "通过命令行管理实例、账户和配置，也可供 AI agent 调用。";
+
+/* @symbol CLISetup.onboardingHint @args - */
+"cliSetup.onboardingHint" = "安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。";
+
+/* @symbol CLISetup.skip @args - */
+"cliSetup.skip" = "暂时跳过";
+
+/* @symbol CLISetup.installing @args - */
+"cliSetup.installing" = "正在安装…";
