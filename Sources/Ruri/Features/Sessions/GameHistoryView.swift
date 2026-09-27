@@ -393,7 +393,7 @@ struct GameHistoryView: View {
                         HighlightCard(kicker: Messages.HistoryUI.favoriteWorld.localized, title: favorite.title,
                                       detail: LocalizedFormat.duration(favorite.seconds) + (favorite.subtitle.map { " · " + $0 } ?? ""),
                                       help: Messages.HistoryUI.showRuns.localized) {
-                            world = favorite
+                            world = favorite; server = nil
                         } icon: {
                             WorldIcon(image: worldIcons[favorite.id], size: 56)
                         }
@@ -540,7 +540,7 @@ struct GameHistoryView: View {
             HStack(alignment: .firstTextBaseline) {
                 Text(dayTitle(day)).font(.headline)
                 Spacer()
-                Text(LocalizedFormat.duration(records.reduce(0) { $0 + $1.playedSeconds }))
+                Text(LocalizedFormat.duration(records.reduce(0) { $0 + timelineSeconds($1) }))
                     .font(.subheadline).foregroundStyle(.secondary).monospacedDigit()
             }
             .padding(.horizontal, 4)
@@ -550,7 +550,7 @@ struct GameHistoryView: View {
                         .padding(.horizontal, 18).padding(.top, 14).padding(.bottom, 6)
                     ForEach(records) { record in
                         Divider().padding(.leading, record.id == records.first?.id ? 0 : 66)
-                        HistoryRunRow(record: record, instance: model.state.instances.first { $0.id == record.instanceID },
+                        HistoryRunRow(record: record, attributedSeconds: world != nil || server != nil ? timelineSeconds(record) : nil, instance: model.state.instances.first { $0.id == record.instanceID },
                                       worldIcon: record.world.map { worldIcons[record.instanceID.uuidString + "/" + $0.folder] } ?? nil) {
                             model.inspectSession(record)
                         }
@@ -588,6 +588,12 @@ struct GameHistoryView: View {
         } else {
             InstanceIcon(loader: .vanilla, size: size)
         }
+    }
+
+    private func timelineSeconds(_ record: GameSession) -> Double {
+        if let world { return record.seconds(worldFolder: world.folder ?? "") }
+        if let server { return record.activitySegments.filter { $0.target.kind == "server" && $0.target.key == server.id }.reduce(0) { $0 + $1.seconds } }
+        return record.playedSeconds
     }
 
     private var worldIconRequests: [WorldIconRequest] {
@@ -965,6 +971,7 @@ private struct DayTrack: View {
 /// One run in the timeline: when it started, where, and how it ended.
 private struct HistoryRunRow: View {
     let record: GameSession
+    var attributedSeconds: Double? = nil
     let instance: GameInstance?
     let worldIcon: NSImage?
     let action: () -> Void
@@ -1018,7 +1025,7 @@ private struct HistoryRunRow: View {
                         .foregroundStyle(record.resultColor)
                         .lineLimit(1)
                 }
-                Text(record.userDuration).font(.callout.weight(.medium)).monospacedDigit().lineLimit(1)
+                Text(attributedSeconds.map(LocalizedFormat.duration) ?? record.userDuration).font(.callout.weight(.medium)).monospacedDigit().lineLimit(1)
                 Image(systemName: "chevron.right").font(.caption2.weight(.semibold)).foregroundStyle(.tertiary)
             }
             .padding(.horizontal, 18).padding(.vertical, 12)

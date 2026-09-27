@@ -14,7 +14,7 @@ struct ServerEditorSheet: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     let request: ServerEditorRequest
-    var completed: () -> Void
+    var completed: (ServerAddress) -> Void
     @State private var address: String
     @State private var name: String
     @State private var notes: String
@@ -29,7 +29,7 @@ struct ServerEditorSheet: View {
     @State private var queryRequest = UUID()
     private var preferences: Bool { request.item != nil }
     private var isNew: Bool { request.item == nil && request.entry == nil }
-    init(request: ServerEditorRequest, completed: @escaping () -> Void) {
+    init(request: ServerEditorRequest, completed: @escaping (ServerAddress) -> Void) {
         self.request = request; self.completed = completed
         _address = State(initialValue: request.entry?.address ?? request.item?.address.authority ?? "")
         _name = State(initialValue: request.entry?.name ?? request.item?.preference?.alias ?? "")
@@ -79,7 +79,7 @@ struct ServerEditorSheet: View {
                 Spacer()
                 Button(Messages.Servers.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
                 Button(Messages.Servers.save.localized) { save() }.keyboardShortcut(.defaultAction)
-                    .disabled(saving || model.readOnly || (isNew && selectedInstance == nil && !favorite) || selectedInstance.map { model.isInstanceInUse($0) && !preferences } == true)
+                    .disabled(saving || model.readOnly || (try? ServerAddress(address)) == nil || (isNew && selectedInstance == nil && !favorite) || selectedInstance.map { model.isInstanceInUse($0) && !preferences } == true)
             }
         }.padding(24).frame(width: 520)
         .task(id: address + queryRequest.uuidString) {
@@ -114,7 +114,7 @@ struct ServerEditorSheet: View {
                     model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
                 }
             }
-            completed(); dismiss()
+            completed(endpoint); dismiss()
         } catch { self.error = error.localizedDescription }
     }
 }
@@ -169,7 +169,7 @@ struct ServerManagerView: View {
                 Spacer(); Button(Messages.Servers.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
             }
         }
-        .sheet(item: $editor) { request in ServerEditorSheet(request: request) { refresh = UUID() } }
+        .sheet(item: $editor) { request in ServerEditorSheet(request: request) { _ in refresh = UUID() } }
         .confirmationDialog(Messages.Servers.deleteConfirm.localized, isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
             Button(Messages.Servers.confirmRemove.localized, role: .destructive) { if let removing { apply(.remove(id: removing.id)) }; removing = nil }
         }

@@ -143,8 +143,8 @@ public enum GameHistoryStore {
             if let date = query.since { clauses.append("started >= ?"); values.append(.real(date.timeIntervalSince1970)) }
             let search = query.search.trimmingCharacters(in: .whitespacesAndNewlines)
             if !search.isEmpty {
-                clauses.append("(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0)")
-                values += [.text(search), .text(search), .text(search)]
+                clauses.append("(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0 OR EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND (instr(lower(a.name),lower(?))>0 OR instr(lower(a.target),lower(?))>0)))")
+                values += [.text(search), .text(search), .text(search), .text(search), .text(search)]
             }
             if query.problemsOnly { clauses.append("attention = 1") }
             let filter = clauses.isEmpty ? "" : " WHERE " + clauses.joined(separator: " AND ")

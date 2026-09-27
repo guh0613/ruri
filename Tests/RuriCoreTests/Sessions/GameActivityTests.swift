@@ -74,6 +74,7 @@ struct GameActivityTests {
         #expect(try GameActivityStore.days(paths: paths, server: ServerAddress("example.test")).reduce(0) { $0 + $1.seconds } == 30)
         #expect(try GameHistoryStore.list(paths: paths, query: .init(serverAddress: ServerAddress("example.test"))).count == 1)
         #expect(try GameHistoryStore.list(paths: paths, query: .init(worldFolder: "World")).count == 1)
+        #expect(try GameHistoryStore.list(paths: paths, query: .init(search: "example.test")).count == 1)
         #expect(try GameHistoryStore.overview(paths: paths, range: .all).worlds.first?.seconds == 20)
         let restored = try #require(try GameHistoryStore.load(paths: paths, sessionID: record.id))
         #expect(restored.activity?.valid(total: restored.playedSeconds) == true)

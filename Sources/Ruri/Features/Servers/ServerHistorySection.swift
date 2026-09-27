@@ -41,7 +41,7 @@ struct ServerHistorySection: View {
                     Spacer()
                     VStack(alignment: .trailing) {
                         Text(Messages.Servers.lastPlayed.localized).font(.caption).foregroundStyle(.secondary)
-                        Text(current.lastPlayed, style: .relative)
+                        Text(LocalizedFormat.relative(current.lastPlayed))
                     }
                 }
                 if !days.isEmpty { InstancePlaytimeChart(days: days).frame(height: 140) }

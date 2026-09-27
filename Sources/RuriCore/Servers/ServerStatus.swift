@@ -26,7 +26,7 @@ public struct ServerStatus: Sendable {
     public let queriedAt: Date
 
     static func decode(_ data: Data) throws -> Self {
-        guard data.count <= 1_048_576, let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else { throw ServerStatusError.response }
+        guard data.count <= 1_048_576, let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { throw ServerStatusError.response }
         var budget = 16384
         func text(_ value: Any?, depth: Int = 0) -> String {
             guard budget > 0, depth < 16 else { return "" }

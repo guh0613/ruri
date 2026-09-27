@@ -1333,5 +1333,10 @@
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"\"\"\n                SELECT world_folder, world_name, instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                AND tracking_version IS NULL AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC\n                \"\"\"",
     "reason": "SQLite history aggregation query."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0 OR EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND (instr(lower(a.name),lower(?))>0 OR instr(lower(a.target),lower(?))>0)))\"",
+    "reason": "SQLite search query including activity target names and addresses."
   }
 ]

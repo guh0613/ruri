@@ -9,6 +9,7 @@ import RuriLocalization
     var scope = "all"
     var instanceID: UUID?
     var selectedID: String?
+    var pendingSelection: String?
     var snapshot: ServerLibrarySnapshot?
     var responses: [String: ServerStatus] = [:]
     var failures: [String: String] = [:]
@@ -22,6 +23,7 @@ import RuriLocalization
         let result = await Task.detached(priority: .utility) { ServerLibrary.load(paths: paths, state: state) }.value
         guard !Task.isCancelled else { return }
         snapshot = result
+        if let key = pendingSelection, result.items.contains(where: { $0.id == key }) { selectedID = key; pendingSelection = nil }
     }
     func refresh(_ addresses: [ServerAddress]) async {
         let generation = UUID(); queryID = generation
@@ -78,7 +80,12 @@ struct ServersView: View {
                 if let item = current { ServerDetailView(item: item, navigation: navigation).id(item.id) }
                 else { ContentUnavailableView(Messages.Servers.noSelection.localized, systemImage: "server.rack") }
             }
-            .sheet(item: $navigation.editor) { request in ServerEditorSheet(request: request) { navigation.refreshID = UUID() } }
+            .sheet(item: $navigation.editor) { request in
+                ServerEditorSheet(request: request) { address in
+                    if request.entry == nil && request.item == nil { navigation.scope = "all"; navigation.search = "" }
+                    navigation.pendingSelection = address.key; navigation.refreshID = UUID()
+                }
+            }
             .toolbar { RootToolbar(model: model) }
         }
     }
@@ -209,7 +216,7 @@ private struct ServerDetailView: View {
                             LabeledContent(Messages.Servers.version.localized, value: response.version ?? Messages.Servers.unknown.localized)
                             LabeledContent(Messages.Servers.players.localized, value: response.online.map { "\($0)/\(response.maximum.map(String.init) ?? "–")" } ?? Messages.Servers.unknown.localized)
                             LabeledContent(Messages.Servers.latency.localized, value: response.latencyMilliseconds.map { Messages.Servers.milliseconds(Int64($0)).localized } ?? Messages.Servers.unknown.localized)
-                            LabeledContent(Messages.Servers.lastUpdated.localized) { Text(response.queriedAt, style: .relative) }
+                            LabeledContent(Messages.Servers.lastUpdated.localized) { Text(LocalizedFormat.relative(response.queriedAt)) }
                         }
                         Text(Messages.Servers.queryHint.localized).font(.caption).foregroundStyle(.secondary)
                     }.padding(8).frame(maxWidth: .infinity, alignment: .leading)
