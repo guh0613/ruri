@@ -140,6 +140,13 @@ enum CommandSchemas {
             if action == "default" { return object(["changed": boolean, "dryRun": boolean, "before": configReport, "after": configReport]) }
             return java.mergingSchema(object(["runtime": java, "dryRun": boolean, "references": array(string), "trashedPath": nullable(string)]))
         }
+        if p.first == "server" {
+            let row = object(["id": .object(["anyOf": .array([integer, string])]), "name": string, "address": string, "resourcePacks": string, "validAddress": boolean,
+                              "favorite": boolean, "instanceIDs": array(string), "notes": string, "preferredInstanceID": nullable(string)])
+            if action == "list" { return page(row).mergingSchema(object(["warnings": array(string)])) }
+            if action == "query" { return object(["address": string, "description": string, "version": nullable(string), "protocolVersion": nullable(integer), "online": nullable(integer), "maximum": nullable(integer), "latencyMilliseconds": nullable(integer), "playerSample": array(string), "queriedAt": string]) }
+            return row.mergingSchema(object(["dryRun": boolean, "instanceID": string, "revision": string, "items": array(row)]))
+        }
         if p.first == "world" {
             if action == "list" { return page(p.contains("backup") ? backup : world) }
             if action == "show" { return world }

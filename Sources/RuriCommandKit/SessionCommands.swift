@@ -6,8 +6,11 @@ extension CLIApplication {
     @MainActor static func manageLaunch(_ request: CommandRequest, output: CommandOutput) async throws -> Value {
         let (_, paths, downloader) = try await context(request), service = LaunchService(paths: paths, downloader: downloader)
         let id = try uuid(request.operand()), account = try request.string("account").map(uuid)
-        if request.spec.path.last == "preflight" || request.dryRun { return try await service.preflight(instanceID: id, accountID: account, worldFolder: request.string("world")) }
-        let record = try await service.start(instanceID: id, accountID: account, worldFolder: request.string("world"), progress: { output.progress($0) }, updated: { output.event("session", sessionValue($0)) })
+        let destination: LaunchDestination
+        do { destination = try .resolve(worldFolder: request.string("world"), serverAddress: request.string("server")) }
+        catch { throw OperationFailure("INVALID_ARGUMENT", error.localizedDescription) }
+        if request.spec.path.last == "preflight" || request.dryRun { return try await service.preflight(instanceID: id, accountID: account, destination: destination) }
+        let record = try await service.start(instanceID: id, accountID: account, destination: destination, progress: { output.progress($0) }, updated: { output.event("session", sessionValue($0)) })
         return sessionValue(record)
     }
     @MainActor static func manageSession(_ request: CommandRequest, output: CommandOutput) async throws -> Value {

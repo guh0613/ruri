@@ -37,8 +37,8 @@ public struct ServerListManager: Sendable {
     public let instanceID: UUID
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
     public func snapshot() throws -> ServerListSnapshot {
-        let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instanceID)
-        defer { withExtendedLifetime(location) {} }
+        try InstanceLocationLease.requireCurrentDirectory(paths: paths, instanceID: instanceID)
+        if let instance = try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) { try paths.validateBinding(instance) }
         try paths.validateInstanceLocation(instanceID)
         try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
         let directory = paths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath()
@@ -57,7 +57,8 @@ public struct ServerListManager: Sendable {
     @discardableResult public func apply(_ change: ServerListChange, to snapshot: ServerListSnapshot, dryRun: Bool = false) throws -> ServerListSnapshot {
         // This lease covers all instances sharing a game directory, as well as
         // directory relocation. Never race the game's in-memory server list.
-        let lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID)
+        let lease = try dryRun ? nil : GameRunLease.acquire(paths: paths, instanceID: instanceID)
+        if let instance = try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) { try paths.validateBinding(instance) }
         defer { withExtendedLifetime(lease) {} }
         guard paths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath() == snapshot.directory,
               try read() == snapshot.original else { throw RuriError.message(Messages.Servers.listChanged) }

@@ -114,6 +114,7 @@ public enum CLIApplication {
         if request.spec.path.first == "session" { return try await manageSession(request, output: output) }
         if request.spec.path.first == "catalog" { return try await manageCatalog(request) }
         if request.spec.path.first == "content" { return try await manageContent(request, output: output) }
+        if request.spec.path.first == "server" { return try await manageServer(request) }
         if request.spec.path.first == "world" { return try await manageWorld(request, output: output) }
         if request.spec.path.first == "datapack" { return try await manageDataPack(request, output: output) }
         if request.spec.path.first == "schematic" { return try await manageSchematic(request) }

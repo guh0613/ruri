@@ -137,6 +137,7 @@ struct CommandTextRenderer {
         case "java": return ["id", "managedID", "path", "runtime.version", "version", "runtime.architecture", "architecture", "source"]
         case "catalog": return ["id", "provider", "title", "name", "number", "type", "gameVersions", "loaders", "channel"]
         case "content": return ["filename", "title", "version", "enabled", "kind"]
+        case "server": return ["id", "name", "address", "resourcePacks", "favorite", "instanceIDs", "online", "maximum", "latencyMilliseconds", "description"]
         case "world": return ["id", "folder", "name", "world", "worldName", "version", "lastPlayed", "createdAt", "bytes"]
         case "datapack": return ["id", "title", "name", "number", "enabled", "description"]
         case "schematic": return ["path", "directory", "bytes", "modifiedAt"]
