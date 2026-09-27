@@ -370,8 +370,8 @@ public enum GameHistoryStore {
     }
 
     static func checkpoint(_ record: GameSession, paths: LauncherPaths) throws {
-        if record.activity != nil { try Self.record(record, paths: paths); return }
         guard !record.state.isFinished, record.exit == nil, let timing = record.timing, timing.isValid else { throw POSIXError(.EINVAL) }
+        if record.activity != nil { try Self.record(record, paths: paths); return }
         try withDatabase(paths: paths) { db in
             try db.execute("""
                 UPDATE sessions SET timing=?, seconds=?, started=?, played=1, updated=?, revision=?, observed=?

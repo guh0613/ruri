@@ -39,7 +39,10 @@ import RuriLocalization
             while let (key, response, error) = await group.next() {
                 guard !Task.isCancelled, queryID == generation else { group.cancelAll(); return }
                 querying.remove(key)
-                if let response { responses[key] = response; failures[key] = nil }
+                if let response {
+                    responses[key] = response; failures[key] = nil
+                    if responses.count > 256, let oldest = responses.min(by: { $0.value.queriedAt < $1.value.queriedAt })?.key { responses[oldest] = nil }
+                }
                 else { failures[key] = error }
                 if let address = pending.next() { enqueue(address) }
             }
@@ -108,6 +111,10 @@ struct ServersView: View {
                                 if item.preference?.favorite == true { Image(systemName: "star.fill").font(.caption).foregroundStyle(.yellow) }
                             }
                             Text(item.address.authority).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                            if !item.instanceIDs.isEmpty {
+                                Text(model.state.instances.filter { item.instanceIDs.contains($0.id) }.prefix(2).map(\.name).joined(separator: " · "))
+                                    .font(.caption2).foregroundStyle(.secondary).lineLimit(1)
+                            }
                             Text(navigation.label(for: item.id)).font(.caption).foregroundStyle(navigation.failures[item.id] == nil ? Color.secondary : Color.orange).lineLimit(1)
                             if let response = navigation.responses[item.id] {
                                 HStack {
@@ -182,6 +189,14 @@ private struct ServerDetailView: View {
                         Text(item.address.authority).font(.callout.monospaced()).foregroundStyle(.secondary).textSelection(.enabled)
                     }
                     Spacer()
+                    Button {
+                        do {
+                            var preference = item.preference ?? .init(address: item.address)
+                            preference.favorite.toggle()
+                            model.acceptState(try ServerLibrary.save(preference, paths: model.basePaths)); navigation.refreshID = UUID()
+                        } catch { model.error = error.localizedDescription }
+                    } label: { Image(systemName: item.preference?.favorite == true ? "star.fill" : "star") }
+                        .help(Messages.Servers.favorite.localized).disabled(model.readOnly)
                     Button { navigation.editor = .init(item: item) } label: { Image(systemName: "slider.horizontal.3") }.help(Messages.Servers.globalSettings.localized)
                         .disabled(model.readOnly)
                 }

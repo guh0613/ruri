@@ -49,6 +49,8 @@ struct GameActivityTests {
         #expect(events.count == 1)
         if case .connecting(let address) = events.first { #expect(address.key == "example.test:25565") } else { Issue.record("Expected only a connection attempt") }
         #expect(parser.consume(Data("[Client thread/INFO] Loaded 12 advancements\n".utf8)).count == 1)
+        let stop = parser.consume(Data("[Client thread/INFO] Stopping!\n".utf8))
+        if case .left(let explicit) = stop.first { #expect(!explicit) } else { Issue.record("Expected an estimated exit boundary") }
         var old = GameActivityLogParser(version: "1.8.9")
         #expect(old.consume(Data("[Client thread/INFO] Loaded 12 advancements\n".utf8)).isEmpty)
     }

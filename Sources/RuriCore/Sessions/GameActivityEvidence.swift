@@ -52,7 +52,8 @@ struct GameActivityLogParser {
                 return (try? ServerAddress(authority)).map(GameActivityLogEvent.connecting)
             }
             if body.hasPrefix("Starting integrated minecraft server") { return .left(explicit: false) }
-            if body == "Stopping!" || body.hasPrefix("Disconnected from server:") || body.hasPrefix("Lost connection:") { return .left(explicit: true) }
+            if body == "Stopping!" { return .left(explicit: false) }
+            if body.hasPrefix("Disconnected from server:") || body.hasPrefix("Lost connection:") { return .left(explicit: true) }
             // Vanilla 1.12–1.19 logs this after receiving an advancement packet
             // in the play state. It only confirms an already pending connection.
             if version.range(of: #"^1\.(?:1[2-9])(?:\.[0-9]+)?$"#, options: .regularExpression) != nil,

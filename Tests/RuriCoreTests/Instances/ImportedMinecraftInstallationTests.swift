@@ -85,7 +85,10 @@ struct ImportedMinecraftInstallationTests {
         #expect(try f.paths.resources(for: ordinary).root == f.paths.root)
         // A serialized monitor snapshot must resolve the same installation.
         let monitor = try JSONDecoder().decode(LauncherPaths.self, from: JSONEncoder().encode(f.paths.monitorSnapshot(for: f.instance.id)))
-        #expect(try f.plan(f.instance, paths: monitor).arguments == plan.arguments)
+        let monitorPlan = try f.plan(f.instance, paths: monitor)
+        func stableArguments(_ plan: LaunchPlan) -> [String] { plan.arguments.map { $0 == plan.quickPlayLog?.path ? "<quick-play-log>" : $0 } }
+        #expect(stableArguments(monitorPlan) == stableArguments(plan))
+        #expect(monitorPlan.quickPlayLog != plan.quickPlayLog)
     }
 
     @Test func missingLocalFilesNeverFallBackToSharedNames() async throws {

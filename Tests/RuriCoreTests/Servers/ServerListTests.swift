@@ -75,4 +75,26 @@ struct ServerListTests {
         #expect(library.items[0].name == "Favorite")
         #expect(try StateStore.load(paths).servers?.first?.address == address)
     }
+    @Test func sharedDirectoriesHaveOneListAndOneWriterAndRemovedInstancesCannotWrite() throws {
+        let base = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
+        defer { try? FileManager.default.removeItem(at: base.root) }
+        var first = GameInstance(name: "First", gameVersion: "1.20.1"), second = GameInstance(name: "Second", gameVersion: "1.21.1")
+        first.runDirectory = .shared; second.runDirectory = .shared
+        var state = PersistentState(); state.instances = [first, second]
+        state = try StateStore.save(state, to: base)
+        let paths = base.configured(with: state), address = try ServerAddress("example.test")
+        let manager = ServerListManager(paths: paths, instanceID: first.id)
+        let snapshot = try manager.apply(.add(name: "Shared", address: address, resourcePacks: .ask), to: manager.snapshot())
+        let library = ServerLibrary.load(paths: paths, state: state)
+        #expect(library.items.count == 1 && Set(library.items[0].instanceIDs) == Set([first.id, second.id]))
+        #expect(library.lists[first.id]?.directory == library.lists[second.id]?.directory)
+        do {
+            let lease = try GameRunLease.acquire(paths: paths, instanceID: second.id)
+            defer { withExtendedLifetime(lease) {} }
+            #expect(throws: (any Error).self) { try manager.apply(.remove(id: 0), to: snapshot) }
+        }
+        try StateStore.update(paths) { $0.instances.removeAll { $0.id == first.id } }
+        #expect(throws: (any Error).self) { try manager.apply(.remove(id: 0), to: snapshot) }
+        #expect(try ServerListManager(paths: paths, instanceID: second.id).snapshot().entries.count == 1)
+    }
 }

@@ -25,6 +25,7 @@ struct ServerEditorSheet: View {
     @State private var status: ServerStatus?
     @State private var querying = false
     @State private var saving = false
+    @State private var savedEntry = false
     @State private var queryRequest = UUID()
     private var preferences: Bool { request.item != nil }
     private var isNew: Bool { request.item == nil && request.entry == nil }
@@ -100,11 +101,12 @@ struct ServerEditorSheet: View {
                 model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
             } else {
                 let title = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? endpoint.authority : name
-                if let id = selectedInstance {
+                if let id = selectedInstance, !savedEntry {
                     let manager = ServerListManager(paths: model.paths, instanceID: id)
                     let snapshot = try request.snapshot ?? manager.snapshot()
                     let change: ServerListChange = request.entry.map { .edit(id: $0.id, name: title, address: endpoint, resourcePacks: packs) } ?? .add(name: title, address: endpoint, resourcePacks: packs)
                     try manager.apply(change, to: snapshot)
+                    savedEntry = true
                 }
                 if isNew && favorite {
                     var value = model.state.servers?.first { $0.id == endpoint.key } ?? .init(address: endpoint)

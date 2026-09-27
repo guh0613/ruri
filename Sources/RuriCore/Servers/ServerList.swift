@@ -38,7 +38,7 @@ public struct ServerListManager: Sendable {
     public init(paths: LauncherPaths, instanceID: UUID) { self.paths = paths; self.instanceID = instanceID }
     public func snapshot() throws -> ServerListSnapshot {
         try InstanceLocationLease.requireCurrentDirectory(paths: paths, instanceID: instanceID)
-        if let instance = try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) { try paths.validateBinding(instance) }
+        try paths.validateBinding(InstanceService(paths: paths).resolve(id: instanceID))
         try paths.validateInstanceLocation(instanceID)
         try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID)
         let directory = paths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath()
@@ -58,15 +58,18 @@ public struct ServerListManager: Sendable {
         // This lease covers all instances sharing a game directory, as well as
         // directory relocation. Never race the game's in-memory server list.
         let lease = try dryRun ? nil : GameRunLease.acquire(paths: paths, instanceID: instanceID)
-        if let instance = try StateStore.load(paths).instances.first(where: { $0.id == instanceID }) { try paths.validateBinding(instance) }
+        try paths.validateBinding(InstanceService(paths: paths).resolve(id: instanceID))
         defer { withExtendedLifetime(lease) {} }
-        guard paths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath() == snapshot.directory,
+        guard paths.game(instanceID).standardizedFileURL.resolvingSymlinksInPath().path == snapshot.directory.path,
               try read() == snapshot.original else { throw RuriError.message(Messages.Servers.listChanged) }
         var document = snapshot.document
         func fields(_ name: String, _ address: ServerAddress, _ packs: ServerResourcePacks, original: [ServerNBTDocument.Field]) throws -> [ServerNBTDocument.Field] {
             let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty, name.utf8.count <= 1024 else { throw RuriError.message(Messages.Servers.invalidName) }
-            var result = original.filter { !["name", "ip", "acceptTextures"].contains($0.name) }
+            let previousAddress = original.first { $0.name == "ip" }?.value.string.flatMap { try? ServerAddress($0) }
+            var replaced: Set<String> = ["name", "ip", "acceptTextures"]
+            if previousAddress?.key != address.key { replaced.insert("icon") }
+            var result = original.filter { !replaced.contains($0.name) }
             result += [try ServerNBTDocument.string("name", name), try ServerNBTDocument.string("ip", address.authority)]
             if packs != .ask { result.append(try ServerNBTDocument.byte("acceptTextures", packs == .always ? 1 : 0)) }
             return result
