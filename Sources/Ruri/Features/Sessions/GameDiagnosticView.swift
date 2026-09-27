@@ -95,7 +95,7 @@ struct GameDiagnosticView: View {
                     detail(Messages.SessionUI.environment.localized, "\(session.loader) \(session.loaderVersion ?? "") · \(session.hostArchitecture)")
                     detail("Java", session.java ?? "—")
                     detail("macOS", session.operatingSystem)
-                    if let world = session.world { detail(Messages.HistoryUI.world.localized, world.name + " · " + world.folder) }
+                    if session.activity != nil || session.world != nil { detail(Messages.Servers.history.localized, session.activityDescription) }
                     if let host = session.host { detail(Messages.SessionUI.result.localized, host.summary) }
                     if let exit = session.exit { detail(Messages.SessionUI.result.localized, exit.logDescription) }
                 }.textSelection(.enabled)

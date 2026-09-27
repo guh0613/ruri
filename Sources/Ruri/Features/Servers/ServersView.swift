@@ -6,7 +6,7 @@ import RuriLocalization
 
 @MainActor @Observable final class ServerNavigationState {
     var search = ""
-    var favoritesOnly = false
+    var scope = "all"
     var instanceID: UUID?
     var selectedID: String?
     var snapshot: ServerLibrarySnapshot?
@@ -58,9 +58,13 @@ struct ServersView: View {
     @Bindable var navigation: ServerNavigationState
     private var filtered: [ServerLibraryItem] {
         (navigation.snapshot?.items ?? []).filter { item in
-            (!navigation.favoritesOnly || item.preference?.favorite == true) &&
-            (navigation.instanceID == nil || item.instanceIDs.contains(navigation.instanceID!)) &&
+            (navigation.scope != "favorites" || item.preference?.favorite == true) &&
+            (navigation.scope != "recent" || navigation.snapshot?.history[item.id] != nil) &&
+            (navigation.instanceID == nil || (item.instanceIDs + item.playedInstanceIDs).contains(navigation.instanceID!)) &&
             (navigation.search.isEmpty || item.name.localizedCaseInsensitiveContains(navigation.search) || item.address.authority.localizedCaseInsensitiveContains(navigation.search))
+        }.sorted { first, second in
+            if navigation.scope == "recent" { return (navigation.snapshot?.history[first.id]?.lastPlayed ?? .distantPast) > (navigation.snapshot?.history[second.id]?.lastPlayed ?? .distantPast) }
+            return first.name.localizedStandardCompare(second.name) == .orderedAscending
         }
     }
     private var current: ServerLibraryItem? { filtered.first { $0.id == navigation.selectedID } ?? filtered.first }
@@ -79,9 +83,10 @@ struct ServersView: View {
         VStack(spacing: 0) {
             VStack(spacing: 10) {
                 TextField(Messages.Servers.search.localized, text: $navigation.search).textFieldStyle(.roundedBorder)
-                Picker(Messages.Servers.page.localized, selection: $navigation.favoritesOnly) {
-                    Text(Messages.Servers.all.localized).tag(false)
-                    Text(Messages.Servers.favorites.localized).tag(true)
+                Picker(Messages.Servers.page.localized, selection: $navigation.scope) {
+                    Text(Messages.Servers.all.localized).tag("all")
+                    Text(Messages.Servers.favorites.localized).tag("favorites")
+                    Text(Messages.Servers.recent.localized).tag("recent")
                 }.pickerStyle(.segmented).labelsHidden()
                 Picker(Messages.Servers.instanceName.localized, selection: $navigation.instanceID) {
                     Text(Messages.Servers.all.localized).tag(nil as UUID?)
@@ -125,7 +130,7 @@ struct ServersView: View {
             Button { navigation.editor = .init(instanceID: navigation.instanceID) } label: { Label(Messages.Servers.add.localized, systemImage: "plus") }
                 .disabled(model.readOnly || model.busy)
         }
-        .task(id: "\(model.state.revision?.uuidString ?? "")/\(navigation.refreshID)") {
+        .task(id: "\(model.state.revision?.uuidString ?? "")/\(navigation.refreshID)/\(model.historyRevision)") {
             let paths = model.paths, state = model.state
             let observer = FileChangeObserver(directories: state.instances.map { paths.game($0.id) }, fallbackSeconds: 15)
             defer { observer.cancel() }
@@ -205,6 +210,7 @@ private struct ServerDetailView: View {
                     }.buttonStyle(.borderedProminent).controlSize(.large)
                         .disabled(instance == nil || model.busy || model.readOnly || navigation.joining || instance.map { model.isInstanceInUse($0.id) } == true)
                 }
+                ServerHistorySection(address: item.address, summary: navigation.snapshot?.history[item.id], historyError: navigation.snapshot?.historyError)
                 if !item.instanceIDs.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(Messages.Servers.instances.localized).font(.title3.weight(.semibold))
@@ -221,7 +227,7 @@ private struct ServerDetailView: View {
         }
         .onAppear {
             let preferred = item.preference?.preferredInstanceID
-            chosenInstance = preferred.flatMap { id in model.state.instances.contains { $0.id == id } ? id : nil } ?? item.instanceIDs.first ?? model.selected?.id
+            chosenInstance = preferred.flatMap { id in model.state.instances.contains { $0.id == id } ? id : nil } ?? navigation.snapshot?.history[item.id]?.lastInstanceID.flatMap { id in model.state.instances.contains { $0.id == id } ? id : nil } ?? item.instanceIDs.first ?? model.selected?.id
         }
     }
     private func join() {

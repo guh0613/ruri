@@ -20,7 +20,8 @@ enum CommandSchemas {
         .merging(["installed": boolean, "favorite": boolean, "hasCustomIcon": boolean, "components": array(object(fields("loader,version")))]) { _, new in new })
     static let account = object(fields("id,kind,username,uuid,server", type: nullable(string)))
     static let session = object(fields("id,instanceID,instanceName,state,stage,createdAt,activity,failure", type: nullable(string))
-        .merging(["finished": boolean, "playedSeconds": number, "gameExitCode": nullable(integer)]) { _, new in new })
+        .merging(["finished": boolean, "playedSeconds": number, "gameExitCode": nullable(integer), "trackingVersion": nullable(integer),
+                   "segments": array(object(["id": string, "kind": string, "target": string, "name": string, "startedAt": string, "endedAt": string, "seconds": number, "quality": string, "source": string]))]) { _, new in new })
     static let project = object(fields("id,provider,title,type,pageURL", type: nullable(string)))
     static let version = object(fields("id,name,number,channel,publishedAt,filename").merging(["gameVersions": array(string), "loaders": array(string), "bytes": integer]) { _, new in new })
     static let managed = object(fields("id,provider,projectID,versionID,title,version,filename").merging(["enabled": boolean, "bytes": integer]) { _, new in new })

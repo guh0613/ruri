@@ -93,6 +93,22 @@ struct LogsView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     hero(session)
                     facts(session)
+                if let activity = session.activity {
+                    Surface {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(Messages.Servers.history.localized).font(.headline)
+                            ForEach(activity.segments) { segment in
+                                HStack {
+                                    Text(segment.target == .unattributed ? Messages.Servers.unattributed.localized : segment.target.name).lineLimit(1)
+                                    Spacer()
+                                    if segment.quality != .observed { Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary) }
+                                    Text(LocalizedFormat.duration(segment.seconds)).monospacedDigit()
+                                }
+                            }
+                            Text(Messages.Servers.estimateHint.localized).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                }
                     GameDiagnosticView(session: session, action: diagnosticAction).id(session.id)
                     tools(session)
                 }
@@ -153,8 +169,8 @@ struct LogsView: View {
                     Text("·").foregroundStyle(.secondary)
                     Text(LocalizedFormat.date(session.startDate)).font(.callout).foregroundStyle(.secondary)
                 }
-                if let world = session.world {
-                    Label(world.name, systemImage: "map").font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                if session.activity != nil || session.world != nil {
+                    Label(session.activityDescription, systemImage: "gamecontroller").font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
             }
             Spacer(minLength: 8)
@@ -169,7 +185,7 @@ struct LogsView: View {
                 StatTile(label: Messages.SessionUI.started.localized, value: LocalizedFormat.date(session.startDate, date: .omitted, time: .standard))
                 StatTile(label: Messages.SessionUI.ended.localized,
                          value: session.endDate.map { LocalizedFormat.date($0, date: .omitted, time: .standard) } ?? "—")
-                StatTile(label: Messages.HistoryUI.world.localized, value: session.world?.name ?? Messages.HistoryUI.unknownWorld.localized)
+                StatTile(label: Messages.Servers.history.localized, value: session.activityDescription)
                 StatTile(label: "Minecraft", value: session.gameVersion)
                 StatTile(label: Messages.HistoryUI.loader.localized,
                          value: (LoaderKind(rawValue: session.loader)?.title ?? session.loader) + (session.loaderVersion.map { " " + $0 } ?? ""))

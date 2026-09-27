@@ -23,12 +23,15 @@ public struct ServerLibraryItem: Identifiable, Sendable {
     public var preference: ServerPreference?
     public var instanceIDs: [UUID]
     public var icon: Data?
+    public var playedInstanceIDs: [UUID] = []
 }
 
 public struct ServerLibrarySnapshot: Sendable {
     public var items: [ServerLibraryItem]
     public var lists: [UUID: ServerListSnapshot]
     public var errors: [UUID: String]
+    public var history: [String: ServerPlaySummary]
+    public var historyError: String?
 }
 
 public enum ServerLibrary {
@@ -57,7 +60,16 @@ public enum ServerLibrary {
                 }
             } catch { errors[instance.id] = error.localizedDescription }
         }
-        return .init(items: items.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }, lists: lists, errors: errors)
+        var history: [String: ServerPlaySummary] = [:], historyError: String?
+        do {
+            for summary in try GameActivityStore.servers(paths: paths) {
+                history[summary.id] = summary
+                var item = items[summary.id] ?? .init(address: summary.address, name: summary.name.isEmpty ? summary.address.authority : summary.name, preference: nil, instanceIDs: [], icon: nil)
+                item.playedInstanceIDs = summary.instanceIDs
+                items[summary.id] = item
+            }
+        } catch { historyError = error.localizedDescription }
+        return .init(items: items.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }, lists: lists, errors: errors, history: history, historyError: historyError)
     }
     @discardableResult public static func save(_ preference: ServerPreference, paths: LauncherPaths) throws -> PersistentState {
         try preference.validate()

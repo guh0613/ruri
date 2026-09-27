@@ -71,10 +71,13 @@ struct GameWorldPlayTests {
             try db.execute("DROP INDEX sessions_world")
             try db.execute("ALTER TABLE sessions DROP COLUMN world_folder")
             try db.execute("ALTER TABLE sessions DROP COLUMN world_name")
+            try db.execute("ALTER TABLE sessions DROP COLUMN tracking_version")
+            try db.execute("DROP TABLE activity_days")
+            try db.execute("DROP TABLE activity_segments")
             try db.execute("PRAGMA user_version=1")
         }
         let reopened = try HistoryDatabase(paths: paths)
-        #expect(try reopened.scalar("PRAGMA user_version") == 2)
+        #expect(try reopened.scalar("PRAGMA user_version") == 3)
 
         var later = record
         later.world = .init(folder: "after", name: "After", source: .detected)

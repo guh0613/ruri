@@ -3,6 +3,14 @@ import RuriCore
 import RuriLocalization
 
 extension GameSession {
+    var activityDescription: String {
+        if let activity {
+            var seen = Set<String>()
+            let names = activity.segments.filter { $0.target != .unattributed && seen.insert($0.target.kind + "/" + $0.target.key).inserted }.map { $0.target.name }
+            return names.isEmpty ? Messages.Servers.unattributed.localized : names.joined(separator: " → ")
+        }
+        return world.map { $0.name + " · " + Messages.Servers.legacyTime.localized } ?? Messages.HistoryUI.unknownWorld.localized
+    }
     var userResult: String {
         if hasPostCommandFailure { return Messages.SessionUI.afterCommandFailed.localized }
         switch state {

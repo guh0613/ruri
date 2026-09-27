@@ -24,6 +24,7 @@ extension GameSession {
     /// its provenance when the save agrees, and is replaced when the player
     /// moved on to another one during the same run.
     mutating func applyWorldPlayed(start: Date, end: Date) {
+        guard activity == nil else { return }
         guard let directory = gameDirectory,
               let played = GameWorldActivity.played(in: directory, start: start, end: end) else { return }
         if world?.folder == played.folder {

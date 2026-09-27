@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import RuriLocalization
+import RuriLocalization
 
 /// Owns one launch attempt. Commands and optional services compose around the
 /// game lifetime; they do not decide how much playtime gets credited.
@@ -9,6 +10,7 @@ import RuriLocalization
     private let recorder: GameSessionRecorder
     private let paths: LauncherPaths
     private var game: GameProcess?
+    private var activityMonitor: GameActivityMonitor?
     private var stopPending = false
     private let checkpointInterval: DispatchTimeInterval
     private let checkpointLeeway: DispatchTimeInterval
@@ -65,11 +67,15 @@ import RuriLocalization
     private func runGame() async throws -> GameExit {
         if recorder.record.stage != .starting { try recorder.transition(.starting) }
         if let log = plan.quickPlayLog {
+            let expected = try LauncherPaths.safePath("quick-play/" + log.lastPathComponent, within: paths.instance(recorder.record.instanceID))
+            guard log.isFileURL, log.pathExtension == "json", log.standardizedFileURL == expected.standardizedFileURL else { throw RuriError.message(Messages.Servers.invalidList) }
             try FileManager.default.createDirectory(at: log.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
         }
         recorder.prepareGame(directory: plan.directory)
         let process = GameProcess(); game = process
         let capture = try recorder.makeOutputCapture(); recorder.retainOutput(capture)
+        let activityFeed = GameActivityLogFeed()
+        capture.observeActivity { activityFeed.receive($0) }
         try recorder.setNativeQuitSupported(plan.nativeQuitSupported == true)
         let checkpoint = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .utility))
         checkpoint.schedule(deadline: .now() + checkpointInterval, repeating: checkpointInterval, leeway: checkpointLeeway)
@@ -86,7 +92,9 @@ import RuriLocalization
         defer {
             checkpoint.cancel()
             for token in notifications { center.removeObserver(token) }
-            game = nil
+            game = nil; activityMonitor = nil
+            capture.observeActivity(nil); activityFeed.finish()
+            if let log = plan.quickPlayLog { try? FileManager.default.removeItem(at: log) }
         }
         var result = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, any Error>) in
             do {
@@ -95,10 +103,15 @@ import RuriLocalization
                 }) { result in continuation.resume(returning: result) }
                 if let pid = process.processIdentifier {
                     try? recorder.started(processID: pid)
+                    if let timing = process.timing {
+                        let activity = GameActivityMonitor(recorder: recorder, logURL: plan.quickPlayLog, feed: activityFeed, initial: timing, sample: { process.timing })
+                        activityMonitor = activity; activity.start()
+                    }
                     saveClock()
                 }
             } catch { continuation.resume(throwing: error) }
         }
+        if let timing = process.timing { await activityMonitor?.finish(timing, maximumSeconds: result.playTime) }
         if result.succeeded && !result.stopRequested {
             let markers = ["Crash report saved to", "Could not save crash report to", "This crash report has been saved to:", "Unable to launch", "An exception was thrown, the game will display an error screen and halt."]
             let output = capture.snapshot(final: true, includeHead: true)
@@ -109,7 +122,7 @@ import RuriLocalization
     }
     private func saveClock() {
         guard let game, game.isRunning, let timing = game.timing else { return }
-        recorder.checkpoint(timing)
+        if let activityMonitor { activityMonitor.checkpoint(timing) } else { recorder.checkpoint(timing) }
     }
     private func checkCancellation() throws { if shouldStop { throw CancellationError() } }
     private func control(_ request: MonitorControlRequest) -> Bool {

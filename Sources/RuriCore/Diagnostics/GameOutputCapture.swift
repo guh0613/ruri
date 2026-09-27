@@ -125,15 +125,20 @@ final class GameOutputCapture: @unchecked Sendable {
         debug = try debugLogURL.map { try GameDebugWriter(url: $0, redactor: redactor, byteLimit: debugByteLimit) }
     }
 
+    private var activityObserver: (@Sendable (Data) -> Void)?
+    func observeActivity(_ observer: (@Sendable (Data) -> Void)?) {
+        lock.lock(); activityObserver = observer; lock.unlock()
+    }
     func receive(_ data: Data) {
         lock.lock()
         guard !finished else { lock.unlock(); return }
         tail.append(data)
         if head.count < 65_536 { head.append(data.prefix(65_536 - head.count)) }
         received &+= UInt64(data.count)
-        let observer = observer
+        let observer = observer, activityObserver = activityObserver
         lock.unlock()
         debug?.receive(data)
+        activityObserver?(data)
         observer?()
     }
 

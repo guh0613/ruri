@@ -31,6 +31,7 @@ struct GameHistoryView: View {
     struct RunsKey: Hashable {
         let overview: OverviewKey
         var worldFolder: String?
+        var serverAddress: ServerAddress?
         var search = ""
         var problemsOnly = false
     }
@@ -102,6 +103,7 @@ struct GameHistoryView: View {
     @State private var overview = GameHistoryOverview()
     @State private var records: [GameSession] = []
     @State private var world: GameHistoryTotal?
+    @State private var server: ServerPlaySummary?
     @State private var search = ""
     @State private var problemsOnly = false
     @State private var loadingRuns = false
@@ -142,12 +144,12 @@ struct GameHistoryView: View {
     }
 
     private var instanceID: UUID? { world?.instanceID ?? model.historyInstanceID }
-    private var filtered: Bool { model.historyInstanceID != nil || world != nil || problemsOnly || !search.trimmed.isEmpty }
+    private var filtered: Bool { model.historyInstanceID != nil || world != nil || server != nil || problemsOnly || !search.trimmed.isEmpty }
     private var overviewKey: String { "\(model.historyInstanceID?.uuidString ?? "")|\(span.rawValue)|\(model.historyRevision)|\(request)" }
-    private var runsKey: String { "\(instanceID?.uuidString ?? "")|\(world?.folder ?? "")|\(span.rawValue)|\(search)|\(problemsOnly)|\(model.historyRevision)|\(request)" }
+    private var runsKey: String { "\(instanceID?.uuidString ?? "")|\(world?.folder ?? "")|\(server?.id ?? "")|\(span.rawValue)|\(search)|\(problemsOnly)|\(model.historyRevision)|\(request)" }
     private var overviewCacheKey: OverviewKey { .init(instanceID: model.historyInstanceID, range: span.query) }
     private var runsCacheKey: RunsKey {
-        .init(overview: .init(instanceID: instanceID, range: span.query), worldFolder: world?.folder, search: search, problemsOnly: problemsOnly)
+        .init(overview: .init(instanceID: instanceID, range: span.query), worldFolder: world?.folder, serverAddress: server?.address, search: search, problemsOnly: problemsOnly)
     }
     private var isBlank: Bool { overviewResolved && runsResolved && overview.playCount == 0 && records.isEmpty }
     private var showsEmptyState: Bool { isBlank && !filtered }
@@ -179,6 +181,7 @@ struct GameHistoryView: View {
                         highlights
                         instancesSection
                         worldsSection
+                        serversSection
                         timeline
                         if let error = error ?? model.historyStorageError { failure(error) }
                     }
@@ -288,6 +291,7 @@ struct GameHistoryView: View {
             if let world {
                 FilterChip(text: Messages.HistoryUI.filteredByWorld(world.title).localized) { self.world = nil }
             }
+            if let server { FilterChip(text: server.name) { self.server = nil } }
             if problemsOnly {
                 FilterChip(text: Messages.SessionUI.problemsOnly.localized) { problemsOnly = false }
             }
@@ -309,7 +313,7 @@ struct GameHistoryView: View {
                 if filtered {
                     Divider()
                     Button(Messages.HistoryUI.clearFilters.localized, systemImage: "xmark.circle") {
-                        model.historyInstanceID = nil; world = nil; problemsOnly = false; search = ""
+                        model.historyInstanceID = nil; world = nil; server = nil; problemsOnly = false; search = ""
                     }
                 }
             } label: {
@@ -434,6 +438,32 @@ struct GameHistoryView: View {
         }
     }
 
+    @ViewBuilder private var serversSection: some View {
+        if !overview.servers.isEmpty {
+            VStack(alignment: .leading, spacing: 14) {
+                SectionTitle(Messages.Servers.page.localized)
+                ForEach(overview.servers.sorted { $0.seconds > $1.seconds }.prefix(8)) { total in
+                    Button {
+                        server = server?.id == total.id ? nil : total; world = nil
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "server.rack").foregroundStyle(.secondary)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(total.name).fontWeight(.medium)
+                                Text(total.address.authority).font(.caption).foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if total.estimatedSeconds > 0 { Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary) }
+                            Text(LocalizedFormat.duration(total.seconds)).monospacedDigit()
+                            if server?.id == total.id { Image(systemName: "checkmark.circle.fill") }
+                        }.padding(14).background(server?.id == total.id ? Color.accentColor.opacity(0.12) : Color.secondary.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
+                    }.buttonStyle(.plain)
+                }
+                Text(Messages.Servers.estimateHint.localized).font(.caption).foregroundStyle(.secondary)
+            }
+        }
+    }
+
     @ViewBuilder private var worldsSection: some View {
         VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.HistoryUI.worldsSection.localized)
@@ -450,7 +480,7 @@ struct GameHistoryView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 12)], spacing: 12) {
                     ForEach(Array(overview.worlds.prefix(8))) { total in
                         RankTile(total: total, share: share(total.seconds), subtitle: total.subtitle, selected: world?.id == total.id) {
-                            world = world?.id == total.id ? nil : total
+                            world = world?.id == total.id ? nil : total; server = nil
                         } icon: {
                             WorldIcon(image: worldIcons[total.id], size: 40)
                         }
@@ -636,7 +666,7 @@ struct GameHistoryView: View {
                 if !Task.isCancelled { runsResolved = true }
             }
         }
-        let query = GameHistoryQuery(instanceID: instanceID, worldFolder: world?.folder, since: span.since,
+        let query = GameHistoryQuery(instanceID: instanceID, worldFolder: world?.folder, serverAddress: server?.address, since: span.since,
                                      search: search, problemsOnly: problemsOnly, limit: 60)
         let paths = model.paths
         do {
@@ -654,7 +684,7 @@ struct GameHistoryView: View {
         guard !loadingRuns else { return }
         let generation = runsKey, paths = model.paths
         loadingRuns = true; defer { if generation == runsKey { loadingRuns = false } }
-        let query = GameHistoryQuery(instanceID: instanceID, worldFolder: world?.folder, since: span.since,
+        let query = GameHistoryQuery(instanceID: instanceID, worldFolder: world?.folder, serverAddress: server?.address, since: span.since,
                                      search: search, problemsOnly: problemsOnly, limit: 60, offset: records.count)
         do {
             let value = try await Task.detached(priority: .utility) { try GameHistoryStore.list(paths: paths, query: query) }.value
@@ -962,7 +992,10 @@ private struct HistoryRunRow: View {
                     }
                     HStack(spacing: 6) {
                         Text(time).monospacedDigit()
-                        if let world = record.world {
+                        if let activity = record.activity {
+                            let names = activity.segments.filter { $0.target != .unattributed }.map { $0.target.name }
+                            if !names.isEmpty { Text("·"); Text(names.joined(separator: " → ")).lineLimit(1) }
+                        } else if let world = record.world {
                             Text("·")
                             HStack(spacing: 4) {
                                 if let worldIcon {
@@ -973,6 +1006,7 @@ private struct HistoryRunRow: View {
                                     Image(systemName: "map").font(.caption2)
                                 }
                                 Text(world.name).lineLimit(1)
+                                Text(Messages.Servers.legacyTime.localized).font(.caption2)
                             }
                         }
                     }.font(.caption).foregroundStyle(.secondary)

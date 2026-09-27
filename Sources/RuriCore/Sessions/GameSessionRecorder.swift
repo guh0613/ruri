@@ -68,9 +68,16 @@ import OSLog
         record.debugLogging = debug; try save()
     }
     func setControlEndpoint(_ endpoint: String) throws { record.controlEndpoint = endpoint; record.updatedAt = Date(); try save() }
-    func checkpoint(_ timing: GameSessionTiming) {
+    func checkpoint(_ timing: GameSessionTiming, activity: GameActivityTracking? = nil) {
         guard !record.state.isFinished, record.exit == nil else { return }
-        record.timing = timing; record.updatedAt = Date(); record.revision = (record.revision) + 1
+        record.timing = timing
+        if let activity {
+            record.activity = activity
+            if let segment = activity.segments.last(where: { $0.target.kind == "world" }), case .world(let folder, let name) = segment.target {
+                record.world = .init(folder: folder, name: name, lastPlayed: segment.startedAt, source: .detected)
+            } else { record.world = nil }
+        }
+        record.updatedAt = Date(); record.revision = (record.revision) + 1
         do { try GameHistoryStore.checkpoint(record, paths: paths) } catch { storageWarning(error) }
         onChange?(record)
     }
@@ -123,6 +130,10 @@ import OSLog
     public func setWorld(_ world: GameWorldPlay) throws {
         guard !record.state.isFinished, world.isValid else { return }
         record.world = world; try save()
+    }
+    public func setDestination(_ destination: LaunchDestination) throws {
+        guard !record.state.isFinished else { return }
+        record.destination = destination; try save()
     }
     func recordNormalQuit(requestID: UUID, requestedAt: Date, accepted: Bool) throws {
         guard !record.state.isFinished else { return }

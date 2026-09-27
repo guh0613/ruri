@@ -435,9 +435,9 @@ private struct RunRow: View {
                         .font(.callout.weight(.medium)).lineLimit(1)
                     HStack(spacing: 6) {
                         Text(LocalizedFormat.date(session.createdAt))
-                        if let world = session.world {
+                        if session.activity != nil || session.world != nil {
                             Text("·")
-                            Label(world.name, systemImage: "map").labelStyle(.titleAndIcon).lineLimit(1)
+                            Label(session.activityDescription, systemImage: "gamecontroller").labelStyle(.titleAndIcon).lineLimit(1)
                         }
                     }.font(.caption).foregroundStyle(.secondary)
                 }

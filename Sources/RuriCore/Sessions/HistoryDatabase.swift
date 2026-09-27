@@ -67,7 +67,7 @@ final class HistoryDatabase: @unchecked Sendable {
             sqlite3_busy_timeout(connection, 1500)
             try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: file.path)
             let version = try scalar("PRAGMA user_version")
-            guard version == 0 || version == 1 || version == 2 else { throw POSIXError(.EPROTONOSUPPORT) }
+            guard (0...3).contains(Int(version)) else { throw POSIXError(.EPROTONOSUPPORT) }
             if version == 1 {
                 // The save a run was spent in became indexed metadata in v2.
                 // Existing rows keep NULL; they predate the read-back.
@@ -104,6 +104,22 @@ final class HistoryDatabase: @unchecked Sendable {
                     try execute("CREATE TABLE launcher_events(id TEXT PRIMARY KEY, session_id TEXT, updated REAL NOT NULL, running INTEGER NOT NULL, payload BLOB NOT NULL)")
                     try execute("CREATE INDEX launcher_events_session ON launcher_events(session_id, updated)")
                     try execute("PRAGMA user_version=2")
+                }
+            }
+            if try scalar("PRAGMA user_version") < 3 {
+                try transaction {
+                    guard try scalar("PRAGMA user_version") < 3 else { return }
+                    try execute("ALTER TABLE sessions ADD COLUMN tracking_version INTEGER")
+                    try execute("""
+                        CREATE TABLE activity_segments(id TEXT PRIMARY KEY,session_id TEXT NOT NULL,instance_id TEXT NOT NULL,
+                            kind TEXT NOT NULL,target TEXT NOT NULL,name TEXT NOT NULL,started REAL NOT NULL,ended REAL NOT NULL,
+                            seconds REAL NOT NULL,quality TEXT NOT NULL,payload BLOB NOT NULL)
+                        """)
+                    try execute("CREATE INDEX activity_target ON activity_segments(kind,target,started)")
+                    try execute("CREATE INDEX activity_session ON activity_segments(session_id)")
+                    try execute("CREATE INDEX activity_instance ON activity_segments(instance_id,kind,started)")
+                    try execute("CREATE TABLE activity_days(segment_id TEXT NOT NULL,date REAL NOT NULL,seconds REAL NOT NULL,PRIMARY KEY(segment_id,date))")
+                    try execute("PRAGMA user_version=3")
                 }
             }
             var info = stat()

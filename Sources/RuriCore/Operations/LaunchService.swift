@@ -78,9 +78,9 @@ import Foundation
             try advance(.manifest)
             let installer = GameInstaller(paths: paths, downloader: downloader), manifest = try await installer.loadManifest(instance)
             guard worldFolder == nil || destination == .normal else { throw RuriError.message(Messages.Servers.destinationConflict) }
-        let target = worldFolder.map { LaunchDestination.world(folder: $0) } ?? destination
-        let selectedFolder: String? = { if case .world(let folder) = target { return folder }; return nil }()
-        let world = try selectedFolder.map { folder in
+            let target = worldFolder.map { LaunchDestination.world(folder: $0) } ?? destination
+            let selectedFolder: String? = { if case .world(let folder) = target { return folder }; return nil }()
+            let world = try selectedFolder.map { folder in
                 try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
                 return try WorldQuickPlay.selection(folder: folder, instanceID: instanceID, paths: paths)
             }
@@ -94,6 +94,7 @@ import Foundation
             let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, destination: target, externalAuth: externalAuth, offlineSkin: offlineSkin)
             recorder.addSecrets(plan.environmentRedactions + [token])
             try recorder.append(plan.redactedCommand)
+            try recorder.setDestination(target)
             if let world { try recorder.setWorld(.init(folder: world.folder, name: world.name, lastPlayed: world.lastPlayed, source: .quickPlay)) }
             try Task.checkCancellation()
             try advance(.starting)

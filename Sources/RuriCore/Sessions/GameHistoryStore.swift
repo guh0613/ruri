@@ -13,13 +13,14 @@ public struct GameHistorySummary: Sendable {
 public struct GameHistoryQuery: Sendable {
     public var instanceID: UUID?
     public var worldFolder: String?
+    public var serverAddress: ServerAddress?
     public var since: Date?
     public var search: String
     public var problemsOnly: Bool
     public var limit: Int
     public var offset: Int
-    public init(instanceID: UUID? = nil, worldFolder: String? = nil, since: Date? = nil, search: String = "", problemsOnly: Bool = false, limit: Int = 100, offset: Int = 0) {
-        self.instanceID = instanceID; self.worldFolder = worldFolder; self.since = since; self.search = search
+    public init(instanceID: UUID? = nil, worldFolder: String? = nil, serverAddress: ServerAddress? = nil, since: Date? = nil, search: String = "", problemsOnly: Bool = false, limit: Int = 100, offset: Int = 0) {
+        self.instanceID = instanceID; self.worldFolder = worldFolder; self.serverAddress = serverAddress; self.since = since; self.search = search
         self.problemsOnly = problemsOnly; self.limit = limit; self.offset = offset
     }
 }
@@ -65,6 +66,7 @@ public struct GameHistoryOverview: Sendable {
     public var daily = true
     public var instances: [GameHistoryTotal] = []
     public var worlds: [GameHistoryTotal] = []
+    public var servers: [ServerPlaySummary] = []
     /// The total for the stretch of the same length just before this one, so
     /// the page can say whether play went up or down; `nil` for all time.
     public var previousSeconds: Double?
@@ -105,13 +107,14 @@ public enum GameHistoryStore {
         let data = try JSONEncoder().encode(snapshot)
         guard data.count <= 1_048_576 else { throw POSIXError(.EFBIG) }
         let started = record.timing?.startedAt ?? record.exit?.startedAt ?? record.createdAt
+        try db.transaction {
         try db.execute("""
-            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed, world_folder, world_name)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed, world_folder, world_name, tracking_version)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,
                 started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,
                 attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed,
-                world_folder=excluded.world_folder, world_name=excluded.world_name
+                world_folder=excluded.world_folder, world_name=excluded.world_name, tracking_version=excluded.tracking_version
             WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND
                 excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)
             """, [.text(record.id.uuidString), .text(record.instanceID.uuidString), .text(record.instanceName), .text(record.gameVersion),
@@ -120,14 +123,23 @@ public enum GameHistoryStore {
                   .integer(record.state.isFinished ? 1 : 0), .integer(Int(clamping: record.revision)), .blob(data),
                   try record.timing.map { .blob(try JSONEncoder().encode($0)) } ?? .null,
                   record.state.isFinished ? .null : record.controlEndpoint.map(HistoryDatabase.Value.text) ?? .null, .real(record.updatedAt.timeIntervalSinceReferenceDate),
-                  record.world.map { HistoryDatabase.Value.text($0.folder) } ?? .null, record.world.map { HistoryDatabase.Value.text($0.name) } ?? .null])
+                  record.world.map { HistoryDatabase.Value.text($0.folder) } ?? .null, record.world.map { HistoryDatabase.Value.text($0.name) } ?? .null, record.activity.map { .integer($0.version) } ?? .null])
+        if try db.scalar("SELECT changes()") > 0 { try GameActivityStore.store(record, db: db) }
+        }
     }
 
     public static func list(paths: LauncherPaths, query: GameHistoryQuery = .init()) throws -> [GameSession] {
         return try withDatabase(paths: paths) { db in
             var clauses: [String] = [], values: [HistoryDatabase.Value] = []
             if let id = query.instanceID { clauses.append("instance_id = ?"); values.append(.text(id.uuidString)) }
-            if let folder = query.worldFolder { clauses.append("world_folder = ?"); values.append(.text(folder)) }
+            if let folder = query.worldFolder {
+                clauses.append("((tracking_version IS NULL AND world_folder=?) OR EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND a.kind='world' AND a.target=?))")
+                values += [.text(folder), .text(folder)]
+            }
+            if let address = query.serverAddress {
+                clauses.append("EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND a.kind='server' AND a.target=?)")
+                values.append(.text(address.key))
+            }
             if let date = query.since { clauses.append("started >= ?"); values.append(.real(date.timeIntervalSince1970)) }
             let search = query.search.trimmingCharacters(in: .whitespacesAndNewlines)
             if !search.isEmpty {
@@ -246,7 +258,7 @@ public enum GameHistoryStore {
             }
             try db.rows("""
                 SELECT world_folder, world_name, instance_id, name, sum(seconds), count(*), max(started) FROM sessions\(filter)
-                AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC LIMIT 16
+                AND tracking_version IS NULL AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC
                 """, values) { statement in
                 guard let folder = HistoryDatabase.text(statement, 0), let instance = HistoryDatabase.text(statement, 2) else { return }
                 result.worlds.append(.init(id: instance + "/" + folder, instanceID: UUID(uuidString: instance), folder: folder,
@@ -254,6 +266,16 @@ public enum GameHistoryStore {
                                            seconds: sqlite3_column_double(statement, 4), count: Int(sqlite3_column_int64(statement, 5)),
                                            lastPlayed: Date(timeIntervalSince1970: sqlite3_column_double(statement, 6))))
             }
+            for total in try GameActivityStore.worldTotals(db: db, instanceID: instanceID, since: start) {
+                if let index = result.worlds.firstIndex(where: { $0.id == total.id }) {
+                    let previous = result.worlds[index]
+                    result.worlds[index] = .init(id: total.id, instanceID: total.instanceID, folder: total.folder, title: total.title, subtitle: total.subtitle,
+                                                seconds: previous.seconds + total.seconds, count: previous.count + total.count, lastPlayed: max(previous.lastPlayed ?? .distantPast, total.lastPlayed ?? .distantPast))
+                } else { result.worlds.append(total) }
+            }
+            result.servers = try GameActivityStore.servers(paths: paths, instanceID: instanceID, since: start)
+            result.worlds.sort { $0.seconds > $1.seconds }
+            result.worlds = Array(result.worlds.prefix(16))
             var counts: [Date: Int] = [:]
             let unit = range.usesDailyBuckets ? "%Y-%m-%d" : "%Y-%m"
             try db.rows("SELECT strftime(?, started, 'unixepoch', 'localtime'), sum(seconds), count(*) FROM sessions\(filter) GROUP BY 1",
@@ -348,6 +370,7 @@ public enum GameHistoryStore {
     }
 
     static func checkpoint(_ record: GameSession, paths: LauncherPaths) throws {
+        if record.activity != nil { try Self.record(record, paths: paths); return }
         guard !record.state.isFinished, record.exit == nil, let timing = record.timing, timing.isValid else { throw POSIXError(.EINVAL) }
         try withDatabase(paths: paths) { db in
             try db.execute("""

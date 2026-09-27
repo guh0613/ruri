@@ -79,6 +79,10 @@ extension CLIApplication {
         .object(["id": .string(record.id.uuidString), "instanceID": .string(record.instanceID.uuidString), "instanceName": .string(record.instanceName),
             "state": .string(record.state.rawValue), "stage": .string(record.stage.rawValue), "createdAt": .string(record.createdAt.ISO8601Format()),
             "finished": .bool(record.state.isFinished), "playedSeconds": .number(record.playedSeconds), "gameExitCode": record.exit.map { .integer($0.shellStatus) } ?? .null,
+            "segments": .array(record.activitySegments.map { segment in
+                .object(["id": .string(segment.id.uuidString), "kind": .string(segment.target.kind), "target": .string(segment.target.key), "name": .string(segment.target.name),
+                         "startedAt": .string(segment.startedAt.ISO8601Format()), "endedAt": .string(segment.endedAt.ISO8601Format()), "seconds": .number(segment.seconds), "quality": .string(segment.quality.rawValue), "source": .string(segment.source.rawValue)])
+            }), "trackingVersion": record.activity.map { .integer($0.version) } ?? .null,
             "failure": .text(record.failure), "activity": .string(String(describing: GameMonitorClient.activity(record)))])
     }
 }

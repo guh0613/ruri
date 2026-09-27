@@ -81,6 +81,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     /// The save this run was spent in, when the launcher chose it or the save
     /// itself recorded the visit. History display only; never a launch input.
     public var world: GameWorldPlay? = nil
+    public var destination: LaunchDestination? = nil
+    public var activity: GameActivityTracking? = nil
     public var revision: UInt64 = 0
     public var finalSnapshot = false
     public var timing: GameSessionTiming? = nil
@@ -100,6 +102,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
               (controlEndpoint?.utf8.count ?? 0) < 104, revision < UInt64(Int64.max),
               createdAt.timeIntervalSince1970.isFinite, updatedAt.timeIntervalSince1970.isFinite,
               (nativeLogs?.count ?? 0) <= 128, (logBaseline?.count ?? 0) <= 128, world?.isValid != false,
+              activity?.valid(total: playedSeconds) != false,
               gameDirectory == nil || gameDirectory?.isFileURL == true else {
             throw RuriError.message(Messages.CoreGameSession.invalidRunRecordFormat)
         }

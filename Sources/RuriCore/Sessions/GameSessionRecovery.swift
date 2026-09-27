@@ -93,6 +93,7 @@ public enum GameSessionRecovery {
             : Messages.CoreGameSessionRecovery.interruptedUnverifiedGameExit
         let explanation = explanationMessage.localized
         record.interruption = .init(resolution: resolution, observedAt: date, previousStage: record.stage, explanation: explanation, explanationMessage: explanationMessage.recorded())
+        record.activity?.interrupt()
         record.state = .interrupted; record.stage = .monitorRecovery; record.updatedAt = date
         record.exit = nil
         if record.timing != nil { record.timing?.quality = .interrupted }
