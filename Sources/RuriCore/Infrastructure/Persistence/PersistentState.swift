@@ -4,6 +4,7 @@ public struct PersistentState: Codable, Equatable, Sendable {
     public var schemaVersion = 1
     public var revision: UUID?
     public var instances: [GameInstance] = []
+    public var servers: [ServerPreference]?
     public var accounts: [Account] = []
     public var activeAccountID: UUID?
     public var selectedInstanceID: UUID?

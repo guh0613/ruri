@@ -209,6 +209,7 @@ enum MessageCatalog {
         result.merge(Messages.MonitorLogging.definitions) { first, _ in first }
         result.merge(Messages.NativeGameLogs.definitions) { first, _ in first }
         result.merge(Messages.OfflineSkin.definitions) { first, _ in first }
+        result.merge(Messages.Servers.definitions) { first, _ in first }
         result.merge(Messages.SessionRuntime.definitions) { first, _ in first }
         result.merge(Messages.SessionUI.definitions) { first, _ in first }
         return result

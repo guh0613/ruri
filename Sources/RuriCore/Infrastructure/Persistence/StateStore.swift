@@ -3,7 +3,7 @@ import Foundation
 import Darwin
 
 public enum StateStore {
-    public static let currentSchemaVersion = 24
+    public static let currentSchemaVersion = 25
     public static func load(_ paths: LauncherPaths) throws -> PersistentState {
         guard FileManager.default.fileExists(atPath: paths.state.path) else { return PersistentState() }
         let result = try JSONDecoder().decode(PersistentState.self, from: Data(contentsOf: paths.state))
@@ -47,6 +47,9 @@ public enum StateStore {
         return try write(state, paths: paths)
     }
     private static func validate(_ state: PersistentState, paths: LauncherPaths) throws {
+        let servers = state.servers ?? []
+        guard servers.count <= 16384, Set(servers.map(\.id)).count == servers.count else { throw RuriError.message(Messages.Servers.invalidList) }
+        for server in servers { try server.validate() }
         try JavaRuntimeStore.validate(state.settings.javaLocations ?? [])
         guard state.instances.allSatisfy({ $0.frozenMemory == nil }) else { throw RuriError.message(Messages.CoreStateStore.snapshotCannotOverwriteSettings) }
         guard Set(state.instances.map(\.id)).count == state.instances.count, Set(state.accounts.map(\.id)).count == state.accounts.count else { throw RuriError.message(Messages.CoreStateStore.duplicateInstancesOrAccounts) }

@@ -1,0 +1,225 @@
+/* @symbol Servers.invalidAddress @args - */
+"invalidAddress" = "服务器地址无效，请输入域名、IP 或主机:端口。";
+
+/* @symbol Servers.invalidList @args - */
+"invalidList" = "服务器列表格式无效，原文件已保留。";
+
+/* @symbol Servers.listChanged @args - */
+"listChanged" = "服务器列表或游戏目录已变化，请刷新后重试。";
+
+/* @symbol Servers.invalidName @args - */
+"invalidName" = "服务器名称不能为空，且不能超过 1024 字节。";
+
+/* @symbol Servers.notFound @args - */
+"notFound" = "找不到服务器条目，请刷新后重试。";
+
+/* @symbol Servers.listLimit @args - */
+"listLimit" = "服务器条目数量超过限制。";
+
+/* @symbol Servers.destinationConflict @args - */
+"destinationConflict" = "存档和服务器启动目标不能同时指定。";
+
+/* @symbol Servers.unsupportedLaunch @args - */
+"unsupportedLaunch" = "该游戏版本暂不支持从启动器加入服务器。";
+
+/* @symbol Servers.queryFailed @args - */
+"queryFailed" = "无法查询服务器状态。";
+
+/* @symbol Servers.invalidResponse @args - */
+"invalidResponse" = "服务器返回了无效或过大的响应。";
+
+/* @symbol Servers.page @args - */
+"page" = "服务器";
+
+/* @symbol Servers.all @args - */
+"all" = "全部";
+
+/* @symbol Servers.favorites @args - */
+"favorites" = "收藏";
+
+/* @symbol Servers.recent @args - */
+"recent" = "最近游玩";
+
+/* @symbol Servers.add @args - */
+"add" = "添加服务器";
+
+/* @symbol Servers.edit @args - */
+"edit" = "编辑服务器";
+
+/* @symbol Servers.name @args - */
+"name" = "名称";
+
+/* @symbol Servers.address @args - */
+"address" = "地址";
+
+/* @symbol Servers.save @args - */
+"save" = "保存";
+
+/* @symbol Servers.cancel @args - */
+"cancel" = "取消";
+
+/* @symbol Servers.remove @args - */
+"remove" = "从实例移除";
+
+/* @symbol Servers.refresh @args - */
+"refresh" = "刷新";
+
+/* @symbol Servers.join @args - */
+"join" = "启动并加入";
+
+/* @symbol Servers.addAndJoin @args - */
+"addAndJoin" = "添加到此实例并启动";
+
+/* @symbol Servers.chooseInstance @args - */
+"chooseInstance" = "选择实例";
+
+/* @symbol Servers.independent @args - */
+"independent" = "仅收藏，不添加到实例";
+
+/* @symbol Servers.favorite @args - */
+"favorite" = "收藏此服务器";
+
+/* @symbol Servers.alias @args - */
+"alias" = "显示别名";
+
+/* @symbol Servers.notes @args - */
+"notes" = "备注";
+
+/* @symbol Servers.preferredInstance @args - */
+"preferredInstance" = "首选实例";
+
+/* @symbol Servers.instances @args - */
+"instances" = "关联实例";
+
+/* @symbol Servers.unknown @args - */
+"unknown" = "未知";
+
+/* @symbol Servers.querying @args - */
+"querying" = "查询中";
+
+/* @symbol Servers.reachable @args - */
+"reachable" = "可达";
+
+/* @symbol Servers.timeout @args - */
+"timeout" = "查询超时";
+
+/* @symbol Servers.dnsFailed @args - */
+"dnsFailed" = "地址解析失败";
+
+/* @symbol Servers.connectionFailed @args - */
+"connectionFailed" = "连接失败";
+
+/* @symbol Servers.players @args - */
+"players" = "在线人数";
+
+/* @symbol Servers.latency @args - */
+"latency" = "延迟";
+
+/* @symbol Servers.version @args - */
+"version" = "服务器版本";
+
+/* @symbol Servers.lastUpdated @args - */
+"lastUpdated" = "最近成功查询";
+
+/* @symbol Servers.playtime @args - */
+"playtime" = "累计游玩";
+
+/* @symbol Servers.lastPlayed @args - */
+"lastPlayed" = "最近游玩";
+
+/* @symbol Servers.estimated @args - */
+"estimated" = "估算";
+
+/* @symbol Servers.unavailableTime @args - */
+"unavailableTime" = "无法统计";
+
+/* @symbol Servers.history @args - */
+"history" = "游玩记录";
+
+/* @symbol Servers.empty @args - */
+"empty" = "尚未添加服务器";
+
+/* @symbol Servers.emptyDescription @args - */
+"emptyDescription" = "添加一个地址，或从实例的多人游戏列表开始。";
+
+/* @symbol Servers.search @args - */
+"search" = "搜索名称或地址";
+
+/* @symbol Servers.resourcePacks @args - */
+"resourcePacks" = "服务器资源包";
+
+/* @symbol Servers.ask @args - */
+"ask" = "询问";
+
+/* @symbol Servers.always @args - */
+"always" = "接受";
+
+/* @symbol Servers.never @args - */
+"never" = "拒绝";
+
+/* @symbol Servers.moveUp @args - */
+"moveUp" = "上移";
+
+/* @symbol Servers.moveDown @args - */
+"moveDown" = "下移";
+
+/* @symbol Servers.manage @args - */
+"manage" = "管理服务器";
+
+/* @symbol Servers.running @args - */
+"running" = "游戏运行中，列表只读";
+
+/* @symbol Servers.noSelection @args - */
+"noSelection" = "选择一个服务器查看详情";
+
+/* @symbol Servers.instanceName @args - */
+"instanceName" = "实例";
+
+/* @symbol Servers.queryHint @args - */
+"queryHint" = "查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。";
+
+/* @symbol Servers.estimateHint @args - */
+"estimateHint" = "无法确认离开时间的记录为估算，可能包含菜单停留；证据不足的时间不归属到服务器。";
+
+/* @symbol Servers.legacyTime @args - */
+"legacyTime" = "旧版整次归属";
+
+/* @symbol Servers.unattributed @args - */
+"unattributed" = "未归属";
+
+/* @symbol Servers.world @args - */
+"world" = "存档";
+
+/* @symbol Servers.noHistory @args - */
+"noHistory" = "暂无可统计的游玩记录";
+
+/* @symbol Servers.globalSettings @args - */
+"globalSettings" = "启动器收藏设置";
+
+/* @symbol Servers.localEntries @args - */
+"localEntries" = "实例中的服务器条目";
+
+/* @symbol Servers.listErrors @args - */
+"listErrors" = "部分实例列表无法读取";
+
+/* @symbol Servers.loading @args - */
+"loading" = "正在读取服务器";
+
+/* @symbol Servers.refreshRequired @args - */
+"refreshRequired" = "列表尚未加载，请稍后重试。";
+
+/* @symbol Servers.deleteConfirm @args - */
+"deleteConfirm" = "从此实例的游戏列表移除服务器？收藏和历史记录会保留。";
+
+/* @symbol Servers.confirmRemove @args - */
+"confirmRemove" = "移除";
+
+/* @symbol Servers.probe @args - */
+"probe" = "查询状态";
+
+/* @symbol Servers.noInstance @args - */
+"noInstance" = "先创建或导入一个实例。";
+
+/* @symbol Servers.sharedDirectory @args - */
+"sharedDirectory" = "列表由共用此游戏目录的实例共享。";
+

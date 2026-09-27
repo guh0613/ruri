@@ -9,6 +9,75 @@ public indirect enum NBTValue: Sendable, Equatable {
     public subscript(_ key: String) -> NBTValue? { if case .compound(let value) = self { value[key] } else { nil } }
 }
 
+/// Keep untouched fields as their original bytes, including numeric widths,
+/// array types, modified UTF-8 and the subtype of an empty list.
+struct ServerNBTDocument: Sendable {
+    struct Field: Sendable {
+        let name: String
+        let type: UInt8
+        let encoded: Data
+        let payload: Data
+        let value: NBTValue
+    }
+    var root: [Field]
+    var entries: [[Field]]
+    let header: Data
+    let compressed: Bool
+    static func empty() throws -> Self { try NBTReader.serverDocument(Data([10, 0, 0, 9, 0, 7] + Array("servers".utf8) + [10, 0, 0, 0, 0, 0])) }
+    func encoded() throws -> Data { try NBTReader.encodeServers(self) }
+    static func string(_ name: String, _ value: String) throws -> Field { try NBTReader.serverField(name, type: 8, payload: NBTReader.serverString(value), value: .string(value)) }
+    static func byte(_ name: String, _ value: UInt8) throws -> Field { try NBTReader.serverField(name, type: 1, payload: Data([value]), value: .integer(Int64(value))) }
+}
+
+extension NBTReader {
+    fileprivate static func serverString(_ value: String) throws -> Data { try encodedString(value) }
+    fileprivate static func serverField(_ name: String, type: UInt8, payload: Data, value: NBTValue) throws -> ServerNBTDocument.Field {
+        .init(name: name, type: type, encoded: Data([type]) + (try encodedString(name)) + payload, payload: payload, value: value)
+    }
+    private mutating func losslessFields() throws -> [ServerNBTDocument.Field] {
+        var result: [ServerNBTDocument.Field] = [], names = Set<String>()
+        while true {
+            let start = offset, type = try byte()
+            if type == 0 { break }
+            let name = try text(), payloadStart = offset
+            guard names.insert(name).inserted else { throw RuriError.message(Messages.CoreNBT.duplicateNbtTag) }
+            let value = try payload(type, depth: 1)
+            result.append(.init(name: name, type: type, encoded: Data(bytes[start..<offset]), payload: Data(bytes[payloadStart..<offset]), value: value))
+        }
+        return result
+    }
+    static func serverDocument(_ data: Data) throws -> ServerNBTDocument {
+        var reader = try NBTReader(data: data)
+        guard try reader.byte() == 10 else { throw RuriError.message(Messages.Servers.invalidList) }
+        _ = try reader.text()
+        let header = Data(reader.bytes[..<reader.offset]), root = try reader.losslessFields()
+        guard reader.offset == reader.bytes.count else { throw RuriError.message(Messages.Servers.invalidList) }
+        var entries: [[ServerNBTDocument.Field]] = []
+        if let list = root.first(where: { $0.name == "servers" }) {
+            guard list.type == 9 else { throw RuriError.message(Messages.Servers.invalidList) }
+            var items = try NBTReader(data: list.payload)
+            let type = try items.byte(), count = try items.count()
+            guard count <= 4096, type == 10 || count == 0 else { throw RuriError.message(Messages.Servers.invalidList) }
+            for _ in 0..<count { entries.append(try items.losslessFields()) }
+        }
+        return .init(root: root, entries: entries, header: header, compressed: data.starts(with: [0x1f, 0x8b]))
+    }
+    fileprivate static func encodeServers(_ document: ServerNBTDocument) throws -> Data {
+        guard document.entries.count <= 4096 else { throw RuriError.message(Messages.Servers.listLimit) }
+        let count = UInt32(document.entries.count)
+        var list = Data([9]) + (try encodedString("servers")) + Data([10, UInt8(truncatingIfNeeded: count >> 24), UInt8(truncatingIfNeeded: count >> 16), UInt8(truncatingIfNeeded: count >> 8), UInt8(truncatingIfNeeded: count)])
+        for entry in document.entries { for field in entry { list += field.encoded }; list.append(0) }
+        var result = document.header, found = false
+        for field in document.root {
+            if field.name == "servers" { result += list; found = true } else { result += field.encoded }
+        }
+        if !found { result += list }
+        result.append(0)
+        guard result.count <= 8 * 1024 * 1024 else { throw RuriError.message(Messages.Servers.listLimit) }
+        return document.compressed ? try Gzip.compress(result) : result
+    }
+}
+
 public enum Gzip {
     static func compress(_ data: Data) throws -> Data {
         guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.nbtCompressionInputTooLarge) }
