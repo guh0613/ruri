@@ -223,3 +223,6 @@
 /* @symbol Servers.sharedDirectory @args - */
 "sharedDirectory" = "列表由共用此游戏目录的实例共享。";
 
+/* @symbol Servers.milliseconds @args integer */
+"milliseconds" = "%lld ms";
+

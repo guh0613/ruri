@@ -12,8 +12,9 @@ struct RootView: View {
     @State private var collectionWidth: CGFloat = 280
     @State private var libraryNavigation = LibraryNavigationState()
     @State private var historyCache = GameHistoryView.Cache()
+    @State private var serverNavigation = ServerNavigationState()
     @State private var accountsNavigation = AccountsNavigationState()
-    private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts }
+    private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts || model.page == .servers }
     private var minimumWindowWidth: CGFloat {
         // Three visible columns need 210 + 280 + 420 points, plus their dividers.
         hasCollectionColumn && columns != .detailOnly && columns != .doubleColumn ? 912 : 760
@@ -28,6 +29,8 @@ struct RootView: View {
                     Group {
                         if model.page == .library {
                             LibraryView(column: .content, navigation: libraryNavigation)
+                        } else if model.page == .servers {
+                            ServersView(column: .content, navigation: serverNavigation)
                         } else {
                             AccountsView(column: .content, navigation: accountsNavigation)
                         }
@@ -46,6 +49,8 @@ struct RootView: View {
                     Group {
                         if model.page == .library {
                             LibraryView(column: .detail, navigation: libraryNavigation)
+                        } else if model.page == .servers {
+                            ServersView(column: .detail, navigation: serverNavigation)
                         } else {
                             AccountsView(column: .detail, navigation: accountsNavigation)
                         }
@@ -59,7 +64,7 @@ struct RootView: View {
                 } detail: {
                     Group {
                         switch model.page {
-                        case .home, .library, .accounts: HomeView()
+                        case .home, .library, .accounts, .servers: HomeView()
                         case .discover: DiscoverView()
                         case .history: GameHistoryView(cache: historyCache, instanceID: model.historyInstanceID)
                         case .activity: LauncherLogView().id(model.logNavigationID)
@@ -93,6 +98,7 @@ struct RootView: View {
         .sheet(item: Bindable(model).contentPresentation) { presentation in
             InstanceContentView(instance: presentation.instance, kind: presentation.kind).id(presentation.id)
         }
+        .sheet(item: Bindable(model).serverInstance) { instance in ServerManagerView(instance: instance) }
         .sheet(item: Bindable(model).worldInstance) { instance in WorldManagerView(instance: instance) }
         .sheet(item: Bindable(model).schematicInstance) { instance in SchematicManagerView(instance: instance) }
         .sheet(item: Bindable(model).importingInstance) { prepared in ImportInstanceView(prepared: prepared) }
@@ -159,7 +165,7 @@ private struct RootSidebar: View {
     var body: some View {
         @Bindable var model = model
         List(selection: $model.page) {
-            Section { ForEach([Page.home, .library, .discover, .history, .activity]) { page in sidebarRow(page) } }
+            Section { ForEach([Page.home, .library, .servers, .discover, .history, .activity]) { page in sidebarRow(page) } }
             Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
         }
         .listStyle(.sidebar)

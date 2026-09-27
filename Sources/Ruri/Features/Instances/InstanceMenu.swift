@@ -23,6 +23,7 @@ struct InstanceMenu<Content: View>: View {
                 Divider()
                 Button(Messages.AppInstanceMenu.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                 Button(Messages.AppInstanceMenu.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
+                Button(Messages.Servers.manage.localized, systemImage: "server.rack") { model.serverInstance = instance }
                 Button(Messages.AppInstanceMenu.manageSavesAndBackups.localized, systemImage: "globe") { model.worldInstance = instance }
                 Button(Messages.AppInstanceMenu.manageSchematics.localized, systemImage: "square.3.layers.3d") { model.schematicInstance = instance }
                 Button(Messages.AppInstanceMenu.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }

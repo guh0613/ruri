@@ -692,5 +692,6 @@
   "Servers:confirmRemove": "Remove",
   "Servers:probe": "Query status",
   "Servers:noInstance": "Create or import an instance first.",
-  "Servers:sharedDirectory": "This list is shared by instances using the same game directory."
+  "Servers:sharedDirectory": "This list is shared by instances using the same game directory.",
+  "Servers:milliseconds": "%lld ms"
 }

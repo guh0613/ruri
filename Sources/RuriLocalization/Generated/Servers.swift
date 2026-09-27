@@ -453,6 +453,12 @@ extension Messages {
         public static var sharedDirectory: LocalizedMessage {
             .init(key: "sharedDirectory", table: "Servers", fallback: "列表由共用此游戏目录的实例共享。")
         }
+        /// %lld ms
+        ///
+        /// Resource: `Servers.milliseconds`.
+        public static func milliseconds(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "milliseconds", table: "Servers", fallback: "%lld ms", arguments: [.integer(value0)])
+        }
         static let definitions: [String: MessageDefinition] = [
             "Servers:invalidAddress": .init("服务器地址无效，请输入域名、IP 或主机:端口。", []),
             "Servers:invalidList": .init("服务器列表格式无效，原文件已保留。", []),
@@ -529,6 +535,7 @@ extension Messages {
             "Servers:probe": .init("查询状态", []),
             "Servers:noInstance": .init("先创建或导入一个实例。", []),
             "Servers:sharedDirectory": .init("列表由共用此游戏目录的实例共享。", []),
+            "Servers:milliseconds": .init("%lld ms", [.integer]),
         ]
     }
 }

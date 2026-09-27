@@ -62,6 +62,9 @@ struct LibraryInstanceDetail<Notices: View>: View {
                     VStack(alignment: .leading, spacing: 32) {
                         notices
                         strip
+                        SectionTitle(Messages.Servers.page.localized) {
+                            Button(Messages.Servers.manage.localized) { model.serverInstance = instance }.buttonStyle(.link)
+                        }
                         worldsSection
                         historySection
                     }

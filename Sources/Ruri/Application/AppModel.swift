@@ -77,6 +77,7 @@ import RuriCore
     var editingInstance: GameInstance?
     var contentPresentation: InstanceContentPresentation?
     var worldInstance: GameInstance?
+    var serverInstance: GameInstance?
     var schematicInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
