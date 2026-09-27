@@ -14,6 +14,8 @@ public struct LaunchPlan: Codable, Sendable {
     public var offlineSkin: OfflineSkinLaunch? = nil
     public var debugLogging: Bool? = nil
     public var host: GameHostPlan? = nil
+    public var quickPlayLog: URL? = nil
+    public var destination: LaunchDestination? = nil
     var processExecutable: URL { wrapper?.first.map { URL(fileURLWithPath: $0) } ?? executable }
     var processArguments: [String] { wrapper?.isEmpty == false ? Array(wrapper!.dropFirst()) + [executable.path] + arguments : arguments }
     public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
@@ -49,7 +51,7 @@ public enum ArgumentTokenizer {
 }
 
 public enum LaunchBuilder {
-    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil) throws -> LaunchPlan {
+    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, destination: LaunchDestination = .normal, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil) throws -> LaunchPlan {
         guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.externalAuthRequired) }
         if let offlineSkin {
             guard account.kind == .offline, offlineSkin.account == account else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
@@ -58,6 +60,15 @@ public enum LaunchBuilder {
         guard paths.repositoryImportID == nil else { throw RuriError.message(Messages.CoreLaunch.packImportIncomplete) }
         let instance = try instance.resolvingPersistedLaunchSettings(paths: paths)
         try paths.validateBinding(instance)
+        guard world == nil || destination == .normal else { throw RuriError.message(Messages.Servers.destinationConflict) }
+        let target: LaunchDestination = world.map { .world(folder: $0.folder) } ?? destination
+        let selectedWorld: WorldSnapshot?
+        if case .world(let folder) = target { selectedWorld = try world ?? WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths) }
+        else { selectedWorld = nil }
+        let world = selectedWorld
+        let supportsQuickPlay = GameQuickPlay.supports(instance: instance, manifest: manifest)
+        if case .server = target, !supportsQuickPlay, !GameQuickPlay.supportsLegacyServer(instance.gameVersion) { throw RuriError.message(Messages.Servers.unsupportedLaunch) }
+        let quickPlayLog = supportsQuickPlay ? paths.instance(instance.id).appendingPathComponent("quick-play/\(UUID().uuidString).json") : nil
         if let world { try WorldQuickPlay.validate(world, instance: instance, manifest: manifest, paths: paths) }
         guard let mainClass = manifest.mainClass else { throw RuriError.message(Messages.CoreLaunch.mainClassMissing) }
         guard manifest.inheritsFrom == nil else { throw RuriError.message(Messages.CoreLaunch.parentManifestUnmerged) }
@@ -116,7 +127,7 @@ public enum LaunchBuilder {
             guard result.range(of: #"\$\{[^}]+\}"#, options: .regularExpression) == nil else { throw RuriError.message(Messages.CoreLaunch.unsupportedManifestVariable(String(describing: input))) }
             return result
         }
-        let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": world != nil,
+        let features = ["has_custom_resolution": true, "is_demo_user": false, "has_quick_plays_support": supportsQuickPlay,
                         "is_quick_play_singleplayer": world != nil, "is_quick_play_multiplayer": false, "is_quick_play_realms": false]
         var jvm = try (manifest.arguments?.jvm ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand)
         jvm = ForgeLaunchArguments.bootstrap(jvm, manifest: manifest, classpath: classpath, client: jar)
@@ -145,7 +156,7 @@ public enum LaunchBuilder {
         let reserved: Set<String> = ["--gameDir", "--assetsDir", "--assetIndex", "--username", "--uuid", "--accessToken", "--session", "--clientId", "--xuid", "--userType", "--userProperties"]
         guard !extraGame.contains(where: { reserved.contains(String($0.split(separator: "=", maxSplits: 1).first ?? "")) }) else { throw RuriError.message(Messages.CoreLaunch.gameArgumentsOverride) }
         game += extraGame
-        if let world { game = WorldQuickPlay.applying(world, to: game, instance: instance, paths: paths) }
+        game = GameQuickPlay.applying(target, arguments: game, logging: quickPlayLog, gameDirectory: paths.game(instance.id))
         func hasOption(_ name: String) -> Bool { game.contains { $0 == name || $0.hasPrefix(name + "=") } }
         if !hasOption("--width") { game += ["--width", String(instance.width)] }
         if !hasOption("--height") { game += ["--height", String(instance.height)] }
@@ -162,6 +173,6 @@ public enum LaunchBuilder {
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
         var offlineSkin = offlineSkin
         offlineSkin?.argumentIndex = jvm.count
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin, debugLogging: instance.launchPresentation?.debugLogging == true, host: GameHostPlan(instanceID: instance.id, name: instance.name, iconPNG: instance.iconPNG ?? instance.iconStyle.flatMap(InstanceIconRenderer.launchPNG), javaVersion: java.version, architecture: java.architecture, settings: instance.macOSGameSettings ?? .init(), fullscreen: instance.fullscreen == true))
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin, debugLogging: instance.launchPresentation?.debugLogging == true, host: GameHostPlan(instanceID: instance.id, name: instance.name, iconPNG: instance.iconPNG ?? instance.iconStyle.flatMap(InstanceIconRenderer.launchPNG), javaVersion: java.version, architecture: java.architecture, settings: instance.macOSGameSettings ?? .init(), fullscreen: instance.fullscreen == true), quickPlayLog: quickPlayLog, destination: target)
     }
 }

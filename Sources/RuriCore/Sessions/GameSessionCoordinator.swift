@@ -64,6 +64,9 @@ import RuriLocalization
 
     private func runGame() async throws -> GameExit {
         if recorder.record.stage != .starting { try recorder.transition(.starting) }
+        if let log = plan.quickPlayLog {
+            try FileManager.default.createDirectory(at: log.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+        }
         recorder.prepareGame(directory: plan.directory)
         let process = GameProcess(); game = process
         let capture = try recorder.makeOutputCapture(); recorder.retainOutput(capture)

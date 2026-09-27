@@ -16,6 +16,7 @@ public enum WorldQuickPlay {
         if value.range(of: #"^[0-9]{2}w[0-9]{2}[a-z]$"#, options: .regularExpression) != nil {
             return value >= "23w14a"
         }
+        if value.range(of: #"^(?:2[6-9]|[3-9][0-9])\.[0-9]+(?:\.[0-9]+)?(?:-(?:pre|rc)[0-9]+)?$"#, options: .regularExpression) != nil { return true }
         return false
     }
     public static func requireSupport(instance: GameInstance, manifest: VersionManifest) throws {

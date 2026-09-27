@@ -36,7 +36,9 @@ struct WorldQuickPlayTests {
         #expect(try StateStore.load(paths).instances[0].extraGameArguments == instance.extraGameArguments)
         instance.extraGameArguments = nil
         let normal = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "Player"), paths: paths)
-        #expect(!normal.arguments.contains { $0.hasPrefix("--quickPlay") })
+        #expect(normal.arguments.contains("--quickPlayPath"))
+        #expect(!normal.arguments.contains("--quickPlaySingleplayer"))
+        #expect(normal.quickPlayLog != plan.quickPlayLog)
     }
 
     @Test func unsupportedVersionAndMissingWorldCannotQuickPlay() throws {

@@ -3,7 +3,7 @@ import Foundation
 import RuriCore
 
 extension AppModel {
-    func launch(_ requested: GameInstance, world: WorldSnapshot? = nil) {
+    func launch(_ requested: GameInstance, world: WorldSnapshot? = nil, server: ServerAddress? = nil) {
         guard !busy, !readOnly else { return }
         // Refresh/merge before taking a launch snapshot: another client may
         // have just committed a directory change while this window was idle.
@@ -24,7 +24,7 @@ extension AppModel {
                 journal.linkSession(recorder.record.id, to: id)
                 do {
                     let record = try await LaunchService(paths: paths, downloader: downloader).start(
-                        instanceID: stored.id, accountID: account.id, worldFolder: world?.folder, recorder: recorder,
+                        instanceID: stored.id, accountID: account.id, worldFolder: world?.folder, destination: server.map(LaunchDestination.server) ?? .normal, recorder: recorder,
                         javaResolver: { [self] instance, manifest in try await javaForLaunch(instance: instance, manifest: manifest, activityID: id) },
                         progress: { [weak self] p in await self?.progress(id, p) },
                         updated: { [self] record in publishSession(record) })

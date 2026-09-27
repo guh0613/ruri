@@ -10,7 +10,7 @@ import Foundation
     public init(paths: LauncherPaths, downloader: DownloadManager = DownloadManager(), accounts: AccountService? = nil) {
         self.paths = paths; self.downloader = downloader; self.accounts = accounts ?? AccountService(paths: paths)
     }
-    public func preflight(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil) async throws -> OperationValue {
+    public func preflight(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil, destination: LaunchDestination = .normal) async throws -> OperationValue {
         let state = try StateStore.load(paths), paths = paths.configured(with: state), stored = try InstanceService(paths: paths).resolve(id: instanceID)
         guard stored.installed else { throw OperationFailure("INSTALLATION_REQUIRED", Messages.CLIInterface.t1914c0297b34.localized, nextActions: [.init(["instance", "install", instanceID.uuidString])]) }
         let instance = try stored.launchSnapshot(defaults: state.settings, workload: MemoryWorkload.scan(paths: paths, instance: stored))
@@ -19,16 +19,19 @@ import Foundation
         let java = try await resolveJava(instance: instance, requirement: requirement, paths: paths)
         let selectedAccount = accountID ?? state.activeAccountID
         guard let selectedAccount, let account = state.accounts.first(where: { $0.id == selectedAccount }) else { throw OperationFailure("ACCOUNT_REQUIRED", Messages.CLIInterface.t46ce3acb0041.localized, nextActions: [.init(["account", "list", "--json"])]) }
-        let world = try worldFolder.map { folder in
+        guard worldFolder == nil || destination == .normal else { throw RuriError.message(Messages.Servers.destinationConflict) }
+        let target = worldFolder.map { LaunchDestination.world(folder: $0) } ?? destination
+        let selectedFolder: String? = { if case .world(let folder) = target { return folder }; return nil }()
+        _ = try selectedFolder.map { folder in
             try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
             return try WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths)
         }
-        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, world: world)
+        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, destination: target)
         return .object(["instanceID": .string(instanceID.uuidString), "accountID": .string(account.id.uuidString), "accountKind": .string(account.kind.rawValue),
             "javaPath": .string(java.path), "javaMajor": .integer(java.major), "gameDirectory": .string(plan.directory.path),
             "command": .string(plan.redactedCommand), "authenticationChecked": .bool(account.kind == .offline), "environmentNames": .array((plan.customEnvironmentNames ?? []).map(OperationValue.string))])
     }
-    public func start(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil, recorder provided: GameSessionRecorder? = nil,
+    public func start(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil, destination: LaunchDestination = .normal, recorder provided: GameSessionRecorder? = nil,
                       javaResolver: (@MainActor (GameInstance, VersionManifest) async throws -> JavaRuntime)? = nil,
                       progress: @Sendable @escaping (InstallProgress) async -> Void = { _ in },
                       updated: @MainActor (GameSession) -> Void = { _ in }) async throws -> GameSession {
@@ -74,7 +77,10 @@ import Foundation
             }
             try advance(.manifest)
             let installer = GameInstaller(paths: paths, downloader: downloader), manifest = try await installer.loadManifest(instance)
-            let world = try worldFolder.map { folder in
+            guard worldFolder == nil || destination == .normal else { throw RuriError.message(Messages.Servers.destinationConflict) }
+        let target = worldFolder.map { LaunchDestination.world(folder: $0) } ?? destination
+        let selectedFolder: String? = { if case .world(let folder) = target { return folder }; return nil }()
+        let world = try selectedFolder.map { folder in
                 try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
                 return try WorldQuickPlay.selection(folder: folder, instanceID: instanceID, paths: paths)
             }
@@ -85,7 +91,7 @@ import Foundation
             try recorder.setJava(java.label + " · " + java.version)
             try advance(.arguments)
             try await installer.prepareRunDirectory(instance, manifest: manifest)
-            let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, world: world, externalAuth: externalAuth, offlineSkin: offlineSkin)
+            let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, destination: target, externalAuth: externalAuth, offlineSkin: offlineSkin)
             recorder.addSecrets(plan.environmentRedactions + [token])
             try recorder.append(plan.redactedCommand)
             if let world { try recorder.setWorld(.init(folder: world.folder, name: world.name, lastPlayed: world.lastPlayed, source: .quickPlay)) }
