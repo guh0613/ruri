@@ -309,6 +309,10 @@ struct ServersView: View {
             }
         }
         .listStyle(.inset)
+        // The list starts empty while the library loads. Give AppKit the
+        // two-line row height up front so its initial 24-point estimate
+        // doesn't clip asynchronously inserted rows until the next layout.
+        .environment(\.defaultMinListRowHeight, 48)
         .scrollContentBackground(.hidden)
         .overlay {
             if navigation.snapshot == nil { DelayedProgressView() }
