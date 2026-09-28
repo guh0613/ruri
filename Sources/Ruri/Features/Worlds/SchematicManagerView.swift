@@ -22,53 +22,54 @@ struct SchematicManagerView: View {
     private var canModify: Bool { !loading && !model.busy && !model.isInstanceInUse(instance.id) }
     private var types: [UTType] { SchematicManager.fileExtensions.map { UTType(filenameExtension: $0) ?? .data } }
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                SectionHeading(title: Messages.AppSchematicManagerView.schematics.localized, subtitle: instance.name)
-                Spacer()
-                Button(Messages.AppSchematicManagerView.newFolder.localized, systemImage: "folder.badge.plus") { folderName = ""; creatingFolder = true }.disabled(!canModify)
-                Button(Messages.AppSchematicManagerView.importSchematics.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
-            }
+        InstanceManagementSheet(title: Messages.AppSchematicManagerView.schematics.localized, instanceName: instance.name) {
             Text(Messages.AppSchematicManagerView.schematicHelp.localized).font(.callout).foregroundStyle(.secondary)
-            HStack {
+                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 10) {
                 Button { directory = directory.split(separator: "/").dropLast().joined(separator: "/"); search = "" } label: { Image(systemName: "chevron.left") }.disabled(directory.isEmpty || model.busy).help(Messages.AppSchematicManagerView.goUp.localized)
                 Button("schematics") { directory = ""; search = "" }.disabled(directory.isEmpty || model.busy)
                 if !directory.isEmpty { Text("/ " + directory).lineLimit(1).truncationMode(.middle).foregroundStyle(.secondary) }
                 Spacer()
-                TextField(Messages.AppSchematicManagerView.searchFolder.localized, text: $search).textFieldStyle(.roundedBorder).frame(width: 200)
+                TextField(Messages.AppSchematicManagerView.searchFolder.localized, text: $search).textFieldStyle(.roundedBorder).frame(width: 180)
+                Button(Messages.AppSchematicManagerView.newFolder.localized, systemImage: "folder.badge.plus") { folderName = ""; creatingFolder = true }.disabled(!canModify)
+                Button(Messages.AppSchematicManagerView.importSchematics.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
             }
-            if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled) }
-            if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else {
-                List(entries.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) }) { entry in
-                    HStack(spacing: 12) {
-                        Image(systemName: entry.isDirectory ? "folder.fill" : "square.3.layers.3d").font(.title2).foregroundStyle(Theme.accent)
-                        Button {
-                            if entry.isDirectory { directory = entry.id; search = "" } else { inspecting = entry }
-                        } label: {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text(entry.name).font(.headline).lineLimit(1)
-                                if !entry.isDirectory { Text(entry.url.pathExtension.uppercased() + " · " + LocalizedFormat.bytes(entry.size)).font(.caption).foregroundStyle(.secondary) }
-                            }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
-                        }.buttonStyle(.plain).disabled(model.busy)
-                        Menu {
-                            if !entry.isDirectory { Button(Messages.AppSchematicManagerView.viewInfo.localized) { inspecting = entry }; Button(Messages.AppSchematicManagerView.exportSchematics.localized) { export(entry) }.disabled(!canModify) }
-                            Button(Messages.AppSchematicManagerView.revealInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([entry.url]) }
-                            Divider()
-                            Button(Messages.AppSchematicManagerView.trashSchematics.localized, role: .destructive) { removing = entry }.disabled(!canModify)
-                        } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-                    }.padding(.vertical, 7)
-                }.listStyle(.bordered)
-                .overlay { if entries.isEmpty { Text(Messages.AppSchematicManagerView.dropSchematics.localized).foregroundStyle(.secondary).allowsHitTesting(false) } }
-                .dropDestination(for: URL.self) { urls, _ in guard canModify else { return false }; importFiles(urls); return true }
+        } content: {
+            VStack(alignment: .leading, spacing: 0) {
+                if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled).padding(.horizontal, 20).padding(.vertical, 8) }
+                if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+                else {
+                    List(entries.filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) }) { entry in
+                        HStack(spacing: 12) {
+                            Image(systemName: entry.isDirectory ? "folder.fill" : "square.3.layers.3d").font(.title2).foregroundStyle(Theme.accent)
+                            Button {
+                                if entry.isDirectory { directory = entry.id; search = "" } else { inspecting = entry }
+                            } label: {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(entry.name).font(.headline).lineLimit(1)
+                                    if !entry.isDirectory { Text(entry.url.pathExtension.uppercased() + " · " + LocalizedFormat.bytes(entry.size)).font(.caption).foregroundStyle(.secondary) }
+                                }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
+                            }.buttonStyle(.plain).disabled(model.busy)
+                            Menu {
+                                if !entry.isDirectory { Button(Messages.AppSchematicManagerView.viewInfo.localized) { inspecting = entry }; Button(Messages.AppSchematicManagerView.exportSchematics.localized) { export(entry) }.disabled(!canModify) }
+                                Button(Messages.AppSchematicManagerView.revealInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([entry.url]) }
+                                Divider()
+                                Button(Messages.AppSchematicManagerView.trashSchematics.localized, role: .destructive) { removing = entry }.disabled(!canModify)
+                            } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
+                        }.padding(.vertical, 7)
+                    }.listStyle(.inset).scrollContentBackground(.hidden)
+                    .overlay { if entries.isEmpty { Text(Messages.AppSchematicManagerView.dropSchematics.localized).foregroundStyle(.secondary).allowsHitTesting(false) } }
+                    .dropDestination(for: URL.self) { urls, _ in guard canModify else { return false }; importFiles(urls); return true }
+                }
             }
-            HStack {
+        } footer: {
+            HStack(spacing: 12) {
                 Button(Messages.AppSchematicManagerView.refresh.localized, systemImage: "arrow.clockwise") { Task { await reload() } }.disabled(loading || model.busy)
-                Spacer()
+                Spacer(minLength: 8)
                 if model.busy { ProgressView().controlSize(.small); Button(Messages.AppSchematicManagerView.cancelTask.localized) { model.operation?.cancel() } }
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).buttonStyle(.borderedProminent).disabled(model.busy)
             }
-        }.padding(24).frame(width: 780, height: 600).interactiveDismissDisabled(model.busy)
+        }.interactiveDismissDisabled(model.busy)
         .task(id: directory) { await reload() }
         .fileImporter(isPresented: $importing, allowedContentTypes: types, allowsMultipleSelection: true) { result in
             do { importFiles(try result.get()) } catch { self.error = error.localizedDescription }

@@ -22,50 +22,59 @@ struct WorldDataPacksView: View {
     private var canModify: Bool { !loading && !model.busy && !model.isInstanceInUse(instance.id) }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                SectionHeading(title: Messages.AppWorldDataPacksView.dataPacks.localized, subtitle: world.name)
-                Spacer()
+        InstanceManagementSheet(title: Messages.AppWorldDataPacksView.dataPacks.localized, instanceName: world.name) {
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
+                Text(Messages.AppWorldDataPacksView.dataPackAvailability.localized).font(.callout).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
                 Button(Messages.AppWorldDataPacksView.find.localized, systemImage: "magnifyingglass") { searching = true }.disabled(!canModify)
                 Button(Messages.AppWorldDataPacksView.importDataPackAction.localized, systemImage: "square.and.arrow.down") { importing = true }.disabled(!canModify)
-                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).disabled(model.busy)
             }
-            Text(Messages.AppWorldDataPacksView.dataPackAvailability.localized).font(.callout).foregroundStyle(.secondary)
-            if model.isInstanceInUse(instance.id) { Label(Messages.AppWorldDataPacksView.exitGameBeforeEditing.localized, systemImage: "play.circle").foregroundStyle(.secondary) }
-            if let error { Text(error).foregroundStyle(.orange).textSelection(.enabled) }
-            if let status { Text(status).foregroundStyle(Theme.accent) }
-            if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else if packs.isEmpty { EmptyPanel(symbol: "shippingbox", title: Messages.AppWorldDataPacksView.noLocalDataPacks.localized, detail: Messages.AppWorldDataPacksView.dataPackImportInstructions.localized) }
-            else {
-                List(packs) { pack in
-                    HStack(spacing: 12) {
-                        Image(systemName: "shippingbox").font(.title2).foregroundStyle(pack.enabled ? Theme.accent : .secondary)
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(pack.id).font(.headline).lineLimit(1)
-                            if !pack.description.isEmpty { Text(pack.description).font(.caption).foregroundStyle(.secondary).lineLimit(3) }
-                            if let format = pack.format { Text(Messages.AppWorldDataPacksView.declaredFormat(String(describing: format)).localized).font(.caption).foregroundStyle(.secondary) }
-                            if let error = pack.error { Text(error).font(.caption).foregroundStyle(.orange).lineLimit(2) }
-                        }
-                        Spacer()
-                        Toggle(Messages.AppWorldDataPacksView.enable.localized, isOn: Binding(get: { pack.enabled }, set: { value in
-                            mutate(value ? Messages.AppWorldDataPacksView.enableDataPack.localized : Messages.AppWorldDataPacksView.disableDataPack.localized) { try await manager.setDataPackEnabled(value, name: pack.id, folder: world.folder) }
-                        })).toggleStyle(.switch).labelsHidden().help(pack.enabled ? Messages.AppWorldDataPacksView.disableDataPack.localized : Messages.AppWorldDataPacksView.enableDataPack.localized).disabled(!canModify || pack.error != nil)
-                        Menu {
-                            Button(Messages.AppWorldDataPacksView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([pack.url]) }
-                            Button(Messages.AppWorldDataPacksView.moveToTrash.localized, role: .destructive) { removing = pack }.disabled(!canModify)
-                        } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
-                    }.padding(.vertical, 7)
-                }.listStyle(.inset)
+        } content: {
+            VStack(alignment: .leading, spacing: 0) {
+                if model.isInstanceInUse(instance.id) {
+                    Label(Messages.AppWorldDataPacksView.exitGameBeforeEditing.localized, systemImage: "play.circle")
+                        .font(.callout).foregroundStyle(.secondary).padding(.horizontal, 20).padding(.vertical, 8)
+                }
+                if let error { Text(error).font(.callout).foregroundStyle(.orange).textSelection(.enabled).padding(.horizontal, 20).padding(.vertical, 8) }
+                if let status { Text(status).font(.callout).foregroundStyle(Theme.accent).padding(.horizontal, 20).padding(.vertical, 8) }
+                if loading { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
+                else if packs.isEmpty {
+                    EmptyPanel(symbol: "shippingbox", title: Messages.AppWorldDataPacksView.noLocalDataPacks.localized, detail: Messages.AppWorldDataPacksView.dataPackImportInstructions.localized)
+                        .frame(maxHeight: .infinity)
+                } else {
+                    List(packs) { pack in
+                        HStack(spacing: 12) {
+                            Image(systemName: "shippingbox").font(.title2).foregroundStyle(pack.enabled ? Theme.accent : .secondary)
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(pack.id).font(.headline).lineLimit(1)
+                                if !pack.description.isEmpty { Text(pack.description).font(.caption).foregroundStyle(.secondary).lineLimit(3) }
+                                if let format = pack.format { Text(Messages.AppWorldDataPacksView.declaredFormat(String(describing: format)).localized).font(.caption).foregroundStyle(.secondary) }
+                                if let error = pack.error { Text(error).font(.caption).foregroundStyle(.orange).lineLimit(2) }
+                            }
+                            Spacer()
+                            Toggle(Messages.AppWorldDataPacksView.enable.localized, isOn: Binding(get: { pack.enabled }, set: { value in
+                                mutate(value ? Messages.AppWorldDataPacksView.enableDataPack.localized : Messages.AppWorldDataPacksView.disableDataPack.localized) { try await manager.setDataPackEnabled(value, name: pack.id, folder: world.folder) }
+                            })).toggleStyle(.switch).labelsHidden().help(pack.enabled ? Messages.AppWorldDataPacksView.disableDataPack.localized : Messages.AppWorldDataPacksView.enableDataPack.localized).disabled(!canModify || pack.error != nil)
+                            Menu {
+                                Button(Messages.AppWorldDataPacksView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([pack.url]) }
+                                Button(Messages.AppWorldDataPacksView.moveToTrash.localized, role: .destructive) { removing = pack }.disabled(!canModify)
+                            } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize()
+                        }.padding(.vertical, 7)
+                    }.listStyle(.inset).scrollContentBackground(.hidden)
+                }
             }
-            Divider()
-            HStack {
+        } footer: {
+            HStack(spacing: 12) {
                 Button(Messages.AppWorldDataPacksView.adjustPriority.localized) { ordering = true }.disabled(!canModify)
-                Text(Messages.AppWorldDataPacksView.backupBeforeEditing.localized).font(.caption).foregroundStyle(.secondary)
+                Text(Messages.AppWorldDataPacksView.backupBeforeEditing.localized).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 if let backup { Button(Messages.AppWorldDataPacksView.showConfigBackup.localized) { NSWorkspace.shared.activateFileViewerSelecting([backup]) }.font(.caption) }
-                Spacer()
-                Button(Messages.AppWorldDataPacksView.refresh.localized, systemImage: "arrow.clockwise") { error = nil; Task { await reload() } }.disabled(loading || model.busy)
+                Spacer(minLength: 8)
+                if model.busy { ProgressView().controlSize(.small) }
+                Button(Messages.AppWorldDataPacksView.refresh.localized, systemImage: "arrow.clockwise") { error = nil; Task { await reload() } }
+                    .labelStyle(.iconOnly).help(Messages.AppWorldDataPacksView.refresh.localized).disabled(loading || model.busy)
+                Button(Messages.Common.done.localized) { dismiss() }.keyboardShortcut(.cancelAction).buttonStyle(.borderedProminent).disabled(model.busy)
             }
-        }.padding(24).frame(width: 760, height: 570)
+        }
         .task { await reload() }
         .sheet(isPresented: $searching, onDismiss: { Task { await reload() } }) { WorldDataPackSearchView(instance: instance, world: world) }
         .sheet(isPresented: $ordering, onDismiss: { Task { await reload() } }) { WorldDataPackPriorityView(instance: instance, world: world) }
