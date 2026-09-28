@@ -15,6 +15,13 @@ struct LaunchSettingsEditor: View {
     var scansContent = false
     @State private var javaIssue: String?
     private var effective: LaunchSettingsValues { overrides.resolve(defaults: defaults) }
+    private static let commonWindowSizes: [GameWindowSize] = [.init(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)]
+    private var javaMajorVersions: [Int] {
+        var majors = Set<Int>([8, 11, 16, 17, 21, 25])
+        majors.formUnion(runtimes.map(\.major))
+        if let major = effective.java.major { majors.insert(major) }
+        return majors.sorted()
+    }
 
     var body: some View {
         ForEach(keys) { key in
@@ -58,7 +65,7 @@ struct LaunchSettingsEditor: View {
             Picker(Messages.AppLaunchSettingsEditor.runtime.localized, selection: Binding(get: { effective.java }, set: { overrides.java = $0; javaIssue = nil })) {
                 Text(Messages.AppLaunchSettingsEditor.autoCompatibleRuntime.localized).tag(JavaSelection.automatic)
                 Section(Messages.AppLaunchSettingsEditor.majorVersionRuntime.localized) {
-                    ForEach(Array(Set([8, 11, 16, 17, 21, 25] + runtimes.map(\.major) + [effective.java.major].compactMap { $0 })).sorted(), id: \.self) { major in
+                    ForEach(javaMajorVersions, id: \.self) { major in
                         Text("Java \(major)").tag(JavaSelection.major(major))
                     }
                 }
@@ -93,7 +100,7 @@ struct LaunchSettingsEditor: View {
                     SettingsNumberInput(title: Messages.AppLaunchSettingsEditor.windowHeight.localized, value: windowBinding(\.height), unit: "px")
                 }
                 Menu(Messages.AppLaunchSettingsEditor.commonWindowSize.localized) {
-                    ForEach([GameWindowSize(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)], id: \.width) { size in
+                    ForEach(Self.commonWindowSizes, id: \.width) { size in
                         Button("\(size.width) × \(size.height)") { var value = effective.window; value.width = size.width; value.height = size.height; overrides.window = value }
                     }
                 }.fixedSize()
