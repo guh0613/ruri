@@ -63,11 +63,11 @@ extension Messages {
         public static var noNotifications: LocalizedMessage {
             .init(key: "launcherLog.noNotifications", table: "Interface", fallback: "暂无通知")
         }
-        /// 任务结果和需要关注的消息会出现在这里。
+        /// 进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。
         ///
         /// Resource: `Interface.launcherLog.notificationHint`.
         public static var notificationHint: LocalizedMessage {
-            .init(key: "launcherLog.notificationHint", table: "Interface", fallback: "任务结果和需要关注的消息会出现在这里。")
+            .init(key: "launcherLog.notificationHint", table: "Interface", fallback: "进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。")
         }
         /// 暂无日志
         ///
@@ -309,12 +309,6 @@ extension Messages {
         public static func unreadCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "launcherLog.unreadCount", table: "Interface", fallback: "%1$lld 条未读通知", arguments: [.integer(value0)])
         }
-        /// 启动器已启动
-        ///
-        /// Resource: `Interface.launcherLog.ready`.
-        public static var ready: LocalizedMessage {
-            .init(key: "launcherLog.ready", table: "Interface", fallback: "启动器已启动")
-        }
         /// 取消任务
         ///
         /// Resource: `Interface.launcherLog.cancelTask`.
@@ -410,7 +404,7 @@ extension Messages {
             "Interface:launcherLog.markAllRead": .init("全部标为已读", []),
             "Interface:launcherLog.showAll": .init("查看全部日志", []),
             "Interface:launcherLog.noNotifications": .init("暂无通知", []),
-            "Interface:launcherLog.notificationHint": .init("任务结果和需要关注的消息会出现在这里。", []),
+            "Interface:launcherLog.notificationHint": .init("进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。", []),
             "Interface:launcherLog.noEntries": .init("暂无日志", []),
             "Interface:launcherLog.emptyHint": .init("启动器操作、任务进度和运行事件会记录在这里。", []),
             "Interface:launcherLog.noMatches": .init("没有匹配的记录", []),
@@ -451,7 +445,6 @@ extension Messages {
             "Interface:launcherLog.retention": .init("保留最近 500 条历史记录", []),
             "Interface:launcherLog.entryCount": .init("%1$lld 条记录", [.integer]),
             "Interface:launcherLog.unreadCount": .init("%1$lld 条未读通知", [.integer]),
-            "Interface:launcherLog.ready": .init("启动器已启动", []),
             "Interface:launcherLog.cancelTask": .init("取消任务", []),
             "Interface:launcherLog.noTransfers": .init("暂无文件传输", []),
             "Interface:launcherLog.transferHint": .init("当前运行期间最近的文件传输会显示在这里。", []),

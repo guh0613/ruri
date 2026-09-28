@@ -50,7 +50,7 @@ struct WorldDataPackPriorityView: View {
     }
     private func save() {
         guard let snapshot else { return }
-        model.perform(Messages.AppWorldDataPackPriorityView.adjustDataPackPriority, presentErrors: false, instanceID: instance.id) { _ in
+        model.perform(Messages.AppWorldDataPackPriorityView.adjustDataPackPriority, presentErrors: false, instanceID: instance.id, recording: .transient) { _ in
             do { try await manager.setDataPackPriority(keys, folder: world.folder, expecting: snapshot); dismiss() }
             catch { self.error = error.localizedDescription; throw error }
         }

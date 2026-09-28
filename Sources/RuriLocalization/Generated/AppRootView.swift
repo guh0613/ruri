@@ -9,11 +9,17 @@ extension Messages {
         public static var manage: LocalizedMessage {
             .init(key: "appRootView.modelText1", table: "Interface", fallback: "管理")
         }
-        /// 游戏详情
+        /// 记录
+        ///
+        /// Resource: `Interface.appRootView.records`.
+        public static var records: LocalizedMessage {
+            .init(key: "appRootView.records", table: "Interface", fallback: "记录")
+        }
+        /// 游玩详情
         ///
         /// Resource: `Interface.appRootView.runningIDText1`.
         public static var runHistory: LocalizedMessage {
-            .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "游戏详情")
+            .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "游玩详情")
         }
         /// 查看正在运行的游戏 ⌘L
         ///
@@ -69,12 +75,6 @@ extension Messages {
         public static var switchAccount: LocalizedMessage {
             .init(key: "appRootView.bodyText6", table: "Interface", fallback: "切换账号")
         }
-        /// 查看记录
-        ///
-        /// Resource: `Interface.appRootView.idText1`.
-        public static var viewRecord: LocalizedMessage {
-            .init(key: "appRootView.idText1", table: "Interface", fallback: "查看记录")
-        }
         /// 在 Finder 中显示
         ///
         /// Resource: `Interface.appRootView.urlText1`.
@@ -83,7 +83,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appRootView.modelText1": .init("管理", []),
-            "Interface:appRootView.runningIDText1": .init("游戏详情", []),
+            "Interface:appRootView.records": .init("记录", []),
+            "Interface:appRootView.runningIDText1": .init("游玩详情", []),
             "Interface:appRootView.runningIDText2": .init("查看正在运行的游戏 ⌘L", []),
             "Interface:appRootView.runningIDText3": .init("操作未完成", []),
             "Interface:appRootView.runningIDText4": .init("好", []),
@@ -93,7 +94,6 @@ extension Messages {
             "Interface:appRootView.bodyText4": .init("添加账号后即可启动游戏", []),
             "Interface:appRootView.bodyText5": .init("添加账号", []),
             "Interface:appRootView.bodyText6": .init("切换账号", []),
-            "Interface:appRootView.idText1": .init("查看记录", []),
             "Interface:appRootView.urlText1": .init("在 Finder 中显示", []),
         ]
     }

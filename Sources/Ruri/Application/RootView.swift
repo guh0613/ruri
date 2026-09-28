@@ -167,7 +167,8 @@ private struct RootSidebar: View {
     var body: some View {
         @Bindable var model = model
         List(selection: $model.page) {
-            Section { ForEach([Page.home, .library, .servers, .discover, .history, .activity]) { page in sidebarRow(page) } }
+            Section { ForEach([Page.home, .library, .servers, .discover]) { page in sidebarRow(page) } }
+            Section(Messages.AppRootView.records.localized) { ForEach([Page.history, .activity]) { page in sidebarRow(page) } }
             Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
         }
         .listStyle(.sidebar)
@@ -188,8 +189,7 @@ private struct RootSidebar: View {
             Label(page.title, systemImage: page.symbol)
             Spacer()
             if page == .activity, let task = model.activeActivity {
-                if let fraction = task.overallFraction { ProgressView(value: fraction).progressViewStyle(.circular).controlSize(.mini) }
-                else { ProgressView().controlSize(.mini) }
+                LauncherTaskProgress(entry: task).controlSize(.mini)
             } else if page == .activity, model.journal.unreadCount > 0 {
                 Text(model.journal.unreadCount, format: .number).font(.caption).foregroundStyle(.secondary)
             }

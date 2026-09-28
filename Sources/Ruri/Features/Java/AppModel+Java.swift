@@ -20,7 +20,7 @@ extension AppModel {
         panel.message = path == nil ? Messages.AppAppModelJava.javaPathPurpose.localized : Messages.AppAppModelJava.javaPathReplacementDetails.localized
         guard panel.runModal() == .OK, let url = panel.url else { return }
         save()
-        perform(path == nil ? Messages.AppAppModelJava.addLocalJava.localized : Messages.AppAppModelJava.chooseJavaAgain.localized) { [self] _ in
+        perform(path == nil ? Messages.AppAppModelJava.addLocalJava.localized : Messages.AppAppModelJava.chooseJavaAgain.localized, recording: .transient) { [self] _ in
             let saved = try await JavaRuntimeStore.add(url, replacing: path, paths: paths)
             acceptState(saved); await scanJava(); report(Messages.AppAppModelJava.javaAdded)
         }

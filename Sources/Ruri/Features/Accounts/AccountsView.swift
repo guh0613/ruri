@@ -78,7 +78,7 @@ struct AccountsView: View {
             Button(Messages.Common.cancel.localized, role: .cancel) { navigation.loggingOut = nil }
             Button(Messages.AppAccountsView.removeLogin.localized, role: .destructive) {
                 if let account = navigation.loggingOut {
-                    model.perform(Messages.AppAccountsView.updateAccount) { _ in try await model.logoutExternal(account) }
+                    model.perform(Messages.AppAccountsView.updateAccount, recording: .transient) { _ in try await model.logoutExternal(account) }
                 }
                 navigation.loggingOut = nil
             }
@@ -170,7 +170,7 @@ private struct AccountDetailView: View {
                     if account.kind != .offline {
                         Button(Messages.AppAccountsView.relogin.localized, systemImage: "key", action: relogin)
                         Button(Messages.AppAccountsView.refreshLogin.localized, systemImage: "arrow.clockwise") {
-                            model.perform(Messages.AppAccountsView.updateAccount) { _ in try await model.refreshAccount(account) }
+                            model.perform(Messages.AppAccountsView.updateAccount, recording: .transient) { _ in try await model.refreshAccount(account) }
                         }
                         Divider()
                     }

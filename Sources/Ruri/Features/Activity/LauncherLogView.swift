@@ -86,6 +86,11 @@ struct LauncherLogView: View {
                     .tableStyle(.inset(alternatesRowBackgrounds: false))
                     .contextMenu(forSelectionType: UUID.self) { ids in
                         if let id = ids.first, let entry = model.journal.entries.first(where: { $0.id == id }) { LauncherEntryActions(entry: entry) }
+                    } primaryAction: { ids in
+                        // Double-clicking a game entry opens that run.
+                        if let id = ids.first, let sessionID = model.journal.entries.first(where: { $0.id == id })?.sessionID {
+                            model.showSession(sessionID)
+                        }
                     }
                     .overlay {
                         if entries.isEmpty {
@@ -246,7 +251,8 @@ private struct LauncherLogDetail: View {
 
     private var actions: some View {
         HStack(spacing: 12) {
-            LauncherEntryActions(entry: entry).labelStyle(.titleAndIcon)
-        }.controlSize(.small).buttonStyle(.borderless)
+            if let id = entry.sessionID { LauncherSessionButton(sessionID: id).buttonStyle(.bordered) }
+            LauncherEntryActions(entry: entry, includesSession: false).buttonStyle(.borderless)
+        }.labelStyle(.titleAndIcon).controlSize(.small)
     }
 }

@@ -37,8 +37,11 @@
 /* @symbol AppRootView.manage @args - */
 "appRootView.modelText1" = "管理";
 
+/* @symbol AppRootView.records @args - */
+"appRootView.records" = "记录";
+
 /* @symbol AppRootView.runHistory @args - */
-"appRootView.runningIDText1" = "游戏详情";
+"appRootView.runningIDText1" = "游玩详情";
 
 /* @symbol AppRootView.viewRunningGameLogs @args - */
 "appRootView.runningIDText2" = "查看正在运行的游戏 ⌘L";
@@ -66,9 +69,6 @@
 
 /* @symbol AppRootView.switchAccount @args - */
 "appRootView.bodyText6" = "切换账号";
-
-/* @symbol AppRootView.viewRecord @args - */
-"appRootView.idText1" = "查看记录";
 
 /* @symbol AppRootView.showInFinder @args - */
 "appRootView.urlText1" = "在 Finder 中显示";
@@ -3797,7 +3797,7 @@
 "launcherLog.noNotifications" = "暂无通知";
 
 /* @symbol LauncherLog.notificationHint @args - */
-"launcherLog.notificationHint" = "任务结果和需要关注的消息会出现在这里。";
+"launcherLog.notificationHint" = "进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。";
 
 /* @symbol LauncherLog.noEntries @args - */
 "launcherLog.noEntries" = "暂无日志";
@@ -3918,9 +3918,6 @@
 
 /* @symbol LauncherLog.unreadCount @args integer */
 "launcherLog.unreadCount" = "%1$lld 条未读通知";
-
-/* @symbol LauncherLog.ready @args - */
-"launcherLog.ready" = "启动器已启动";
 
 /* @symbol LauncherLog.cancelTask @args - */
 "launcherLog.cancelTask" = "取消任务";

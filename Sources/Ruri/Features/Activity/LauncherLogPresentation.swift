@@ -40,6 +40,8 @@ extension LauncherLogEntry {
     var symbol: String {
         if status == .running { return "circle.dotted" }
         if status == .cancelled { return "minus.circle" }
+        // The tint still carries the outcome.
+        if sessionID != nil { return "gamecontroller" }
         switch level {
         case .info: return "info.circle"
         case .success: return "checkmark.circle"
@@ -81,17 +83,33 @@ struct LauncherEntrySymbol: View {
     }
 }
 
+/// The running task's overall progress, spinning while the size is unknown.
+struct LauncherTaskProgress: View {
+    let entry: LauncherLogEntry
+    var body: some View {
+        if let fraction = entry.overallFraction { ProgressView(value: fraction).progressViewStyle(.circular) }
+        else { ProgressView() }
+    }
+}
+
+struct LauncherSessionButton: View {
+    @Environment(AppModel.self) private var model
+    let sessionID: UUID
+    var body: some View {
+        Button(Messages.AppRootView.runHistory.localized, systemImage: "doc.text.magnifyingglass") { model.showSession(sessionID) }
+    }
+}
+
 struct LauncherEntryActions: View {
     @Environment(AppModel.self) private var model
     let entry: LauncherLogEntry
+    var includesSession = true
     var body: some View {
         if entry.status == .running {
             Button(Messages.LauncherLog.cancelTask.localized) { model.operation?.cancel() }
                 .disabled(model.activeActivity?.id != entry.id)
         }
-        if let id = entry.sessionID {
-            Button(Messages.AppRootView.viewRecord.localized) { model.showSession(id) }
-        }
+        if includesSession, let id = entry.sessionID { LauncherSessionButton(sessionID: id) }
         if let url = entry.fileURL {
             Button(Messages.AppRootView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
         }

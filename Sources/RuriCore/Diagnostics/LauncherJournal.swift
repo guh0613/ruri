@@ -147,7 +147,10 @@ public struct LauncherJournal: Codable, Equatable, Sendable {
         if let fileURL { entries[index].fileURL = fileURL }
     }
 
-    public mutating func finish(_ id: UUID, status: LauncherLogEntry.Status, detail: String? = nil, date: Date = Date()) {
+    /// `announce` decides whether a clean success becomes a notification.
+    /// Failures and results needing attention always do.
+    public mutating func finish(_ id: UUID, status: LauncherLogEntry.Status, detail: String? = nil,
+                                announce: Bool = true, date: Date = Date()) {
         guard [.completed, .failed, .cancelled].contains(status),
               let index = entries.firstIndex(where: { $0.id == id && $0.status == .running }) else { return }
         entries[index].status = status
@@ -157,10 +160,13 @@ public struct LauncherJournal: Codable, Equatable, Sendable {
         if status == .failed { entries[index].level = .error }
         else if status == .cancelled { entries[index].level = entries[index].needsAttention ? .warning : .info }
         else if !entries[index].needsAttention { entries[index].level = .success }
-        entries[index].isNotification = status != .cancelled || entries[index].needsAttention
+        entries[index].isNotification = entries[index].needsAttention || (status == .completed && announce)
         entries[index].isRead = !entries[index].isNotification
         trim()
     }
+
+    /// Drops a finished entry whose result the interface already showed.
+    public mutating func discard(_ id: UUID) { entries.removeAll { $0.id == id && $0.status != .running } }
 
     public mutating func markRead(_ id: UUID? = nil) {
         for index in entries.indices where id == nil || entries[index].id == id { entries[index].isRead = true }

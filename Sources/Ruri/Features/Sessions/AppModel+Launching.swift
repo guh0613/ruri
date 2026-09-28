@@ -20,7 +20,8 @@ extension AppModel {
             let presentation = stored.resolvedLaunchSettings(defaults: state.settings).presentation
             launchPresentations[recorder.record.id] = presentation
             if presentation.showLogs { showLogs = true }
-            perform(Messages.AppAppModelLaunching.launchingInstance(stored.name), presentErrors: false) { [self] id in
+            // A successful launch continues as the game run, which game history covers.
+            perform(Messages.AppAppModelLaunching.launchingInstance(stored.name), presentErrors: false, recording: .logged) { [self] id in
                 journal.linkSession(recorder.record.id, to: id)
                 do {
                     let record = try await LaunchService(paths: paths, downloader: downloader).start(

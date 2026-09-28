@@ -26,7 +26,7 @@ extension AppModel {
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelMinecraftDirectory.recoverGameFolder) { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.recoverGameFolder, recording: .transient) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) {
                 try MinecraftFolderStore.restore(folder.id, from: url, paths: base)
             }.value
@@ -47,7 +47,7 @@ extension AppModel {
         save()
         guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelMinecraftDirectory.addGameFolderEntry, presentErrors: false) { [self] _ in
+        perform(Messages.AppAppModelMinecraftDirectory.addGameFolderEntry, presentErrors: false, recording: .transient) { [self] _ in
             do {
                 let result = try await Task.detached(priority: .userInitiated) {
                     // Recheck the selection before committing; preview never writes metadata.

@@ -55,6 +55,25 @@ struct LauncherJournalTests {
         #expect(journal.notifications.count == 1)
     }
 
+    @Test func quietSuccessStaysInTheLogButProblemsStillNotify() {
+        var journal = LauncherJournal()
+        let quiet = journal.begin(.verbatim("Switch folder"))
+        journal.finish(quiet, status: .completed, announce: false)
+        #expect(journal.entries[0].level == .success)
+        #expect(journal.unreadCount == 0)
+        let warned = journal.begin(.verbatim("Copy instance"))
+        journal.annotate(warned, message: .verbatim("Some files were skipped"), level: .warning)
+        journal.finish(warned, status: .completed, announce: false)
+        let failed = journal.begin(.verbatim("Launch"))
+        journal.finish(failed, status: .failed, announce: false)
+        #expect(journal.unreadCount == 2)
+        journal.discard(quiet)
+        #expect(!journal.entries.contains { $0.id == quiet })
+        let running = journal.begin(.verbatim("Install"))
+        journal.discard(running)
+        #expect(journal.entries.contains { $0.id == running })
+    }
+
     @Test func boundedHistoryAndClearPreserveRunningTasks() {
         var journal = LauncherJournal()
         let id = journal.begin(.verbatim("Long running"))

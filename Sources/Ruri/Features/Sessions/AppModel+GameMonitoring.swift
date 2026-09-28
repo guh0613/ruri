@@ -192,7 +192,6 @@ extension AppModel {
                 if logsSessionID == nil { logsSessionID = record.id }
             } else if previous[record.instanceID]?.id == record.id {
                 if let exit = record.exit { lastGameExit = exit }
-                if record.state.isFinished && !record.needsAttention { report(record.title, level: .success, sessionID: record.id) }
             }
             if review && !handledExits.contains(record.id) {
                 handledExits.insert(record.id)

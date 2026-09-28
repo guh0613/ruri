@@ -7,7 +7,7 @@ extension AppModel {
         guard !busy, !readOnly else { return }
         save(); guard !readOnly else { return }
         let base = basePaths
-        perform(Messages.AppAppModelDirectories.switchGameDirectory) { [self] _ in
+        perform(Messages.AppAppModelDirectories.switchGameDirectory, recording: .transient) { [self] _ in
             let result = try await Task.detached(priority: .userInitiated) { try GameDirectoryStore.select(id, paths: base) }.value
             acceptState(result); page = .library
             await refreshDirectoryAvailability()

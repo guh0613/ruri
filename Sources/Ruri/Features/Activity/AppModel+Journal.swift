@@ -8,7 +8,28 @@ enum LauncherActivityContext {
     @TaskLocal static var id: UUID?
 }
 
+/// How a task that succeeds cleanly is kept. Failures and warnings are always
+/// kept and announced.
+enum TaskRecording {
+    /// Announced when it ran long enough to walk away from, or finished while
+    /// the launcher was in the background.
+    case standard
+    /// Logged without a notification; its outcome has its own place, like a game run.
+    case logged
+    /// Not kept; the interface shows the result as it happens.
+    case transient
+}
+
 extension AppModel {
+    static let noticeableTaskDuration: TimeInterval = 10
+
+    func finishTask(_ id: UUID, recording: TaskRecording) {
+        guard let entry = journal.entries.first(where: { $0.id == id }) else { return }
+        let long = Date().timeIntervalSince(entry.startedAt) >= Self.noticeableTaskDuration || !NSApp.isActive
+        journal.finish(id, status: .completed, announce: recording == .standard && long)
+        if recording == .transient, entry.sessionID == nil, entry.fileURL == nil, !entry.needsAttention { journal.discard(id) }
+    }
+
     func report(_ message: String, level: LauncherLogEntry.Level = .info,
                 sessionID: UUID? = nil, fileURL: URL? = nil) {
         report(.verbatim(message), level: level, sessionID: sessionID, fileURL: fileURL)
@@ -20,8 +41,9 @@ extension AppModel {
            journal.entries.contains(where: { $0.id == id && $0.status == .running }) {
             journal.annotate(id, message: message, level: level, sessionID: sessionID, fileURL: fileURL)
         } else {
+            // Confirmations already show where they happen; only problems notify.
             journal.record(message, level: level, kind: sessionID == nil ? .launcher : .game,
-                           sessionID: sessionID, fileURL: fileURL)
+                           notify: level == .warning || level == .error, sessionID: sessionID, fileURL: fileURL)
         }
         persistJournal()
     }
@@ -50,6 +72,12 @@ extension AppModel {
         logNavigationID = UUID()
         page = .activity
         if let id { markLogRead(id) }
+    }
+
+    /// Game results open the run itself; everything else opens its log entry.
+    func openLogEntry(_ entry: LauncherLogEntry) {
+        if let sessionID = entry.sessionID { markLogRead(entry.id); showSession(sessionID) }
+        else { showLauncherLog(entry.id) }
     }
 
     func clearLogHistory() {

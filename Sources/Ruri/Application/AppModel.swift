@@ -133,7 +133,6 @@ import RuriCore
             journalStorageError = Messages.LauncherLog.historyUnavailable.localized
             journal.record(Messages.LauncherLog.historyReadError(error.localizedDescription), level: .warning)
         }
-        journal.record(Messages.LauncherLog.ready, notify: false)
         if let error { journal.record(.verbatim(error), level: .error) }
         persistJournal()
     }
@@ -182,10 +181,10 @@ import RuriCore
         async let java: () = scanJava()
         _ = await (versions, java)
     }
-    func perform(_ title: String, presentErrors: Bool = true, instanceID: UUID? = nil, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
-        perform(.verbatim(title), presentErrors: presentErrors, instanceID: instanceID, work: work)
+    func perform(_ title: String, presentErrors: Bool = true, instanceID: UUID? = nil, recording: TaskRecording = .standard, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
+        perform(.verbatim(title), presentErrors: presentErrors, instanceID: instanceID, recording: recording, work: work)
     }
-    func perform(_ title: LocalizedMessage, presentErrors: Bool = true, instanceID: UUID? = nil, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
+    func perform(_ title: LocalizedMessage, presentErrors: Bool = true, instanceID: UUID? = nil, recording: TaskRecording = .standard, work: @escaping @MainActor @Sendable (UUID) async throws -> Void) {
         guard !busy, !readOnly else { return }
         let id = journal.begin(title)
         persistJournal()
@@ -201,7 +200,7 @@ import RuriCore
                     }) {
                         try await work(id)
                     }
-                    journal.finish(id, status: .completed)
+                    finishTask(id, recording: recording)
                 } catch {
                     let cancelled = Task.isCancelled || error is CancellationError
                     let detail = error is RunDirectoryCopyFailure || error is InstanceMoveFailure || error is RepositoryImportFailure ? error.localizedDescription : cancelled ? Messages.AppAppModel.taskCancelled.localized : error.localizedDescription
