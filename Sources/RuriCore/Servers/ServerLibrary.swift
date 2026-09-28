@@ -69,7 +69,13 @@ public enum ServerLibrary {
                 items[summary.id] = item
             }
         } catch { historyError = error.localizedDescription }
-        return .init(items: items.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }, lists: lists, errors: errors, history: history, historyError: historyError)
+        // Break name ties by key: dictionary order changes between loads, and
+        // an unstable order would reshuffle rows and restart status queries.
+        let sorted = items.values.sorted { first, second in
+            let order = first.name.localizedStandardCompare(second.name)
+            return order == .orderedSame ? first.id < second.id : order == .orderedAscending
+        }
+        return .init(items: sorted, lists: lists, errors: errors, history: history, historyError: historyError)
     }
     @discardableResult public static func save(_ preference: ServerPreference, paths: LauncherPaths) throws -> PersistentState {
         try preference.validate()
