@@ -50,7 +50,7 @@ struct ServerEditorSheet: View {
         _name = State(initialValue: request.entry?.name ?? request.item?.preference?.alias ?? "")
         _notes = State(initialValue: request.item?.preference?.notes ?? "")
         _selectedInstance = State(initialValue: request.instanceID ?? request.item?.preference?.preferredInstanceID)
-        _favorite = State(initialValue: request.item?.preference?.favorite ?? (request.instanceID == nil))
+        _favorite = State(initialValue: request.item?.preference?.favorite ?? false)
         _packs = State(initialValue: request.entry?.resourcePacks ?? .ask)
         _status = State(initialValue: request.status)
     }
@@ -96,7 +96,7 @@ struct ServerEditorSheet: View {
                                     ForEach(model.state.instances) { instance in Text(instance.name).tag(Optional(instance.id)) }
                                 }
                             }.disabled(request.instanceID != nil)
-                            if selectedInstance != nil { Toggle(Messages.Servers.favorite.localized, isOn: $favorite) }
+                            Toggle(Messages.Servers.favorite.localized, isOn: $favorite)
                         } footer: {
                             footnote(selectedInstance == nil ? Messages.Servers.favoriteOnlyFooter.localized : Messages.Servers.saveToFooter.localized)
                         }
@@ -211,7 +211,7 @@ struct ServerEditorSheet: View {
             let endpoint = try ServerAddress(address)
             if preferences {
                 let alias = name.trimmingCharacters(in: .whitespacesAndNewlines)
-                let value = ServerPreference(address: endpoint, favorite: favorite, alias: alias, notes: notes, preferredInstanceID: selectedInstance)
+                let value = ServerPreference(address: endpoint, favorite: favorite, saved: request.item?.preference?.saved ?? false, alias: alias, notes: notes, preferredInstanceID: selectedInstance)
                 model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
             } else {
                 let title = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? endpoint.authority : name
@@ -222,10 +222,11 @@ struct ServerEditorSheet: View {
                     try manager.apply(change, to: snapshot)
                     savedEntry = true
                 }
-                // A server kept only in Ruri is always a favorite; otherwise it would have nowhere to live.
+                // A server kept only in Ruri is saved in its library, pinned or not.
                 if isNew && (favorite || selectedInstance == nil) {
                     var value = model.state.servers?.first { $0.id == endpoint.key } ?? .init(address: endpoint)
-                    value.favorite = true
+                    if favorite { value.favorite = true }
+                    if selectedInstance == nil { value.saved = true }
                     if value.alias.isEmpty { value.alias = title == endpoint.authority ? "" : title }
                     model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
                 }

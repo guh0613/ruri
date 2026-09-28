@@ -3,23 +3,17 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceMenu {
-        /// 在主页中显示
-        ///
-        /// Resource: `Interface.appInstanceMenu.bodyText1`.
-        public static var showOnHome: LocalizedMessage {
-            .init(key: "appInstanceMenu.bodyText1", table: "Interface", fallback: "在主页中显示")
-        }
-        /// 取消收藏
+        /// 取消固定
         ///
         /// Resource: `Interface.appInstanceMenu.bodyText2`.
         public static var unfavorite: LocalizedMessage {
-            .init(key: "appInstanceMenu.bodyText2", table: "Interface", fallback: "取消收藏")
+            .init(key: "appInstanceMenu.bodyText2", table: "Interface", fallback: "取消固定")
         }
-        /// 收藏
+        /// 固定到主页
         ///
         /// Resource: `Interface.appInstanceMenu.bodyText3`.
         public static var favorite: LocalizedMessage {
-            .init(key: "appInstanceMenu.bodyText3", table: "Interface", fallback: "收藏")
+            .init(key: "appInstanceMenu.bodyText3", table: "Interface", fallback: "固定到主页")
         }
         /// 实例设置
         ///
@@ -100,9 +94,8 @@ extension Messages {
             .init(key: "appInstanceMenu.onTrashText2", table: "Interface", fallback: "更多操作")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceMenu.bodyText1": .init("在主页中显示", []),
-            "Interface:appInstanceMenu.bodyText2": .init("取消收藏", []),
-            "Interface:appInstanceMenu.bodyText3": .init("收藏", []),
+            "Interface:appInstanceMenu.bodyText2": .init("取消固定", []),
+            "Interface:appInstanceMenu.bodyText3": .init("固定到主页", []),
             "Interface:appInstanceMenu.valueText1": .init("实例设置", []),
             "Interface:appInstanceMenu.valueText2": .init("管理模组与资源包", []),
             "Interface:appInstanceMenu.valueText3": .init("管理存档与备份", []),

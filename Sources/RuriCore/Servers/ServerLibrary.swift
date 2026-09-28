@@ -4,13 +4,28 @@ import RuriLocalization
 public struct ServerPreference: Codable, Equatable, Identifiable, Sendable {
     public var id: String { address.key }
     public let address: ServerAddress
+    /// Pinned to the home page and the top of the server list.
     public var favorite: Bool
+    /// Kept in Ruri's own library even when no instance lists it, until the
+    /// player removes it; pinning and unpinning never add or drop a server.
+    public var saved: Bool
     public var alias: String
     public var notes: String
     public var preferredInstanceID: UUID?
-    public init(address: ServerAddress, favorite: Bool = false, alias: String = "", notes: String = "", preferredInstanceID: UUID? = nil) {
-        self.address = address; self.favorite = favorite; self.alias = alias; self.notes = notes; self.preferredInstanceID = preferredInstanceID
+    public init(address: ServerAddress, favorite: Bool = false, saved: Bool = false, alias: String = "", notes: String = "", preferredInstanceID: UUID? = nil) {
+        self.address = address; self.favorite = favorite; self.saved = saved; self.alias = alias; self.notes = notes; self.preferredInstanceID = preferredInstanceID
     }
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        address = try container.decode(ServerAddress.self, forKey: .address)
+        favorite = try container.decode(Bool.self, forKey: .favorite)
+        // Before `saved`, a favorite was how a server stayed in the library.
+        saved = try container.decodeIfPresent(Bool.self, forKey: .saved) ?? favorite
+        alias = try container.decode(String.self, forKey: .alias)
+        notes = try container.decode(String.self, forKey: .notes)
+        preferredInstanceID = try container.decodeIfPresent(UUID.self, forKey: .preferredInstanceID)
+    }
+    var isEmpty: Bool { !favorite && !saved && alias.isEmpty && notes.isEmpty && preferredInstanceID == nil }
     func validate() throws {
         guard alias.utf8.count <= 1024, notes.utf8.count <= 16384 else { throw RuriError.message(Messages.Servers.invalidList) }
     }
@@ -82,8 +97,15 @@ public enum ServerLibrary {
         return try StateStore.updateIfChanged(paths) { state in
             var values = state.servers ?? []
             values.removeAll { $0.id == preference.id }
-            if preference.favorite || !preference.alias.isEmpty || !preference.notes.isEmpty || preference.preferredInstanceID != nil { values.append(preference) }
+            if !preference.isEmpty { values.append(preference) }
             state.servers = values
+        }
+    }
+    /// Forgets everything Ruri keeps about the server. It stays listed while
+    /// an instance's multiplayer list or the play history still has it.
+    @discardableResult public static func remove(_ address: ServerAddress, paths: LauncherPaths) throws -> PersistentState {
+        try StateStore.updateIfChanged(paths) { state in
+            state.servers = state.servers?.filter { $0.id != address.key }
         }
     }
 }

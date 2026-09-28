@@ -188,7 +188,7 @@
 "coreStateStore.labelsText6" = "名称";
 
 /* @symbol CoreStateStore.favoriteStatus @args - */
-"coreStateStore.labelsText7" = "收藏状态";
+"coreStateStore.labelsText7" = "固定状态";
 
 /* @symbol CoreStateStore.memory @args - */
 "coreStateStore.labelsText8" = "内存";

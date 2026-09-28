@@ -225,12 +225,6 @@ extension Messages {
         public static func editIconAndSettings(_ value0: String) -> LocalizedMessage {
             .init(key: "appLibraryView.iconButtonText2", table: "Interface", fallback: "编辑 %1$@ 的图标和设置", arguments: [.text(value0)])
         }
-        /// 在主页中显示
-        ///
-        /// Resource: `Interface.appLibraryView.contextActionsText1`.
-        public static var showOnHome: LocalizedMessage {
-            .init(key: "appLibraryView.contextActionsText1", table: "Interface", fallback: "在主页中显示")
-        }
         /// 实例设置
         ///
         /// Resource: `Interface.appLibraryView.contextActionsText2`.
@@ -249,11 +243,11 @@ extension Messages {
         public static var showInFinder: LocalizedMessage {
             .init(key: "appLibraryView.contextActionsText4", table: "Interface", fallback: "在 Finder 中显示")
         }
-        /// 收藏
+        /// 已固定
         ///
         /// Resource: `Interface.appLibraryView.sectionText1`.
         public static var favorites: LocalizedMessage {
-            .init(key: "appLibraryView.sectionText1", table: "Interface", fallback: "收藏")
+            .init(key: "appLibraryView.sectionText1", table: "Interface", fallback: "已固定")
         }
         /// 其他实例
         ///
@@ -299,11 +293,10 @@ extension Messages {
             "Interface:appLibraryView.gridText1": .init("或从工具栏导入整合包", []),
             "Interface:appLibraryView.iconButtonText1": .init("更换图标或编辑实例设置", []),
             "Interface:appLibraryView.iconButtonText2": .init("编辑 %1$@ 的图标和设置", [.text]),
-            "Interface:appLibraryView.contextActionsText1": .init("在主页中显示", []),
             "Interface:appLibraryView.contextActionsText2": .init("实例设置", []),
             "Interface:appLibraryView.contextActionsText3": .init("管理模组与资源包", []),
             "Interface:appLibraryView.contextActionsText4": .init("在 Finder 中显示", []),
-            "Interface:appLibraryView.sectionText1": .init("收藏", []),
+            "Interface:appLibraryView.sectionText1": .init("已固定", []),
             "Interface:appLibraryView.sectionText2": .init("其他实例", []),
         ]
     }

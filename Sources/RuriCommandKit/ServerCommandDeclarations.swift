@@ -109,6 +109,7 @@ struct ServerPreferencesCommand: ExecutableCommand {
         .init(name: "alias", type: "string", required: false, help: Messages.Servers.alias.localized, values: []),
         .init(name: "notes", type: "string", required: false, help: Messages.Servers.notes.localized, values: []),
         .init(name: "preferred-instance", type: "string", required: false, help: Messages.Servers.preferredInstance.localized, values: []),
+        .init(name: "saved", type: "string", required: false, help: Messages.Servers.savedInLibrary.localized, values: ["true", "false"]),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
     ], mutation: true, confirmation: false) }
     @OptionGroup var common: CommonOptions
@@ -116,8 +117,9 @@ struct ServerPreferencesCommand: ExecutableCommand {
     @Option(name: .customLong("alias"), help: ArgumentHelp(Messages.Servers.alias.localized)) var optionAlias: String?
     @Option(name: .customLong("notes"), help: ArgumentHelp(Messages.Servers.notes.localized)) var optionNotes: String?
     @Option(name: .customLong("preferred-instance"), help: ArgumentHelp(Messages.Servers.preferredInstance.localized)) var optionPreferredInstance: String?
+    @Option(name: .customLong("saved"), help: ArgumentHelp(Messages.Servers.savedInLibrary.localized)) var optionSaved: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    var parameters: [String: Value] { ["alias": .text(optionAlias), "notes": .text(optionNotes), "preferred-instance": .text(optionPreferredInstance), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
+    var parameters: [String: Value] { ["alias": .text(optionAlias), "notes": .text(optionNotes), "preferred-instance": .text(optionPreferredInstance), "saved": .text(optionSaved), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
 }
 
 struct ServerQueryCommand: ExecutableCommand {

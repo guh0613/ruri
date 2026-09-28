@@ -3,14 +3,18 @@ import SwiftUI
 import AppKit
 import RuriCore
 
-/// The landing page: the instance to play next, running games, play history,
-/// and shortcuts to the things a new player does first.
+/// The landing page: the instance launched last, running games, what the
+/// player pinned, play history, and shortcuts to the things a new player
+/// does first.
 struct HomeView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
+    let servers: ServerNavigationState
     private var featured: GameInstance? { model.selected }
+    private var pinned: [GameInstance] { model.directoryInstances.filter(\.favorite).sorted { $0.createdAt > $1.createdAt } }
+    /// Pinned instances are already a click away, so they aren't repeated here.
     private var recent: [GameInstance] {
-        Array(model.directoryInstances.filter { $0.id != featured?.id }
+        Array(model.directoryInstances.filter { $0.id != featured?.id && !$0.favorite }
             .sorted { ($0.lastPlayed ?? .distantPast, $0.createdAt) > ($1.lastPlayed ?? .distantPast, $1.createdAt) }
             .prefix(8))
     }
@@ -25,6 +29,7 @@ struct HomeView: View {
                         featuredSection(featured)
                     }
                     if !running.isEmpty { runningSection }
+                    HomePinnedSection(instances: pinned, servers: servers)
                     HomeActivityCard()
                     if !recent.isEmpty { recentSection }
                     quickActions(columns: geometry.size.width >= 1000 ? 4 : geometry.size.width >= 620 ? 2 : 1)
@@ -117,7 +122,7 @@ struct HomeView: View {
     private func featuredActions(_ instance: GameInstance) -> some View {
         HStack(spacing: 12) {
             InstanceQuickActions(instance: instance)
-            InstanceMenu(instance: instance, showsSelect: false) { Image(systemName: "ellipsis.circle").font(.title3) }
+            InstanceMenu(instance: instance) { Image(systemName: "ellipsis.circle").font(.title3) }
         }.fixedSize()
     }
 
@@ -195,11 +200,13 @@ struct HomeView: View {
         }
         .padding(.horizontal, 20).padding(.vertical, 16)
         .contentShape(Rectangle())
-        .onTapGesture { model.select(instance) }
-        .help(Messages.AppHomeView.setAsFeaturedHint.localized)
+        .onTapGesture { model.showInstance(instance) }
+        .help(Messages.AppHomeView.showInLibraryHint.localized)
         .contextMenu {
             Group {
-                Button(Messages.AppHomeView.setAsFeatured.localized, systemImage: "house") { model.select(instance) }
+                Button(Messages.AppHomeView.showInLibrary.localized, systemImage: "square.grid.2x2") { model.showInstance(instance) }
+                InstancePinButton(instance: instance)
+                Divider()
                 Button(Messages.AppHomeView.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                 Button(Messages.AppHomeView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }
             }.labelStyle(.titleAndIcon)

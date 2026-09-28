@@ -5,19 +5,17 @@ import RuriCore
 import RuriLocalization
 
 enum ServerScope: String, CaseIterable, Identifiable {
-    case all, favorites, recent
+    case all, recent
     var id: String { rawValue }
     var title: String {
         switch self {
         case .all: Messages.Servers.allServers.localized
-        case .favorites: Messages.Servers.favorites.localized
         case .recent: Messages.Servers.recent.localized
         }
     }
     var symbol: String {
         switch self {
         case .all: "server.rack"
-        case .favorites: "star"
         case .recent: "clock"
         }
     }
@@ -80,6 +78,7 @@ extension AppModel {
     var refreshID = UUID()
     var queryID = UUID()
     var editor: ServerEditorRequest?
+    var removeTarget: ServerLibraryItem?
     var joining = false
     @ObservationIgnored private var lastRound: (key: String, date: Date)?
 
@@ -166,6 +165,13 @@ extension AppModel {
         } catch { model.error = error.localizedDescription }
     }
 
+    func remove(_ item: ServerLibraryItem, model: AppModel) {
+        do {
+            model.acceptState(try ServerLibrary.remove(item.address, paths: model.basePaths))
+            refreshID = UUID()
+        } catch { model.error = error.localizedDescription }
+    }
+
     /// Adds the server to the instance's multiplayer list when it isn't there
     /// yet, so the game shows it afterwards, then launches straight into it.
     func join(_ item: ServerLibraryItem, with instance: GameInstance, model: AppModel) {
@@ -188,8 +194,8 @@ extension AppModel {
     }
 }
 
-/// Servers from every instance's multiplayer list and the player's own
-/// favorites, as a master–detail page like the library.
+/// Servers from every instance's multiplayer list and the ones the player
+/// saved in Ruri, as a master–detail page like the library.
 struct ServersView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
@@ -200,7 +206,6 @@ struct ServersView: View {
     private var filtered: [ServerLibraryItem] {
         let history = navigation.snapshot?.history ?? [:]
         return items.filter { item in
-            (navigation.scope != .favorites || item.preference?.favorite == true) &&
             (navigation.scope != .recent || history[item.id] != nil) &&
             (navigation.instanceID.map { (item.instanceIDs + item.playedInstanceIDs).contains($0) } ?? true) &&
             (navigation.search.isEmpty || item.name.localizedCaseInsensitiveContains(navigation.search) || item.address.authority.localizedCaseInsensitiveContains(navigation.search))
@@ -223,6 +228,12 @@ struct ServersView: View {
                     }
                 }
                 .toolbar { RootToolbar(model: model) }
+                .confirmationDialog(Messages.Servers.removeFromLibraryConfirm.localized, isPresented: Binding(get: { navigation.removeTarget != nil }, set: { if !$0 { navigation.removeTarget = nil } }), titleVisibility: .visible) {
+                    Button(Messages.Servers.removeFromLibrary.localized, role: .destructive) {
+                        if let target = navigation.removeTarget { navigation.remove(target, model: model) }
+                        navigation.removeTarget = nil
+                    }
+                } message: { Text(Messages.Servers.removeFromLibraryDetail.localized) }
         }
     }
 
@@ -285,15 +296,15 @@ struct ServersView: View {
         return Messages.Servers.filteredServerCount(Int64(filtered.count), Int64(items.count)).localized
     }
 
-    /// Favorites get their own section only when there is something else to
-    /// set them apart from. Double-clicking a row joins the server.
+    /// Pinned servers get their own section only when there is something else
+    /// to set them apart from. Double-clicking a row joins the server.
     private var list: some View {
         List(selection: $navigation.selectedID) {
-            let favorites = navigation.scope == .all ? filtered.filter { $0.preference?.favorite == true } : []
-            if favorites.isEmpty || favorites.count == filtered.count {
+            let pinned = navigation.scope == .all ? filtered.filter { $0.preference?.favorite == true } : []
+            if pinned.isEmpty || pinned.count == filtered.count {
                 rows(filtered)
             } else {
-                Section(Messages.Servers.favorites.localized) { rows(favorites) }
+                Section(Messages.Servers.favorites.localized) { rows(pinned) }
                 Section(Messages.Servers.otherServers.localized) { rows(filtered.filter { $0.preference?.favorite != true }) }
             }
         }
@@ -374,13 +385,7 @@ private struct ServerRow: View {
         HStack(spacing: 10) {
             ServerIcon(data: reachability.status?.icon ?? item.icon, size: 32)
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 4) {
-                    Text(item.name).font(.body.weight(.medium)).lineLimit(1)
-                    if item.preference?.favorite == true {
-                        Image(systemName: "star.fill").font(.system(size: 9)).foregroundStyle(.yellow)
-                            .accessibilityLabel(Messages.Servers.favorites.localized)
-                    }
-                }
+                Text(item.name).font(.body.weight(.medium)).lineLimit(1)
                 Text(item.address.authority).font(.caption).foregroundStyle(.secondary).lineLimit(1)
             }
             Spacer(minLength: 4)
@@ -477,8 +482,8 @@ struct ServerContextActions: View {
                 .disabled(navigation.joining || (model.activeSessions[instance.id] == nil && (model.busy || model.readOnly || model.isInstanceInUse(instance.id))))
             Divider()
         }
-        let favorite = item.preference?.favorite == true
-        Button(favorite ? Messages.Servers.unfavorite.localized : Messages.Servers.favorite.localized, systemImage: favorite ? "star.slash" : "star") {
+        let pinned = item.preference?.favorite == true
+        Button(pinned ? Messages.Servers.unfavorite.localized : Messages.Servers.favorite.localized, systemImage: pinned ? "pin.slash" : "pin") {
             navigation.toggleFavorite(item, model: model)
         }.disabled(model.readOnly)
         Button(Messages.Servers.globalSettings.localized, systemImage: "slider.horizontal.3") {
@@ -488,6 +493,11 @@ struct ServerContextActions: View {
         Button(Messages.Servers.copyAddress.localized, systemImage: "doc.on.doc") { copyServerAddress(item.address) }
         Button(Messages.Servers.refreshStatus.localized, systemImage: "arrow.clockwise") { Task { await navigation.refresh(item.address) } }
             .disabled(navigation.querying.contains(item.id))
+        if item.preference?.saved == true {
+            Divider()
+            Button(Messages.Servers.removeFromLibrary.localized, systemImage: "trash", role: .destructive) { navigation.removeTarget = item }
+                .disabled(model.readOnly)
+        }
     }
 }
 

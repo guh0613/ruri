@@ -281,7 +281,7 @@
 "cliInterface.tb19f8bbe0060" = "实例 ID 和新名称。";
 
 /* @symbol CLIInterface.t850a4e6bffbd @args - */
-"cliInterface.t850a4e6bffbd" = "设置实例的收藏状态。";
+"cliInterface.t850a4e6bffbd" = "设置实例是否固定到主页。";
 
 /* @symbol CLIInterface.t07e88e1b19e9 @args - */
 "cliInterface.t07e88e1b19e9" = "实例 ID 和收藏状态，状态为 true 或 false。";

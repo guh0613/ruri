@@ -35,7 +35,7 @@
 "all" = "全部";
 
 /* @symbol Servers.favorites @args - */
-"favorites" = "收藏";
+"favorites" = "已固定";
 
 /* @symbol Servers.recent @args - */
 "recent" = "最近游玩";
@@ -74,10 +74,10 @@
 "chooseInstance" = "选择实例";
 
 /* @symbol Servers.independent @args - */
-"independent" = "仅在 Ruri 中收藏";
+"independent" = "仅保存在 Ruri 中";
 
 /* @symbol Servers.favorite @args - */
-"favorite" = "收藏";
+"favorite" = "固定到主页";
 
 /* @symbol Servers.alias @args - */
 "alias" = "显示别名";
@@ -209,7 +209,7 @@
 "refreshRequired" = "列表尚未加载，请稍后重试。";
 
 /* @symbol Servers.deleteConfirm @args - */
-"deleteConfirm" = "从此实例的游戏列表移除服务器？收藏和历史记录会保留。";
+"deleteConfirm" = "从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。";
 
 /* @symbol Servers.confirmRemove @args - */
 "confirmRemove" = "移除";
@@ -254,7 +254,7 @@
 "showAll" = "显示全部服务器";
 
 /* @symbol Servers.unfavorite @args - */
-"unfavorite" = "取消收藏";
+"unfavorite" = "取消固定";
 
 /* @symbol Servers.copyAddress @args - */
 "copyAddress" = "拷贝地址";
@@ -345,6 +345,18 @@
 
 /* @symbol Servers.favoriteOnlyFooter @args - */
 "favoriteOnlyFooter" = "服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。";
+
+/* @symbol Servers.removeFromLibrary @args - */
+"removeFromLibrary" = "从 Ruri 中移除";
+
+/* @symbol Servers.removeFromLibraryConfirm @args - */
+"removeFromLibraryConfirm" = "从 Ruri 中移除此服务器？";
+
+/* @symbol Servers.removeFromLibraryDetail @args - */
+"removeFromLibraryDetail" = "Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。";
+
+/* @symbol Servers.savedInLibrary @args - */
+"savedInLibrary" = "即使没有实例列出，也保存在 Ruri 中";
 
 /* @symbol Servers.settingsFooter @args - */
 "settingsFooter" = "别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。";

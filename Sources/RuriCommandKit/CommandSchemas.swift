@@ -143,7 +143,7 @@ enum CommandSchemas {
         }
         if p.first == "server" {
             let row = object(["id": .object(["anyOf": .array([integer, string])]), "name": string, "address": string, "resourcePacks": string, "validAddress": boolean,
-                              "favorite": boolean, "instanceIDs": array(string), "notes": string, "preferredInstanceID": nullable(string)])
+                              "favorite": boolean, "saved": boolean, "instanceIDs": array(string), "notes": string, "preferredInstanceID": nullable(string)])
             if action == "list" { return page(row).mergingSchema(object(["warnings": array(string)])) }
             if action == "query" { return object(["address": string, "description": string, "version": nullable(string), "protocolVersion": nullable(integer), "online": nullable(integer), "maximum": nullable(integer), "latencyMilliseconds": nullable(integer), "playerSample": array(string), "queriedAt": string]) }
             return row.mergingSchema(object(["dryRun": boolean, "instanceID": string, "revision": string, "items": array(row)]))

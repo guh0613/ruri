@@ -55,6 +55,11 @@ struct LibraryView: View {
                 navigation.selectedID = preferred.flatMap { ids.contains($0) ? $0 : nil } ?? ids.first
             }
             .onChange(of: navigation.selectedID) { _, id in if id == nil { navigation.selectedID = filtered.first?.id } }
+            .onChange(of: model.libraryFocus, initial: true) { _, id in
+                guard let id else { return }
+                navigation.search = ""; navigation.selectedID = id
+                model.libraryFocus = nil
+            }
     }
 
     private var countLabel: String {
@@ -89,16 +94,16 @@ struct LibraryView: View {
         }
     }
 
-    /// Favorites get their own section only when there is something else to
-    /// set them apart from. Double-clicking a row launches it, and Delete
+    /// Pinned instances get their own section only when there is something
+    /// else to set them apart from. Double-clicking a row launches it, and Delete
     /// moves it to the Trash after confirming.
     private var list: some View {
         List(selection: $navigation.selectedID) {
-            let favorites = filtered.filter(\.favorite)
-            if favorites.isEmpty || favorites.count == filtered.count {
+            let pinned = filtered.filter(\.favorite)
+            if pinned.isEmpty || pinned.count == filtered.count {
                 rows(filtered)
             } else {
-                Section(Messages.AppLibraryView.favorites.localized) { rows(favorites) }
+                Section(Messages.AppLibraryView.favorites.localized) { rows(pinned) }
                 Section(Messages.AppLibraryView.otherInstances.localized) { rows(filtered.filter { !$0.favorite }) }
             }
         }
@@ -241,7 +246,8 @@ private struct LibraryContextActions: View {
     let instance: GameInstance
     let onTrash: (GameInstance) -> Void
     var body: some View {
-        Button(Messages.AppLibraryView.showOnHome.localized, systemImage: "house") { model.select(instance) }
+        InstancePinButton(instance: instance)
+        Divider()
         Button(Messages.AppLibraryView.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
         Button(Messages.AppLibraryView.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
         Button(Messages.AppLibraryView.showInFinder.localized, systemImage: "folder") { model.reveal(instance) }

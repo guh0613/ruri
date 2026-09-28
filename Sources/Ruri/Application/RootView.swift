@@ -13,6 +13,8 @@ struct RootView: View {
     @State private var libraryNavigation = LibraryNavigationState()
     @State private var historyCache = GameHistoryView.Cache()
     @State private var serverNavigation = ServerNavigationState()
+    /// Pinned servers on the home page keep their own status rounds.
+    @State private var homeServers = ServerNavigationState()
     @State private var accountsNavigation = AccountsNavigationState()
     private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts || model.page == .servers }
     private var minimumWindowWidth: CGFloat {
@@ -64,7 +66,7 @@ struct RootView: View {
                 } detail: {
                     Group {
                         switch model.page {
-                        case .home, .library, .accounts, .servers: HomeView()
+                        case .home, .library, .accounts, .servers: HomeView(servers: homeServers)
                         case .discover: DiscoverView()
                         case .history: GameHistoryView(cache: historyCache, instanceID: model.historyInstanceID)
                         case .activity: LauncherLogView().id(model.logNavigationID)

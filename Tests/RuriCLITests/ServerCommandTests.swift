@@ -18,7 +18,11 @@ import Testing
         #expect(try listed.value["data"]["total"] == .integer(1))
         let unset = CommandCapture()
         #expect(await CLIApplication.run(["server", "favorite", "example.test", "--value", "false"] + common, write: unset.write) == 0)
-        #expect(try StateStore.load(LauncherPaths(root: root)).servers?.first?.favorite == false)
+        let unpinned = try #require(try StateStore.load(LauncherPaths(root: root)).servers?.first)
+        #expect(!unpinned.favorite && unpinned.saved)
+        let forgotten = CommandCapture()
+        #expect(await CLIApplication.run(["server", "preferences", "example.test", "--saved", "false", "--alias", ""] + common, write: forgotten.write) == 0)
+        #expect(try StateStore.load(LauncherPaths(root: root)).servers?.isEmpty == true)
     }
     @Test func instanceListCRUDAndConflictValidation() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

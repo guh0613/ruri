@@ -75,11 +75,11 @@ extension Messages {
         public static var all: LocalizedMessage {
             .init(key: "all", table: "Servers", fallback: "全部")
         }
-        /// 收藏
+        /// 已固定
         ///
         /// Resource: `Servers.favorites`.
         public static var favorites: LocalizedMessage {
-            .init(key: "favorites", table: "Servers", fallback: "收藏")
+            .init(key: "favorites", table: "Servers", fallback: "已固定")
         }
         /// 最近游玩
         ///
@@ -153,17 +153,17 @@ extension Messages {
         public static var chooseInstance: LocalizedMessage {
             .init(key: "chooseInstance", table: "Servers", fallback: "选择实例")
         }
-        /// 仅在 Ruri 中收藏
+        /// 仅保存在 Ruri 中
         ///
         /// Resource: `Servers.independent`.
         public static var independent: LocalizedMessage {
-            .init(key: "independent", table: "Servers", fallback: "仅在 Ruri 中收藏")
+            .init(key: "independent", table: "Servers", fallback: "仅保存在 Ruri 中")
         }
-        /// 收藏
+        /// 固定到主页
         ///
         /// Resource: `Servers.favorite`.
         public static var favorite: LocalizedMessage {
-            .init(key: "favorite", table: "Servers", fallback: "收藏")
+            .init(key: "favorite", table: "Servers", fallback: "固定到主页")
         }
         /// 显示别名
         ///
@@ -423,11 +423,11 @@ extension Messages {
         public static var refreshRequired: LocalizedMessage {
             .init(key: "refreshRequired", table: "Servers", fallback: "列表尚未加载，请稍后重试。")
         }
-        /// 从此实例的游戏列表移除服务器？收藏和历史记录会保留。
+        /// 从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。
         ///
         /// Resource: `Servers.deleteConfirm`.
         public static var deleteConfirm: LocalizedMessage {
-            .init(key: "deleteConfirm", table: "Servers", fallback: "从此实例的游戏列表移除服务器？收藏和历史记录会保留。")
+            .init(key: "deleteConfirm", table: "Servers", fallback: "从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。")
         }
         /// 移除
         ///
@@ -513,11 +513,11 @@ extension Messages {
         public static var showAll: LocalizedMessage {
             .init(key: "showAll", table: "Servers", fallback: "显示全部服务器")
         }
-        /// 取消收藏
+        /// 取消固定
         ///
         /// Resource: `Servers.unfavorite`.
         public static var unfavorite: LocalizedMessage {
-            .init(key: "unfavorite", table: "Servers", fallback: "取消收藏")
+            .init(key: "unfavorite", table: "Servers", fallback: "取消固定")
         }
         /// 拷贝地址
         ///
@@ -699,6 +699,30 @@ extension Messages {
         public static var favoriteOnlyFooter: LocalizedMessage {
             .init(key: "favoriteOnlyFooter", table: "Servers", fallback: "服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。")
         }
+        /// 从 Ruri 中移除
+        ///
+        /// Resource: `Servers.removeFromLibrary`.
+        public static var removeFromLibrary: LocalizedMessage {
+            .init(key: "removeFromLibrary", table: "Servers", fallback: "从 Ruri 中移除")
+        }
+        /// 从 Ruri 中移除此服务器？
+        ///
+        /// Resource: `Servers.removeFromLibraryConfirm`.
+        public static var removeFromLibraryConfirm: LocalizedMessage {
+            .init(key: "removeFromLibraryConfirm", table: "Servers", fallback: "从 Ruri 中移除此服务器？")
+        }
+        /// Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。
+        ///
+        /// Resource: `Servers.removeFromLibraryDetail`.
+        public static var removeFromLibraryDetail: LocalizedMessage {
+            .init(key: "removeFromLibraryDetail", table: "Servers", fallback: "Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。")
+        }
+        /// 即使没有实例列出，也保存在 Ruri 中
+        ///
+        /// Resource: `Servers.savedInLibrary`.
+        public static var savedInLibrary: LocalizedMessage {
+            .init(key: "savedInLibrary", table: "Servers", fallback: "即使没有实例列出，也保存在 Ruri 中")
+        }
         /// 别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。
         ///
         /// Resource: `Servers.settingsFooter`.
@@ -760,7 +784,7 @@ extension Messages {
             "Servers:invalidResponse": .init("服务器返回了无效或过大的响应。", []),
             "Servers:page": .init("服务器", []),
             "Servers:all": .init("全部", []),
-            "Servers:favorites": .init("收藏", []),
+            "Servers:favorites": .init("已固定", []),
             "Servers:recent": .init("最近游玩", []),
             "Servers:add": .init("添加服务器", []),
             "Servers:edit": .init("编辑服务器", []),
@@ -773,8 +797,8 @@ extension Messages {
             "Servers:join": .init("启动并加入", []),
             "Servers:addAndJoin": .init("添加到此实例并启动", []),
             "Servers:chooseInstance": .init("选择实例", []),
-            "Servers:independent": .init("仅在 Ruri 中收藏", []),
-            "Servers:favorite": .init("收藏", []),
+            "Servers:independent": .init("仅保存在 Ruri 中", []),
+            "Servers:favorite": .init("固定到主页", []),
             "Servers:alias": .init("显示别名", []),
             "Servers:notes": .init("备注", []),
             "Servers:preferredInstance": .init("首选实例", []),
@@ -818,7 +842,7 @@ extension Messages {
             "Servers:listErrors": .init("部分实例列表无法读取", []),
             "Servers:loading": .init("正在读取服务器", []),
             "Servers:refreshRequired": .init("列表尚未加载，请稍后重试。", []),
-            "Servers:deleteConfirm": .init("从此实例的游戏列表移除服务器？收藏和历史记录会保留。", []),
+            "Servers:deleteConfirm": .init("从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。", []),
             "Servers:confirmRemove": .init("移除", []),
             "Servers:probe": .init("查询状态", []),
             "Servers:noInstance": .init("先创建或导入一个实例。", []),
@@ -833,7 +857,7 @@ extension Messages {
             "Servers:noMatches": .init("没有符合条件的服务器", []),
             "Servers:noMatchesDescription": .init("换个筛选条件，或显示全部服务器。", []),
             "Servers:showAll": .init("显示全部服务器", []),
-            "Servers:unfavorite": .init("取消收藏", []),
+            "Servers:unfavorite": .init("取消固定", []),
             "Servers:copyAddress": .init("拷贝地址", []),
             "Servers:moreActions": .init("更多操作", []),
             "Servers:refreshStatus": .init("刷新状态", []),
@@ -864,6 +888,10 @@ extension Messages {
             "Servers:saveTo": .init("保存到", []),
             "Servers:saveToFooter": .init("添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。", []),
             "Servers:favoriteOnlyFooter": .init("服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。", []),
+            "Servers:removeFromLibrary": .init("从 Ruri 中移除", []),
+            "Servers:removeFromLibraryConfirm": .init("从 Ruri 中移除此服务器？", []),
+            "Servers:removeFromLibraryDetail": .init("Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。", []),
+            "Servers:savedInLibrary": .init("即使没有实例列出，也保存在 Ruri 中", []),
             "Servers:settingsFooter": .init("别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。", []),
             "Servers:previewPrompt": .init("输入地址后会自动查询服务器状态。", []),
             "Servers:displayName": .init("显示名称", []),

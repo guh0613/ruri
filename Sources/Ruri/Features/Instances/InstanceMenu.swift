@@ -7,8 +7,6 @@ import RuriCore
 struct InstanceMenu<Content: View>: View {
     @Environment(AppModel.self) private var model
     let instance: GameInstance
-    /// Hidden on the home page, where the instance is already the one shown.
-    var showsSelect = true
     /// When nil the destructive entry is omitted, so callers without a
     /// confirmation dialog never expose it.
     var onTrash: ((GameInstance) -> Void)? = nil
@@ -18,8 +16,7 @@ struct InstanceMenu<Content: View>: View {
         Menu {
             // Style the items themselves so macOS 27 marks their images visible.
             Group {
-                if showsSelect { Button(Messages.AppInstanceMenu.showOnHome.localized, systemImage: "house") { model.select(instance) } }
-                Button(instance.favorite ? Messages.AppInstanceMenu.unfavorite.localized : Messages.AppInstanceMenu.favorite.localized, systemImage: instance.favorite ? "star.slash" : "star") { model.setFavorite(!instance.favorite, for: instance) }
+                InstancePinButton(instance: instance)
                 Divider()
                 Button(Messages.AppInstanceMenu.instanceSettings.localized, systemImage: "slider.horizontal.3") { model.editingInstance = instance }
                 Button(Messages.AppInstanceMenu.manageModsAndResourcePacks.localized, systemImage: "puzzlepiece.extension") { model.contentPresentation = .init(instance: instance) }
@@ -54,7 +51,34 @@ struct InstanceMenu<Content: View>: View {
 
 extension InstanceMenu where Content == Image {
     /// The ellipsis form used on cards and rows.
-    init(instance: GameInstance, showsSelect: Bool = true, onTrash: ((GameInstance) -> Void)? = nil) {
-        self.init(instance: instance, showsSelect: showsSelect, onTrash: onTrash) { Image(systemName: "ellipsis.circle") }
+    init(instance: GameInstance, onTrash: ((GameInstance) -> Void)? = nil) {
+        self.init(instance: instance, onTrash: onTrash) { Image(systemName: "ellipsis.circle") }
+    }
+}
+
+/// Pins or unpins the instance, as a menu item.
+struct InstancePinButton: View {
+    @Environment(AppModel.self) private var model
+    let instance: GameInstance
+    var body: some View {
+        Button(instance.favorite ? Messages.AppInstanceMenu.unfavorite.localized : Messages.AppInstanceMenu.favorite.localized,
+               systemImage: instance.favorite ? "pin.slash" : "pin") { model.setFavorite(!instance.favorite, for: instance) }
+            .disabled(model.readOnly)
+    }
+}
+
+/// The round pin toggle in a detail page's header, filled while pinned.
+struct PinToggleButton: View {
+    let pinned: Bool
+    let action: () -> Void
+    var body: some View {
+        let title = pinned ? Messages.AppInstanceMenu.unfavorite.localized : Messages.AppInstanceMenu.favorite.localized
+        Button(action: action) {
+            Image(systemName: pinned ? "pin.fill" : "pin").frame(width: 18, height: 18)
+                .foregroundStyle(pinned ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(.primary))
+                .contentTransition(.symbolEffect(.replace))
+        }
+        .buttonStyle(.bordered).buttonBorderShape(.circle).controlSize(.large)
+        .help(title).accessibilityLabel(title)
     }
 }

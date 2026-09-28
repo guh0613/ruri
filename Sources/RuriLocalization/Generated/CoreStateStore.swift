@@ -45,11 +45,11 @@ extension Messages {
         public static var name: LocalizedMessage {
             .init(key: "coreStateStore.labelsText6", table: "Core", fallback: "名称")
         }
-        /// 收藏状态
+        /// 固定状态
         ///
         /// Resource: `Core.coreStateStore.labelsText7`.
         public static var favoriteStatus: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText7", table: "Core", fallback: "收藏状态")
+            .init(key: "coreStateStore.labelsText7", table: "Core", fallback: "固定状态")
         }
         /// 内存
         ///
@@ -197,7 +197,7 @@ extension Messages {
             "Core:coreStateStore.labelsText4": .init("保留的文件夹记录", []),
             "Core:coreStateStore.labelsText5": .init("启动器设置", []),
             "Core:coreStateStore.labelsText6": .init("名称", []),
-            "Core:coreStateStore.labelsText7": .init("收藏状态", []),
+            "Core:coreStateStore.labelsText7": .init("固定状态", []),
             "Core:coreStateStore.labelsText8": .init("内存", []),
             "Core:coreStateStore.labelsText10": .init("Java 选择", []),
             "Core:coreStateStore.labelsText11": .init("窗口宽度", []),

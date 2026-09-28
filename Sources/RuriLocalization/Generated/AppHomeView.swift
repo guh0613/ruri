@@ -147,17 +147,23 @@ extension Messages {
         public static var recentlyPlayed: LocalizedMessage {
             .init(key: "appHomeView.recentSectionText1", table: "Interface", fallback: "最近游玩")
         }
-        /// 点按后在“继续游戏”中显示
+        /// 点按以在实例库中查看
         ///
         /// Resource: `Interface.appHomeView.recentRowText1`.
-        public static var setAsFeaturedHint: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText1", table: "Interface", fallback: "点按后在“继续游戏”中显示")
+        public static var showInLibraryHint: LocalizedMessage {
+            .init(key: "appHomeView.recentRowText1", table: "Interface", fallback: "点按以在实例库中查看")
         }
-        /// 在“继续游戏”中显示
+        /// 在实例库中显示
         ///
         /// Resource: `Interface.appHomeView.recentRowText2`.
-        public static var setAsFeatured: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText2", table: "Interface", fallback: "在“继续游戏”中显示")
+        public static var showInLibrary: LocalizedMessage {
+            .init(key: "appHomeView.recentRowText2", table: "Interface", fallback: "在实例库中显示")
+        }
+        /// 已固定
+        ///
+        /// Resource: `Interface.appHomeView.pinnedSectionText1`.
+        public static var pinned: LocalizedMessage {
+            .init(key: "appHomeView.pinnedSectionText1", table: "Interface", fallback: "已固定")
         }
         /// 实例设置
         ///
@@ -250,8 +256,9 @@ extension Messages {
             "Interface:appHomeView.activitySectionText1": .init("正在进行", []),
             "Interface:appHomeView.activitySectionText2": .init("全部任务", []),
             "Interface:appHomeView.recentSectionText1": .init("最近游玩", []),
-            "Interface:appHomeView.recentRowText1": .init("点按后在“继续游戏”中显示", []),
-            "Interface:appHomeView.recentRowText2": .init("在“继续游戏”中显示", []),
+            "Interface:appHomeView.recentRowText1": .init("点按以在实例库中查看", []),
+            "Interface:appHomeView.recentRowText2": .init("在实例库中显示", []),
+            "Interface:appHomeView.pinnedSectionText1": .init("已固定", []),
             "Interface:appHomeView.recentRowText3": .init("实例设置", []),
             "Interface:appHomeView.recentRowText4": .init("在 Finder 中显示", []),
             "Interface:appHomeView.quickActionsText1": .init("快捷操作", []),

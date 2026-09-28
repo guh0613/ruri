@@ -80,6 +80,8 @@ import RuriCore
     var serverInstance: GameInstance?
     /// A server the server center should reveal and select when it next appears.
     var serverFocus: String?
+    /// An instance the library should reveal and select when it next appears.
+    var libraryFocus: UUID?
     var schematicInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?

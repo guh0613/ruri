@@ -99,6 +99,12 @@ import Foundation
             try Task.checkCancellation()
             try advance(.starting)
             try await GameMonitorClient.start(plan: plan, recorder: recorder, paths: paths, secrets: authenticated.secrets + [token])
+            // The instance launched last is the one the home page offers to
+            // continue, as long as it belongs to the folder being shown.
+            _ = try? StateStore.updateIfChanged(self.paths) { state in
+                let directory = state.instances.first { $0.id == instanceID }.map { $0.directoryID ?? GameDirectory.defaultID }
+                if directory != nil, directory == (state.selectedDirectoryID ?? GameDirectory.defaultID) { state.selectedInstanceID = instanceID }
+            }
             updated(recorder.record)
             return recorder.record
         } catch {

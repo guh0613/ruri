@@ -75,6 +75,19 @@ struct ServerListTests {
         #expect(library.items[0].name == "Favorite")
         #expect(try StateStore.load(paths).servers?.first?.address == address)
     }
+    @Test func unpinningKeepsSavedServersAndLegacyFavoritesStaySaved() throws {
+        let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
+        defer { try? FileManager.default.removeItem(at: paths.root) }
+        let address = try ServerAddress("example.test")
+        try ServerLibrary.save(.init(address: address, favorite: true, saved: true), paths: paths)
+        try ServerLibrary.save(.init(address: address, favorite: false, saved: true), paths: paths)
+        #expect(try StateStore.load(paths).servers?.first?.saved == true)
+        try ServerLibrary.remove(address, paths: paths)
+        #expect(try StateStore.load(paths).servers?.isEmpty == true)
+        let legacy = #"{"address":"example.test","favorite":true,"alias":"","notes":""}"#
+        let decoded = try JSONDecoder().decode(ServerPreference.self, from: Data(legacy.utf8))
+        #expect(decoded.favorite && decoded.saved)
+    }
     @Test func sharedDirectoriesHaveOneListAndOneWriterAndRemovedInstancesCannotWrite() throws {
         let base = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString))
         defer { try? FileManager.default.removeItem(at: base.root) }

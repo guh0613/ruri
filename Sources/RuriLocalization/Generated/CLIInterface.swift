@@ -567,11 +567,11 @@ extension Messages {
         public static var tb19f8bbe0060: LocalizedMessage {
             .init(key: "cliInterface.tb19f8bbe0060", table: "CLIInterface", fallback: "实例 ID 和新名称。")
         }
-        /// 设置实例的收藏状态。
+        /// 设置实例是否固定到主页。
         ///
         /// Resource: `CLIInterface.cliInterface.t850a4e6bffbd`.
         public static var t850a4e6bffbd: LocalizedMessage {
-            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "设置实例的收藏状态。")
+            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "设置实例是否固定到主页。")
         }
         /// 实例 ID 和收藏状态，状态为 true 或 false。
         ///
@@ -2408,7 +2408,7 @@ extension Messages {
             "CLIInterface:cliInterface.ta4178213b601": .init("选择实例。", []),
             "CLIInterface:cliInterface.t5ba0c4853561": .init("重命名实例。", []),
             "CLIInterface:cliInterface.tb19f8bbe0060": .init("实例 ID 和新名称。", []),
-            "CLIInterface:cliInterface.t850a4e6bffbd": .init("设置实例的收藏状态。", []),
+            "CLIInterface:cliInterface.t850a4e6bffbd": .init("设置实例是否固定到主页。", []),
             "CLIInterface:cliInterface.t07e88e1b19e9": .init("实例 ID 和收藏状态，状态为 true 或 false。", []),
             "CLIInterface:cliInterface.t1e047c3f4441": .init("将实例自有文件移到废纸篓，并移除实例记录。", []),
             "CLIInterface:cliInterface.t2774fd42ed73": .init("设置或重置实例图标。", []),

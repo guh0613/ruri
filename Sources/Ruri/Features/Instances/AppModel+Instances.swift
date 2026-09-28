@@ -7,6 +7,12 @@ extension AppModel {
         do { acceptState(try InstanceService(paths: basePaths).select(instance.id)) }
         catch { self.error = error.localizedDescription }
     }
+    /// Opens the library with the instance selected and the search cleared.
+    func showInstance(_ instance: GameInstance) {
+        libraryFocus = instance.id
+        page = .library
+    }
+    /// Pins the instance to the home page and the top of the library.
     func setFavorite(_ favorite: Bool, for instance: GameInstance) {
         guard !readOnly else { return }
         do {

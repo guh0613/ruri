@@ -75,11 +75,11 @@ extension Messages {
         public static var enterInstanceName: LocalizedMessage {
             .init(key: "appInstanceSettingsView.overviewText4", table: "Interface", fallback: "输入实例名称")
         }
-        /// 收藏此实例
+        /// 固定到主页
         ///
         /// Resource: `Interface.appInstanceSettingsView.overviewText5`.
         public static var favoriteInstance: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText5", table: "Interface", fallback: "收藏此实例")
+            .init(key: "appInstanceSettingsView.overviewText5", table: "Interface", fallback: "固定到主页")
         }
         /// 实例图标
         ///
@@ -340,7 +340,7 @@ extension Messages {
             "Interface:appInstanceSettingsView.overviewText2": .init("名称", []),
             "Interface:appInstanceSettingsView.overviewText3": .init("实例名称", []),
             "Interface:appInstanceSettingsView.overviewText4": .init("输入实例名称", []),
-            "Interface:appInstanceSettingsView.overviewText5": .init("收藏此实例", []),
+            "Interface:appInstanceSettingsView.overviewText5": .init("固定到主页", []),
             "Interface:appInstanceSettingsView.overviewText6": .init("实例图标", []),
             "Interface:appInstanceSettingsView.overviewText7": .init("可选用内置图标，或使用自定义图片（自动裁剪为正方形）。", []),
             "Interface:appInstanceSettingsView.overviewText8": .init("更改图标", []),

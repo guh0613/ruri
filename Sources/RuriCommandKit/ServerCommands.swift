@@ -23,7 +23,7 @@ extension CLIApplication {
             }
             let library = ServerLibrary.load(paths: paths, state: state)
             var result = request.page(library.items.filter { matchesServer($0.name, $0.address.authority, request: request) }.map { item in
-                .object(["id": .string(item.id), "address": .string(item.address.authority), "name": .string(item.name), "favorite": .bool(item.preference?.favorite == true),
+                .object(["id": .string(item.id), "address": .string(item.address.authority), "name": .string(item.name), "favorite": .bool(item.preference?.favorite == true), "saved": .bool(item.preference?.saved == true),
                          "instanceIDs": .array(item.instanceIDs.map { .string($0.uuidString) }), "notes": .string(item.preference?.notes ?? ""), "preferredInstanceID": .text(item.preference?.preferredInstanceID?.uuidString)])
             }).object!
             result["warnings"] = .array(library.errors.sorted { $0.key.uuidString < $1.key.uuidString }.map { .string($0.key.uuidString + ": " + $0.value) })
@@ -32,8 +32,9 @@ extension CLIApplication {
         if action == "favorite" || action == "preferences" || (action == "add" && request.string("instance") == nil) {
             let endpoint = try address(request.operand())
             var preference = state.servers?.first { $0.id == endpoint.key } ?? .init(address: endpoint)
-            if action == "add" { preference.favorite = true; preference.alias = request.string("name") ?? preference.alias }
+            if action == "add" { preference.saved = true; preference.alias = request.string("name") ?? preference.alias }
             if action == "favorite" { preference.favorite = request.string("value") == "true" }
+            if let saved = request.string("saved") { preference.saved = saved == "true" }
             if let alias = request.string("alias") { preference.alias = alias }
             if let notes = request.string("notes") { preference.notes = notes }
             if let target = request.string("preferred-instance") {
@@ -42,7 +43,7 @@ extension CLIApplication {
             }
             guard preference.alias.utf8.count <= 1024, preference.notes.utf8.count <= 16384 else { throw OperationFailure("INVALID_ARGUMENT", Messages.Servers.invalidList.localized) }
             if !request.dryRun { try ServerLibrary.save(preference, paths: paths) }
-            return .object(["address": .string(endpoint.authority), "favorite": .bool(preference.favorite), "name": .string(preference.alias), "notes": .string(preference.notes), "preferredInstanceID": .text(preference.preferredInstanceID?.uuidString)])
+            return .object(["address": .string(endpoint.authority), "favorite": .bool(preference.favorite), "saved": .bool(preference.saved), "name": .string(preference.alias), "notes": .string(preference.notes), "preferredInstanceID": .text(preference.preferredInstanceID?.uuidString)])
         }
         let id = try uuid(action == "add" ? request.required("instance") : request.operand())
         _ = try InstanceService(paths: paths).resolve(id: id)

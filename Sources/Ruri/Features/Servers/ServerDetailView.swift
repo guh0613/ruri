@@ -18,7 +18,7 @@ struct ServerDetailView: View {
     private var querying: Bool { navigation.querying.contains(item.id) }
     private var summary: ServerPlaySummary? { navigation.snapshot?.history[item.id] }
     private var icon: Data? { response?.icon ?? item.icon }
-    private var favorite: Bool { item.preference?.favorite == true }
+    private var pinned: Bool { item.preference?.favorite == true }
 
     var body: some View {
         GeometryReader { geometry in
@@ -80,14 +80,8 @@ struct ServerDetailView: View {
             ServerIcon(data: icon, size: 96)
                 .shadow(color: .black.opacity(0.22), radius: 14, y: 6)
             VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(item.name).font(.system(size: 30, weight: .bold)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
-                        .textSelection(.enabled)
-                    if favorite {
-                        Image(systemName: "star.fill").font(.title3).foregroundStyle(.yellow)
-                            .accessibilityLabel(Messages.Servers.favorites.localized)
-                    }
-                }
+                Text(item.name).font(.system(size: 30, weight: .bold)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                    .textSelection(.enabled)
                 HStack(spacing: 6) {
                     Text(item.address.authority).font(.callout.monospaced()).foregroundStyle(.secondary)
                         .lineLimit(1).truncationMode(.middle).textSelection(.enabled)
@@ -111,9 +105,7 @@ struct ServerDetailView: View {
 
     private var actions: some View {
         HStack(spacing: 10) {
-            circleAction(favorite ? "star.fill" : "star", favorite ? Messages.Servers.unfavorite.localized : Messages.Servers.favorite.localized) {
-                navigation.toggleFavorite(item, model: model)
-            }.disabled(model.readOnly)
+            PinToggleButton(pinned: pinned) { navigation.toggleFavorite(item, model: model) }.disabled(model.readOnly)
             circleAction("slider.horizontal.3", Messages.Servers.globalSettings.localized) {
                 navigation.editor = .init(item: item, status: response)
             }.disabled(model.readOnly)
@@ -125,6 +117,11 @@ struct ServerDetailView: View {
                     if let instance = selectedInstance {
                         Divider()
                         Button(Messages.Servers.manage.localized + " · " + instance.name, systemImage: "list.bullet") { model.serverInstance = instance }
+                    }
+                    if item.preference?.saved == true {
+                        Divider()
+                        Button(Messages.Servers.removeFromLibrary.localized, systemImage: "trash", role: .destructive) { navigation.removeTarget = item }
+                            .disabled(model.readOnly)
                     }
                 }.labelStyle(.titleAndIcon)
             } label: { Image(systemName: "ellipsis.circle").font(.title2) }

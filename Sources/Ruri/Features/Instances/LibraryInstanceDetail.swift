@@ -146,6 +146,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
 
     private var actions: some View {
         HStack(spacing: 10) {
+            PinToggleButton(pinned: instance.favorite) { model.setFavorite(!instance.favorite, for: instance) }.disabled(model.readOnly)
             circleAction("slider.horizontal.3", Messages.AppLibraryView.instanceSettings.localized) { model.editingInstance = instance }
             circleAction("folder", Messages.AppLibraryView.showInFinder.localized) { model.reveal(instance) }
             InstanceMenu(instance: instance, onTrash: onTrash) { Image(systemName: "ellipsis.circle").font(.title2) }

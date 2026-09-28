@@ -883,11 +883,14 @@
 /* @symbol AppHomeView.recentlyPlayed @args - */
 "appHomeView.recentSectionText1" = "最近游玩";
 
-/* @symbol AppHomeView.setAsFeaturedHint @args - */
-"appHomeView.recentRowText1" = "点按后在“继续游戏”中显示";
+/* @symbol AppHomeView.showInLibraryHint @args - */
+"appHomeView.recentRowText1" = "点按以在实例库中查看";
 
-/* @symbol AppHomeView.setAsFeatured @args - */
-"appHomeView.recentRowText2" = "在“继续游戏”中显示";
+/* @symbol AppHomeView.showInLibrary @args - */
+"appHomeView.recentRowText2" = "在实例库中显示";
+
+/* @symbol AppHomeView.pinned @args - */
+"appHomeView.pinnedSectionText1" = "已固定";
 
 /* @symbol AppHomeView.instanceSettings @args - */
 "appHomeView.recentRowText3" = "实例设置";
@@ -1315,14 +1318,11 @@
 /* @symbol AppInstanceComponentsView.noCompatibleLoader @args - */
 "appInstanceComponentsView.currentText1" = "未找到兼容版本";
 
-/* @symbol AppInstanceMenu.showOnHome @args - */
-"appInstanceMenu.bodyText1" = "在主页中显示";
-
 /* @symbol AppInstanceMenu.unfavorite @args - */
-"appInstanceMenu.bodyText2" = "取消收藏";
+"appInstanceMenu.bodyText2" = "取消固定";
 
 /* @symbol AppInstanceMenu.favorite @args - */
-"appInstanceMenu.bodyText3" = "收藏";
+"appInstanceMenu.bodyText3" = "固定到主页";
 
 /* @symbol AppInstanceMenu.instanceSettings @args - */
 "appInstanceMenu.valueText1" = "实例设置";
@@ -1409,7 +1409,7 @@
 "appInstanceSettingsView.overviewText4" = "输入实例名称";
 
 /* @symbol AppInstanceSettingsView.favoriteInstance @args - */
-"appInstanceSettingsView.overviewText5" = "收藏此实例";
+"appInstanceSettingsView.overviewText5" = "固定到主页";
 
 /* @symbol AppInstanceSettingsView.instanceIcon @args - */
 "appInstanceSettingsView.overviewText6" = "实例图标";
@@ -1828,9 +1828,6 @@
 /* @symbol AppLibraryView.editIconAndSettings @args text */
 "appLibraryView.iconButtonText2" = "编辑 %1$@ 的图标和设置";
 
-/* @symbol AppLibraryView.showOnHome @args - */
-"appLibraryView.contextActionsText1" = "在主页中显示";
-
 /* @symbol AppLibraryView.instanceSettings @args - */
 "appLibraryView.contextActionsText2" = "实例设置";
 
@@ -1841,7 +1838,7 @@
 "appLibraryView.contextActionsText4" = "在 Finder 中显示";
 
 /* @symbol AppLibraryView.favorites @args - */
-"appLibraryView.sectionText1" = "收藏";
+"appLibraryView.sectionText1" = "已固定";
 
 /* @symbol AppLibraryView.otherInstances @args - */
 "appLibraryView.sectionText2" = "其他实例";
