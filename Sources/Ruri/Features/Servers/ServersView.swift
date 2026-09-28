@@ -81,6 +81,7 @@ extension AppModel {
     var queryID = UUID()
     var editor: ServerEditorRequest?
     var joining = false
+    @ObservationIgnored private var lastRound: (key: String, date: Date)?
 
     var filtering: Bool { scope != .all || instanceID != nil }
 
@@ -110,6 +111,20 @@ extension AppModel {
                 if let address = pending.next() { enqueue(address) }
             }
         }
+    }
+    /// Queries the list every minute. A new list or a manual refresh (a new
+    /// key) starts at once; otherwise the next round waits until the last
+    /// finished one is a minute old, so pausing and resuming doesn't re-query.
+    func monitor(_ addresses: [ServerAddress], key: String) async {
+        repeat {
+            if let lastRound, lastRound.key == key {
+                let wait = 60 - Date().timeIntervalSince(lastRound.date)
+                if wait > 0 { do { try await Task.sleep(for: .seconds(wait)) } catch { return } }
+            }
+            await refresh(addresses)
+            guard !Task.isCancelled else { return }
+            lastRound = (key, Date())
+        } while !Task.isCancelled
     }
     /// Queries one server again without restarting the rest of the list.
     func refresh(_ address: ServerAddress) async {
@@ -178,6 +193,7 @@ extension AppModel {
 struct ServersView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.appearsActive) private var appearsActive
     let column: NavigationSplitViewColumn
     @Bindable var navigation: ServerNavigationState
     private var items: [ServerLibraryItem] { navigation.snapshot?.items ?? [] }
@@ -194,6 +210,7 @@ struct ServersView: View {
         }
     }
     private var current: ServerLibraryItem? { filtered.first { $0.id == navigation.selectedID } ?? filtered.first }
+    private var statusKey: String { items.map(\.id).joined(separator: "|") + navigation.refreshID.uuidString }
 
     var body: some View {
         if column == .content { contentColumn }
@@ -245,11 +262,11 @@ struct ServersView: View {
             }
             // Status belongs to the whole library, so typing in the search
             // field or switching filters doesn't start the queries over.
-            .task(id: items.map(\.id).joined(separator: "|") + navigation.refreshID.uuidString) {
-                repeat {
-                    await navigation.refresh(items.map(\.address))
-                    do { try await Task.sleep(for: .seconds(60)) } catch { break }
-                } while !Task.isCancelled
+            // Queries pause while the window is in the background or
+            // minimized, such as while the game is running.
+            .task(id: "\(statusKey)|\(appearsActive)") {
+                guard appearsActive else { return }
+                await navigation.monitor(items.map(\.address), key: statusKey)
             }
             .onChange(of: filtered.map(\.id), initial: true) { _, ids in
                 if navigation.selectedID.map(ids.contains) != true { navigation.selectedID = ids.first }
