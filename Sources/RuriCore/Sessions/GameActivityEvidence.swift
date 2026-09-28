@@ -33,16 +33,25 @@ enum GameActivityLogEvent: Sendable {
 }
 
 struct GameActivityLogParser {
+    // Compiled once: the parser runs for every console line on the main actor.
+    private static let integratedServer = try! NSRegularExpression(pattern: #"^(?:\[[0-9:]+\] )?\[Server thread/INFO\](?: \[[^\]]+\])?:? Starting integrated minecraft server"#)
+    private static let clientMessage = try! NSRegularExpression(pattern: #"^(?:\[[0-9:]+\] )?\[(?:Render thread|Client thread)/(?:INFO|WARN|ERROR)\](?: \[[^\]]+\])?:? (.*)$"#)
+    private static let advancements = try! NSRegularExpression(pattern: #"^Loaded [0-9]+ advancements$"#)
     private var decoder = GameOutputDecoder(omitted: "")
     let version: String
+    private let legacy: Bool
+    init(version: String) {
+        self.version = version
+        legacy = version.range(of: #"^1\.(?:1[2-9])(?:\.[0-9]+)?$"#, options: .regularExpression) != nil
+    }
     mutating func reset() { decoder = GameOutputDecoder(omitted: "") }
     mutating func consume(_ data: Data) -> [GameActivityLogEvent] {
         decoder.consume(data).components(separatedBy: .newlines).compactMap { line in
+            let whole = NSRange(line.startIndex..., in: line)
             // Anchored client-thread messages only. Chat text and arbitrary
             // occurrences of these strings must never become control events.
-            if line.range(of: #"^(?:\[[0-9:]+\] )?\[Server thread/INFO\](?: \[[^\]]+\])?:? Starting integrated minecraft server"#, options: .regularExpression) != nil { return .left(explicit: false) }
-            let pattern = #"^(?:\[[0-9:]+\] )?\[(?:Render thread|Client thread)/(?:INFO|WARN|ERROR)\](?: \[[^\]]+\])?:? (.*)$"#
-            guard let regex = try? NSRegularExpression(pattern: pattern), let match = regex.firstMatch(in: line, range: NSRange(line.startIndex..., in: line)),
+            if Self.integratedServer.firstMatch(in: line, range: whole) != nil { return .left(explicit: false) }
+            guard let match = Self.clientMessage.firstMatch(in: line, range: whole),
                   let range = Range(match.range(at: 1), in: line) else { return nil }
             let body = String(line[range])
             if body.hasPrefix("Connecting to "), let comma = body.lastIndex(of: ",") {
@@ -56,8 +65,7 @@ struct GameActivityLogParser {
             if body.hasPrefix("Disconnected from server:") || body.hasPrefix("Lost connection:") { return .left(explicit: true) }
             // Vanilla 1.12–1.19 logs this after receiving an advancement packet
             // in the play state. It only confirms an already pending connection.
-            if version.range(of: #"^1\.(?:1[2-9])(?:\.[0-9]+)?$"#, options: .regularExpression) != nil,
-               body.range(of: #"^Loaded [0-9]+ advancements$"#, options: .regularExpression) != nil { return .legacyJoined }
+            if legacy, Self.advancements.firstMatch(in: body, range: NSRange(body.startIndex..., in: body)) != nil { return .legacyJoined }
             return nil
         }
     }

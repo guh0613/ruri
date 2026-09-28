@@ -78,6 +78,8 @@ import RuriCore
     var contentPresentation: InstanceContentPresentation?
     var worldInstance: GameInstance?
     var serverInstance: GameInstance?
+    /// A server the server center should reveal and select when it next appears.
+    var serverFocus: String?
     var schematicInstance: GameInstance?
     var curseForgeConfigured = CurseForgeKeyStore.isConfigured()
     var importingInstance: PreparedInstanceImport?
@@ -101,7 +103,7 @@ import RuriCore
     var busy: Bool { operation != nil || restoringGames || isQuitting }
     var isPresentingSheet: Bool {
         showCLISetup || showCreate || showDirectories || showAddDirectory || showAccount || showLogs
-            || editingInstance != nil || contentPresentation != nil || worldInstance != nil || schematicInstance != nil
+            || editingInstance != nil || contentPresentation != nil || worldInstance != nil || serverInstance != nil || schematicInstance != nil
             || importingInstance != nil || exportingInstance != nil || copyingInstance != nil || movingInstance != nil
     }
     var activeActivity: LauncherLogEntry? { journal.entries.first { $0.status == .running } }

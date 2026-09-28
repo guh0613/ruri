@@ -74,10 +74,10 @@
 "chooseInstance" = "选择实例";
 
 /* @symbol Servers.independent @args - */
-"independent" = "仅收藏，不添加到实例";
+"independent" = "仅在 Ruri 中收藏";
 
 /* @symbol Servers.favorite @args - */
-"favorite" = "收藏此服务器";
+"favorite" = "收藏";
 
 /* @symbol Servers.alias @args - */
 "alias" = "显示别名";
@@ -89,7 +89,7 @@
 "preferredInstance" = "首选实例";
 
 /* @symbol Servers.instances @args - */
-"instances" = "关联实例";
+"instances" = "所在实例";
 
 /* @symbol Servers.unknown @args - */
 "unknown" = "未知";
@@ -98,7 +98,7 @@
 "querying" = "查询中";
 
 /* @symbol Servers.reachable @args - */
-"reachable" = "可达";
+"reachable" = "在线";
 
 /* @symbol Servers.timeout @args - */
 "timeout" = "查询超时";
@@ -194,7 +194,7 @@
 "noHistory" = "暂无可统计的游玩记录";
 
 /* @symbol Servers.globalSettings @args - */
-"globalSettings" = "启动器收藏设置";
+"globalSettings" = "服务器设置";
 
 /* @symbol Servers.localEntries @args - */
 "localEntries" = "实例中的服务器条目";
@@ -226,3 +226,146 @@
 /* @symbol Servers.milliseconds @args integer */
 "milliseconds" = "%lld ms";
 
+/* @symbol Servers.allServers @args - */
+"allServers" = "所有服务器";
+
+/* @symbol Servers.allInstances @args - */
+"allInstances" = "所有实例";
+
+/* @symbol Servers.filter @args - */
+"filter" = "筛选";
+
+/* @symbol Servers.otherServers @args - */
+"otherServers" = "其他服务器";
+
+/* @symbol Servers.serverCount @args integer */
+"serverCount" = "%1$lld 个服务器";
+
+/* @symbol Servers.filteredServerCount @args integer,integer */
+"filteredServerCount" = "%1$lld / %2$lld 个服务器";
+
+/* @symbol Servers.noMatches @args - */
+"noMatches" = "没有符合条件的服务器";
+
+/* @symbol Servers.noMatchesDescription @args - */
+"noMatchesDescription" = "换个筛选条件，或显示全部服务器。";
+
+/* @symbol Servers.showAll @args - */
+"showAll" = "显示全部服务器";
+
+/* @symbol Servers.unfavorite @args - */
+"unfavorite" = "取消收藏";
+
+/* @symbol Servers.copyAddress @args - */
+"copyAddress" = "拷贝地址";
+
+/* @symbol Servers.moreActions @args - */
+"moreActions" = "更多操作";
+
+/* @symbol Servers.refreshStatus @args - */
+"refreshStatus" = "刷新状态";
+
+/* @symbol Servers.joinButton @args - */
+"joinButton" = "加入";
+
+/* @symbol Servers.addAndJoinButton @args - */
+"addAndJoinButton" = "添加并加入";
+
+/* @symbol Servers.joinHelp @args - */
+"joinHelp" = "使用所选实例启动游戏并直接连接到此服务器";
+
+/* @symbol Servers.addAndJoinHelp @args - */
+"addAndJoinHelp" = "把服务器添加到所选实例的多人游戏列表，然后启动并连接";
+
+/* @symbol Servers.instanceMenuHelp @args - */
+"instanceMenuHelp" = "选择用于加入服务器的实例";
+
+/* @symbol Servers.listedInstances @args - */
+"listedInstances" = "已添加此服务器";
+
+/* @symbol Servers.otherInstances @args - */
+"otherInstances" = "其他实例";
+
+/* @symbol Servers.statusSection @args - */
+"statusSection" = "服务器状态";
+
+/* @symbol Servers.updatedAt @args text */
+"updatedAt" = "%1$@更新";
+
+/* @symbol Servers.onlinePlayers @args - */
+"onlinePlayers" = "在线玩家";
+
+/* @symbol Servers.morePlayers @args integer */
+"morePlayers" = "另有 %1$lld 人";
+
+/* @symbol Servers.noDescription @args - */
+"noDescription" = "服务器没有提供简介。";
+
+/* @symbol Servers.offline @args - */
+"offline" = "无法连接";
+
+/* @symbol Servers.retry @args - */
+"retry" = "重试";
+
+/* @symbol Servers.maximumPlayers @args integer */
+"maximumPlayers" = "上限 %1$lld";
+
+/* @symbol Servers.protocolVersion @args integer */
+"protocolVersion" = "协议 %1$lld";
+
+/* @symbol Servers.visitCount @args integer */
+"visitCount" = "%1$lld 次游玩";
+
+/* @symbol Servers.notPlayed @args - */
+"notPlayed" = "尚未游玩";
+
+/* @symbol Servers.last30Days @args - */
+"last30Days" = "最近 30 天";
+
+/* @symbol Servers.noRecentPlay @args - */
+"noRecentPlay" = "最近 30 天没有游玩";
+
+/* @symbol Servers.estimatedPortion @args text */
+"estimatedPortion" = "其中估算 %1$@";
+
+/* @symbol Servers.notInInstances @args - */
+"notInInstances" = "尚未添加到任何实例的多人游戏列表。加入时会自动添加到所选实例。";
+
+/* @symbol Servers.manageList @args - */
+"manageList" = "管理列表";
+
+/* @symbol Servers.addressPlaceholder @args - */
+"addressPlaceholder" = "play.example.com";
+
+/* @symbol Servers.saveTo @args - */
+"saveTo" = "保存到";
+
+/* @symbol Servers.saveToFooter @args - */
+"saveToFooter" = "添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。";
+
+/* @symbol Servers.favoriteOnlyFooter @args - */
+"favoriteOnlyFooter" = "服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。";
+
+/* @symbol Servers.settingsFooter @args - */
+"settingsFooter" = "别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。";
+
+/* @symbol Servers.previewPrompt @args - */
+"previewPrompt" = "输入地址后会自动查询服务器状态。";
+
+/* @symbol Servers.displayName @args - */
+"displayName" = "显示名称";
+
+/* @symbol Servers.reorderHint @args - */
+"reorderHint" = "拖移以调整顺序，与游戏内多人游戏列表一致。";
+
+/* @symbol Servers.emptyInstanceList @args - */
+"emptyInstanceList" = "多人游戏列表为空";
+
+/* @symbol Servers.emptyInstanceListDescription @args - */
+"emptyInstanceListDescription" = "添加的服务器会出现在游戏的多人游戏列表中。";
+
+/* @symbol Servers.showInServers @args - */
+"showInServers" = "在服务器页面中查看";
+
+/* @symbol Servers.automaticInstance @args - */
+"automaticInstance" = "自动选择";

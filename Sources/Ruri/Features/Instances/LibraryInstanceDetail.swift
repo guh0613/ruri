@@ -14,6 +14,7 @@ struct LibraryInstanceSnapshot {
     var worlds: [WorldSnapshot] = []
     var worldIcons: [String: NSImage] = [:]
     var backups = 0
+    var servers: [ServerEntry] = []
     var loaded = false
     var sessions: [GameSession] = []
     var historyDays: [GameSessionTiming.Day] = []
@@ -40,8 +41,8 @@ struct LibraryInstanceDetail<Notices: View>: View {
     private var loaded: Bool { snapshot.loaded }
     private var sessions: [GameSession] { snapshot.sessions }
     private var historyDays: [GameSessionTiming.Day] { snapshot.historyDays }
-    /// Counts are read again when a content or save manager closes.
-    private var managerOpen: Bool { model.contentPresentation != nil || model.worldInstance != nil }
+    /// Counts are read again when a content, save or server manager closes.
+    private var managerOpen: Bool { model.contentPresentation != nil || model.worldInstance != nil || model.serverInstance != nil }
 
     init(instance: GameInstance, cache: ViewSnapshotCache<LibraryInstanceSnapshot.Key, LibraryInstanceSnapshot>,
          cacheKey: LibraryInstanceSnapshot.Key, onTrash: @escaping (GameInstance) -> Void,
@@ -61,11 +62,9 @@ struct LibraryInstanceDetail<Notices: View>: View {
                     hero(topInset: geometry.safeAreaInsets.top)
                     VStack(alignment: .leading, spacing: 32) {
                         notices
-                        strip
-                        SectionTitle(Messages.Servers.page.localized) {
-                            Button(Messages.Servers.manage.localized) { model.serverInstance = instance }.buttonStyle(.link)
-                        }
+                        FactStrip(items: stripItems)
                         worldsSection
+                        serversSection
                         historySection
                     }
                     .padding(.horizontal, 28).padding(.bottom, 32)
@@ -163,48 +162,26 @@ struct LibraryInstanceDetail<Notices: View>: View {
 
     // MARK: Numbers
 
-    private var stripItems: [StripItem] {
+    private var stripItems: [FactStripItem] {
         var items = [
-            StripItem(id: "playTime", label: Messages.AppHomeView.playTime.localized, value: instance.playTimeLabel,
+            FactStripItem(id: "playTime", label: Messages.AppHomeView.playTime.localized, value: instance.playTimeLabel,
                       detail: sessions.isEmpty ? nil : Messages.AppLibraryView.runCount(Int64(sessions.count)).localized),
-            StripItem(id: "lastPlayed", label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized,
+            FactStripItem(id: "lastPlayed", label: Messages.AppHomeView.lastPlayed.localized, value: instance.lastPlayed.map(LocalizedFormat.relative) ?? Messages.AppHomeView.neverPlayed.localized,
                       detail: instance.lastPlayed.map { LocalizedFormat.date($0, time: .omitted) }),
         ]
         for kind in ContentKind.allCases where instance.loader != .vanilla || kind == .resourcepack {
             let tally = content[kind]
-            items.append(StripItem(id: kind.rawValue, label: kind.title, value: tally.map { LocalizedFormat.number($0.total) } ?? (loaded ? "—" : "…"),
+            items.append(FactStripItem(id: kind.rawValue, label: kind.title, value: tally.map { LocalizedFormat.number($0.total) } ?? (loaded ? "—" : "…"),
                                    detail: tally.flatMap { $0.disabled > 0 ? Messages.AppLibraryView.disabledCount(Int64($0.disabled)).localized : nil }) {
                 model.contentPresentation = .init(instance: instance, kind: kind)
             })
         }
         if let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview(workload: MemoryWorkload.cached(paths: model.paths, instance: instance)) {
-            items.append(StripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: LaunchMemory.size(memory.maximumBytes), detail: memory.maximumSource.title))
+            items.append(FactStripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: LaunchMemory.size(memory.maximumBytes), detail: memory.maximumSource.title))
         } else {
-            items.append(StripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: Messages.AppInstancePresentation.memoryNeedsCheck.localized))
+            items.append(FactStripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: Messages.AppInstancePresentation.memoryNeedsCheck.localized))
         }
         return items
-    }
-
-    /// One row of equal columns split by hairlines, like the facts under an
-    /// App Store title; it scrolls sideways when the page is too narrow.
-    private var strip: some View {
-        let items = stripItems
-        return ViewThatFits(in: .horizontal) {
-            stripRow(items, expanded: true)
-            ScrollView(.horizontal, showsIndicators: false) { stripRow(items, expanded: false) }
-        }
-        .overlay(alignment: .top) { Divider() }
-        .overlay(alignment: .bottom) { Divider() }
-    }
-
-    private func stripRow(_ items: [StripItem], expanded: Bool) -> some View {
-        HStack(spacing: 0) {
-            ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
-                if index > 0 { Divider().frame(height: 36) }
-                StripCell(item: item).frame(minWidth: 104, maxWidth: expanded ? .infinity : nil)
-            }
-        }
-        .padding(.vertical, 12)
     }
 
     // MARK: Worlds
@@ -214,7 +191,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
             SectionTitle(Messages.AppLibraryView.worlds.localized) {
                 HStack(spacing: 14) {
                     if backups > 0 { Text(Messages.AppLibraryView.backupCount(Int64(backups)).localized).foregroundStyle(.secondary) }
-                    link(Messages.AppLibraryView.manage.localized) { model.worldInstance = instance }
+                    SectionLink(Messages.AppLibraryView.manage.localized) { model.worldInstance = instance }
                 }
             }
             if !loaded {
@@ -243,6 +220,48 @@ struct LibraryInstanceDetail<Notices: View>: View {
         }
     }
 
+    // MARK: Servers
+
+    /// The instance's multiplayer list in game order; a tile opens the server
+    /// in the server center, where it can be joined or inspected.
+    private var serversSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            SectionTitle(Messages.Servers.page.localized) {
+                HStack(spacing: 14) {
+                    if snapshot.servers.count > 6 { Text(Messages.Servers.serverCount(Int64(snapshot.servers.count)).localized).foregroundStyle(.secondary) }
+                    SectionLink(Messages.Servers.manageList.localized) { model.serverInstance = instance }
+                }
+            }
+            if !loaded {
+                DelayedProgressView().controlSize(.small).frame(maxWidth: .infinity, minHeight: 68)
+            } else if snapshot.servers.isEmpty {
+                Surface(padding: 24) {
+                    VStack(spacing: 10) {
+                        Image(systemName: "server.rack").font(.system(size: 26))
+                            .foregroundStyle(.tertiary).accessibilityHidden(true)
+                        VStack(spacing: 4) {
+                            Text(Messages.Servers.emptyInstanceList.localized).font(.headline)
+                            Text(Messages.Servers.emptyInstanceListDescription.localized).font(.callout)
+                        }.foregroundStyle(.secondary)
+                        Button(Messages.Servers.add.localized) { model.serverInstance = instance }
+                            .disabled(model.readOnly)
+                    }
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+                }
+            } else {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 12)], spacing: 12) {
+                    ForEach(snapshot.servers.prefix(6)) { entry in
+                        ServerTile(entry: entry) {
+                            if let address = entry.endpoint { model.showServer(address) } else { model.serverInstance = instance }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // MARK: Play history
 
     private var playDays: [InstancePlaytimeChart.Day] {
@@ -259,7 +278,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
         let total = days.reduce(0) { $0 + $1.minutes }
         return VStack(alignment: .leading, spacing: 14) {
             SectionTitle(Messages.AppLibraryView.playHistory.localized) {
-                link(Messages.SessionUI.history.localized) { model.showHistory(instanceID: instance.id) }
+                SectionLink(Messages.SessionUI.history.localized) { model.showHistory(instanceID: instance.id) }
             }
             Surface(padding: 0) {
                 if snapshot.historyLoaded {
@@ -294,13 +313,6 @@ struct LibraryInstanceDetail<Notices: View>: View {
         }
     }
 
-    private func link(_ title: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 3) { Text(title); Image(systemName: "chevron.right").font(.caption.weight(.semibold)) }
-        }
-        .buttonStyle(.plain).foregroundStyle(Theme.accent)
-    }
-
     // MARK: Loading
 
     private func load() async {
@@ -311,6 +323,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
             if let tally = try? await manager.count(kind) { counts[kind] = tally }
         }
         let overview = try? await WorldManager(paths: paths, instanceID: id).overview(limit: 6)
+        let servers = await Task.detached(priority: .utility) { try? ServerListManager(paths: paths, instanceID: id).snapshot().entries }.value
         let recent = overview?.recent ?? []
         let icons = await Task.detached(priority: .utility) {
             recent.reduce(into: [String: Data]()) { result, world in
@@ -325,6 +338,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
             snapshot.backups = overview.backups
             snapshot.worldIcons = icons.compactMapValues(NSImage.init(data:))
         }
+        if let servers { snapshot.servers = servers }
         snapshot.loaded = true
         cache[cacheKey] = snapshot
     }
@@ -336,49 +350,6 @@ private extension VerticalAlignment {
     }
 
     static let instanceIdentityCenter = VerticalAlignment(InstanceIdentityCenter.self)
-}
-
-private struct StripItem: Identifiable {
-    let id: String
-    let label: String
-    let value: String
-    var detail: String?
-    var action: (() -> Void)?
-}
-
-private struct StripCell: View {
-    let item: StripItem
-    @State private var hovering = false
-    var body: some View {
-        if let action = item.action {
-            Button(action: action) { cell.contentShape(Rectangle()) }
-                .buttonStyle(.plain)
-                .background(.primary.opacity(hovering ? 0.05 : 0), in: RoundedRectangle(cornerRadius: 8))
-                .onHover { hovering = $0 }
-        } else {
-            cell
-        }
-    }
-    private var cell: some View {
-        VStack(spacing: 4) {
-            Text(item.label).font(.caption.weight(.medium)).foregroundStyle(.secondary).lineLimit(1)
-            Text(item.value).font(.system(size: 20, weight: .semibold, design: .rounded)).monospacedDigit()
-                .lineLimit(1).minimumScaleFactor(0.6)
-            // Cells that open a manager say so with a link-coloured line, so
-            // every cell keeps three lines and none reads as a blank gap.
-            if item.action != nil {
-                HStack(spacing: 2) {
-                    Text(item.detail ?? Messages.AppLibraryView.manage.localized)
-                    Image(systemName: "chevron.right").font(.system(size: 9, weight: .bold))
-                }
-                .font(.caption).foregroundStyle(Theme.accent).lineLimit(1)
-            } else {
-                Text(item.detail ?? " ").font(.caption).foregroundStyle(.secondary).lineLimit(1)
-            }
-        }
-        .padding(.horizontal, 14).padding(.vertical, 4)
-        .frame(maxWidth: .infinity)
-    }
 }
 
 private struct WorldTile: View {
@@ -419,6 +390,33 @@ private struct WorldTile: View {
     }
     private var subtitle: String {
         [world.gameMode, world.version, world.lastPlayed.map(LocalizedFormat.relative)].compactMap { $0 }.joined(separator: " · ")
+    }
+}
+
+private struct ServerTile: View {
+    let entry: ServerEntry
+    let action: () -> Void
+    @State private var hovering = false
+    var body: some View {
+        Surface(padding: 0) {
+            Button(action: action) {
+                HStack(spacing: 12) {
+                    ServerIcon(data: entry.icon, size: 44)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(entry.name.isEmpty ? entry.address : entry.name).font(.headline).lineLimit(1)
+                        Text(entry.endpoint?.authority ?? entry.address).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.primary.opacity(hovering ? 0.045 : 0))
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+        .onHover { hovering = $0 }
+        .help(Messages.Servers.showInServers.localized)
     }
 }
 

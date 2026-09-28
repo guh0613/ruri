@@ -2,6 +2,8 @@ import SwiftUI
 import RuriCore
 import RuriLocalization
 
+/// Time spent on one server: the last 30 days as a chart, the total for the
+/// chosen instance, and each visit, which opens the run it belongs to.
 struct ServerHistorySection: View {
     @Environment(AppModel.self) private var model
     let address: ServerAddress
@@ -13,63 +15,95 @@ struct ServerHistorySection: View {
     @State private var days: [InstancePlaytimeChart.Day] = []
     @State private var hasMore = false
     @State private var loading = false
+    @State private var loaded = false
     @State private var error: String?
     private var current: ServerPlaySummary? { instanceID == nil ? summary : filteredSummary }
     private var key: String { address.key + (instanceID?.uuidString ?? "") + model.historyRevision.uuidString }
+    private var playedInstances: [GameInstance] { model.state.instances.filter { summary?.instanceIDs.contains($0.id) == true } }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                Text(Messages.Servers.history.localized).font(.title3.weight(.semibold))
-                Spacer()
-                Picker(Messages.Servers.instanceName.localized, selection: $instanceID) {
-                    Text(Messages.Servers.all.localized).tag(nil as UUID?)
-                    ForEach(model.state.instances.filter { summary?.instanceIDs.contains($0.id) == true }) { instance in Text(instance.name).tag(Optional(instance.id)) }
-                }.frame(maxWidth: 220)
-            }
-            if let current {
-                HStack(alignment: .firstTextBaseline, spacing: 20) {
-                    VStack(alignment: .leading) {
-                        Text(Messages.Servers.playtime.localized).font(.caption).foregroundStyle(.secondary)
-                        Text(LocalizedFormat.duration(current.seconds)).font(.title2.weight(.semibold)).monospacedDigit()
+            SectionTitle(Messages.Servers.history.localized) {
+                if playedInstances.count > 1 {
+                    Picker(Messages.Servers.instanceName.localized, selection: $instanceID) {
+                        Text(Messages.Servers.allInstances.localized).tag(nil as UUID?)
+                        ForEach(playedInstances) { instance in Text(instance.name).tag(Optional(instance.id)) }
                     }
-                    if current.estimatedSeconds > 0 {
-                        VStack(alignment: .leading) {
-                            Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary)
-                            Text(LocalizedFormat.duration(current.estimatedSeconds)).monospacedDigit()
-                        }
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing) {
-                        Text(Messages.Servers.lastPlayed.localized).font(.caption).foregroundStyle(.secondary)
-                        Text(LocalizedFormat.relative(current.lastPlayed))
-                    }
+                    .pickerStyle(.menu).labelsHidden().fixedSize()
                 }
-                if !days.isEmpty { InstancePlaytimeChart(days: days).frame(height: 140) }
-            } else { Text(Messages.Servers.unavailableTime.localized).foregroundStyle(.secondary) }
-            Text(Messages.Servers.estimateHint.localized).font(.caption).foregroundStyle(.secondary)
-            if let error = error ?? historyError { Text(error).font(.callout).foregroundStyle(.orange) }
-            if visits.isEmpty && !loading { Text(Messages.Servers.noHistory.localized).font(.callout).foregroundStyle(.secondary) }
-            ForEach(visits) { visit in
-                Button {
-                    do { if let record = try GameHistoryStore.load(paths: model.paths, sessionID: visit.sessionID) { model.inspectSession(record) } }
-                    catch { model.error = error.localizedDescription }
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(visit.instanceName).fontWeight(.medium)
-                            Text(visit.segment.startedAt, format: .dateTime.year().month().day().hour().minute()).font(.caption).foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        if visit.segment.quality != .observed { Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary) }
-                        Text(LocalizedFormat.duration(visit.segment.seconds)).monospacedDigit()
-                        Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
-                    }.padding(.vertical, 5).contentShape(Rectangle())
-                }.buttonStyle(.plain)
             }
-            if hasMore { Button(Messages.SessionUI.loadMore.localized) { Task { await load(more: true) } }.disabled(loading) }
+            Surface(padding: 0) {
+                if loaded {
+                    VStack(alignment: .leading, spacing: 0) {
+                        overview.padding(20)
+                        Divider()
+                        visitList
+                    }
+                } else {
+                    DelayedProgressView().frame(maxWidth: .infinity, minHeight: 254)
+                }
+            }
+            if let error = error ?? historyError {
+                Label(error, systemImage: "exclamationmark.triangle.fill").font(.caption).foregroundStyle(.orange).textSelection(.enabled)
+            }
         }
         .task(id: key) { await load(more: false) }
     }
+
+    private var overview: some View {
+        let recent = days.reduce(0) { $0 + $1.minutes }
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(Messages.Servers.last30Days.localized).font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                    if recent > 0 {
+                        Text(LocalizedFormat.duration(recent * 60)).font(.system(size: 22, weight: .semibold, design: .rounded)).monospacedDigit()
+                    } else {
+                        Text(Messages.Servers.noRecentPlay.localized).font(.callout).foregroundStyle(.secondary)
+                    }
+                }
+                Spacer(minLength: 16)
+                if let current {
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(Messages.Servers.playtime.localized).font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        Text(LocalizedFormat.duration(current.seconds)).font(.system(size: 22, weight: .semibold, design: .rounded)).monospacedDigit()
+                        if current.estimatedSeconds > 0 {
+                            HStack(spacing: 4) {
+                                Text(Messages.Servers.estimatedPortion(LocalizedFormat.duration(current.estimatedSeconds)).localized)
+                                Image(systemName: "info.circle")
+                            }
+                            .font(.caption).foregroundStyle(.secondary)
+                            .help(Messages.Servers.estimateHint.localized)
+                        }
+                    }
+                }
+            }
+            InstancePlaytimeChart(days: days).frame(height: 130)
+        }
+    }
+
+    @ViewBuilder private var visitList: some View {
+        if visits.isEmpty {
+            Text(Messages.Servers.noHistory.localized).font(.callout).foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity).padding(.vertical, 18)
+        } else {
+            ForEach(visits) { visit in
+                ServerVisitRow(visit: visit, instance: model.state.instances.first { $0.id == visit.instanceID })
+                if visit.id != visits.last?.id { Divider().padding(.leading, 54) }
+            }
+            if hasMore {
+                Divider()
+                Button { Task { await load(more: true) } } label: {
+                    Group {
+                        if loading { ProgressView().controlSize(.small) } else { Text(Messages.SessionUI.loadMore.localized) }
+                    }
+                    .frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
+                }
+                .buttonStyle(.plain).foregroundStyle(Theme.accent).disabled(loading)
+            }
+        }
+    }
+
     private func load(more: Bool) async {
         let generation = key, paths = model.paths, address = address, instanceID = instanceID, offset = more ? visits.count : 0
         loading = true; defer { if key == generation { loading = false } }
@@ -89,5 +123,38 @@ struct ServerHistorySection: View {
                 Calendar.current.date(byAdding: .day, value: index, to: result.3).map { .init(date: $0, minutes: (measured[$0] ?? 0) / 60) }
             }
         } catch { if !Task.isCancelled, generation == key { self.error = error.localizedDescription } }
+        if generation == key { loaded = true }
+    }
+}
+
+private struct ServerVisitRow: View {
+    @Environment(AppModel.self) private var model
+    let visit: GameActivityVisit
+    let instance: GameInstance?
+    @State private var hovering = false
+    var body: some View {
+        Button {
+            do { if let record = try GameHistoryStore.load(paths: model.paths, sessionID: visit.sessionID) { model.inspectSession(record) } }
+            catch { model.error = error.localizedDescription }
+        } label: {
+            HStack(spacing: 12) {
+                InstanceIcon(instance, size: 26)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(instance?.name ?? visit.instanceName).font(.callout.weight(.medium)).lineLimit(1)
+                    Text(LocalizedFormat.date(visit.segment.startedAt)).font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 8)
+                if visit.segment.quality != .observed {
+                    TagPill(text: Messages.Servers.estimated.localized, color: .secondary).help(Messages.Servers.estimateHint.localized)
+                }
+                Text(LocalizedFormat.duration(visit.segment.seconds)).font(.callout).foregroundStyle(.secondary).monospacedDigit()
+                Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+            }
+            .padding(.horizontal, 16).padding(.vertical, 10)
+            .background(.primary.opacity(hovering ? 0.045 : 0))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
     }
 }

@@ -56,7 +56,7 @@ struct RootView: View {
                         }
                     }
                     .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbarBackground(model.page == .library ? .hidden : .automatic, for: .windowToolbar)
+                    .toolbarBackground(model.page == .library || model.page == .servers ? .hidden : .automatic, for: .windowToolbar)
                 }
             } else {
                 NavigationSplitView(columnVisibility: $columns) {

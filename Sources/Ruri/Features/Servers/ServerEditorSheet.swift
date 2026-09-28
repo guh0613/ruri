@@ -8,8 +8,13 @@ struct ServerEditorRequest: Identifiable {
     var snapshot: ServerListSnapshot?
     var entry: ServerEntry?
     var item: ServerLibraryItem?
+    /// The last known status, so the preview isn't blank while it's queried again.
+    var status: ServerStatus?
 }
 
+/// Adds a server, edits an entry in an instance's multiplayer list, or edits
+/// the launcher's own settings for a server. A preview at the top shows what
+/// the address answers as it is typed.
 struct ServerEditorSheet: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
@@ -23,12 +28,22 @@ struct ServerEditorSheet: View {
     @State private var packs: ServerResourcePacks
     @State private var error: String?
     @State private var status: ServerStatus?
+    @State private var queryError: String?
     @State private var querying = false
     @State private var saving = false
     @State private var savedEntry = false
     @State private var queryRequest = UUID()
     private var preferences: Bool { request.item != nil }
     private var isNew: Bool { request.item == nil && request.entry == nil }
+    private var endpoint: ServerAddress? { try? ServerAddress(address) }
+    private var instanceBusy: Bool { !preferences && selectedInstance.map { model.isInstanceInUse($0) } == true }
+    private var title: String { preferences ? Messages.Servers.globalSettings.localized : isNew ? Messages.Servers.add.localized : Messages.Servers.edit.localized }
+    private var subtitle: String? {
+        if let item = request.item { return item.address.authority }
+        if let id = request.instanceID, !isNew { return model.state.instances.first { $0.id == id }?.name }
+        return nil
+    }
+
     init(request: ServerEditorRequest, completed: @escaping (ServerAddress) -> Void) {
         self.request = request; self.completed = completed
         _address = State(initialValue: request.entry?.address ?? request.item?.address.authority ?? "")
@@ -37,67 +52,166 @@ struct ServerEditorSheet: View {
         _selectedInstance = State(initialValue: request.instanceID ?? request.item?.preference?.preferredInstanceID)
         _favorite = State(initialValue: request.item?.preference?.favorite ?? (request.instanceID == nil))
         _packs = State(initialValue: request.entry?.resourcePacks ?? .ask)
+        _status = State(initialValue: request.status)
     }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(preferences ? Messages.Servers.globalSettings.localized : isNew ? Messages.Servers.add.localized : Messages.Servers.edit.localized).font(.title2.weight(.semibold))
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title).font(.title2.weight(.semibold))
+                if let subtitle { Text(subtitle).font(.callout).foregroundStyle(.secondary).lineLimit(1).textSelection(.enabled) }
+            }
+            .padding(.horizontal, 24).padding(.top, 22).padding(.bottom, 4)
             Form {
-                TextField(Messages.Servers.address.localized, text: $address).disabled(preferences)
-                TextField(preferences ? Messages.Servers.alias.localized : Messages.Servers.name.localized, text: $name)
+                Section { preview }
+                Section {
+                    if preferences {
+                        LabeledContent(Messages.Servers.address.localized) {
+                            Text(address).font(.body.monospaced()).textSelection(.enabled)
+                        }
+                        TextField(Messages.Servers.displayName.localized, text: $name, prompt: Text(request.item?.name ?? ""))
+                    } else {
+                        TextField(Messages.Servers.address.localized, text: $address, prompt: Text(Messages.Servers.addressPlaceholder.localized))
+                        TextField(Messages.Servers.name.localized, text: $name, prompt: Text(endpoint?.authority ?? ""))
+                    }
+                }
                 if preferences {
-                    TextField(Messages.Servers.notes.localized, text: $notes, axis: .vertical).lineLimit(3...6)
-                    Toggle(Messages.Servers.favorite.localized, isOn: $favorite)
-                    Picker(Messages.Servers.preferredInstance.localized, selection: $selectedInstance) {
-                        Text(Messages.Servers.chooseInstance.localized).tag(nil as UUID?)
-                        ForEach(model.state.instances) { instance in Text(instance.name).tag(Optional(instance.id)) }
+                    Section {
+                        Toggle(Messages.Servers.favorite.localized, isOn: $favorite)
+                        Picker(Messages.Servers.preferredInstance.localized, selection: $selectedInstance) {
+                            Text(Messages.Servers.automaticInstance.localized).tag(nil as UUID?)
+                            ForEach(model.state.instances) { instance in Text(instance.name).tag(Optional(instance.id)) }
+                        }
+                    } footer: { footnote(Messages.Servers.settingsFooter.localized) }
+                    Section(Messages.Servers.notes.localized) {
+                        TextField(Messages.Servers.notes.localized, text: $notes, axis: .vertical).lineLimit(4...8).labelsHidden()
                     }
                 } else {
                     if isNew {
-                        Picker(Messages.Servers.instanceName.localized, selection: $selectedInstance) {
-                            Text(Messages.Servers.independent.localized).tag(nil as UUID?)
-                            ForEach(model.state.instances) { instance in Text(instance.name).tag(Optional(instance.id)) }
-                        }.disabled(request.instanceID != nil)
-                        Toggle(Messages.Servers.favorite.localized, isOn: $favorite)
+                        Section {
+                            Picker(Messages.Servers.saveTo.localized, selection: $selectedInstance) {
+                                Text(Messages.Servers.independent.localized).tag(nil as UUID?)
+                                if !model.state.instances.isEmpty {
+                                    Divider()
+                                    ForEach(model.state.instances) { instance in Text(instance.name).tag(Optional(instance.id)) }
+                                }
+                            }.disabled(request.instanceID != nil)
+                            if selectedInstance != nil { Toggle(Messages.Servers.favorite.localized, isOn: $favorite) }
+                        } footer: {
+                            footnote(selectedInstance == nil ? Messages.Servers.favoriteOnlyFooter.localized : Messages.Servers.saveToFooter.localized)
+                        }
                     }
                     if selectedInstance != nil {
-                        Picker(Messages.Servers.resourcePacks.localized, selection: $packs) {
-                            ForEach(ServerResourcePacks.allCases, id: \.self) { policy in Text(policy.title).tag(policy) }
+                        Section {
+                            Picker(Messages.Servers.resourcePacks.localized, selection: $packs) {
+                                ForEach(ServerResourcePacks.allCases, id: \.self) { policy in Text(policy.title).tag(policy) }
+                            }
+                        } footer: {
+                            if instanceBusy { footnote(Messages.Servers.running.localized, symbol: "lock.fill") }
                         }
                     }
                 }
-            }.formStyle(.grouped)
-            if !preferences {
-                HStack {
-                    Button(Messages.Servers.probe.localized) { queryRequest = UUID() }.disabled((try? ServerAddress(address)) == nil || querying)
-                    if querying { ProgressView().controlSize(.small) }
-                    if let status { Text(status.description).font(.callout).lineLimit(2).foregroundStyle(.secondary) }
+                if let error {
+                    Section {
+                        Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(.red).textSelection(.enabled)
+                    }
                 }
-                Text(Messages.Servers.queryHint.localized).font(.caption).foregroundStyle(.secondary)
             }
-            if let error { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
+            .formStyle(.grouped)
+            Divider()
             HStack {
                 Spacer()
                 Button(Messages.Servers.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(Messages.Servers.save.localized) { save() }.keyboardShortcut(.defaultAction)
-                    .disabled(saving || model.readOnly || (try? ServerAddress(address)) == nil || (isNew && selectedInstance == nil && !favorite) || selectedInstance.map { model.isInstanceInUse($0) && !preferences } == true)
+                Button(Messages.Servers.save.localized) { save() }
+                    .buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
+                    .disabled(saving || model.readOnly || endpoint == nil || instanceBusy)
             }
-        }.padding(24).frame(width: 520)
+            .padding(20)
+        }
+        .frame(width: 540, height: preferences ? 600 : 560)
+        .onChange(of: address) { status = nil; queryError = nil }
         .task(id: address + queryRequest.uuidString) {
-            guard !preferences, let endpoint = try? ServerAddress(address) else { status = nil; return }
-            do { try await Task.sleep(for: .milliseconds(500)) } catch { return }
-            querying = true
-            do { let result = try await ServerStatusClient.query(endpoint); if !Task.isCancelled { status = result; error = nil } }
-            catch { if !Task.isCancelled { status = nil; self.error = error.localizedDescription } }
             querying = false
+            guard let endpoint else { status = nil; queryError = nil; return }
+            // Wait for typing to pause, except for the first look at a known server.
+            if !(preferences && status == nil) { do { try await Task.sleep(for: .milliseconds(500)) } catch { return } }
+            querying = true
+            defer { if !Task.isCancelled { querying = false } }
+            do {
+                let result = try await ServerStatusClient.query(endpoint)
+                if !Task.isCancelled { status = result; queryError = nil }
+            } catch {
+                if !Task.isCancelled { status = nil; queryError = error.localizedDescription }
+            }
         }
     }
+
+    // MARK: Preview
+
+    private var previewName: String {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty { return trimmed }
+        return request.item?.name ?? endpoint?.authority ?? Messages.Servers.add.localized
+    }
+
+    /// How the server will look in the list, and whether it answers.
+    private var preview: some View {
+        HStack(spacing: 14) {
+            ServerIcon(data: status?.icon ?? request.entry?.icon ?? request.item?.icon, size: 48)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(previewName).font(.headline).lineLimit(1)
+                Group {
+                    if endpoint == nil {
+                        Text(address.isEmpty ? Messages.Servers.previewPrompt.localized : Messages.Servers.invalidAddress.localized)
+                            .foregroundStyle(address.isEmpty ? AnyShapeStyle(.secondary) : AnyShapeStyle(.red))
+                    } else if let status {
+                        let motd = status.description.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespaces) }.first { !$0.isEmpty }
+                        if let motd { Text(motd).foregroundStyle(.secondary).lineLimit(1) }
+                        HStack(spacing: 8) {
+                            ServerSignal(reachability: .online(status))
+                            Text([status.playersLabel, status.latencyMilliseconds.map { Messages.Servers.milliseconds(Int64($0)).localized }, status.version]
+                                .compactMap { $0 }.joined(separator: " · ")).lineLimit(1)
+                        }.foregroundStyle(.secondary)
+                    } else if querying {
+                        HStack(spacing: 6) { ProgressView().controlSize(.mini); Text(Messages.Servers.querying.localized) }.foregroundStyle(.secondary)
+                    } else if let queryError {
+                        HStack(spacing: 6) {
+                            Image(systemName: "network.slash").foregroundStyle(.red)
+                            Text(queryError).foregroundStyle(.secondary)
+                        }
+                        .help(Messages.Servers.queryHint.localized)
+                    }
+                }
+                .font(.caption)
+            }
+            Spacer(minLength: 8)
+            Button { queryRequest = UUID() } label: { Image(systemName: "arrow.clockwise") }
+                .buttonStyle(.borderless)
+                .disabled(endpoint == nil || querying)
+                .help(Messages.Servers.refreshStatus.localized).accessibilityLabel(Messages.Servers.refreshStatus.localized)
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func footnote(_ text: String, symbol: String? = nil) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            if let symbol { Image(systemName: symbol) }
+            Text(text).fixedSize(horizontal: false, vertical: true)
+        }
+        .font(.caption).foregroundStyle(.secondary)
+    }
+
+    // MARK: Saving
+
     private func save() {
         saving = true
         defer { saving = false }
+        error = nil
         do {
             let endpoint = try ServerAddress(address)
             if preferences {
-                let value = ServerPreference(address: endpoint, favorite: favorite, alias: name, notes: notes, preferredInstanceID: selectedInstance)
+                let alias = name.trimmingCharacters(in: .whitespacesAndNewlines)
+                let value = ServerPreference(address: endpoint, favorite: favorite, alias: alias, notes: notes, preferredInstanceID: selectedInstance)
                 model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
             } else {
                 let title = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? endpoint.authority : name
@@ -108,88 +222,15 @@ struct ServerEditorSheet: View {
                     try manager.apply(change, to: snapshot)
                     savedEntry = true
                 }
-                if isNew && favorite {
+                // A server kept only in Ruri is always a favorite; otherwise it would have nowhere to live.
+                if isNew && (favorite || selectedInstance == nil) {
                     var value = model.state.servers?.first { $0.id == endpoint.key } ?? .init(address: endpoint)
-                    value.favorite = true; value.alias = title
+                    value.favorite = true
+                    if value.alias.isEmpty { value.alias = title == endpoint.authority ? "" : title }
                     model.acceptState(try ServerLibrary.save(value, paths: model.basePaths))
                 }
             }
             completed(endpoint); dismiss()
         } catch { self.error = error.localizedDescription }
-    }
-}
-
-struct ServerManagerView: View {
-    @Environment(AppModel.self) private var model
-    @Environment(\.dismiss) private var dismiss
-    let instance: GameInstance
-    @State private var snapshot: ServerListSnapshot?
-    @State private var failure: String?
-    @State private var editor: ServerEditorRequest?
-    @State private var removing: ServerEntry?
-    @State private var refresh = UUID()
-    private var readOnly: Bool { model.readOnly || model.busy || model.isInstanceInUse(instance.id) }
-    var body: some View {
-        InstanceManagementSheet(title: Messages.Servers.manage.localized, instanceName: instance.name) {
-            HStack {
-                Button(Messages.Servers.add.localized, systemImage: "plus") { editor = .init(instanceID: instance.id) }.disabled(readOnly)
-                Button(Messages.Servers.refresh.localized, systemImage: "arrow.clockwise") { refresh = UUID() }
-                Spacer()
-                if model.isInstanceInUse(instance.id) { Label(Messages.Servers.running.localized, systemImage: "lock").font(.caption).foregroundStyle(.secondary) }
-            }
-        } content: {
-            VStack(alignment: .leading, spacing: 0) {
-                if let failure { Text(failure).foregroundStyle(.red).padding() }
-                if let snapshot {
-                    List {
-                        ForEach(snapshot.entries) { entry in
-                            HStack(spacing: 12) {
-                                ServerIcon(data: entry.icon, size: 36)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(entry.name).font(.headline)
-                                    Text(entry.address).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
-                                }
-                                Spacer()
-                                Text(entry.resourcePacks.title).font(.caption).foregroundStyle(.secondary)
-                                Button { apply(.move(id: entry.id, to: entry.id - 1)) } label: { Image(systemName: "arrow.up") }.help(Messages.Servers.moveUp.localized).disabled(readOnly || entry.id == 0)
-                                Button { apply(.move(id: entry.id, to: entry.id + 1)) } label: { Image(systemName: "arrow.down") }.help(Messages.Servers.moveDown.localized).disabled(readOnly || entry.id == snapshot.entries.count - 1)
-                                Button { editor = .init(instanceID: instance.id, snapshot: snapshot, entry: entry) } label: { Image(systemName: "pencil") }.help(Messages.Servers.edit.localized).disabled(readOnly)
-                                Button(role: .destructive) { removing = entry } label: { Image(systemName: "trash") }.help(Messages.Servers.remove.localized).disabled(readOnly)
-                            }.padding(.vertical, 5)
-                        }
-                    }
-                    .overlay { if snapshot.entries.isEmpty { ContentUnavailableView(Messages.Servers.empty.localized, systemImage: "server.rack") } }
-                } else if failure == nil { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
-            }
-        } footer: {
-            HStack {
-                if model.state.instances.filter({ model.paths.game($0.id).standardizedFileURL.resolvingSymlinksInPath() == model.paths.game(instance.id).standardizedFileURL.resolvingSymlinksInPath() }).count > 1 {
-                    Text(Messages.Servers.sharedDirectory.localized).font(.caption).foregroundStyle(.secondary)
-                }
-                Spacer(); Button(Messages.Servers.cancel.localized) { dismiss() }.keyboardShortcut(.cancelAction)
-            }
-        }
-        .sheet(item: $editor) { request in ServerEditorSheet(request: request) { _ in refresh = UUID() } }
-        .confirmationDialog(Messages.Servers.deleteConfirm.localized, isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible) {
-            Button(Messages.Servers.confirmRemove.localized, role: .destructive) { if let removing { apply(.remove(id: removing.id)) }; removing = nil }
-        }
-        .task(id: refresh.uuidString + (model.state.revision?.uuidString ?? "")) {
-            let paths = model.paths, id = instance.id
-            let observer = FileChangeObserver(directories: [paths.game(id)], fallbackSeconds: 15)
-            defer { observer.cancel() }
-            await load(paths: paths, id: id)
-            for await _ in observer.events { if Task.isCancelled { break }; await load(paths: paths, id: id) }
-        }
-    }
-    private func load(paths: LauncherPaths, id: UUID) async {
-        do {
-            let result = try await Task.detached(priority: .utility) { try ServerListManager(paths: paths, instanceID: id).snapshot() }.value
-            if !Task.isCancelled { snapshot = result; failure = nil }
-        } catch { if !Task.isCancelled { snapshot = nil; failure = error.localizedDescription } }
-    }
-    private func apply(_ change: ServerListChange) {
-        guard let snapshot, !readOnly else { return }
-        do { self.snapshot = try ServerListManager(paths: model.paths, instanceID: instance.id).apply(change, to: snapshot); failure = nil }
-        catch { failure = error.localizedDescription }
     }
 }
