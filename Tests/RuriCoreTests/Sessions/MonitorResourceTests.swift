@@ -56,7 +56,8 @@ struct MonitorResourceTests {
         let running = try load(), file = recorder.directory.appendingPathComponent("log-preview.log")
         #expect(!FileManager.default.fileExists(atPath: file.path))
         #expect(try !GameSessionStore.logTail(paths: paths, session: running).contains("ready"))
-        #expect(try GameMonitorClient.logPreview(paths: paths, session: running).contains("ready <redacted>"))
+        // The session turns running before the monitor has necessarily read the first line.
+        try await waitFor { try GameMonitorClient.logPreview(paths: paths, session: running).contains("ready <redacted>") }
         #expect(!FileManager.default.fileExists(atPath: file.path))
         let exported = paths.root.deletingLastPathComponent().appendingPathComponent("\(UUID().uuidString).log")
         defer { try? FileManager.default.removeItem(at: exported) }
