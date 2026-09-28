@@ -23,6 +23,13 @@ binary_dir="$(scripts/swift-build.sh -c "$configuration" "$@" --show-bin-path)"
 cp "$binary_dir/Ruri" "$app/Contents/MacOS/Ruri"
 cp "$binary_dir/ruri-cli" "$app/Contents/Helpers/ruri-cli"
 cp "$binary_dir/ruri-monitor" "$app/Contents/Helpers/ruri-monitor"
+if [[ "$configuration" == release ]]; then
+  # Symbol tables are about half of each executable; the dSYMs stay in the build folder.
+  for binary in "$app/Contents/MacOS/Ruri" "$app/Contents/Helpers/ruri-cli" "$app/Contents/Helpers/ruri-monitor"; do
+    codesign --remove-signature "$binary"
+    xcrun strip "$binary"
+  done
+fi
 sign_keychain=()
 if [[ -n "${RURI_SIGN_KEYCHAIN:-}" ]]; then sign_keychain=(--keychain "$RURI_SIGN_KEYCHAIN"); fi
 codesign --force --sign "${RURI_SIGN_IDENTITY:--}" "${sign_keychain[@]}" "$app/Contents/Helpers/ruri-monitor"
