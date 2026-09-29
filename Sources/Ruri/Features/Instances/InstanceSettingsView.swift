@@ -85,6 +85,8 @@ struct InstanceSettingsView: View {
             if let origin, origin.provider != .mcbbs, origin.projectID != nil { modpackOrigin = origin }
         }
         .task(id: RuntimeContextKey(java: launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).java, runtimes: model.runtimes)) {
+            // The detail page already looked up the saved Java; start from it.
+            if runtimeContext == nil { runtimeContext = model.runtimeContexts[instance.id] }
             let context = await JVMRuntimeContext.preview(instance: locationInstance, java: launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).java,
                                                           paths: model.paths, runtimes: model.runtimes)
             if !Task.isCancelled { runtimeContext = context }

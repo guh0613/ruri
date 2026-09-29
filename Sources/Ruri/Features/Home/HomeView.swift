@@ -140,6 +140,7 @@ struct HomeView: View {
                 .frame(minWidth: 80, maxWidth: .infinity)
                 .accessibilityElement(children: .combine)
         }
+        .task(id: model.runtimeContextKey(instance)) { await model.refreshRuntimeContext(instance) }
     }
 
     // MARK: Running games

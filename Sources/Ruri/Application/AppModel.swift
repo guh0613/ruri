@@ -17,6 +17,9 @@ import RuriCore
     var catalogLoading = false
     var catalogError: String?
     var runtimes: [JavaRuntime] = []
+    /// The Java each instance would launch with and its flags, for the heap
+    /// and tuning summaries; refreshed by the pages that show them.
+    var runtimeContexts: [UUID: JVMRuntimeContext] = [:]
     var javaEntries: [JavaRuntimeEntry] = []
     var scanningJava = false
     var javaScanAgain = false

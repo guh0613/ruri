@@ -22,6 +22,14 @@ public struct JVMPlan: Equatable, Sendable {
         let tuned = tuning.applying(to: base)
         return .init(base: tuned, memory: try JVMHeapArguments.resolve(base: tuned, arguments: others), tuning: tuning)
     }
+
+    /// The plan settings pages and summaries show for these settings on this
+    /// machine now. Without a context no collector is chosen yet, so the heap
+    /// is the estimate alone.
+    public static func preview(settings: LaunchSettingsValues, workload: MemoryWorkload?, context: JVMRuntimeContext?, availability: MemoryAvailability = .current()) throws -> JVMPlan {
+        try make(base: settings.memory.resolve(availability: availability, workload: workload), mode: settings.jvmTuning, java: context?.java,
+                 capabilities: context?.capabilities, workload: workload ?? .generic, availability: availability, userArguments: ArgumentTokenizer.split(settings.jvmArguments))
+    }
 }
 
 /// The Java a launch of this instance would pick and the flags it accepts,

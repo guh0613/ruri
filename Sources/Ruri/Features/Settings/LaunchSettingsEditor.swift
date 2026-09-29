@@ -31,12 +31,7 @@ struct LaunchSettingsEditor: View {
     /// The same plan a launch makes, so the memory card and the tuning card
     /// cannot disagree: the heap shown already includes any raise for ZGC.
     private var plan: Result<JVMPlan, Error> {
-        Result {
-            let settings = effective
-            return try JVMPlan.make(base: settings.memory.resolve(availability: availability, workload: memoryWorkload), mode: settings.jvmTuning,
-                                    java: runtimeContext?.java, capabilities: runtimeContext?.capabilities, workload: memoryWorkload ?? .generic,
-                                    availability: availability, userArguments: ArgumentTokenizer.split(settings.jvmArguments))
-        }
+        Result { try JVMPlan.preview(settings: effective, workload: memoryWorkload, context: runtimeContext, availability: availability) }
     }
 
     var body: some View {

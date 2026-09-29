@@ -46,8 +46,21 @@ extension AppModel {
         if runningLabel(instance.id) != nil || !instance.installed { return .orange }
         return .green
     }
+    /// The heap a launch would give, collector included, as settings show it.
+    func plannedMemory(_ instance: GameInstance) -> LaunchMemory? {
+        try? JVMPlan.preview(settings: instance.resolvedLaunchSettings(defaults: state.settings), workload: MemoryWorkload.cached(paths: paths, instance: instance),
+                             context: runtimeContexts[instance.id]).memory
+    }
+    /// Everything the context depends on; the manifest cache checks its files itself.
+    func runtimeContextKey(_ instance: GameInstance) -> String {
+        "\(instance.id)|\(instance.resolvedLaunchSettings(defaults: state.settings).java)|\(instance.installed)|\(instance.loaderVersion ?? "")|\(instance.repositoryVersionID ?? "")|\(runtimes.map(\.path))"
+    }
+    func refreshRuntimeContext(_ instance: GameInstance) async {
+        let context = await JVMRuntimeContext.preview(instance: instance, java: instance.resolvedLaunchSettings(defaults: state.settings).java, paths: paths, runtimes: runtimes)
+        if !Task.isCancelled, runtimeContexts[instance.id] != context { runtimeContexts[instance.id] = context }
+    }
     func memoryLabel(_ instance: GameInstance) -> String {
-        guard let memory = try? instance.resolvedLaunchSettings(defaults: state.settings).memoryPreview(workload: MemoryWorkload.cached(paths: paths, instance: instance)) else { return Messages.AppInstancePresentation.memoryNeedsCheck.localized }
+        guard let memory = plannedMemory(instance) else { return Messages.AppInstancePresentation.memoryNeedsCheck.localized }
         return "\(memory.maximumMB) MB" + (memory.maximumSource == .automatic ? Messages.AppInstancePresentation.automaticMemory.localized : memory.maximumSource == .jvmArguments ? Messages.AppInstancePresentation.memoryArguments.localized : "")
     }
 }

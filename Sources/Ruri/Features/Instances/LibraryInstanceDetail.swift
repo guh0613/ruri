@@ -75,6 +75,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
             .softTopScrollEdge()
         }
         .task(id: managerOpen) { if !managerOpen { await load() } }
+        .task(id: model.runtimeContextKey(instance)) { await model.refreshRuntimeContext(instance) }
         .task(id: "\(instance.id)-\(model.historyRevision)") {
             let paths = model.paths, id = instance.id
             let since = Calendar.current.date(byAdding: .day, value: -13, to: Calendar.current.startOfDay(for: Date())) ?? Date()
@@ -177,7 +178,7 @@ struct LibraryInstanceDetail<Notices: View>: View {
                 model.contentPresentation = .init(instance: instance, kind: kind)
             })
         }
-        if let memory = try? instance.resolvedLaunchSettings(defaults: model.state.settings).memoryPreview(workload: MemoryWorkload.cached(paths: model.paths, instance: instance)) {
+        if let memory = model.plannedMemory(instance) {
             items.append(FactStripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: LaunchMemory.size(memory.maximumBytes), detail: memory.maximumSource.title))
         } else {
             items.append(FactStripItem(id: "memory", label: Messages.AppHomeView.memory.localized, value: Messages.AppInstancePresentation.memoryNeedsCheck.localized))
