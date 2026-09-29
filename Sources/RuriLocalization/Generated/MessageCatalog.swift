@@ -141,6 +141,7 @@ enum MessageCatalog {
         result.merge(Messages.CoreInstanceMoveSnapshot.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceMover.definitions) { first, _ in first }
         result.merge(Messages.CoreInstanceTransfer.definitions) { first, _ in first }
+        result.merge(Messages.CoreJVMTuning.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaBytecode.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaInstaller.definitions) { first, _ in first }
         result.merge(Messages.CoreJavaRuntime.definitions) { first, _ in first }

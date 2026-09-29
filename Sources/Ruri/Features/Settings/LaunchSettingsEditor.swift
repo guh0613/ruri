@@ -13,7 +13,12 @@ struct LaunchSettingsEditor: View {
     /// editing the global defaults, which have no instance to inspect.
     var memoryWorkload: MemoryWorkload? = nil
     var scansContent = false
+    /// The Java a launch would use and its flags, for previewing the tuning;
+    /// nil while it is looked up. Only instance settings show the preview.
+    var runtimeContext: JVMRuntimeContext? = nil
+    var showsTuningPreview = false
     @State private var javaIssue: String?
+    @State private var availability = MemoryAvailability.current()
     private var effective: LaunchSettingsValues { overrides.resolve(defaults: defaults) }
     private static let commonWindowSizes: [GameWindowSize] = [.init(width: 1280, height: 720), .init(width: 1600, height: 900), .init(width: 1920, height: 1080), .init(width: 2560, height: 1440)]
     private var javaMajorVersions: [Int] {
@@ -21,6 +26,17 @@ struct LaunchSettingsEditor: View {
         majors.formUnion(runtimes.map(\.major))
         if let major = effective.java.major { majors.insert(major) }
         return majors.sorted()
+    }
+
+    /// The same plan a launch makes, so the memory card and the tuning card
+    /// cannot disagree: the heap shown already includes any raise for ZGC.
+    private var plan: Result<JVMPlan, Error> {
+        Result {
+            let settings = effective
+            return try JVMPlan.make(base: settings.memory.resolve(availability: availability, workload: memoryWorkload), mode: settings.jvmTuning,
+                                    java: runtimeContext?.java, capabilities: runtimeContext?.capabilities, workload: memoryWorkload ?? .generic,
+                                    availability: availability, userArguments: ArgumentTokenizer.split(settings.jvmArguments))
+        }
     }
 
     var body: some View {
@@ -59,8 +75,8 @@ struct LaunchSettingsEditor: View {
     @ViewBuilder private func fields(_ key: LaunchSettingKey) -> some View {
         switch key {
         case .memory:
-            MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), jvmArguments: effective.jvmArguments,
-                                 workload: memoryWorkload, scansContent: scansContent)
+            MemorySettingsEditor(settings: Binding(get: { effective.memory }, set: { overrides.memory = $0 }), memory: plan.map(\.memory),
+                                 workload: memoryWorkload, scansContent: scansContent) { availability = .current() }
         case .java:
             Picker(Messages.AppLaunchSettingsEditor.runtime.localized, selection: Binding(get: { effective.java }, set: { overrides.java = $0; javaIssue = nil })) {
                 Text(Messages.AppLaunchSettingsEditor.autoCompatibleRuntime.localized).tag(JavaSelection.automatic)
@@ -80,6 +96,13 @@ struct LaunchSettingsEditor: View {
             LabeledContent(Messages.AppLaunchSettingsEditor.localJava.localized) { Button(Messages.AppLaunchSettingsEditor.chooseJavaFile.localized, action: chooseJava) }
             if let path = effective.java.path { Text(path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled).lineLimit(2).truncationMode(.middle) }
             if let javaIssue { Text(javaIssue).font(.caption).foregroundStyle(.red) }
+        case .jvmTuning:
+            Picker(Messages.AppLaunchSettingsEditor.jvmTuningPicker.localized, selection: Binding(get: { effective.jvmTuning }, set: { overrides.jvmTuning = $0 })) {
+                ForEach(JVMTuningMode.allCases) { Text($0.title).tag($0) }
+            }
+            if showsTuningPreview, effective.jvmTuning != .off, case .success(let plan) = plan {
+                JVMTuningPreviewCard(java: runtimeContext?.java, tuning: runtimeContext == nil ? nil : plan.tuning, jvmArguments: effective.jvmArguments)
+            }
         case .jvmArguments:
             SettingsTextArea(title: Messages.AppLaunchSettingsEditor.jvmArguments.localized,
                              prompt: Messages.AppLaunchSettingsEditor.jvmArgumentsPlaceholder.localized,
@@ -143,11 +166,11 @@ struct LaunchSettingsEditor: View {
 
 struct MemorySettingsEditor: View {
     @Binding var settings: MemorySettings
-    let jvmArguments: String
+    /// The heap the game would get, from the launch plan.
+    let memory: Result<LaunchMemory, Error>
     var workload: MemoryWorkload? = nil
     var scansContent = false
-    @State private var availability = MemoryAvailability.current()
-    private var preview: Result<LaunchMemory, Error> { Result { try JVMHeapArguments.resolve(base: settings.resolve(availability: availability, workload: workload), arguments: ArgumentTokenizer.split(jvmArguments)) } }
+    let reestimate: () -> Void
     var body: some View {
         Picker(Messages.AppLaunchSettingsEditor.allocationMethod.localized, selection: $settings.mode) { Text(Messages.AppLaunchSettingsEditor.automaticMemory.localized).tag(MemorySettings.Mode.automatic); Text(Messages.AppLaunchSettingsEditor.manualMemory.localized).tag(MemorySettings.Mode.manual) }
         if settings.mode == .manual {
@@ -163,10 +186,10 @@ struct MemorySettingsEditor: View {
             }
         }
         VStack(alignment: .leading, spacing: 6) {
-            switch preview {
+            switch memory {
             case .success(let memory):
                 if settings.mode == .automatic, let estimate = memory.estimate, memory.maximumSource == .automatic {
-                    MemoryEstimateCard(memory: memory, estimate: estimate, scanning: scansContent && workload == nil, scansContent: scansContent) { availability = .current() }
+                    MemoryEstimateCard(memory: memory, estimate: estimate, scanning: scansContent && workload == nil, scansContent: scansContent, reestimate: reestimate)
                 } else {
                     Text(memory.summary).font(.callout).textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
                 }
@@ -238,7 +261,7 @@ struct MemoryEstimateCard: View {
             facts
             if estimate.constrained {
                 status(Messages.AppLaunchSettingsEditor.memoryEstimateShortfall(size(estimate.demandMB), size(estimate.maximumMB)).localized, symbol: "exclamationmark.triangle.fill", tint: .orange)
-            } else if estimate.trimmed {
+            } else if estimate.trimmed && memory.maximumMB < estimate.generousMB {
                 status(Messages.AppLaunchSettingsEditor.memoryEstimateTrimmed(size(estimate.demandMB), size(estimate.generousMB)).localized, symbol: "info.circle", tint: .secondary)
             }
         }
@@ -248,10 +271,12 @@ struct MemoryEstimateCard: View {
 
     /// Track is what the machine allows; the filled part is the heap, split into
     /// basic demand and margin. Demand the machine cannot cover shows as a
-    /// faint orange tail so the shortfall is visible at a glance.
+    /// faint orange tail so the shortfall is visible at a glance. The heap is
+    /// the planned one, so extra room a collector asked for is margin too.
     private var bar: some View {
-        let track = max(estimate.ceilingMB, estimate.generousMB, estimate.demandMB, 1)
-        let granted = min(estimate.maximumMB, estimate.demandMB), margin = max(0, estimate.maximumMB - estimate.demandMB), unmet = max(0, estimate.demandMB - estimate.maximumMB)
+        let heap = memory.maximumMB
+        let track = max(estimate.ceilingMB, estimate.generousMB, estimate.demandMB, heap, 1)
+        let granted = min(heap, estimate.demandMB), margin = max(0, heap - estimate.demandMB), unmet = max(0, estimate.demandMB - heap)
         let tint: Color = estimate.constrained ? .orange : Theme.accent
         return VStack(alignment: .leading, spacing: 6) {
             GeometryReader { geometry in

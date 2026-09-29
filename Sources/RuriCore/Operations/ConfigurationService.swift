@@ -43,6 +43,7 @@ public struct ConfigurationService: Sendable {
         .init(name: "java.mode", type: "string", values: ["automatic", "major", "path"]),
         .init(name: "java.major", type: "integer", nullable: true, minimum: 6, maximum: 99),
         .init(name: "java.path", type: "string", nullable: true),
+        .init(name: "jvmTuning", type: "string", values: JVMTuningMode.allCases.map(\.rawValue)),
         .init(name: "jvmArguments", type: "string"), .init(name: "gameArguments", type: "string"),
         .init(name: "window.width", type: "integer", minimum: 320, maximum: 16384),
         .init(name: "window.height", type: "integer", minimum: 240, maximum: 16384), .init(name: "window.fullscreen", type: "boolean"),
@@ -185,7 +186,7 @@ public struct ConfigurationService: Sendable {
         }
         return .object([
             "memory": .object(["mode": .string(v.memory.mode.rawValue), "maximumMB": .integer(v.memory.maximumMB), "initialMB": v.memory.initialMB.map(OperationValue.integer) ?? .null, "metaspaceMB": v.memory.metaspaceMB.map(OperationValue.integer) ?? .null]),
-            "java": java, "jvmArguments": .string(v.jvmArguments), "gameArguments": .string(v.gameArguments), "environment": .string(v.environment),
+            "java": java, "jvmTuning": .string(v.jvmTuning.rawValue), "jvmArguments": .string(v.jvmArguments), "gameArguments": .string(v.gameArguments), "environment": .string(v.environment),
             "window": .object(["width": .integer(v.window.width), "height": .integer(v.window.height), "fullscreen": .bool(v.window.fullscreen)]),
             "presentation": .object(["hideLauncher": .bool(v.presentation.hideLauncher), "showLogs": .bool(v.presentation.showLogs), "debugLogging": .bool(v.presentation.debugLogging)]),
             "commands": .object(["enabled": .bool(v.commands.enabled), "before": .string(v.commands.before), "after": .string(v.commands.after), "wrapper": .string(v.commands.wrapper), "timeoutSeconds": .integer(v.commands.timeoutSeconds)]),
@@ -202,6 +203,7 @@ public struct ConfigurationService: Sendable {
         default:
             guard let path = v["java"]["path"].string else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t15b3dd14487d.localized) }; result.java = .path(path)
         }
+        result.jvmTuning = JVMTuningMode(rawValue: v["jvmTuning"].string!)!
         result.jvmArguments = v["jvmArguments"].string!; result.gameArguments = v["gameArguments"].string!; result.environment = v["environment"].string!
         result.window = try v["window"].decode(GameWindowSize.self); result.presentation = try v["presentation"].decode(LaunchPresentation.self)
         result.commands = try v["commands"].decode(LaunchCommands.self); result.macOS = try v["macOS"].decode(MacOSGameSettings.self)
@@ -209,7 +211,7 @@ public struct ConfigurationService: Sendable {
     }
     static func copyGroup(_ group: String, from v: InstanceLaunchOverrides, into target: inout InstanceLaunchOverrides) {
         switch LaunchSettingKey(rawValue: group)! {
-        case .memory: target.memory = v.memory; case .java: target.java = v.java; case .window: target.window = v.window
+        case .memory: target.memory = v.memory; case .java: target.java = v.java; case .jvmTuning: target.jvmTuning = v.jvmTuning; case .window: target.window = v.window
         case .jvmArguments: target.jvmArguments = v.jvmArguments; case .gameArguments: target.gameArguments = v.gameArguments
         case .presentation: target.presentation = v.presentation; case .environment: target.environment = v.environment
         case .commands: target.commands = v.commands; case .macOS: target.macOS = v.macOS

@@ -26,10 +26,10 @@ import Foundation
             try WorldQuickPlay.requireSupport(instance: instance, manifest: manifest)
             return try WorldQuickPlay.selection(folder: folder, instanceID: instance.id, paths: paths)
         }
-        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, destination: target)
+        let plan = try await LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, paths: paths, destination: target, capabilities: JavaCapabilities.load(for: java, cache: paths.cache))
         return .object(["instanceID": .string(instanceID.uuidString), "accountID": .string(account.id.uuidString), "accountKind": .string(account.kind.rawValue),
             "javaPath": .string(java.path), "javaMajor": .integer(java.major), "gameDirectory": .string(plan.directory.path),
-            "command": .string(plan.redactedCommand), "authenticationChecked": .bool(account.kind == .offline), "environmentNames": .array((plan.customEnvironmentNames ?? []).map(OperationValue.string))])
+            "command": .string(plan.redactedCommand), "jvmTuning": try plan.tuning.map { try .encode($0) } ?? .null, "authenticationChecked": .bool(account.kind == .offline), "environmentNames": .array((plan.customEnvironmentNames ?? []).map(OperationValue.string))])
     }
     public func start(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil, destination: LaunchDestination = .normal, recorder provided: GameSessionRecorder? = nil,
                       javaResolver: (@MainActor (GameInstance, VersionManifest) async throws -> JavaRuntime)? = nil,
@@ -91,7 +91,8 @@ import Foundation
             try recorder.setJava(java.label + " · " + java.version)
             try advance(.arguments)
             try await installer.prepareRunDirectory(instance, manifest: manifest)
-            let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, destination: target, externalAuth: externalAuth, offlineSkin: offlineSkin)
+            let capabilities = await JavaCapabilities.load(for: java, cache: paths.cache)
+            let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: token, paths: paths, destination: target, externalAuth: externalAuth, offlineSkin: offlineSkin, capabilities: capabilities)
             recorder.addSecrets(plan.environmentRedactions + [token])
             try recorder.append(plan.redactedCommand)
             try recorder.setDestination(target)

@@ -1338,5 +1338,10 @@
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0 OR EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND (instr(lower(a.name),lower(?))>0 OR instr(lower(a.target),lower(?))>0)))\"",
     "reason": "SQLite search query including activity target names and addresses."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/JVMTuningPreviewCard.swift",
+    "literal": "\"Java \\($0.version)\"",
+    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   }
 ]

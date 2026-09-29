@@ -22,6 +22,10 @@ struct InstanceSettingsView: View {
     @State private var modpackOrigin: ModpackOrigin?
     @State private var preservedWorkspaces: [URL] = []
     @State private var memoryWorkload: MemoryWorkload?
+    /// Looked up once per Java choice here, above the panes, so switching panes
+    /// or editing other settings never waits for it again.
+    @State private var runtimeContext: JVMRuntimeContext?
+    private struct RuntimeContextKey: Equatable { let java: JavaSelection; let runtimes: [JavaRuntime] }
     private let original: GameInstance
     private var locationInstance: GameInstance { model.state.instances.first(where: { $0.id == instance.id }) ?? instance }
     private var directoryCopyPending: Bool { model.pendingDirectoryCopyIDs.contains(instance.id) || RunDirectoryCopyGuard.hasPending(paths: model.paths, instanceID: instance.id) }
@@ -40,7 +44,7 @@ struct InstanceSettingsView: View {
                         Section { LabeledContent(Messages.AppInstanceSettingsView.supportedJava.localized, value: LocalizedFormat.list(versions.map(String.init))) }
                     }
                     LaunchSettingsEditor(overrides: $launchOverrides, defaults: model.state.settings.defaultLaunchSettings, runtimes: model.runtimes, keys: pane.launchKeys,
-                                         memoryWorkload: memoryWorkload, scansContent: true)
+                                         memoryWorkload: memoryWorkload, scansContent: true, runtimeContext: runtimeContext, showsTuningPreview: true)
                 }
             }
             Divider()
@@ -79,6 +83,11 @@ struct InstanceSettingsView: View {
             let paths = model.paths, id = instance.id
             let origin = await Task.detached(priority: .utility) { try? ModpackRegistry.load(paths: paths, instanceID: id)?.origin }.value
             if let origin, origin.provider != .mcbbs, origin.projectID != nil { modpackOrigin = origin }
+        }
+        .task(id: RuntimeContextKey(java: launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).java, runtimes: model.runtimes)) {
+            let context = await JVMRuntimeContext.preview(instance: locationInstance, java: launchOverrides.resolve(defaults: model.state.settings.defaultLaunchSettings).java,
+                                                          paths: model.paths, runtimes: model.runtimes)
+            if !Task.isCancelled { runtimeContext = context }
         }
         .task {
             let paths = model.paths, scanned = locationInstance

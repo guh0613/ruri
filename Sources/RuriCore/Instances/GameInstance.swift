@@ -15,6 +15,8 @@ public struct GameInstance: Codable, Identifiable, Equatable, Sendable {
     public var javaMajor: Int?
     public var environmentVariables: String?
     public var launchCommands: LaunchCommands?
+    /// Nil in records from before JVM tuning existed; launches treat it as recommended.
+    public var jvmTuning: JVMTuningMode?
     public var extraJVMArguments: String
     public var extraGameArguments: String?
     public var supportedJavaMajors: [Int]?

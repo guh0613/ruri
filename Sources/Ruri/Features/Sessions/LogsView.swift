@@ -190,7 +190,7 @@ struct LogsView: View {
                 StatTile(label: Messages.HistoryUI.loader.localized,
                          value: (LoaderKind(rawValue: session.loader)?.title ?? session.loader) + (session.loaderVersion.map { " " + $0 } ?? ""))
                 StatTile(label: "Java", value: session.java ?? "—")
-                StatTile(label: Messages.HistoryUI.memory.localized, value: LocalizedFormat.bytes(Int64(session.memoryMB) * 1_048_576, memory: true))
+                StatTile(label: Messages.HistoryUI.memory.localized, value: LocalizedFormat.bytes(Int64(session.memoryMB) * 1_048_576, memory: true) + (session.tuning?.collector.map { " · " + $0.title } ?? ""))
                 StatTile(label: Messages.SessionUI.environment.localized, value: session.hostArchitecture)
             }
         }

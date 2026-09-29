@@ -110,6 +110,9 @@ public struct GameDiagnosticBundle: Sendable {
             session.exit.map { String($0.status) } ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
             session.exit.map { $0.stopRequested ? Messages.CoreGameDiagnosticBundle.yes.localized : Messages.CoreGameDiagnosticBundle.no.localized } ?? Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized,
             session.exit?.normalQuitRequested == true ? Messages.CoreGameDiagnosticBundle.yes.localized : session.normalQuitAttempt?.accepted == true ? Messages.CoreGameDiagnosticBundle.exitPending.localized : Messages.CoreGameDiagnosticBundle.environmentUnrecorded.localized).localized
+        if let tuning = session.tuning {
+            environment += "\n" + Messages.CoreJVMTuning.diagnosticHeader(tuning.mode.title, tuning.collector?.title ?? Messages.CoreJVMTuning.defaultCollector.localized).localized + "\n" + tuning.detail + "\n"
+        }
         if let interruption = session.interruption {
             environment += Messages.CoreGameDiagnosticBundle.recoveryEnvironment(interruption.observedAt.ISO8601Format(), interruption.resolution.rawValue, interruption.displayExplanation).localized
         }

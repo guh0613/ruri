@@ -1002,3 +1002,57 @@
 
 /* @symbol CoreMemoryEstimate.availableMemory @args text */
 "coreMemoryEstimate.availableMemory" = "剩余内存 %1$@";
+
+/* @symbol CoreJVMTuning.settingTitle @args - */
+"coreJVMTuning.settingTitle" = "JVM 优化参数";
+
+/* @symbol CoreJVMTuning.recommended @args - */
+"coreJVMTuning.recommended" = "推荐";
+
+/* @symbol CoreJVMTuning.experimental @args - */
+"coreJVMTuning.experimental" = "推荐 + 实验性";
+
+/* @symbol CoreJVMTuning.off @args - */
+"coreJVMTuning.off" = "不添加";
+
+/* @symbol CoreJVMTuning.diagnostics @args - */
+"coreJVMTuning.diagnostics" = "保留完整异常堆栈，便于排查崩溃";
+
+/* @symbol CoreJVMTuning.systemProxy @args - */
+"coreJVMTuning.systemProxy" = "游戏联网跟随 macOS 系统代理";
+
+/* @symbol CoreJVMTuning.legacyForge @args - */
+"coreJVMTuning.legacyForge" = "旧版 Forge 跳过游戏文件签名和补丁校验";
+
+/* @symbol CoreJVMTuning.unsafeMemoryAccess @args - */
+"coreJVMTuning.unsafeMemoryAccess" = "允许旧模组继续使用 Unsafe 内存访问";
+
+/* @symbol CoreJVMTuning.g1 @args - */
+"coreJVMTuning.g1" = "G1 垃圾回收，按低停顿调优";
+
+/* @symbol CoreJVMTuning.zgc @args - */
+"coreJVMTuning.zgc" = "分代 ZGC，大型整合包下停顿更短";
+
+/* @symbol CoreJVMTuning.compactHeaders @args - */
+"coreJVMTuning.compactHeaders" = "紧凑对象头，减少堆占用（实验性）";
+
+/* @symbol CoreJVMTuning.disabled @args - */
+"coreJVMTuning.disabled" = "已关闭";
+
+/* @symbol CoreJVMTuning.capabilitiesUnknown @args - */
+"coreJVMTuning.capabilitiesUnknown" = "无法读取 Java 支持的参数";
+
+/* @symbol CoreJVMTuning.collectorChosenByUser @args - */
+"coreJVMTuning.collectorChosenByUser" = "由附加 JVM 参数指定";
+
+/* @symbol CoreJVMTuning.zgcHeadroom @args - */
+"coreJVMTuning.zgcHeadroom" = "内存余量不足，未使用 ZGC";
+
+/* @symbol CoreJVMTuning.heapRaised @args text,text */
+"coreJVMTuning.heapRaised" = "ZGC 不压缩对象引用，堆上限从 %1$@ 提高到 %2$@";
+
+/* @symbol CoreJVMTuning.diagnosticHeader @args text,text */
+"coreJVMTuning.diagnosticHeader" = "JVM 优化：%1$@ · 垃圾回收器：%2$@";
+
+/* @symbol CoreJVMTuning.defaultCollector @args - */
+"coreJVMTuning.defaultCollector" = "由 Java 决定";

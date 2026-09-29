@@ -25,7 +25,7 @@ enum InstanceSettingsPane: String, CaseIterable, Identifiable {
     }
     var launchKeys: [LaunchSettingKey] {
         switch self {
-        case .runtime: [.java, .memory]
+        case .runtime: [.java, .memory, .jvmTuning]
         case .launch: [.window, .macOS, .presentation]
         case .advanced: [.jvmArguments, .gameArguments, .environment, .commands]
         default: []
@@ -144,6 +144,7 @@ enum SettingsValidation {
             switch key {
             case .memory: field.memory = values.memory
             case .java: field.java = values.java
+            case .jvmTuning: field.jvmTuning = values.jvmTuning
             case .jvmArguments: field.jvmArguments = values.jvmArguments; field.memory = values.memory
             case .gameArguments: field.gameArguments = values.gameArguments
             case .window: field.window = values.window

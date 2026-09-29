@@ -55,6 +55,8 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     public let loaderVersion: String?
     public var memoryMB: Int
     public var memory: LaunchMemory?
+    /// The options Ruri added on top of the game's and the user's, and why.
+    public var tuning: JVMTuning? = nil
     public let operatingSystem: String
     public let hostArchitecture: String
     public let accountMode: String

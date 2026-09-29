@@ -119,6 +119,10 @@ import OSLog
         guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.memoryChangeAfterLaunch) }
         record.memory = memory; record.memoryMB = memory.maximumMB; try save()
     }
+    public func setTuning(_ tuning: JVMTuning) throws {
+        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.memoryChangeAfterLaunch) }
+        record.tuning = tuning; try save()
+    }
     func setHostStatus(_ status: GameHostStatus) throws {
         guard !record.state.isFinished, record.host != status else { return }
         record.host = status; record.updatedAt = Date()

@@ -4150,3 +4150,9 @@
 
 /* @symbol AppLaunchSettingsEditor.memoryEstimateSample @args - */
 "appLaunchSettingsEditor.memoryEstimateSample" = "示例：无 Mod 实例";
+
+/* @symbol AppLaunchSettingsEditor.jvmTuningPicker @args - */
+"appLaunchSettingsEditor.jvmTuningPicker" = "自动添加";
+
+/* @symbol AppLaunchSettingsEditor.jvmTuningNoJava @args - */
+"appLaunchSettingsEditor.jvmTuningNoJava" = "启动时安装 Java";

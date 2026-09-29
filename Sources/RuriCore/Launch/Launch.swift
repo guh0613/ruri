@@ -8,6 +8,7 @@ public struct LaunchPlan: Codable, Sendable {
     public let environment: [String: String]
     public var nativeQuitSupported: Bool?
     public var memory: LaunchMemory?
+    public var tuning: JVMTuning? = nil
     public var customEnvironmentNames: [String]?
     public var commands: LaunchCommands?
     public var wrapper: [String]?
@@ -51,7 +52,7 @@ public enum ArgumentTokenizer {
 }
 
 public enum LaunchBuilder {
-    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, destination: LaunchDestination = .normal, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil) throws -> LaunchPlan {
+    public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, destination: LaunchDestination = .normal, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil, capabilities: JavaCapabilities? = nil) throws -> LaunchPlan {
         guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.externalAuthRequired) }
         if let offlineSkin {
             guard account.kind == .offline, offlineSkin.account == account else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
@@ -137,18 +138,25 @@ public enum LaunchBuilder {
         let legacyLWJGL = manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl.lwjgl:lwjgl:") }
         if !legacyLWJGL && !jvm.contains("-XstartOnFirstThread") { jvm.insert("-XstartOnFirstThread", at: 0) }
         let baseMemory = try instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve()
-        var memoryArguments = jvm
-        jvm.insert(contentsOf: baseMemory.arguments + ["-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"], at: 0)
+        var fixed = ["-Dfile.encoding=UTF-8", "-Dapple.awt.application.name=\(instance.name)", "-Dlog4j2.formatMsgNoLookups=true"]
+        // Java 8 builds before 8u191, such as Mojang's own 8u51, still let RMI
+        // and CORBA lookups load remote classes, the other half of Log4Shell.
+        if java.major <= 8 {
+            fixed += ["-Djava.rmi.server.useCodebaseOnly=true", "-Dcom.sun.jndi.rmi.object.trustURLCodebase=false",
+                      "-Dcom.sun.jndi.cosnaming.object.trustURLCodebase=false", "-Dcom.sun.jndi.ldap.object.trustURLCodebase=false"]
+        }
         if let logging = manifest.logging?.client {
             let file = try LauncherPaths.safePath("log_configs/\(logging.file.id)", within: resources.assets)
             jvm.append(try expand(logging.argument.replacingOccurrences(of: "${path}", with: file.path)))
         }
         let extras = try ArgumentTokenizer.split(instance.extraJVMArguments).map(expand)
         guard !extras.contains(where: { $0.hasPrefix("@") || ["-jar", "--class-path", "-classpath", "-cp"].contains($0) }) else { throw RuriError.message(Messages.CoreLaunch.jvmArgumentsOverride) }
+        let plan = try JVMPlan.make(base: baseMemory, mode: instance.jvmTuning ?? .recommended, java: java, capabilities: capabilities,
+                                    workload: baseMemory.estimate?.workload ?? MemoryWorkload.cached(paths: paths, instance: instance),
+                                    availability: baseMemory.availability ?? .current(), launchArguments: fixed + jvm, userArguments: extras)
+        jvm.insert(contentsOf: plan.base.arguments + fixed + plan.tuning.values, at: 0)
         jvm += extras
         if let externalAuth { jvm += try externalAuth.arguments(for: account) }
-        memoryArguments += extras
-        let memory = try JVMHeapArguments.resolve(base: baseMemory, arguments: memoryArguments)
         var game: [String]
         if let legacy = manifest.minecraftArguments { game = try ArgumentTokenizer.split(legacy).map(expand) }
         else { game = try (manifest.arguments?.game ?? []).flatMap { $0.values(architecture: architecture, features: features) }.map(expand) }
@@ -173,6 +181,6 @@ public enum LaunchBuilder {
         let nativeQuitSupported = !legacyLWJGL && manifest.libraries.contains { $0.name.hasPrefix("org.lwjgl:lwjgl-glfw:") }
         var offlineSkin = offlineSkin
         offlineSkin?.argumentIndex = jvm.count
-        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: memory, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin, debugLogging: instance.launchPresentation?.debugLogging == true, host: GameHostPlan(instanceID: instance.id, name: instance.name, iconPNG: instance.iconPNG ?? instance.iconStyle.flatMap(InstanceIconRenderer.launchPNG), javaVersion: java.version, architecture: java.architecture, settings: instance.macOSGameSettings ?? .init(), fullscreen: instance.fullscreen == true), quickPlayLog: quickPlayLog, destination: target)
+        return LaunchPlan(executable: URL(fileURLWithPath: java.path), arguments: jvm + [mainClass] + game, directory: paths.game(instance.id), environment: env, nativeQuitSupported: nativeQuitSupported, memory: plan.memory, tuning: plan.tuning, customEnvironmentNames: customEnvironment.entries.map(\.name), commands: commands.enabled && !commands.isEmpty ? commands : nil, wrapper: wrapper.isEmpty ? nil : wrapper, offlineSkin: offlineSkin, debugLogging: instance.launchPresentation?.debugLogging == true, host: GameHostPlan(instanceID: instance.id, name: instance.name, iconPNG: instance.iconPNG ?? instance.iconStyle.flatMap(InstanceIconRenderer.launchPNG), javaVersion: java.version, architecture: java.architecture, settings: instance.macOSGameSettings ?? .init(), fullscreen: instance.fullscreen == true), quickPlayLog: quickPlayLog, destination: target)
     }
 }

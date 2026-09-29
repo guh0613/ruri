@@ -13,6 +13,7 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var isolationPolicy: GameIsolationPolicy?
     public var defaultJava: JavaSelection?
     public var javaLocations: [JavaLocation]?
+    public var defaultJVMTuning: JVMTuningMode?
     public var defaultJVMArguments: String?
     public var defaultGameArguments: String?
     public var defaultWindow: GameWindowSize?

@@ -471,6 +471,18 @@ extension Messages {
         public static var memoryEstimateSample: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.memoryEstimateSample", table: "Interface", fallback: "示例：无 Mod 实例")
         }
+        /// 自动添加
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.jvmTuningPicker`.
+        public static var jvmTuningPicker: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.jvmTuningPicker", table: "Interface", fallback: "自动添加")
+        }
+        /// 启动时安装 Java
+        ///
+        /// Resource: `Interface.appLaunchSettingsEditor.jvmTuningNoJava`.
+        public static var jvmTuningNoJava: LocalizedMessage {
+            .init(key: "appLaunchSettingsEditor.jvmTuningNoJava", table: "Interface", fallback: "启动时安装 Java")
+        }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appLaunchSettingsEditor.bodyText1": .init("跟随默认设置", []),
             "Interface:appLaunchSettingsEditor.bodyText2": .init("自定义", []),
@@ -550,6 +562,8 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.estimateCeilingLegend": .init("本机上限 %1$@", [.text]),
             "Interface:appLaunchSettingsEditor.memoryEstimateExplain": .init("估算说明", []),
             "Interface:appLaunchSettingsEditor.memoryEstimateSample": .init("示例：无 Mod 实例", []),
+            "Interface:appLaunchSettingsEditor.jvmTuningPicker": .init("自动添加", []),
+            "Interface:appLaunchSettingsEditor.jvmTuningNoJava": .init("启动时安装 Java", []),
         ]
     }
 }

@@ -50,6 +50,7 @@ public enum GameMonitorClient {
         try recorder.configureLogging(debug: plan.debugLogging == true)
         if let names = plan.customEnvironmentNames, !names.isEmpty { try recorder.append(Messages.CoreGameMonitor.environmentNames(names.joined(separator: ", ")).localized) }
         if let memory = plan.memory { try recorder.setMemory(memory) }
+        if let tuning = plan.tuning { try recorder.setTuning(tuning) }
         let process = Process(), input = Pipe()
         process.executableURL = try helper ?? helperExecutable()
         process.arguments = ["run"]
