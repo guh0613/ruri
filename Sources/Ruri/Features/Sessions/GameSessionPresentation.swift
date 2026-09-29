@@ -11,6 +11,16 @@ extension GameSession {
         }
         return world.map { $0.name + " · " + Messages.Servers.legacyTime.localized } ?? Messages.HistoryUI.unknownWorld.localized
     }
+    /// Worlds and servers in play order. Menu gaps are dropped, so a return
+    /// to the same place after a trip to the title screen reads as one visit.
+    var playedSegments: [GameActivitySegment] {
+        (activity?.segments ?? []).filter { $0.target != .unattributed }.reduce(into: []) { rows, segment in
+            guard let last = rows.last, last.target == segment.target else { rows.append(segment); return }
+            rows[rows.count - 1].endedAt = segment.endedAt
+            rows[rows.count - 1].seconds += segment.seconds
+            if segment.quality != .observed { rows[rows.count - 1].quality = segment.quality }
+        }
+    }
     var userResult: String {
         if hasPostCommandFailure { return Messages.SessionUI.afterCommandFailed.localized }
         switch state {

@@ -453,13 +453,15 @@ struct GameHistoryView: View {
                                 Text(total.address.authority).font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
-                            if total.estimatedSeconds > 0 { Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary) }
+                            if total.estimatedSeconds > 0 {
+                                Text(Messages.Servers.estimated.localized).font(.caption).foregroundStyle(.secondary)
+                                    .help(Messages.Servers.estimateHint.localized)
+                            }
                             Text(LocalizedFormat.duration(total.seconds)).monospacedDigit()
                             if server?.id == total.id { Image(systemName: "checkmark.circle.fill") }
                         }.padding(14).background(server?.id == total.id ? Color.accentColor.opacity(0.12) : Color.secondary.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
                     }.buttonStyle(.plain)
                 }
-                Text(Messages.Servers.estimateHint.localized).font(.caption).foregroundStyle(.secondary)
             }
         }
     }

@@ -363,11 +363,11 @@ extension Messages {
         public static var queryHint: LocalizedMessage {
             .init(key: "queryHint", table: "Servers", fallback: "查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。")
         }
-        /// 无法确认离开时间的记录为估算，可能包含菜单停留；证据不足的时间不归属到服务器。
+        /// 未能确认离开时间，可能包含菜单停留
         ///
         /// Resource: `Servers.estimateHint`.
         public static var estimateHint: LocalizedMessage {
-            .init(key: "estimateHint", table: "Servers", fallback: "无法确认离开时间的记录为估算，可能包含菜单停留；证据不足的时间不归属到服务器。")
+            .init(key: "estimateHint", table: "Servers", fallback: "未能确认离开时间，可能包含菜单停留")
         }
         /// 旧版整次归属
         ///
@@ -375,11 +375,11 @@ extension Messages {
         public static var legacyTime: LocalizedMessage {
             .init(key: "legacyTime", table: "Servers", fallback: "旧版整次归属")
         }
-        /// 未归属
+        /// 未进入世界
         ///
         /// Resource: `Servers.unattributed`.
         public static var unattributed: LocalizedMessage {
-            .init(key: "unattributed", table: "Servers", fallback: "未归属")
+            .init(key: "unattributed", table: "Servers", fallback: "未进入世界")
         }
         /// 存档
         ///
@@ -832,9 +832,9 @@ extension Messages {
             "Servers:noSelection": .init("选择一个服务器查看详情", []),
             "Servers:instanceName": .init("实例", []),
             "Servers:queryHint": .init("查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。", []),
-            "Servers:estimateHint": .init("无法确认离开时间的记录为估算，可能包含菜单停留；证据不足的时间不归属到服务器。", []),
+            "Servers:estimateHint": .init("未能确认离开时间，可能包含菜单停留", []),
             "Servers:legacyTime": .init("旧版整次归属", []),
-            "Servers:unattributed": .init("未归属", []),
+            "Servers:unattributed": .init("未进入世界", []),
             "Servers:world": .init("存档", []),
             "Servers:noHistory": .init("暂无可统计的游玩记录", []),
             "Servers:globalSettings": .init("服务器设置", []),

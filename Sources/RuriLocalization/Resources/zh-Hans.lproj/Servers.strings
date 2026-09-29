@@ -179,13 +179,13 @@
 "queryHint" = "查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。";
 
 /* @symbol Servers.estimateHint @args - */
-"estimateHint" = "无法确认离开时间的记录为估算，可能包含菜单停留；证据不足的时间不归属到服务器。";
+"estimateHint" = "未能确认离开时间，可能包含菜单停留";
 
 /* @symbol Servers.legacyTime @args - */
 "legacyTime" = "旧版整次归属";
 
 /* @symbol Servers.unattributed @args - */
-"unattributed" = "未归属";
+"unattributed" = "未进入世界";
 
 /* @symbol Servers.world @args - */
 "world" = "存档";
