@@ -9,6 +9,8 @@ struct AppearanceDraft: Identifiable {
     let kind: PlayerTextureKind
     var name: String
     var model: PlayerSkinModel
+    /// The library entry this draft was opened from, if any.
+    var libraryID: UUID?
 }
 
 /// Confirms a picked texture before it touches the account: the character is
@@ -72,7 +74,8 @@ struct AppearanceDraftSheet: View {
                         Text(Messages.AccountCenter.textureSize(Int64(draft.image.width), Int64(draft.image.height)).localized)
                             .font(.callout.monospacedDigit()).foregroundStyle(.secondary)
                     }
-                    if draft.kind == .skin {
+                    // A library skin keeps its entry in step when applied.
+                    if draft.kind == .skin && draft.libraryID == nil {
                         HStack(spacing: 10) {
                             Button(Messages.AccountCenter.saveToLibrary.localized) {
                                 error = nil

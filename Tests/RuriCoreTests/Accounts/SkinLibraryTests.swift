@@ -22,13 +22,41 @@ struct SkinLibraryTests {
         #expect(try reopened.preview(for: accountID) == nil)
     }
 
-    @Test func sameTextureDifferentModelsRemainDistinct() throws {
+    @Test func armModelIsAnAttributeOfTheSameSkin() throws {
         let paths = try AccountTestFixtures.paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let library = SkinLibrary(paths: paths), image = try PlayerTextureImage(data: AccountTestFixtures.png(width: 128, height: 128))
         let first = try library.save(name: "Classic", image: image, model: .classic)
         let second = try library.save(name: "Slim", image: image, model: .slim)
-        #expect(first.id != second.id)
-        #expect(try library.skins().count == 2)
+        #expect(first.id == second.id && second.name == "Classic" && second.model == .slim)
+        #expect(try library.skins().count == 1)
+    }
+
+    @Test func wearingASkinUpdatesItsSavedCopy() throws {
+        let paths = try AccountTestFixtures.paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let library = SkinLibrary(paths: paths), image = try PlayerTextureImage(data: AccountTestFixtures.png())
+        let saved = try library.save(name: "Blue", image: image, model: .classic)
+        try library.noteWorn(image, model: .slim)
+        #expect(try library.skins().map(\.model) == [.slim])
+        try library.noteWorn(image, model: .classic, entry: saved.id, name: "Navy")
+        let worn = try #require(try library.skins().first)
+        #expect(worn.id == saved.id && worn.name == "Navy" && worn.model == .classic)
+        try library.noteWorn(PlayerTextureImage(data: AccountTestFixtures.png(width: 128, height: 128)), model: .slim)
+        #expect(try library.skins().count == 1)
+    }
+
+    @Test func legacyPerModelCopiesAreNotCollapsed() throws {
+        let paths = try AccountTestFixtures.paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let library = SkinLibrary(paths: paths), image = try PlayerTextureImage(data: AccountTestFixtures.png())
+        let classic = try SavedPlayerSkin(name: "Classic", image: image, model: .classic)
+        let slim = try SavedPlayerSkin(name: "Slim", image: image, model: .slim)
+        let folder = paths.root.appendingPathComponent("appearance/skins")
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        for skin in [classic, slim] { try JSONEncoder().encode(skin).write(to: folder.appendingPathComponent(skin.id.uuidString + ".json")) }
+        try library.noteWorn(image, model: .slim, entry: classic.id, name: "Renamed")
+        let skins = try library.skins()
+        #expect(Set(skins.map(\.model)) == [.classic, .slim])
+        #expect(skins.first { $0.id == classic.id }?.name == "Renamed")
+        #expect(try library.save(name: "Again", image: image, model: .slim).id == slim.id)
     }
 
     @Test func corruptDocumentsAreReportedWithoutReplacingSavedData() throws {

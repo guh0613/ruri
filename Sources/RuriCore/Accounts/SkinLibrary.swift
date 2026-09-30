@@ -53,18 +53,40 @@ public struct SkinLibrary: Sendable {
             .sorted { $0.createdAt == $1.createdAt ? $0.id.uuidString < $1.id.uuidString : $0.createdAt > $1.createdAt }
     }
 
+    /// Pixels identify a saved skin; the arm model is one of its attributes.
+    /// Saving pixels the library already holds adopts the new arm model on
+    /// that entry rather than adding a second copy.
     @discardableResult public func save(name: String, image: PlayerTextureImage, model: PlayerSkinModel) throws -> SavedPlayerSkin {
         let skin = try SavedPlayerSkin(name: name, image: image, model: model)
-        // Identical pixels with a different arm model are deliberately distinct.
-        if let existing = try listing().skins.first(where: { $0.png == skin.png && $0.model == model }) { return existing }
+        let same = try listing().skins.filter { $0.png == skin.png }
+        if let exact = same.first(where: { $0.model == model }) { return exact }
+        if let existing = same.first { return try update(existing.id, model: model) }
         try write(skin, to: file(skin.id, folder: "skins"))
         return skin
     }
 
-    public func rename(_ id: UUID, to name: String) throws {
+    public func rename(_ id: UUID, to name: String) throws { try update(id, name: name) }
+
+    @discardableResult public func update(_ id: UUID, name: String? = nil, model: PlayerSkinModel? = nil) throws -> SavedPlayerSkin {
         let url = try file(id, folder: "skins"), original = try read(url)
-        let renamed = try SavedPlayerSkin(id: id, name: name, image: original.image, model: original.model, createdAt: original.createdAt)
-        try write(renamed, to: url)
+        let updated = try SavedPlayerSkin(id: id, name: name ?? original.name, image: original.image, model: model ?? original.model, createdAt: original.createdAt)
+        try write(updated, to: url)
+        return updated
+    }
+
+    /// Keeps the library in step with a skin that was just put on: the saved
+    /// copy of those pixels takes the arm model it was worn with, and the name
+    /// too when the player picked that copy (`entry`) and edited it. Libraries
+    /// from before arm models were attributes may hold one copy per model;
+    /// those are left alone rather than collapsed into identical twins.
+    public func noteWorn(_ image: PlayerTextureImage, model: PlayerSkinModel, entry: UUID? = nil, name: String? = nil) throws {
+        let same = try listing().skins.filter { $0.png == image.png }
+        guard let target = same.first(where: { $0.id == entry }) ?? same.first(where: { $0.model == model }) ?? same.first else { return }
+        let twin = same.contains { $0.id != target.id && $0.model == model }
+        let newModel = twin ? target.model : model
+        let newName = target.id == entry ? name ?? target.name : target.name
+        guard newModel != target.model || newName != target.name else { return }
+        try update(target.id, name: newName, model: newModel)
     }
 
     public func remove(_ id: UUID) throws { try FileManager.default.removeItem(at: file(id, folder: "skins")) }

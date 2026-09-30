@@ -291,6 +291,30 @@ extension Messages {
         public static var previewAndUse: LocalizedMessage {
             .init(key: "accountCenter.previewAndUse", table: "Accounts", fallback: "预览与使用")
         }
+        /// 使用…
+        ///
+        /// Resource: `Accounts.accountCenter.useSkin`.
+        public static var useSkin: LocalizedMessage {
+            .init(key: "accountCenter.useSkin", table: "Accounts", fallback: "使用…")
+        }
+        /// 经典
+        ///
+        /// Resource: `Accounts.accountCenter.classicArms`.
+        public static var classicArms: LocalizedMessage {
+            .init(key: "accountCenter.classicArms", table: "Accounts", fallback: "经典")
+        }
+        /// 纤细
+        ///
+        /// Resource: `Accounts.accountCenter.slimArms`.
+        public static var slimArms: LocalizedMessage {
+            .init(key: "accountCenter.slimArms", table: "Accounts", fallback: "纤细")
+        }
+        /// 已切换手臂模型
+        ///
+        /// Resource: `Accounts.accountCenter.armsChanged`.
+        public static var armsChanged: LocalizedMessage {
+            .init(key: "accountCenter.armsChanged", table: "Accounts", fallback: "已切换手臂模型")
+        }
         /// 皮肤操作
         ///
         /// Resource: `Accounts.accountCenter.skinActions`.
@@ -520,6 +544,10 @@ extension Messages {
             "Accounts:accountCenter.libraryEmpty": .init("皮肤库为空", []),
             "Accounts:accountCenter.libraryEmptyHelp": .init("导入 PNG，或把账号当前皮肤保存到这里。", []),
             "Accounts:accountCenter.previewAndUse": .init("预览与使用", []),
+            "Accounts:accountCenter.useSkin": .init("使用…", []),
+            "Accounts:accountCenter.classicArms": .init("经典", []),
+            "Accounts:accountCenter.slimArms": .init("纤细", []),
+            "Accounts:accountCenter.armsChanged": .init("已切换手臂模型", []),
             "Accounts:accountCenter.skinActions": .init("皮肤操作", []),
             "Accounts:accountCenter.localPreviewSaved": .init("皮肤已应用，下次启动游戏时生效。", []),
             "Accounts:accountCenter.reloginTitle": .init("重新登录", []),

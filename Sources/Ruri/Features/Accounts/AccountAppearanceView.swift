@@ -30,6 +30,7 @@ struct AccountAppearanceView: View {
     @State private var removeSkin: SavedPlayerSkin?
     @State private var resetKind: PlayerTextureKind?
     @State private var revision = UUID()
+    @State private var pendingModel: PlayerSkinModel?
     private var store: SkinLibrary { SkinLibrary(paths: model.paths) }
     private var isOffline: Bool { account.kind == .offline }
     private var selectedCape: AccountTexture? { appearance?.capes.first { $0.id == capeID } }
@@ -39,6 +40,15 @@ struct AccountAppearanceView: View {
         return appearance?.playerName ?? (skin == nil ? nil : account.username)
     }
     private var canUpload: Set<PlayerTextureKind> { isOffline ? [.skin, .cape] : appearance?.uploadable ?? [] }
+    private var canSwitchArms: Bool { skin != nil && canUpload.contains(.skin) }
+    /// The library entry for the skin being worn. Pixels identify it; an
+    /// older library may still hold one copy per arm model, so prefer the one
+    /// that matches.
+    private var inUseSkinID: UUID? {
+        guard let skin else { return nil }
+        let same = library.filter { $0.png == skin.png }
+        return (same.first { $0.model == skinModel } ?? same.first)?.id
+    }
     private var locked: Bool { task != nil || model.readOnly }
 
     var body: some View {
@@ -178,6 +188,7 @@ struct AccountAppearanceView: View {
                       subtitle: skinSubtitle) {
             SkinAvatar(image: skin, size: 44)
         } controls: {
+            if canSwitchArms { armsPicker }
             if canUpload.contains(.skin) {
                 Button(skin == nil ? Messages.AppAccountAppearanceView.chooseSkinPNG.localized : Messages.AccountCenter.replaceSkin.localized) { choose(.skin) }
             }
@@ -188,7 +199,7 @@ struct AccountAppearanceView: View {
                         try store.save(name: String((skinName ?? account.username).prefix(80)), image: skin, model: skinModel)
                         reloadLibrary(); show(Messages.AccountCenter.savedToLibrary.localized)
                     }
-                }.disabled(skin == nil)
+                }.disabled(skin == nil || inUseSkinID != nil)
                 Button(Messages.AppAccountAppearanceView.savePNG.localized, systemImage: "square.and.arrow.down") {
                     if let skin { savePNG(skin, name: skinName ?? account.username) }
                 }.disabled(skin == nil)
@@ -204,9 +215,26 @@ struct AccountAppearanceView: View {
         .disabled(locked)
     }
 
+    /// Arm model is a choice about the skin being worn, so it switches in
+    /// place, the way the cape picker sits beside the cape.
+    private var armsPicker: some View {
+        let legacy = skin?.isLegacySkin == true
+        return Picker(Messages.AppAccountAppearanceView.skinModel.localized,
+                      selection: Binding(get: { pendingModel ?? skinModel }, set: switchArms)) {
+            Text(Messages.AccountCenter.classicArms.localized).tag(PlayerSkinModel.classic)
+            Text(Messages.AccountCenter.slimArms.localized).tag(PlayerSkinModel.slim)
+        }
+        .pickerStyle(.segmented).labelsHidden().fixedSize()
+        .disabled(legacy)
+        .help(legacy ? Messages.AccountCenter.legacySkinHelp.localized : Messages.AppAccountAppearanceView.skinModel.localized)
+    }
+
     private var skinSubtitle: String {
         if !canUpload.contains(.skin), appearance != nil { return Messages.AppAccountAppearanceView.skinUploadUnavailable.localized }
-        if let skin { return [skinModel.title, Messages.AccountCenter.textureSize(Int64(skin.width), Int64(skin.height)).localized].joined(separator: " · ") }
+        if let skin {
+            let size = Messages.AccountCenter.textureSize(Int64(skin.width), Int64(skin.height)).localized
+            return canSwitchArms ? size : [skinModel.title, size].joined(separator: " · ")
+        }
         if !isOffline, appearance == nil { return Messages.AccountCenter.appearanceUnavailableOffline.localized }
         return canUpload.contains(.skin) ? Messages.AccountCenter.chooseSkinHelp.localized : Messages.AccountCenter.defaultSkinHelp.localized
     }
@@ -318,8 +346,8 @@ struct AccountAppearanceView: View {
             } else {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 210), spacing: 16, alignment: .top)], alignment: .leading, spacing: 16) {
                     ForEach(library) { entry in
-                        SkinLibraryTile(entry: entry, inUse: skin?.png == entry.png && skinModel == entry.model) {
-                            localAction { draft = AppearanceDraft(image: try entry.image, kind: .skin, name: entry.name, model: entry.model) }
+                        SkinLibraryTile(entry: entry, inUse: entry.id == inUseSkinID) {
+                            localAction { draft = AppearanceDraft(image: try entry.image, kind: .skin, name: entry.name, model: entry.model, libraryID: entry.id) }
                         } rename: { renameText = entry.name; renameSkin = entry }
                           export: { localAction { savePNG(try entry.image, name: entry.name) } }
                           remove: { removeSkin = entry }
@@ -341,14 +369,14 @@ struct AccountAppearanceView: View {
                                     model: image.isLegacySkin ? .classic : skinModel)
         }
     }
-    private func apply(_ draft: AppearanceDraft) async throws {
+    private func apply(_ draft: AppearanceDraft, success: String? = nil) async throws {
         guard !model.readOnly else { return }
         if isOffline {
             if draft.kind == .skin {
                 let saved = try SavedPlayerSkin(name: draft.name, image: draft.image, model: draft.model)
                 try model.cacheAccountSkin(saved, account: account); skin = draft.image
             } else { try model.cacheAccountCape(draft.image, account: account); cape = draft.image }
-            error = nil; show(Messages.AccountCenter.localPreviewSaved.localized)
+            error = nil; noteWorn(draft); show(success ?? Messages.AccountCenter.localPreviewSaved.localized)
             return
         }
         guard let appearance else { return }
@@ -356,10 +384,30 @@ struct AccountAppearanceView: View {
             try await client.upload(draft.image, kind: draft.kind, model: draft.model, expecting: appearance)
             try model.invalidateAccountAppearance(account, uploaded: draft.kind == .skin ? appearance.skin : appearance.activeCape, kind: draft.kind)
             try Task.checkCancellation()
-            error = nil; show(Messages.AppAccountAppearanceView.uploaded(draft.kind.title).localized)
+            error = nil; noteWorn(draft); show(success ?? Messages.AppAccountAppearanceView.uploaded(draft.kind.title).localized)
             do { try await fetch(client, forceRefresh: true) }
             catch { if !Task.isCancelled { self.error = Messages.AppAccountAppearanceView.refreshAppearanceError(error.localizedDescription).localized } }
         }
+    }
+    /// Re-applies the skin being worn with the other arm model. The picker
+    /// shows the new choice straight away and settles once the account does.
+    private func switchArms(to arms: PlayerSkinModel) {
+        guard let skin, arms != skinModel, task == nil, !model.readOnly else { return }
+        error = nil; pendingModel = arms
+        let draft = AppearanceDraft(image: skin, kind: .skin, name: String((skinName ?? account.username).prefix(80)), model: arms)
+        task = Task {
+            defer { task = nil; pendingModel = nil }
+            do { try await apply(draft, success: Messages.AccountCenter.armsChanged.localized) }
+            catch { if !Task.isCancelled { self.error = error.localizedDescription } }
+        }
+    }
+    /// The library follows what is worn, so its entry never disagrees with
+    /// the account about arm model. A failure here must not undo the change.
+    private func noteWorn(_ draft: AppearanceDraft) {
+        guard draft.kind == .skin else { return }
+        do { try store.noteWorn(draft.image, model: draft.model, entry: draft.libraryID, name: draft.libraryID == nil ? nil : draft.name) }
+        catch { self.error = error.localizedDescription }
+        reloadLibrary()
     }
     private func load(forceRefresh: Bool = false) {
         guard task == nil, !model.readOnly else { return }
@@ -454,9 +502,9 @@ private struct AppearanceRow<Thumbnail: View, Controls: View>: View {
     }
 }
 
-/// A saved skin in the library grid. Clicking it previews the skin on the
-/// account; the less common actions live under the hover menu and the
-/// context menu.
+/// A saved skin in the library grid. Hovering reveals a "use" cue and
+/// clicking opens the preview sheet; the skin already in use is inert. The
+/// less common actions live under the hover menu and the context menu.
 private struct SkinLibraryTile: View {
     @Environment(\.colorScheme) private var colorScheme
     let entry: SavedPlayerSkin
@@ -467,25 +515,20 @@ private struct SkinLibraryTile: View {
     let remove: () -> Void
     @State private var hovering = false
     var body: some View {
-        Button(action: use) {
-            VStack(spacing: 12) {
-                SkinAvatar(image: try? entry.image, size: 64)
-                VStack(spacing: 3) {
-                    Text(entry.name).font(.headline).lineLimit(1).help(entry.name)
-                    Text(entry.model.title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                }
-                if inUse { TagPill(text: Messages.AppAccountAppearanceView.currentlyInUse.localized) }
+        Group {
+            if inUse {
+                content.accessibilityElement(children: .combine)
+            } else {
+                Button(action: use) { content }
+                    .buttonStyle(.plain)
+                    .help(Messages.AccountCenter.previewAndUse.localized)
+                    .accessibilityLabel(entry.name).accessibilityHint(Messages.AccountCenter.previewAndUse.localized)
             }
-            .padding(.horizontal, 14).padding(.top, 22).padding(.bottom, 18)
-            .frame(maxWidth: .infinity).contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        .help(Messages.AccountCenter.previewAndUse.localized)
-        .accessibilityLabel(entry.name).accessibilityHint(Messages.AccountCenter.previewAndUse.localized)
         .background {
             let shape = RoundedRectangle(cornerRadius: 16, style: .continuous)
             shape.fill(Theme.surface(for: colorScheme))
-                .overlay { shape.fill(.primary.opacity(hovering ? 0.045 : 0)) }
+                .overlay { shape.fill(.primary.opacity(hovering && !inUse ? 0.045 : 0)) }
                 .shadow(color: .black.opacity(colorScheme == .dark ? 0.12 : 0.04), radius: 8, x: 0, y: 3)
         }
         .overlay {
@@ -500,12 +543,39 @@ private struct SkinLibraryTile: View {
                 .help(Messages.AccountCenter.skinActions.localized).accessibilityLabel(Messages.AccountCenter.skinActions.localized)
         }
         .contextMenu {
-            Button(Messages.AccountCenter.previewAndUse.localized, systemImage: "person.crop.rectangle", action: use)
-            Divider()
+            if !inUse {
+                Button(Messages.AccountCenter.previewAndUse.localized, systemImage: "person.crop.rectangle", action: use)
+                Divider()
+            }
             actions
         }
         .onHover { hovering = $0 }
         .animation(.easeOut(duration: 0.12), value: hovering)
+    }
+    private var content: some View {
+        VStack(spacing: 12) {
+            SkinAvatar(image: try? entry.image, size: 64)
+            VStack(spacing: 3) {
+                Text(entry.name).font(.headline).lineLimit(1).help(entry.name)
+                Text(entry.model.title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+            }
+            // A fixed slot keeps every tile the same height whether it shows
+            // the in-use pill, the hover cue, or nothing.
+            Group {
+                if inUse {
+                    TagPill(text: Messages.AppAccountAppearanceView.currentlyInUse.localized)
+                } else {
+                    Text(Messages.AccountCenter.useSkin.localized)
+                        .font(.caption.weight(.semibold)).foregroundStyle(.white)
+                        .padding(.horizontal, 12).padding(.vertical, 3)
+                        .background(Theme.accent, in: Capsule())
+                        .opacity(hovering ? 1 : 0)
+                        .accessibilityHidden(true)
+                }
+            }.frame(height: 22)
+        }
+        .padding(.horizontal, 14).padding(.top, 22).padding(.bottom, 14)
+        .frame(maxWidth: .infinity).contentShape(Rectangle())
     }
     @ViewBuilder private var actions: some View {
         Group {

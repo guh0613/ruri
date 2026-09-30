@@ -142,6 +142,18 @@
 /* @symbol AccountCenter.previewAndUse @args - */
 "accountCenter.previewAndUse" = "预览与使用";
 
+/* @symbol AccountCenter.useSkin @args - */
+"accountCenter.useSkin" = "使用…";
+
+/* @symbol AccountCenter.classicArms @args - */
+"accountCenter.classicArms" = "经典";
+
+/* @symbol AccountCenter.slimArms @args - */
+"accountCenter.slimArms" = "纤细";
+
+/* @symbol AccountCenter.armsChanged @args - */
+"accountCenter.armsChanged" = "已切换手臂模型";
+
 /* @symbol AccountCenter.skinActions @args - */
 "accountCenter.skinActions" = "皮肤操作";
 
