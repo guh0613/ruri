@@ -9,7 +9,7 @@ struct RootView: View {
     @AppStorage(CLISetupModel.onboardingSeenKey) private var cliSetupSeen = false
     @State private var columns = NavigationSplitViewVisibility.automatic
     @State private var sidebarWidth: CGFloat = 236
-    @State private var collectionWidth: CGFloat = 420
+    @State private var collectionWidth: CGFloat = 280
     @State private var libraryNavigation = LibraryNavigationState()
     @State private var historyCache = GameHistoryView.Cache()
     @State private var serverNavigation = ServerNavigationState()
@@ -17,16 +17,13 @@ struct RootView: View {
     @State private var homeServers = ServerNavigationState()
     @State private var accountsNavigation = AccountsNavigationState()
     private var hasCollectionColumn: Bool { model.page == .library || model.page == .accounts || model.page == .servers }
-    // Reserve room for the title, actions and window controls in either state.
-    // AppKit writes columnVisibility back after its sidebar animation; changing
-    // these limits then causes a second, unanimated resize at the end.
-    private let collectionMinimumWidth: CGFloat = 420
+    private let collectionMinimumWidth: CGFloat = 280
+    private let collectionToolbarWidth: CGFloat = 420
     private let collectionMaximumWidth: CGFloat = 560
     private var minimumWindowWidth: CGFloat {
         guard hasCollectionColumn, columns != .detailOnly else { return 760 }
-        // Account for every visible column without changing their width limits.
         let visibleSidebarWidth: CGFloat = columns == .doubleColumn ? 0 : 210
-        return visibleSidebarWidth + collectionMinimumWidth + 420 + 2
+        return max(visibleSidebarWidth + collectionMinimumWidth, collectionToolbarWidth) + 420 + 2
     }
     var body: some View {
         // Keep the same split view and column constraints when switching collections.
@@ -50,13 +47,8 @@ struct RootView: View {
                         ideal: min(max(collectionWidth, collectionMinimumWidth), collectionMaximumWidth),
                         max: collectionMaximumWidth
                     )
-                    .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width in
-                        // Navigation and window restoration can report temporary compressed sizes.
-                        // Only remember intentional resizing, not those layout transitions.
-                        if NSApp.currentEvent?.type == .leftMouseDragged,
-                           width >= collectionMinimumWidth, abs(width - collectionWidth) > 1 {
-                            collectionWidth = min(width, collectionMaximumWidth)
-                        }
+                    .background {
+                        CollectionColumnSizing(width: $collectionWidth, toolbarWidth: collectionToolbarWidth)
                     }
                 } detail: {
                     Group {
