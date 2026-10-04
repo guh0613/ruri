@@ -29,7 +29,10 @@ struct ServerHistorySection: View {
                         Text(Messages.Servers.allInstances.localized).tag(nil as UUID?)
                         ForEach(playedInstances) { instance in Text(instance.name).tag(Optional(instance.id)) }
                     }
-                    .pickerStyle(.menu).labelsHidden().fixedSize()
+                    .pickerStyle(.menu).labelsHidden()
+                    .lineLimit(1).truncationMode(.middle)
+                    .frame(minWidth: 0, idealWidth: 200, maxWidth: 240)
+                    .help(playedInstances.first { $0.id == instanceID }?.name ?? Messages.Servers.allInstances.localized)
                 }
             }
             Surface(padding: 0) {

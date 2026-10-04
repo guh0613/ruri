@@ -37,6 +37,7 @@ struct ServerDetailView: View {
                     .padding(.horizontal, 28).padding(.bottom, 32)
                     .frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
                 }
+                .frame(width: geometry.size.width, alignment: .leading)
                 .background { OverlayScrollIndicators().allowsHitTesting(false).accessibilityHidden(true) }
             }
             .ignoresSafeArea(.container, edges: .top)
@@ -108,6 +109,15 @@ struct ServerDetailView: View {
     }
 
     private var actions: some View {
+        // Keep the small actions together and move the join controls to their
+        // own row when the detail column cannot accommodate the whole group.
+        WrappingLayout(spacing: 10) {
+            secondaryActions
+            ServerJoinControl(item: item, navigation: navigation, chosenInstance: $chosenInstance)
+        }
+    }
+
+    private var secondaryActions: some View {
         HStack(spacing: 10) {
             PinToggleButton(pinned: pinned) { navigation.toggleFavorite(item, model: model) }.disabled(model.readOnly)
             circleAction("slider.horizontal.3", Messages.Servers.globalSettings.localized) {
@@ -131,7 +141,6 @@ struct ServerDetailView: View {
             } label: { Image(systemName: "ellipsis.circle").font(.title2) }
                 .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
                 .help(Messages.Servers.moreActions.localized).accessibilityLabel(Messages.Servers.moreActions.localized)
-            ServerJoinControl(item: item, navigation: navigation, chosenInstance: $chosenInstance)
         }
         .fixedSize()
     }
@@ -296,21 +305,35 @@ private struct ServerJoinControl: View {
     private var needsAdd: Bool { chosenInstance.map { !item.instanceIDs.contains($0) } ?? false }
     private var session: GameSession? { instance.flatMap { model.activeSessions[$0.id] } }
     var body: some View {
-        HStack(spacing: 8) {
-            if !model.state.instances.isEmpty {
-                let listed = model.state.instances.filter { item.instanceIDs.contains($0.id) }
-                let others = model.state.instances.filter { !item.instanceIDs.contains($0.id) }
-                Picker(Messages.Servers.chooseInstance.localized, selection: $chosenInstance) {
-                    if listed.isEmpty || others.isEmpty {
-                        ForEach(model.state.instances) { option($0) }
-                    } else {
-                        Section(Messages.Servers.listedInstances.localized) { ForEach(listed) { option($0) } }
-                        Section(Messages.Servers.otherInstances.localized) { ForEach(others) { option($0) } }
-                    }
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) { instancePicker; joinButton }
+                .fixedSize(horizontal: true, vertical: false)
+            VStack(alignment: .leading, spacing: 8) { instancePicker; joinButton }
+        }
+        .controlSize(.large)
+    }
+
+    @ViewBuilder private var instancePicker: some View {
+        if !model.state.instances.isEmpty {
+            let listed = model.state.instances.filter { item.instanceIDs.contains($0.id) }
+            let others = model.state.instances.filter { !item.instanceIDs.contains($0.id) }
+            Picker(Messages.Servers.chooseInstance.localized, selection: $chosenInstance) {
+                if listed.isEmpty || others.isEmpty {
+                    ForEach(model.state.instances) { option($0) }
+                } else {
+                    Section(Messages.Servers.listedInstances.localized) { ForEach(listed) { option($0) } }
+                    Section(Messages.Servers.otherInstances.localized) { ForEach(others) { option($0) } }
                 }
-                .pickerStyle(.menu).labelsHidden().fixedSize()
-                .help(Messages.Servers.instanceMenuHelp.localized)
             }
+            .pickerStyle(.menu).labelsHidden()
+            .lineLimit(1).truncationMode(.middle)
+            .frame(minWidth: 0, idealWidth: 240, maxWidth: 240)
+            .help([Messages.Servers.instanceMenuHelp.localized, instance.map { $0.name + " · " + $0.gameVersion }].compactMap { $0 }.joined(separator: "\n"))
+        }
+    }
+
+    private var joinButton: some View {
+        Group {
             if let session, let instance {
                 Button { model.returnToGame(instance.id) } label: {
                     Label(session.gameIdentity?.isAlive == true ? Messages.AppLaunchButton.returnToGame.localized : Messages.AppLaunchButton.viewRunHistory.localized,
@@ -326,7 +349,7 @@ private struct ServerJoinControl: View {
                 .help(instance == nil ? Messages.Servers.noInstance.localized : needsAdd ? Messages.Servers.addAndJoinHelp.localized : Messages.Servers.joinHelp.localized)
             }
         }
-        .controlSize(.large)
+        .fixedSize()
     }
     private func option(_ instance: GameInstance) -> some View {
         Text(instance.name + " · " + instance.gameVersion).tag(Optional(instance.id))
