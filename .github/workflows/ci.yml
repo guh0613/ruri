@@ -19,17 +19,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Both slices build with one Xcode on Apple silicon; Intel builds are
+        # cross-compiled and their tests run under Rosetta. An older Intel
+        # toolchain only added compiler crashes of its own.
         include:
-          - runner: xcode-27
-            arch: arm64
-            developer_dir: /Applications/Xcode.app/Contents/Developer
-          - runner: macos-26-intel
-            arch: x86_64
-            developer_dir: /Applications/Xcode_26.6.app/Contents/Developer
-    runs-on: ${{ matrix.runner }}
+          - arch: arm64
+            cross_arch: ''
+          - arch: x86_64
+            cross_arch: x86_64
+    runs-on: xcode-27
     timeout-minutes: 30
     env:
-      DEVELOPER_DIR: ${{ matrix.developer_dir }}
+      DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+      RURI_ARCH: ${{ matrix.cross_arch }}
       RURI_BUILD_DIR: .build/ci
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

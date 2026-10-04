@@ -37,7 +37,7 @@ struct GameHostTests {
         }
         """#.utf8).write(to: source)
         let compiler = Process(); compiler.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
-        compiler.arguments = ["clang", "-dynamiclib", "-framework", "CoreFoundation", source.path, "-o", root.appendingPathComponent("lib/libjli.dylib").path]
+        compiler.arguments = ["clang", "-arch", Self.libraryArchitecture, "-dynamiclib", "-framework", "CoreFoundation", source.path, "-o", root.appendingPathComponent("lib/libjli.dylib").path]
         try compiler.run(); compiler.waitUntilExit(); #expect(compiler.terminationStatus == 0)
         let game = GameProcess(), capture = try GameOutputCapture(redactor: .init())
         let exit = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GameExit, Error>) in
@@ -73,6 +73,14 @@ struct GameHostTests {
         #expect(events.count == 2 && events.allSatisfy { $0.sessionID == sessionID && $0.event == "windowReady" })
         #expect(throws: (any Error).self) { try decoder.append(Data([0, 2, 0, 0])) }
     }
+
+    /// The fake JVM must match the host slice the plan launches, even when the
+    /// tests themselves run under Rosetta and clang does not.
+    #if arch(arm64)
+    static let libraryArchitecture = "arm64"
+    #else
+    static let libraryArchitecture = "x86_64"
+    #endif
 
     private func fixture() throws -> (URL, LaunchPlan) {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-host-\(UUID())")
@@ -126,7 +134,7 @@ struct GameHostTests {
         }
         """#.utf8).write(to: source)
         let compiler = Process(); compiler.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
-        compiler.arguments = ["clang", "-dynamiclib", source.path, "-o", root.appendingPathComponent("lib/libjli.dylib").path]
+        compiler.arguments = ["clang", "-arch", Self.libraryArchitecture, "-dynamiclib", source.path, "-o", root.appendingPathComponent("lib/libjli.dylib").path]
         try compiler.run(); compiler.waitUntilExit(); #expect(compiler.terminationStatus == 0)
         let game = GameProcess()
         let capture = try GameOutputCapture(redactor: .init())

@@ -3,7 +3,8 @@
 # Usage: scripts/swift-build.sh -c debug --product Ruri
 # Tests: scripts/swift-build.sh test --filter AuthenticationTests
 # DEVELOPER_DIR selects Xcode; RURI_BUILD_DIR optionally selects the build folder
-# (release builds use its release-scratch subfolder).
+# (release builds use its release-scratch subfolder). RURI_ARCH=x86_64 builds
+# for Intel with the same Xcode; tests then run under Rosetta.
 set -euo pipefail
 cd "${0:A:h:h}"
 source scripts/lib/build.sh
@@ -29,6 +30,10 @@ for argument in "$@"; do
       print -u2 -- "Unsupported override: $argument. Use DEVELOPER_DIR to select the macOS toolchain/SDK."
       exit 2
       ;;
+    --arch|--arch=*)
+      print -u2 -- "Unsupported override: $argument. Use RURI_ARCH to select the target architecture."
+      exit 2
+      ;;
   esac
 done
 
@@ -49,9 +54,20 @@ build_args=(
   -Xlinker -platform_version -Xlinker macos
   -Xlinker "$deployment_target" -Xlinker "$sdk_version"
 )
+# Building every architecture with one compiler keeps an older toolchain's bugs
+# out of a single slice. Each architecture builds in its own folder, because the
+# products path does not name the architecture.
+scratch_path="${RURI_BUILD_DIR:-.build}"
+if [[ -n "${RURI_ARCH:-}" ]]; then
+  case "$RURI_ARCH" in
+    arm64|x86_64) ;;
+    *) print -u2 -- "Unsupported RURI_ARCH: $RURI_ARCH. Use arm64 or x86_64."; exit 2 ;;
+  esac
+  build_args+=(--arch "$RURI_ARCH")
+  scratch_path="$scratch_path/$RURI_ARCH"
+fi
 # A debug build in the same folder invalidates release intermediates, making the
 # next release build recompile everything. Keep release in its own folder.
-scratch_path="${RURI_BUILD_DIR:-.build}"
 if [[ "$configuration" == release ]]; then scratch_path="$scratch_path/release-scratch"; fi
 build_args+=(--scratch-path "$scratch_path")
 if [[ "$swift_command" == test ]]; then
@@ -59,5 +75,26 @@ if [[ "$swift_command" == test ]]; then
   if [[ "${RURI_BUILD_DIR:-}" == /* ]]; then host_app="$RURI_BUILD_DIR/game-host/RuriGame.app"; fi
   build_game_host "$host_app"
   export RURI_TEST_GAME_HOST="$host_app/Contents/MacOS/ruri-game"
+fi
+if [[ "$swift_command" == test && -n "${RURI_ARCH:-}" && "$RURI_ARCH" != "$(uname -m)" ]]; then
+  # SwiftPM's test helpers only run natively. Build the bundles, then run each
+  # one with the universal xctest agent under Rosetta.
+  for argument in "$@"; do
+    case "$argument" in
+      --filter|--filter=*|--skip|--skip=*)
+        print -u2 -- "Cross-architecture tests run the whole suite; $argument is unsupported."
+        exit 2
+        ;;
+    esac
+  done
+  if (( ${@[(Ie)--no-parallel]} )); then export SWT_EXPERIMENTAL_MAXIMUM_PARALLELIZATION_WIDTH=1; fi
+  build_flags=("${@:#--no-parallel}")
+  xcrun swift build --build-tests "${build_args[@]}" "${build_flags[@]}"
+  products="$(xcrun swift build "${build_args[@]}" "${build_flags[@]}" --show-bin-path)"
+  failed=0
+  for bundle in "$products"/*.xctest; do
+    arch "-$RURI_ARCH" xcrun xctest "$bundle" || failed=1
+  done
+  exit $failed
 fi
 exec xcrun swift "$swift_command" "${build_args[@]}" "$@"
