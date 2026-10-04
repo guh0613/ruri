@@ -12,10 +12,17 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     public let format: String
     public private(set) var instance: GameInstance
     public let warnings: [String]
+    public let author: String?
+    public let summary: String?
+    public var packVersion: String? { modpack.flatMap { $0.version.isEmpty ? nil : $0.version } }
     public let fileCount: Int
     public let byteCount: Int64
+    /// Content files the pack carries itself, outside its download list.
+    public let bundledContent: [BundledContentFile]
     public let curseForgeFiles: [CurseForgeReference]
-    public private(set) var remoteFileCount: Int
+    /// Selected pack files the archive does not already carry.
+    public private(set) var remoteFiles: [PackFile]
+    public var remoteFileCount: Int { remoteFiles.count }
     let packFiles: [PackFile]
     public private(set) var omittedOptionalPaths: Set<String> = []
     var selectedPackFiles: [PackFile] { packFiles.filter { !omittedOptionalPaths.contains($0.path) } }
@@ -23,7 +30,7 @@ public struct PreparedInstanceImport: Identifiable, Sendable {
     public func selectingOptionalFiles(excluding paths: Set<String>) -> Self {
         var result = self
         result.omittedOptionalPaths = paths.intersection(Set(optionalFiles.map(\.path)))
-        result.remoteFileCount = result.selectedPackFiles.filter { !FileManager.default.fileExists(atPath: game.appendingPathComponent($0.path).path) }.count
+        result.remoteFiles = result.selectedPackFiles.filter { !FileManager.default.fileExists(atPath: game.appendingPathComponent($0.path).path) }
         return result
     }
     /// Drops the pack's values for these settings so the new instance follows
@@ -56,6 +63,8 @@ struct InstanceImportDescription {
     let game: URL
     let format: String
     var warnings: [String] = []
+    var author: String?
+    var summary: String?
     var records: Data?
     var curseForgeFiles: [CurseForgeReference] = []
     var packFiles: [PackFile] = []
@@ -65,6 +74,12 @@ struct InstanceImportDescription {
     var modpack: ModpackDescriptor?
     var inheritedModpack: InstalledModpack?
     var installation: URL?
+}
+
+public struct BundledContentFile: Identifiable, Sendable {
+    public var id: String { path }
+    public let path: String
+    public let size: Int64
 }
 
 public struct PackFile: Identifiable, Sendable {
@@ -196,11 +211,27 @@ public actor InstanceTransfer {
                 try PreparedMinecraftInstallation.capture($0, in: workspace, instance: description.instance, paths: paths)
             }
             let entries = try FileTree.entries(in: snapshot)
-            return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings,
-                                          fileCount: entries.filter { !$0.directory }.count + (installation?.fileCount ?? 0), byteCount: entries.reduce(0) { $0 + $1.size } + (installation?.byteCount ?? 0), curseForgeFiles: description.curseForgeFiles,
-                                          remoteFileCount: packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) }.count,
+            let bundled = Self.bundledContent(entries)
+            return PreparedInstanceImport(id: UUID(), format: description.format, instance: description.instance, warnings: description.warnings, author: description.author, summary: description.summary,
+                                          fileCount: entries.filter { !$0.directory }.count + (installation?.fileCount ?? 0), byteCount: entries.reduce(0) { $0 + $1.size } + (installation?.byteCount ?? 0), bundledContent: bundled, curseForgeFiles: description.curseForgeFiles,
+                                          remoteFiles: packFiles.filter { !FileManager.default.fileExists(atPath: snapshot.appendingPathComponent($0.path).path) },
                                           packFiles: packFiles, sourceMetadata: description.sourceMetadata, workspace: workspace, game: snapshot, records: description.records, modpack: description.modpack, inheritedModpack: description.inheritedModpack, installation: installation)
         } catch { try? FileManager.default.removeItem(at: workspace); throw error }
+    }
+
+    /// One item per mod archive or pack in a content folder; unpacked packs
+    /// count once, and side files such as shader settings are not content.
+    static func bundledContent(_ entries: [FileTree.Entry]) -> [BundledContentFile] {
+        var sizes: [String: Int64] = [:]
+        for entry in entries where !entry.directory {
+            let parts = entry.path.split(separator: "/", maxSplits: 2).map(String.init)
+            guard parts.count >= 2, let kind = ContentKind.allCases.first(where: { $0.folder == parts[0] }) else { continue }
+            if parts.count == 2 {
+                guard kind.fileExtensions.contains((parts[1] as NSString).pathExtension.lowercased()) else { continue }
+            } else if kind == .mod { continue }
+            sizes[parts[0] + "/" + parts[1], default: 0] += entry.size
+        }
+        return sizes.map { BundledContentFile(path: $0.key, size: $0.value) }.sorted { $0.path < $1.path }
     }
 
     public func discard(_ prepared: PreparedInstanceImport) { try? FileManager.default.removeItem(at: prepared.workspace) }
@@ -443,7 +474,6 @@ public actor InstanceTransfer {
         let games = ["minecraft", ".minecraft"].map { root.appendingPathComponent($0) }.filter { fm.fileExists(atPath: $0.path) }
         guard games.count == 1, try games[0].resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey]).isDirectory == true,
               try games[0].resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuriError.message(Messages.CoreInstanceTransfer.uniqueGameDirectory) }
-        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreInstanceTransfer.customJvmArguments.localized) }
         let source = root.appendingPathComponent("ruri-source-mcbbs.packmeta")
         return InstanceImportDescription(instance: instance, game: games[0], format: format, warnings: warnings, records: records,
                                          sourceMetadata: format == "Ruri" && fm.fileExists(atPath: source.path) ? try read(source) : nil,

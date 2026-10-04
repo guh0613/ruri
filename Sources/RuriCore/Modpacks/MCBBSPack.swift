@@ -104,12 +104,9 @@ extension InstanceTransfer {
         }
         guard Set(files.map { $0.path.lowercased() }).count == files.count, Set(curse.map(\.projectID)).count == curse.count else { throw RuriError.message(Messages.CoreMCBBSPack.duplicatePackPathOrProject) }
         var warnings: [String] = []
-        if let author = manifest.author, !author.isEmpty { warnings.append(Messages.CoreMCBBSPack.packAuthor(String(describing: author)).localized) }
-        if !instance.extraJVMArguments.isEmpty { warnings.append(Messages.CoreMCBBSPack.packJvmArgumentsNotice.localized) }
         if manifest.fileApi?.isEmpty == false { warnings.append(Messages.CoreMCBBSPack.packMissingFilesNotice.localized) }
-        if !curse.isEmpty { warnings.append(Messages.CoreMCBBSPack.curseForgeFilesToResolve(Int64(curse.count)).localized) }
         let origin = manifest.fileApi.flatMap { $0.isEmpty ? nil : URL(string: $0) }.map { ModpackOrigin(provider: .mcbbs, fileAPI: $0) }
-        return InstanceImportDescription(instance: instance, game: game, format: "MCBBS", warnings: warnings, curseForgeFiles: curse, packFiles: files, sourceMetadata: source, modpack: ModpackDescriptor(version: manifest.version ?? "", origin: origin, forcedProjects: Set(manifest.files.filter { $0.type == "curse" && $0.force == true }.compactMap { $0.projectID.map(String.init) })))
+        return InstanceImportDescription(instance: instance, game: game, format: "MCBBS", warnings: warnings, author: manifest.author?.isEmpty == false ? manifest.author : nil, curseForgeFiles: curse, packFiles: files, sourceMetadata: source, modpack: ModpackDescriptor(version: manifest.version ?? "", origin: origin, forcedProjects: Set(manifest.files.filter { $0.type == "curse" && $0.force == true }.compactMap { $0.projectID.map(String.init) })))
     }
 
     func exportMCBBS(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails, progress: @Sendable (InstallProgress) -> Void) throws {

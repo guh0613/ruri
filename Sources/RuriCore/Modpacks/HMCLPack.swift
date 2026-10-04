@@ -107,8 +107,7 @@ extension InstanceTransfer {
         // The pack carries no launch settings, so it follows the global ones.
         instance.launchOverrides = .init()
         try validate(instance)
-        var warnings = [Messages.CoreHMCLPack.reinstallDependenciesForMac.localized]
-        if let author = metadata.author, !author.isEmpty { warnings.append(Messages.CoreHMCLPack.packAuthor(String(describing: author)).localized) }
-        return InstanceImportDescription(instance: instance, game: game, format: "HMCL", warnings: warnings, excluded: ["pack.json"], modpack: ModpackDescriptor(version: metadata.version ?? ""))
+        return InstanceImportDescription(instance: instance, game: game, format: "HMCL", warnings: [Messages.CoreHMCLPack.reinstallDependenciesForMac.localized],
+                                         author: metadata.author?.isEmpty == false ? metadata.author : nil, excluded: ["pack.json"], modpack: ModpackDescriptor(version: metadata.version ?? ""))
     }
 }

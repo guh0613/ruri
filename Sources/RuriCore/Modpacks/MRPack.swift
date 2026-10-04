@@ -52,8 +52,6 @@ extension InstanceTransfer {
             guard let first = urls.first else { throw RuriError.message(Messages.CoreMRPack.missingDownloadURL(file.path)) }
             files.append(PackFile(path: file.path, sha1: sha1, url: first, sha512: sha512, size: file.fileSize, fallbackURLs: Array(urls.dropFirst()), optional: file.env?["client"] == "optional"))
         }
-        var warnings = [Messages.CoreMRPack.packVersion(String(describing: index.versionId)).localized]
-        if let summary = index.summary, !summary.isEmpty { warnings.append(summary) }
         var identities: [String: String] = [:]
         for file in files {
             if let url = file.url, url.host == "cdn.modrinth.com" {
@@ -61,7 +59,7 @@ extension InstanceTransfer {
                 if parts.count >= 5, parts[0] == "data", parts[2] == "versions" { identities[file.path] = "modrinth:" + parts[1] }
             }
         }
-        return InstanceImportDescription(instance: instance, game: game, format: "Modrinth", warnings: warnings, packFiles: files, overlays: [root.appendingPathComponent("client-overrides")], modpack: ModpackDescriptor(version: index.versionId, identities: identities))
+        return InstanceImportDescription(instance: instance, game: game, format: "Modrinth", summary: index.summary?.isEmpty == false ? index.summary : nil, packFiles: files, overlays: [root.appendingPathComponent("client-overrides")], modpack: ModpackDescriptor(version: index.versionId, identities: identities))
     }
 
     func exportMRPack(_ instance: GameInstance, game: URL, to destination: URL, includeWorlds: Bool, details: ModpackExportDetails,

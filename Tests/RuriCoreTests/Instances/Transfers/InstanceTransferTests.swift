@@ -16,6 +16,18 @@ struct InstanceTransferTests {
         }
         return (paths, instance)
     }
+    @Test func bundledContentCountsPacksOnceAndSkipsSideFiles() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString); defer { try? FileManager.default.removeItem(at: root) }
+        for path in ["mods/a.jar", "mods/b.litemod", "mods/notes.txt", "mods/1.20.1/nested.jar", "resourcepacks/Zipped.zip", "resourcepacks/Unpacked/pack.mcmeta",
+                     "resourcepacks/Unpacked/assets/a.png", "shaderpacks/Shader.zip", "shaderpacks/Shader.zip.txt", "config/x.toml"] {
+            let file = root.appendingPathComponent(path)
+            try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try Data("12".utf8).write(to: file)
+        }
+        let bundled = InstanceTransfer.bundledContent(try FileTree.entries(in: root))
+        #expect(bundled.map(\.path) == ["mods/a.jar", "mods/b.litemod", "resourcepacks/Unpacked", "resourcepacks/Zipped.zip", "shaderpacks/Shader.zip"])
+        #expect(bundled.first { $0.path == "resourcepacks/Unpacked" }?.size == 4)
+    }
     @Test func portableAndMultiMCRoundTrip() async throws {
         let (paths, original) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let transfer = InstanceTransfer(paths: paths)

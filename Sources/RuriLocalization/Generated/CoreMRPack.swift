@@ -3,12 +3,6 @@ import Foundation
 
 extension Messages {
     public enum CoreMRPack {
-        /// 整合包版本：%1$@
-        ///
-        /// Resource: `Core.coreMRPack.warningsText1`.
-        public static func packVersion(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.warningsText1", table: "Core", fallback: "整合包版本：%1$@", arguments: [.text(value0)])
-        }
         /// 无效文件哈希请求
         ///
         /// Resource: `Errors.coreMRPack.versionsFromHashesText1`.
@@ -118,7 +112,6 @@ extension Messages {
             .init(key: "coreMRPack.encoderText1", table: "Progress", fallback: "正在导出 mrpack")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMRPack.warningsText1": .init("整合包版本：%1$@", [.text]),
             "Errors:coreMRPack.versionsFromHashesText1": .init("无效文件哈希请求", []),
             "Errors:coreMRPack.lengthText1": .init("无效文件哈希", []),
             "Errors:coreMRPack.versionsText1": .init("Modrinth 返回的文件与查询哈希不一致", []),

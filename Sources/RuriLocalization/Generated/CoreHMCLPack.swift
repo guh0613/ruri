@@ -9,12 +9,6 @@ extension Messages {
         public static var reinstallDependenciesForMac: LocalizedMessage {
             .init(key: "coreHMCLPack.warningsText1", table: "Core", fallback: "游戏与加载器依赖会重新安装，以匹配当前 Mac。")
         }
-        /// 整合包作者：%1$@
-        ///
-        /// Resource: `Core.coreHMCLPack.authorText1`.
-        public static func packAuthor(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreHMCLPack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
-        }
         /// HMCL 清单补丁数量超过限制
         ///
         /// Resource: `Errors.coreHMCLPack.indexText1`.
@@ -77,7 +71,6 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:coreHMCLPack.warningsText1": .init("游戏与加载器依赖会重新安装，以匹配当前 Mac。", []),
-            "Core:coreHMCLPack.authorText1": .init("整合包作者：%1$@", [.text]),
             "Errors:coreHMCLPack.indexText1": .init("HMCL 清单补丁数量超过限制", []),
             "Errors:coreHMCLPack.versionText1": .init("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。", []),
             "Errors:coreHMCLPack.unsupportedText1": .init("HMCL 整合包包含尚未支持的组件：%1$@", [.text]),

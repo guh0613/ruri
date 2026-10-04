@@ -3,18 +3,6 @@ import Foundation
 
 extension Messages {
     public enum CoreCurseForgePack {
-        /// 需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。
-        ///
-        /// Resource: `Core.coreCurseForgePack.warningsText1`.
-        public static func curseForgeFilesNeedDownload(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "coreCurseForgePack.warningsText1", table: "Core", fallback: "需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。", arguments: [.integer(value0)])
-        }
-        /// 整合包作者：%1$@
-        ///
-        /// Resource: `Core.coreCurseForgePack.authorText1`.
-        public static func packAuthor(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForgePack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
-        }
         /// 不支持的 CurseForge 整合包格式
         ///
         /// Resource: `Errors.coreCurseForgePack.manifestText1`.
@@ -58,8 +46,6 @@ extension Messages {
             .init(key: "coreCurseForgePack.recordText1", table: "Errors", fallback: "整合包文件校验失败：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreCurseForgePack.warningsText1": .init("需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。", [.integer]),
-            "Core:coreCurseForgePack.authorText1": .init("整合包作者：%1$@", [.text]),
             "Errors:coreCurseForgePack.manifestText1": .init("不支持的 CurseForge 整合包格式", []),
             "Errors:coreCurseForgePack.manifestText2": .init("此整合包包含多个加载器，暂时无法安装。", []),
             "Errors:coreCurseForgePack.kindText1": .init("尚未支持的整合包加载器：%1$@", [.text]),

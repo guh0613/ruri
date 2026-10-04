@@ -38,10 +38,7 @@ extension InstanceTransfer {
             let info = try game.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard info.isDirectory == true, info.isSymbolicLink != true else { throw RuriError.message(Messages.CoreCurseForgePack.invalidOverridesDirectory) }
         }
-        var warnings: [String] = []
-        if !manifest.files.isEmpty { warnings.append(Messages.CoreCurseForgePack.curseForgeFilesNeedDownload(Int64(manifest.files.count)).localized) }
-        if let author = manifest.author, !author.isEmpty { warnings.append(Messages.CoreCurseForgePack.packAuthor(String(describing: author)).localized) }
-        return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", warnings: warnings, curseForgeFiles: manifest.files, modpack: ModpackDescriptor(version: manifest.version ?? ""))
+        return InstanceImportDescription(instance: instance, game: game, format: "CurseForge", author: manifest.author?.isEmpty == false ? manifest.author : nil, curseForgeFiles: manifest.files, modpack: ModpackDescriptor(version: manifest.version ?? ""))
     }
 
     static func validatePackContent(_ content: [ContentInstallation], references: [CurseForgeReference]) throws {

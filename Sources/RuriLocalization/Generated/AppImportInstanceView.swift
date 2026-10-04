@@ -15,41 +15,17 @@ extension Messages {
         public static var prepareModpackUpdate: LocalizedMessage {
             .init(key: "appImportInstanceView.bodyText2", table: "Interface", fallback: "准备整合包更新")
         }
-        /// 保存到：%1$@
+        /// 保存到
         ///
         /// Resource: `Interface.appImportInstanceView.updateTargetText3`.
-        public static func saveTo(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText3", table: "Interface", fallback: "保存到：%1$@", arguments: [.text(value0)])
-        }
-        /// 整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText4`.
-        public static var modpackUsesIndependentDirectory: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText4", table: "Interface", fallback: "整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。")
-        }
-        /// Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText5`.
-        public static var recognizedFullCopy: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText5", table: "Interface", fallback: "Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。")
-        }
-        /// 已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText6`.
-        public static func recognizedInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText6", table: "Interface", fallback: "已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。", arguments: [.text(value0)])
+        public static var saveTo: LocalizedMessage {
+            .init(key: "appImportInstanceView.updateTargetText3", table: "Interface", fallback: "保存到")
         }
         /// 实例名称
         ///
         /// Resource: `Interface.appImportInstanceView.updateTargetText7`.
         public static var instanceName: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText7", table: "Interface", fallback: "实例名称")
-        }
-        /// 游戏版本
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText8`.
-        public static var gameVersion: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText8", table: "Interface", fallback: "游戏版本")
         }
         /// 内存
         ///
@@ -63,59 +39,29 @@ extension Messages {
         public static var window: LocalizedMessage {
             .init(key: "appImportInstanceView.updateTargetText10", table: "Interface", fallback: "窗口")
         }
-        /// 跟随全局设置
-        ///
-        /// Resource: `Interface.appImportInstanceView.followsGlobalSettings`.
-        public static var followsGlobalSettings: LocalizedMessage {
-            .init(key: "appImportInstanceView.followsGlobalSettings", table: "Interface", fallback: "跟随全局设置")
-        }
-        /// 整合包设置：%1$@
-        ///
-        /// Resource: `Interface.appImportInstanceView.packSetting`.
-        public static func packSetting(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.packSetting", table: "Interface", fallback: "整合包设置：%1$@", arguments: [.text(value0)])
-        }
         /// 支持 Java
         ///
         /// Resource: `Interface.appImportInstanceView.javaText1`.
         public static var supportedJava: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText1", table: "Interface", fallback: "支持 Java")
         }
-        /// 待下载文件
+        /// 需下载
         ///
         /// Resource: `Interface.appImportInstanceView.javaText2`.
         public static var pendingDownloads: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText2", table: "Interface", fallback: "待下载文件")
+            .init(key: "appImportInstanceView.javaText2", table: "Interface", fallback: "需下载")
         }
-        /// %1$lld 个（整合包下载源）
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText3`.
-        public static func modpackDownloadCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText3", table: "Interface", fallback: "%1$lld 个（整合包下载源）", arguments: [.integer(value0)])
-        }
-        /// 迁移内容
+        /// 包内文件
         ///
         /// Resource: `Interface.appImportInstanceView.javaText4`.
         public static var migratedContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText4", table: "Interface", fallback: "迁移内容")
-        }
-        /// %1$lld 个文件 · %2$@
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText5`.
-        public static func migratedFileCount(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText5", table: "Interface", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
+            .init(key: "appImportInstanceView.javaText4", table: "Interface", fallback: "包内文件")
         }
         /// 可选内容
         ///
         /// Resource: `Interface.appImportInstanceView.javaText6`.
         public static var optionalContent: LocalizedMessage {
             .init(key: "appImportInstanceView.javaText6", table: "Interface", fallback: "可选内容")
-        }
-        /// 安装可选内容：%1$@
-        ///
-        /// Resource: `Interface.appImportInstanceView.optionalText1`.
-        public static func installOptionalContent(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.optionalText1", table: "Interface", fallback: "安装可选内容：%1$@", arguments: [.text(value0)])
         }
         /// 正在解析整合包文件…
         ///
@@ -159,38 +105,101 @@ extension Messages {
         public static var viewUpdateDiff: LocalizedMessage {
             .init(key: "appImportInstanceView.onCancelText2", table: "Interface", fallback: "查看更新差异")
         }
-        /// 游戏参数：%1$@
+        /// 查看
+        ///
+        /// Resource: `Interface.appImportInstanceView.browseContent`.
+        public static var browseContent: LocalizedMessage {
+            .init(key: "appImportInstanceView.browseContent", table: "Interface", fallback: "查看")
+        }
+        /// 全部
+        ///
+        /// Resource: `Interface.appImportInstanceView.allContent`.
+        public static var allContent: LocalizedMessage {
+            .init(key: "appImportInstanceView.allContent", table: "Interface", fallback: "全部")
+        }
+        /// 其他
+        ///
+        /// Resource: `Interface.appImportInstanceView.otherContent`.
+        public static var otherContent: LocalizedMessage {
+            .init(key: "appImportInstanceView.otherContent", table: "Interface", fallback: "其他")
+        }
+        /// 搜索内容
+        ///
+        /// Resource: `Interface.appImportInstanceView.searchContent`.
+        public static var searchContent: LocalizedMessage {
+            .init(key: "appImportInstanceView.searchContent", table: "Interface", fallback: "搜索内容")
+        }
+        /// 无匹配内容
+        ///
+        /// Resource: `Interface.appImportInstanceView.noMatchingContent`.
+        public static var noMatchingContent: LocalizedMessage {
+            .init(key: "appImportInstanceView.noMatchingContent", table: "Interface", fallback: "无匹配内容")
+        }
+        /// 包内附带
+        ///
+        /// Resource: `Interface.appImportInstanceView.bundledInPack`.
+        public static var bundledInPack: LocalizedMessage {
+            .init(key: "appImportInstanceView.bundledInPack", table: "Interface", fallback: "包内附带")
+        }
+        /// CurseForge 文件
+        ///
+        /// Resource: `Interface.appImportInstanceView.curseForgeFiles`.
+        public static var curseForgeFiles: LocalizedMessage {
+            .init(key: "appImportInstanceView.curseForgeFiles", table: "Interface", fallback: "CurseForge 文件")
+        }
+        /// 待解析
+        ///
+        /// Resource: `Interface.appImportInstanceView.awaitingResolution`.
+        public static var awaitingResolution: LocalizedMessage {
+            .init(key: "appImportInstanceView.awaitingResolution", table: "Interface", fallback: "待解析")
+        }
+        /// 需手动下载
+        ///
+        /// Resource: `Interface.appImportInstanceView.manualDownloads`.
+        public static var manualDownloads: LocalizedMessage {
+            .init(key: "appImportInstanceView.manualDownloads", table: "Interface", fallback: "需手动下载")
+        }
+        /// 高级
+        ///
+        /// Resource: `Interface.appImportInstanceView.advanced`.
+        public static var advanced: LocalizedMessage {
+            .init(key: "appImportInstanceView.advanced", table: "Interface", fallback: "高级")
+        }
+        /// 启动设置
+        ///
+        /// Resource: `Interface.appImportInstanceView.launchSettings`.
+        public static var launchSettings: LocalizedMessage {
+            .init(key: "appImportInstanceView.launchSettings", table: "Interface", fallback: "启动设置")
+        }
+        /// 使用整合包的启动设置
+        ///
+        /// Resource: `Interface.appImportInstanceView.usePackLaunchSettings`.
+        public static var usePackLaunchSettings: LocalizedMessage {
+            .init(key: "appImportInstanceView.usePackLaunchSettings", table: "Interface", fallback: "使用整合包的启动设置")
+        }
+        /// 游戏参数
         ///
         /// Resource: `Interface.appImportInstanceView.gameArguments`.
-        public static func gameArguments(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.gameArguments", table: "Interface", fallback: "游戏参数：%1$@", arguments: [.text(value0)])
+        public static var gameArguments: LocalizedMessage {
+            .init(key: "appImportInstanceView.gameArguments", table: "Interface", fallback: "游戏参数")
         }
-        /// 更新：%1$@；下一步查看文件差异。
+        /// 更新实例
         ///
         /// Resource: `Interface.appImportInstanceView.updateTarget`.
-        public static func updateTarget(_ value0: String) -> LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTarget", table: "Interface", fallback: "更新：%1$@；下一步查看文件差异。", arguments: [.text(value0)])
+        public static var updatingInstance: LocalizedMessage {
+            .init(key: "appImportInstanceView.updateTarget", table: "Interface", fallback: "更新实例")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:appImportInstanceView.bodyText1": .init("导入游戏实例", []),
             "Interface:appImportInstanceView.bodyText2": .init("准备整合包更新", []),
-            "Interface:appImportInstanceView.updateTargetText3": .init("保存到：%1$@", [.text]),
-            "Interface:appImportInstanceView.updateTargetText4": .init("整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。", []),
-            "Interface:appImportInstanceView.updateTargetText5": .init("Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。", []),
-            "Interface:appImportInstanceView.updateTargetText6": .init("已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。", [.text]),
+            "Interface:appImportInstanceView.updateTargetText3": .init("保存到", []),
             "Interface:appImportInstanceView.updateTargetText7": .init("实例名称", []),
-            "Interface:appImportInstanceView.updateTargetText8": .init("游戏版本", []),
             "Interface:appImportInstanceView.updateTargetText9": .init("内存", []),
             "Interface:appImportInstanceView.updateTargetText10": .init("窗口", []),
-            "Interface:appImportInstanceView.followsGlobalSettings": .init("跟随全局设置", []),
-            "Interface:appImportInstanceView.packSetting": .init("整合包设置：%1$@", [.text]),
             "Interface:appImportInstanceView.javaText1": .init("支持 Java", []),
-            "Interface:appImportInstanceView.javaText2": .init("待下载文件", []),
-            "Interface:appImportInstanceView.javaText3": .init("%1$lld 个（整合包下载源）", [.integer]),
-            "Interface:appImportInstanceView.javaText4": .init("迁移内容", []),
-            "Interface:appImportInstanceView.javaText5": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
+            "Interface:appImportInstanceView.javaText2": .init("需下载", []),
+            "Interface:appImportInstanceView.javaText4": .init("包内文件", []),
             "Interface:appImportInstanceView.javaText6": .init("可选内容", []),
-            "Interface:appImportInstanceView.optionalText1": .init("安装可选内容：%1$@", [.text]),
             "Interface:appImportInstanceView.optionalText2": .init("正在解析整合包文件…", []),
             "Interface:appImportInstanceView.optionalText3": .init("继续前需要解析 CurseForge 文件清单。", []),
             "Interface:appImportInstanceView.optionalText4": .init("解析文件清单", []),
@@ -198,8 +207,20 @@ extension Messages {
             "Interface:appImportInstanceView.argumentsText2": .init("保留自定义 JVM 参数", []),
             "Interface:appImportInstanceView.onCancelText1": .init("导入实例", []),
             "Interface:appImportInstanceView.onCancelText2": .init("查看更新差异", []),
-            "Interface:appImportInstanceView.gameArguments": .init("游戏参数：%1$@", [.text]),
-            "Interface:appImportInstanceView.updateTarget": .init("更新：%1$@；下一步查看文件差异。", [.text]),
+            "Interface:appImportInstanceView.browseContent": .init("查看", []),
+            "Interface:appImportInstanceView.allContent": .init("全部", []),
+            "Interface:appImportInstanceView.otherContent": .init("其他", []),
+            "Interface:appImportInstanceView.searchContent": .init("搜索内容", []),
+            "Interface:appImportInstanceView.noMatchingContent": .init("无匹配内容", []),
+            "Interface:appImportInstanceView.bundledInPack": .init("包内附带", []),
+            "Interface:appImportInstanceView.curseForgeFiles": .init("CurseForge 文件", []),
+            "Interface:appImportInstanceView.awaitingResolution": .init("待解析", []),
+            "Interface:appImportInstanceView.manualDownloads": .init("需手动下载", []),
+            "Interface:appImportInstanceView.advanced": .init("高级", []),
+            "Interface:appImportInstanceView.launchSettings": .init("启动设置", []),
+            "Interface:appImportInstanceView.usePackLaunchSettings": .init("使用整合包的启动设置", []),
+            "Interface:appImportInstanceView.gameArguments": .init("游戏参数", []),
+            "Interface:appImportInstanceView.updateTarget": .init("更新实例", []),
         ]
     }
 }

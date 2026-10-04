@@ -3,29 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreMCBBSPack {
-        /// 整合包作者：%1$@
-        ///
-        /// Resource: `Core.coreMCBBSPack.authorText1`.
-        public static func packAuthor(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMCBBSPack.authorText1", table: "Core", fallback: "整合包作者：%1$@", arguments: [.text(value0)])
-        }
-        /// 此整合包提供了 JVM 参数，可在下方查看并选择保留。
-        ///
-        /// Resource: `Core.coreMCBBSPack.authorText2`.
-        public static var packJvmArgumentsNotice: LocalizedMessage {
-            .init(key: "coreMCBBSPack.authorText2", table: "Core", fallback: "此整合包提供了 JVM 参数，可在下方查看并选择保留。")
-        }
         /// 缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。
         ///
         /// Resource: `Core.coreMCBBSPack.authorText3`.
         public static var packMissingFilesNotice: LocalizedMessage {
             .init(key: "coreMCBBSPack.authorText3", table: "Core", fallback: "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。")
-        }
-        /// 需要解析 %1$lld 个 CurseForge 文件。
-        ///
-        /// Resource: `Core.coreMCBBSPack.authorText4`.
-        public static func curseForgeFilesToResolve(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "coreMCBBSPack.authorText4", table: "Core", fallback: "需要解析 %1$lld 个 CurseForge 文件。", arguments: [.integer(value0)])
         }
         /// MCBBS 整合包清单无效或缺少游戏版本
         ///
@@ -124,10 +106,7 @@ extension Messages {
             .init(key: "coreMCBBSPack.extrasText1", table: "Progress", fallback: "正在导出 MCBBS 整合包")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMCBBSPack.authorText1": .init("整合包作者：%1$@", [.text]),
-            "Core:coreMCBBSPack.authorText2": .init("此整合包提供了 JVM 参数，可在下方查看并选择保留。", []),
             "Core:coreMCBBSPack.authorText3": .init("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。", []),
-            "Core:coreMCBBSPack.authorText4": .init("需要解析 %1$lld 个 CurseForge 文件。", [.integer]),
             "Errors:coreMCBBSPack.gameVersionText1": .init("MCBBS 整合包清单无效或缺少游戏版本", []),
             "Errors:coreMCBBSPack.unknownText1": .init("MCBBS 整合包包含尚未接入的组件：%1$@", [.text]),
             "Errors:coreMCBBSPack.loadersText1": .init("MCBBS 整合包同时声明多个加载器，暂时无法安装。", []),

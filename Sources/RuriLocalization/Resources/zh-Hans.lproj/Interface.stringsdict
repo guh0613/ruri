@@ -403,34 +403,6 @@
 		<key>NSStringLocalizedFormatKey</key>
 		<string>已回退整合包，保留了 %1$#@count1@ 项更新后的本地修改</string>
 	</dict>
-	<key>appImportInstanceView.javaText3</key>
-	<dict>
-		<key>count1</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>lld</string>
-			<key>other</key>
-			<string>%lld</string>
-		</dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%1$#@count1@ 个（整合包下载源）</string>
-	</dict>
-	<key>appImportInstanceView.javaText5</key>
-	<dict>
-		<key>count1</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>lld</string>
-			<key>other</key>
-			<string>%lld</string>
-		</dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%1$#@count1@ 个文件 · %2$@</string>
-	</dict>
 	<key>appModpackUpdateView.explanationText3</key>
 	<dict>
 		<key>count1</key>

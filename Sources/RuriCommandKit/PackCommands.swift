@@ -74,7 +74,11 @@ extension CLIApplication {
             let missing = files.filter { $0.requiresManualDownload && manual[$0.id] == nil }
             var result: [String: Value] = ["dryRun": .bool(request.dryRun), "format": .string(prepared.format), "name": .string(prepared.instance.name),
                 "gameVersion": .string(prepared.instance.gameVersion), "files": .integer(prepared.fileCount), "bytes": .integer(prepared.byteCount), "manualFiles": .array(missing.map(manualValue)),
-                "warnings": .array(prepared.warnings.map(Value.string))]
+                "curseForgeFiles": .integer(prepared.curseForgeFiles.count), "warnings": .array(prepared.warnings.map(Value.string))]
+            if let version = prepared.packVersion { result["packVersion"] = .string(version) }
+            if let author = prepared.author { result["author"] = .string(author) }
+            if let summary = prepared.summary { result["summary"] = .string(summary) }
+            if !prepared.instance.extraJVMArguments.isEmpty { result["jvmArguments"] = .string(prepared.instance.extraJVMArguments) }
             if importing {
                 let name = try request.required("name")
                 try await transfer.validateDestination(prepared, name: name)

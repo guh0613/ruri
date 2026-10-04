@@ -463,9 +463,6 @@
 /* @symbol CoreInstanceTransfer.retainedCommands @args - */
 "coreInstanceTransfer.commandsText1" = "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。";
 
-/* @symbol CoreInstanceTransfer.customJvmArguments @args - */
-"coreInstanceTransfer.gamesText2" = "实例带有自定义 JVM 参数，确认内容后可选择保留。";
-
 /* @symbol CoreInstanceMoveProgress.validatingInstanceFiles @args - */
 "coreInstanceMoveProgress.progressText1" = "正在校验实例文件…";
 
@@ -598,32 +595,11 @@
 /* @symbol CoreMemorySettings.memorySummary @args text,text,text */
 "coreMemorySettings.summaryText2" = "堆上限 %1$@ · 初始 %2$@ · %3$@";
 
-/* @symbol CoreCurseForgePack.curseForgeFilesNeedDownload @args integer */
-"coreCurseForgePack.warningsText1" = "需要下载 %1$lld 个 CurseForge 文件。下一步可查看可选内容，并补齐需要手动下载的文件。";
-
-/* @symbol CoreCurseForgePack.packAuthor @args text */
-"coreCurseForgePack.authorText1" = "整合包作者：%1$@";
-
 /* @symbol CoreHMCLPack.reinstallDependenciesForMac @args - */
 "coreHMCLPack.warningsText1" = "游戏与加载器依赖会重新安装，以匹配当前 Mac。";
 
-/* @symbol CoreHMCLPack.packAuthor @args text */
-"coreHMCLPack.authorText1" = "整合包作者：%1$@";
-
-/* @symbol CoreMCBBSPack.packAuthor @args text */
-"coreMCBBSPack.authorText1" = "整合包作者：%1$@";
-
-/* @symbol CoreMCBBSPack.packJvmArgumentsNotice @args - */
-"coreMCBBSPack.authorText2" = "此整合包提供了 JVM 参数，可在下方查看并选择保留。";
-
 /* @symbol CoreMCBBSPack.packMissingFilesNotice @args - */
 "coreMCBBSPack.authorText3" = "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。";
-
-/* @symbol CoreMCBBSPack.curseForgeFilesToResolve @args integer */
-"coreMCBBSPack.authorText4" = "需要解析 %1$lld 个 CurseForge 文件。";
-
-/* @symbol CoreMRPack.packVersion @args text */
-"coreMRPack.warningsText1" = "整合包版本：%1$@";
 
 /* @symbol CoreModpackUpdatePlan.newFile @args - */
 "coreModpackUpdatePlan.titleText1" = "新增";

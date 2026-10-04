@@ -54,12 +54,6 @@ extension Messages {
         public static var retainedCommands: LocalizedMessage {
             .init(key: "coreInstanceTransfer.commandsText1", table: "Core", fallback: "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。")
         }
-        /// 实例带有自定义 JVM 参数，确认内容后可选择保留。
-        ///
-        /// Resource: `Core.coreInstanceTransfer.gamesText2`.
-        public static var customJvmArguments: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.gamesText2", table: "Core", fallback: "实例带有自定义 JVM 参数，确认内容后可选择保留。")
-        }
         /// 此实例包需要更新版本的 Ruri，或缺少安装文件信息。
         ///
         /// Resource: `Errors.coreInstanceTransfer.instanceText1`.
@@ -219,7 +213,6 @@ extension Messages {
             "Core:coreInstanceTransfer.infoText1": .init("未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。", []),
             "Core:coreInstanceTransfer.infoText2": .init("目录包含多个实例，请选择其中一个实例目录。", []),
             "Core:coreInstanceTransfer.commandsText1": .init("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。", []),
-            "Core:coreInstanceTransfer.gamesText2": .init("实例带有自定义 JVM 参数，确认内容后可选择保留。", []),
             "Errors:coreInstanceTransfer.instanceText1": .init("此实例包需要更新版本的 Ruri，或缺少安装文件信息。", []),
             "Errors:coreInstanceTransfer.isDirectoryText1": .init("请选择实际实例目录或压缩包。", []),
             "Errors:coreInstanceTransfer.itemText1": .init("整合包内附文件校验失败：%1$@", [.text]),

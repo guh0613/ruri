@@ -171,7 +171,8 @@ enum CommandSchemas {
         }
         if p.first == "pack" || path == "instance import" {
             let pack = object(fields("instanceID,name,version,format,provider,projectID,versionID", type: nullable(string)).merging(["managedFiles": integer]) { _, n in n })
-            return pack.mergingSchema(object(["dryRun": boolean, "instance": instance, "gameVersion": string, "files": integer, "bytes": integer, "manualFiles": array(object([:])), "warnings": array(string),
+            return pack.mergingSchema(object(["dryRun": boolean, "instance": instance, "gameVersion": string, "files": integer, "bytes": integer, "manualFiles": array(object([:])), "curseForgeFiles": integer, "warnings": array(string),
+                "packVersion": string, "author": string, "summary": string, "jvmArguments": string,
                 "current": pack, "releases": array(object(["id": string, "title": string, "gameVersions": array(string), "publishedAt": nullable(string), "stable": boolean, "manualDownloadRequired": boolean, "pageURL": nullable(string)])),
                 "changes": array(object(["path": string, "action": string, "conflict": boolean, "explanation": nullable(string)])), "offset": integer, "hasMore": boolean, "complete": boolean, "preservedFiles": integer, "available": boolean]))
         }

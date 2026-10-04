@@ -1978,23 +1978,11 @@
 /* @symbol AppImportInstanceView.prepareModpackUpdate @args - */
 "appImportInstanceView.bodyText2" = "准备整合包更新";
 
-/* @symbol AppImportInstanceView.saveTo @args text */
-"appImportInstanceView.updateTargetText3" = "保存到：%1$@";
-
-/* @symbol AppImportInstanceView.modpackUsesIndependentDirectory @args - */
-"appImportInstanceView.updateTargetText4" = "整合包会使用独立运行目录，存档和模组保存在新版本文件夹中。";
-
-/* @symbol AppImportInstanceView.recognizedFullCopy @args - */
-"appImportInstanceView.updateTargetText5" = "Ruri 完整副本：还原游戏安装文件和本地修改，使用独立目录。";
-
-/* @symbol AppImportInstanceView.recognizedInstance @args text */
-"appImportInstanceView.updateTargetText6" = "已识别 %1$@ 实例。游戏依赖将按这台 Mac 的系统与架构安装。";
+/* @symbol AppImportInstanceView.saveTo @args - */
+"appImportInstanceView.updateTargetText3" = "保存到";
 
 /* @symbol AppImportInstanceView.instanceName @args - */
 "appImportInstanceView.updateTargetText7" = "实例名称";
-
-/* @symbol AppImportInstanceView.gameVersion @args - */
-"appImportInstanceView.updateTargetText8" = "游戏版本";
 
 /* @symbol AppImportInstanceView.memory @args - */
 "appImportInstanceView.updateTargetText9" = "内存";
@@ -2002,32 +1990,17 @@
 /* @symbol AppImportInstanceView.window @args - */
 "appImportInstanceView.updateTargetText10" = "窗口";
 
-/* @symbol AppImportInstanceView.followsGlobalSettings @args - */
-"appImportInstanceView.followsGlobalSettings" = "跟随全局设置";
-
-/* @symbol AppImportInstanceView.packSetting @args text */
-"appImportInstanceView.packSetting" = "整合包设置：%1$@";
-
 /* @symbol AppImportInstanceView.supportedJava @args - */
 "appImportInstanceView.javaText1" = "支持 Java";
 
 /* @symbol AppImportInstanceView.pendingDownloads @args - */
-"appImportInstanceView.javaText2" = "待下载文件";
-
-/* @symbol AppImportInstanceView.modpackDownloadCount @args integer */
-"appImportInstanceView.javaText3" = "%1$lld 个（整合包下载源）";
+"appImportInstanceView.javaText2" = "需下载";
 
 /* @symbol AppImportInstanceView.migratedContent @args - */
-"appImportInstanceView.javaText4" = "迁移内容";
-
-/* @symbol AppImportInstanceView.migratedFileCount @args integer,text */
-"appImportInstanceView.javaText5" = "%1$lld 个文件 · %2$@";
+"appImportInstanceView.javaText4" = "包内文件";
 
 /* @symbol AppImportInstanceView.optionalContent @args - */
 "appImportInstanceView.javaText6" = "可选内容";
-
-/* @symbol AppImportInstanceView.installOptionalContent @args text */
-"appImportInstanceView.optionalText1" = "安装可选内容：%1$@";
 
 /* @symbol AppImportInstanceView.resolvingModpackFiles @args - */
 "appImportInstanceView.optionalText2" = "正在解析整合包文件…";
@@ -2049,6 +2022,42 @@
 
 /* @symbol AppImportInstanceView.viewUpdateDiff @args - */
 "appImportInstanceView.onCancelText2" = "查看更新差异";
+
+/* @symbol AppImportInstanceView.browseContent @args - */
+"appImportInstanceView.browseContent" = "查看";
+
+/* @symbol AppImportInstanceView.allContent @args - */
+"appImportInstanceView.allContent" = "全部";
+
+/* @symbol AppImportInstanceView.otherContent @args - */
+"appImportInstanceView.otherContent" = "其他";
+
+/* @symbol AppImportInstanceView.searchContent @args - */
+"appImportInstanceView.searchContent" = "搜索内容";
+
+/* @symbol AppImportInstanceView.noMatchingContent @args - */
+"appImportInstanceView.noMatchingContent" = "无匹配内容";
+
+/* @symbol AppImportInstanceView.bundledInPack @args - */
+"appImportInstanceView.bundledInPack" = "包内附带";
+
+/* @symbol AppImportInstanceView.curseForgeFiles @args - */
+"appImportInstanceView.curseForgeFiles" = "CurseForge 文件";
+
+/* @symbol AppImportInstanceView.awaitingResolution @args - */
+"appImportInstanceView.awaitingResolution" = "待解析";
+
+/* @symbol AppImportInstanceView.manualDownloads @args - */
+"appImportInstanceView.manualDownloads" = "需手动下载";
+
+/* @symbol AppImportInstanceView.advanced @args - */
+"appImportInstanceView.advanced" = "高级";
+
+/* @symbol AppImportInstanceView.launchSettings @args - */
+"appImportInstanceView.launchSettings" = "启动设置";
+
+/* @symbol AppImportInstanceView.usePackLaunchSettings @args - */
+"appImportInstanceView.usePackLaunchSettings" = "使用整合包的启动设置";
 
 /* @symbol AppInstanceCopyView.copyInstance @args - */
 "appInstanceCopyView.bodyText1" = "复制实例";
@@ -3616,14 +3625,14 @@
 /* @symbol AppInstanceComponentsView.previousComponents @args text */
 "appInstanceComponentsView.previousComponents" = "上次配置：%1$@";
 
-/* @symbol AppImportInstanceView.gameArguments @args text */
-"appImportInstanceView.gameArguments" = "游戏参数：%1$@";
+/* @symbol AppImportInstanceView.gameArguments @args - */
+"appImportInstanceView.gameArguments" = "游戏参数";
 
 /* @symbol AppGameRunDirectoryChangeView.sharedInstances @args text */
 "appGameRunDirectoryChangeView.sharedInstances" = "共用目标目录：%1$@";
 
-/* @symbol AppImportInstanceView.updateTarget @args text */
-"appImportInstanceView.updateTarget" = "更新：%1$@；下一步查看文件差异。";
+/* @symbol AppImportInstanceView.updatingInstance @args - */
+"appImportInstanceView.updateTarget" = "更新实例";
 
 /* @symbol AppInstanceCopyView.copyName @args text */
 "appInstanceCopyView.copyName" = "%1$@ 副本";

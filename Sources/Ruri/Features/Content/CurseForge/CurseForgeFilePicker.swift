@@ -10,9 +10,34 @@ struct CurseForgeFileRow: View {
     let page: URL
     let manual: Bool
     @Binding var selectedURL: URL?
+    /// A single form row for lists of manual downloads.
+    var compact = false
     @State private var checking = false
     @State private var error: String?
     var body: some View {
+        Group { if compact { row } else { card } }
+        .task(id: file.id) {
+            if manual, selectedURL == nil, let cached = await CurseForgeService.cachedFile(file, paths: model.paths), !Task.isCancelled { selectedURL = cached }
+        }
+    }
+    private var row: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title).lineLimit(1)
+                    Text(file.fileName).font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).help(file.fileName)
+                }
+                Spacer(minLength: 8)
+                if checking { ProgressView().controlSize(.small) }
+                else if selectedURL != nil { Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.accent).help(Messages.AppCurseForgeFilePicker.verified.localized) }
+                Link(destination: page) { Image(systemName: "safari") }.help(Messages.AppCurseForgeFilePicker.openDownloadPage.localized)
+                Button(selectedURL == nil ? Messages.AppCurseForgeFilePicker.chooseDownloadedFile.localized : Messages.AppCurseForgeFilePicker.chooseAnotherFile.localized) { choose() }
+                    .controlSize(.small).disabled(checking)
+            }
+            if let error { Text(error).font(.caption).foregroundStyle(.orange) }
+        }
+    }
+    private var card: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -32,9 +57,6 @@ struct CurseForgeFileRow: View {
             }
             if let error { Text(error).font(.caption).foregroundStyle(.orange) }
         }.padding(14).background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 10))
-        .task(id: file.id) {
-            if manual, selectedURL == nil, let cached = await CurseForgeService.cachedFile(file, paths: model.paths), !Task.isCancelled { selectedURL = cached }
-        }
     }
     private func choose() {
         let panel = NSOpenPanel(); panel.canChooseDirectories = false; panel.allowsMultipleSelection = false
