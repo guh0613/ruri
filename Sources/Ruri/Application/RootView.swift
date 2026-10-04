@@ -177,14 +177,19 @@ private struct RootSidebar: View {
     @Binding var width: CGFloat
     var body: some View {
         @Bindable var model = model
-        List(selection: $model.page) {
-            Section { ForEach([Page.home, .library, .servers, .discover]) { page in sidebarRow(page) } }
-            Section(Messages.AppRootView.records.localized) { ForEach([Page.history, .activity]) { page in sidebarRow(page) } }
-            Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
+        // Give the sidebar its own navigation scope. When the root switches
+        // between two and three columns, the implicit scope can leave native
+        // row emphasis tied to the selection from the sidebar's creation.
+        NavigationStack {
+            List(selection: $model.page) {
+                Section { ForEach([Page.home, .library, .servers, .discover]) { page in sidebarRow(page) } }
+                Section(Messages.AppRootView.records.localized) { ForEach([Page.history, .activity]) { page in sidebarRow(page) } }
+                Section(Messages.AppRootView.manage.localized) { ForEach([Page.accounts, .java, .settings]) { page in sidebarRow(page) } }
+            }
+            .listStyle(.sidebar)
+            .controlSize(.large)
+            .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
         }
-        .listStyle(.sidebar)
-        .controlSize(.large)
-        .safeAreaInset(edge: .bottom, spacing: 0) { AccountSidebarFooter() }
         // Constrain the actual sidebar as well as the split view's preferred width.
         .frame(minWidth: 210, idealWidth: width, maxWidth: 320)
         .navigationSplitViewColumnWidth(min: 210, ideal: width, max: 320)
