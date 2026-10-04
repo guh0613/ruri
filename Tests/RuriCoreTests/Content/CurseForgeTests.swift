@@ -110,6 +110,13 @@ struct CurseForgeTests {
         var record = file(10, project: 1); record["hashes"] = []
         let invalid = try decoded(record)
         #expect(throws: (any Error).self) { try invalid.downloadItem(to: URL(fileURLWithPath: "/tmp/test"), permittedURL: invalid.downloadURL) }
+        // Archived files still download; withdrawn ones do not.
+        var archived = file(11, project: 1); archived["isAvailable"] = false; archived["fileStatus"] = 8
+        #expect(throws: Never.self) { try decoded(archived).validateDownloadMetadata() }
+        var deleted = archived; deleted["fileStatus"] = 7
+        #expect(throws: (any Error).self) { try decoded(deleted).validateDownloadMetadata() }
+        var unknown = archived; unknown["fileStatus"] = nil
+        #expect(throws: (any Error).self) { try decoded(unknown).validateDownloadMetadata() }
     }
     @Test func providerNamespacesKeepUnrelatedDependenciesIndependent() async throws {
         let paths = LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)); try paths.prepare()

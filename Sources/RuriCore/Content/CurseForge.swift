@@ -73,6 +73,11 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     public let dependencies: [Dependency]
     public let hashes: [Hash]
     public let isAvailable: Bool?
+    public var fileStatus: Int? = nil
+    /// Archived files report `isAvailable: false` yet keep their download and
+    /// hashes, so packs that pin them still install. Rejected, malware and
+    /// deleted files do not.
+    var downloadable: Bool { fileStatus.map { ![5, 6, 7].contains($0) } ?? (isAvailable != false) }
     public var fileFingerprint: UInt32? = nil
     public var sha1: String? { hash(algorithm: 1, length: 40) }
     public var md5: String? { hash(algorithm: 2, length: 32) }
@@ -89,7 +94,7 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
         return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength, cacheable: true)
     }
     func validateDownloadMetadata() throws {
-        guard id > 0, modId > 0, fileLength >= 0, isAvailable != false, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.invalidDownloadMetadata(fileName)) }
+        guard id > 0, modId > 0, fileLength >= 0, downloadable, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.invalidDownloadMetadata(fileName)) }
         guard !fileName.isEmpty, !fileName.contains("/"), !fileName.contains("\\"), !fileName.contains("\0") else { throw RuriError.message(Messages.CoreCurseForge.invalidFileName) }
     }
     public func supports(_ instance: GameInstance, kind: ContentKind) -> Bool {
