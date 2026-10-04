@@ -220,7 +220,7 @@ struct AccountAppearanceView: View {
     private var armsPicker: some View {
         let legacy = skin?.isLegacySkin == true
         return Picker(Messages.AppAccountAppearanceView.skinModel.localized,
-                      selection: Binding(get: { pendingModel ?? skinModel }, set: switchArms)) {
+                      selection: Binding(get: { pendingModel ?? skinModel }, set: { switchArms(to: $0) })) {
             Text(Messages.AccountCenter.classicArms.localized).tag(PlayerSkinModel.classic)
             Text(Messages.AccountCenter.slimArms.localized).tag(PlayerSkinModel.slim)
         }
