@@ -9,11 +9,11 @@ extension Messages {
         public static var debugMode: LocalizedMessage {
             .init(key: "monitorLogging.debugMode", table: "Interface", fallback: "调试模式")
         }
-        /// 详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。
+        /// 详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。
         ///
         /// Resource: `Interface.monitorLogging.debugModeHelp`.
         public static var debugModeHelp: LocalizedMessage {
-            .init(key: "monitorLogging.debugModeHelp", table: "Interface", fallback: "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。")
+            .init(key: "monitorLogging.debugModeHelp", table: "Interface", fallback: "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。")
         }
         /// 默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。
         ///
@@ -47,7 +47,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:monitorLogging.debugMode": .init("调试模式", []),
-            "Interface:monitorLogging.debugModeHelp": .init("详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。", []),
+            "Interface:monitorLogging.debugModeHelp": .init("详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。", []),
             "Interface:monitorLogging.defaultModeHelp": .init("默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。", []),
             "Interface:monitorLogging.writeFailed": .init("[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", [.text]),
             "Interface:monitorLogging.debugLimit": .init("已达到本次运行的 64 MiB 调试日志上限", []),

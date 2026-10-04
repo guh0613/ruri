@@ -2981,7 +2981,7 @@
 "appLaunchSettingsEditor.javaIssueText2" = "例如：-Dfile.encoding=UTF-8";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsHelp @args - */
-"appLaunchSettingsEditor.javaIssueText3" = "参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。";
+"appLaunchSettingsEditor.javaIssueText3" = "参数用空格分隔，含空格的值加引号。内存大小可在“Java 与内存”中设置。";
 
 /* @symbol AppLaunchSettingsEditor.jvmArgumentsExample @args - */
 "appLaunchSettingsEditor.javaIssueText4" = "填写示例";
@@ -3027,9 +3027,6 @@
 
 /* @symbol AppLaunchSettingsEditor.logsKeepLauncherVisible @args - */
 "appLaunchSettingsEditor.valueText4" = "打开游戏详情时，Ruri 保持可见。";
-
-/* @symbol AppLaunchSettingsEditor.logsHideLauncherVisible @args - */
-"appLaunchSettingsEditor.valueText5" = "游戏退出后自动显示 Ruri 窗口。";
 
 /* @symbol AppLaunchSettingsEditor.chooseJavaPanelHelp @args - */
 "appLaunchSettingsEditor.panelText1" = "选择 java 文件、JDK 包或 Java Home 文件夹。";
@@ -3952,9 +3949,6 @@
 /* @symbol LauncherLog.noAttentionHint @args - */
 "launcherLog.noAttentionHint" = "任务失败、警告和中断信息会集中显示在这里。";
 
-/* @symbol LauncherLog.transferScope @args - */
-"launcherLog.transferScope" = "本次运行 · 最近的文件传输";
-
 /* @symbol LauncherLog.transferProgress @args integer,integer */
 "launcherLog.transferProgress" = "%1$lld / %2$lld";
 
@@ -3982,7 +3976,7 @@
 "monitorLogging.debugMode" = "调试模式";
 
 /* @symbol MonitorLogging.debugModeHelp @args - */
-"monitorLogging.debugModeHelp" = "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB；达到上限、输出过载或写入失败时，停止详细记录并保留有界的启动与近期输出。";
+"monitorLogging.debugModeHelp" = "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。";
 
 /* @symbol MonitorLogging.defaultModeHelp @args - */
 "monitorLogging.defaultModeHelp" = "默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。";

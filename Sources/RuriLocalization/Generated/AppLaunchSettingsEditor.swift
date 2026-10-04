@@ -195,11 +195,11 @@ extension Messages {
         public static var jvmArgumentsPlaceholder: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.javaIssueText2", table: "Interface", fallback: "例如：-Dfile.encoding=UTF-8")
         }
-        /// 参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。
+        /// 参数用空格分隔，含空格的值加引号。内存大小可在“Java 与内存”中设置。
         ///
         /// Resource: `Interface.appLaunchSettingsEditor.javaIssueText3`.
         public static var jvmArgumentsHelp: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。")
+            .init(key: "appLaunchSettingsEditor.javaIssueText3", table: "Interface", fallback: "参数用空格分隔，含空格的值加引号。内存大小可在“Java 与内存”中设置。")
         }
         /// 填写示例
         ///
@@ -290,12 +290,6 @@ extension Messages {
         /// Resource: `Interface.appLaunchSettingsEditor.valueText4`.
         public static var logsKeepLauncherVisible: LocalizedMessage {
             .init(key: "appLaunchSettingsEditor.valueText4", table: "Interface", fallback: "打开游戏详情时，Ruri 保持可见。")
-        }
-        /// 游戏退出后自动显示 Ruri 窗口。
-        ///
-        /// Resource: `Interface.appLaunchSettingsEditor.valueText5`.
-        public static var logsHideLauncherVisible: LocalizedMessage {
-            .init(key: "appLaunchSettingsEditor.valueText5", table: "Interface", fallback: "游戏退出后自动显示 Ruri 窗口。")
         }
         /// 选择 java 文件、JDK 包或 Java Home 文件夹。
         ///
@@ -516,7 +510,7 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.majorText5": .init("选择文件或 JDK…", []),
             "Interface:appLaunchSettingsEditor.javaIssueText1": .init("附加 JVM 参数", []),
             "Interface:appLaunchSettingsEditor.javaIssueText2": .init("例如：-Dfile.encoding=UTF-8", []),
-            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("参数用空格分隔，含空格的值加引号。内存大小可在“内存”中设置。", []),
+            "Interface:appLaunchSettingsEditor.javaIssueText3": .init("参数用空格分隔，含空格的值加引号。内存大小可在“Java 与内存”中设置。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText4": .init("填写示例", []),
             "Interface:appLaunchSettingsEditor.javaIssueText5": .init("多个参数用空格分隔，含空格的值加引号。", []),
             "Interface:appLaunchSettingsEditor.javaIssueText6": .init("附加游戏参数", []),
@@ -532,7 +526,6 @@ extension Messages {
             "Interface:appLaunchSettingsEditor.valueText2": .init("关闭“全屏启动”后，使用游戏保存的全屏状态。", []),
             "Interface:appLaunchSettingsEditor.valueText3": .init("启动时打开游戏详情", []),
             "Interface:appLaunchSettingsEditor.valueText4": .init("打开游戏详情时，Ruri 保持可见。", []),
-            "Interface:appLaunchSettingsEditor.valueText5": .init("游戏退出后自动显示 Ruri 窗口。", []),
             "Interface:appLaunchSettingsEditor.panelText1": .init("选择 java 文件、JDK 包或 Java Home 文件夹。", []),
             "Interface:appLaunchSettingsEditor.bodyText6": .init("分配方式", []),
             "Interface:appLaunchSettingsEditor.bodyText7": .init("手动设置", []),

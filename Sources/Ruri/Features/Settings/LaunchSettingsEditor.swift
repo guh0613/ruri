@@ -63,7 +63,7 @@ struct LaunchSettingsEditor: View {
         case .memory: Messages.AppLaunchSettingsEditor.heapMemoryExplanation.localized
         case .window: Messages.AppLaunchSettingsEditor.fullscreenHelp.localized
         case .macOS: Messages.GameHost.settingsHelp.localized
-        case .presentation: effective.presentation.showLogs ? Messages.AppLaunchSettingsEditor.logsKeepLauncherVisible.localized : Messages.AppLaunchSettingsEditor.logsHideLauncherVisible.localized
+        case .presentation: effective.presentation.showLogs ? Messages.AppLaunchSettingsEditor.logsKeepLauncherVisible.localized : nil
         default: nil
         }
     }

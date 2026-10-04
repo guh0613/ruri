@@ -62,7 +62,6 @@ struct LauncherTransfersView: View {
             HStack {
                 Text(Messages.LauncherLog.entryCount(Int64(filtered.count)).localized)
                 Spacer()
-                Text(Messages.LauncherLog.transferScope.localized)
             }.font(.caption).foregroundStyle(.secondary).padding(.horizontal, 20).padding(.vertical, 9)
         }
         .task {

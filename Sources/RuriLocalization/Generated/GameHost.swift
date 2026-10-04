@@ -9,11 +9,11 @@ extension Messages {
         public static var settings: LocalizedMessage {
             .init(key: "gameHost.settings", table: "Core", fallback: "macOS 游戏集成")
         }
-        /// 在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会记录原因并使用常规启动方式。
+        /// 在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。
         ///
         /// Resource: `Core.gameHost.settingsHelp`.
         public static var settingsHelp: LocalizedMessage {
-            .init(key: "gameHost.settingsHelp", table: "Core", fallback: "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会记录原因并使用常规启动方式。")
+            .init(key: "gameHost.settingsHelp", table: "Core", fallback: "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。")
         }
         /// 启用 macOS 游戏集成
         ///
@@ -131,7 +131,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:gameHost.settings": .init("macOS 游戏集成", []),
-            "Core:gameHost.settingsHelp": .init("在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会记录原因并使用常规启动方式。", []),
+            "Core:gameHost.settingsHelp": .init("在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。", []),
             "Core:gameHost.enableIntegration": .init("启用 macOS 游戏集成", []),
             "Core:gameHost.instanceAppearance": .init("使用实例图标和窗口名称", []),
             "Core:gameHost.nativeFullscreen": .init("全屏启动时使用 macOS 原生全屏", []),

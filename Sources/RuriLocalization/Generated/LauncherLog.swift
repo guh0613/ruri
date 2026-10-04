@@ -375,12 +375,6 @@ extension Messages {
         public static var noAttentionHint: LocalizedMessage {
             .init(key: "launcherLog.noAttentionHint", table: "Interface", fallback: "任务失败、警告和中断信息会集中显示在这里。")
         }
-        /// 本次运行 · 最近的文件传输
-        ///
-        /// Resource: `Interface.launcherLog.transferScope`.
-        public static var transferScope: LocalizedMessage {
-            .init(key: "launcherLog.transferScope", table: "Interface", fallback: "本次运行 · 最近的文件传输")
-        }
         /// %1$lld / %2$lld
         ///
         /// Resource: `Interface.launcherLog.transferProgress`.
@@ -456,7 +450,6 @@ extension Messages {
             "Interface:launcherLog.catalogFailed": .init("无法刷新游戏版本列表：%1$@", [.text]),
             "Interface:launcherLog.noAttention": .init("没有需要关注的记录", []),
             "Interface:launcherLog.noAttentionHint": .init("任务失败、警告和中断信息会集中显示在这里。", []),
-            "Interface:launcherLog.transferScope": .init("本次运行 · 最近的文件传输", []),
             "Interface:launcherLog.transferProgress": .init("%1$lld / %2$lld", [.integer, .integer]),
             "Interface:launcherLog.clearSearch": .init("清除搜索", []),
         ]
