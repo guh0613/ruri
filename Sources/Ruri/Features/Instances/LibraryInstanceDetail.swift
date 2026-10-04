@@ -70,8 +70,12 @@ struct LibraryInstanceDetail<Notices: View>: View {
                     .padding(.horizontal, 28).padding(.bottom, 32)
                     .frame(maxWidth: 1040, alignment: .leading).frame(maxWidth: .infinity)
                 }
+                .background { OverlayScrollIndicators().allowsHitTesting(false).accessibilityHidden(true) }
             }
             .ignoresSafeArea(.container, edges: .top)
+            // Let the artwork reach the title bar, but keep the scroller below it.
+            .contentMargins(.top, geometry.safeAreaInsets.top + 8, for: .scrollIndicators)
+            .contentMargins(.bottom, 8, for: .scrollIndicators)
             .softTopScrollEdge()
         }
         .task(id: managerOpen) { if !managerOpen { await load() } }
