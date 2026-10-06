@@ -81,7 +81,7 @@ enum CommandHelp {
         }
         // Shared conventions appear once, even for the complete command index.
         lines += ["", Messages.CLIExperience.discovery.localized, Messages.CLIExperience.rules.localized,
-                  Messages.CLIExperience.formats.localized, Messages.CLIExperience.listRules.localized, Messages.CLIExperience.schemaHint.localized]
+                  Messages.CLIExperience.formats(LocalizationContext.commandLineLanguages.joined(separator: "|")).localized, Messages.CLIExperience.listRules.localized, Messages.CLIExperience.schemaHint.localized]
         return lines.joined(separator: "\n")
     }
 }

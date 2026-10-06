@@ -5,6 +5,12 @@
       "comment" : "Discover search filter or sort controls. Used for all categories.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Categories"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17,6 +23,12 @@
       "comment" : "Discover search filter or sort controls. Used for all channels.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Release Channels"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29,6 +41,12 @@
       "comment" : "Discover search filter or sort controls. Used for all game versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Game Versions"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41,6 +59,12 @@
       "comment" : "Discover search filter or sort controls. Used for all loaders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Loaders"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53,6 +77,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for already installed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -65,6 +95,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for applying install.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installing content…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77,6 +113,12 @@
       "comment" : "Discover search results or layout controls. Used for categories unavailable.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories are temporarily unavailable. You can still search for content."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +131,12 @@
       "comment" : "Discover search filter or sort controls. Used for category.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +149,12 @@
       "comment" : "Discover category filter option. Used for category adventure.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adventure"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +167,12 @@
       "comment" : "Discover category filter option. Used for category decoration.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decoration"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +185,12 @@
       "comment" : "Discover category filter option. Used for category equipment.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equipment"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -137,6 +203,12 @@
       "comment" : "Discover category filter option. Used for category kitchen sink.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kitchen Sink"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -149,6 +221,12 @@
       "comment" : "Discover category filter option. Used for category library.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Libraries"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +239,12 @@
       "comment" : "Discover category filter option. Used for category magic.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magic"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -173,6 +257,12 @@
       "comment" : "Discover category filter option. Used for category optimization.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Performance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -185,6 +275,12 @@
       "comment" : "Discover category filter option. Used for category quests.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quests"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +293,12 @@
       "comment" : "Discover category filter option. Used for category storage.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -209,6 +311,12 @@
       "comment" : "Discover category filter option. Used for category technology.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Technology"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -221,6 +329,12 @@
       "comment" : "Discover category filter option. Used for category utility.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utility"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +347,12 @@
       "comment" : "Discover category filter option. Used for category worldgen.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World Generation"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +365,12 @@
       "comment" : "Discover project or file detail panel. Used for changelog.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changelog"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +383,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for checking dependencies.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking dependencies…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -269,6 +401,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for choose instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an Instance to Install Into"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +419,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for choose save location.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Save Location…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -293,6 +437,12 @@
       "comment" : "Discover search filter or sort controls. Used for clear filters.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Filters"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -305,6 +455,12 @@
       "comment" : "Discover search filter or sort controls. Used for clear instance filter.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Instance Filter"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +473,12 @@
       "comment" : "Discover project version list and pagination. Used for collapse group.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapse This Game Version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -329,6 +491,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for confirm install.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +509,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for content changed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance's content has changed. Check again before installing."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -353,6 +527,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for create and install.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create and Install"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +545,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for create compatible instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create New Instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -377,6 +563,12 @@
       "comment" : "Discover search results or layout controls. Used for custom version hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you cannot find a version, enter the full version number and press Return."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -389,6 +581,12 @@
       "comment" : "Discover project or file detail panel. Used for dependencies.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dependencies"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -401,6 +599,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for dependency preview notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri automatically installs required dependencies and keeps compatible dependencies that are already installed."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -413,6 +617,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for dependency version notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The author provided the dependencies below. Ruri checks required dependencies during installation."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -425,6 +635,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for destination.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download to"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -437,6 +653,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for done.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -449,6 +671,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for download game.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download Game"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -461,6 +689,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for downloading file. %1$@: downloaded filename.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -473,6 +707,12 @@
       "comment" : "Discover project or file detail panel. Used for embedded.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Included"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -485,6 +725,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for existing instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing Instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -497,6 +743,12 @@
       "comment" : "Discover project version list and pagination. Used for expand group.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expand This Game Version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -509,6 +761,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for file dependencies notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When downloading files only, you must install dependencies yourself. Check the required dependencies in File Details."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,6 +779,12 @@
       "comment" : "Discover project or file detail panel. Used for file details.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File Details"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -533,6 +797,12 @@
       "comment" : "Discover search filter or sort controls. Used for filter by instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter by Instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -545,6 +815,12 @@
       "comment" : "Discover search filter or sort controls. Used for filtering for instance. %1$@: instance name.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtering for “%1$@”"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -557,6 +833,12 @@
       "comment" : "Discover search filter or sort controls. Used for find game version.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search or enter a game version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +851,12 @@
       "comment" : "Discover project or file detail panel. Used for gallery.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gallery"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -581,6 +869,12 @@
       "comment" : "Discover search filter or sort controls. Used for game version.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -593,6 +887,12 @@
       "comment" : "Discover project version list and pagination. Used for get versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -605,6 +905,12 @@
       "comment" : "Discover project version list and pagination. Used for group collapsed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapsed"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -617,6 +923,12 @@
       "comment" : "Discover project version list and pagination. Used for group expanded.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expanded"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -629,6 +941,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for incompatible.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incompatible"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -641,6 +959,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for incompatible target.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incompatible game version or loader"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -653,6 +977,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install complete. %1$@: instance name.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished installing content for %1$@."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -665,6 +995,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install or save.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install or Download…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -677,6 +1013,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install preview.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dependency Check"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -689,6 +1031,24 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install summary. %1$lld: number of files pending installation; %2$@: formatted total download size.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld file · %2$@ to download"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld files · %2$@ to download"
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -707,6 +1067,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for installing into. %1$@: destination instance name.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installing into %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -719,6 +1085,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for instance changed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance's game version or loader has changed. Select the instance again."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -731,6 +1103,12 @@
       "comment" : "Discover search filter or sort controls. Used for instance filter hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select an instance to filter by its game version and loader."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -743,6 +1121,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for instance in use.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Use"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -755,6 +1139,12 @@
       "comment" : "Discover project or file detail panel. Used for issues.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issues"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -767,6 +1157,12 @@
       "comment" : "Discover search results or layout controls. Used for layout.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -779,6 +1175,12 @@
       "comment" : "Discover project version list and pagination. Used for load more.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load More"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -791,6 +1193,54 @@
       "comment" : "Discover project version list and pagination. Used for loaded versions. %1$lld: number of loaded version files; %2$lld: total available version file count.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loaded %1$#@count1@ out of %2$#@count2@"
+          },
+          "substitutions" : {
+            "count1" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld file"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld files"
+                    }
+                  }
+                }
+              }
+            },
+            "count2" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -833,6 +1283,12 @@
       "comment" : "Discover search results or layout controls. Used for loader.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loader"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -845,6 +1301,12 @@
       "comment" : "Discover search results or layout controls. Used for loaders unknown.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No loader specified"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -857,6 +1319,12 @@
       "comment" : "Discover project version list and pagination. Used for loading changelog.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading changelog…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -869,6 +1337,12 @@
       "comment" : "Discover search results or layout controls. Used for loading detail.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading project details…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -881,6 +1355,12 @@
       "comment" : "Discover project version list and pagination. Used for loading versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading versions…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -893,6 +1373,12 @@
       "comment" : "Discover search filter or sort controls. Used for match instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match Current Instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -905,6 +1391,12 @@
       "comment" : "Discover project version list and pagination. Used for minecraft version. %1$@: Minecraft version.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -917,6 +1409,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for modpack import notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri reads the modpack first, then asks you to confirm the instance name and installation content."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -929,6 +1427,12 @@
       "comment" : "Discover search filter or sort controls. Used for most downloads.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most Downloads"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -941,6 +1445,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for new instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -953,6 +1463,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for new instance notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri installs the game and loader first, then the selected content and its dependencies."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -965,6 +1481,12 @@
       "comment" : "Discover search filter or sort controls. Used for newest.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Newest"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +1499,12 @@
       "comment" : "Discover project version list and pagination. Used for no changelog.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The author has not provided a changelog for this version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -989,6 +1517,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for no compatible instance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No instance is compatible with this version. Create an instance or download the file only."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1001,6 +1535,12 @@
       "comment" : "Discover project or file detail panel. Used for no dependencies.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The author has not listed dependencies for this version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1013,6 +1553,12 @@
       "comment" : "Discover project or file detail panel. Used for no description.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The author has not provided a detailed description"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1025,6 +1571,12 @@
       "comment" : "Discover project or file detail panel. Used for no gallery.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The author has not uploaded screenshots"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1037,6 +1589,12 @@
       "comment" : "Discover search filter or sort controls. Used for no instance filter.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Instance Filter"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1049,6 +1607,12 @@
       "comment" : "Discover project version list and pagination. Used for no versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No matching versions"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1061,6 +1625,12 @@
       "comment" : "Discover project version list and pagination. Used for no versions hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try changing the game version, loader, or release channel. You can also load more files."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1073,6 +1643,12 @@
       "comment" : "Discover project or file detail panel. Used for open image.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Original Image"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1085,6 +1661,12 @@
       "comment" : "Discover project or file detail panel. Used for open provider website. %1$@: content provider name.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the %1$@ project page in your default browser"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1097,6 +1679,12 @@
       "comment" : "Discover project or file detail panel. Used for open website.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View on Website"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1109,6 +1697,12 @@
       "comment" : "Discover project or file detail panel. Used for optional.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional Dependency"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1121,6 +1715,12 @@
       "comment" : "Discover project or file detail panel. Used for overview.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overview"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1133,6 +1733,34 @@
       "comment" : "Discover project version list and pagination. Used for page range. %1$lld: first displayed project index; %2$lld: last displayed project index; %3$lld: total number of matching projects.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld–%2$lld of %3$#@count3@"
+          },
+          "substitutions" : {
+            "count3" : {
+              "argNum" : 3,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1161,6 +1789,12 @@
       "comment" : "Discover project or file detail panel. Used for pinned version.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specified Version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1173,6 +1807,12 @@
       "comment" : "Discover project or file detail panel. Used for project sections.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project Content"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1185,6 +1825,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for read modpack.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read Modpack"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1197,6 +1843,12 @@
       "comment" : "Discover search filter or sort controls. Used for recently updated.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recently Updated"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1209,6 +1861,12 @@
       "comment" : "Discover search results or layout controls. Used for refresh.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1221,6 +1879,12 @@
       "comment" : "Discover project version list and pagination. Used for release.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1233,6 +1897,12 @@
       "comment" : "Discover search filter or sort controls. Used for release channel.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release channel"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1245,6 +1915,12 @@
       "comment" : "Discover search filter or sort controls. Used for relevance.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relevance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1257,6 +1933,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for replacing version. %1$@: installed version to be replaced.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replacing existing version: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1269,6 +1951,12 @@
       "comment" : "Discover project or file detail panel. Used for required.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Required Dependency"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1281,6 +1969,24 @@
       "comment" : "Discover search results or layout controls. Used for result count. %1$lld: total project count.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld project in total"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld projects in total"
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -1299,6 +2005,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save failed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to save the file. Check permissions for the destination."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1311,6 +2023,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save file.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download File Only"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1323,6 +2041,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save file notice.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose where to save the file. You can install it manually later."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1335,6 +2059,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for saved file. %1$@: saved filename.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved %1$@."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1347,6 +2077,12 @@
       "comment" : "Discover search filter or sort controls. Used for search loaded versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search loaded versions or filenames"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1359,6 +2095,12 @@
       "comment" : "Discover search results or layout controls. Used for searching.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Searching…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1371,6 +2113,12 @@
       "comment" : "Discover search filter or sort controls. Used for show incompatible.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Incompatible Instances"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1383,6 +2131,12 @@
       "comment" : "Discover project version list and pagination. Used for showing previous results.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing the last successfully loaded results."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1395,6 +2149,12 @@
       "comment" : "Discover search filter or sort controls. Used for sort.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1407,6 +2167,12 @@
       "comment" : "Discover project or file detail panel. Used for source code.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1419,6 +2185,12 @@
       "comment" : "Discover project or file detail panel. Used for supported game versions. %1$@: supported Minecraft versions joined for display.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supported game versions: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1431,6 +2203,12 @@
       "comment" : "Discover project or file detail panel. Used for supported loaders. %1$@: supported loader names joined for display.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supported loaders: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1443,6 +2221,12 @@
       "comment" : "Discover project or file detail panel. Used for tool.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1455,6 +2239,12 @@
       "comment" : "Discover project or file detail panel. Used for unknown dependency.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown Dependency"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1467,6 +2257,12 @@
       "comment" : "Discover search filter or sort controls. Used for unrestricted.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Any"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1479,6 +2275,24 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for untracked notice. %1$lld: number of files with dependencies that Ruri cannot check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Ruri cannot check dependencies for another %1$lld file. Check them manually."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Ruri cannot check dependencies for another %1$lld files. Check them manually."
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -1497,6 +2311,12 @@
       "comment" : "Discover project or file detail panel. Used for updated on. %1$@: formatted last update date.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated on %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1509,6 +2329,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for verified download.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri checks the file's integrity after downloading."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1521,6 +2347,12 @@
       "comment" : "Discover project version list and pagination. Used for version project mismatch.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected file does not belong to this project. Reload the version list."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1533,6 +2365,12 @@
       "comment" : "Discover project version list and pagination. Used for versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versions"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1545,6 +2383,12 @@
       "comment" : "Discover project or file detail panel. Used for versions unknown.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game version specified"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1557,6 +2401,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for view downloads.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Downloads"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1569,6 +2419,12 @@
       "comment" : "Discover project or file detail panel. Used for view project.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Project"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1581,6 +2437,12 @@
       "comment" : "Discover project or file detail panel. Used for wiki.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Documentation"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1593,6 +2455,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will enable.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Will Re-enable"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1605,6 +2473,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will install.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Will Install"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1617,6 +2491,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will update.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Will Update"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1629,6 +2509,12 @@
       "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will update and enable.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Will Update and Enable"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

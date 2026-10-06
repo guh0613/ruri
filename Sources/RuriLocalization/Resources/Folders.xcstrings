@@ -5,6 +5,12 @@
       "comment" : "Section heading listing game Folders already added to Ruri. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17,6 +23,12 @@
       "comment" : "Button to add a game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29,6 +41,12 @@
       "comment" : "Title of the Add Game Folder dialog. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Game Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41,6 +59,12 @@
       "comment" : "Progress label while adding a game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adding Folder…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53,6 +77,12 @@
       "comment" : "Status label in the Add Game Folder dialog for a location already registered. Placeholder 1: name of the already registered Folder.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already added as “%@”"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -65,6 +95,12 @@
       "comment" : "Availability status for a discovered game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77,6 +113,12 @@
       "comment" : "Back button in the game Folder discovery flow. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +131,12 @@
       "comment" : "Button to change a registered game Folder's location. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +149,12 @@
       "comment" : "Progress label while searching for game Folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finding game Folders…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +167,12 @@
       "comment" : "Error shown when the selected game Folder search area is too broad. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The search area is too large. Select the game Folder or its parent directory."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +185,12 @@
       "comment" : "Validation prompt when no Folder has been selected in the Add Game Folder dialog. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a Folder."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -137,6 +203,12 @@
       "comment" : "Button that opens the Folder location picker. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Folder…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -149,6 +221,12 @@
       "comment" : "Title prompting selection of a discovered game Folder to add. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose game folder to add"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +239,12 @@
       "comment" : "Game folder manager: Section heading for automatically discovered game folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detected Game Folders"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -173,6 +257,12 @@
       "comment" : "Game folder manager: Field label for the number of instances in a folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance count"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -185,6 +275,12 @@
       "comment" : "Game folder manager: Badge for the active game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently in use"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +293,12 @@
       "comment" : "Game folder manager: Help describing Ruri's managed default folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Managed by Ruri for newly installed and imported instances."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -209,6 +311,12 @@
       "comment" : "Game folder manager: Notice after finding a nested game folder automatically. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game folder located automatically"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -221,6 +329,12 @@
       "comment" : "Game folder manager: Validation error when a folder display name is already used. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This name is already used by another folder."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +347,12 @@
       "comment" : "Game folder manager: Status for a folder with no installed game versions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game versions"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +365,12 @@
       "comment" : "Game folder manager: Help describing uses for an empty game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use this folder to install a game or import a modpack."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +383,12 @@
       "comment" : "Game folder manager: Label for the folder path field. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folder location"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -269,6 +401,12 @@
       "comment" : "Game folder manager: Validation guidance for a folder display name. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a name with 1–100 characters, without line breaks or other control characters."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +419,12 @@
       "comment" : "Game folder manager: Label for the folder's name as shown in Ruri. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display name"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -293,6 +437,12 @@
       "comment" : "Game folder manager: Name of a detected local Minecraft folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local Minecraft"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -305,6 +455,12 @@
       "comment" : "Game folder manager: Help for selecting a game folder or its parent. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a game folder containing versions, usually named .minecraft or minecraft. Its parent folder can also be detected automatically."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +473,12 @@
       "comment" : "Game folder manager: Warning before removing a managed folder that still contains instances. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This folder is managed by Ruri. Move its instances elsewhere before removing it from the list."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -329,6 +491,12 @@
       "comment" : "Game folder manager: Notice when the selected location contains several game folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This location contains multiple game folders."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +509,12 @@
       "comment" : "Game folder manager: Label for the editable folder name. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -353,6 +527,12 @@
       "comment" : "Game folder manager: Help clarifying that the display name does not rename the folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used only for display in Ruri; the folder name stays the same."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +545,12 @@
       "comment" : "Game folder manager: Example names in the folder name field. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For example: Survival, HMCL Modpacks"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -377,6 +563,12 @@
       "comment" : "Game folder manager: Title for creating a new game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Game Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -389,6 +581,12 @@
       "comment" : "Game folder manager: Help explaining that a new game can use an empty folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An empty folder can be used for a new game."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -401,6 +599,12 @@
       "comment" : "Game folder manager: Selection error when no usable game folder is found. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game folder found. Choose a .minecraft or minecraft folder containing versions, or its parent folder. To store a new game, choose an empty folder."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -413,6 +617,12 @@
       "comment" : "Game folder manager: Empty detail pane prompt before selecting a folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a folder to view its details"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -425,6 +635,12 @@
       "comment" : "Game folder manager: Empty discovery results guidance for choosing a folder manually. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game folders detected within the automatic search locations. Choose a location manually."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -437,6 +653,12 @@
       "comment" : "Game folder manager: Action to add the selected existing folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use This Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -449,6 +671,12 @@
       "comment" : "Game folder manager: Help for reconnecting a moved folder or external drive. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the folder has moved or is on an external drive, connect the drive or locate the original folder again."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -461,6 +689,12 @@
       "comment" : "Game folder manager: Action to repeat automatic folder discovery. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh Detected Folders"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -473,6 +707,12 @@
       "comment" : "Game folder manager: Help explaining what is retained when removing a folder entry. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removing this folder from the list keeps the game files in place and retains instance settings for when it is added again."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -485,6 +725,12 @@
       "comment" : "Game folder manager: Status badge for a removed folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removed"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -497,6 +743,12 @@
       "comment" : "Game folder manager: Status for a folder removed from the instance Library. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removed from Library"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -509,6 +761,12 @@
       "comment" : "Game folder manager: Section heading for instance settings retained after removal. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retained instance settings"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,6 +779,12 @@
       "comment" : "Game folder manager: Action to show the selected folder's instances in the Library. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View in Library"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -533,6 +797,12 @@
       "comment" : "Game folder manager: Label for the folder availability status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -545,6 +815,12 @@
       "comment" : "Game folder manager: Status badge when the game folder cannot be accessed. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inaccessible"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -557,6 +833,24 @@
       "comment" : "Game folder manager: Summary of game versions found in a detected folder. Placeholders: 1 = number of detected game versions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Found %lld game version"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Found %lld game versions"
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -575,6 +869,24 @@
       "comment" : "Game folder manager: Notice about game versions that need inspection after adding the folder. Placeholders: 1 = number of detected game versions requiring inspection.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld of these versions needs checking. View details in the Library after adding the folder."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld of these versions need checking. View details in the Library after adding the folder."
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {

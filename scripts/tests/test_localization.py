@@ -37,6 +37,10 @@ class CatalogTests(unittest.TestCase):
             'total': {'argNum': 2, 'formatSpecifier': 'lld', **plural(one='%lld file', other='%lld files')},
         }}
         self.assertEqual(localization_value(node), ('%1$lld selected / %2$lld files', {1: 'integer', 2: 'integer'}, {1, 2}))
+        node['substitutions']['total']['variations']['plural']['one'] = unit('%1$lld file')
+        with self.assertRaisesRegex(ValueError, 'own numeric'):
+            localization_value(node)
+        node['substitutions']['total']['variations']['plural']['one'] = unit('%lld file')
         node['substitutions']['total']['argNum'] = 3
         with self.assertRaisesRegex(ValueError, 'position'):
             localization_value(node)

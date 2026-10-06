@@ -51,11 +51,11 @@ extension Messages {
         public static var empty: LocalizedMessage {
             .init(key: "CLIExperience.empty", table: "CLIExperience", fallback: "没有匹配的结果。")
         }
-        /// 默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。
+        /// 默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。
         ///
         /// Resource: `CLIExperience.CLIExperience.formats`.
-        public static var formats: LocalizedMessage {
-            .init(key: "CLIExperience.formats", table: "CLIExperience", fallback: "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。")
+        public static func formats(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.formats", table: "CLIExperience", fallback: "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", arguments: [.text(value0)])
         }
         /// 使用 --json 查看完整字段。
         ///
@@ -192,7 +192,7 @@ extension Messages {
             "CLIExperience:CLIExperience.configUpdated": .init("配置已更新", []),
             "CLIExperience:CLIExperience.discovery": .init("发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。", []),
             "CLIExperience:CLIExperience.empty": .init("没有匹配的结果。", []),
-            "CLIExperience:CLIExperience.formats": .init("默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。", []),
+            "CLIExperience:CLIExperience.formats": .init("默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", [.text]),
             "CLIExperience:CLIExperience.fullDetails": .init("使用 --json 查看完整字段。", []),
             "CLIExperience:CLIExperience.fullSchema": .init("展开目录中所有命令的完整结构，输出可能很长", []),
             "CLIExperience:CLIExperience.helpAll": .init("列出全部命令的精简用法", []),

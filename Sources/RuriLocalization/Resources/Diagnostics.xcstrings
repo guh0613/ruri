@@ -5,6 +5,12 @@
       "comment" : "Game diagnosis finding title. Used for action failed. %1$@: launch preparation stage title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ Failed"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17,6 +23,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for analysis read limit. %1$@: unread evidence source title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysis reached the 16 MiB read limit. %1$@ was not read."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29,6 +41,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for architecture check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check whether the selected Java uses ARM64 or Intel architecture, and choose a version suitable for this game."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41,6 +59,12 @@
       "comment" : "Game diagnosis finding title. Used for architecture mismatch.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Native Library or Java Architecture Mismatch"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53,6 +77,12 @@
       "comment" : "Game diagnosis finding explanation. Used for architecture mismatch explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The system explicitly reports an incompatible binary architecture. Java and the game's native libraries need matching architectures."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -65,6 +95,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for architecture mod check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check whether mods providing native libraries support the current architecture, then repair the instance to prepare the native libraries again."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77,6 +113,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for bounded tail. %1$@: partially analyzed evidence source title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only a limited excerpt of %1$@ was analyzed. Context may be missing; the original file was preserved."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +131,12 @@
       "comment" : "Game diagnosis panel action button. Used for check account.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check Account"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +149,12 @@
       "comment" : "Game diagnosis panel action button. Used for check instance settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check Instance Settings"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +167,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for class version check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check Java in the instance settings and select the version required by the game and modpack."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +185,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for class version mod check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you recently replaced a mod, check whether it requires a different Java or Minecraft version."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -137,6 +203,12 @@
       "comment" : "Game diagnosis finding title. Used for class version unreadable.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java Cannot Read the Required Class Version"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -149,6 +221,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for class version unsupported.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java explicitly reports an unsupported class file version. The game, loader, and mods may each have Java requirements."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +239,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for clues needing verification.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clues to Verify"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -173,6 +257,12 @@
       "comment" : "Game diagnosis panel action button. Used for collect diagnostic reports.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collect Diagnostic Reports"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -185,6 +275,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for config backup.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the filename and underlying error in the original text first. Copy the configuration elsewhere as a backup before editing."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +293,12 @@
       "comment" : "Game diagnosis finding explanation. Used for config read explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The loader reports an unreadable configuration in the error context. This may involve content format, version differences, or file access."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -209,6 +311,12 @@
       "comment" : "Game diagnosis finding title. Used for config read failure.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to Read a Configuration File"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -221,6 +329,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for config repair.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fix the configuration using the mod's instructions. If it needs regeneration, handle only that file to avoid clearing all configurations."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +347,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for confirmed abnormal exit.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The game exited abnormally. The cause is currently unknown."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +365,12 @@
       "comment" : "Game diagnosis finding title. Used for debug crash.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report Identifies a Manually Triggered Debug Crash"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +383,12 @@
       "comment" : "Game diagnosis finding explanation. Used for debug crash explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft describes a manual debug crash. This does not establish mod incompatibility."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -269,6 +401,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for debug crash retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you triggered this debug action intentionally, save the reports you need and restart normally."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +419,12 @@
       "comment" : "Game diagnosis finding title. Used for duplicate mod.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loader Found Duplicate Mods"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -293,6 +437,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for duplicate mod check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the files and versions listed in the original text in mod management."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -305,6 +455,12 @@
       "comment" : "Game diagnosis finding explanation. Used for duplicate mod explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The same mod was loaded multiple times, possibly from different versions or duplicate sources."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +473,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for duplicate mod retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disable the extra copy and retry. Do not delete all versions at once."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -329,6 +491,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for evidence not regular file.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The evidence is not a regular file."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +509,12 @@
       "comment" : "Game diagnosis run facts. Used for exit code.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit code"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -353,6 +527,12 @@
       "comment" : "Game diagnosis run facts. Used for exit summary. %1$@: exit code or termination signal label; %2$@: exit status or signal number formatted as text; %3$@: whether Ruri requested stopping, as localized yes/no.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@; Ruri stop requested: %3$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +545,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for guidance check errors.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the original errors below and their corresponding settings, then restart after resolving them."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -377,6 +563,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for guidance collect retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If it still fails, collect this run's records to compare the errors before and after retrying."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -389,6 +581,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for has exit status.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -401,6 +599,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for invalid evidence path skipped.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skipped an invalid evidence path."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -413,6 +617,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for java not recorded.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java not recorded"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -425,6 +635,12 @@
       "comment" : "Game diagnosis finding title. Used for jvm crash.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM Recorded a Native Crash"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -437,6 +653,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for jvm crash check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the Java version and versions of mods containing native libraries. Provide the report and reproduction steps to the maintainers."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -449,6 +671,12 @@
       "comment" : "Game diagnosis finding explanation. Used for jvm crash explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The virtual machine reports a fatal error. The Problematic frame only identifies the crash location; native libraries, Java, and the system environment must also be considered."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -461,6 +689,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for jvm crash report.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preserve the error signal, Problematic frame, and Java version from the JVM report."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -473,6 +707,12 @@
       "comment" : "Game diagnosis run facts. Used for last recorded phase. %1$@: last recorded launch stage title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last recorded stage: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -485,6 +725,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for launch argument check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the instance's additional JVM arguments. Keep a copy, then undo recently added arguments one at a time."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -497,6 +743,12 @@
       "comment" : "Game diagnosis finding explanation. Used for launch argument explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The virtual machine reports invalid arguments or memory limits. The game has not started normally."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -509,6 +761,12 @@
       "comment" : "Game diagnosis finding title. Used for launch argument rejected.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java Launch Arguments Were Rejected"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,6 +779,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for launch argument retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm that the memory limit suits the selected Java, then retry."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -533,6 +797,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for launch cancelled.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launching was cancelled. There is no evidence that the game crashed."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -545,6 +815,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for launch preparation failed. %1$@: failed launch preparation stage title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launching failed during “%1$@”. The game has not produced an exit record. Check the error at that stage first."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -557,6 +833,12 @@
       "comment" : "Game diagnosis finding title. Used for loader mod conflict.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loader Rejected the Mod Combination"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +851,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for loader mod conflict check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check dependencies against the mod IDs and version ranges in the evidence, and confirm the Minecraft and loader versions."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -581,6 +869,12 @@
       "comment" : "Game diagnosis finding explanation. Used for loader mod conflict explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The loader reports missing dependencies, unmet version requirements, or mod conflicts. The original text usually includes the required version ranges."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -593,6 +887,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for loader mod conflict retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review recent changes in mod management. Change one group of related dependencies at a time, keeping recovery possible, then retry."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -605,6 +905,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for log explicit report.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explicitly Reported in the Log"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -617,6 +923,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for main thread check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the Java and loader versions required by the game, and whether custom arguments affect first-thread launching."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -629,6 +941,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for main thread report.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preserve the Java version, macOS version, and original error text from the report to help determine whether the launcher's launch method needs a fix."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -641,6 +959,12 @@
       "comment" : "Game diagnosis finding title. Used for main thread violation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Window Initialization Violated macOS Main-Thread Requirements"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -653,6 +977,12 @@
       "comment" : "Game diagnosis finding explanation. Used for main thread violation explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cocoa or GLFW explicitly reports that windows must be created on the main thread. Check the combination of Java, LWJGL, and first-thread launch arguments."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -665,6 +995,12 @@
       "comment" : "Game diagnosis panel action button. Used for manage mods.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage Mods"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -677,6 +1013,12 @@
       "comment" : "Game diagnosis run facts. Used for memory limit. %1$@: Java runtime description or unrecorded-Java message; %2$@: configured memory limit in MB, formatted as text.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Memory limit %2$@ MB"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -689,6 +1031,12 @@
       "comment" : "Game diagnosis finding title. Used for missing launch entry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Launch Entry Point Not Found"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -701,6 +1049,12 @@
       "comment" : "Game diagnosis finding title. Used for missing main class.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could Not Find or Load Main Class"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -713,6 +1067,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for missing main class check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the game's and loader's versions in the instance, then use instance repair to restore the installation files."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -725,6 +1085,12 @@
       "comment" : "Game diagnosis finding title. Used for missing main class cjk.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could Not Find or Load Main Class"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -737,6 +1103,12 @@
       "comment" : "Game diagnosis finding explanation. Used for missing main class explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java explicitly reports that it cannot load the main class. Check version files, the loader installation, and the launch entry point."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -749,6 +1121,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for missing main class report.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preserve existing configurations and worlds. If repair does not resolve the failure, include this report."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -761,6 +1139,12 @@
       "comment" : "Game diagnosis finding explanation. Used for mixin apply explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This indicates a failure while a mod modifies game code. A mod named in a filename or stack trace cannot be assumed to be the sole cause."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,6 +1157,12 @@
       "comment" : "Game diagnosis finding title. Used for mixin apply failure.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error Context Includes a Mixin Application Failure"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -785,6 +1175,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for mixin dependency check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolve any explicit dependency or entry point errors above first, then check the combination of mod versions involved here."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -797,6 +1193,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for mixin mod check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verify by gradually disabling recently changed mods in mod management; you can re-enable them later. Do not delete mods in bulk based on a single warning."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -809,6 +1211,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for mod initialization check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the mods, dependencies, and loader versions listed in the evidence."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -821,6 +1229,12 @@
       "comment" : "Game diagnosis finding explanation. Used for mod initialization explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The loader reports that an entry point or mod instance failed to initialize. Dependencies or other mods may also be involved."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -833,6 +1247,12 @@
       "comment" : "Game diagnosis finding title. Used for mod initialization failure.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mod Initialization Failed"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -845,6 +1265,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for mod initialization retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the error appeared immediately after an update, check the previous version first. You can disable recently added mods in mod management to verify, then re-enable them later."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -857,6 +1283,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for monitoring interrupted.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring was interrupted. The game's exit result was not obtained."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -869,6 +1301,12 @@
       "comment" : "Game diagnosis finding explanation. Used for native memory allocation explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The JVM reports a native memory allocation failure. Increasing the Java heap limit may further reduce memory available to the system."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -881,6 +1319,12 @@
       "comment" : "Game diagnosis finding title. Used for native memory allocation failure.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virtual Machine Cannot Allocate the Required Memory"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -893,6 +1337,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for native memory check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check system memory pressure and memory used by other applications, and whether the Java heap is set too large."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -905,6 +1355,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for native memory retry.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart after adjusting. Preserve the allocation size and failure location in the JVM report for troubleshooting."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -917,6 +1373,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for no exit status.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -929,6 +1391,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for normal exit requested.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The system received a normal quit request from Ruri."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -941,6 +1409,12 @@
       "comment" : "Game diagnosis finding title. Used for out of memory.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java Reported Running Out of Memory"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -953,6 +1427,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for out of memory check.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consider adjusting instance memory only for insufficient heap memory, leaving enough for macOS. Also check recently added mods or high-resolution resources."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -965,6 +1445,12 @@
       "comment" : "Game diagnosis finding explanation. Used for out of memory explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The error context includes OutOfMemoryError. This error type alone does not identify which kind of memory should be increased."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +1463,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for out of memory types.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First check whether the original text mentions Java heap space, Direct buffer memory, Metaspace, or an inability to create a thread."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -989,6 +1481,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for preparation error.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is a preparation error recorded by the launcher. It cannot yet be classified as a game crash."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1001,6 +1499,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for process identity invalid.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The original process identity is no longer valid"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1013,6 +1517,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for process terminated.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The records indicate that the process was terminated, but do not identify the request's source or establish insufficient memory or a mod conflict."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1025,6 +1535,12 @@
       "comment" : "Game diagnosis run facts. Used for recovery basis. %1$@: process recovery basis explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery basis: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1037,6 +1553,12 @@
       "comment" : "Game diagnosis run facts. Used for recovery record time. %1$@: recovery observation timestamp, not game exit time.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery record time: %1$@ (not the game exit time)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1049,6 +1571,24 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for related error count. %1$lld: number of distinct related error findings.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Found %1$lld type of related error. The original text and resolution steps are preserved below; mods mentioned in an error may not be its sole cause."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Found %1$lld types of related errors. The original text and resolution steps are preserved below; mods mentioned in an error may not be its sole cause."
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -1067,6 +1607,12 @@
       "comment" : "Game diagnosis panel action button. Used for repair installation files.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repair Installation Files"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1079,6 +1625,24 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for report limit. %1$lld: number of diagnostic reports found.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "This run has %1$lld report. Only the first 12 were analyzed; the rest are available in the working folder."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "This run has %1$lld reports. Only the first 12 were analyzed; the rest are available in the working folder."
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -1097,6 +1661,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for run completed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This run has ended. No crash handling is needed."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1109,6 +1679,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for run without exit record.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This run has no final exit record yet, so the crash cause cannot be assessed. You can continue checking live logs and process status."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1121,6 +1697,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for session log read failure. %1$@: session log read error.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to read the session log: %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1133,6 +1715,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for tail title. %1$@: evidence document title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (Tail)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1145,6 +1733,12 @@
       "comment" : "Game diagnosis run facts. Used for termination signal.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termination signal"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1157,6 +1751,12 @@
       "comment" : "Game diagnosis troubleshooting step. Used for unreadable report. %1$@: evidence source title; %2$@: read error explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to read %1$@: %2$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1169,6 +1769,12 @@
       "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for user confirmed exit.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The user confirmed that the game exited"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1181,6 +1787,12 @@
       "comment" : "Game diagnosis panel action button. Used for view run files.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Run Files"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1193,6 +1805,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for body line number heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The body starts at line 1 of the original file"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1205,6 +1823,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for complete file heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete file read"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1217,6 +1841,12 @@
       "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic bundle save failed.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to save the diagnostic bundle."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1229,6 +1859,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for diagnostic conclusion header.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostic Conclusions and Resolution Steps"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1241,6 +1877,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for diagnostic report header. %1$@: run creation timestamp in ISO 8601 format; %2$@: diagnosis title; %3$@: diagnosis summary.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri local diagnostic report\nAnalyzer version: 1\nRun time: %1$@\n\n%2$@\n%3$@\n\n"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1253,6 +1895,12 @@
       "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic run mismatch.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The diagnosis does not match the run record. Analyze it again."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1265,6 +1913,12 @@
       "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic save location invalid.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save the diagnostic bundle outside the Ruri data folder and instance folder."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1277,6 +1931,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for environment. %1$@: Minecraft version; %2$@: loader name; %3$@: loader version, possibly empty; %4$@: Java runtime description; %5$@: memory configuration summary; %6$@: operating system description; %7$@: host CPU architecture; %8$@: account type; %9$@: run creation timestamp; %10$@: last recorded launch stage; %11$@: run state; %12$@: exit kind; %13$@: exit status; %14$@: whether stopping was requested through Ruri; %15$@: normal quit request result.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1289,6 +1949,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for environment unrecorded.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not recorded"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1301,6 +1967,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for excerpt heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · Excerpt"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1331,6 +2003,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for exit pending.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yes (exit not recorded)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1361,6 +2039,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for game java system environment.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game, Java, and System Environment"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1373,6 +2057,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for heap limit. %1$@: heap limit in MB formatted as text.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heap limit %1$@ MB"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1385,6 +2075,12 @@
       "comment" : "Diagnostic ZIP export validation and file save UI. Used for invalid report selection.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select valid report content."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1397,6 +2093,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for no.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1409,6 +2111,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for no read errors.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No truncation or read errors were found."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1439,6 +2147,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for read scope header.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nRead Scope and Missing Information\n"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1451,6 +2165,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for recovery environment. %1$@: recovery observation timestamp, not game exit time; %2$@: recovery resolution code; %3$@: recovery explanation.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1463,6 +2183,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for source range heading. %1$@: document title; %2$@: description of full-file or truncated read scope; %3$@: explanation of original-file or tail-relative line numbering.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: %1$@\nRange: %2$@\nLine numbers: %3$@\n\n"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1475,6 +2201,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for tail line number heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numbered from 1 within the tail, not the original file's line numbers"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1487,6 +2219,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for truncated file heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excerpt; context may be missing"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1499,6 +2237,12 @@
       "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for yes.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yes"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1511,6 +2255,12 @@
       "comment" : "Diagnostic ZIP export validation and file save UI. Used for zip save location selection.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose where to save the ZIP file."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

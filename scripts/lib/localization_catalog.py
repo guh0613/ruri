@@ -10,7 +10,7 @@ BASE_LANGUAGE = 'zh-Hans'
 CLI_LANGUAGES = ['en', BASE_LANGUAGE]
 CLI_TABLES = {'CLIInterface', 'CLIExperience', 'CLISetup', 'Progress'}
 SHIP_THRESHOLD = 0.95
-REQUIRED_COMPLETE = set()
+REQUIRED_COMPLETE = {'en'}
 # Integer cardinal categories from CLDR 48, common/supplemental/plurals.xml:
 # https://github.com/unicode-org/cldr/blob/release-48/common/supplemental/plurals.xml
 # Foundation also requires an `other` fallback, even for languages whose
@@ -124,7 +124,8 @@ def localization_value(node):
         for text in plural_variants(rule).values():
             # Substitutions format their own value; other arguments belong to
             # the outer format or to a whole-message plural variation.
-            if signature(text) not in ({1: 'integer'}, {argument: 'integer'}):
+            if (signature(text) not in ({1: 'integer'}, {argument: 'integer'})
+                    or any(token[1] and int(token[1]) != argument for token in FORMAT.finditer(text) if token[2] != '%')):
                 raise ValueError('Plural variant must format its own numeric argument')
     def expand(match):
         rule = substitutions[match[2]]

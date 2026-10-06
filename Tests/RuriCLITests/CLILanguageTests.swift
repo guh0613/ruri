@@ -28,7 +28,8 @@ import RuriLocalization
         let again = await run(["help", "config"])
         #expect(again.1.output == initial.1.output)
         #expect(LocalizationContext(language: "zh-Hans").string(Messages.CLISetup.title) == "命令行工具")
-        #expect(!LocalizationContext.supportedLanguages.contains("en"))
+        #expect(LocalizationContext.supportedLanguages.contains("en"))
+        #expect(english.contains("--language " + LocalizationContext.commandLineLanguages.joined(separator: "|")))
     }
     @Test func everyHelpAndSchemaDescriptionUsesEnglishByDefault() async throws {
         for spec in CommandRegistry.commands {

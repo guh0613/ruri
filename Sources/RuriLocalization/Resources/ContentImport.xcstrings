@@ -5,6 +5,12 @@
       "comment" : "Instance content drop zone copy-destination hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Files will be copied to the current instance"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17,6 +23,24 @@
       "comment" : "Instance content drag-and-drop import heading. %1$lld: dropped content item count; %2$@: content category title (Mods, Resource Packs, or Shader Packs). Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Release to Import %1$lld Item (%2$@)"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Release to Import %1$lld Items (%2$@)"
+                }
+              }
+            }
+          }
+        },
         "zh-Hans" : {
           "variations" : {
             "plural" : {
@@ -35,6 +59,12 @@
       "comment" : "Instance content empty-state import instructions.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag content from Finder, or use “Import…” above."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47,6 +77,12 @@
       "comment" : "Instance content import progress by category. %1$@: content category title.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importing %1$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +95,12 @@
       "comment" : "Instance content drag-and-drop file-read error.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to read the dropped files. Drag them from Finder again, or use “Import…”."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +113,12 @@
       "comment" : "Mod file import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JAR or LITEMOD Files"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -83,6 +131,12 @@
       "comment" : "Resource Pack import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource Pack ZIP or Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -95,6 +149,12 @@
       "comment" : "Shader Pack import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shader Pack ZIP or Folder"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +167,12 @@
       "comment" : "Instance content drop zone unavailable-state heading.",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content Import Is Currently Unavailable"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

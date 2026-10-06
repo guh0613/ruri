@@ -5,6 +5,7 @@ public struct LocalizationContext: Sendable {
     public static let preferenceKey = "interfaceLanguage"
     public static let systemPreference = "system"
     public static var supportedLanguages: [String] { LocalizationResources.languages }
+    public static var commandLineLanguages: [String] { SupportedLocalizations.commandLineLanguages }
 
     public let language: String
     public let regionIdentifier: String

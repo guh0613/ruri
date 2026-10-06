@@ -146,19 +146,19 @@
       }
     },
     "CLIExperience.formats" : {
-      "comment" : "Footer of CLI help describing output formats and global options. Preserve option names and literal format values.",
+      "comment" : "CLI help footer explaining output and global options. %1$@ is the supported message-language codes separated by |.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default: concise text. --json: stable structured result. --output ndjson: event stream. --data-dir <path>: data directory. --language en|zh-Hans: message language (default: en). --quiet: hide progress."
+            "value" : "Default: concise text. --json: stable structured result. --output ndjson: event stream. --data-dir <path>: data directory. --language %1$@: message language (default: en). --quiet: hide progress."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。"
+            "value" : "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。"
           }
         }
       }

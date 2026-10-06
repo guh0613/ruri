@@ -75,6 +75,9 @@ if [[ "$swift_command" == test ]]; then
   if [[ "${RURI_BUILD_DIR:-}" == /* ]]; then host_app="$RURI_BUILD_DIR/game-host/RuriGame.app"; fi
   build_game_host "$host_app"
   export RURI_TEST_GAME_HOST="$host_app/Contents/MacOS/ruri-game"
+  # Human-readable assertions use the source language on every CI host.
+  # Localization tests scope their own contexts for other languages.
+  export RURI_LANGUAGE="${RURI_LANGUAGE:-zh-Hans}"
 fi
 if [[ "$swift_command" == test && -n "${RURI_ARCH:-}" && "$RURI_ARCH" != "$(uname -m)" ]]; then
   # SwiftPM's test helpers only run natively. Build the bundles, then run each
