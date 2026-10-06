@@ -125,7 +125,7 @@ public enum CLIApplication {
             return .object(["version": .string(BuildConfiguration().version), "schemaVersion": .integer(1), "application": .text(RuriInstallation.application()?.path),
                 "cli": .text(RuriInstallation.cliExecutable?.path), "dataDirectory": .string(basePaths(request).root.path)])
         case "app language get", "app language set":
-            let preferences = UserDefaults(suiteName: "dev.ruri.launcher")!
+            let preferences = UserDefaults(suiteName: LocalizationContext.preferenceDomain)!
             if request.path.hasSuffix("set") {
                 let language = try request.operand()
                 guard language == "system" || LocalizationContext.supportedLanguages.contains(language) else {
@@ -134,7 +134,7 @@ public enum CLIApplication {
                 if !request.dryRun { LocalizationContext.savePreference(language, in: preferences) }
                 return .object(["language": .string(language), "restartRequired": .bool(true), "dryRun": .bool(request.dryRun)])
             }
-            return .object(["language": .string(preferences.string(forKey: LocalizationContext.preferenceKey) ?? "system"), "supported": .array(LocalizationContext.supportedLanguages.map(Value.string))])
+            return .object(["language": .string(LocalizationContext.savedLanguage(in: preferences)),"supported": .array(LocalizationContext.supportedLanguages.map(Value.string))])
         case "cli status", "cli install", "cli uninstall":
             let service = try CLIInstallation(binDirectory: request.string("bin-dir").map { URL(fileURLWithPath: $0) })
             if request.path == "cli install" { return try service.install(dryRun: request.dryRun) }

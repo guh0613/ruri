@@ -7,7 +7,7 @@ struct PreferencesView: View {
     @Environment(AppModel.self) private var model
     @Environment(SoftwareUpdater.self) private var updater
     @State private var showLaunchDefaults = false
-    @AppStorage(LocalizationContext.preferenceKey) private var language = LocalizationContext.systemPreference
+    @State private var language = LocalizationContext.savedLanguage()
     var body: some View {
         Form {
             appearance

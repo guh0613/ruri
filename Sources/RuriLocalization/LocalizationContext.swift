@@ -2,8 +2,10 @@ import Foundation
 
 public struct LocalizationContext: Sendable {
     public static let baseLanguage = "zh-Hans"
-    public static let preferenceKey = "interfaceLanguage"
+    public static let preferenceDomain = "dev.ruri.launcher"
     public static let systemPreference = "system"
+    private static let languagesKey = "AppleLanguages"
+    private static let legacyPreferenceKey = "interfaceLanguage"
     public static var supportedLanguages: [String] { LocalizationResources.languages }
     public static var commandLineLanguages: [String] { SupportedLocalizations.commandLineLanguages }
 
@@ -23,14 +25,14 @@ public struct LocalizationContext: Sendable {
 
     public static let processDefault: LocalizationContext = {
         let environment = ProcessInfo.processInfo.environment
-        let preference = Bundle.main.bundleIdentifier == "dev.ruri.launcher"
-            ? UserDefaults.standard.string(forKey: preferenceKey) : nil
+        // The saved choice reaches Locale.preferredLanguages through AppleLanguages.
+        let migrated = Bundle.main.bundleIdentifier == preferenceDomain ? migrateLegacyPreference() : nil
         #if DEBUG
         let pseudolocalized = environment["RURI_PSEUDOLOCALIZE"] == "1"
         #else
         let pseudolocalized = false
         #endif
-        return .init(language: environment["RURI_LANGUAGE"] ?? preference,
+        return .init(language: environment["RURI_LANGUAGE"] ?? migrated,
                      region: Locale.current.identifier,
                      pseudolocalized: pseudolocalized)
     }()
@@ -49,13 +51,31 @@ public struct LocalizationContext: Sendable {
         }
     }
 
+    /// The app's own AppleLanguages entry is the only saved language. macOS
+    /// edits the same entry from System Settings › Language & Region › Applications.
+    public static func savedLanguage(in preferences: UserDefaults = .standard, domain: String = preferenceDomain) -> String {
+        guard let first = (preferences.persistentDomain(forName: domain)?[languagesKey] as? [String])?.first else { return systemPreference }
+        return resolve(first, available: supportedLanguages, preferences: [])
+    }
+
     public static func savePreference(_ language: String, in preferences: UserDefaults = .standard) {
-        preferences.set(language, forKey: preferenceKey)
         if language == systemPreference {
-            preferences.removeObject(forKey: "AppleLanguages")
+            preferences.removeObject(forKey: languagesKey)
         } else {
-            preferences.set([language], forKey: "AppleLanguages")
+            preferences.set([language], forKey: languagesKey)
         }
+        preferences.removeObject(forKey: legacyPreferenceKey)
+    }
+
+    /// Earlier builds kept the choice in a separate key. Fold it into
+    /// AppleLanguages once and return it when this launch must still apply it.
+    static func migrateLegacyPreference(in preferences: UserDefaults = .standard, domain: String = preferenceDomain) -> String? {
+        let saved = preferences.persistentDomain(forName: domain)
+        guard let legacy = saved?[legacyPreferenceKey] as? String else { return nil }
+        preferences.removeObject(forKey: legacyPreferenceKey)
+        guard legacy != systemPreference, saved?[languagesKey] == nil else { return nil }
+        preferences.set([legacy], forKey: languagesKey)
+        return legacy
     }
 
     public static func resolve(_ requested: String?, available: [String], preferences: [String]) -> String {

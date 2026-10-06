@@ -47,17 +47,39 @@ struct LocalizationFallbackTests {
         #expect(french.string(.init(key: "Common.fileCount", table: "Common", fallback: "invalid data", arguments: [.text("unsafe")])) == "invalid data")
     }
 
-    @Test func preferenceUpdatesAppKitLanguageAndReturnsToSystem() throws {
-        let suite = "test.ruri.language." + UUID().uuidString
+    // Fixed domains: clearing a domain leaves its empty plist behind, so
+    // per-run names would accumulate files in ~/Library/Preferences.
+    @Test func preferenceIsTheAppLanguagesEntry() throws {
+        let suite = "test.ruri.language.preference"
         let preferences = try #require(UserDefaults(suiteName: suite))
+        preferences.removePersistentDomain(forName: suite)
         defer { preferences.removePersistentDomain(forName: suite) }
+        #expect(LocalizationContext.savedLanguage(in: preferences, domain: suite) == "system")
         LocalizationContext.savePreference("en", in: preferences)
-        #expect(preferences.string(forKey: LocalizationContext.preferenceKey) == "en")
-        #expect(preferences.stringArray(forKey: "AppleLanguages") == ["en"])
-        LocalizationContext.savePreference("zh-Hans", in: preferences)
-        #expect(preferences.stringArray(forKey: "AppleLanguages") == ["zh-Hans"])
+        #expect(preferences.persistentDomain(forName: suite)?["AppleLanguages"] as? [String] == ["en"])
+        #expect(LocalizationContext.savedLanguage(in: preferences, domain: suite) == "en")
+        // System Settings may store a regional variant of a supported language.
+        preferences.set(["en-GB"], forKey: "AppleLanguages")
+        #expect(LocalizationContext.savedLanguage(in: preferences, domain: suite) == "en")
         LocalizationContext.savePreference("system", in: preferences)
-        #expect(preferences.string(forKey: LocalizationContext.preferenceKey) == "system")
         #expect(preferences.persistentDomain(forName: suite)?["AppleLanguages"] == nil)
+        #expect(LocalizationContext.savedLanguage(in: preferences, domain: suite) == "system")
+    }
+
+    @Test func legacyPreferenceMigratesOnce() throws {
+        let suite = "test.ruri.language.migration"
+        let preferences = try #require(UserDefaults(suiteName: suite))
+        preferences.removePersistentDomain(forName: suite)
+        defer { preferences.removePersistentDomain(forName: suite) }
+        preferences.set("en", forKey: "interfaceLanguage")
+        #expect(LocalizationContext.migrateLegacyPreference(in: preferences, domain: suite) == "en")
+        #expect(preferences.persistentDomain(forName: suite)?["AppleLanguages"] as? [String] == ["en"])
+        #expect(preferences.persistentDomain(forName: suite)?["interfaceLanguage"] == nil)
+        #expect(LocalizationContext.migrateLegacyPreference(in: preferences, domain: suite) == nil)
+        // A choice made later in System Settings wins over the old key.
+        preferences.set("en", forKey: "interfaceLanguage")
+        preferences.set(["zh-Hans"], forKey: "AppleLanguages")
+        #expect(LocalizationContext.migrateLegacyPreference(in: preferences, domain: suite) == nil)
+        #expect(preferences.persistentDomain(forName: suite)?["AppleLanguages"] as? [String] == ["zh-Hans"])
     }
 }
