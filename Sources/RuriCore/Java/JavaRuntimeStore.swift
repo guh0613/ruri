@@ -80,7 +80,7 @@ public enum JavaRuntimeStore {
         do {
             let saved = try StateStore.update(paths) { state in
                 let references = references(in: state, directory: root)
-                guard references.isEmpty || resetReferences else { throw RuriError.message(Messages.CoreJavaRuntimeStore.javaStillReferencedBySettings(String(describing: references.joined(separator: "、")))) }
+                guard references.isEmpty || resetReferences else { throw RuriError.message(Messages.CoreJavaRuntimeStore.javaStillReferencedBySettings(String(describing: LocalizedFormat.list(Array(references))))) }
                 if resetReferences { replaceReferences(in: &state, matching: { contains($0, directory: root) }, with: nil) }
                 state.settings.javaLocations?.removeAll { contains($0.path, directory: root) }
                 try FileManager.default.trashItem(at: root, resultingItemURL: &trashed)

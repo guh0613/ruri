@@ -167,6 +167,8 @@ def read_catalogs(root, check_format=False, format_files=False):
                 raise ValueError('Unknown key without a source localization: ' + identity)
             try:
                 value, expected, plurals = localization_value(localizations[BASE_LANGUAGE])
+                if expected and not entry.get('comment', '').strip():
+                    raise ValueError('Messages with placeholders need a translator comment')
                 if set(expected) != set(range(1, len(expected) + 1)):
                     raise ValueError('Format argument positions must be contiguous')
                 for language, localization in localizations.items():

@@ -197,7 +197,7 @@ extension AppModel {
                 handledExits.insert(record.id)
                 NSApp.dockTile.badgeLabel = "!"
                 let summary = record.state.isFinished ? record.title : activity == .uncertain ? Messages.AppAppModelGameMonitoring.statusUnconfirmed.localized : Messages.AppAppModelGameMonitoring.monitoringStopped.localized
-                report("\(record.instanceName)：\(summary)", level: record.state == .failed ? .error : .warning, sessionID: record.id)
+                report(Messages.Common.labeledValue(record.instanceName, summary).localized, level: record.state == .failed ? .error : .warning, sessionID: record.id)
                 if !presentedAttention {
                     if NSApp.isActive && NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {
                         requestedLogSessionID = record.id; showLogs = true

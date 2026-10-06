@@ -269,7 +269,7 @@ struct GameHistoryView: View {
             }
             Divider().frame(height: 40)
             HeroStat(label: Messages.HistoryUI.averageSession.localized, value: LocalizedFormat.duration(overview.averageSeconds)) {
-                Text(overview.longestSeconds > 0 ? Messages.HistoryUI.longestSession.localized + " " + LocalizedFormat.duration(overview.longestSeconds) : " ")
+                Text(overview.longestSeconds > 0 ? Messages.HistoryUI.longestSessionValue(LocalizedFormat.duration(overview.longestSeconds)).localized : " ")
             }
             Divider().frame(height: 40)
             HeroStat(label: Messages.HistoryUI.streak.localized, value: Messages.HistoryUI.dayCount(Int64(overview.streakDays)).localized) {

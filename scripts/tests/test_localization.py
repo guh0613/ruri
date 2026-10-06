@@ -5,6 +5,7 @@ import tempfile
 import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from lib.localization import candidates, localized_concatenations
 from lib.localization_catalog import (catalog_text, localization_value, read_catalogs, read_json, signature,
                                       coverage, source_hash, accept_translations, read_baseline,
                                       validate_policy, shipping_languages, check_completeness, REQUIRED_COMPLETE)
@@ -53,7 +54,7 @@ class CatalogTests(unittest.TestCase):
             resources = root / 'Sources/RuriLocalization/Resources'
             resources.mkdir(parents=True)
             path = resources / 'Test.xcstrings'
-            entry = {'extractionState': 'manual', 'localizations': {'zh-Hans': unit('%1$lld files'), 'en': unit('%1$@ files')}}
+            entry = {'comment': 'File count test fixture.', 'extractionState': 'manual', 'localizations': {'zh-Hans': unit('%1$lld files'), 'en': unit('%1$@ files')}}
             catalog = {'sourceLanguage': 'zh-Hans', 'version': '1.0', 'strings': {'Test.files': entry}}
             path.write_text(catalog_text(catalog))
             with self.assertRaisesRegex(ValueError, 'changes parameters'):
@@ -78,7 +79,7 @@ class CoverageTests(unittest.TestCase):
 
     def catalog(self, entries, table='Test'):
         data = {'sourceLanguage': 'zh-Hans', 'version': '1.0', 'strings': {
-            key: {'extractionState': 'manual', 'localizations': localizations} for key, localizations in entries.items()
+            key: {'comment': 'Translation test fixture.', 'extractionState': 'manual', 'localizations': localizations} for key, localizations in entries.items()
         }}
         (self.resources / (table + '.xcstrings')).write_text(catalog_text(data))
         return read_catalogs(self.root)
@@ -149,6 +150,32 @@ class CoverageTests(unittest.TestCase):
         path.write_text(json.dumps([{'key': 'Test:Test.files', 'reason': ''}]))
         with self.assertRaisesRegex(ValueError, 'exemption'):
             validate_policy(self.root, catalogs)
+
+
+class SourceScanTests(unittest.TestCase):
+    def test_full_width_punctuation_and_interpolated_literals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'Sources').mkdir()
+            (root / 'Sources/Test.swift').write_text('let text = "\\(label)：\\(value)"\n// "，"\nlet brand = "Java"\n')
+            found = list(candidates(root))
+            self.assertEqual(len(found), 1)
+            self.assertIn('：', found[0]['literal'])
+
+    def test_composition_scan_ignores_comments_and_machine_data(self):
+        cases = [
+            ('let text = Messages.Common.cancel.localized + suffix', True),
+            ('let text = prefix + Messages.Common.filesAndSize(count, size).localized', True),
+            ('let text = prefix + message.localized', True),
+            ('let text = Messages.Common.cancel.localized\n + suffix', True),
+            ('// Messages.Common.cancel.localized + suffix', False),
+            ('let text = "value.localized + suffix"', False),
+            ('rows += [Messages.Common.cancel.localized]', False),
+            ('let value = count + 1; print(Messages.Common.cancel.localized)', False),
+        ]
+        for source, expected in cases:
+            with self.subTest(source=source):
+                self.assertEqual(bool(localized_concatenations(source)), expected)
 
 
 if __name__ == '__main__':

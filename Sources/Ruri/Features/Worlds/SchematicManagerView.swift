@@ -85,7 +85,7 @@ struct SchematicManagerView: View {
                 if let entry = removing { mutate(Messages.AppSchematicManagerView.entryRemoval.localized) { _ = try await manager.remove(entry) } }
                 removing = nil
             }
-        } message: { Text((removing?.name ?? "") + (removing?.isDirectory == true ? Messages.AppSchematicManagerView.entryFiles.localized : "")) }
+        } message: { Text(removing?.isDirectory == true ? Messages.AppSchematicManagerView.directoryRemovalDescription(removing?.name ?? "").localized : removing?.name ?? "") }
     }
     private func importFiles(_ urls: [URL]) {
         mutate(Messages.AppSchematicManagerView.importSchematicFiles.localized) {

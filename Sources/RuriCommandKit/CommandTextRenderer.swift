@@ -71,7 +71,7 @@ struct CommandTextRenderer {
         let before = value["before"], after = value["after"], changed = value["changed"] == .bool(true)
         let preview = value["dryRun"] == .bool(true)
         let status = changed ? (preview ? Messages.CLIExperience.configPreview.localized : Messages.CLIExperience.configUpdated.localized)
-            : (preview ? Messages.CLIExperience.preview.localized + ": " : "") + Messages.CLIExperience.configUnchanged.localized
+            : (preview ? Messages.CLIExperience.previewMessage(Messages.CLIExperience.configUnchanged.localized).localized : Messages.CLIExperience.configUnchanged.localized)
         var lines = [status, "scope: " + Self.atom(after["scope"])]
         let oldFields = Self.flatten(before["effective"]), newFields = Self.flatten(after["effective"])
         var differences: [String] = []

@@ -50,7 +50,7 @@ public struct GameDiagnosticBundle: Sendable {
                 files.removeAll { $0.id == source.id || $0.id == source.id + "#tail" }
                 let path = source.gameRelativePath.map { "game/" + $0 } ?? "evidence/" + source.reference.relativePath
                 files.append(.init(id: source.id, path: path + (source.truncated ? ".excerpt.txt" : ""),
-                                   title: source.title + (source.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""),
+                                   title: source.truncated ? Messages.CoreGameDiagnosticBundle.excerptTitle(source.title).localized : source.title,
                                    text: snapshot.preview, changedByRedaction: snapshot.changedByRedaction, snapshot: snapshot))
             } catch is CancellationError { throw CancellationError() }
             catch {
@@ -87,12 +87,12 @@ public struct GameDiagnosticBundle: Sendable {
         }
         var summary = Messages.CoreGameDiagnosticBundle.diagnosticReportHeader(String(describing: session.createdAt.ISO8601Format()), diagnosis.title, diagnosis.summary).localized
         for finding in diagnosis.findings {
-            summary += "\n\(finding.title)（\(finding.confidence.title)）\n\(finding.explanation)\n"
+            summary += Messages.CoreGameDiagnosticBundle.findingSummary(finding.title, finding.confidence.title, finding.explanation).localized
             for (index, step) in finding.steps.enumerated() { summary += "\(index + 1). \(step)\n" }
             // Excerpts are intentionally separate selectable files. Deselecting
             // a log must also remove its quoted contents from the package.
         }
-        summary += Messages.CoreGameDiagnosticBundle.readScopeHeader.localized + (diagnosis.limitations.isEmpty ? Messages.CoreGameDiagnosticBundle.noReadErrors.localized : diagnosis.limitations.joined(separator: "\n"))
+        summary += Messages.CoreGameDiagnosticBundle.readScopeDetails(diagnosis.limitations.isEmpty ? Messages.CoreGameDiagnosticBundle.noReadErrors.localized : diagnosis.limitations.joined(separator: "\n")).localized
         append(id: "summary", path: "diagnosis.txt", title: Messages.CoreGameDiagnosticBundle.diagnosticConclusionHeader.localized, text: summary + "\n")
         var environment = Messages.CoreGameDiagnosticBundle.environment(
             session.gameVersion,
@@ -142,7 +142,7 @@ public struct GameDiagnosticBundle: Sendable {
             } else { path = "evidence/\(String(format: "%02d", index + 1))-\(stem)\(document.isTail ? "-tail" : "").txt" }
             let heading = Messages.CoreGameDiagnosticBundle.sourceRangeHeading(document.title, String(describing: document.truncated ? Messages.CoreGameDiagnosticBundle.truncatedFileHeading.localized : Messages.CoreGameDiagnosticBundle.completeFileHeading.localized), String(describing: document.isTail ? Messages.CoreGameDiagnosticBundle.tailLineNumberHeading.localized : Messages.CoreGameDiagnosticBundle.bodyLineNumberHeading.localized)).localized
             let text = document.gameRelativePath != nil && !document.truncated ? document.text : heading + document.text
-            append(id: document.id, path: path, title: document.title + (document.truncated ? Messages.CoreGameDiagnosticBundle.excerptHeading.localized : ""), text: text)
+            append(id: document.id, path: path, title: document.truncated ? Messages.CoreGameDiagnosticBundle.excerptTitle(document.title).localized : document.title, text: text)
         }
         return .init(sessionID: session.id, createdAt: Date(), files: files)
     }

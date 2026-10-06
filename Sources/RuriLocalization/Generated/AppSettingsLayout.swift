@@ -3,6 +3,12 @@ import Foundation
 
 extension Messages {
     public enum AppSettingsLayout {
+        /// %1$@，%2$@
+        ///
+        /// Resource: `Interface.AppSettingsLayout.actionLabel`.
+        public static func actionLabel(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "AppSettingsLayout.actionLabel", table: "Interface", fallback: "%1$@，%2$@", arguments: [.text(value0), .text(value1)])
+        }
         /// 参数与环境
         ///
         /// Resource: `Interface.AppSettingsLayout.argumentsAndEnvironment`.
@@ -40,6 +46,7 @@ extension Messages {
             .init(key: "AppSettingsLayout.windowAndLaunch", table: "Interface", fallback: "窗口与启动")
         }
         static let definitions: [String: MessageDefinition] = [
+            "Interface:AppSettingsLayout.actionLabel": .init("%1$@，%2$@", [.text, .text]),
             "Interface:AppSettingsLayout.argumentsAndEnvironment": .init("参数与环境", []),
             "Interface:AppSettingsLayout.filesAndDirectories": .init("文件与目录", []),
             "Interface:AppSettingsLayout.javaAndMemory": .init("Java 与内存", []),

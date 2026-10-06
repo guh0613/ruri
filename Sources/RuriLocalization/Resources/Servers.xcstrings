@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "Servers.add" : {
+      "comment" : "Servers page action that opens the add-server form. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -19,6 +20,7 @@
       }
     },
     "Servers.addAndJoin" : {
+      "comment" : "Server action that adds the server to the selected instance and starts the game. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -36,6 +38,7 @@
       }
     },
     "Servers.addAndJoinButton" : {
+      "comment" : "Server action button that adds the server and joins it. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -47,6 +50,7 @@
       }
     },
     "Servers.addAndJoinHelp" : {
+      "comment" : "Server action help explaining the add-and-join operation. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -58,6 +62,7 @@
       }
     },
     "Servers.address" : {
+      "comment" : "Server form address field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -75,6 +80,7 @@
       }
     },
     "Servers.addressPlaceholder" : {
+      "comment" : "Server address field example hostname. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -86,6 +92,7 @@
       }
     },
     "Servers.alias" : {
+      "comment" : "Server settings field label for the Ruri-only alias. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -103,6 +110,7 @@
       }
     },
     "Servers.all" : {
+      "comment" : "Servers page filter option for all servers. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -120,6 +128,7 @@
       }
     },
     "Servers.allInstances" : {
+      "comment" : "Servers page instance filter option. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -131,6 +140,7 @@
       }
     },
     "Servers.allServers" : {
+      "comment" : "Servers page filter option for the complete list. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -142,6 +152,7 @@
       }
     },
     "Servers.always" : {
+      "comment" : "Server resource pack policy option to always accept packs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -159,6 +170,7 @@
       }
     },
     "Servers.ask" : {
+      "comment" : "Server resource pack policy option to ask before accepting packs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -176,6 +188,7 @@
       }
     },
     "Servers.automaticInstance" : {
+      "comment" : "Server preferred-instance option for automatic selection. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -187,6 +200,7 @@
       }
     },
     "Servers.cancel" : {
+      "comment" : "Server form cancel button. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -204,6 +218,7 @@
       }
     },
     "Servers.chooseInstance" : {
+      "comment" : "Server join action that opens the instance picker. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -221,6 +236,7 @@
       }
     },
     "Servers.confirmRemove" : {
+      "comment" : "Server removal confirmation button. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -238,6 +254,7 @@
       }
     },
     "Servers.connectionFailed" : {
+      "comment" : "Server status query error when a connection cannot be established. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -255,6 +272,7 @@
       }
     },
     "Servers.copyAddress" : {
+      "comment" : "Server action that copies the connection address. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -266,6 +284,7 @@
       }
     },
     "Servers.deleteConfirm" : {
+      "comment" : "Server removal confirmation detail for an instance multiplayer list. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -283,6 +302,7 @@
       }
     },
     "Servers.destinationConflict" : {
+      "comment" : "Server launch validation error for conflicting destinations. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -300,6 +320,7 @@
       }
     },
     "Servers.displayName" : {
+      "comment" : "Server form name field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -311,6 +332,7 @@
       }
     },
     "Servers.dnsFailed" : {
+      "comment" : "Server status query error when DNS resolution fails. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -328,6 +350,7 @@
       }
     },
     "Servers.edit" : {
+      "comment" : "Server action that opens the edit form. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -345,6 +368,7 @@
       }
     },
     "Servers.empty" : {
+      "comment" : "Servers page empty-state title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -362,6 +386,7 @@
       }
     },
     "Servers.emptyDescription" : {
+      "comment" : "Servers page empty-state instructions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -379,6 +404,7 @@
       }
     },
     "Servers.emptyInstanceList" : {
+      "comment" : "Instance server list empty-state title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -390,6 +416,7 @@
       }
     },
     "Servers.emptyInstanceListDescription" : {
+      "comment" : "Instance server list empty-state explanation. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -401,6 +428,7 @@
       }
     },
     "Servers.estimateHint" : {
+      "comment" : "Server playtime estimation caveat. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -418,6 +446,7 @@
       }
     },
     "Servers.estimated" : {
+      "comment" : "Server playtime badge for an estimated duration. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -435,6 +464,7 @@
       }
     },
     "Servers.estimatedPortion" : {
+      "comment" : "Server playtime estimate summary; %1$@ is the formatted estimated portion of the duration.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -446,6 +476,7 @@
       }
     },
     "Servers.favorite" : {
+      "comment" : "Server action that pins the server to the home page. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -463,6 +494,7 @@
       }
     },
     "Servers.favoriteOnlyFooter" : {
+      "comment" : "Server form footer for a server saved only in Ruri. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -474,6 +506,7 @@
       }
     },
     "Servers.favorites" : {
+      "comment" : "Servers page filter option for pinned servers. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -491,6 +524,7 @@
       }
     },
     "Servers.filter" : {
+      "comment" : "Servers page filter menu title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -502,6 +536,7 @@
       }
     },
     "Servers.filteredServerCount" : {
+      "comment" : "Servers page filtered-count summary; %1$lld is the visible server count and %2$lld is the total server count.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -543,6 +578,7 @@
       }
     },
     "Servers.globalSettings" : {
+      "comment" : "Server settings section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -560,6 +596,7 @@
       }
     },
     "Servers.history" : {
+      "comment" : "Server detail play-history section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -577,6 +614,7 @@
       }
     },
     "Servers.independent" : {
+      "comment" : "Server form destination option for saving outside instance lists. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -594,6 +632,7 @@
       }
     },
     "Servers.instanceMenuHelp" : {
+      "comment" : "Server instance menu help text. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -605,6 +644,7 @@
       }
     },
     "Servers.instanceName" : {
+      "comment" : "Server form or detail field label for the chosen instance. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -622,6 +662,7 @@
       }
     },
     "Servers.instances" : {
+      "comment" : "Server detail section listing instances containing the server. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -639,6 +680,7 @@
       }
     },
     "Servers.invalidAddress" : {
+      "comment" : "Server form address validation error. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -656,6 +698,7 @@
       }
     },
     "Servers.invalidList" : {
+      "comment" : "Server list loading error for invalid data. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -673,6 +716,7 @@
       }
     },
     "Servers.invalidName" : {
+      "comment" : "Server form name validation error. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -690,6 +734,7 @@
       }
     },
     "Servers.invalidResponse" : {
+      "comment" : "Server status query error for a malformed response. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -707,6 +752,7 @@
       }
     },
     "Servers.join" : {
+      "comment" : "Server action that launches the selected instance and connects. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -724,6 +770,7 @@
       }
     },
     "Servers.joinButton" : {
+      "comment" : "Server join button. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -735,6 +782,7 @@
       }
     },
     "Servers.joinHelp" : {
+      "comment" : "Server join button help text. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -746,6 +794,7 @@
       }
     },
     "Servers.last30Days" : {
+      "comment" : "Server playtime period option or heading. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -757,6 +806,7 @@
       }
     },
     "Servers.lastPlayed" : {
+      "comment" : "Server detail field label for the most recent visit. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -774,6 +824,7 @@
       }
     },
     "Servers.lastUpdated" : {
+      "comment" : "Server status timestamp field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -791,6 +842,7 @@
       }
     },
     "Servers.latency" : {
+      "comment" : "Server status latency field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -808,6 +860,7 @@
       }
     },
     "Servers.legacyTime" : {
+      "comment" : "Server playtime attribution category for legacy whole-session records. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -825,6 +878,7 @@
       }
     },
     "Servers.listChanged" : {
+      "comment" : "Server list modification error after underlying data changes. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -842,6 +896,7 @@
       }
     },
     "Servers.listErrors" : {
+      "comment" : "Servers page warning about unreadable instance multiplayer lists. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -859,6 +914,7 @@
       }
     },
     "Servers.listLimit" : {
+      "comment" : "Server list error when its entry limit is exceeded. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -876,6 +932,7 @@
       }
     },
     "Servers.listedInstances" : {
+      "comment" : "Server detail heading above instances that list the server. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -887,6 +944,7 @@
       }
     },
     "Servers.loading" : {
+      "comment" : "Servers page loading status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -904,6 +962,7 @@
       }
     },
     "Servers.localEntries" : {
+      "comment" : "Instance server-list section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -921,6 +980,7 @@
       }
     },
     "Servers.manage" : {
+      "comment" : "Server management page or action title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -938,6 +998,7 @@
       }
     },
     "Servers.manageList" : {
+      "comment" : "Instance server-list management action. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -949,6 +1010,7 @@
       }
     },
     "Servers.maximumPlayers" : {
+      "comment" : "Server status player-capacity detail; %1$lld is the maximum supported player count.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -960,6 +1022,7 @@
       }
     },
     "Servers.milliseconds" : {
+      "comment" : "Server latency display; %lld is the latency in milliseconds, not a count of items.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -977,6 +1040,7 @@
       }
     },
     "Servers.moreActions" : {
+      "comment" : "Server context menu title for additional actions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -988,6 +1052,7 @@
       }
     },
     "Servers.morePlayers" : {
+      "comment" : "Server player-list overflow summary; %1$lld is the number of additional players.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1005,6 +1070,7 @@
       }
     },
     "Servers.moveDown" : {
+      "comment" : "Server list action that moves an entry down. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1022,6 +1088,7 @@
       }
     },
     "Servers.moveUp" : {
+      "comment" : "Server list action that moves an entry up. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1039,6 +1106,7 @@
       }
     },
     "Servers.name" : {
+      "comment" : "Server form name field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1056,6 +1124,7 @@
       }
     },
     "Servers.never" : {
+      "comment" : "Server resource pack policy option to reject packs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1073,6 +1142,7 @@
       }
     },
     "Servers.noDescription" : {
+      "comment" : "Server detail fallback when no server description is returned. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1084,6 +1154,7 @@
       }
     },
     "Servers.noHistory" : {
+      "comment" : "Server detail empty state when no usable playtime records exist. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1101,6 +1172,7 @@
       }
     },
     "Servers.noInstance" : {
+      "comment" : "Server join guidance when there are no instances. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1118,6 +1190,7 @@
       }
     },
     "Servers.noMatches" : {
+      "comment" : "Servers page filtered-list empty-state title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1129,6 +1202,7 @@
       }
     },
     "Servers.noMatchesDescription" : {
+      "comment" : "Servers page filtered-list empty-state guidance. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1140,6 +1214,7 @@
       }
     },
     "Servers.noRecentPlay" : {
+      "comment" : "Server detail empty state for recent playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1151,6 +1226,7 @@
       }
     },
     "Servers.noSelection" : {
+      "comment" : "Servers page detail pane prompt. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1168,6 +1244,7 @@
       }
     },
     "Servers.notFound" : {
+      "comment" : "Server list operation error when the target entry no longer exists. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1185,6 +1262,7 @@
       }
     },
     "Servers.notInInstances" : {
+      "comment" : "Server detail note for a Ruri-only server. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1196,6 +1274,7 @@
       }
     },
     "Servers.notPlayed" : {
+      "comment" : "Server detail fallback when the server has no play history. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1207,6 +1286,7 @@
       }
     },
     "Servers.notes" : {
+      "comment" : "Server settings notes field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1224,6 +1304,7 @@
       }
     },
     "Servers.offline" : {
+      "comment" : "Server status badge when the server cannot be reached. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1235,6 +1316,7 @@
       }
     },
     "Servers.onlinePlayers" : {
+      "comment" : "Server detail section title for the online player list. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1246,6 +1328,7 @@
       }
     },
     "Servers.otherInstances" : {
+      "comment" : "Server detail section for additional instances. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1257,6 +1340,7 @@
       }
     },
     "Servers.otherServers" : {
+      "comment" : "Server playtime attribution category for other servers. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1268,6 +1352,7 @@
       }
     },
     "Servers.page" : {
+      "comment" : "Servers page title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1285,6 +1370,7 @@
       }
     },
     "Servers.players" : {
+      "comment" : "Server status field label for the online player count. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1302,6 +1388,7 @@
       }
     },
     "Servers.playtime" : {
+      "comment" : "Server detail cumulative-playtime field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1319,6 +1406,7 @@
       }
     },
     "Servers.preferredInstance" : {
+      "comment" : "Server settings field label for the preferred launch instance. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1336,6 +1424,7 @@
       }
     },
     "Servers.previewPrompt" : {
+      "comment" : "Server form status-preview guidance. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1347,6 +1436,7 @@
       }
     },
     "Servers.probe" : {
+      "comment" : "Server form action that queries server status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1364,6 +1454,7 @@
       }
     },
     "Servers.protocolVersion" : {
+      "comment" : "Server status protocol-version detail; %1$lld is the protocol version number, not a count.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1375,6 +1466,7 @@
       }
     },
     "Servers.queryFailed" : {
+      "comment" : "Server status query general failure message. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1392,6 +1484,7 @@
       }
     },
     "Servers.queryHint" : {
+      "comment" : "Server form query-status explanation. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1409,6 +1502,7 @@
       }
     },
     "Servers.querying" : {
+      "comment" : "Server status badge while a query is running. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1426,6 +1520,7 @@
       }
     },
     "Servers.reachable" : {
+      "comment" : "Server status badge after a successful query. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1443,6 +1538,7 @@
       }
     },
     "Servers.recent" : {
+      "comment" : "Servers page recent-play filter option. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1460,6 +1556,7 @@
       }
     },
     "Servers.refresh" : {
+      "comment" : "Servers page action that reloads server lists. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1477,6 +1574,7 @@
       }
     },
     "Servers.refreshRequired" : {
+      "comment" : "Server list operation error before data is loaded. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1494,6 +1592,7 @@
       }
     },
     "Servers.refreshStatus" : {
+      "comment" : "Server detail action that queries status again. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1505,6 +1604,7 @@
       }
     },
     "Servers.remove" : {
+      "comment" : "Server action that removes an entry from an instance multiplayer list. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1522,6 +1622,7 @@
       }
     },
     "Servers.removeFromLibrary" : {
+      "comment" : "Server action that removes Ruri's saved server metadata. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1533,6 +1634,7 @@
       }
     },
     "Servers.removeFromLibraryConfirm" : {
+      "comment" : "Server confirmation title for removing Ruri's saved metadata. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1544,6 +1646,7 @@
       }
     },
     "Servers.removeFromLibraryDetail" : {
+      "comment" : "Server confirmation detail for removing Ruri's saved metadata. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1555,6 +1658,7 @@
       }
     },
     "Servers.reorderHint" : {
+      "comment" : "Instance server-list reorder help text. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1566,6 +1670,7 @@
       }
     },
     "Servers.resourcePacks" : {
+      "comment" : "Server settings field label for the resource pack acceptance policy. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1583,6 +1688,7 @@
       }
     },
     "Servers.retry" : {
+      "comment" : "Server status query retry action. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1594,6 +1700,7 @@
       }
     },
     "Servers.running" : {
+      "comment" : "Instance server-list status while the game is running. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1611,6 +1718,7 @@
       }
     },
     "Servers.save" : {
+      "comment" : "Server form save button. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1628,6 +1736,7 @@
       }
     },
     "Servers.saveTo" : {
+      "comment" : "Server form destination field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1639,6 +1748,7 @@
       }
     },
     "Servers.saveToFooter" : {
+      "comment" : "Server form footer explaining instance destinations. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1650,6 +1760,7 @@
       }
     },
     "Servers.savedInLibrary" : {
+      "comment" : "Server settings option for retaining Ruri's saved server metadata. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1667,6 +1778,7 @@
       }
     },
     "Servers.search" : {
+      "comment" : "Servers page search field placeholder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1684,6 +1796,7 @@
       }
     },
     "Servers.serverCount" : {
+      "comment" : "Servers page server-count summary; %1$lld is the number of servers.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1701,6 +1814,7 @@
       }
     },
     "Servers.settingsFooter" : {
+      "comment" : "Server settings footer explaining Ruri-only metadata. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1712,6 +1826,7 @@
       }
     },
     "Servers.sharedDirectory" : {
+      "comment" : "Instance server-list notice for a shared game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1729,6 +1844,7 @@
       }
     },
     "Servers.showAll" : {
+      "comment" : "Servers page action that clears filters. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1740,6 +1856,7 @@
       }
     },
     "Servers.showInServers" : {
+      "comment" : "Server action that opens the server's detail on the Servers page. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1751,6 +1868,7 @@
       }
     },
     "Servers.statusSection" : {
+      "comment" : "Server detail status section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1762,6 +1880,7 @@
       }
     },
     "Servers.timeout" : {
+      "comment" : "Server status query timeout error. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1779,6 +1898,7 @@
       }
     },
     "Servers.unattributed" : {
+      "comment" : "Server playtime attribution category for time outside a world. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1796,6 +1916,7 @@
       }
     },
     "Servers.unavailableTime" : {
+      "comment" : "Server playtime fallback when duration cannot be calculated. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1813,6 +1934,7 @@
       }
     },
     "Servers.unfavorite" : {
+      "comment" : "Server action that removes a home-page pin. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1824,6 +1946,7 @@
       }
     },
     "Servers.unknown" : {
+      "comment" : "Server detail fallback for unknown status information. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1841,6 +1964,7 @@
       }
     },
     "Servers.unsupportedLaunch" : {
+      "comment" : "Server join validation error for unsupported game versions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1858,6 +1982,7 @@
       }
     },
     "Servers.updatedAt" : {
+      "comment" : "Server status last-update summary; %1$@ is the formatted relative update time.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1869,6 +1994,7 @@
       }
     },
     "Servers.version" : {
+      "comment" : "Server status game-version field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1886,6 +2012,7 @@
       }
     },
     "Servers.visitCount" : {
+      "comment" : "Server play-history visit count; %1$lld is the number of recorded visits.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1903,6 +2030,7 @@
       }
     },
     "Servers.world" : {
+      "comment" : "Server playtime attribution category for a local world. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

@@ -89,7 +89,7 @@ public enum JavaDiscovery {
             let order = $0.version.compare($1.version, options: .numeric)
             return order == .orderedSame ? $0.path < $1.path : order == .orderedDescending
         }).first else {
-            throw RuriError.message(Messages.CoreJavaRuntime.javaVersionRequired(String(describing: major), String(describing: architecture == "x86_64" ? "（Intel / Rosetta）" : "")))
+            throw RuriError.message(architecture == "x86_64" ? Messages.CoreJavaRuntime.intelJavaVersionRequired(String(major)) : Messages.CoreJavaRuntime.javaVersionRequired(String(major), ""))
         }
         return runtime
     }

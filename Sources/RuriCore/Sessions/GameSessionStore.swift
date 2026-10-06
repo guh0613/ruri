@@ -37,7 +37,7 @@ public enum GameSessionStore {
             try handle.seek(toOffset: UInt64(max(0, length - Int64(limit))))
             let data = try handle.read(upToCount: limit) ?? Data()
             let text = GameLogRedactor().redact(String(decoding: data, as: UTF8.self))
-            let body = length > limit ? Messages.CoreGameSession.truncatedLogNotice.localized + String(text.drop(while: { $0 != "\n" }).dropFirst()) : text
+            let body = length > limit ? Messages.CoreGameSession.truncatedLog(String(text.drop(while: { $0 != "\n" }).dropFirst())).localized : text
             return source == .combined ? bounded(eventText + body, byteLimit: byteLimit) : body
         }
         if !eventText.isEmpty { return bounded(eventText, byteLimit: byteLimit) }
@@ -53,14 +53,14 @@ public enum GameSessionStore {
         try handle.seek(toOffset: length > limit ? length - limit : 0)
         let data = try handle.read(upToCount: Int(limit)) ?? Data()
         let text = String(decoding: data, as: UTF8.self)
-        return length > limit ? Messages.CoreGameSession.truncatedLogNotice.localized + String(text.drop(while: { $0 != "\n" }).dropFirst()) : text
+        return length > limit ? Messages.CoreGameSession.truncatedLog(String(text.drop(while: { $0 != "\n" }).dropFirst())).localized : text
     }
     static func bounded(_ text: String, byteLimit: Int) -> String {
         let data = Data(text.utf8), limit = max(0, byteLimit)
         guard data.count > limit else { return text }
         let tail = data.suffix(limit)
         guard let newline = tail.firstIndex(of: 10) else { return "" }
-        return Messages.CoreGameSession.truncatedLogNotice.localized + String(decoding: tail[tail.index(after: newline)...], as: UTF8.self)
+        return Messages.CoreGameSession.truncatedLog(String(decoding: tail[tail.index(after: newline)...], as: UTF8.self)).localized
     }
     /// Save exactly the visible snapshot, with share-level privacy masking. Do
     /// not re-open a changing live log after the user has reviewed the preview.

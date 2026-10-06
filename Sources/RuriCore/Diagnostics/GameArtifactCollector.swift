@@ -47,7 +47,7 @@ enum GameArtifactCollector {
                 let content = redactor.redact(String(decoding: data, as: UTF8.self))
                 let relative = "reports/\(index)-\(url.lastPathComponent)"
                 let destination = try LauncherPaths.safePath(relative, within: directory)
-                let encoded = Data((content + (truncated ? Messages.CoreGameSession.reportTooLargeNotice.localized : "")).utf8)
+                let encoded = Data((truncated ? Messages.CoreGameSession.reportWithTruncation(content).localized : content).utf8)
                 try encoded.prefix(budget).write(to: destination, options: .atomic)
                 try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
                 evidence.append(.init(relativePath: relative, name: url.lastPathComponent, truncated: truncated || encoded.count > budget))

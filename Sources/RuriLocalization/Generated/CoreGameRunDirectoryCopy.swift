@@ -52,6 +52,13 @@ extension Messages {
             .init(key: "CoreGameRunDirectoryCopy.directorySwitchedCleanupPending", table: "Core", fallback: "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", arguments: [.text(value0)])
         }
         /// %1$@
+        /// 工作副本保留在：%2$@
+        ///
+        /// Resource: `Core.CoreGameRunDirectoryCopy.failureWithWorkCopy`.
+        public static func failureWithWorkCopy(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.failureWithWorkCopy", table: "Core", fallback: "%1$@\n工作副本保留在：%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// %1$@
         /// 自动恢复尚未完成，请在实例设置中恢复复制。%2$@
         ///
         /// Resource: `Core.CoreGameRunDirectoryCopy.recoveryFailure`.
@@ -158,6 +165,7 @@ extension Messages {
             "Core:CoreGameRunDirectoryCopy.copyingGameFiles": .init("正在复制游戏文件（%1$@ / %2$@）", [.text, .text]),
             "Core:CoreGameRunDirectoryCopy.directorySettingsUnconfirmed": .init("无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@", [.text]),
             "Core:CoreGameRunDirectoryCopy.directorySwitchedCleanupPending": .init("目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.failureWithWorkCopy": .init("%1$@\n工作副本保留在：%2$@", [.text, .text]),
             "Core:CoreGameRunDirectoryCopy.recoveryFailure": .init("%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@", [.text, .text]),
             "Core:CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning": .init("目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。", []),
             "Core:CoreGameRunDirectoryCopy.validatingFileContents": .init("正在校验文件内容…", []),

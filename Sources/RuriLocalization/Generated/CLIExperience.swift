@@ -123,6 +123,12 @@ extension Messages {
         public static var preview: LocalizedMessage {
             .init(key: "CLIExperience.preview", table: "CLIExperience", fallback: "预览（未执行）")
         }
+        /// 预览（未执行）：%1$@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.previewMessage`.
+        public static func previewMessage(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.previewMessage", table: "CLIExperience", fallback: "预览（未执行）：%1$@", arguments: [.text(value0)])
+        }
         /// 此操作可以重试。
         ///
         /// Resource: `CLIExperience.CLIExperience.retryable`.
@@ -198,6 +204,7 @@ extension Messages {
             "CLIExperience:CLIExperience.outputSchema": .init("只返回命令结果结构", []),
             "CLIExperience:CLIExperience.page": .init("显示 %1$lld 项；起始位置 %2$lld。", [.integer, .integer]),
             "CLIExperience:CLIExperience.preview": .init("预览（未执行）", []),
+            "CLIExperience:CLIExperience.previewMessage": .init("预览（未执行）：%1$@", [.text]),
             "CLIExperience:CLIExperience.retryable": .init("此操作可以重试。", []),
             "CLIExperience:CLIExperience.rules": .init("目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。", []),
             "CLIExperience:CLIExperience.schemaHint": .init("严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。", []),

@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "Discovery.allCategories" : {
+      "comment" : "Discover search filter or sort controls. Used for all categories.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "Discovery.allChannels" : {
+      "comment" : "Discover search filter or sort controls. Used for all channels.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -24,6 +26,7 @@
       }
     },
     "Discovery.allGameVersions" : {
+      "comment" : "Discover search filter or sort controls. Used for all game versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -35,6 +38,7 @@
       }
     },
     "Discovery.allLoaders" : {
+      "comment" : "Discover search filter or sort controls. Used for all loaders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -46,6 +50,7 @@
       }
     },
     "Discovery.alreadyInstalled" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for already installed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -57,6 +62,7 @@
       }
     },
     "Discovery.applyingInstall" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for applying install.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -68,6 +74,7 @@
       }
     },
     "Discovery.categoriesUnavailable" : {
+      "comment" : "Discover search results or layout controls. Used for categories unavailable.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -79,6 +86,7 @@
       }
     },
     "Discovery.category" : {
+      "comment" : "Discover search filter or sort controls. Used for category.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -90,6 +98,7 @@
       }
     },
     "Discovery.categoryAdventure" : {
+      "comment" : "Discover category filter option. Used for category adventure.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -101,6 +110,7 @@
       }
     },
     "Discovery.categoryDecoration" : {
+      "comment" : "Discover category filter option. Used for category decoration.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -112,6 +122,7 @@
       }
     },
     "Discovery.categoryEquipment" : {
+      "comment" : "Discover category filter option. Used for category equipment.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -123,6 +134,7 @@
       }
     },
     "Discovery.categoryKitchenSink" : {
+      "comment" : "Discover category filter option. Used for category kitchen sink.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -134,6 +146,7 @@
       }
     },
     "Discovery.categoryLibrary" : {
+      "comment" : "Discover category filter option. Used for category library.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -145,6 +158,7 @@
       }
     },
     "Discovery.categoryMagic" : {
+      "comment" : "Discover category filter option. Used for category magic.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -156,6 +170,7 @@
       }
     },
     "Discovery.categoryOptimization" : {
+      "comment" : "Discover category filter option. Used for category optimization.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -167,6 +182,7 @@
       }
     },
     "Discovery.categoryQuests" : {
+      "comment" : "Discover category filter option. Used for category quests.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -178,6 +194,7 @@
       }
     },
     "Discovery.categoryStorage" : {
+      "comment" : "Discover category filter option. Used for category storage.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -189,6 +206,7 @@
       }
     },
     "Discovery.categoryTechnology" : {
+      "comment" : "Discover category filter option. Used for category technology.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -200,6 +218,7 @@
       }
     },
     "Discovery.categoryUtility" : {
+      "comment" : "Discover category filter option. Used for category utility.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -211,6 +230,7 @@
       }
     },
     "Discovery.categoryWorldgen" : {
+      "comment" : "Discover category filter option. Used for category worldgen.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -222,6 +242,7 @@
       }
     },
     "Discovery.changelog" : {
+      "comment" : "Discover project or file detail panel. Used for changelog.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -233,6 +254,7 @@
       }
     },
     "Discovery.checkingDependencies" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for checking dependencies.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -244,6 +266,7 @@
       }
     },
     "Discovery.chooseInstance" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for choose instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -255,6 +278,7 @@
       }
     },
     "Discovery.chooseSaveLocation" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for choose save location.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -266,6 +290,7 @@
       }
     },
     "Discovery.clearFilters" : {
+      "comment" : "Discover search filter or sort controls. Used for clear filters.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -277,6 +302,7 @@
       }
     },
     "Discovery.clearInstanceFilter" : {
+      "comment" : "Discover search filter or sort controls. Used for clear instance filter.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -288,6 +314,7 @@
       }
     },
     "Discovery.collapseGroup" : {
+      "comment" : "Discover project version list and pagination. Used for collapse group.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -299,6 +326,7 @@
       }
     },
     "Discovery.confirmInstall" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for confirm install.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -310,6 +338,7 @@
       }
     },
     "Discovery.contentChanged" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for content changed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -321,6 +350,7 @@
       }
     },
     "Discovery.createAndInstall" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for create and install.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -332,6 +362,7 @@
       }
     },
     "Discovery.createCompatibleInstance" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for create compatible instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -343,6 +374,7 @@
       }
     },
     "Discovery.customVersionHint" : {
+      "comment" : "Discover search results or layout controls. Used for custom version hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -354,6 +386,7 @@
       }
     },
     "Discovery.dependencies" : {
+      "comment" : "Discover project or file detail panel. Used for dependencies.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -365,6 +398,7 @@
       }
     },
     "Discovery.dependencyPreviewNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for dependency preview notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -376,6 +410,7 @@
       }
     },
     "Discovery.dependencyVersionNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for dependency version notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -387,6 +422,7 @@
       }
     },
     "Discovery.destination" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for destination.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -398,6 +434,7 @@
       }
     },
     "Discovery.done" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for done.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -409,6 +446,7 @@
       }
     },
     "Discovery.downloadGame" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for download game.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -420,6 +458,7 @@
       }
     },
     "Discovery.downloadingFile" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for downloading file. %1$@: downloaded filename.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -431,6 +470,7 @@
       }
     },
     "Discovery.embedded" : {
+      "comment" : "Discover project or file detail panel. Used for embedded.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -442,6 +482,7 @@
       }
     },
     "Discovery.existingInstance" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for existing instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -453,6 +494,7 @@
       }
     },
     "Discovery.expandGroup" : {
+      "comment" : "Discover project version list and pagination. Used for expand group.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -464,6 +506,7 @@
       }
     },
     "Discovery.fileDependenciesNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for file dependencies notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -475,6 +518,7 @@
       }
     },
     "Discovery.fileDetails" : {
+      "comment" : "Discover project or file detail panel. Used for file details.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -486,6 +530,7 @@
       }
     },
     "Discovery.filterByInstance" : {
+      "comment" : "Discover search filter or sort controls. Used for filter by instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -497,6 +542,7 @@
       }
     },
     "Discovery.filteringForInstance" : {
+      "comment" : "Discover search filter or sort controls. Used for filtering for instance. %1$@: instance name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -508,6 +554,7 @@
       }
     },
     "Discovery.findGameVersion" : {
+      "comment" : "Discover search filter or sort controls. Used for find game version.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -519,6 +566,7 @@
       }
     },
     "Discovery.gallery" : {
+      "comment" : "Discover project or file detail panel. Used for gallery.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -530,6 +578,7 @@
       }
     },
     "Discovery.gameVersion" : {
+      "comment" : "Discover search filter or sort controls. Used for game version.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -541,6 +590,7 @@
       }
     },
     "Discovery.getVersions" : {
+      "comment" : "Discover project version list and pagination. Used for get versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -552,6 +602,7 @@
       }
     },
     "Discovery.groupCollapsed" : {
+      "comment" : "Discover project version list and pagination. Used for group collapsed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -563,6 +614,7 @@
       }
     },
     "Discovery.groupExpanded" : {
+      "comment" : "Discover project version list and pagination. Used for group expanded.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -574,6 +626,7 @@
       }
     },
     "Discovery.incompatible" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for incompatible.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -585,6 +638,7 @@
       }
     },
     "Discovery.incompatibleTarget" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for incompatible target.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -596,6 +650,7 @@
       }
     },
     "Discovery.installComplete" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install complete. %1$@: instance name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -607,6 +662,7 @@
       }
     },
     "Discovery.installOrSave" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install or save.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -618,6 +674,7 @@
       }
     },
     "Discovery.installPreview" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install preview.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -629,6 +686,7 @@
       }
     },
     "Discovery.installSummary" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for install summary. %1$lld: number of files pending installation; %2$@: formatted total download size.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -646,6 +704,7 @@
       }
     },
     "Discovery.installingInto" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for installing into. %1$@: destination instance name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -657,6 +716,7 @@
       }
     },
     "Discovery.instanceChanged" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for instance changed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -668,6 +728,7 @@
       }
     },
     "Discovery.instanceFilterHint" : {
+      "comment" : "Discover search filter or sort controls. Used for instance filter hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -679,6 +740,7 @@
       }
     },
     "Discovery.instanceInUse" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for instance in use.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -690,6 +752,7 @@
       }
     },
     "Discovery.issues" : {
+      "comment" : "Discover project or file detail panel. Used for issues.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -701,6 +764,7 @@
       }
     },
     "Discovery.layout" : {
+      "comment" : "Discover search results or layout controls. Used for layout.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -712,6 +776,7 @@
       }
     },
     "Discovery.loadMore" : {
+      "comment" : "Discover project version list and pagination. Used for load more.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -723,6 +788,7 @@
       }
     },
     "Discovery.loadedVersions" : {
+      "comment" : "Discover project version list and pagination. Used for loaded versions. %1$lld: number of loaded version files; %2$lld: total available version file count.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -764,6 +830,7 @@
       }
     },
     "Discovery.loader" : {
+      "comment" : "Discover search results or layout controls. Used for loader.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -775,6 +842,7 @@
       }
     },
     "Discovery.loadersUnknown" : {
+      "comment" : "Discover search results or layout controls. Used for loaders unknown.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -786,6 +854,7 @@
       }
     },
     "Discovery.loadingChangelog" : {
+      "comment" : "Discover project version list and pagination. Used for loading changelog.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -797,6 +866,7 @@
       }
     },
     "Discovery.loadingDetail" : {
+      "comment" : "Discover search results or layout controls. Used for loading detail.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -808,6 +878,7 @@
       }
     },
     "Discovery.loadingVersions" : {
+      "comment" : "Discover project version list and pagination. Used for loading versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -819,6 +890,7 @@
       }
     },
     "Discovery.matchInstance" : {
+      "comment" : "Discover search filter or sort controls. Used for match instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -830,6 +902,7 @@
       }
     },
     "Discovery.minecraftVersion" : {
+      "comment" : "Discover project version list and pagination. Used for minecraft version. %1$@: Minecraft version.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -841,6 +914,7 @@
       }
     },
     "Discovery.modpackImportNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for modpack import notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -852,6 +926,7 @@
       }
     },
     "Discovery.mostDownloads" : {
+      "comment" : "Discover search filter or sort controls. Used for most downloads.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -863,6 +938,7 @@
       }
     },
     "Discovery.newInstance" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for new instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -874,6 +950,7 @@
       }
     },
     "Discovery.newInstanceNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for new instance notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -885,6 +962,7 @@
       }
     },
     "Discovery.newest" : {
+      "comment" : "Discover search filter or sort controls. Used for newest.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -896,6 +974,7 @@
       }
     },
     "Discovery.noChangelog" : {
+      "comment" : "Discover project version list and pagination. Used for no changelog.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -907,6 +986,7 @@
       }
     },
     "Discovery.noCompatibleInstance" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for no compatible instance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -918,6 +998,7 @@
       }
     },
     "Discovery.noDependencies" : {
+      "comment" : "Discover project or file detail panel. Used for no dependencies.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -929,6 +1010,7 @@
       }
     },
     "Discovery.noDescription" : {
+      "comment" : "Discover project or file detail panel. Used for no description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -940,6 +1022,7 @@
       }
     },
     "Discovery.noGallery" : {
+      "comment" : "Discover project or file detail panel. Used for no gallery.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -951,6 +1034,7 @@
       }
     },
     "Discovery.noInstanceFilter" : {
+      "comment" : "Discover search filter or sort controls. Used for no instance filter.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -962,6 +1046,7 @@
       }
     },
     "Discovery.noVersions" : {
+      "comment" : "Discover project version list and pagination. Used for no versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -973,6 +1058,7 @@
       }
     },
     "Discovery.noVersionsHint" : {
+      "comment" : "Discover project version list and pagination. Used for no versions hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -984,6 +1070,7 @@
       }
     },
     "Discovery.openImage" : {
+      "comment" : "Discover project or file detail panel. Used for open image.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -995,6 +1082,7 @@
       }
     },
     "Discovery.openProviderWebsite" : {
+      "comment" : "Discover project or file detail panel. Used for open provider website. %1$@: content provider name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1006,6 +1094,7 @@
       }
     },
     "Discovery.openWebsite" : {
+      "comment" : "Discover project or file detail panel. Used for open website.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1017,6 +1106,7 @@
       }
     },
     "Discovery.optionalDependency" : {
+      "comment" : "Discover project or file detail panel. Used for optional.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1028,6 +1118,7 @@
       }
     },
     "Discovery.overview" : {
+      "comment" : "Discover project or file detail panel. Used for overview.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1039,6 +1130,7 @@
       }
     },
     "Discovery.pageRange" : {
+      "comment" : "Discover project version list and pagination. Used for page range. %1$lld: first displayed project index; %2$lld: last displayed project index; %3$lld: total number of matching projects.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1066,6 +1158,7 @@
       }
     },
     "Discovery.pinnedVersion" : {
+      "comment" : "Discover project or file detail panel. Used for pinned version.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1077,6 +1170,7 @@
       }
     },
     "Discovery.projectSections" : {
+      "comment" : "Discover project or file detail panel. Used for project sections.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1088,6 +1182,7 @@
       }
     },
     "Discovery.readModpack" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for read modpack.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1099,6 +1194,7 @@
       }
     },
     "Discovery.recentlyUpdated" : {
+      "comment" : "Discover search filter or sort controls. Used for recently updated.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1110,6 +1206,7 @@
       }
     },
     "Discovery.refresh" : {
+      "comment" : "Discover search results or layout controls. Used for refresh.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1121,6 +1218,7 @@
       }
     },
     "Discovery.release" : {
+      "comment" : "Discover project version list and pagination. Used for release.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1132,6 +1230,7 @@
       }
     },
     "Discovery.releaseChannel" : {
+      "comment" : "Discover search filter or sort controls. Used for release channel.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1143,6 +1242,7 @@
       }
     },
     "Discovery.relevance" : {
+      "comment" : "Discover search filter or sort controls. Used for relevance.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1154,6 +1254,7 @@
       }
     },
     "Discovery.replacingVersion" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for replacing version. %1$@: installed version to be replaced.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1165,6 +1266,7 @@
       }
     },
     "Discovery.requiredDependency" : {
+      "comment" : "Discover project or file detail panel. Used for required.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1176,6 +1278,7 @@
       }
     },
     "Discovery.resultCount" : {
+      "comment" : "Discover search results or layout controls. Used for result count. %1$lld: total project count.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1193,6 +1296,7 @@
       }
     },
     "Discovery.saveFailed" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save failed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1204,6 +1308,7 @@
       }
     },
     "Discovery.saveFile" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save file.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1215,6 +1320,7 @@
       }
     },
     "Discovery.saveFileNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for save file notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1226,6 +1332,7 @@
       }
     },
     "Discovery.savedFile" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for saved file. %1$@: saved filename.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1237,6 +1344,7 @@
       }
     },
     "Discovery.searchLoadedVersions" : {
+      "comment" : "Discover search filter or sort controls. Used for search loaded versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1248,6 +1356,7 @@
       }
     },
     "Discovery.searching" : {
+      "comment" : "Discover search results or layout controls. Used for searching.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1259,6 +1368,7 @@
       }
     },
     "Discovery.showIncompatible" : {
+      "comment" : "Discover search filter or sort controls. Used for show incompatible.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1270,6 +1380,7 @@
       }
     },
     "Discovery.showingPreviousResults" : {
+      "comment" : "Discover project version list and pagination. Used for showing previous results.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1281,6 +1392,7 @@
       }
     },
     "Discovery.sort" : {
+      "comment" : "Discover search filter or sort controls. Used for sort.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1292,6 +1404,7 @@
       }
     },
     "Discovery.sourceCode" : {
+      "comment" : "Discover project or file detail panel. Used for source code.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1303,6 +1416,7 @@
       }
     },
     "Discovery.supportedGameVersions" : {
+      "comment" : "Discover project or file detail panel. Used for supported game versions. %1$@: supported Minecraft versions joined for display.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1314,6 +1428,7 @@
       }
     },
     "Discovery.supportedLoaders" : {
+      "comment" : "Discover project or file detail panel. Used for supported loaders. %1$@: supported loader names joined for display.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1325,6 +1440,7 @@
       }
     },
     "Discovery.tool" : {
+      "comment" : "Discover project or file detail panel. Used for tool.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1336,6 +1452,7 @@
       }
     },
     "Discovery.unknownDependency" : {
+      "comment" : "Discover project or file detail panel. Used for unknown dependency.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1347,6 +1464,7 @@
       }
     },
     "Discovery.unrestricted" : {
+      "comment" : "Discover search filter or sort controls. Used for unrestricted.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1358,6 +1476,7 @@
       }
     },
     "Discovery.untrackedNotice" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for untracked notice. %1$lld: number of files with dependencies that Ruri cannot check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1375,6 +1494,7 @@
       }
     },
     "Discovery.updatedOn" : {
+      "comment" : "Discover project or file detail panel. Used for updated on. %1$@: formatted last update date.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1386,6 +1506,7 @@
       }
     },
     "Discovery.verifiedDownload" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for verified download.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1397,6 +1518,7 @@
       }
     },
     "Discovery.versionProjectMismatch" : {
+      "comment" : "Discover project version list and pagination. Used for version project mismatch.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1408,6 +1530,7 @@
       }
     },
     "Discovery.versions" : {
+      "comment" : "Discover project version list and pagination. Used for versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1419,6 +1542,7 @@
       }
     },
     "Discovery.versionsUnknown" : {
+      "comment" : "Discover project or file detail panel. Used for versions unknown.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1430,6 +1554,7 @@
       }
     },
     "Discovery.viewDownloads" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for view downloads.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1441,6 +1566,7 @@
       }
     },
     "Discovery.viewProject" : {
+      "comment" : "Discover project or file detail panel. Used for view project.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1452,6 +1578,7 @@
       }
     },
     "Discovery.wiki" : {
+      "comment" : "Discover project or file detail panel. Used for wiki.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1463,6 +1590,7 @@
       }
     },
     "Discovery.willEnable" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will enable.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1474,6 +1602,7 @@
       }
     },
     "Discovery.willInstall" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will install.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1485,6 +1614,7 @@
       }
     },
     "Discovery.willUpdate" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will update.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1496,6 +1626,7 @@
       }
     },
     "Discovery.willUpdateAndEnable" : {
+      "comment" : "Discover install/download confirmation, dependency preview, or progress UI. Used for will update and enable.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

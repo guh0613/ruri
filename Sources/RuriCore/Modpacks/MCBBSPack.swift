@@ -49,7 +49,7 @@ extension InstanceTransfer {
               let gameVersion = manifest.addons.first(where: { $0.id == "game" })?.version else { throw RuriError.message(Messages.CoreMCBBSPack.invalidPackGameVersion) }
         let supported = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader", "optifine"])
         let unknown = manifest.addons.filter { !supported.contains($0.id) }
-        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMCBBSPack.unsupportedPackComponents(String(describing: unknown.map(\.id).joined(separator: "、")))) }
+        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMCBBSPack.unsupportedPackComponents(String(describing: LocalizedFormat.list(Array(unknown.map(\.id)))))) }
         let loaders = manifest.addons.filter { $0.id != "game" }
         let selections = loaders.compactMap { addon in LoaderKind(rawValue: addon.id).map { LoaderSelection(loader: $0, version: addon.version) } }
         try LoaderCompatibility.validate(selections, game: gameVersion)

@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "CoreGameDiagnosis.actionFailed" : {
+      "comment" : "Game diagnosis finding title. Used for action failed. %1$@: launch preparation stage title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "CoreGameDiagnosis.analysisReadLimit" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for analysis read limit. %1$@: unread evidence source title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -24,6 +26,7 @@
       }
     },
     "CoreGameDiagnosis.architectureCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for architecture check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -35,6 +38,7 @@
       }
     },
     "CoreGameDiagnosis.architectureMismatch" : {
+      "comment" : "Game diagnosis finding title. Used for architecture mismatch.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -46,6 +50,7 @@
       }
     },
     "CoreGameDiagnosis.architectureMismatchExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for architecture mismatch explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -57,6 +62,7 @@
       }
     },
     "CoreGameDiagnosis.architectureModCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for architecture mod check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -68,6 +74,7 @@
       }
     },
     "CoreGameDiagnosis.boundedTail" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for bounded tail. %1$@: partially analyzed evidence source title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -79,6 +86,7 @@
       }
     },
     "CoreGameDiagnosis.checkAccount" : {
+      "comment" : "Game diagnosis panel action button. Used for check account.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -90,6 +98,7 @@
       }
     },
     "CoreGameDiagnosis.checkInstanceSettings" : {
+      "comment" : "Game diagnosis panel action button. Used for check instance settings.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -101,6 +110,7 @@
       }
     },
     "CoreGameDiagnosis.classVersionCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for class version check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -112,6 +122,7 @@
       }
     },
     "CoreGameDiagnosis.classVersionModCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for class version mod check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -123,6 +134,7 @@
       }
     },
     "CoreGameDiagnosis.classVersionUnreadable" : {
+      "comment" : "Game diagnosis finding title. Used for class version unreadable.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -134,6 +146,7 @@
       }
     },
     "CoreGameDiagnosis.classVersionUnsupported" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for class version unsupported.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -145,6 +158,7 @@
       }
     },
     "CoreGameDiagnosis.cluesNeedingVerification" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for clues needing verification.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -156,6 +170,7 @@
       }
     },
     "CoreGameDiagnosis.collectDiagnosticReports" : {
+      "comment" : "Game diagnosis panel action button. Used for collect diagnostic reports.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -167,6 +182,7 @@
       }
     },
     "CoreGameDiagnosis.configBackup" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for config backup.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -178,6 +194,7 @@
       }
     },
     "CoreGameDiagnosis.configReadExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for config read explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -189,6 +206,7 @@
       }
     },
     "CoreGameDiagnosis.configReadFailure" : {
+      "comment" : "Game diagnosis finding title. Used for config read failure.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -200,6 +218,7 @@
       }
     },
     "CoreGameDiagnosis.configRepair" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for config repair.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -211,6 +230,7 @@
       }
     },
     "CoreGameDiagnosis.confirmedAbnormalExit" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for confirmed abnormal exit.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -222,6 +242,7 @@
       }
     },
     "CoreGameDiagnosis.debugCrash" : {
+      "comment" : "Game diagnosis finding title. Used for debug crash.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -233,6 +254,7 @@
       }
     },
     "CoreGameDiagnosis.debugCrashExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for debug crash explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -244,6 +266,7 @@
       }
     },
     "CoreGameDiagnosis.debugCrashRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for debug crash retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -255,6 +278,7 @@
       }
     },
     "CoreGameDiagnosis.duplicateMod" : {
+      "comment" : "Game diagnosis finding title. Used for duplicate mod.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -266,6 +290,7 @@
       }
     },
     "CoreGameDiagnosis.duplicateModCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for duplicate mod check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -277,6 +302,7 @@
       }
     },
     "CoreGameDiagnosis.duplicateModExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for duplicate mod explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -288,6 +314,7 @@
       }
     },
     "CoreGameDiagnosis.duplicateModRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for duplicate mod retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -299,6 +326,7 @@
       }
     },
     "CoreGameDiagnosis.evidenceNotRegularFile" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for evidence not regular file.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -310,6 +338,7 @@
       }
     },
     "CoreGameDiagnosis.exitCode" : {
+      "comment" : "Game diagnosis run facts. Used for exit code.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -321,6 +350,7 @@
       }
     },
     "CoreGameDiagnosis.exitSummary" : {
+      "comment" : "Game diagnosis run facts. Used for exit summary. %1$@: exit code or termination signal label; %2$@: exit status or signal number formatted as text; %3$@: whether Ruri requested stopping, as localized yes/no.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -332,6 +362,7 @@
       }
     },
     "CoreGameDiagnosis.guidanceCheckErrors" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for guidance check errors.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -343,6 +374,7 @@
       }
     },
     "CoreGameDiagnosis.guidanceCollectRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for guidance collect retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -354,6 +386,7 @@
       }
     },
     "CoreGameDiagnosis.hasExitStatus" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for has exit status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -365,6 +398,7 @@
       }
     },
     "CoreGameDiagnosis.invalidEvidencePathSkipped" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for invalid evidence path skipped.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -376,6 +410,7 @@
       }
     },
     "CoreGameDiagnosis.javaNotRecorded" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for java not recorded.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -387,6 +422,7 @@
       }
     },
     "CoreGameDiagnosis.jvmCrash" : {
+      "comment" : "Game diagnosis finding title. Used for jvm crash.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -398,6 +434,7 @@
       }
     },
     "CoreGameDiagnosis.jvmCrashCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for jvm crash check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -409,6 +446,7 @@
       }
     },
     "CoreGameDiagnosis.jvmCrashExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for jvm crash explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -420,6 +458,7 @@
       }
     },
     "CoreGameDiagnosis.jvmCrashReport" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for jvm crash report.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -431,6 +470,7 @@
       }
     },
     "CoreGameDiagnosis.lastRecordedPhase" : {
+      "comment" : "Game diagnosis run facts. Used for last recorded phase. %1$@: last recorded launch stage title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -442,6 +482,7 @@
       }
     },
     "CoreGameDiagnosis.launchArgumentCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for launch argument check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -453,6 +494,7 @@
       }
     },
     "CoreGameDiagnosis.launchArgumentExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for launch argument explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -464,6 +506,7 @@
       }
     },
     "CoreGameDiagnosis.launchArgumentRejected" : {
+      "comment" : "Game diagnosis finding title. Used for launch argument rejected.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -475,6 +518,7 @@
       }
     },
     "CoreGameDiagnosis.launchArgumentRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for launch argument retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -486,6 +530,7 @@
       }
     },
     "CoreGameDiagnosis.launchCancelled" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for launch cancelled.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -497,6 +542,7 @@
       }
     },
     "CoreGameDiagnosis.launchPreparationFailed" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for launch preparation failed. %1$@: failed launch preparation stage title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -508,6 +554,7 @@
       }
     },
     "CoreGameDiagnosis.loaderModConflict" : {
+      "comment" : "Game diagnosis finding title. Used for loader mod conflict.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -519,6 +566,7 @@
       }
     },
     "CoreGameDiagnosis.loaderModConflictCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for loader mod conflict check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -530,6 +578,7 @@
       }
     },
     "CoreGameDiagnosis.loaderModConflictExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for loader mod conflict explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -541,6 +590,7 @@
       }
     },
     "CoreGameDiagnosis.loaderModConflictRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for loader mod conflict retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -552,6 +602,7 @@
       }
     },
     "CoreGameDiagnosis.logExplicitReport" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for log explicit report.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -563,6 +614,7 @@
       }
     },
     "CoreGameDiagnosis.mainThreadCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for main thread check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -574,6 +626,7 @@
       }
     },
     "CoreGameDiagnosis.mainThreadReport" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for main thread report.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -585,6 +638,7 @@
       }
     },
     "CoreGameDiagnosis.mainThreadViolation" : {
+      "comment" : "Game diagnosis finding title. Used for main thread violation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -596,6 +650,7 @@
       }
     },
     "CoreGameDiagnosis.mainThreadViolationExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for main thread violation explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -607,6 +662,7 @@
       }
     },
     "CoreGameDiagnosis.manageMods" : {
+      "comment" : "Game diagnosis panel action button. Used for manage mods.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -618,6 +674,7 @@
       }
     },
     "CoreGameDiagnosis.memoryLimit" : {
+      "comment" : "Game diagnosis run facts. Used for memory limit. %1$@: Java runtime description or unrecorded-Java message; %2$@: configured memory limit in MB, formatted as text.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -629,6 +686,7 @@
       }
     },
     "CoreGameDiagnosis.missingLaunchEntry" : {
+      "comment" : "Game diagnosis finding title. Used for missing launch entry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -640,6 +698,7 @@
       }
     },
     "CoreGameDiagnosis.missingMainClass" : {
+      "comment" : "Game diagnosis finding title. Used for missing main class.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -651,6 +710,7 @@
       }
     },
     "CoreGameDiagnosis.missingMainClassCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for missing main class check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -662,6 +722,7 @@
       }
     },
     "CoreGameDiagnosis.missingMainClassCjk" : {
+      "comment" : "Game diagnosis finding title. Used for missing main class cjk.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -673,6 +734,7 @@
       }
     },
     "CoreGameDiagnosis.missingMainClassExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for missing main class explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -684,6 +746,7 @@
       }
     },
     "CoreGameDiagnosis.missingMainClassReport" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for missing main class report.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -695,6 +758,7 @@
       }
     },
     "CoreGameDiagnosis.mixinApplyExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for mixin apply explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -706,6 +770,7 @@
       }
     },
     "CoreGameDiagnosis.mixinApplyFailure" : {
+      "comment" : "Game diagnosis finding title. Used for mixin apply failure.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -717,6 +782,7 @@
       }
     },
     "CoreGameDiagnosis.mixinDependencyCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for mixin dependency check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -728,6 +794,7 @@
       }
     },
     "CoreGameDiagnosis.mixinModCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for mixin mod check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -739,6 +806,7 @@
       }
     },
     "CoreGameDiagnosis.modInitializationCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for mod initialization check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -750,6 +818,7 @@
       }
     },
     "CoreGameDiagnosis.modInitializationExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for mod initialization explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -761,6 +830,7 @@
       }
     },
     "CoreGameDiagnosis.modInitializationFailure" : {
+      "comment" : "Game diagnosis finding title. Used for mod initialization failure.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -772,6 +842,7 @@
       }
     },
     "CoreGameDiagnosis.modInitializationRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for mod initialization retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -783,6 +854,7 @@
       }
     },
     "CoreGameDiagnosis.monitoringInterrupted" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for monitoring interrupted.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -794,6 +866,7 @@
       }
     },
     "CoreGameDiagnosis.nativeMemoryAllocationExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for native memory allocation explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -805,6 +878,7 @@
       }
     },
     "CoreGameDiagnosis.nativeMemoryAllocationFailure" : {
+      "comment" : "Game diagnosis finding title. Used for native memory allocation failure.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -816,6 +890,7 @@
       }
     },
     "CoreGameDiagnosis.nativeMemoryCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for native memory check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -827,6 +902,7 @@
       }
     },
     "CoreGameDiagnosis.nativeMemoryRetry" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for native memory retry.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -838,6 +914,7 @@
       }
     },
     "CoreGameDiagnosis.noExitStatus" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for no exit status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -849,6 +926,7 @@
       }
     },
     "CoreGameDiagnosis.normalExitRequested" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for normal exit requested.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -860,6 +938,7 @@
       }
     },
     "CoreGameDiagnosis.outOfMemory" : {
+      "comment" : "Game diagnosis finding title. Used for out of memory.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -871,6 +950,7 @@
       }
     },
     "CoreGameDiagnosis.outOfMemoryCheck" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for out of memory check.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -882,6 +962,7 @@
       }
     },
     "CoreGameDiagnosis.outOfMemoryExplanation" : {
+      "comment" : "Game diagnosis finding explanation. Used for out of memory explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -893,6 +974,7 @@
       }
     },
     "CoreGameDiagnosis.outOfMemoryTypes" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for out of memory types.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -904,6 +986,7 @@
       }
     },
     "CoreGameDiagnosis.preparationError" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for preparation error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -915,6 +998,7 @@
       }
     },
     "CoreGameDiagnosis.processIdentityInvalid" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for process identity invalid.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -926,6 +1010,7 @@
       }
     },
     "CoreGameDiagnosis.processTerminated" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for process terminated.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -937,6 +1022,7 @@
       }
     },
     "CoreGameDiagnosis.recoveryBasis" : {
+      "comment" : "Game diagnosis run facts. Used for recovery basis. %1$@: process recovery basis explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -948,6 +1034,7 @@
       }
     },
     "CoreGameDiagnosis.recoveryRecordTime" : {
+      "comment" : "Game diagnosis run facts. Used for recovery record time. %1$@: recovery observation timestamp, not game exit time.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -959,6 +1046,7 @@
       }
     },
     "CoreGameDiagnosis.relatedErrorCount" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for related error count. %1$lld: number of distinct related error findings.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -976,6 +1064,7 @@
       }
     },
     "CoreGameDiagnosis.repairInstallationFiles" : {
+      "comment" : "Game diagnosis panel action button. Used for repair installation files.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -987,6 +1076,7 @@
       }
     },
     "CoreGameDiagnosis.reportLimit" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for report limit. %1$lld: number of diagnostic reports found.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1004,6 +1094,7 @@
       }
     },
     "CoreGameDiagnosis.runCompleted" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for run completed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1015,6 +1106,7 @@
       }
     },
     "CoreGameDiagnosis.runWithoutExitRecord" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for run without exit record.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1026,6 +1118,7 @@
       }
     },
     "CoreGameDiagnosis.sessionLogReadFailure" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for session log read failure. %1$@: session log read error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1037,6 +1130,7 @@
       }
     },
     "CoreGameDiagnosis.tailTitle" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for tail title. %1$@: evidence document title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1048,6 +1142,7 @@
       }
     },
     "CoreGameDiagnosis.terminationSignal" : {
+      "comment" : "Game diagnosis run facts. Used for termination signal.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1059,6 +1154,7 @@
       }
     },
     "CoreGameDiagnosis.unreadableReport" : {
+      "comment" : "Game diagnosis troubleshooting step. Used for unreadable report. %1$@: evidence source title; %2$@: read error explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1070,6 +1166,7 @@
       }
     },
     "CoreGameDiagnosis.userConfirmedExit" : {
+      "comment" : "Game diagnosis summary, evidence limitation, or confidence label. Used for user confirmed exit.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1081,6 +1178,7 @@
       }
     },
     "CoreGameDiagnosis.viewRunFiles" : {
+      "comment" : "Game diagnosis panel action button. Used for view run files.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1092,6 +1190,7 @@
       }
     },
     "CoreGameDiagnosticBundle.bodyLineNumberHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for body line number heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1103,6 +1202,7 @@
       }
     },
     "CoreGameDiagnosticBundle.completeFileHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for complete file heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1114,6 +1214,7 @@
       }
     },
     "CoreGameDiagnosticBundle.diagnosticBundleSaveFailed" : {
+      "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic bundle save failed.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1125,6 +1226,7 @@
       }
     },
     "CoreGameDiagnosticBundle.diagnosticConclusionHeader" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for diagnostic conclusion header.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1136,6 +1238,7 @@
       }
     },
     "CoreGameDiagnosticBundle.diagnosticReportHeader" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for diagnostic report header. %1$@: run creation timestamp in ISO 8601 format; %2$@: diagnosis title; %3$@: diagnosis summary.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1147,6 +1250,7 @@
       }
     },
     "CoreGameDiagnosticBundle.diagnosticRunMismatch" : {
+      "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic run mismatch.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1158,6 +1262,7 @@
       }
     },
     "CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid" : {
+      "comment" : "Diagnostic ZIP export validation and file save UI. Used for diagnostic save location invalid.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1169,6 +1274,7 @@
       }
     },
     "CoreGameDiagnosticBundle.environment" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for environment. %1$@: Minecraft version; %2$@: loader name; %3$@: loader version, possibly empty; %4$@: Java runtime description; %5$@: memory configuration summary; %6$@: operating system description; %7$@: host CPU architecture; %8$@: account type; %9$@: run creation timestamp; %10$@: last recorded launch stage; %11$@: run state; %12$@: exit kind; %13$@: exit status; %14$@: whether stopping was requested through Ruri; %15$@: normal quit request result.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1180,6 +1286,7 @@
       }
     },
     "CoreGameDiagnosticBundle.environmentUnrecorded" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for environment unrecorded.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1191,6 +1298,7 @@
       }
     },
     "CoreGameDiagnosticBundle.excerptHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for excerpt heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1201,7 +1309,26 @@
         }
       }
     },
+    "CoreGameDiagnosticBundle.excerptTitle" : {
+      "comment" : "Title of a truncated diagnostic source. %1$@ is the source document title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Excerpt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · 片段"
+          }
+        }
+      }
+    },
     "CoreGameDiagnosticBundle.exitPending" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for exit pending.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1212,7 +1339,26 @@
         }
       }
     },
+    "CoreGameDiagnosticBundle.findingSummary" : {
+      "comment" : "Diagnostic report finding. %1$@ is the finding title; %2$@ is its confidence label; %3$@ is the explanation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n%1$@ (%2$@)\n%3$@\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n%1$@（%2$@）\n%3$@\n"
+          }
+        }
+      }
+    },
     "CoreGameDiagnosticBundle.gameJavaSystemEnvironment" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for game java system environment.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1224,6 +1370,7 @@
       }
     },
     "CoreGameDiagnosticBundle.heapLimit" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for heap limit. %1$@: heap limit in MB formatted as text.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1235,6 +1382,7 @@
       }
     },
     "CoreGameDiagnosticBundle.invalidReportSelection" : {
+      "comment" : "Diagnostic ZIP export validation and file save UI. Used for invalid report selection.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1246,6 +1394,7 @@
       }
     },
     "CoreGameDiagnosticBundle.no" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for no.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1257,6 +1406,7 @@
       }
     },
     "CoreGameDiagnosticBundle.noReadErrors" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for no read errors.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1267,7 +1417,26 @@
         }
       }
     },
+    "CoreGameDiagnosticBundle.readScopeDetails" : {
+      "comment" : "Diagnostic report section. %1$@ is the list of read limitations or the no-errors message.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nRead scope and missing information\n%1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n读取范围与缺失信息\n%1$@"
+          }
+        }
+      }
+    },
     "CoreGameDiagnosticBundle.readScopeHeader" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for read scope header.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1279,6 +1448,7 @@
       }
     },
     "CoreGameDiagnosticBundle.recoveryEnvironment" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for recovery environment. %1$@: recovery observation timestamp, not game exit time; %2$@: recovery resolution code; %3$@: recovery explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1290,6 +1460,7 @@
       }
     },
     "CoreGameDiagnosticBundle.sourceRangeHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for source range heading. %1$@: document title; %2$@: description of full-file or truncated read scope; %3$@: explanation of original-file or tail-relative line numbering.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1301,6 +1472,7 @@
       }
     },
     "CoreGameDiagnosticBundle.tailLineNumberHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for tail line number heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1312,6 +1484,7 @@
       }
     },
     "CoreGameDiagnosticBundle.truncatedFileHeading" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for truncated file heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1323,6 +1496,7 @@
       }
     },
     "CoreGameDiagnosticBundle.yes" : {
+      "comment" : "Generated diagnostic ZIP report text and selectable report headings. Used for yes.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1334,6 +1508,7 @@
       }
     },
     "CoreGameDiagnosticBundle.zipSaveLocationSelection" : {
+      "comment" : "Diagnostic ZIP export validation and file save UI. Used for zip save location selection.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

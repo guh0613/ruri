@@ -105,6 +105,12 @@ extension Messages {
         public static var longestSession: LocalizedMessage {
             .init(key: "HistoryUI.longestSession", table: "Sessions", fallback: "最长一次")
         }
+        /// 最长单次 %1$@
+        ///
+        /// Resource: `Sessions.HistoryUI.longestSessionValue`.
+        public static func longestSessionValue(_ value0: String) -> LocalizedMessage {
+            .init(key: "HistoryUI.longestSessionValue", table: "Sessions", fallback: "最长单次 %1$@", arguments: [.text(value0)])
+        }
         /// 分配内存
         ///
         /// Resource: `Sessions.HistoryUI.memory`.
@@ -333,6 +339,7 @@ extension Messages {
             "Sessions:HistoryUI.lessThanPrevious": .init("比%1$@少 %2$@", [.text, .text]),
             "Sessions:HistoryUI.loader": .init("加载器", []),
             "Sessions:HistoryUI.longestSession": .init("最长一次", []),
+            "Sessions:HistoryUI.longestSessionValue": .init("最长单次 %1$@", [.text]),
             "Sessions:HistoryUI.memory": .init("分配内存", []),
             "Sessions:HistoryUI.moreThanPrevious": .init("比%1$@多 %2$@", [.text, .text]),
             "Sessions:HistoryUI.moreTools": .init("工具", []),

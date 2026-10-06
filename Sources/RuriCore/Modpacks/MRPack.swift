@@ -30,7 +30,7 @@ extension InstanceTransfer {
         let index = try JSONDecoder().decode(ModpackIndex.self, from: read(root.appendingPathComponent("modrinth.index.json")))
         guard index.formatVersion == 1, index.game == "minecraft", let gameVersion = index.dependencies["minecraft"], !index.versionId.isEmpty else { throw RuriError.message(Messages.CoreMRPack.unsupportedManifest) }
         let unknown = Set(index.dependencies.keys).subtracting(Set(mrpackLoaders.keys).union(["minecraft"]))
-        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMRPack.unknownComponent(String(describing: unknown.sorted().joined(separator: "、")))) }
+        guard unknown.isEmpty else { throw RuriError.message(Messages.CoreMRPack.unknownComponent(String(describing: LocalizedFormat.list(Array(unknown.sorted()))))) }
         let loaders = index.dependencies.keys.filter { mrpackLoaders[$0] != nil }
         guard loaders.count <= 1 else { throw RuriError.message(Messages.CoreMRPack.multipleLoaders) }
         var instance = GameInstance(name: index.name, gameVersion: gameVersion, loader: loaders.first.flatMap { mrpackLoaders[$0] } ?? .vanilla, loaderVersion: loaders.first.flatMap { index.dependencies[$0] })

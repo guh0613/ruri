@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "ContentImport.copyHint" : {
+      "comment" : "Instance content drop zone copy-destination hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "ContentImport.dropTitle" : {
+      "comment" : "Instance content drag-and-drop import heading. %1$lld: dropped content item count; %2$@: content category title (Mods, Resource Packs, or Shader Packs). Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -30,6 +32,7 @@
       }
     },
     "ContentImport.emptyHint" : {
+      "comment" : "Instance content empty-state import instructions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -41,6 +44,7 @@
       }
     },
     "ContentImport.importing" : {
+      "comment" : "Instance content import progress by category. %1$@: content category title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -52,6 +56,7 @@
       }
     },
     "ContentImport.invalidDrop" : {
+      "comment" : "Instance content drag-and-drop file-read error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -63,6 +68,7 @@
       }
     },
     "ContentImport.modFormats" : {
+      "comment" : "Mod file import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -74,6 +80,7 @@
       }
     },
     "ContentImport.resourcePackFormats" : {
+      "comment" : "Resource Pack import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -85,6 +92,7 @@
       }
     },
     "ContentImport.shaderFormats" : {
+      "comment" : "Shader Pack import accepted-format hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -96,6 +104,7 @@
       }
     },
     "ContentImport.unavailable" : {
+      "comment" : "Instance content drop zone unavailable-state heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

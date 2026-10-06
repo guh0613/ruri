@@ -345,7 +345,7 @@ public actor ContentManager {
                 guard Self.isPackDirectory(file, kind: kind) else { throw RuriError.message(Messages.ContentDetails.invalidPackFolder) }
                 containsDirectory = true
             } else {
-                guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.chooseFiles(String(describing: kind.fileExtensions.map { "." + $0 }.joined(separator: Messages.CoreContentManager.importedIDsSeparator.localized)))) }
+                guard kind.fileExtensions.contains(file.pathExtension.lowercased()) else { throw RuriError.message(Messages.CoreContentManager.chooseFiles(String(describing: LocalizedFormat.list(kind.fileExtensions.map { "." + $0 })))) }
                 _ = try Archive(url: file, accessMode: .read)
             }
             let size = directory ? 0 : values.fileSize ?? 0

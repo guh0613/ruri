@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "CLIExperience.completed" : {
+      "comment" : "Status label in CLI mutation text output after successful completion.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -19,6 +20,7 @@
       }
     },
     "CLIExperience.configFields" : {
+      "comment" : "Heading before the configuration field list in CLI help. The ? marker means null is permitted; empty string differs from null.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -36,6 +38,7 @@
       }
     },
     "CLIExperience.configPreview" : {
+      "comment" : "Status heading in CLI configuration text output for a dry run that would change settings.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -53,6 +56,7 @@
       }
     },
     "CLIExperience.configRules" : {
+      "comment" : "Configuration command help explaining scopes, JSON literal values, stdin patches, inheritance, and revision guards.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -70,6 +74,7 @@
       }
     },
     "CLIExperience.configUnchanged" : {
+      "comment" : "Status heading in CLI configuration text output when settings are unchanged.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -87,6 +92,7 @@
       }
     },
     "CLIExperience.configUpdated" : {
+      "comment" : "Status heading in CLI configuration text output after settings change.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -104,6 +110,7 @@
       }
     },
     "CLIExperience.discovery" : {
+      "comment" : "Footer of CLI help explaining how to discover command groups and the full command index. Preserve command syntax.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -121,6 +128,7 @@
       }
     },
     "CLIExperience.empty" : {
+      "comment" : "Empty-state message in human-readable CLI list output when no items match.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -138,6 +146,7 @@
       }
     },
     "CLIExperience.formats" : {
+      "comment" : "Footer of CLI help describing output formats and global options. Preserve option names and literal format values.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -155,6 +164,7 @@
       }
     },
     "CLIExperience.fullDetails" : {
+      "comment" : "Hint in CLI text output when only some available fields are displayed; --json returns every field.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -172,6 +182,7 @@
       }
     },
     "CLIExperience.fullSchema" : {
+      "comment" : "Help for ruri schema --full, which expands every matching command's complete schema.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -189,6 +200,7 @@
       }
     },
     "CLIExperience.helpAll" : {
+      "comment" : "Help for the ruri help --all flag showing the complete concise command index.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -206,6 +218,7 @@
       }
     },
     "CLIExperience.hiddenChanges" : {
+      "comment" : "CLI configuration difference-list message when changes exist but sensitive-value redaction hides all visible differences.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -223,6 +236,7 @@
       }
     },
     "CLIExperience.inputSchema" : {
+      "comment" : "Help for ruri schema --input, including the config apply patch schema.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -240,6 +254,7 @@
       }
     },
     "CLIExperience.listRules" : {
+      "comment" : "Footer of CLI help describing default list limits and pagination. Preserve --limit, --offset, and --all.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -257,6 +272,7 @@
       }
     },
     "CLIExperience.more" : {
+      "comment" : "Pagination continuation hint in CLI list output. %@ is the shell-quoted ruri command for retrieving the next page.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -274,6 +290,7 @@
       }
     },
     "CLIExperience.nextAction" : {
+      "comment" : "Suggested follow-up action in CLI failure text output. %@ is a shell-quoted ruri command assembled from the suggested command arguments.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -291,6 +308,7 @@
       }
     },
     "CLIExperience.outputSchema" : {
+      "comment" : "Help for ruri schema --output-schema, which returns the result structure.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -308,6 +326,7 @@
       }
     },
     "CLIExperience.page" : {
+      "comment" : "Pagination footer in CLI list output. First %lld is the number of items on this page; second %lld is the zero-based result offset.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -363,6 +382,7 @@
       }
     },
     "CLIExperience.preview" : {
+      "comment" : "Status label in CLI mutation/configuration text output for a dry-run preview that was not executed.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -379,7 +399,26 @@
         }
       }
     },
+    "CLIExperience.previewMessage" : {
+      "comment" : "CLI dry-run result heading. %1$@ is the localized result description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview (not executed): %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览（未执行）：%1$@"
+          }
+        }
+      }
+    },
     "CLIExperience.retryable" : {
+      "comment" : "Hint in CLI failure text output when the failed operation is marked retryable.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -397,6 +436,7 @@
       }
     },
     "CLIExperience.rules" : {
+      "comment" : "Footer of CLI help explaining target IDs, current selection, previews, and mutation confirmation options.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -414,6 +454,7 @@
       }
     },
     "CLIExperience.schemaHint" : {
+      "comment" : "Footer of CLI help explaining input/output schema discovery. Command and option names are literal syntax.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -431,6 +472,7 @@
       }
     },
     "CLIExperience.schemaScope" : {
+      "comment" : "Help for ruri schema --scope. app, defaults, and instance are literal scope values.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -448,6 +490,7 @@
       }
     },
     "CLIExperience.schemaSelection" : {
+      "comment" : "CLI schema-discovery validation error for options used without an exact command, or --scope used outside a configuration input schema.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -465,6 +508,7 @@
       }
     },
     "CLIExperience.total" : {
+      "comment" : "Pagination footer in CLI list output. %lld is the total number of matching items across all pages.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -500,6 +544,7 @@
       }
     },
     "CLIExperience.unchanged" : {
+      "comment" : "Status label in CLI mutation text output when no data changed.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -517,6 +562,7 @@
       }
     },
     "CLIExperience.unknownHelp" : {
+      "comment" : "CLI help lookup error. %@ is the requested command path joined with spaces; ruri help --all is a literal command suggestion.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -534,6 +580,7 @@
       }
     },
     "CLIExperience.warning" : {
+      "comment" : "Warning line written to standard error by the CLI output layer. %@ is the warning message after sensitive-value redaction.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

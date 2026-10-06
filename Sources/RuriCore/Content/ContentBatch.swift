@@ -88,7 +88,7 @@ extension ContentManager {
                 let dependency = key(record, project: project)
                 return !available.contains(dependency) && (changedIDs.contains(record.id) || changed.contains(dependency))
             }
-            guard missing.isEmpty else { throw RuriError.message(Messages.CoreContentBatch.dependencySelectionRequired(record.title, String(describing: missing.joined(separator: "、")))) }
+            guard missing.isEmpty else { throw RuriError.message(Messages.CoreContentBatch.dependencySelectionRequired(record.title, String(describing: LocalizedFormat.list(Array(missing))))) }
         }
     }
 

@@ -39,6 +39,12 @@ extension Messages {
         public static var invalidLanguageOption: LocalizedMessage {
             .init(key: "Common.invalidLanguageOption", table: "Common", fallback: "--language 后需要填写语言代码。")
         }
+        /// %1$@：%2$@
+        ///
+        /// Resource: `Common.Common.labeledValue`.
+        public static func labeledValue(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "Common.labeledValue", table: "Common", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
+        }
         /// 语言
         ///
         /// Resource: `Common.Common.language`.
@@ -64,6 +70,7 @@ extension Messages {
             "Common:Common.filesAndSize": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
             "Common:Common.followSystem": .init("跟随系统", []),
             "Common:Common.invalidLanguageOption": .init("--language 后需要填写语言代码。", []),
+            "Common:Common.labeledValue": .init("%1$@：%2$@", [.text, .text]),
             "Common:Common.language": .init("语言", []),
             "Common:Common.languageRestart": .init("重新打开 Ruri 后生效。", []),
             "Common:Common.localizationCheck": .init("本地化资源读取成功", []),

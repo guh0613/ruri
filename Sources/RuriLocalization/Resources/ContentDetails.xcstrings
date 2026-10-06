@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "ContentDetails.authors" : {
+      "comment" : "Content detail authors heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "ContentDetails.compatibility" : {
+      "comment" : "Content detail compatibility heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -24,6 +26,7 @@
       }
     },
     "ContentDetails.compatible" : {
+      "comment" : "Resource Pack format compatibility status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -35,6 +38,7 @@
       }
     },
     "ContentDetails.curseforgeUnavailable" : {
+      "comment" : "Online content identification notice for missing CurseForge API key.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -46,6 +50,7 @@
       }
     },
     "ContentDetails.description" : {
+      "comment" : "Content detail description heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -57,6 +62,7 @@
       }
     },
     "ContentDetails.details" : {
+      "comment" : "Content details view title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -68,6 +74,7 @@
       }
     },
     "ContentDetails.download" : {
+      "comment" : "Content download action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -79,6 +86,7 @@
       }
     },
     "ContentDetails.duplicateProjects" : {
+      "comment" : "Content update check warning listing files skipped as duplicate projects. %1$@: formatted list of duplicate project filenames.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -90,6 +98,7 @@
       }
     },
     "ContentDetails.encyclopedia" : {
+      "comment" : "MCMod encyclopedia link.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -101,6 +110,7 @@
       }
     },
     "ContentDetails.fileChanged" : {
+      "comment" : "Content file association/digest validation error when a file changed. %1$@: changed filename.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -112,6 +122,7 @@
       }
     },
     "ContentDetails.filename" : {
+      "comment" : "Content detail filename field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -123,6 +134,7 @@
       }
     },
     "ContentDetails.folder" : {
+      "comment" : "Content type label for a folder.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -134,6 +146,7 @@
       }
     },
     "ContentDetails.folderOnlineInfo" : {
+      "comment" : "Folder content detail explanation of online ZIP support.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -145,6 +158,7 @@
       }
     },
     "ContentDetails.gameFormat" : {
+      "comment" : "Resource Pack compatibility current game format label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -156,6 +170,7 @@
       }
     },
     "ContentDetails.gameVersions" : {
+      "comment" : "Content detail supported game versions heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -167,6 +182,7 @@
       }
     },
     "ContentDetails.homepage" : {
+      "comment" : "Content detail official website link.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -178,6 +194,7 @@
       }
     },
     "ContentDetails.identifyingUpdates" : {
+      "comment" : "Content list identify-and-check-updates progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -189,6 +206,7 @@
       }
     },
     "ContentDetails.includesFolders" : {
+      "comment" : "Content filter/status label indicating folders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -200,6 +218,7 @@
       }
     },
     "ContentDetails.invalidPackFolder" : {
+      "comment" : "Imported Resource Pack/Shader Pack folder validation error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -211,6 +230,7 @@
       }
     },
     "ContentDetails.invalidPackMetadata" : {
+      "comment" : "Resource Pack invalid metadata status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -222,6 +242,7 @@
       }
     },
     "ContentDetails.irisFeatures" : {
+      "comment" : "Shader Pack Iris requirements field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -233,6 +254,7 @@
       }
     },
     "ContentDetails.loadingMetadata" : {
+      "comment" : "Content detail local metadata read progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -244,6 +266,7 @@
       }
     },
     "ContentDetails.localFile" : {
+      "comment" : "Content detail installation source for local imports.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -255,6 +278,7 @@
       }
     },
     "ContentDetails.lookingUp" : {
+      "comment" : "Content detail online project lookup progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -266,6 +290,7 @@
       }
     },
     "ContentDetails.metadataAttribution" : {
+      "comment" : "Content detail MCMod/HMCL metadata attribution.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -277,6 +302,7 @@
       }
     },
     "ContentDetails.missingPackMetadata" : {
+      "comment" : "Resource Pack missing metadata status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -288,6 +314,7 @@
       }
     },
     "ContentDetails.missingShaders" : {
+      "comment" : "Shader Pack missing shader-file status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -299,6 +326,7 @@
       }
     },
     "ContentDetails.modID" : {
+      "comment" : "Content detail Mod ID field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -310,6 +338,7 @@
       }
     },
     "ContentDetails.noDescription" : {
+      "comment" : "Content detail empty-description explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -321,6 +350,7 @@
       }
     },
     "ContentDetails.noIdentifiedUpdates" : {
+      "comment" : "Content list no-updates status after identification.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -332,6 +362,7 @@
       }
     },
     "ContentDetails.noMatch" : {
+      "comment" : "Content detail online lookup no-match explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -343,6 +374,7 @@
       }
     },
     "ContentDetails.onlineProjects" : {
+      "comment" : "Content detail matched online projects heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -354,6 +386,7 @@
       }
     },
     "ContentDetails.openFolder" : {
+      "comment" : "Content detail folder open action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -365,6 +398,7 @@
       }
     },
     "ContentDetails.packFormat" : {
+      "comment" : "Resource Pack pack-format field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -376,6 +410,7 @@
       }
     },
     "ContentDetails.packTooNew" : {
+      "comment" : "Resource Pack format too-new compatibility explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -387,6 +422,7 @@
       }
     },
     "ContentDetails.packTooOld" : {
+      "comment" : "Resource Pack format too-old compatibility explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -398,6 +434,7 @@
       }
     },
     "ContentDetails.projectUnavailable" : {
+      "comment" : "Content online project detail retrieval error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -409,6 +446,7 @@
       }
     },
     "ContentDetails.refresh" : {
+      "comment" : "Content list refresh button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -420,6 +458,7 @@
       }
     },
     "ContentDetails.resultCount" : {
+      "comment" : "Filtered instance content list result count. %1$lld: matching content item count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -437,6 +476,7 @@
       }
     },
     "ContentDetails.retry" : {
+      "comment" : "Content detail repeat-identification action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -448,6 +488,7 @@
       }
     },
     "ContentDetails.searchEncyclopedia" : {
+      "comment" : "Content detail MCMod search action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -459,6 +500,7 @@
       }
     },
     "ContentDetails.serviceFailure" : {
+      "comment" : "Online identification provider failure line. %1$@: online provider name (Modrinth or CurseForge); %2$@: provider error description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -470,6 +512,7 @@
       }
     },
     "ContentDetails.size" : {
+      "comment" : "Content detail size field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -481,6 +524,7 @@
       }
     },
     "ContentDetails.source" : {
+      "comment" : "Content detail installation source field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -492,6 +536,7 @@
       }
     },
     "ContentDetails.unknownCompatibility" : {
+      "comment" : "Resource Pack compatibility unknown status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -503,6 +548,7 @@
       }
     },
     "ContentDetails.unmatchedCount" : {
+      "comment" : "Content list count of resources not linked to an online project. %1$lld: unmatched content item count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -520,6 +566,7 @@
       }
     },
     "ContentDetails.updateFailure" : {
+      "comment" : "Content update-check failure line. %1$@: content record title; %2$@: update-check error description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -531,6 +578,7 @@
       }
     },
     "ContentDetails.updateFailuresRemaining" : {
+      "comment" : "Content update-check failure summary after the first three failures. %1$lld: additional failed update-check count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -548,6 +596,7 @@
       }
     },
     "ContentDetails.updateProgress" : {
+      "comment" : "Content list update-check progress accessibility label. %1$lld: processed content item count; %2$lld: total content item count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -589,6 +638,7 @@
       }
     },
     "ContentDetails.version" : {
+      "comment" : "Content detail version field label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

@@ -119,7 +119,7 @@ struct InstanceMoveView: View {
         .onChange(of: model.busy) { if !model.busy { cancelling = false; refresh = UUID() } }
         .onChange(of: directoryID) { operationIssue = nil }
     }
-    private func path(_ label: String, _ url: URL) -> some View { Text("\(label)：\(url.path)").font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
+    private func path(_ label: String, _ url: URL) -> some View { Text(Messages.Common.labeledValue(label, url.path).localized).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
     private func reveal(_ url: URL) {
         if FileManager.default.fileExists(atPath: url.path) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
         else { issue = Messages.AppInstanceMoveView.inaccessibleLocation(url.path).localized }

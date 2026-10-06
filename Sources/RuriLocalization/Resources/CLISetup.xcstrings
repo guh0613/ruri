@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "CLISetup.authorizationFailed" : {
+      "comment" : "Error displayed by the command-line setup model when system authorization fails. %@ is the trimmed combined stdout/stderr output from the osascript authorization process.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -19,6 +20,7 @@
       }
     },
     "CLISetup.authorizationHint" : {
+      "comment" : "Settings hint that installing or uninstalling the command link may request administrator authorization.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -36,6 +38,7 @@
       }
     },
     "CLISetup.authorizationRequired" : {
+      "comment" : "CLI installation/removal error directing the user to app settings for administrator authorization or a writable --bin-dir.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -53,6 +56,7 @@
       }
     },
     "CLISetup.authorizeInstall" : {
+      "comment" : "Reason shown in the system administrator-authorization prompt for installing the ruri link into /usr/local/bin.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -70,6 +74,7 @@
       }
     },
     "CLISetup.authorizeUninstall" : {
+      "comment" : "Reason shown in the system administrator-authorization prompt for removing the ruri command link.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -87,6 +92,7 @@
       }
     },
     "CLISetup.copied" : {
+      "comment" : "Temporary feedback on the command-copy button after copying in settings or onboarding.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -104,6 +110,7 @@
       }
     },
     "CLISetup.copyCommand" : {
+      "comment" : "Copy-example-command button label and tooltip in command-line settings and onboarding.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -121,6 +128,7 @@
       }
     },
     "CLISetup.copyDirectCommand" : {
+      "comment" : "Settings button that copies a terminal command using the complete executable path.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -138,6 +146,7 @@
       }
     },
     "CLISetup.details" : {
+      "comment" : "Disclosure-group label expanding command-line installation details in settings.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -155,6 +164,7 @@
       }
     },
     "CLISetup.footer" : {
+      "comment" : "Footer in command-line tool settings describing CLI management features and use by AI agents.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -172,6 +182,7 @@
       }
     },
     "CLISetup.install" : {
+      "comment" : "Install button label in command-line tool settings and the CLI onboarding sheet.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -189,6 +200,7 @@
       }
     },
     "CLISetup.installing" : {
+      "comment" : "Busy-state label on the CLI onboarding install button while setup is running.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -206,6 +218,7 @@
       }
     },
     "CLISetup.introduction" : {
+      "comment" : "Introductory text in command-line tool settings explaining terminal access after installation. PATH is an environment variable name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -223,6 +236,7 @@
       }
     },
     "CLISetup.location" : {
+      "comment" : "Field label for the installed command's filesystem location in settings.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -240,6 +254,7 @@
       }
     },
     "CLISetup.onboardingDetail" : {
+      "comment" : "Description in the CLI onboarding sheet explaining command-line management and AI-agent use.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -257,6 +272,7 @@
       }
     },
     "CLISetup.onboardingHint" : {
+      "comment" : "Hint in the CLI onboarding sheet about administrator authorization and the settings location for later installation. Preserve the intentional line break.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -274,6 +290,7 @@
       }
     },
     "CLISetup.onboardingTitle" : {
+      "comment" : "Heading in the CLI onboarding sheet before installation.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -291,6 +308,7 @@
       }
     },
     "CLISetup.ready" : {
+      "comment" : "Installed-state heading in command-line tool settings and the CLI onboarding sheet.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -308,6 +326,7 @@
       }
     },
     "CLISetup.readyDetail" : {
+      "comment" : "Installed-state instructions in command-line tool settings and onboarding, above the example terminal command.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -325,6 +344,7 @@
       }
     },
     "CLISetup.reinstall" : {
+      "comment" : "Reinstall button in command-line installation details when installation is already available.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -342,6 +362,7 @@
       }
     },
     "CLISetup.repair" : {
+      "comment" : "Repair-installation button in command-line tool settings and CLI onboarding.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -359,6 +380,7 @@
       }
     },
     "CLISetup.repairDetail" : {
+      "comment" : "Settings explanation for repairing an outdated command-line link.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -376,6 +398,7 @@
       }
     },
     "CLISetup.repairTitle" : {
+      "comment" : "Settings heading when the installed command-line link needs to point to the current application.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -393,6 +416,7 @@
       }
     },
     "CLISetup.skip" : {
+      "comment" : "Dismiss/skip button in the CLI onboarding sheet.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -410,6 +434,7 @@
       }
     },
     "CLISetup.title" : {
+      "comment" : "Default heading in the command-line tool settings section before installation.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "AccountCenter.accountActions" : {
+      "comment" : "Account actions menu tooltip and accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "AccountCenter.accountCount" : {
+      "comment" : "Account list navigation subtitle showing the saved account count. %1$lld: account count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -30,6 +32,7 @@
       }
     },
     "AccountCenter.accountDetails" : {
+      "comment" : "Account details section heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -41,6 +44,7 @@
       }
     },
     "AccountCenter.accountType" : {
+      "comment" : "Account details row label for account type.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -52,6 +56,7 @@
       }
     },
     "AccountCenter.addAccountHelp" : {
+      "comment" : "Add Account sheet introduction.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -63,6 +68,7 @@
       }
     },
     "AccountCenter.appearanceNotLoaded" : {
+      "comment" : "Cape row help before an account appearance is loaded.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -74,6 +80,7 @@
       }
     },
     "AccountCenter.appearanceReset" : {
+      "comment" : "Appearance reset completion notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -85,6 +92,7 @@
       }
     },
     "AccountCenter.appearanceSection" : {
+      "comment" : "Appearance category section heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -96,6 +104,7 @@
       }
     },
     "AccountCenter.appearanceUnavailableOffline" : {
+      "comment" : "Skin row help when a connected account appearance is unavailable.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -107,6 +116,7 @@
       }
     },
     "AccountCenter.applyCape" : {
+      "comment" : "Cape application button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -118,6 +128,7 @@
       }
     },
     "AccountCenter.applyingAppearance" : {
+      "comment" : "Appearance confirmation sheet application progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -129,6 +140,7 @@
       }
     },
     "AccountCenter.armsChanged" : {
+      "comment" : "Arm model change completion notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -140,6 +152,7 @@
       }
     },
     "AccountCenter.browserLoginHelp" : {
+      "comment" : "Microsoft Account sign-in instructions in Add Account.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -151,6 +164,7 @@
       }
     },
     "AccountCenter.capeActions" : {
+      "comment" : "Cape actions menu tooltip and accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -162,6 +176,7 @@
       }
     },
     "AccountCenter.capeSection" : {
+      "comment" : "Cape appearance section label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -173,6 +188,7 @@
       }
     },
     "AccountCenter.characterPreview" : {
+      "comment" : "Character preview accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -184,6 +200,7 @@
       }
     },
     "AccountCenter.chooseCapeHelp" : {
+      "comment" : "Cape import help text.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -195,6 +212,7 @@
       }
     },
     "AccountCenter.chooseSkinHelp" : {
+      "comment" : "Skin import help text.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -206,6 +224,7 @@
       }
     },
     "AccountCenter.classicArms" : {
+      "comment" : "Classic arm-model picker option.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -217,6 +236,7 @@
       }
     },
     "AccountCenter.clearLocalPreview" : {
+      "comment" : "Skin menu action to restore the default skin.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -228,6 +248,7 @@
       }
     },
     "AccountCenter.confirmAppearanceHelp" : {
+      "comment" : "Appearance confirmation sheet instructions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -239,6 +260,7 @@
       }
     },
     "AccountCenter.confirmReset" : {
+      "comment" : "Appearance reset confirmation button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -250,6 +272,7 @@
       }
     },
     "AccountCenter.connected" : {
+      "comment" : "Account appearance connection status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -261,6 +284,7 @@
       }
     },
     "AccountCenter.connecting" : {
+      "comment" : "Account appearance connection progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -272,6 +296,7 @@
       }
     },
     "AccountCenter.copyUUID" : {
+      "comment" : "Account UUID copy button and tooltip.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -283,6 +308,7 @@
       }
     },
     "AccountCenter.currentAppearance" : {
+      "comment" : "Current appearance section heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -294,6 +320,7 @@
       }
     },
     "AccountCenter.defaultSkin" : {
+      "comment" : "Skin row default-skin title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -305,6 +332,7 @@
       }
     },
     "AccountCenter.defaultSkinHelp" : {
+      "comment" : "Skin row help when no skin is set.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -316,6 +344,7 @@
       }
     },
     "AccountCenter.draftPreview" : {
+      "comment" : "Unapplied appearance draft status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -327,6 +356,7 @@
       }
     },
     "AccountCenter.importSkin" : {
+      "comment" : "Skin Library PNG import button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -338,6 +368,7 @@
       }
     },
     "AccountCenter.invalidSavedSkin" : {
+      "comment" : "Saved skin read/identity validation error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -349,6 +380,7 @@
       }
     },
     "AccountCenter.invalidSkinName" : {
+      "comment" : "Skin Library name validation error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -360,6 +392,7 @@
       }
     },
     "AccountCenter.legacySkinHelp" : {
+      "comment" : "Legacy skin arm-model help in the appearance editor.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -371,6 +404,7 @@
       }
     },
     "AccountCenter.libraryEmpty" : {
+      "comment" : "Skin Library empty-state heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -382,6 +416,7 @@
       }
     },
     "AccountCenter.libraryEmptyHelp" : {
+      "comment" : "Skin Library empty-state instructions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -393,6 +428,7 @@
       }
     },
     "AccountCenter.libraryHelp" : {
+      "comment" : "Skin Library section introduction.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -404,6 +440,7 @@
       }
     },
     "AccountCenter.localAccount" : {
+      "comment" : "Local account label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -415,6 +452,7 @@
       }
     },
     "AccountCenter.localPreviewSaved" : {
+      "comment" : "Offline skin application completion notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -426,6 +464,7 @@
       }
     },
     "AccountCenter.logoutHelp" : {
+      "comment" : "Sign-out confirmation alert explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -437,6 +476,7 @@
       }
     },
     "AccountCenter.logoutTitle" : {
+      "comment" : "Sign-out confirmation alert title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -448,6 +488,7 @@
       }
     },
     "AccountCenter.microsoftLogin" : {
+      "comment" : "Microsoft Account login action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -459,6 +500,7 @@
       }
     },
     "AccountCenter.microsoftSkinHelp" : {
+      "comment" : "Microsoft Account skin dimension and owned-cape help.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -470,6 +512,7 @@
       }
     },
     "AccountCenter.offlineLoginHelp" : {
+      "comment" : "Offline Account sign-in form explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -481,6 +524,7 @@
       }
     },
     "AccountCenter.offlinePreviewHelp" : {
+      "comment" : "Offline appearance editor application timing help.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -492,6 +536,7 @@
       }
     },
     "AccountCenter.outerLayer" : {
+      "comment" : "Character preview outer-layer checkbox.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -503,6 +548,7 @@
       }
     },
     "AccountCenter.placeholderPreview" : {
+      "comment" : "Placeholder character preview status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -514,6 +560,7 @@
       }
     },
     "AccountCenter.previewAndUse" : {
+      "comment" : "Skin Library item preview/use action and accessibility hint.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -525,6 +572,7 @@
       }
     },
     "AccountCenter.previewBeforeApply" : {
+      "comment" : "Appearance draft confirmation sheet heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -536,6 +584,7 @@
       }
     },
     "AccountCenter.reloginHelp" : {
+      "comment" : "Account reauthentication sheet instructions. %1$@: account/player display name to verify.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -547,6 +596,7 @@
       }
     },
     "AccountCenter.reloginTitle" : {
+      "comment" : "Account reauthentication sheet title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -558,6 +608,7 @@
       }
     },
     "AccountCenter.removeAccountHelp" : {
+      "comment" : "Account removal confirmation explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -569,6 +620,7 @@
       }
     },
     "AccountCenter.removeAccountTitle" : {
+      "comment" : "Account removal confirmation title. %1$@: account display name to remove.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -580,6 +632,7 @@
       }
     },
     "AccountCenter.removeSkin" : {
+      "comment" : "Skin Library item removal action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -591,6 +644,7 @@
       }
     },
     "AccountCenter.removeSkinHelp" : {
+      "comment" : "Skin Library removal confirmation explanation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -602,6 +656,7 @@
       }
     },
     "AccountCenter.removeSkinTitle" : {
+      "comment" : "Skin Library removal confirmation title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -613,6 +668,7 @@
       }
     },
     "AccountCenter.renameSkin" : {
+      "comment" : "Skin Library rename alert title and menu action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -624,6 +680,7 @@
       }
     },
     "AccountCenter.replaceSkin" : {
+      "comment" : "Skin/cape row replacement action.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -635,6 +692,7 @@
       }
     },
     "AccountCenter.resetAppearance" : {
+      "comment" : "Default appearance reset confirmation title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -646,6 +704,7 @@
       }
     },
     "AccountCenter.resetView" : {
+      "comment" : "Character preview camera reset button tooltip.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -657,6 +716,7 @@
       }
     },
     "AccountCenter.retry" : {
+      "comment" : "Account appearance load retry button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -668,6 +728,7 @@
       }
     },
     "AccountCenter.rotation" : {
+      "comment" : "Character preview rotation slider accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -679,6 +740,7 @@
       }
     },
     "AccountCenter.save" : {
+      "comment" : "Skin rename alert save button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -690,6 +752,7 @@
       }
     },
     "AccountCenter.saveToLibrary" : {
+      "comment" : "Skin/cape appearance action to save a skin to the Skin Library.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -701,6 +764,7 @@
       }
     },
     "AccountCenter.savedToLibrary" : {
+      "comment" : "Skin Library save completion notice.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -712,6 +776,7 @@
       }
     },
     "AccountCenter.searchAccounts" : {
+      "comment" : "Account list search field placeholder.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -723,6 +788,7 @@
       }
     },
     "AccountCenter.selectAccount" : {
+      "comment" : "Account details empty-state title.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -734,6 +800,7 @@
       }
     },
     "AccountCenter.showSkinFolder" : {
+      "comment" : "Skin Library folder opening button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -745,6 +812,7 @@
       }
     },
     "AccountCenter.skinActions" : {
+      "comment" : "Skin actions menu tooltip and accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -756,6 +824,7 @@
       }
     },
     "AccountCenter.skinCount" : {
+      "comment" : "Skin Library heading count subtitle. %1$lld: saved skin count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -773,6 +842,7 @@
       }
     },
     "AccountCenter.skinLibrary" : {
+      "comment" : "Skin Library section heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -784,6 +854,7 @@
       }
     },
     "AccountCenter.skinName" : {
+      "comment" : "Skin name text field label and placeholder.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -795,6 +866,7 @@
       }
     },
     "AccountCenter.skinSection" : {
+      "comment" : "Skin appearance section label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -806,6 +878,7 @@
       }
     },
     "AccountCenter.slimArms" : {
+      "comment" : "Slim arm-model picker option.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -817,6 +890,7 @@
       }
     },
     "AccountCenter.textureSize" : {
+      "comment" : "Skin/cape PNG dimension subtitle in appearance details and confirmation. %1$lld: PNG width in pixels; %2$lld: PNG height in pixels.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -828,6 +902,7 @@
       }
     },
     "AccountCenter.unreadableSkins" : {
+      "comment" : "Skin Library warning for unreadable entries. %1$lld: unreadable saved skin count. Use the singular form for a count of one.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -845,6 +920,7 @@
       }
     },
     "AccountCenter.unverified" : {
+      "comment" : "Account appearance disconnected status.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -856,6 +932,7 @@
       }
     },
     "AccountCenter.useLittleSkin" : {
+      "comment" : "External Account form LittleSkin preset button.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -867,6 +944,7 @@
       }
     },
     "AccountCenter.useLocalPreview" : {
+      "comment" : "Offline skin application button in appearance confirmation.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -878,6 +956,7 @@
       }
     },
     "AccountCenter.useSkin" : {
+      "comment" : "Skin Library item use menu.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -889,6 +968,7 @@
       }
     },
     "AccountCenter.welcome" : {
+      "comment" : "Account list empty-state heading.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -900,6 +980,7 @@
       }
     },
     "AccountCenter.welcomeHelp" : {
+      "comment" : "Account list empty-state sign-in instructions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -911,6 +992,7 @@
       }
     },
     "AccountCenter.wrongLoginAccount" : {
+      "comment" : "Account reauthentication error for a different player identity.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -922,6 +1004,7 @@
       }
     },
     "OfflineSkin.invalidConfiguration" : {
+      "comment" : "Offline skin configuration validation error before game launch.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -933,6 +1016,7 @@
       }
     },
     "OfflineSkin.preparing" : {
+      "comment" : "Offline skin launch preparation progress.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -944,6 +1028,7 @@
       }
     },
     "OfflineSkin.ready" : {
+      "comment" : "Game log notice that the offline skin service is ready.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -955,6 +1040,7 @@
       }
     },
     "OfflineSkin.serviceFailed" : {
+      "comment" : "Offline skin local service startup error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -966,6 +1052,7 @@
       }
     },
     "OfflineSkin.signingFailed" : {
+      "comment" : "Offline skin signature generation error.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

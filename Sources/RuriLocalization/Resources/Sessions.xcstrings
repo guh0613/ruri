@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "HistoryUI.activeDays" : {
+      "comment" : "Play history summary field for the number of active days. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "HistoryUI.activity" : {
+      "comment" : "Play history activity section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -24,6 +26,7 @@
       }
     },
     "HistoryUI.allWorlds" : {
+      "comment" : "Play history world filter option. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -35,6 +38,7 @@
       }
     },
     "HistoryUI.averageSession" : {
+      "comment" : "Play history summary field for average session duration. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -46,6 +50,7 @@
       }
     },
     "HistoryUI.clearFilters" : {
+      "comment" : "Play history action that resets all filters. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -57,6 +62,7 @@
       }
     },
     "HistoryUI.dayCount" : {
+      "comment" : "Play history active-day or streak summary; %1$lld is the number of days.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -74,6 +80,7 @@
       }
     },
     "HistoryUI.dayTrack" : {
+      "comment" : "Play history heading above the selected day's session timeline. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -85,6 +92,7 @@
       }
     },
     "HistoryUI.favoriteWorld" : {
+      "comment" : "Play history summary field for the most frequently visited world. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -96,6 +104,7 @@
       }
     },
     "HistoryUI.filteredByInstance" : {
+      "comment" : "Play history instance-filter chip; %1$@ is the instance display name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -107,6 +116,7 @@
       }
     },
     "HistoryUI.filteredByWorld" : {
+      "comment" : "Play history world-filter chip; %1$@ is the world display name.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -118,6 +128,7 @@
       }
     },
     "HistoryUI.filters" : {
+      "comment" : "Play history filter section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -129,6 +140,7 @@
       }
     },
     "HistoryUI.instanceRemoved" : {
+      "comment" : "Play history fallback when a recorded instance has been deleted. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -140,6 +152,7 @@
       }
     },
     "HistoryUI.instancesSection" : {
+      "comment" : "Play history instance breakdown section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -151,6 +164,7 @@
       }
     },
     "HistoryUI.lastPlayed" : {
+      "comment" : "Play history most-recent-play summary; %1$@ is the formatted relative time.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -162,6 +176,7 @@
       }
     },
     "HistoryUI.lessThanPrevious" : {
+      "comment" : "Play history comparison summary; %1$@ is the previous period label and %2$@ is the formatted decrease in playtime.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -173,6 +188,7 @@
       }
     },
     "HistoryUI.loader" : {
+      "comment" : "Play history session environment field label for the loader. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -184,6 +200,7 @@
       }
     },
     "HistoryUI.longestSession" : {
+      "comment" : "Play history summary field for the longest session duration. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -194,7 +211,26 @@
         }
       }
     },
+    "HistoryUI.longestSessionValue" : {
+      "comment" : "Play history statistic below the average session duration. %1$@ is the formatted longest duration.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longest session: %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最长单次 %1$@"
+          }
+        }
+      }
+    },
     "HistoryUI.memory" : {
+      "comment" : "Play history session environment field label for allocated memory. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -206,6 +242,7 @@
       }
     },
     "HistoryUI.moreThanPrevious" : {
+      "comment" : "Play history comparison summary; %1$@ is the previous period label and %2$@ is the formatted increase in playtime.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -217,6 +254,7 @@
       }
     },
     "HistoryUI.moreTools" : {
+      "comment" : "Play history tools menu title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -228,6 +266,7 @@
       }
     },
     "HistoryUI.mostPlayed" : {
+      "comment" : "Play history heading for the most-played instance or world. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -239,6 +278,7 @@
       }
     },
     "HistoryUI.noActivity" : {
+      "comment" : "Play history empty state for the selected time range. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -250,6 +290,7 @@
       }
     },
     "HistoryUI.noWorldsHelp" : {
+      "comment" : "Play history world breakdown empty-state explanation. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -261,6 +302,7 @@
       }
     },
     "HistoryUI.openLogs" : {
+      "comment" : "Play history action that opens the original logs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -272,6 +314,7 @@
       }
     },
     "HistoryUI.openLogsHelp" : {
+      "comment" : "Play history help text for the log-view action. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -283,6 +326,7 @@
       }
     },
     "HistoryUI.otherInstances" : {
+      "comment" : "Play history instance breakdown overflow summary; %1$lld is the number of additional instances.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -300,6 +344,7 @@
       }
     },
     "HistoryUI.previousMonth" : {
+      "comment" : "Play history comparison period label for the preceding 30-day period. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -311,6 +356,7 @@
       }
     },
     "HistoryUI.previousWeek" : {
+      "comment" : "Play history comparison period label for the preceding 7-day period. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -322,6 +368,7 @@
       }
     },
     "HistoryUI.previousYear" : {
+      "comment" : "Play history comparison period label for the preceding 12-month period. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -333,6 +380,7 @@
       }
     },
     "HistoryUI.rangeAll" : {
+      "comment" : "Play history time-range selector option for all recorded time. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -344,6 +392,7 @@
       }
     },
     "HistoryUI.rangeAllTitle" : {
+      "comment" : "Play history heading for the full recorded time range. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -355,6 +404,7 @@
       }
     },
     "HistoryUI.rangeMonth" : {
+      "comment" : "Play history time-range selector option for the last month. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -366,6 +416,7 @@
       }
     },
     "HistoryUI.rangeMonthTitle" : {
+      "comment" : "Play history heading for the last 30 days. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -377,6 +428,7 @@
       }
     },
     "HistoryUI.rangeWeek" : {
+      "comment" : "Play history time-range selector option for the last week. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -388,6 +440,7 @@
       }
     },
     "HistoryUI.rangeWeekTitle" : {
+      "comment" : "Play history heading for the last 7 days. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -399,6 +452,7 @@
       }
     },
     "HistoryUI.rangeYear" : {
+      "comment" : "Play history time-range selector option for the last year. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -410,6 +464,7 @@
       }
     },
     "HistoryUI.rangeYearTitle" : {
+      "comment" : "Play history heading for the last 12 months. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -421,6 +476,7 @@
       }
     },
     "HistoryUI.recentWeek" : {
+      "comment" : "Play history recent-week section label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -432,6 +488,7 @@
       }
     },
     "HistoryUI.removeFilter" : {
+      "comment" : "Play history filter-chip removal action. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -443,6 +500,7 @@
       }
     },
     "HistoryUI.sameAsPrevious" : {
+      "comment" : "Play history comparison summary for unchanged playtime; %1$@ is the previous period label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -454,6 +512,7 @@
       }
     },
     "HistoryUI.sessionCount" : {
+      "comment" : "Play history session-count summary; %1$lld is the number of game sessions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -471,6 +530,7 @@
       }
     },
     "HistoryUI.shareOfRange" : {
+      "comment" : "Play history instance or world breakdown share; %1$@ is the formatted percentage of playtime in the selected range.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -482,6 +542,7 @@
       }
     },
     "HistoryUI.showRuns" : {
+      "comment" : "Play history breakdown action that filters to the selected item. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -493,6 +554,7 @@
       }
     },
     "HistoryUI.sinceFirstPlay" : {
+      "comment" : "Play history all-time summary; %1$@ is the formatted date of the first recorded play.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -504,6 +566,7 @@
       }
     },
     "HistoryUI.streak" : {
+      "comment" : "Play history summary field for consecutive days played. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -515,6 +578,7 @@
       }
     },
     "HistoryUI.timeRange" : {
+      "comment" : "Play history or activity chart time range; %1$@ is the formatted start date or time and %2$@ is the formatted end date or time.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -526,6 +590,7 @@
       }
     },
     "HistoryUI.timelineSection" : {
+      "comment" : "Play history session timeline section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -537,6 +602,7 @@
       }
     },
     "HistoryUI.today" : {
+      "comment" : "Play history timeline date-group heading for today. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -548,6 +614,7 @@
       }
     },
     "HistoryUI.unknownWorld" : {
+      "comment" : "Play history fallback when no world was recorded for a session. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -559,6 +626,7 @@
       }
     },
     "HistoryUI.world" : {
+      "comment" : "Play history session world field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -570,6 +638,7 @@
       }
     },
     "HistoryUI.worldsSection" : {
+      "comment" : "Play history world breakdown section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -581,6 +650,7 @@
       }
     },
     "HistoryUI.yesterday" : {
+      "comment" : "Play history timeline date-group heading for yesterday. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -592,6 +662,7 @@
       }
     },
     "HomeActivity.activeDays" : {
+      "comment" : "Home activity summary; %1$lld is the number of days played during the selected year.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -609,6 +680,7 @@
       }
     },
     "HomeActivity.chartLabel" : {
+      "comment" : "Home activity heatmap accessibility label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -620,6 +692,7 @@
       }
     },
     "HomeActivity.cumulative" : {
+      "comment" : "Home activity statistics mode option for cumulative playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -631,6 +704,7 @@
       }
     },
     "HomeActivity.day" : {
+      "comment" : "Home activity statistics interval option for daily values. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -642,6 +716,7 @@
       }
     },
     "HomeActivity.dayContribution" : {
+      "comment" : "Home activity day tooltip or accessibility detail; %1$@ is the formatted playtime for that day.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -653,6 +728,7 @@
       }
     },
     "HomeActivity.dayTime" : {
+      "comment" : "Home activity daily-mode tooltip describing the day’s playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -664,6 +740,7 @@
       }
     },
     "HomeActivity.keyboardHelp" : {
+      "comment" : "Home activity heatmap keyboard navigation help. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -675,6 +752,7 @@
       }
     },
     "HomeActivity.legendHelp" : {
+      "comment" : "Home activity heatmap color legend help. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -686,6 +764,7 @@
       }
     },
     "HomeActivity.less" : {
+      "comment" : "Home activity heatmap legend label for less playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -697,6 +776,7 @@
       }
     },
     "HomeActivity.loadFailed" : {
+      "comment" : "Home activity error when play history cannot be loaded. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -708,6 +788,7 @@
       }
     },
     "HomeActivity.modePicker" : {
+      "comment" : "Home activity mode picker accessibility label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -719,6 +800,7 @@
       }
     },
     "HomeActivity.more" : {
+      "comment" : "Home activity heatmap legend label for more playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -730,6 +812,7 @@
       }
     },
     "HomeActivity.openHistory" : {
+      "comment" : "Home activity action that opens play history. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -741,6 +824,7 @@
       }
     },
     "HomeActivity.title" : {
+      "comment" : "Home activity panel title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -752,6 +836,7 @@
       }
     },
     "HomeActivity.totalTime" : {
+      "comment" : "Home activity summary field for total playtime during the selected year. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -763,6 +848,7 @@
       }
     },
     "HomeActivity.week" : {
+      "comment" : "Home activity statistics interval option for weekly values. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -774,6 +860,7 @@
       }
     },
     "HomeActivity.year" : {
+      "comment" : "Home activity year picker option; %1$@ is the calendar year displayed as text.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -785,6 +872,7 @@
       }
     },
     "HomeActivity.yearPicker" : {
+      "comment" : "Home activity year picker label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -796,6 +884,7 @@
       }
     },
     "SessionRuntime.artifactsExpired" : {
+      "comment" : "Session runtime notice when diagnostic files have expired. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -807,6 +896,7 @@
       }
     },
     "SessionRuntime.collectedWithoutAnalysis" : {
+      "comment" : "Session runtime diagnostic status after analysis fails to complete. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -818,6 +908,7 @@
       }
     },
     "SessionRuntime.debugOverload" : {
+      "comment" : "Session runtime warning when detailed output processing is overloaded. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -829,6 +920,7 @@
       }
     },
     "SessionRuntime.historyError" : {
+      "comment" : "Session runtime persistence error; %1$@ is the underlying history storage error description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -840,6 +932,7 @@
       }
     },
     "SessionRuntime.launchTimeout" : {
+      "comment" : "Session runtime launch timeout warning. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -851,6 +944,7 @@
       }
     },
     "SessionRuntime.launcherEvents" : {
+      "comment" : "Session runtime diagnostic section title for launcher events. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -862,6 +956,7 @@
       }
     },
     "SessionRuntime.loggingHelp" : {
+      "comment" : "Session runtime help text for opening native game logs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -873,6 +968,7 @@
       }
     },
     "SessionRuntime.outputHead" : {
+      "comment" : "Session runtime console separator before the preserved beginning of process output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -884,6 +980,7 @@
       }
     },
     "SessionRuntime.outputTail" : {
+      "comment" : "Session runtime console separator before the preserved end of process output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -895,6 +992,7 @@
       }
     },
     "SessionRuntime.reportUnavailable" : {
+      "comment" : "Session runtime notice when no matching macOS crash report exists. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -906,6 +1004,7 @@
       }
     },
     "SessionRuntime.storageWarning" : {
+      "comment" : "Session runtime console storage warning; %1$@ is the record storage error description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -917,6 +1016,7 @@
       }
     },
     "SessionRuntime.timingHelp" : {
+      "comment" : "Session runtime explanation of how playtime is measured. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -928,6 +1028,7 @@
       }
     },
     "SessionRuntime.timingPartial" : {
+      "comment" : "Session runtime warning for partial timing records. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -939,6 +1040,7 @@
       }
     },
     "SessionRuntime.transportFailed" : {
+      "comment" : "Session runtime monitor-transport connection error. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -950,6 +1052,7 @@
       }
     },
     "SessionUI.afterCommandFailed" : {
+      "comment" : "Session detail status when the command run after game exit fails. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -961,6 +1064,7 @@
       }
     },
     "SessionUI.afterCommandHelp" : {
+      "comment" : "Session detail explanation of an after-game command failure. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -972,6 +1076,7 @@
       }
     },
     "SessionUI.allInstances" : {
+      "comment" : "Session history instance filter option. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -983,6 +1088,7 @@
       }
     },
     "SessionUI.cancelled" : {
+      "comment" : "Session detail status for a cancelled launch. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -994,6 +1100,7 @@
       }
     },
     "SessionUI.checking" : {
+      "comment" : "Session detail status while final cleanup runs. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1005,6 +1112,7 @@
       }
     },
     "SessionUI.collectingLimits" : {
+      "comment" : "Session diagnostic collection warning heading. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1016,6 +1124,7 @@
       }
     },
     "SessionUI.console" : {
+      "comment" : "Session action that opens the log console. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1027,6 +1136,7 @@
       }
     },
     "SessionUI.crashed" : {
+      "comment" : "Session detail status for an abnormal game exit. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1038,6 +1148,7 @@
       }
     },
     "SessionUI.date" : {
+      "comment" : "Session history or detail start-time field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1049,6 +1160,7 @@
       }
     },
     "SessionUI.details" : {
+      "comment" : "Session action that opens diagnostic details. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1060,6 +1172,7 @@
       }
     },
     "SessionUI.duration" : {
+      "comment" : "Session duration field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1071,6 +1184,7 @@
       }
     },
     "SessionUI.emptyLog" : {
+      "comment" : "Session log console empty state. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1082,6 +1196,7 @@
       }
     },
     "SessionUI.ended" : {
+      "comment" : "Session detail end-time field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1093,6 +1208,7 @@
       }
     },
     "SessionUI.environment" : {
+      "comment" : "Session diagnostic section title for launch environment details. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1104,6 +1220,7 @@
       }
     },
     "SessionUI.evidence" : {
+      "comment" : "Session diagnostic section title for evidence supporting a finding. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1115,6 +1232,7 @@
       }
     },
     "SessionUI.exportReport" : {
+      "comment" : "Session action that opens the diagnostic report export sheet. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1126,6 +1244,7 @@
       }
     },
     "SessionUI.exportZIP" : {
+      "comment" : "Diagnostic report action that opens the save destination dialog. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1137,6 +1256,7 @@
       }
     },
     "SessionUI.extraRedaction" : {
+      "comment" : "Diagnostic report export field label for custom redaction strings. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1148,6 +1268,7 @@
       }
     },
     "SessionUI.failureHelp" : {
+      "comment" : "Session diagnostic explanation for an abnormal exit. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1159,6 +1280,7 @@
       }
     },
     "SessionUI.fallbackLogHelp" : {
+      "comment" : "Session log console notice when falling back to process output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1170,6 +1292,7 @@
       }
     },
     "SessionUI.finished" : {
+      "comment" : "Session detail status after the game ends. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1181,6 +1304,7 @@
       }
     },
     "SessionUI.finishingHelp" : {
+      "comment" : "Session detail explanation while after-game operations run. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1192,6 +1316,7 @@
       }
     },
     "SessionUI.follow" : {
+      "comment" : "Session log console toggle that follows incoming output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1203,6 +1328,7 @@
       }
     },
     "SessionUI.fullExportFailed" : {
+      "comment" : "Diagnostic report export error; %1$@ is the diagnostic source title and %2$@ is the underlying error description.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1214,6 +1340,7 @@
       }
     },
     "SessionUI.fullFilePreview" : {
+      "comment" : "Session log preview notice for a complete exportable file. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1225,6 +1352,7 @@
       }
     },
     "SessionUI.history" : {
+      "comment" : "Session navigation title for recorded play sessions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1236,6 +1364,7 @@
       }
     },
     "SessionUI.instance" : {
+      "comment" : "Session detail instance field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1247,6 +1376,7 @@
       }
     },
     "SessionUI.interrupted" : {
+      "comment" : "Session detail status when recording ended without complete exit information. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1258,6 +1388,7 @@
       }
     },
     "SessionUI.interruptedHelp" : {
+      "comment" : "Session detail explanation for interrupted recording. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1269,6 +1400,7 @@
       }
     },
     "SessionUI.jvmCrashReport" : {
+      "comment" : "Session diagnostic source option for JVM crash reports. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1280,6 +1412,7 @@
       }
     },
     "SessionUI.launchFailed" : {
+      "comment" : "Session detail status when game launch fails. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1291,6 +1424,7 @@
       }
     },
     "SessionUI.launcherActivity" : {
+      "comment" : "Session detail launcher activity section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1302,6 +1436,7 @@
       }
     },
     "SessionUI.launcherLog" : {
+      "comment" : "Session diagnostic source option for launcher output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1313,6 +1448,7 @@
       }
     },
     "SessionUI.loadMore" : {
+      "comment" : "Session history action that loads older sessions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1324,6 +1460,7 @@
       }
     },
     "SessionUI.logOrigin" : {
+      "comment" : "Session log console source description; %1$@ is the log source or origin label.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1335,6 +1472,7 @@
       }
     },
     "SessionUI.logSearch" : {
+      "comment" : "Session log console search field placeholder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1346,6 +1484,7 @@
       }
     },
     "SessionUI.logSource" : {
+      "comment" : "Session log console source picker field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1357,6 +1496,7 @@
       }
     },
     "SessionUI.macosCrashReport" : {
+      "comment" : "Session diagnostic source option for operating-system crash reports. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1368,6 +1508,7 @@
       }
     },
     "SessionUI.minecraftCrashReport" : {
+      "comment" : "Session diagnostic source option for Minecraft crash reports. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1379,6 +1520,7 @@
       }
     },
     "SessionUI.nativeDebugLog" : {
+      "comment" : "Session diagnostic source option for the game's debug log. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1390,6 +1532,7 @@
       }
     },
     "SessionUI.nativeGameLog" : {
+      "comment" : "Session diagnostic source option for the game's standard log. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1401,6 +1544,7 @@
       }
     },
     "SessionUI.nativeLogUnavailable" : {
+      "comment" : "Session log console notice when native logs are unavailable. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1412,6 +1556,7 @@
       }
     },
     "SessionUI.noFinding" : {
+      "comment" : "Session diagnostic fallback when analysis yields no finding. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1423,6 +1568,7 @@
       }
     },
     "SessionUI.noFindingHelp" : {
+      "comment" : "Session diagnostic explanation when analysis yields no finding. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1434,6 +1580,7 @@
       }
     },
     "SessionUI.noHistory" : {
+      "comment" : "Session history empty-state title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1445,6 +1592,7 @@
       }
     },
     "SessionUI.noHistoryHelp" : {
+      "comment" : "Session history empty-state explanation. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1456,6 +1604,7 @@
       }
     },
     "SessionUI.noLiveConnection" : {
+      "comment" : "Session log console notice after disconnecting from a live monitor. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1467,6 +1616,7 @@
       }
     },
     "SessionUI.noMatches" : {
+      "comment" : "Session history or log search empty state. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1478,6 +1628,7 @@
       }
     },
     "SessionUI.normalHelp" : {
+      "comment" : "Session diagnostic explanation for a normal exit. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1489,6 +1640,7 @@
       }
     },
     "SessionUI.notStarted" : {
+      "comment" : "Session detail status when the game was not reached. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1500,6 +1652,7 @@
       }
     },
     "SessionUI.openGameFolder" : {
+      "comment" : "Session action that opens the native game log folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1511,6 +1664,7 @@
       }
     },
     "SessionUI.openSystemReports" : {
+      "comment" : "Session action that opens the system Console app. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1522,6 +1676,7 @@
       }
     },
     "SessionUI.partialTime" : {
+      "comment" : "Session duration display for incomplete timing; %1$@ is the formatted confirmed duration.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1533,6 +1688,7 @@
       }
     },
     "SessionUI.playCount" : {
+      "comment" : "Session history summary field for the play-session count. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1544,6 +1700,7 @@
       }
     },
     "SessionUI.preparing" : {
+      "comment" : "Session detail status while preparing and launching the game. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1555,6 +1712,7 @@
       }
     },
     "SessionUI.problemsOnly" : {
+      "comment" : "Session history filter option for problematic sessions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1566,6 +1724,7 @@
       }
     },
     "SessionUI.processOutput" : {
+      "comment" : "Session log source option for additional process output. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1577,6 +1736,7 @@
       }
     },
     "SessionUI.recordUnavailable" : {
+      "comment" : "Session detail error when the selected history record is missing. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1588,6 +1748,7 @@
       }
     },
     "SessionUI.reportContents" : {
+      "comment" : "Diagnostic report export contents summary; %1$lld is the selected file count and %2$@ is the formatted total file size.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1605,6 +1766,7 @@
       }
     },
     "SessionUI.reportExcerpt" : {
+      "comment" : "Session crash report preview notice for incomplete content. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1616,6 +1778,7 @@
       }
     },
     "SessionUI.reportHelp" : {
+      "comment" : "Diagnostic report export explanation of the report's purpose. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1627,6 +1790,7 @@
       }
     },
     "SessionUI.reportNotAvailable" : {
+      "comment" : "Session crash report error when the underlying report has expired. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1638,6 +1802,7 @@
       }
     },
     "SessionUI.reportPreparing" : {
+      "comment" : "Diagnostic report export preparation status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1649,6 +1814,7 @@
       }
     },
     "SessionUI.reportPrivacy" : {
+      "comment" : "Diagnostic report export privacy notice. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1660,6 +1826,7 @@
       }
     },
     "SessionUI.reportReady" : {
+      "comment" : "Diagnostic report export status when preparation finishes. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1671,6 +1838,7 @@
       }
     },
     "SessionUI.reportSaved" : {
+      "comment" : "Diagnostic report export success status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1682,6 +1850,7 @@
       }
     },
     "SessionUI.reportTitle" : {
+      "comment" : "Diagnostic report export sheet title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1693,6 +1862,7 @@
       }
     },
     "SessionUI.result" : {
+      "comment" : "Session diagnostic result section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1704,6 +1874,7 @@
       }
     },
     "SessionUI.retry" : {
+      "comment" : "Session diagnostic collection retry action. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1715,6 +1886,7 @@
       }
     },
     "SessionUI.reviewFiles" : {
+      "comment" : "Diagnostic report export action that opens the file review step. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1726,6 +1898,7 @@
       }
     },
     "SessionUI.running" : {
+      "comment" : "Session detail status while the game is running. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1737,6 +1910,7 @@
       }
     },
     "SessionUI.runningHelp" : {
+      "comment" : "Session detail explanation while the game is running independently. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1748,6 +1922,7 @@
       }
     },
     "SessionUI.saveVisibleLog" : {
+      "comment" : "Session log console action that saves the displayed log. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1759,6 +1934,7 @@
       }
     },
     "SessionUI.saveVisibleReport" : {
+      "comment" : "Session crash report action that saves the displayed report. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1770,6 +1946,7 @@
       }
     },
     "SessionUI.search" : {
+      "comment" : "Session log console search action or field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1781,6 +1958,7 @@
       }
     },
     "SessionUI.session" : {
+      "comment" : "Session detail page title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1792,6 +1970,7 @@
       }
     },
     "SessionUI.showFile" : {
+      "comment" : "Session diagnostic action that reveals the source file in Finder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1803,6 +1982,7 @@
       }
     },
     "SessionUI.started" : {
+      "comment" : "Session detail start-time field label. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1814,6 +1994,7 @@
       }
     },
     "SessionUI.stopped" : {
+      "comment" : "Session detail status when the game is forcibly stopped. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1825,6 +2006,7 @@
       }
     },
     "SessionUI.suggestions" : {
+      "comment" : "Session diagnostic suggestions section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1836,6 +2018,7 @@
       }
     },
     "SessionUI.technicalDetails" : {
+      "comment" : "Session diagnostic technical-details section title. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1847,6 +2030,7 @@
       }
     },
     "SessionUI.totalTime" : {
+      "comment" : "Session history summary field for cumulative playtime. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1858,6 +2042,7 @@
       }
     },
     "SessionUI.unknownTime" : {
+      "comment" : "Session duration fallback when timing information is unavailable. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -1869,6 +2054,7 @@
       }
     },
     "SessionUI.unsafeLongLine" : {
+      "comment" : "Session log preview warning when an oversized line prevents safe redaction. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

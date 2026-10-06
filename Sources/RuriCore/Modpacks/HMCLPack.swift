@@ -45,7 +45,7 @@ extension InstanceTransfer {
         guard let version, version.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:[-_][A-Za-z0-9. -]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil else { throw RuriError.message(Messages.CoreHMCLPack.unknownPackGameVersion) }
         let known = Set(["game", "fabric", "quilt", "forge", "neoforge", "legacyfabric", "liteloader", "optifine"])
         let unsupported = patches.filter { $0.hidden != true && $0.id != nil && !known.contains($0.id!) }.compactMap(\.id)
-        guard unsupported.isEmpty else { throw RuriError.message(Messages.CoreHMCLPack.unsupportedPackComponents(String(describing: unsupported.joined(separator: "、")))) }
+        guard unsupported.isEmpty else { throw RuriError.message(Messages.CoreHMCLPack.unsupportedPackComponents(String(describing: LocalizedFormat.list(Array(unsupported))))) }
         for library in libraries {
             let parts = library.name.split(separator: ":")
             guard parts.count >= 3 else { throw RuriError.message(Messages.CoreHMCLPack.invalidDependencyCoordinates) }

@@ -82,11 +82,25 @@ extension Messages {
         public static var excerptHeading: LocalizedMessage {
             .init(key: "CoreGameDiagnosticBundle.excerptHeading", table: "Diagnostics", fallback: " · 片段")
         }
+        /// %1$@ · 片段
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.excerptTitle`.
+        public static func excerptTitle(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.excerptTitle", table: "Diagnostics", fallback: "%1$@ · 片段", arguments: [.text(value0)])
+        }
         /// yes (exit not recorded)
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosticBundle.exitPending`.
         public static var exitPending: LocalizedMessage {
             .init(key: "CoreGameDiagnosticBundle.exitPending", table: "Diagnostics", fallback: "yes (exit not recorded)")
+        }
+        ///
+        /// %1$@（%2$@）
+        /// %3$@
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.findingSummary`.
+        public static func findingSummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.findingSummary", table: "Diagnostics", fallback: "\n%1$@（%2$@）\n%3$@\n", arguments: [.text(value0), .text(value1), .text(value2)])
         }
         /// 游戏、Java 与系统环境
         ///
@@ -117,6 +131,14 @@ extension Messages {
         /// Resource: `Diagnostics.CoreGameDiagnosticBundle.noReadErrors`.
         public static var noReadErrors: LocalizedMessage {
             .init(key: "CoreGameDiagnosticBundle.noReadErrors", table: "Diagnostics", fallback: "未发现读取截断或读取错误。")
+        }
+        ///
+        /// 读取范围与缺失信息
+        /// %1$@
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.readScopeDetails`.
+        public static func readScopeDetails(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.readScopeDetails", table: "Diagnostics", fallback: "\n读取范围与缺失信息\n%1$@", arguments: [.text(value0)])
         }
         ///
         /// 读取范围与缺失信息
@@ -178,12 +200,15 @@ extension Messages {
             "Diagnostics:CoreGameDiagnosticBundle.environment": .init("Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@", [.text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text]),
             "Diagnostics:CoreGameDiagnosticBundle.environmentUnrecorded": .init("未记录", []),
             "Diagnostics:CoreGameDiagnosticBundle.excerptHeading": .init(" · 片段", []),
+            "Diagnostics:CoreGameDiagnosticBundle.excerptTitle": .init("%1$@ · 片段", [.text]),
             "Diagnostics:CoreGameDiagnosticBundle.exitPending": .init("yes (exit not recorded)", []),
+            "Diagnostics:CoreGameDiagnosticBundle.findingSummary": .init("\n%1$@（%2$@）\n%3$@\n", [.text, .text, .text]),
             "Diagnostics:CoreGameDiagnosticBundle.gameJavaSystemEnvironment": .init("游戏、Java 与系统环境", []),
             "Diagnostics:CoreGameDiagnosticBundle.heapLimit": .init("堆上限 %1$@ MB", [.text]),
             "Diagnostics:CoreGameDiagnosticBundle.invalidReportSelection": .init("请选择有效的报告内容。", []),
             "Diagnostics:CoreGameDiagnosticBundle.no": .init("no", []),
             "Diagnostics:CoreGameDiagnosticBundle.noReadErrors": .init("未发现读取截断或读取错误。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.readScopeDetails": .init("\n读取范围与缺失信息\n%1$@", [.text]),
             "Diagnostics:CoreGameDiagnosticBundle.readScopeHeader": .init("\n读取范围与缺失信息\n", []),
             "Diagnostics:CoreGameDiagnosticBundle.recoveryEnvironment": .init("\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@", [.text, .text, .text]),
             "Diagnostics:CoreGameDiagnosticBundle.sourceRangeHeading": .init("来源：%1$@\n范围：%2$@\n行号：%3$@\n\n", [.text, .text, .text]),

@@ -39,6 +39,12 @@ extension Messages {
         public static var createdAt: LocalizedMessage {
             .init(key: "AppSchematicManagerView.createdAt", table: "Interface", fallback: "创建时间")
         }
+        /// %1$@ 及其中的全部文件
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.directoryRemovalDescription`.
+        public static func directoryRemovalDescription(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppSchematicManagerView.directoryRemovalDescription", table: "Interface", fallback: "%1$@ 及其中的全部文件", arguments: [.text(value0)])
+        }
         /// 将原理图拖到这里，或点击“导入”。
         ///
         /// Resource: `Interface.AppSchematicManagerView.dropSchematics`.
@@ -220,6 +226,7 @@ extension Messages {
             "Interface:AppSchematicManagerView.confirmTrash": .init("移到废纸篓？", []),
             "Interface:AppSchematicManagerView.createFolder": .init("创建", []),
             "Interface:AppSchematicManagerView.createdAt": .init("创建时间", []),
+            "Interface:AppSchematicManagerView.directoryRemovalDescription": .init("%1$@ 及其中的全部文件", [.text]),
             "Interface:AppSchematicManagerView.dropSchematics": .init("将原理图拖到这里，或点击“导入”。", []),
             "Interface:AppSchematicManagerView.entryFiles": .init(" 及其中的全部文件", []),
             "Interface:AppSchematicManagerView.entryRemoval": .init("移除原理图", []),

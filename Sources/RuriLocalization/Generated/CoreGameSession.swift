@@ -106,6 +106,13 @@ extension Messages {
         public static var reportTooLargeNotice: LocalizedMessage {
             .init(key: "CoreGameSession.reportTooLargeNotice", table: "Core", fallback: "\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n")
         }
+        /// %1$@
+        /// [Ruri] 报告超过 8 MiB，副本仅保留开头。
+        ///
+        /// Resource: `Core.CoreGameSession.reportWithTruncation`.
+        public static func reportWithTruncation(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameSession.reportWithTruncation", table: "Core", fallback: "%1$@\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n", arguments: [.text(value0)])
+        }
         /// 请求结束游戏
         ///
         /// Resource: `Core.CoreGameSession.requestingGameExit`.
@@ -153,6 +160,13 @@ extension Messages {
         /// Resource: `Core.CoreGameSession.startingGameProcess`.
         public static var startingGameProcess: LocalizedMessage {
             .init(key: "CoreGameSession.startingGameProcess", table: "Core", fallback: "创建游戏进程")
+        }
+        /// [Ruri] 此处显示日志末尾，完整内容保存在会话目录。
+        /// %1$@
+        ///
+        /// Resource: `Core.CoreGameSession.truncatedLog`.
+        public static func truncatedLog(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameSession.truncatedLog", table: "Core", fallback: "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n%1$@", arguments: [.text(value0)])
         }
         /// [Ruri] 此处显示日志末尾，完整内容保存在会话目录。
         ///
@@ -286,6 +300,7 @@ extension Messages {
             "Core:CoreGameSession.reportCopyFailed": .init("[Ruri] 未能保存报告副本 %1$@：%2$@", [.text, .text]),
             "Core:CoreGameSession.reportCopySaveFailed": .init("[Ruri] 未能保存报告副本：%1$@", [.text]),
             "Core:CoreGameSession.reportTooLargeNotice": .init("\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n", []),
+            "Core:CoreGameSession.reportWithTruncation": .init("%1$@\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n", [.text]),
             "Core:CoreGameSession.requestingGameExit": .init("请求结束游戏", []),
             "Core:CoreGameSession.runFinished": .init("运行已结束", []),
             "Core:CoreGameSession.runningAfterCommand": .init("执行退出后命令", []),
@@ -294,6 +309,7 @@ extension Messages {
             "Core:CoreGameSession.startedWithoutCompletion": .init("%1$@ · 尚无完成记录", [.text]),
             "Core:CoreGameSession.startedWithoutExitRecord": .init("游戏已启动 · 尚无退出记录", []),
             "Core:CoreGameSession.startingGameProcess": .init("创建游戏进程", []),
+            "Core:CoreGameSession.truncatedLog": .init("[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n%1$@", [.text]),
             "Core:CoreGameSession.truncatedLogNotice": .init("[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n", []),
             "Core:CoreGameSession.validatingAccount": .init("验证账号", []),
             "Core:CoreGameSession.waitingForGameExit": .init("等待游戏处理退出请求", []),

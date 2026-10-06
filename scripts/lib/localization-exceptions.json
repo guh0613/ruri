@@ -10,24 +10,9 @@
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/Ruri/Features/Instances/InstanceComponentsView.swift",
-    "literal": "\" · Minecraft \"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
     "file": "Sources/Ruri/Features/Instances/Transfers/ModpackUpdateView.swift",
     "literal": "\"Minecraft \\(plan.instance.gameVersion) → \\(plan.incoming.settings.gameVersion) · \\(plan.incoming.settings.loader.title) \\(plan.incoming.settings.loaderVersion ?? \"\")\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
-    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
-    "literal": "\"[Ruri] \\(java.label)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
-    "literal": "\"[Ruri] \\(plan.redactedCommand)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
   },
   {
     "file": "Sources/Ruri/Features/Sessions/AppModel+Launching.swift",
@@ -425,11 +410,6 @@
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/RuriCore/Java/JavaRuntime.swift",
-    "literal": "\"（Intel / Rosetta）\"",
-    "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
-  },
-  {
     "file": "Sources/RuriCore/Launch/MemorySettings.swift",
     "literal": "\" · Metaspace ≤ \\(Self.size($0))\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
@@ -588,11 +568,6 @@
     "file": "Sources/RuriCore/Sessions/GameSessionRecorder.swift",
     "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
-    "file": "Sources/Ruri/Features/Sessions/GameHistoryView.swift",
-    "literal": "\"Minecraft \\(record.gameVersion) · \\(record.loader)\"",
-    "reason": "Game brand and version identifiers in a history row."
   },
   {
     "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
@@ -781,21 +756,6 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"\"\"\n            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed, world_folder, world_name)\n            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,\n                started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,\n                attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed,\n                world_folder=excluded.world_folder, world_name=excluded.world_name\n            WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND\n                excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)\n            \"\"\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"world_folder = ?\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"(instr(lower(name), lower(?)) > 0 OR instr(lower(game_version), lower(?)) > 0 OR instr(lower(coalesce(world_name, '')), lower(?)) > 0)\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"played = 1\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -807,11 +767,6 @@
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"\"\"\n                SELECT instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                GROUP BY instance_id ORDER BY 3 DESC LIMIT 16\n                \"\"\"",
-    "reason": "SQLite syntax and schema, not user-facing prose."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"\"\"\n                SELECT world_folder, world_name, instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC LIMIT 16\n                \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
@@ -958,12 +913,6 @@
     "file": "Sources/RuriCommandKit/CommandSchemas.swift",
     "literal": "\"instance component versions\"",
     "line": 139,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri schema config apply --json\"",
-    "line": 12,
     "reason": "Public command path or invocation syntax; not a translated message."
   },
   {
@@ -1221,11 +1170,6 @@
   },
   {
     "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
-    "literal": "\"\"\"\n                SELECT target,name,sum(seconds),sum(CASE WHEN quality!='observed' THEN seconds ELSE 0 END),count(*),max(started),instance_id\n                FROM activity_segments WHERE \\(clauses.joined(separator: \" AND \")) GROUP BY target ORDER BY max(started) DESC\n                \"\"\"",
-    "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
     "literal": "\" AND \"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
@@ -1277,11 +1221,6 @@
   {
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"EXISTS (SELECT 1 FROM activity_segments a WHERE a.session_id=sessions.id AND a.kind='server' AND a.target=?)\"",
-    "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
-  },
-  {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
-    "literal": "\"\"\"\n                SELECT world_folder, world_name, instance_id, name, sum(seconds), count(*), max(started) FROM sessions\\(filter)\n                AND tracking_version IS NULL AND world_folder IS NOT NULL GROUP BY instance_id, world_folder ORDER BY 5 DESC LIMIT 16\n                \"\"\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
@@ -1343,5 +1282,105 @@
     "file": "Sources/Ruri/Features/Settings/JVMTuningPreviewCard.swift",
     "literal": "\"Java \\($0.version)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
+  },
+  {
+    "file": "Sources/Ruri/Features/Content/CatalogVersionGroup.swift",
+    "literal": ".help(D.fileDetails.localized + \" · \" + version.filename)",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Content/CatalogVersionGroup.swift",
+    "literal": ".accessibilityLabel(D.installOrSave.localized + \" · \" + version.name)",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Home/HomePinnedSection.swift",
+    "literal": "let title = instance.map { Messages.Servers.joinButton.localized + \" · \" + $0.name } ?? Messages.Servers.noInstance.localized",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Home/YearActivityGrid.swift",
+    "literal": "return mode.title + \" · \" + LocalizedFormat.duration(activity.seconds) + \" · \" + Messages.HomeActivity.activeDays(Int64(activity.activeDays)).localized",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Instances/InstanceComponentsView.swift",
+    "literal": "subtitle: instance.name + \" · \" + Messages.Discovery.minecraftVersion(instance.gameVersion).localized)",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Servers/ServerDetailView.swift",
+    "literal": "Button(Messages.Servers.manage.localized + \" · \" + instance.name, systemImage: \"list.bullet\") { model.serverInstance = instance }",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Servers/ServersView.swift",
+    "literal": "Button(Messages.Servers.joinButton.localized + \" · \" + instance.name, systemImage: \"play.fill\") { navigation.join(item, with: instance, model: model) }",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/GameHistoryView.swift",
+    "literal": "detail: LocalizedFormat.duration(top.seconds) + \" · \" + Messages.HistoryUI.shareOfRange(LocalizedFormat.percent(share(top.seconds))).localized,",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/GameHistoryView.swift",
+    "literal": "Text(Messages.HistoryUI.sessionCount(Int64(total.count)).localized + \" · \" + Messages.HistoryUI.shareOfRange(LocalizedFormat.percent(share)).localized)",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Sessions/GameSessionPresentation.swift",
+    "literal": "return world.map { $0.name + \" · \" + Messages.Servers.legacyTime.localized } ?? Messages.HistoryUI.unknownWorld.localized",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Features/Settings/LaunchSettingsEditor.swift",
+    "literal": "Text(Messages.AppLaunchSettingsEditor.heapLimit.localized + \" · \" + Messages.AppLaunchSettingsEditor.initialHeapValue(size(Int(memory.initialBytes / 1_048_576))).localized)",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/Ruri/Shared/InstanceMetadata.swift",
+    "literal": "summary = Messages.Discovery.minecraftVersion(session.gameVersion).localized + \" · \" + text",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "environment += \"\\n\" + Messages.CoreJVMTuning.diagnosticHeader(tuning.mode.title, tuning.collector?.title ?? Messages.CoreJVMTuning.defaultCollector.localized).localized + \"\\n\" + tuning.detail + \"\\n\"",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "environment += Messages.SessionRuntime.timingHelp.localized + \"\\n\"",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
+    "literal": "if timing.quality != .complete { environment += Messages.SessionRuntime.timingPartial.localized + \"\\n\" }",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameEvidenceCollector.swift",
+    "literal": "let text = parts.map(\\.text).joined(separator: \"\\n\" + Messages.CoreGameSession.truncatedLogNotice.localized + \"\\n\")",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameEvidenceCollector.swift",
+    "literal": "activity += ([entry.startedAt.ISO8601Format() + \" \" + entry.title] + entry.steps.map { $0.date.ISO8601Format() + \" \" + $0.message.localized } + [entry.detail ?? \"\"]).joined(separator: \"\\n\") + \"\\n\"",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Diagnostics/GameLogSnapshot.swift",
+    "literal": "preview += \"\\n\" + Messages.SessionUI.fullFilePreview.localized + \"\\n\" + tail",
+    "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
+  },
+  {
+    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "literal": "public var summary: String { Messages.CoreMemorySettings.memorySummary(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.automaticallyManagedMemory.localized : Self.size(initialBytes)), maximumSource.title).localized + (metaspaceBytes.map { \" · Metaspace ≤ \\(Self.size($0))\" } ?? \"\") }",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
+  },
+  {
+    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "literal": "return estimate.basis + \" · \" + Messages.CoreMemoryEstimate.constrained(String(describing: Self.size(Int64(estimate.demandMB) * 1_048_576)), String(describing: Self.size(Int64(estimate.maximumMB) * 1_048_576))).localized",
+    "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
   }
 ]

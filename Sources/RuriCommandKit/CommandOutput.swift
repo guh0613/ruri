@@ -46,7 +46,11 @@ public final class CommandOutput: @unchecked Sendable {
                 let renderer = CommandTextRenderer(request: request)
                 let text = error != nil ? renderer.error(value["error"]) : renderer.result(clean(data))
                 if !text.isEmpty { write(Data((text + (text.hasSuffix("\n") ? "" : "\n")).utf8), error != nil) }
-                for warning in warnings { write(Data((Messages.CLIExperience.warning(redactor.redact(warning)).localized + "\n").utf8), true) }
+                for warning in warnings {
+                    var line = Data(Messages.CLIExperience.warning(redactor.redact(warning)).localized.utf8)
+                    line.append(10)
+                    write(line, true)
+                }
             } else if format == .ndjson { emit(.object(["schemaVersion": .integer(1), "type": .string("result"), "data": value])) }
             else { emit(value) }
         }

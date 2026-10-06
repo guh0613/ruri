@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "FolderExperience.activeFolders" : {
+      "comment" : "Section heading listing game Folders already added to Ruri. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -13,6 +14,7 @@
       }
     },
     "FolderExperience.add" : {
+      "comment" : "Button to add a game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -24,6 +26,7 @@
       }
     },
     "FolderExperience.addTitle" : {
+      "comment" : "Title of the Add Game Folder dialog. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -35,6 +38,7 @@
       }
     },
     "FolderExperience.adding" : {
+      "comment" : "Progress label while adding a game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -46,6 +50,7 @@
       }
     },
     "FolderExperience.alreadyAdded" : {
+      "comment" : "Status label in the Add Game Folder dialog for a location already registered. Placeholder 1: name of the already registered Folder.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -57,6 +62,7 @@
       }
     },
     "FolderExperience.available" : {
+      "comment" : "Availability status for a discovered game Folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -68,6 +74,7 @@
       }
     },
     "FolderExperience.back" : {
+      "comment" : "Back button in the game Folder discovery flow. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -79,6 +86,7 @@
       }
     },
     "FolderExperience.changeLocation" : {
+      "comment" : "Button to change a registered game Folder's location. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -90,6 +98,7 @@
       }
     },
     "FolderExperience.checking" : {
+      "comment" : "Progress label while searching for game Folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -101,6 +110,7 @@
       }
     },
     "FolderExperience.chooseCloserFolder" : {
+      "comment" : "Error shown when the selected game Folder search area is too broad. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -112,6 +122,7 @@
       }
     },
     "FolderExperience.chooseFolder" : {
+      "comment" : "Validation prompt when no Folder has been selected in the Add Game Folder dialog. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -123,6 +134,7 @@
       }
     },
     "FolderExperience.chooseLocation" : {
+      "comment" : "Button that opens the Folder location picker. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -134,6 +146,7 @@
       }
     },
     "FolderExperience.chooseResult" : {
+      "comment" : "Title prompting selection of a discovered game Folder to add. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -145,6 +158,7 @@
       }
     },
     "FolderExperience.commonLocations" : {
+      "comment" : "Game folder manager: Section heading for automatically discovered game folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -156,6 +170,7 @@
       }
     },
     "FolderExperience.contents" : {
+      "comment" : "Game folder manager: Field label for the number of instances in a folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -167,6 +182,7 @@
       }
     },
     "FolderExperience.currentFolder" : {
+      "comment" : "Game folder manager: Badge for the active game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -178,6 +194,7 @@
       }
     },
     "FolderExperience.defaultHelp" : {
+      "comment" : "Game folder manager: Help describing Ruri's managed default folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -189,6 +206,7 @@
       }
     },
     "FolderExperience.detectedInside" : {
+      "comment" : "Game folder manager: Notice after finding a nested game folder automatically. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -200,6 +218,7 @@
       }
     },
     "FolderExperience.duplicateName" : {
+      "comment" : "Game folder manager: Validation error when a folder display name is already used. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -211,6 +230,7 @@
       }
     },
     "FolderExperience.emptyFolder" : {
+      "comment" : "Game folder manager: Status for a folder with no installed game versions. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -222,6 +242,7 @@
       }
     },
     "FolderExperience.emptyFolderHelp" : {
+      "comment" : "Game folder manager: Help describing uses for an empty game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -233,6 +254,7 @@
       }
     },
     "FolderExperience.folderLocation" : {
+      "comment" : "Game folder manager: Label for the folder path field. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -244,6 +266,7 @@
       }
     },
     "FolderExperience.invalidName" : {
+      "comment" : "Game folder manager: Validation guidance for a folder display name. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -255,6 +278,7 @@
       }
     },
     "FolderExperience.libraryName" : {
+      "comment" : "Game folder manager: Label for the folder's name as shown in Ruri. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -266,6 +290,7 @@
       }
     },
     "FolderExperience.localMinecraft" : {
+      "comment" : "Game folder manager: Name of a detected local Minecraft folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -277,6 +302,7 @@
       }
     },
     "FolderExperience.locationHelp" : {
+      "comment" : "Game folder manager: Help for selecting a game folder or its parent. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -288,6 +314,7 @@
       }
     },
     "FolderExperience.managedRemoveHelp" : {
+      "comment" : "Game folder manager: Warning before removing a managed folder that still contains instances. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -299,6 +326,7 @@
       }
     },
     "FolderExperience.multipleResults" : {
+      "comment" : "Game folder manager: Notice when the selected location contains several game folders. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -310,6 +338,7 @@
       }
     },
     "FolderExperience.name" : {
+      "comment" : "Game folder manager: Label for the editable folder name. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -321,6 +350,7 @@
       }
     },
     "FolderExperience.nameHelp" : {
+      "comment" : "Game folder manager: Help clarifying that the display name does not rename the folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -332,6 +362,7 @@
       }
     },
     "FolderExperience.namePlaceholder" : {
+      "comment" : "Game folder manager: Example names in the folder name field. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -343,6 +374,7 @@
       }
     },
     "FolderExperience.newFolder" : {
+      "comment" : "Game folder manager: Title for creating a new game folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -354,6 +386,7 @@
       }
     },
     "FolderExperience.newFolderHelp" : {
+      "comment" : "Game folder manager: Help explaining that a new game can use an empty folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -365,6 +398,7 @@
       }
     },
     "FolderExperience.noFolderFound" : {
+      "comment" : "Game folder manager: Selection error when no usable game folder is found. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -376,6 +410,7 @@
       }
     },
     "FolderExperience.noSelection" : {
+      "comment" : "Game folder manager: Empty detail pane prompt before selecting a folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -387,6 +422,7 @@
       }
     },
     "FolderExperience.noSuggestions" : {
+      "comment" : "Game folder manager: Empty discovery results guidance for choosing a folder manually. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -398,6 +434,7 @@
       }
     },
     "FolderExperience.openExisting" : {
+      "comment" : "Game folder manager: Action to add the selected existing folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -409,6 +446,7 @@
       }
     },
     "FolderExperience.reconnectHelp" : {
+      "comment" : "Game folder manager: Help for reconnecting a moved folder or external drive. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -420,6 +458,7 @@
       }
     },
     "FolderExperience.refreshDiscovery" : {
+      "comment" : "Game folder manager: Action to repeat automatic folder discovery. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -431,6 +470,7 @@
       }
     },
     "FolderExperience.removeHelp" : {
+      "comment" : "Game folder manager: Help explaining what is retained when removing a folder entry. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -442,6 +482,7 @@
       }
     },
     "FolderExperience.removedFolder" : {
+      "comment" : "Game folder manager: Status badge for a removed folder. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -453,6 +494,7 @@
       }
     },
     "FolderExperience.retainedFolder" : {
+      "comment" : "Game folder manager: Status for a folder removed from the instance Library. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -464,6 +506,7 @@
       }
     },
     "FolderExperience.savedSettings" : {
+      "comment" : "Game folder manager: Section heading for instance settings retained after removal. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -475,6 +518,7 @@
       }
     },
     "FolderExperience.showLibrary" : {
+      "comment" : "Game folder manager: Action to show the selected folder's instances in the Library. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -486,6 +530,7 @@
       }
     },
     "FolderExperience.status" : {
+      "comment" : "Game folder manager: Label for the folder availability status. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -497,6 +542,7 @@
       }
     },
     "FolderExperience.unavailable" : {
+      "comment" : "Game folder manager: Status badge when the game folder cannot be accessed. No placeholders.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -508,6 +554,7 @@
       }
     },
     "FolderExperience.versionsFound" : {
+      "comment" : "Game folder manager: Summary of game versions found in a detected folder. Placeholders: 1 = number of detected game versions.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -525,6 +572,7 @@
       }
     },
     "FolderExperience.versionsNeedAttention" : {
+      "comment" : "Game folder manager: Notice about game versions that need inspection after adding the folder. Placeholders: 1 = number of detected game versions requiring inspection.",
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {

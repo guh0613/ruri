@@ -2,6 +2,7 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "CLIInterface.accountCleanupFailed" : {
+      "comment" : "CLI account removal partial failure: the record is removed but credentials or appearance data cleanup failed.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -19,6 +20,7 @@
       }
     },
     "CLIInterface.accountCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri account`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -36,6 +38,7 @@
       }
     },
     "CLIInterface.accountIdentityChanged" : {
+      "comment" : "CLI account conflict when the authentication identity changes.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -53,6 +56,7 @@
       }
     },
     "CLIInterface.accountListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -70,6 +74,7 @@
       }
     },
     "CLIInterface.accountLoginCancelHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account login cancel`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -87,6 +92,7 @@
       }
     },
     "CLIInterface.accountLoginCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri account login`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -104,6 +110,7 @@
       }
     },
     "CLIInterface.accountLoginCompleteHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account login complete`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -121,6 +128,7 @@
       }
     },
     "CLIInterface.accountLoginStartHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -138,6 +146,7 @@
       }
     },
     "CLIInterface.accountLogoutHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account logout`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -155,6 +164,7 @@
       }
     },
     "CLIInterface.accountNotFound" : {
+      "comment" : "CLI account lookup error when the requested account ID is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -172,6 +182,7 @@
       }
     },
     "CLIInterface.accountOfflineHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account add-offline`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -189,6 +200,7 @@
       }
     },
     "CLIInterface.accountProviderMismatch" : {
+      "comment" : "CLI login/refresh error when the account's authentication provider does not match.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -206,6 +218,7 @@
       }
     },
     "CLIInterface.accountRefreshHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account refresh`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -223,6 +236,7 @@
       }
     },
     "CLIInterface.accountRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -240,6 +254,7 @@
       }
     },
     "CLIInterface.accountRemoved" : {
+      "comment" : "CLI account conflict when the record is removed before completion.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -257,6 +272,7 @@
       }
     },
     "CLIInterface.accountRemovedOrReplaced" : {
+      "comment" : "CLI account conflict when the original record was removed or replaced.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -274,6 +290,7 @@
       }
     },
     "CLIInterface.accountSelectHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account select`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -291,6 +308,7 @@
       }
     },
     "CLIInterface.accountSelectedHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account selected`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -308,6 +326,7 @@
       }
     },
     "CLIInterface.accountServiceKeyCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri account service-key`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -325,6 +344,7 @@
       }
     },
     "CLIInterface.accountShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -342,6 +362,7 @@
       }
     },
     "CLIInterface.allContentFilesHelp" : {
+      "comment" : "Help text for `--all` in `ruri content enable`. Help text for `--all` in `ruri content disable`. Help text for `--all` in `ruri content remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -359,6 +380,7 @@
       }
     },
     "CLIInterface.allResultsHelp" : {
+      "comment" : "Help text for the shared `--all` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -376,6 +398,7 @@
       }
     },
     "CLIInterface.ambiguousInstanceName" : {
+      "comment" : "CLI instance lookup error when an exact name matches multiple records.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -393,6 +416,7 @@
       }
     },
     "CLIInterface.apiKeyStdinHelp" : {
+      "comment" : "Help text for `--stdin` in `ruri account service-key set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -410,6 +434,7 @@
       }
     },
     "CLIInterface.apiKeyStdinRequired" : {
+      "comment" : "CLI service-key input error requiring --stdin to read the API key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -427,6 +452,7 @@
       }
     },
     "CLIInterface.appCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri app`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -444,6 +470,7 @@
       }
     },
     "CLIInterface.appLanguageCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri app language`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -461,6 +488,7 @@
       }
     },
     "CLIInterface.appLanguageGetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri app language get`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -478,6 +506,7 @@
       }
     },
     "CLIInterface.appLanguageSetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri app language set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -495,6 +524,7 @@
       }
     },
     "CLIInterface.appVersionHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri app info`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -512,6 +542,7 @@
       }
     },
     "CLIInterface.booleanValueRequired" : {
+      "comment" : "CLI instance pin error. true and false are literal Boolean inputs.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -529,6 +560,7 @@
       }
     },
     "CLIInterface.bundledCliNotFound" : {
+      "comment" : "CLI installation error when the bundled executable cannot be located.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -546,6 +578,7 @@
       }
     },
     "CLIInterface.catalogCategoriesHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri catalog categories`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -563,6 +596,7 @@
       }
     },
     "CLIInterface.catalogCategoryHelp" : {
+      "comment" : "Help text for `--category` in `ruri catalog search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -580,6 +614,7 @@
       }
     },
     "CLIInterface.catalogCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri catalog`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -597,6 +632,7 @@
       }
     },
     "CLIInterface.catalogProjectShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri catalog show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -614,6 +650,7 @@
       }
     },
     "CLIInterface.catalogProjectTypeHelp" : {
+      "comment" : "Help text for `--type` in `ruri catalog search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -631,6 +668,7 @@
       }
     },
     "CLIInterface.catalogSearchHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri catalog search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -648,6 +686,7 @@
       }
     },
     "CLIInterface.catalogSortHelp" : {
+      "comment" : "Help text for `--sort` in `ruri catalog search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -665,6 +704,7 @@
       }
     },
     "CLIInterface.catalogVersionsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri catalog versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -682,6 +722,7 @@
       }
     },
     "CLIInterface.cliCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri cli`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -699,6 +740,7 @@
       }
     },
     "CLIInterface.cliExecutableNotFound" : {
+      "comment" : "CLI installation error when the source executable does not exist.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -716,6 +758,7 @@
       }
     },
     "CLIInterface.cliInstallDirectoryHelp" : {
+      "comment" : "Help text for `--bin-dir` in `ruri cli install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -733,6 +776,7 @@
       }
     },
     "CLIInterface.cliInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri cli install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -750,6 +794,7 @@
       }
     },
     "CLIInterface.cliLinkChangedDuringUninstall" : {
+      "comment" : "CLI uninstall error when the command link changes during removal.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -767,6 +812,7 @@
       }
     },
     "CLIInterface.cliLinkInstallFailed" : {
+      "comment" : "CLI installation error when creating or replacing the command link fails.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -784,6 +830,7 @@
       }
     },
     "CLIInterface.cliLinkNotOwnedByRuri" : {
+      "comment" : "CLI installation/removal error for a destination link that was not created by Ruri.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -801,6 +848,7 @@
       }
     },
     "CLIInterface.cliStatusHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri cli status`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -818,6 +866,7 @@
       }
     },
     "CLIInterface.cliUninstallDirectoryHelp" : {
+      "comment" : "Help text for `--bin-dir` in `ruri cli status`. Help text for `--bin-dir` in `ruri cli uninstall`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -835,6 +884,7 @@
       }
     },
     "CLIInterface.cliUninstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri cli uninstall`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -852,6 +902,7 @@
       }
     },
     "CLIInterface.commandLineAndAutomationTitle" : {
+      "comment" : "Settings navigation title for the command-line tool and automation section.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -869,6 +920,7 @@
       }
     },
     "CLIInterface.commandPathArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri schema`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -886,6 +938,7 @@
       }
     },
     "CLIInterface.compatibleDataPackVersionNotFound" : {
+      "comment" : "CLI data-pack install error when no compatible version is available.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -903,6 +956,7 @@
       }
     },
     "CLIInterface.compatibleVersionNotFound" : {
+      "comment" : "CLI content install error when no version matches the instance's compatibility requirements.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -920,6 +974,7 @@
       }
     },
     "CLIInterface.completeUniqueDataPackOrderRequired" : {
+      "comment" : "CLI data-pack order error requiring every pack exactly once in the priority list.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -937,6 +992,7 @@
       }
     },
     "CLIInterface.configApplyHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri config apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -954,6 +1010,7 @@
       }
     },
     "CLIInterface.configCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri config`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -971,6 +1028,7 @@
       }
     },
     "CLIInterface.configFieldOrGroupNamesHelp" : {
+      "comment" : "Description of the reset member in the CLI configuration patch schema: field or group names to reset.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -988,6 +1046,7 @@
       }
     },
     "CLIInterface.configFieldValueArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri config set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1005,6 +1064,7 @@
       }
     },
     "CLIInterface.configGetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri config get`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1022,6 +1082,7 @@
       }
     },
     "CLIInterface.configInheritHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri config inherit`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1039,6 +1100,7 @@
       }
     },
     "CLIInterface.configInheritanceRequiresCompleteGroups" : {
+      "comment" : "CLI config inherit error when inheritance is not applied to a complete instance settings group.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1056,6 +1118,7 @@
       }
     },
     "CLIInterface.configInstanceGroupNamesHelp" : {
+      "comment" : "Description of the inherit member in the CLI configuration patch schema: complete instance groups whose inheritance is restored.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1073,6 +1136,7 @@
       }
     },
     "CLIInterface.configPatchFileHelp" : {
+      "comment" : "Help text for `--file` in `ruri config apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1090,6 +1154,7 @@
       }
     },
     "CLIInterface.configResetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri config reset`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1107,6 +1172,7 @@
       }
     },
     "CLIInterface.configScopeHelp" : {
+      "comment" : "Help text for the shared `--scope` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1124,6 +1190,7 @@
       }
     },
     "CLIInterface.configSetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri config set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1141,6 +1208,7 @@
       }
     },
     "CLIInterface.configSetMappingHelp" : {
+      "comment" : "Description of the set member in the CLI configuration patch schema: an object mapping field names to values.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1158,6 +1226,7 @@
       }
     },
     "CLIInterface.configValueMustBeJson" : {
+      "comment" : "CLI config set error: the value must be a JSON literal, including quotes around strings.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1175,6 +1244,7 @@
       }
     },
     "CLIInterface.confirmDeleteOrReplaceHelp" : {
+      "comment" : "Help text for the shared `--yes` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1192,6 +1262,7 @@
       }
     },
     "CLIInterface.confirmLocalModificationsReplacementHelp" : {
+      "comment" : "Help text for `--yes` in `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1209,6 +1280,7 @@
       }
     },
     "CLIInterface.confirmUnmonitoredGameExitHelp" : {
+      "comment" : "Help text for `--confirm-game-ended` in `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1226,6 +1298,7 @@
       }
     },
     "CLIInterface.confirmationRequired" : {
+      "comment" : "CLI mutation error when --yes is required; --dry-run previews the operation.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1243,6 +1316,7 @@
       }
     },
     "CLIInterface.conflictingConfigPatchOperations" : {
+      "comment" : "CLI patch overlap error. %1$@ is the field or group key targeted by conflicting operations.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1260,6 +1334,7 @@
       }
     },
     "CLIInterface.contentCheckUpdatesHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content update-check`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1277,6 +1352,7 @@
       }
     },
     "CLIInterface.contentCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri content`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1294,6 +1370,7 @@
       }
     },
     "CLIInterface.contentDisableHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content disable`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1311,6 +1388,7 @@
       }
     },
     "CLIInterface.contentEnableHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content enable`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1328,6 +1406,7 @@
       }
     },
     "CLIInterface.contentFileSelectionHelp" : {
+      "comment" : "Help text for the shared `--file` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1345,6 +1424,7 @@
       }
     },
     "CLIInterface.contentFileSelectionRequired" : {
+      "comment" : "CLI content mutation error requiring --file entries or explicit --all.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1362,6 +1442,7 @@
       }
     },
     "CLIInterface.contentImportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri content import`. Combined positional-argument help for `ruri world import`. Combined positional-argument help for `ruri schematic import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1379,6 +1460,7 @@
       }
     },
     "CLIInterface.contentImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1396,6 +1478,7 @@
       }
     },
     "CLIInterface.contentInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1413,6 +1496,7 @@
       }
     },
     "CLIInterface.contentKindHelp" : {
+      "comment" : "Help text for the shared `--kind` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1430,6 +1514,7 @@
       }
     },
     "CLIInterface.contentListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1447,6 +1532,7 @@
       }
     },
     "CLIInterface.contentProjectArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri content install`. Combined positional-argument help for `ruri datapack versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1464,6 +1550,7 @@
       }
     },
     "CLIInterface.contentProviderHelp" : {
+      "comment" : "Help text for the shared `--provider` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1481,6 +1568,7 @@
       }
     },
     "CLIInterface.contentRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1498,6 +1586,7 @@
       }
     },
     "CLIInterface.contentUpdateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri content update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1515,6 +1604,7 @@
       }
     },
     "CLIInterface.contentVersionIdHelp" : {
+      "comment" : "Help text for `--version` in `ruri content install`. Help text for `--version` in `ruri pack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1532,6 +1622,7 @@
       }
     },
     "CLIInterface.copyGameFilesHelp" : {
+      "comment" : "Help text for `--copy` in `ruri directory run set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1549,6 +1640,7 @@
       }
     },
     "CLIInterface.curseForgeKeyClearHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account service-key remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1566,6 +1658,7 @@
       }
     },
     "CLIInterface.curseForgeKeySetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account service-key set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1583,6 +1676,7 @@
       }
     },
     "CLIInterface.curseForgeKeyStatusHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri account service-key status`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1600,6 +1694,7 @@
       }
     },
     "CLIInterface.customRunDirectoryPathHelp" : {
+      "comment" : "Help text for `--path` in `ruri directory run set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1617,6 +1712,7 @@
       }
     },
     "CLIInterface.dataDirectoryHelp" : {
+      "comment" : "Help for the global --data-dir option; RURI_DATA_DIR is the environment variable it overrides.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1634,6 +1730,7 @@
       }
     },
     "CLIInterface.dataPackCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri datapack`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1651,6 +1748,7 @@
       }
     },
     "CLIInterface.dataPackDisableHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack disable`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1668,6 +1766,7 @@
       }
     },
     "CLIInterface.dataPackEnableHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack enable`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1685,6 +1784,7 @@
       }
     },
     "CLIInterface.dataPackImportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri datapack import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1702,6 +1802,7 @@
       }
     },
     "CLIInterface.dataPackImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1719,6 +1820,7 @@
       }
     },
     "CLIInterface.dataPackInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1736,6 +1838,7 @@
       }
     },
     "CLIInterface.dataPackListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1753,6 +1856,7 @@
       }
     },
     "CLIInterface.dataPackNotFound" : {
+      "comment" : "CLI world data-pack lookup error when the requested pack is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1770,6 +1874,7 @@
       }
     },
     "CLIInterface.dataPackOrderCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri datapack order`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1787,6 +1892,7 @@
       }
     },
     "CLIInterface.dataPackOrderGetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack order get`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1804,6 +1910,7 @@
       }
     },
     "CLIInterface.dataPackOrderSetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack order set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1821,6 +1928,7 @@
       }
     },
     "CLIInterface.dataPackPriorityListHelp" : {
+      "comment" : "Help text for `--key` in `ruri datapack order set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1838,6 +1946,7 @@
       }
     },
     "CLIInterface.dataPackProjectArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri datapack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1855,6 +1964,7 @@
       }
     },
     "CLIInterface.dataPackRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1872,6 +1982,7 @@
       }
     },
     "CLIInterface.dataPackSearchArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri datapack search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1889,6 +2000,7 @@
       }
     },
     "CLIInterface.dataPackSearchHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack search`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1906,6 +2018,7 @@
       }
     },
     "CLIInterface.dataPackTargetArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri datapack enable`. Combined positional-argument help for `ruri datapack disable`. Combined positional-argument help for `ruri datapack remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1923,6 +2036,7 @@
       }
     },
     "CLIInterface.dataPackVersionIdHelp" : {
+      "comment" : "Help text for `--version` in `ruri datapack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1940,6 +2054,7 @@
       }
     },
     "CLIInterface.dataPackVersionsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri datapack versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1957,6 +2072,7 @@
       }
     },
     "CLIInterface.dataPackWorldArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri datapack list`. Combined positional-argument help for `ruri datapack order get`. Combined positional-argument help for `ruri datapack order set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1974,6 +2090,7 @@
       }
     },
     "CLIInterface.directoryAddHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory add`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1991,6 +2108,7 @@
       }
     },
     "CLIInterface.directoryCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri directory`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2008,6 +2126,7 @@
       }
     },
     "CLIInterface.directoryFilterHelp" : {
+      "comment" : "Help text for `--directory` in `ruri instance list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2025,6 +2144,7 @@
       }
     },
     "CLIInterface.directoryInspectHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory scan`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2042,6 +2162,7 @@
       }
     },
     "CLIInterface.directoryLayoutHelp" : {
+      "comment" : "Help text for `--layout` in `ruri directory add`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2059,6 +2180,7 @@
       }
     },
     "CLIInterface.directoryListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2076,6 +2198,7 @@
       }
     },
     "CLIInterface.directoryNameHelp" : {
+      "comment" : "Help text for `--name` in `ruri directory add`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2093,6 +2216,7 @@
       }
     },
     "CLIInterface.directoryNotFound" : {
+      "comment" : "CLI game-directory lookup error when the requested registered directory is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2110,6 +2234,7 @@
       }
     },
     "CLIInterface.directoryPathArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri directory relocate`. Combined positional-argument help for `ruri directory restore`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2127,6 +2252,7 @@
       }
     },
     "CLIInterface.directoryRecoverHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory restore`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2144,6 +2270,7 @@
       }
     },
     "CLIInterface.directoryRefreshHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory refresh`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2161,6 +2288,7 @@
       }
     },
     "CLIInterface.directoryRelocateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory relocate`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2178,6 +2306,7 @@
       }
     },
     "CLIInterface.directoryRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2195,6 +2324,7 @@
       }
     },
     "CLIInterface.directoryRenameHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory rename`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2212,6 +2342,7 @@
       }
     },
     "CLIInterface.directorySelectHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory select`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2229,6 +2360,7 @@
       }
     },
     "CLIInterface.directorySelectedHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory selected`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2246,6 +2378,7 @@
       }
     },
     "CLIInterface.doctorChecksFailed" : {
+      "comment" : "CLI doctor result message when one or more diagnostic checks fail.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2263,6 +2396,7 @@
       }
     },
     "CLIInterface.doctorCommandHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri doctor`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2280,6 +2414,7 @@
       }
     },
     "CLIInterface.doctorInstanceHelp" : {
+      "comment" : "Help text for `--instance` in `ruri doctor`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2297,6 +2432,7 @@
       }
     },
     "CLIInterface.downloadCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri download`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2314,6 +2450,7 @@
       }
     },
     "CLIInterface.downloadFetchHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri download fetch`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2331,6 +2468,7 @@
       }
     },
     "CLIInterface.downloadSha1Help" : {
+      "comment" : "Help text for `--sha1` in `ruri download fetch`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2348,6 +2486,7 @@
       }
     },
     "CLIInterface.downloadSizeHelp" : {
+      "comment" : "Help text for `--size` in `ruri download fetch`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2365,6 +2504,7 @@
       }
     },
     "CLIInterface.downloadTargetArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri download fetch`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2382,6 +2522,7 @@
       }
     },
     "CLIInterface.downloadTargetContentConflict" : {
+      "comment" : "CLI verified-download error when an existing destination file has different content.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2399,6 +2540,7 @@
       }
     },
     "CLIInterface.dryRunHelp" : {
+      "comment" : "Help text for the shared `--dry-run` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2416,6 +2558,7 @@
       }
     },
     "CLIInterface.duplicateLoaderSelection" : {
+      "comment" : "CLI loader selection error when the same kind is specified more than once.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2433,6 +2576,7 @@
       }
     },
     "CLIInterface.emptyDirectoryName" : {
+      "comment" : "CLI game-directory registration or rename error for an empty display name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2450,6 +2594,7 @@
       }
     },
     "CLIInterface.exactNameFilterHelp" : {
+      "comment" : "Help text for `--name` in `ruri instance list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2467,6 +2612,7 @@
       }
     },
     "CLIInterface.excludeWorldsHelp" : {
+      "comment" : "Help text for `--without-worlds` in `ruri instance copy`. Help text for `--without-worlds` in `ruri instance export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2484,6 +2630,7 @@
       }
     },
     "CLIInterface.externalLoginIdentityHelp" : {
+      "comment" : "Help text for `--username` in `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2501,6 +2648,7 @@
       }
     },
     "CLIInterface.externalLoginPasswordStdinRequired" : {
+      "comment" : "CLI external login-start error when --password-stdin is missing.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2518,6 +2666,7 @@
       }
     },
     "CLIInterface.externalLoginProfileIdHelp" : {
+      "comment" : "Help text for `--profile` in `ruri account login complete`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2535,6 +2684,7 @@
       }
     },
     "CLIInterface.externalLoginServerHelp" : {
+      "comment" : "Help text for `--server` in `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2552,6 +2702,7 @@
       }
     },
     "CLIInterface.gameExitUnsuccessful" : {
+      "comment" : "CLI session wait failure when the game exits unsuccessfully.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2569,6 +2720,7 @@
       }
     },
     "CLIInterface.ifRevisionHelp" : {
+      "comment" : "Help text for the shared `--if-revision` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2586,6 +2738,7 @@
       }
     },
     "CLIInterface.importModpackJvmArgumentsHelp" : {
+      "comment" : "Help text for the shared `--import-jvm-arguments` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2603,6 +2756,7 @@
       }
     },
     "CLIInterface.includeSnapshotsHelp" : {
+      "comment" : "Help text for `--snapshots` in `ruri instance versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2620,6 +2774,7 @@
       }
     },
     "CLIInterface.includeWorldBackupsHelp" : {
+      "comment" : "Help text for `--with-backups` in `ruri instance copy`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2637,6 +2792,7 @@
       }
     },
     "CLIInterface.inputFileNotFound" : {
+      "comment" : "CLI content import error when the local input file does not exist.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2654,6 +2810,7 @@
       }
     },
     "CLIInterface.inputSizeLimitExceeded" : {
+      "comment" : "CLI input-reading error when stdin or an input file exceeds the allowed size.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2671,6 +2828,7 @@
       }
     },
     "CLIInterface.instanceArchiveFormatHelp" : {
+      "comment" : "Help text for `--format` in `ruri instance export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2688,6 +2846,7 @@
       }
     },
     "CLIInterface.instanceCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri instance`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2705,6 +2864,7 @@
       }
     },
     "CLIInterface.instanceComponentCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri instance component`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2722,6 +2882,7 @@
       }
     },
     "CLIInterface.instanceComponentLoadersHelp" : {
+      "comment" : "Help text for `--component` in `ruri instance component set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2739,6 +2900,7 @@
       }
     },
     "CLIInterface.instanceComponentsRestoreHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance component restore`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2756,6 +2918,7 @@
       }
     },
     "CLIInterface.instanceComponentsSetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance component set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2773,6 +2936,7 @@
       }
     },
     "CLIInterface.instanceComponentsShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance component list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2790,6 +2954,7 @@
       }
     },
     "CLIInterface.instanceComponentsVersionsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance component versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2807,6 +2972,7 @@
       }
     },
     "CLIInterface.instanceCopyHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance copy`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2824,6 +2990,7 @@
       }
     },
     "CLIInterface.instanceCreateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2841,6 +3008,7 @@
       }
     },
     "CLIInterface.instanceCreateLoadersHelp" : {
+      "comment" : "Help text for `--component` in `ruri instance create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2858,6 +3026,7 @@
       }
     },
     "CLIInterface.instanceExportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri instance export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2875,6 +3044,7 @@
       }
     },
     "CLIInterface.instanceExportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2892,6 +3062,7 @@
       }
     },
     "CLIInterface.instanceIconFileHelp" : {
+      "comment" : "Help text for `--file` in `ruri instance icon`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2909,6 +3080,7 @@
       }
     },
     "CLIInterface.instanceIconGlyphHelp" : {
+      "comment" : "Help text for `--glyph` in `ruri instance icon`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2926,6 +3098,7 @@
       }
     },
     "CLIInterface.instanceIconHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance icon`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2943,6 +3116,7 @@
       }
     },
     "CLIInterface.instanceIconResetHelp" : {
+      "comment" : "Help text for `--reset` in `ruri instance icon`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2960,6 +3134,7 @@
       }
     },
     "CLIInterface.instanceIconSelectionRequired" : {
+      "comment" : "CLI instance icon error requiring an image file, built-in glyph, or reset option.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2977,6 +3152,7 @@
       }
     },
     "CLIInterface.instanceIconTintHelp" : {
+      "comment" : "Help text for `--tint` in `ruri instance icon`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2994,6 +3170,7 @@
       }
     },
     "CLIInterface.instanceIdOrNameRequired" : {
+      "comment" : "CLI instance-target error requiring exactly one UUID operand or --name option.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3011,6 +3188,7 @@
       }
     },
     "CLIInterface.instanceImportDirectoryHelp" : {
+      "comment" : "Help text for `--directory` in `ruri instance import`. Help text for `--directory` in `ruri pack import`. Help text for `--directory` in `ruri pack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3028,6 +3206,7 @@
       }
     },
     "CLIInterface.instanceImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3045,6 +3224,7 @@
       }
     },
     "CLIInterface.instanceInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3062,6 +3242,7 @@
       }
     },
     "CLIInterface.instanceInstallRequiredBeforeLaunch" : {
+      "comment" : "CLI launch check/start error when the instance has not been installed.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3079,6 +3260,7 @@
       }
     },
     "CLIInterface.instanceListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3096,6 +3278,7 @@
       }
     },
     "CLIInterface.instanceLoaderArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri instance component versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3113,6 +3296,7 @@
       }
     },
     "CLIInterface.instanceLocationChanged" : {
+      "comment" : "CLI mutation conflict when the instance's registered location changes.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3130,6 +3314,7 @@
       }
     },
     "CLIInterface.instanceMoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance move`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3147,6 +3332,7 @@
       }
     },
     "CLIInterface.instanceNameHelp" : {
+      "comment" : "Help text for `--name` in `ruri instance create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3164,6 +3350,7 @@
       }
     },
     "CLIInterface.instanceNameLookupHelp" : {
+      "comment" : "Help text for `--name` in `ruri instance show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3181,6 +3368,7 @@
       }
     },
     "CLIInterface.instanceNotFound" : {
+      "comment" : "CLI instance lookup error when the requested UUID is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3198,6 +3386,7 @@
       }
     },
     "CLIInterface.instancePinArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri instance favorite`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3215,6 +3404,7 @@
       }
     },
     "CLIInterface.instancePinHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance favorite`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3232,6 +3422,7 @@
       }
     },
     "CLIInterface.instanceRecordOnlyHelp" : {
+      "comment" : "Help text for `--no-install` in `ruri instance create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3249,6 +3440,7 @@
       }
     },
     "CLIInterface.instanceRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3266,6 +3458,7 @@
       }
     },
     "CLIInterface.instanceRemovedDuringInstall" : {
+      "comment" : "CLI installation conflict when the instance is removed during installation.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3283,6 +3476,7 @@
       }
     },
     "CLIInterface.instanceRenameArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri instance rename`. Combined positional-argument help for `ruri directory rename`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3300,6 +3494,7 @@
       }
     },
     "CLIInterface.instanceRenameHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance rename`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3317,6 +3512,7 @@
       }
     },
     "CLIInterface.instanceRepairHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance repair`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3334,6 +3530,7 @@
       }
     },
     "CLIInterface.instanceRunDirectoryCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri directory run`, which manages instance run directories.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3351,6 +3548,7 @@
       }
     },
     "CLIInterface.instanceRunDirectoryModeArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri directory run set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3368,6 +3566,7 @@
       }
     },
     "CLIInterface.instanceRunDirectoryPathArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri directory run relocate`. Combined positional-argument help for `ruri schematic info`. Combined positional-argument help for `ruri schematic remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3385,6 +3584,7 @@
       }
     },
     "CLIInterface.instanceRunDirectoryRelocateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory run relocate`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3402,6 +3602,7 @@
       }
     },
     "CLIInterface.instanceRunDirectorySetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory run set`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3419,6 +3620,7 @@
       }
     },
     "CLIInterface.instanceRunDirectoryShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri directory run get`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3436,6 +3638,7 @@
       }
     },
     "CLIInterface.instanceSelectHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance select`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3453,6 +3656,7 @@
       }
     },
     "CLIInterface.instanceSelectedHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance selected`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3470,6 +3674,7 @@
       }
     },
     "CLIInterface.instanceShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3487,6 +3692,7 @@
       }
     },
     "CLIInterface.instanceTargetDirectoryHelp" : {
+      "comment" : "Help text for `--directory` in `ruri instance create`. Help text for `--directory` in `ruri instance copy`. Help text for `--directory` in `ruri instance move`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3504,6 +3710,7 @@
       }
     },
     "CLIInterface.invalidComponentSpecification" : {
+      "comment" : "CLI loader specification error. loader=version is the literal syntax; vanilla has no loader component.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3521,6 +3728,7 @@
       }
     },
     "CLIInterface.invalidConfigFieldValue" : {
+      "comment" : "CLI configuration validation error. %1$@ is the field name whose value is invalid.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3538,6 +3746,7 @@
       }
     },
     "CLIInterface.invalidConfigPatchJson" : {
+      "comment" : "CLI config apply error when the input patch cannot be decoded as JSON.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3555,6 +3764,7 @@
       }
     },
     "CLIInterface.invalidConfigScope" : {
+      "comment" : "CLI configuration scope error. app, defaults, and instance:<uuid> are literal scope formats.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3572,6 +3782,7 @@
       }
     },
     "CLIInterface.invalidDownloadSourceEnvironment" : {
+      "comment" : "CLI environment validation error for RURI_DOWNLOAD_SOURCE; preserve the variable name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3589,6 +3800,7 @@
       }
     },
     "CLIInterface.invalidDownloadUrlSizeOrChecksum" : {
+      "comment" : "CLI download validation error for the URL, byte size, and SHA-1; preserve --size and --sha1.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3606,6 +3818,7 @@
       }
     },
     "CLIInterface.invalidGameVersion" : {
+      "comment" : "CLI instance creation error for an invalid Minecraft version.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3623,6 +3836,7 @@
       }
     },
     "CLIInterface.invalidInstanceName" : {
+      "comment" : "CLI instance creation or rename error for an invalid name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3640,6 +3854,7 @@
       }
     },
     "CLIInterface.invalidLoginFlow" : {
+      "comment" : "CLI login completion error for an invalid pending authentication record.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3657,6 +3872,7 @@
       }
     },
     "CLIInterface.invalidManualFileSpecification" : {
+      "comment" : "CLI manual-download input error. fileID=path is the literal syntax; file IDs must be unique.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3674,6 +3890,7 @@
       }
     },
     "CLIInterface.invalidMicrosoftClientId" : {
+      "comment" : "CLI configuration validation error for the Microsoft client ID; an empty string clears the custom ID.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3691,6 +3908,7 @@
       }
     },
     "CLIInterface.invalidOptionChoice" : {
+      "comment" : "CLI option validation error. %1$@ is the option name without --; %2$@ is the comma-separated list of allowed literal values.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3708,6 +3926,7 @@
       }
     },
     "CLIInterface.invalidOutputFormatCombination" : {
+      "comment" : "CLI output validation error. --output, --json, text, json, and ndjson are literal options and values.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3725,6 +3944,7 @@
       }
     },
     "CLIInterface.invalidRunDirectoryModeOrPath" : {
+      "comment" : "CLI run-directory validation error. isolated, shared, custom, and --path are literal inputs.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3742,6 +3962,7 @@
       }
     },
     "CLIInterface.javaAddHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java add`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3759,6 +3980,7 @@
       }
     },
     "CLIInterface.javaArchitectureFilterHelp" : {
+      "comment" : "Help text for `--architecture` in `ruri java available`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3776,6 +3998,7 @@
       }
     },
     "CLIInterface.javaCatalogEntryNotFound" : {
+      "comment" : "CLI Java install error when the requested catalog runtime ID is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3793,6 +4016,7 @@
       }
     },
     "CLIInterface.javaCatalogHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java available`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3810,6 +4034,7 @@
       }
     },
     "CLIInterface.javaCheckIncompleteInstallationsHelp" : {
+      "comment" : "Help text for `--partial` in `ruri java references`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3827,6 +4052,7 @@
       }
     },
     "CLIInterface.javaCleanIncompleteInstallationHelp" : {
+      "comment" : "Help text for `--partial` in `ruri java remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3844,6 +4070,7 @@
       }
     },
     "CLIInterface.javaCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri java`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3861,6 +4088,7 @@
       }
     },
     "CLIInterface.javaDefaultHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java default`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3878,6 +4106,7 @@
       }
     },
     "CLIInterface.javaForgetHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java forget`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3895,6 +4124,7 @@
       }
     },
     "CLIInterface.javaInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3912,6 +4142,7 @@
       }
     },
     "CLIInterface.javaListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3929,6 +4160,7 @@
       }
     },
     "CLIInterface.javaMajorFilterHelp" : {
+      "comment" : "Help text for `--major` in `ruri java available`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3946,6 +4178,7 @@
       }
     },
     "CLIInterface.javaMajorRequiredForMajorMode" : {
+      "comment" : "CLI configuration error for Java mode major. java.major is a literal field key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3963,6 +4196,7 @@
       }
     },
     "CLIInterface.javaPathRequiredForPathMode" : {
+      "comment" : "CLI configuration error for Java mode path. java.path is a literal field key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3980,6 +4214,7 @@
       }
     },
     "CLIInterface.javaReferencesHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java references`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -3997,6 +4232,7 @@
       }
     },
     "CLIInterface.javaRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4014,6 +4250,7 @@
       }
     },
     "CLIInterface.javaRepairHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri java repair`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4031,6 +4268,7 @@
       }
     },
     "CLIInterface.javaResetReferencesHelp" : {
+      "comment" : "Help text for `--reset-references` in `ruri java remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4048,6 +4286,7 @@
       }
     },
     "CLIInterface.jsonOutputHelp" : {
+      "comment" : "Help for the global --json flag returning one JSON result on standard output.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4065,6 +4304,7 @@
       }
     },
     "CLIInterface.keepCurrentAccountHelp" : {
+      "comment" : "Help text for `--no-select` in `ruri account add-offline`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4082,6 +4322,7 @@
       }
     },
     "CLIInterface.keepSourceAfterMoveHelp" : {
+      "comment" : "Help text for `--keep-source` in `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4099,6 +4340,7 @@
       }
     },
     "CLIInterface.launchAccountHelp" : {
+      "comment" : "Help text for `--account` in `ruri launch preflight`. Help text for `--account` in `ruri launch start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4116,6 +4358,7 @@
       }
     },
     "CLIInterface.launchAccountRequired" : {
+      "comment" : "CLI launch error requiring an active account or explicit --account UUID.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4133,6 +4376,7 @@
       }
     },
     "CLIInterface.launchCheckHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri launch preflight`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4150,6 +4394,7 @@
       }
     },
     "CLIInterface.launchCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri launch`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4167,6 +4412,7 @@
       }
     },
     "CLIInterface.launchStartHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri launch start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4184,6 +4430,7 @@
       }
     },
     "CLIInterface.libraryImportRecoveryModeHelp" : {
+      "comment" : "Help text for `--mode` in `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4201,6 +4448,7 @@
       }
     },
     "CLIInterface.limitOutOfRange" : {
+      "comment" : "CLI pagination validation error for --limit outside the allowed 1 to 1000 range.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4218,6 +4466,7 @@
       }
     },
     "CLIInterface.loaderFilterHelp" : {
+      "comment" : "Help text for `--loader` in `ruri catalog search`. Help text for `--loader` in `ruri catalog versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4235,6 +4484,7 @@
       }
     },
     "CLIInterface.localModificationsReplacementRequiresConfirmation" : {
+      "comment" : "CLI pack update error requiring --replace and --yes to discard local modifications.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4252,6 +4502,7 @@
       }
     },
     "CLIInterface.logFollowOutputFormatRequired" : {
+      "comment" : "CLI session logs error: --follow requires text or ndjson output.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4269,6 +4520,7 @@
       }
     },
     "CLIInterface.logLineLimitOutOfRange" : {
+      "comment" : "CLI session logs error for --lines outside the 1 to 10000 range.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4286,6 +4538,7 @@
       }
     },
     "CLIInterface.loginDataDirectoryMismatch" : {
+      "comment" : "CLI login completion error when the data directory differs from login start.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4303,6 +4556,7 @@
       }
     },
     "CLIInterface.loginFlowExpired" : {
+      "comment" : "CLI login completion error when the pending authentication flow has expired.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4320,6 +4574,7 @@
       }
     },
     "CLIInterface.loginProfileAlreadySelected" : {
+      "comment" : "CLI login completion conflict when another player profile was already selected for this flow.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4337,6 +4592,7 @@
       }
     },
     "CLIInterface.loginProfileSelectionRequired" : {
+      "comment" : "CLI external login completion error requiring a player profile returned by login start.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4354,6 +4610,7 @@
       }
     },
     "CLIInterface.loginProviderHelp" : {
+      "comment" : "Help text for `--provider` in `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4371,6 +4628,7 @@
       }
     },
     "CLIInterface.loginServerOrIdentityChanged" : {
+      "comment" : "CLI login conflict when the external authentication server or identity changes.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4388,6 +4646,7 @@
       }
     },
     "CLIInterface.managedDirectoryMustBeEmpty" : {
+      "comment" : "CLI managed-directory creation error when the destination is not empty.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4405,6 +4664,7 @@
       }
     },
     "CLIInterface.manualContentDownloadRequired" : {
+      "comment" : "CLI CurseForge installation guidance when files need manual download. --manual fileID=path is literal syntax.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4422,6 +4682,7 @@
       }
     },
     "CLIInterface.manualCurseForgeFileHelp" : {
+      "comment" : "Help text for the shared `--manual` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4439,6 +4700,7 @@
       }
     },
     "CLIInterface.manualModpackArchiveHelp" : {
+      "comment" : "Help text for `--archive` in `ruri pack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4456,6 +4718,7 @@
       }
     },
     "CLIInterface.manualModpackDownloadRequired" : {
+      "comment" : "CLI modpack install guidance when the archive needs manual download. --archive path is literal syntax.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4473,6 +4736,7 @@
       }
     },
     "CLIInterface.manualModpackUpdateArchiveHelp" : {
+      "comment" : "Help text for `--archive` in `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4490,6 +4754,7 @@
       }
     },
     "CLIInterface.messageLanguageHelp" : {
+      "comment" : "Help for the global --language option controlling human-readable CLI messages.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4507,6 +4772,7 @@
       }
     },
     "CLIInterface.microsoftLoginUsesBrowser" : {
+      "comment" : "CLI login-start validation message explaining Microsoft browser authorization rather than password input.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4524,6 +4790,7 @@
       }
     },
     "CLIInterface.minecraftVersionFilterHelp" : {
+      "comment" : "Help text for `--game` in `ruri catalog search`. Help text for `--game` in `ruri catalog versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4541,6 +4808,7 @@
       }
     },
     "CLIInterface.minecraftVersionHelp" : {
+      "comment" : "Help text for `--game` in `ruri instance create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4558,6 +4826,7 @@
       }
     },
     "CLIInterface.minecraftVersionsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri instance versions`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4575,6 +4844,7 @@
       }
     },
     "CLIInterface.missingArgument" : {
+      "comment" : "CLI missing-operand error. %1$@ is the positional operand name, or its one-based position if unnamed.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4592,6 +4862,7 @@
       }
     },
     "CLIInterface.missingOption" : {
+      "comment" : "CLI required-option validation error. %1$@ is the option name without the leading --.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4609,6 +4880,7 @@
       }
     },
     "CLIInterface.modpackCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri pack`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4626,6 +4898,7 @@
       }
     },
     "CLIInterface.modpackImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4643,6 +4916,7 @@
       }
     },
     "CLIInterface.modpackInstallHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack install`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4660,6 +4934,7 @@
       }
     },
     "CLIInterface.modpackMetadataNotFound" : {
+      "comment" : "CLI pack query/update error when the instance has no installed-modpack metadata.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4677,6 +4952,7 @@
       }
     },
     "CLIInterface.modpackReleaseNotFound" : {
+      "comment" : "CLI pack release lookup error when the requested release is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4694,6 +4970,7 @@
       }
     },
     "CLIInterface.modpackRollbackHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack rollback`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4711,6 +4988,7 @@
       }
     },
     "CLIInterface.modpackShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4728,6 +5006,7 @@
       }
     },
     "CLIInterface.modpackTargetDirectoryNotFound" : {
+      "comment" : "CLI modpack import/install error when the destination game directory is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4745,6 +5024,7 @@
       }
     },
     "CLIInterface.modpackUpdateBackupNotFound" : {
+      "comment" : "CLI pack rollback error when no previous update backup is available.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4762,6 +5042,7 @@
       }
     },
     "CLIInterface.modpackUpdateFileHelp" : {
+      "comment" : "Help text for `--file` in `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4779,6 +5060,7 @@
       }
     },
     "CLIInterface.modpackUpdateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4796,6 +5078,7 @@
       }
     },
     "CLIInterface.modpackUpdateSourceRequired" : {
+      "comment" : "CLI pack update error requiring a local --file archive or remote --version release.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4813,6 +5096,7 @@
       }
     },
     "CLIInterface.modpackUpdateVersionHelp" : {
+      "comment" : "Help text for `--version` in `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4830,6 +5114,7 @@
       }
     },
     "CLIInterface.modpackVersionsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri pack update-check`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4847,6 +5132,7 @@
       }
     },
     "CLIInterface.negativeOffset" : {
+      "comment" : "CLI pagination validation error for a negative --offset.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4864,6 +5150,7 @@
       }
     },
     "CLIInterface.newInstanceNameHelp" : {
+      "comment" : "Help text for the shared `--name` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4881,6 +5168,7 @@
       }
     },
     "CLIInterface.operationCancelled" : {
+      "comment" : "CLI failure message when a requested operation is cancelled.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4898,6 +5186,7 @@
       }
     },
     "CLIInterface.operationLockOpenFailed" : {
+      "comment" : "CLI resource-lock error when opening the operation lock fails.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4915,6 +5204,7 @@
       }
     },
     "CLIInterface.outputFileAlreadyExists" : {
+      "comment" : "CLI export error when the destination file already exists.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4932,6 +5222,7 @@
       }
     },
     "CLIInterface.outputFormatHelp" : {
+      "comment" : "Help for the global --output option. text, json, and ndjson are literal format names.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4949,6 +5240,7 @@
       }
     },
     "CLIInterface.passwordStdinHelp" : {
+      "comment" : "Help text for `--password-stdin` in `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4966,6 +5258,7 @@
       }
     },
     "CLIInterface.positionalArgumentCountMismatch" : {
+      "comment" : "CLI operand-count error. %1$@ is the space-separated expected operand names; %2$@ is the actual operand count formatted as text.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -4983,6 +5276,7 @@
       }
     },
     "CLIInterface.problemSessionsOnlyHelp" : {
+      "comment" : "Help text for `--problems` in `ruri session list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5000,6 +5294,7 @@
       }
     },
     "CLIInterface.quickPlayWorldHelp" : {
+      "comment" : "Help text for `--world` in `ruri launch preflight`. Help text for `--world` in `ruri launch start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5017,6 +5312,7 @@
       }
     },
     "CLIInterface.quietProgressHelp" : {
+      "comment" : "Help for the global --quiet flag suppressing progress on standard error.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5034,6 +5330,7 @@
       }
     },
     "CLIInterface.reauthenticateAccountHelp" : {
+      "comment" : "Help text for `--account` in `ruri account login start`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5051,6 +5348,7 @@
       }
     },
     "CLIInterface.recoveryApplyHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5068,6 +5366,7 @@
       }
     },
     "CLIInterface.recoveryCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri recovery`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5085,6 +5384,7 @@
       }
     },
     "CLIInterface.recoveryInstanceFilterHelp" : {
+      "comment" : "Help text for `--instance` in `ruri recovery list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5102,6 +5402,7 @@
       }
     },
     "CLIInterface.recoveryListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri recovery list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5119,6 +5420,7 @@
       }
     },
     "CLIInterface.recoveryTargetArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5136,6 +5438,7 @@
       }
     },
     "CLIInterface.recoveryTransactionHelp" : {
+      "comment" : "Help text for `--transaction` in `ruri recovery apply`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5153,6 +5456,7 @@
       }
     },
     "CLIInterface.recoveryTransactionRequired" : {
+      "comment" : "CLI recovery error requiring the transaction UUID returned by recovery list.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5170,6 +5474,7 @@
       }
     },
     "CLIInterface.replaceLocalModificationsHelp" : {
+      "comment" : "Help text for `--replace` in `ruri pack update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5187,6 +5492,7 @@
       }
     },
     "CLIInterface.resourceInUseByAnotherProcess" : {
+      "comment" : "CLI resource-lock error when another process holds the lock.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5204,6 +5510,7 @@
       }
     },
     "CLIInterface.resultLimitHelp" : {
+      "comment" : "Help text for the shared `--limit` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5221,6 +5528,7 @@
       }
     },
     "CLIInterface.resultOffsetHelp" : {
+      "comment" : "Help text for the shared `--offset` option in CLI command help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5238,6 +5546,7 @@
       }
     },
     "CLIInterface.rootCommandHelp" : {
+      "comment" : "Root ruri command description in CLI help and discovery.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5255,6 +5564,7 @@
       }
     },
     "CLIInterface.schemaCommandHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schema`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5272,6 +5582,7 @@
       }
     },
     "CLIInterface.schematicCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri schematic`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5289,6 +5600,7 @@
       }
     },
     "CLIInterface.schematicCreateFolderHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic mkdir`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5306,6 +5618,7 @@
       }
     },
     "CLIInterface.schematicExportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri schematic export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5323,6 +5636,7 @@
       }
     },
     "CLIInterface.schematicExportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5340,6 +5654,7 @@
       }
     },
     "CLIInterface.schematicFolderArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri schematic mkdir`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5357,6 +5672,7 @@
       }
     },
     "CLIInterface.schematicImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5374,6 +5690,7 @@
       }
     },
     "CLIInterface.schematicListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5391,6 +5708,7 @@
       }
     },
     "CLIInterface.schematicNotFound" : {
+      "comment" : "CLI schematic lookup error when the requested file or folder is absent.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5408,6 +5726,7 @@
       }
     },
     "CLIInterface.schematicParentDirectoryHelp" : {
+      "comment" : "Help text for `--directory` in `ruri schematic mkdir`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5425,6 +5744,7 @@
       }
     },
     "CLIInterface.schematicRelativePathHelp" : {
+      "comment" : "Help text for `--directory` in `ruri schematic list`. Help text for `--directory` in `ruri schematic import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5442,6 +5762,7 @@
       }
     },
     "CLIInterface.schematicRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5459,6 +5780,7 @@
       }
     },
     "CLIInterface.schematicShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri schematic info`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5476,6 +5798,7 @@
       }
     },
     "CLIInterface.selectedContentFilesNotFound" : {
+      "comment" : "CLI content selection error when requested installed files are missing.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5493,6 +5816,7 @@
       }
     },
     "CLIInterface.selectedVersionIncompatible" : {
+      "comment" : "CLI content install error when the selected project version is incompatible with the instance.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5510,6 +5834,7 @@
       }
     },
     "CLIInterface.sessionAnalyzeHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session diagnose`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5527,6 +5852,7 @@
       }
     },
     "CLIInterface.sessionCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri session`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5544,6 +5870,7 @@
       }
     },
     "CLIInterface.sessionExportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri session export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5561,6 +5888,7 @@
       }
     },
     "CLIInterface.sessionExportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5578,6 +5906,7 @@
       }
     },
     "CLIInterface.sessionInstanceIdFilterHelp" : {
+      "comment" : "Help text for `--instance` in `ruri session list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5595,6 +5924,7 @@
       }
     },
     "CLIInterface.sessionInstanceNameFilterHelp" : {
+      "comment" : "Help text for `--search` in `ruri session list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5612,6 +5942,7 @@
       }
     },
     "CLIInterface.sessionKillHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session stop`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5629,6 +5960,7 @@
       }
     },
     "CLIInterface.sessionListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5646,6 +5978,7 @@
       }
     },
     "CLIInterface.sessionLogFollowHelp" : {
+      "comment" : "Help text for `--follow` in `ruri session logs`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5663,6 +5996,7 @@
       }
     },
     "CLIInterface.sessionLogLineLimitHelp" : {
+      "comment" : "Help text for `--lines` in `ruri session logs`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5680,6 +6014,7 @@
       }
     },
     "CLIInterface.sessionLogSourceHelp" : {
+      "comment" : "Help text for `--source` in `ruri session logs`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5697,6 +6032,7 @@
       }
     },
     "CLIInterface.sessionLogsHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session logs`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5714,6 +6050,7 @@
       }
     },
     "CLIInterface.sessionMonitorUnavailable" : {
+      "comment" : "CLI session control error when the monitor process is unavailable.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5731,6 +6068,7 @@
       }
     },
     "CLIInterface.sessionShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5748,6 +6086,7 @@
       }
     },
     "CLIInterface.sessionStopHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session quit`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5765,6 +6104,7 @@
       }
     },
     "CLIInterface.sessionTargetArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri session show`. Combined positional-argument help for `ruri session wait`. Combined positional-argument help for `ruri session quit`. Combined positional-argument help for `ruri session stop`. Combined positional-argument help for `ruri session logs`. Combined positional-argument help for `ruri session diagnose`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5782,6 +6122,7 @@
       }
     },
     "CLIInterface.sessionWaitHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri session wait`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5799,6 +6140,7 @@
       }
     },
     "CLIInterface.showEnvironmentValuesHelp" : {
+      "comment" : "Help text for `--show-secrets` in `ruri config get`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5816,6 +6158,7 @@
       }
     },
     "CLIInterface.stateChangedSinceRead" : {
+      "comment" : "CLI conditional-update error when the current state revision differs from the previously read revision.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5833,6 +6176,7 @@
       }
     },
     "CLIInterface.targetDirectoryRemoved" : {
+      "comment" : "CLI mutation conflict when the destination directory is removed before committing.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5850,6 +6194,7 @@
       }
     },
     "CLIInterface.unfinishedOperationRecoveryRequired" : {
+      "comment" : "CLI read-safety error requiring recovery of an unfinished operation before inspecting data.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5867,6 +6212,7 @@
       }
     },
     "CLIInterface.uninstallAction" : {
+      "comment" : "Uninstall button in the application's command-line tool settings section.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5884,6 +6230,7 @@
       }
     },
     "CLIInterface.unknownAccountAction" : {
+      "comment" : "CLI account dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5901,6 +6248,7 @@
       }
     },
     "CLIInterface.unknownCommand" : {
+      "comment" : "CLI dispatcher error for an unrecognized command.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5918,6 +6266,7 @@
       }
     },
     "CLIInterface.unknownCommandPath" : {
+      "comment" : "CLI command discovery error for an unregistered resource/action path.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5935,6 +6284,7 @@
       }
     },
     "CLIInterface.unknownConfigField" : {
+      "comment" : "CLI configuration lookup error for an unrecognized field name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5952,6 +6302,7 @@
       }
     },
     "CLIInterface.unknownConfigPatchOperation" : {
+      "comment" : "CLI config apply error. set, reset, and inherit are literal patch operation names.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5969,6 +6320,7 @@
       }
     },
     "CLIInterface.unknownContentAction" : {
+      "comment" : "CLI content dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -5986,6 +6338,7 @@
       }
     },
     "CLIInterface.unknownDataPackAction" : {
+      "comment" : "CLI data-pack dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6003,6 +6356,7 @@
       }
     },
     "CLIInterface.unknownDirectoryAction" : {
+      "comment" : "CLI directory dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6020,6 +6374,7 @@
       }
     },
     "CLIInterface.unknownIconGlyphOrTint" : {
+      "comment" : "CLI instance icon error when the requested built-in glyph or tint is unknown.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6037,6 +6392,7 @@
       }
     },
     "CLIInterface.unknownInstanceAction" : {
+      "comment" : "CLI instance dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6054,6 +6410,7 @@
       }
     },
     "CLIInterface.unknownJavaAction" : {
+      "comment" : "CLI Java dispatcher error for an unrecognized runtime action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6071,6 +6428,7 @@
       }
     },
     "CLIInterface.unknownLoader" : {
+      "comment" : "CLI instance component error for an unknown loader kind.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6088,6 +6446,7 @@
       }
     },
     "CLIInterface.unknownNamedConfigField" : {
+      "comment" : "CLI patch validation error. %1$@ is the requested configuration field or group key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6105,6 +6464,7 @@
       }
     },
     "CLIInterface.unknownOrDuplicateConfigField" : {
+      "comment" : "CLI patch validation error. %1$@ is the unknown or duplicated configuration field key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6122,6 +6482,7 @@
       }
     },
     "CLIInterface.unknownOrEmptyConfigGroup" : {
+      "comment" : "CLI patch validation error. %1$@ is the unknown or empty configuration group key.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6139,6 +6500,7 @@
       }
     },
     "CLIInterface.unknownRecoveryKind" : {
+      "comment" : "CLI recovery dispatcher error for an unrecognized operation kind.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6156,6 +6518,7 @@
       }
     },
     "CLIInterface.unknownSessionAction" : {
+      "comment" : "CLI session dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6173,6 +6536,7 @@
       }
     },
     "CLIInterface.unknownWorldAction" : {
+      "comment" : "CLI world dispatcher error for an unrecognized action.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6190,6 +6554,7 @@
       }
     },
     "CLIInterface.unsupportedLanguage" : {
+      "comment" : "CLI language validation error for an unsupported language code.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6207,6 +6572,7 @@
       }
     },
     "CLIInterface.updateAllContentFilesHelp" : {
+      "comment" : "Help text for `--all` in `ruri content update`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6224,6 +6590,7 @@
       }
     },
     "CLIInterface.validUuidRequired" : {
+      "comment" : "CLI target validation error for an invalid UUID identifier.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6241,6 +6608,7 @@
       }
     },
     "CLIInterface.worldBackupArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri world backup restore`. Combined positional-argument help for `ruri world backup remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6258,6 +6626,7 @@
       }
     },
     "CLIInterface.worldBackupCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri world backup`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6275,6 +6644,7 @@
       }
     },
     "CLIInterface.worldBackupCreateHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world backup create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6292,6 +6662,7 @@
       }
     },
     "CLIInterface.worldBackupListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world backup list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6309,6 +6680,7 @@
       }
     },
     "CLIInterface.worldBackupNotFound" : {
+      "comment" : "CLI world backup lookup error when the requested backup ID is missing.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6326,6 +6698,7 @@
       }
     },
     "CLIInterface.worldBackupReasonHelp" : {
+      "comment" : "Help text for `--reason` in `ruri world backup create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6343,6 +6716,7 @@
       }
     },
     "CLIInterface.worldBackupRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world backup remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6360,6 +6734,7 @@
       }
     },
     "CLIInterface.worldBackupReplaceHelp" : {
+      "comment" : "Help text for `--replace` in `ruri world backup restore`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6377,6 +6752,7 @@
       }
     },
     "CLIInterface.worldBackupRestoreHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world backup restore`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6394,6 +6770,7 @@
       }
     },
     "CLIInterface.worldCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri world`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6411,6 +6788,7 @@
       }
     },
     "CLIInterface.worldExportArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri world export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6428,6 +6806,7 @@
       }
     },
     "CLIInterface.worldExportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world export`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6445,6 +6824,7 @@
       }
     },
     "CLIInterface.worldFolderArgumentsHelp" : {
+      "comment" : "Combined positional-argument help for `ruri world show`. Combined positional-argument help for `ruri world remove`. Combined positional-argument help for `ruri world backup create`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6462,6 +6842,7 @@
       }
     },
     "CLIInterface.worldImportHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world import`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6479,6 +6860,7 @@
       }
     },
     "CLIInterface.worldListHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world list`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6496,6 +6878,7 @@
       }
     },
     "CLIInterface.worldNotFound" : {
+      "comment" : "CLI world lookup error when the requested world folder is missing.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6513,6 +6896,7 @@
       }
     },
     "CLIInterface.worldRemoveHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world remove`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -6530,6 +6914,7 @@
       }
     },
     "CLIInterface.worldShowHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri world show`.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

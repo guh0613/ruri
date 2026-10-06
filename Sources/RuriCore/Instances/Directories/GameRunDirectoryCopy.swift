@@ -35,7 +35,7 @@ public struct RunDirectoryCopyFailure: LocalizedError, Sendable {
     public let message: String
     public let preservedCopy: URL?
     public let cancelled: Bool
-    public var errorDescription: String? { message + (preservedCopy.map { Messages.CoreGameRunDirectoryCopy.workCopyRetained($0.path).localized } ?? "") }
+    public var errorDescription: String? { preservedCopy.map { Messages.CoreGameRunDirectoryCopy.failureWithWorkCopy(message, $0.path).localized } ?? message }
 }
 
 extension GameRunDirectoryChange {
@@ -269,7 +269,7 @@ extension GameRunDirectoryChange {
         try FileManager.default.createDirectory(at: recovery.deletingLastPathComponent(), withIntermediateDirectories: true)
         try RunDirectoryCopyGuard.clear(journal, paths: access.targetPaths)
         try RunDirectoryFileCopy.moveWithoutReplacing(RunDirectoryCopyJournal.root(paths: access.sourcePaths, instanceID: journal.original.id), to: recovery)
-        let warning = retained.isEmpty ? nil : Messages.CoreGameRunDirectoryCopy.changedFileIdentitiesRetained(Int64(retained.count), String(describing: retained.prefix(5).joined(separator: "、"))).localized
+        let warning = retained.isEmpty ? nil : Messages.CoreGameRunDirectoryCopy.changedFileIdentitiesRetained(Int64(retained.count), String(describing: LocalizedFormat.list(Array(retained.prefix(5))))).localized
         if journal.stagingOnTarget == true {
             let workspace = try journal.workspace(paths: access.sourcePaths)
             if FileManager.default.fileExists(atPath: workspace.path) { return (workspace, warning) }

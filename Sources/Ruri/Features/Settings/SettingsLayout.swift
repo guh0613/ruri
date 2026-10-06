@@ -132,7 +132,7 @@ struct SettingsActionRow: View {
                 Text(detail).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 8)
-            Button(button, action: action).accessibilityLabel(title + "，" + button)
+            Button(button, action: action).accessibilityLabel(Messages.AppSettingsLayout.actionLabel(title, button).localized)
         }.padding(.vertical, 3)
     }
 }

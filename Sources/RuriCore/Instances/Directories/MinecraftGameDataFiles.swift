@@ -41,7 +41,7 @@ enum MinecraftGameDataFiles {
         let reserved = Set(reservedNames(paths: targetPaths, instanceID: instanceID).map(key))
         let collisions = Set(source.game.compactMap { $0.path.split(separator: "/").first.map(String.init) }).filter { reserved.contains(key($0)) }
         if !collisions.isEmpty {
-            return Messages.CoreMinecraftGameDataFiles.contentCollisions(String(describing: collisions.sorted().joined(separator: "、"))).localized
+            return Messages.CoreMinecraftGameDataFiles.contentCollisions(String(describing: LocalizedFormat.list(Array(collisions.sorted())))).localized
         }
         return nil
     }

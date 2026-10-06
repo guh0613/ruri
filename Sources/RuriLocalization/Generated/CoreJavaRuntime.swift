@@ -15,6 +15,12 @@ extension Messages {
         public static var executableSelectionRequired: LocalizedMessage {
             .init(key: "CoreJavaRuntime.executableSelectionRequired", table: "Errors", fallback: "请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
         }
+        /// 需要 Java %1$@（Intel / Rosetta）。请到设置 → Java 安装或选择该版本。
+        ///
+        /// Resource: `Errors.CoreJavaRuntime.intelJavaVersionRequired`.
+        public static func intelJavaVersionRequired(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreJavaRuntime.intelJavaVersionRequired", table: "Errors", fallback: "需要 Java %1$@（Intel / Rosetta）。请到设置 → Java 安装或选择该版本。", arguments: [.text(value0)])
+        }
         /// 无法运行 Java：%1$@
         ///
         /// Resource: `Errors.CoreJavaRuntime.javaLaunchFailed`.
@@ -66,6 +72,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreJavaRuntime.architectureMismatch": .init("Java 架构与游戏原生库不匹配，需要 %1$@。", [.text]),
             "Errors:CoreJavaRuntime.executableSelectionRequired": .init("请选择 java 可执行文件、JDK 包或 Java Home 文件夹。", []),
+            "Errors:CoreJavaRuntime.intelJavaVersionRequired": .init("需要 Java %1$@（Intel / Rosetta）。请到设置 → Java 安装或选择该版本。", [.text]),
             "Errors:CoreJavaRuntime.javaLaunchFailed": .init("无法运行 Java：%1$@", [.text]),
             "Errors:CoreJavaRuntime.javaNotExecutable": .init("Java 不可执行：%1$@", [.text]),
             "Errors:CoreJavaRuntime.javaProbeTimedOut": .init("Java 检测超时，请检查所选程序是否为可用的 Java。", []),
