@@ -8,6 +8,9 @@ struct PreferencesView: View {
     @Environment(SoftwareUpdater.self) private var updater
     @State private var showLaunchDefaults = false
     @State private var language = LocalizationContext.savedLanguage()
+    /// The interface language is fixed for the process, so only a choice that
+    /// differs from the one this launch started with needs a restart.
+    private static let launchLanguage = LocalizationContext.savedLanguage()
     var body: some View {
         Form {
             appearance
@@ -38,17 +41,18 @@ struct PreferencesView: View {
                 Text(Messages.AppPreferencesView.dark.localized).tag("dark")
             }.disabled(model.readOnly)
             if LocalizationContext.supportedLanguages.count > 1 {
-                Picker(Messages.Common.language.localized, selection: $language) {
+                Picker(selection: $language) {
                     Text(Messages.Common.followSystem.localized).tag(LocalizationContext.systemPreference)
                     ForEach(LocalizationContext.supportedLanguages, id: \.self) { identifier in
                         Text(Locale(identifier: identifier).localizedString(forIdentifier: identifier) ?? identifier).tag(identifier)
                     }
+                } label: {
+                    Text(Messages.Common.language.localized)
+                    if language != Self.launchLanguage { Text(Messages.Common.languageRestart.localized) }
                 }
             }
         } header: {
             Text(Messages.AppPreferencesView.appearance.localized)
-        } footer: {
-            if LocalizationContext.supportedLanguages.count > 1 { Text(Messages.Common.languageRestart.localized) }
         }
     }
 
