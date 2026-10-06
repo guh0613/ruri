@@ -21,6 +21,7 @@ struct PreferencesView: View {
         .formStyle(.grouped).scrollContentBackground(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .sheet(isPresented: $showLaunchDefaults) { DefaultLaunchSettingsView(settings: model.state.settings) }
+        .onChange(of: language) { LocalizationContext.savePreference(language) }
         .onChange(of: model.state.settings.appearance) { model.save() }
         .onChange(of: model.state.settings.isolationPolicy) { model.save() }
         .onChange(of: model.state.settings.concurrentDownloads) { model.save(); Task { await model.applyNetworkSettings() } }

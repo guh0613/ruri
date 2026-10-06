@@ -8,9 +8,7 @@ public struct LocalizationContext: Sendable {
 
     public let language: String
     public let regionIdentifier: String
-    private let resources: Bundle?
-    private let translated: Bundle?
-    private let base: Bundle?
+    private let fallbackBundles: [(language: String, bundle: Bundle)]
     public let pseudolocalized: Bool
 
     /// CLI language is independent of the application's saved UI preference.
@@ -39,12 +37,24 @@ public struct LocalizationContext: Sendable {
     public init(language requested: String? = nil, region: String = Locale.current.identifier,
                 preferences: [String] = Locale.preferredLanguages, resources: Bundle? = LocalizationResources.bundle,
                 pseudolocalized: Bool = false, commandLine: Bool = false, available: [String]? = nil) {
-        self.resources = resources
         self.language = Self.resolve(requested, available: available ?? (commandLine ? SupportedLocalizations.commandLineLanguages : SupportedLocalizations.languages), preferences: preferences)
         self.regionIdentifier = region
         self.pseudolocalized = pseudolocalized
-        self.translated = Self.localizationBundle(language, in: resources)
-        self.base = Self.localizationBundle(Self.baseLanguage, in: resources)
+        let fallback = self.language.lowercased().hasPrefix("zh-") ? Self.baseLanguage : "en"
+        var seen = Set<String>()
+        self.fallbackBundles = [self.language, fallback, Self.baseLanguage].compactMap { language in
+            guard seen.insert(language).inserted, let bundle = Self.localizationBundle(language, in: resources) else { return nil }
+            return (language, bundle)
+        }
+    }
+
+    public static func savePreference(_ language: String, in preferences: UserDefaults = .standard) {
+        preferences.set(language, forKey: preferenceKey)
+        if language == systemPreference {
+            preferences.removeObject(forKey: "AppleLanguages")
+        } else {
+            preferences.set([language], forKey: "AppleLanguages")
+        }
     }
 
     public static func resolve(_ requested: String?, available: [String], preferences: [String]) -> String {
@@ -63,7 +73,9 @@ public struct LocalizationContext: Sendable {
 
     /// Language controls words and units; the user's region, calendar and time
     /// zone remain independent. Machine-readable data never uses this locale.
-    public var formatLocale: Locale {
+    public var formatLocale: Locale { formatLocale(language: language) }
+
+    func formatLocale(language: String) -> Locale {
         var components = Locale.Components(identifier: regionIdentifier)
         components.languageComponents = Locale.Language.Components(identifier: language)
         return Locale(components: components)
@@ -76,10 +88,17 @@ public struct LocalizationContext: Sendable {
         guard let definition = MessageCatalog.definitions[message.table + ":" + message.key],
               definition.accepts(message.arguments) else { return message.fallback }
         let missing = "__RURI_MISSING_LOCALIZATION_817995BA__"
-        let value = translated?.localizedString(forKey: message.key, value: missing, table: message.table)
-        let fallback = base?.localizedString(forKey: message.key, value: definition.fallback, table: message.table) ?? definition.fallback
-        let template = value == nil || value == missing ? fallback : value!
-        let rendered = message.format(template, context: self)
+        var template = definition.fallback
+        var formatLanguage = Self.baseLanguage
+        for (language, bundle) in fallbackBundles {
+            let value = bundle.localizedString(forKey: message.key, value: missing, table: message.table)
+            if value != missing {
+                template = value
+                formatLanguage = language
+                break
+            }
+        }
+        let rendered = message.format(template, context: self, language: formatLanguage)
         return pseudolocalized ? "⟦" + rendered + " " + String(repeating: "ø", count: min(80, max(8, template.count))) + "⟧" : rendered
     }
 }

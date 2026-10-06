@@ -65,8 +65,8 @@ public struct LocalizedMessage: Codable, Equatable, Sendable {
         })
     }
 
-    func format(_ value: String, context: LocalizationContext) -> String {
+    func format(_ value: String, context: LocalizationContext, language: String) -> String {
         guard !arguments.isEmpty else { return value.replacingOccurrences(of: "%%", with: "%") }
-        return String(format: value, locale: context.formatLocale, arguments: arguments.map { $0.value(in: context) })
+        return String(format: value, locale: context.formatLocale(language: language), arguments: arguments.map { $0.value(in: context) })
     }
 }

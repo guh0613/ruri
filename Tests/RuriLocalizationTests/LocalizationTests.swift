@@ -26,7 +26,8 @@ struct LocalizationTests {
             let directory = root.appendingPathComponent(language + ".lproj")
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let cancel = language == "en" ? "Cancel" : "取消"
-            try Data(("\"Common.cancel\" = \"" + cancel + "\";\n").utf8).write(to: directory.appendingPathComponent("Common.strings"))
+            let done = language == "en" ? "Done" : "完成"
+            try Data(("\"Common.cancel\" = \"" + cancel + "\";\n\"Common.done\" = \"" + done + "\";\n").utf8).write(to: directory.appendingPathComponent("Common.strings"))
         }
         let spec: [String: Any] = [
             "Common.fileCount": ["NSStringLocalizedFormatKey": "%#@files@", "files": ["NSStringFormatSpecTypeKey": "NSStringPluralRuleType", "NSStringFormatValueTypeKey": "lld", "one": "%lld file", "other": "%lld files"]],
@@ -45,7 +46,7 @@ struct LocalizationTests {
         async let b = LocalizationContext.$current.withValue(chinese) { await Task.yield(); return Messages.Common.cancel.localized }
         #expect(await a == "Cancel")
         #expect(await b == "取消")
-        #expect(english.string(Messages.Common.done) == "完成")
+        #expect(english.string(Messages.Common.done) == "Done")
         let nested = Messages.Common.filesAndSize(2, "").withTextArgument(1, message: Messages.Common.cancel).recorded()
         #expect(english.string(nested) == "Cancel across 2 files")
     }

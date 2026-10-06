@@ -131,7 +131,7 @@ public enum CLIApplication {
                 guard language == "system" || LocalizationContext.supportedLanguages.contains(language) else {
                     throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unsupportedLanguage.localized, details: .array((["system"] + LocalizationContext.supportedLanguages).map(Value.string)))
                 }
-                if !request.dryRun { preferences.set(language, forKey: LocalizationContext.preferenceKey) }
+                if !request.dryRun { LocalizationContext.savePreference(language, in: preferences) }
                 return .object(["language": .string(language), "restartRequired": .bool(true), "dryRun": .bool(request.dryRun)])
             }
             return .object(["language": .string(preferences.string(forKey: LocalizationContext.preferenceKey) ?? "system"), "supported": .array(LocalizationContext.supportedLanguages.map(Value.string))])
