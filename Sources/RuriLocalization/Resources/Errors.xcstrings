@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The data index was removed or replaced externally. Writing is paused. Check the data folder."
+            "value" : "The data index was removed or replaced externally. Writing is paused. Check the data directory."
           }
         },
         "zh-Hans" : {
@@ -404,7 +404,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to download the appearance image. Try again."
+            "value" : "Could not download the appearance image. Try again."
           }
         },
         "zh-Hans" : {
@@ -674,7 +674,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to extract file: %1$@"
+            "value" : "Could not extract file: %1$@"
           }
         },
         "zh-Hans" : {
@@ -728,7 +728,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to save extracted file: %1$@"
+            "value" : "Could not save extracted file: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1484,7 +1484,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to remove the API Key (Keychain status %1$@)"
+            "value" : "Failed to remove the API key (Keychain status %1$@)"
           }
         },
         "zh-Hans" : {
@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure Ruri's CurseForge API Key in Settings first."
+            "value" : "Configure Ruri's CurseForge API key in Settings first."
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to save the API Key (Keychain status %1$@)"
+            "value" : "Failed to save the API key (Keychain status %1$@)"
           }
         },
         "zh-Hans" : {
@@ -1538,7 +1538,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to cache the downloaded file"
+            "value" : "Could not cache the downloaded file"
           }
         },
         "zh-Hans" : {
@@ -1664,7 +1664,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter a valid CurseForge API Key"
+            "value" : "Enter a valid CurseForge API key"
           }
         },
         "zh-Hans" : {
@@ -2096,7 +2096,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot access the custom run folder: %1$@\nConnect the original disk, check permissions, or relocate the original folder.\n%2$@"
+            "value" : "Could not access the custom run directory: %1$@\nConnect the original disk, check permissions, or relocate the original folder.\n%2$@"
           }
         },
         "zh-Hans" : {
@@ -2114,7 +2114,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This folder is another copy of a registered custom folder. Relocate the original folder or choose another folder."
+            "value" : "This folder is another copy of a registered custom directory. Relocate the original folder or choose another folder."
           }
         },
         "zh-Hans" : {
@@ -2168,7 +2168,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom run folder registration is invalid."
+            "value" : "The custom run directory registration is invalid."
           }
         },
         "zh-Hans" : {
@@ -2186,7 +2186,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom folder identity marker is invalid."
+            "value" : "The custom directory identity marker is invalid."
           }
         },
         "zh-Hans" : {
@@ -2204,7 +2204,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom folder marker version is invalid."
+            "value" : "The custom directory marker version is invalid."
           }
         },
         "zh-Hans" : {
@@ -2222,7 +2222,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the custom folder identity marker."
+            "value" : "Could not read the custom directory identity marker."
           }
         },
         "zh-Hans" : {
@@ -2240,7 +2240,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Custom run folders cannot be nested within each other."
+            "value" : "Custom run directories cannot be nested within each other."
           }
         },
         "zh-Hans" : {
@@ -2258,7 +2258,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A custom run folder cannot overlap with Ruri's shared data or instance folders. Use separate or shared mode, or choose another location."
+            "value" : "A custom run directory cannot overlap with Ruri's shared data or instance folders. Use separate or shared mode, or choose another location."
           }
         },
         "zh-Hans" : {
@@ -2276,7 +2276,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom folder marker is too large."
+            "value" : "The custom directory marker is too large."
           }
         },
         "zh-Hans" : {
@@ -2384,7 +2384,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This instance has no saved custom run folder."
+            "value" : "This instance has no saved custom run directory."
           }
         },
         "zh-Hans" : {
@@ -2510,7 +2510,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot encode the service query parameters."
+            "value" : "Could not encode the service query parameters."
           }
         },
         "zh-Hans" : {
@@ -2906,7 +2906,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the file extended attribute list."
+            "value" : "Could not read the file extended attribute list."
           }
         },
         "zh-Hans" : {
@@ -3104,7 +3104,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the archive: %1$@"
+            "value" : "Could not save the archive: %1$@"
           }
         },
         "zh-Hans" : {
@@ -3338,7 +3338,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot enumerate the folder: %1$@"
+            "value" : "Could not enumerate the folder: %1$@"
           }
         },
         "zh-Hans" : {
@@ -3356,7 +3356,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the folder: %1$@"
+            "value" : "Could not read the folder: %1$@"
           }
         },
         "zh-Hans" : {
@@ -3572,7 +3572,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot verify the file: %1$@"
+            "value" : "Could not verify the file: %1$@"
           }
         },
         "zh-Hans" : {
@@ -4040,7 +4040,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the loader file: %1$@"
+            "value" : "Could not save the loader file: %1$@"
           }
         },
         "zh-Hans" : {
@@ -4076,7 +4076,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the loader version list"
+            "value" : "Could not read the loader version list"
           }
         },
         "zh-Hans" : {
@@ -4238,7 +4238,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom folder does not match the instance policy."
+            "value" : "The custom directory does not match the instance policy."
           }
         },
         "zh-Hans" : {
@@ -4364,7 +4364,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot access instance folder “%1$@”: %2$@\nConnect the disk, check access permissions, or relocate the original folder.\n%3$@"
+            "value" : "Could not access instance folder “%1$@”: %2$@\nConnect the disk, check access permissions, or relocate the original folder.\n%3$@"
           }
         },
         "zh-Hans" : {
@@ -4454,7 +4454,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The instance is missing custom run folder information."
+            "value" : "The instance is missing custom run directory information."
           }
         },
         "zh-Hans" : {
@@ -4490,7 +4490,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the instance's parent folder. Restore the folder registration and try again."
+            "value" : "Could not find the instance's parent folder. Restore the folder registration and try again."
           }
         },
         "zh-Hans" : {
@@ -4544,7 +4544,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instance folders cannot overlap with registered folders or the shared data folder."
+            "value" : "Instance folders cannot overlap with registered folders or the shared data directory."
           }
         },
         "zh-Hans" : {
@@ -4580,7 +4580,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a custom run folder first."
+            "value" : "Select a custom run directory first."
           }
         },
         "zh-Hans" : {
@@ -4652,7 +4652,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the instance folder."
+            "value" : "Could not find the instance folder."
           }
         },
         "zh-Hans" : {
@@ -4778,7 +4778,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Custom run folders require a newer monitoring protocol."
+            "value" : "Custom run directories require a newer monitoring protocol."
           }
         },
         "zh-Hans" : {
@@ -4904,7 +4904,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the launcher event."
+            "value" : "Could not save the launcher event."
           }
         },
         "zh-Hans" : {
@@ -4922,7 +4922,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot locate the game monitor."
+            "value" : "Could not locate the game monitor."
           }
         },
         "zh-Hans" : {
@@ -4976,7 +4976,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot verify the game monitor's identity."
+            "value" : "Could not verify the game monitor's identity."
           }
         },
         "zh-Hans" : {
@@ -5030,7 +5030,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game monitoring is missing the run folder policy."
+            "value" : "Game monitoring is missing the run directory policy."
           }
         },
         "zh-Hans" : {
@@ -5066,7 +5066,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game folder does not match the run session."
+            "value" : "The game directory does not match the run session."
           }
         },
         "zh-Hans" : {
@@ -5084,7 +5084,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shared run folders require a newer monitoring protocol."
+            "value" : "Shared run directories require a newer monitoring protocol."
           }
         },
         "zh-Hans" : {
@@ -5174,7 +5174,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom run folder does not match the path used by this operation. Refresh and try again."
+            "value" : "The custom run directory does not match the path used by this operation. Refresh and try again."
           }
         },
         "zh-Hans" : {
@@ -5192,7 +5192,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The instance already uses this run folder."
+            "value" : "The instance already uses this run directory."
           }
         },
         "zh-Hans" : {
@@ -5210,7 +5210,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom folder identity has changed. Preview again."
+            "value" : "The custom directory identity has changed. Preview again."
           }
         },
         "zh-Hans" : {
@@ -5228,7 +5228,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modpacks keep a separate run folder to preserve their configuration and update records."
+            "value" : "Modpacks keep a separate run directory to preserve their configuration and update records."
           }
         },
         "zh-Hans" : {
@@ -5318,7 +5318,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a custom run folder first."
+            "value" : "Select a custom run directory first."
           }
         },
         "zh-Hans" : {
@@ -5336,7 +5336,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected folder is the current game folder. No change is needed."
+            "value" : "The selected folder is the current game directory. No change is needed."
           }
         },
         "zh-Hans" : {
@@ -5588,7 +5588,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom source folder changed after the copy was interrupted. Check the original location first."
+            "value" : "The custom source directory changed after the copy was interrupted. Check the original location first."
           }
         },
         "zh-Hans" : {
@@ -5606,7 +5606,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game folder has too many top-level items to record a safe publishing process."
+            "value" : "The game directory has too many top-level items to record a safe publishing process."
           }
         },
         "zh-Hans" : {
@@ -6254,7 +6254,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot determine the HMCL modpack's Minecraft version. The manifest must provide gameVersion, jar, or a game patch."
+            "value" : "Could not determine the HMCL modpack's Minecraft version. The manifest must provide gameVersion, jar, or a game patch."
           }
         },
         "zh-Hans" : {
@@ -6344,7 +6344,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The custom run folder changed during installation. The latest settings were not overwritten."
+            "value" : "The custom run directory changed during installation. The latest settings were not overwritten."
           }
         },
         "zh-Hans" : {
@@ -6560,7 +6560,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find Minecraft %1$@"
+            "value" : "Could not find Minecraft %1$@"
           }
         },
         "zh-Hans" : {
@@ -7118,7 +7118,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot verify the copy's operation lock. The working copy has been kept."
+            "value" : "Could not verify the copy's operation lock. The working copy has been kept."
           }
         },
         "zh-Hans" : {
@@ -7280,7 +7280,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the destination instance folder."
+            "value" : "Could not find the destination instance folder."
           }
         },
         "zh-Hans" : {
@@ -7298,7 +7298,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot confirm the destination folder's status. The copy record has been kept."
+            "value" : "Could not confirm the destination folder's status. The copy record has been kept."
           }
         },
         "zh-Hans" : {
@@ -7604,7 +7604,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the instance icon."
+            "value" : "Could not save the instance icon."
           }
         },
         "zh-Hans" : {
@@ -7658,7 +7658,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read this image. Select a PNG, JPEG, or another supported image."
+            "value" : "Could not read this image. Select a PNG, JPEG, or another supported image."
           }
         },
         "zh-Hans" : {
@@ -8216,7 +8216,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the instance to move. Refresh and try again."
+            "value" : "Could not find the instance to move. Refresh and try again."
           }
         },
         "zh-Hans" : {
@@ -8252,7 +8252,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot confirm that the destination is empty. Check the disk and access permissions."
+            "value" : "Could not confirm that the destination is empty. Check the disk and access permissions."
           }
         },
         "zh-Hans" : {
@@ -8270,7 +8270,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the destination instance folder."
+            "value" : "Could not find the destination instance folder."
           }
         },
         "zh-Hans" : {
@@ -8378,7 +8378,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot prepare the folder for cleaning up original files."
+            "value" : "Could not prepare the folder for cleaning up original files."
           }
         },
         "zh-Hans" : {
@@ -8540,7 +8540,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot determine the retired location of the original instance files."
+            "value" : "Could not determine the retired location of the original instance files."
           }
         },
         "zh-Hans" : {
@@ -8630,7 +8630,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create the move workspace. Existing files were not overwritten."
+            "value" : "Could not create the move workspace. Existing files were not overwritten."
           }
         },
         "zh-Hans" : {
@@ -8972,7 +8972,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The worlds folder cannot be a symbolic link."
+            "value" : "The saves folder cannot be a symbolic link."
           }
         },
         "zh-Hans" : {
@@ -9044,7 +9044,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the Java bytecode version of installation tool %1$@. Download it again and retry."
+            "value" : "Could not read the Java bytecode version of installation tool %1$@. Download it again and retry."
           }
         },
         "zh-Hans" : {
@@ -9134,7 +9134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot replace the Java folder. The original runtime has been kept."
+            "value" : "Could not replace the Java folder. The original runtime has been kept."
           }
         },
         "zh-Hans" : {
@@ -9368,7 +9368,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot identify the Java version"
+            "value" : "Could not identify the Java version"
           }
         },
         "zh-Hans" : {
@@ -9386,7 +9386,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot identify the Java major version: %1$@"
+            "value" : "Could not identify the Java major version: %1$@"
           }
         },
         "zh-Hans" : {
@@ -9674,7 +9674,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Extra game arguments cannot override account identity, tokens, or the game folder."
+            "value" : "Extra game arguments cannot override account identity, tokens, or the game directory."
           }
         },
         "zh-Hans" : {
@@ -9764,7 +9764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected Java does not meet the version requirements of the game or Modpack."
+            "value" : "The selected Java does not meet the version requirements of the game or modpack."
           }
         },
         "zh-Hans" : {
@@ -9836,7 +9836,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack import is incomplete. Complete the import before launching."
+            "value" : "The modpack import is incomplete. Complete the import before launching."
           }
         },
         "zh-Hans" : {
@@ -9926,7 +9926,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the wrapper command executable: %1$@"
+            "value" : "Could not find the wrapper command executable: %1$@"
           }
         },
         "zh-Hans" : {
@@ -10250,7 +10250,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find LiteLoader %2$@ for Minecraft %1$@."
+            "value" : "Could not find LiteLoader %2$@ for Minecraft %1$@."
           }
         },
         "zh-Hans" : {
@@ -10268,7 +10268,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot identify the launch entry in the LiteLoader manifest."
+            "value" : "Could not identify the launch entry in the LiteLoader manifest."
           }
         },
         "zh-Hans" : {
@@ -10286,7 +10286,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Loader does not use a Forge installer."
+            "value" : "This loader does not use a Forge installer."
           }
         },
         "zh-Hans" : {
@@ -10304,7 +10304,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Loader does not provide a Fabric/Quilt launch manifest."
+            "value" : "This loader does not provide a Fabric/Quilt launch manifest."
           }
         },
         "zh-Hans" : {
@@ -10412,7 +10412,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The MCBBS Modpack manifest is invalid or has no game version"
+            "value" : "The MCBBS modpack manifest is invalid or has no game version"
           }
         },
         "zh-Hans" : {
@@ -10430,7 +10430,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack memory requirements"
+            "value" : "Invalid modpack memory requirements"
           }
         },
         "zh-Hans" : {
@@ -10448,7 +10448,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack version, author, or description"
+            "value" : "Invalid modpack version, author, or description"
           }
         },
         "zh-Hans" : {
@@ -10466,7 +10466,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete the Loader installation before exporting the Modpack"
+            "value" : "Complete the loader installation before exporting the modpack"
           }
         },
         "zh-Hans" : {
@@ -10502,7 +10502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The MCBBS Modpack declares multiple Loaders and cannot be installed yet."
+            "value" : "The MCBBS modpack declares multiple loaders and cannot be installed yet."
           }
         },
         "zh-Hans" : {
@@ -10520,7 +10520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack file count exceeds the limit"
+            "value" : "The modpack file count exceeds the limit"
           }
         },
         "zh-Hans" : {
@@ -10538,7 +10538,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The MCBBS Modpack contains components that are not yet supported: %1$@"
+            "value" : "The MCBBS modpack contains components that are not yet supported: %1$@"
           }
         },
         "zh-Hans" : {
@@ -10592,7 +10592,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack file count exceeds the limit"
+            "value" : "The modpack file count exceeds the limit"
           }
         },
         "zh-Hans" : {
@@ -10682,7 +10682,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack version or description"
+            "value" : "Invalid modpack version or description"
           }
         },
         "zh-Hans" : {
@@ -10754,7 +10754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack declares multiple Loaders"
+            "value" : "The modpack declares multiple loaders"
           }
         },
         "zh-Hans" : {
@@ -10772,7 +10772,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete the Loader installation first"
+            "value" : "Complete the loader installation first"
           }
         },
         "zh-Hans" : {
@@ -10790,7 +10790,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack requires components that are not yet supported: %1$@"
+            "value" : "The modpack requires components that are not yet supported: %1$@"
           }
         },
         "zh-Hans" : {
@@ -10808,7 +10808,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unsupported Modrinth Modpack manifest"
+            "value" : "Unsupported Modrinth modpack manifest"
           }
         },
         "zh-Hans" : {
@@ -11096,7 +11096,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No versions were found in this directory's versions Folder."
+            "value" : "No versions were found in this directory's versions folder."
           }
         },
         "zh-Hans" : {
@@ -11186,7 +11186,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the version manifest or settings: %1$@"
+            "value" : "Could not read the version manifest or settings: %1$@"
           }
         },
         "zh-Hans" : {
@@ -11222,7 +11222,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a version Folder or a JSON manifest with the same name."
+            "value" : "Select a version folder or a JSON manifest with the same name."
           }
         },
         "zh-Hans" : {
@@ -11258,7 +11258,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the versions Folder. Select .minecraft, versions, or a version directory within it."
+            "value" : "Could not find the versions folder. Select .minecraft, versions, or a version directory within it."
           }
         },
         "zh-Hans" : {
@@ -11294,7 +11294,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This location has already been added as a Ruri instance Folder. Select it from the Folder list."
+            "value" : "This location has already been added as a Ruri instance folder. Select it from the folder list."
           }
         },
         "zh-Hans" : {
@@ -11312,7 +11312,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot access the custom game directory for “%1$@”: %2$@"
+            "value" : "Could not access the custom game directory for “%1$@”: %2$@"
           }
         },
         "zh-Hans" : {
@@ -11366,7 +11366,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Folder has already been added to Ruri or is a copy of an existing Folder. If the original Folder has moved, select its new location in Folder management."
+            "value" : "This folder has already been added to Ruri or is a copy of an existing folder. If the original folder has moved, select its new location in folder management."
           }
         },
         "zh-Hans" : {
@@ -11384,7 +11384,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Folder already has a version named “%1$@”. Choose a different name for the new instance."
+            "value" : "This folder already has a version named “%1$@”. Choose a different name for the new instance."
           }
         },
         "zh-Hans" : {
@@ -11402,7 +11402,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Folder list has changed. Refresh and try again."
+            "value" : "The folder list has changed. Refresh and try again."
           }
         },
         "zh-Hans" : {
@@ -11420,7 +11420,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot identify this Folder's Ruri marker."
+            "value" : "Could not identify this folder's Ruri marker."
           }
         },
         "zh-Hans" : {
@@ -11438,7 +11438,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the local version."
+            "value" : "Could not find the local version."
           }
         },
         "zh-Hans" : {
@@ -11456,7 +11456,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Folder location has changed. Refresh again."
+            "value" : "The folder location has changed. Refresh again."
           }
         },
         "zh-Hans" : {
@@ -11474,7 +11474,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The original Minecraft Folder is still accessible. Select it to restore the instance settings. The current selection is another copy."
+            "value" : "The original Minecraft folder is still accessible. Select it to restore the instance settings. The current selection is another copy."
           }
         },
         "zh-Hans" : {
@@ -12122,7 +12122,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid initial Modpack file checksum information"
+            "value" : "Invalid initial modpack file checksum information"
           }
         },
         "zh-Hans" : {
@@ -12140,7 +12140,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack source ID"
+            "value" : "Invalid modpack source ID"
           }
         },
         "zh-Hans" : {
@@ -12158,7 +12158,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack version record"
+            "value" : "Invalid modpack version record"
           }
         },
         "zh-Hans" : {
@@ -12176,7 +12176,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack update URL"
+            "value" : "Invalid modpack update URL"
           }
         },
         "zh-Hans" : {
@@ -12194,7 +12194,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack version record is unsupported or contains duplicate files"
+            "value" : "The modpack version record is unsupported or contains duplicate files"
           }
         },
         "zh-Hans" : {
@@ -12212,7 +12212,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download this Modpack from CurseForge first, then select the downloaded file."
+            "value" : "Download this modpack from CurseForge first, then select the downloaded file."
           }
         },
         "zh-Hans" : {
@@ -12230,7 +12230,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack source ID."
+            "value" : "Invalid modpack source ID."
           }
         },
         "zh-Hans" : {
@@ -12248,7 +12248,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack version has no checksum information."
+            "value" : "The modpack version has no checksum information."
           }
         },
         "zh-Hans" : {
@@ -12266,7 +12266,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The source project is not a Modpack."
+            "value" : "The source project is not a modpack."
           }
         },
         "zh-Hans" : {
@@ -12284,7 +12284,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected file does not match the Modpack version."
+            "value" : "The selected file does not match the modpack version."
           }
         },
         "zh-Hans" : {
@@ -12302,7 +12302,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Folder already exists at the location of the file to update: %1$@"
+            "value" : "A folder already exists at the location of the file to update: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12320,7 +12320,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Modpack file matches multiple local versions. Resolve the duplicates first: %1$@"
+            "value" : "This modpack file matches multiple local versions. Resolve the duplicates first: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12338,7 +12338,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The new Modpack provides multiple files for the same project: %1$@"
+            "value" : "The new modpack provides multiple files for the same project: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12356,7 +12356,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack contains duplicate projects. Cannot determine which file to replace: %1$@"
+            "value" : "The modpack contains duplicate projects. Cannot determine which file to replace: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12410,7 +12410,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game components have changed since the update. Restore the component configuration before rolling back the Modpack."
+            "value" : "Game components have changed since the update. Restore the component configuration before rolling back the modpack."
           }
         },
         "zh-Hans" : {
@@ -12518,7 +12518,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“%1$@” shares this instance's run directory. Recover its incomplete update in Modpack management first."
+            "value" : "“%1$@” shares this instance's run directory. Recover its incomplete update in modpack management first."
           }
         },
         "zh-Hans" : {
@@ -12536,7 +12536,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The update needs recovery. Backups of the original files have been kept. Click Recover in Modpack management.\n%1$@"
+            "value" : "The update needs recovery. Backups of the original files have been kept. Click Recover in modpack management.\n%1$@"
           }
         },
         "zh-Hans" : {
@@ -12554,7 +12554,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the update file: %1$@"
+            "value" : "Could not save the update file: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12590,7 +12590,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack update still needs recovery. Complete recovery in Modpack management in instance settings."
+            "value" : "The modpack update still needs recovery. Complete recovery in modpack management in instance settings."
           }
         },
         "zh-Hans" : {
@@ -12608,7 +12608,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“%1$@” depends on this version. Create an independent copy before updating the Modpack."
+            "value" : "“%1$@” depends on this version. Create an independent copy before updating the modpack."
           }
         },
         "zh-Hans" : {
@@ -12680,7 +12680,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a Modrinth, CurseForge, HMCL, or MCBBS Modpack update file."
+            "value" : "Select a Modrinth, CurseForge, HMCL, or MCBBS modpack update file."
           }
         },
         "zh-Hans" : {
@@ -12698,7 +12698,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The new Modpack has no valid file manifest."
+            "value" : "The new modpack has no valid file manifest."
           }
         },
         "zh-Hans" : {
@@ -12716,7 +12716,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This instance has no original Modpack file records. Cannot determine which files belong to the Modpack."
+            "value" : "This instance has no original modpack file records. Cannot determine which files belong to the modpack."
           }
         },
         "zh-Hans" : {
@@ -12734,7 +12734,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack version or launch settings changed after the preview. Prepare the update again."
+            "value" : "The modpack version or launch settings changed after the preview. Prepare the update again."
           }
         },
         "zh-Hans" : {
@@ -12788,7 +12788,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected file belongs to another Modpack project."
+            "value" : "The selected file belongs to another modpack project."
           }
         },
         "zh-Hans" : {
@@ -12806,7 +12806,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This file is not a Modrinth Modpack"
+            "value" : "This file is not a Modrinth modpack"
           }
         },
         "zh-Hans" : {
@@ -12842,7 +12842,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find a compatible required dependency: %1$@"
+            "value" : "Could not find a compatible required dependency: %1$@"
           }
         },
         "zh-Hans" : {
@@ -12860,7 +12860,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The number of Mod dependencies exceeds the limit"
+            "value" : "The number of mod dependencies exceeds the limit"
           }
         },
         "zh-Hans" : {
@@ -12896,7 +12896,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mods require an instance with a Loader installed. Create the corresponding instance first."
+            "value" : "Mods require an instance with a loader installed. Create the corresponding instance first."
           }
         },
         "zh-Hans" : {
@@ -12914,7 +12914,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ does not support this instance's Loader"
+            "value" : "%1$@ does not support this instance's loader"
           }
         },
         "zh-Hans" : {
@@ -13040,7 +13040,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The number of Data Packs exceeds the limit"
+            "value" : "The number of data packs exceeds the limit"
           }
         },
         "zh-Hans" : {
@@ -13436,7 +13436,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World has no Data tag"
+            "value" : "The world has no Data tag"
           }
         },
         "zh-Hans" : {
@@ -13454,7 +13454,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World Data Pack configuration is not a compound tag"
+            "value" : "The world data pack configuration is not a compound tag"
           }
         },
         "zh-Hans" : {
@@ -13616,7 +13616,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the OptiFine dependency."
+            "value" : "Could not save the OptiFine dependency."
           }
         },
         "zh-Hans" : {
@@ -13778,7 +13778,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the corresponding OptiFine version."
+            "value" : "Could not find the corresponding OptiFine version."
           }
         },
         "zh-Hans" : {
@@ -14030,7 +14030,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Legacy rectangular Skins only support classic arms. Use the 64 × 64 format for slim arms."
+            "value" : "Legacy rectangular skins only support classic arms. Use the 64 × 64 format for slim arms."
           }
         },
         "zh-Hans" : {
@@ -14048,7 +14048,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The destination Minecraft Folder has moved or been removed from the list. Restore its original location before handling the import."
+            "value" : "The destination Minecraft folder has moved or been removed from the list. Restore its original location before handling the import."
           }
         },
         "zh-Hans" : {
@@ -14192,7 +14192,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This game Folder contains an invalid import record. Check it first: %1$@"
+            "value" : "This game folder contains an invalid import record. Check it first: %1$@"
           }
         },
         "zh-Hans" : {
@@ -14210,7 +14210,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Modpack import record: %1$@"
+            "value" : "Invalid modpack import record: %1$@"
           }
         },
         "zh-Hans" : {
@@ -14246,7 +14246,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Folder still has an incomplete import or copy. Complete or cancel the operation first."
+            "value" : "This folder still has an incomplete import or copy. Complete or cancel the operation first."
           }
         },
         "zh-Hans" : {
@@ -14264,7 +14264,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Folder still has an incomplete import or copy. Restore its original location and resolve the operation before moving it."
+            "value" : "This folder still has an incomplete import or copy. Restore its original location and resolve the operation before moving it."
           }
         },
         "zh-Hans" : {
@@ -14318,7 +14318,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Modpack installation result does not match the destination instance."
+            "value" : "The modpack installation result does not match the destination instance."
           }
         },
         "zh-Hans" : {
@@ -14372,7 +14372,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the import work files."
+            "value" : "Could not save the import work files."
           }
         },
         "zh-Hans" : {
@@ -14390,7 +14390,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create the instance work directory."
+            "value" : "Could not create the instance work directory."
           }
         },
         "zh-Hans" : {
@@ -14462,7 +14462,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install the source instance before saving a complete copy to a Minecraft Folder."
+            "value" : "Install the source instance before saving a complete copy to a Minecraft folder."
           }
         },
         "zh-Hans" : {
@@ -14498,7 +14498,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The source instance settings or destination Folder changed after the preview. Preview again."
+            "value" : "The source instance settings or destination folder changed after the preview. Preview again."
           }
         },
         "zh-Hans" : {
@@ -14516,7 +14516,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The destination version is inside the source game content. Select another Minecraft Folder."
+            "value" : "The destination version is inside the source game content. Select another Minecraft folder."
           }
         },
         "zh-Hans" : {
@@ -14552,7 +14552,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create the original file cleanup directory."
+            "value" : "Could not create the original file cleanup directory."
           }
         },
         "zh-Hans" : {
@@ -14660,7 +14660,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot determine the original file cleanup location."
+            "value" : "Could not determine the original file cleanup location."
           }
         },
         "zh-Hans" : {
@@ -14840,7 +14840,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The original Folder identity has changed. Check it, or choose to keep the original files and complete the move."
+            "value" : "The original folder identity has changed. Check it, or choose to keep the original files and complete the move."
           }
         },
         "zh-Hans" : {
@@ -14912,7 +14912,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Folder involved in the move has changed location. Restore its original location and try again."
+            "value" : "A folder involved in the move has changed location. Restore its original location and try again."
           }
         },
         "zh-Hans" : {
@@ -15056,7 +15056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The instance is already in the selected Folder."
+            "value" : "The instance is already in the selected folder."
           }
         },
         "zh-Hans" : {
@@ -15074,7 +15074,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install the instance before moving it to a Minecraft Folder."
+            "value" : "Install the instance before moving it to a Minecraft folder."
           }
         },
         "zh-Hans" : {
@@ -15092,7 +15092,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the destination Folder."
+            "value" : "Could not find the destination folder."
           }
         },
         "zh-Hans" : {
@@ -15128,7 +15128,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The source version Folder has been replaced. Preview again."
+            "value" : "The source version folder has been replaced. Preview again."
           }
         },
         "zh-Hans" : {
@@ -15200,7 +15200,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The destination Folder cannot be inside the source instance or run directory."
+            "value" : "The destination folder cannot be inside the source instance or run directory."
           }
         },
         "zh-Hans" : {
@@ -15218,7 +15218,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A local library is outside the game Folder."
+            "value" : "A local library is outside the game folder."
           }
         },
         "zh-Hans" : {
@@ -15452,7 +15452,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the run directory copy record. Check %1$@."
+            "value" : "Could not read the run directory copy record. Check %1$@."
           }
         },
         "zh-Hans" : {
@@ -15506,7 +15506,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot determine the file identity of the copy item: %1$@"
+            "value" : "Could not determine the file identity of the copy item: %1$@"
           }
         },
         "zh-Hans" : {
@@ -15614,7 +15614,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the file to copy: %1$@"
+            "value" : "Could not read the file to copy: %1$@"
           }
         },
         "zh-Hans" : {
@@ -15632,7 +15632,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create the copy: %1$@"
+            "value" : "Could not create the copy: %1$@"
           }
         },
         "zh-Hans" : {
@@ -15650,7 +15650,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create the publication directory. Existing content was not overwritten: %1$@"
+            "value" : "Could not create the publication directory. Existing content was not overwritten: %1$@"
           }
         },
         "zh-Hans" : {
@@ -15704,7 +15704,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create a directory to keep the published copy."
+            "value" : "Could not create a directory to keep the published copy."
           }
         },
         "zh-Hans" : {
@@ -15758,7 +15758,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A file or Folder with the same name already exists."
+            "value" : "A file or folder with the same name already exists."
           }
         },
         "zh-Hans" : {
@@ -15776,7 +15776,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Schematic with the same name already exists: %1$@. Rename or move the old file first."
+            "value" : "A schematic with the same name already exists: %1$@. Rename or move the old file first."
           }
         },
         "zh-Hans" : {
@@ -15812,7 +15812,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter a valid file or Folder name."
+            "value" : "Enter a valid file or folder name."
           }
         },
         "zh-Hans" : {
@@ -15830,7 +15830,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select 1–200 Schematic files."
+            "value" : "Select 1–200 schematic files."
           }
         },
         "zh-Hans" : {
@@ -15848,7 +15848,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot save the exported Schematic."
+            "value" : "Could not save the exported schematic."
           }
         },
         "zh-Hans" : {
@@ -15866,7 +15866,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Schematic file has changed. Refresh the list."
+            "value" : "The schematic file has changed. Refresh the list."
           }
         },
         "zh-Hans" : {
@@ -15884,7 +15884,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Folder has no Schematic information."
+            "value" : "The folder has no schematic information."
           }
         },
         "zh-Hans" : {
@@ -15902,7 +15902,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a single Schematic file to export."
+            "value" : "Select a single schematic file to export."
           }
         },
         "zh-Hans" : {
@@ -15956,7 +15956,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a litematic, schem, schematic, or nbt Schematic file."
+            "value" : "Select a litematic, schem, schematic, or nbt schematic file."
           }
         },
         "zh-Hans" : {
@@ -16118,7 +16118,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duplicate directory identities detected. Writes are suspended."
+            "value" : "Duplicate folder identities detected. Writes are suspended."
           }
         },
         "zh-Hans" : {
@@ -16226,7 +16226,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find a compatible Data Pack dependency: %1$@."
+            "value" : "Could not find a compatible data pack dependency: %1$@."
           }
         },
         "zh-Hans" : {
@@ -16244,7 +16244,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Required dependencies need different versions of the same Data Pack. Select another version."
+            "value" : "Required dependencies need different versions of the same data pack. Select another version."
           }
         },
         "zh-Hans" : {
@@ -16262,7 +16262,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Multiple Data Packs use the same filename and cannot be installed together."
+            "value" : "Multiple data packs use the same filename and cannot be installed together."
           }
         },
         "zh-Hans" : {
@@ -16280,7 +16280,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The instance's game version has changed. Select the Data Pack again."
+            "value" : "The instance's game version has changed. Select the data pack again."
           }
         },
         "zh-Hans" : {
@@ -16316,7 +16316,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A required Data Pack dependency has no project or version ID."
+            "value" : "A required data pack dependency has no project or version ID."
           }
         },
         "zh-Hans" : {
@@ -16334,7 +16334,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ has no verifiable ZIP Data Pack file, or the file exceeds 512 MB."
+            "value" : "%1$@ has no verifiable ZIP data pack file, or the file exceeds 512 MB."
           }
         },
         "zh-Hans" : {
@@ -16352,7 +16352,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ has no Data Pack version for Minecraft %2$@."
+            "value" : "%1$@ has no data pack version for Minecraft %2$@."
           }
         },
         "zh-Hans" : {
@@ -16370,7 +16370,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The number of Data Pack dependencies exceeds the limit."
+            "value" : "The number of data pack dependencies exceeds the limit."
           }
         },
         "zh-Hans" : {
@@ -16406,7 +16406,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Data Pack with the same name already exists: %1$@. Remove the old file or rename the import file first."
+            "value" : "A data pack with the same name already exists: %1$@. Remove the old file or rename the import file first."
           }
         },
         "zh-Hans" : {
@@ -16424,7 +16424,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enable the Data Pack before importing it."
+            "value" : "Enable the data pack before importing it."
           }
         },
         "zh-Hans" : {
@@ -16460,7 +16460,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid World Data Pack configuration"
+            "value" : "Invalid world data pack configuration"
           }
         },
         "zh-Hans" : {
@@ -16496,7 +16496,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid Data Pack filename"
+            "value" : "Invalid data pack filename"
           }
         },
         "zh-Hans" : {
@@ -16514,7 +16514,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid World Data Pack list"
+            "value" : "Invalid world data pack list"
           }
         },
         "zh-Hans" : {
@@ -16532,7 +16532,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changing priority cannot add, remove, or duplicate Data Packs."
+            "value" : "Changing priority cannot add, remove, or duplicate data packs."
           }
         },
         "zh-Hans" : {
@@ -16550,7 +16550,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The relative order of built-in, Mod, and missing Data Packs must be preserved."
+            "value" : "The relative order of built-in, mod, and missing data packs must be preserved."
           }
         },
         "zh-Hans" : {
@@ -16568,7 +16568,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the World's level.dat. Check that the file is complete and does not exceed 32 MB."
+            "value" : "Could not read the world's level.dat. Check that the file is complete and does not exceed 32 MB."
           }
         },
         "zh-Hans" : {
@@ -16586,7 +16586,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World has no Data tag"
+            "value" : "The world has no Data tag"
           }
         },
         "zh-Hans" : {
@@ -16604,7 +16604,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack root directory has no pack.mcmeta"
+            "value" : "The data pack root directory has no pack.mcmeta"
           }
         },
         "zh-Hans" : {
@@ -16640,7 +16640,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack description has no pack or description field"
+            "value" : "The data pack description has no pack or description field"
           }
         },
         "zh-Hans" : {
@@ -16658,7 +16658,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack description is too large"
+            "value" : "The data pack description is too large"
           }
         },
         "zh-Hans" : {
@@ -16676,7 +16676,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a real Data Pack file."
+            "value" : "Select a real data pack file."
           }
         },
         "zh-Hans" : {
@@ -16694,7 +16694,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack file is invalid or exceeds 512 MB"
+            "value" : "The data pack file is invalid or exceeds 512 MB"
           }
         },
         "zh-Hans" : {
@@ -16712,7 +16712,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack list has changed. Refresh before adjusting the order again."
+            "value" : "The data pack list has changed. Refresh before adjusting the order again."
           }
         },
         "zh-Hans" : {
@@ -16730,7 +16730,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read pack.mcmeta in the Data Pack root directory. Check that the file is complete and does not exceed 1 MB."
+            "value" : "Could not read pack.mcmeta in the data pack root directory. Check that the file is complete and does not exceed 1 MB."
           }
         },
         "zh-Hans" : {
@@ -16748,7 +16748,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack no longer exists. Refresh the list."
+            "value" : "The data pack no longer exists. Refresh the list."
           }
         },
         "zh-Hans" : {
@@ -16766,7 +16766,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Data Pack directory cannot be a symbolic link."
+            "value" : "The data pack directory cannot be a symbolic link."
           }
         },
         "zh-Hans" : {
@@ -16784,7 +16784,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Symbolic link Data Packs are not modified."
+            "value" : "Symbolic link data packs are not modified."
           }
         },
         "zh-Hans" : {
@@ -16838,7 +16838,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The backup has no World data"
+            "value" : "The backup has no world data"
           }
         },
         "zh-Hans" : {
@@ -16892,7 +16892,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is not a valid Ruri World backup"
+            "value" : "This is not a valid Ruri world backup"
           }
         },
         "zh-Hans" : {
@@ -16910,7 +16910,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid World directory name"
+            "value" : "Invalid world directory name"
           }
         },
         "zh-Hans" : {
@@ -16928,7 +16928,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a Folder or ZIP file containing a single Minecraft World"
+            "value" : "Select a folder or ZIP file containing a single Minecraft world"
           }
         },
         "zh-Hans" : {
@@ -16946,7 +16946,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot find the World's level.dat"
+            "value" : "Could not find the world's level.dat"
           }
         },
         "zh-Hans" : {
@@ -16964,7 +16964,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot read the World lock file"
+            "value" : "Could not read the world lock file"
           }
         },
         "zh-Hans" : {
@@ -17000,7 +17000,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World directory from before the restore is missing. Restore from the automatic backup"
+            "value" : "The world directory from before the restore is missing. Restore from the automatic backup"
           }
         },
         "zh-Hans" : {
@@ -17018,7 +17018,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The restore directory conflicts with an existing World. Both copies have been kept"
+            "value" : "The restore directory conflicts with an existing world. Both copies have been kept"
           }
         },
         "zh-Hans" : {
@@ -17036,7 +17036,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World restore needs review. Files have been kept at %1$@. %2$@"
+            "value" : "The world restore needs review. Files have been kept at %1$@. %2$@"
           }
         },
         "zh-Hans" : {
@@ -17072,7 +17072,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot create a unique World directory"
+            "value" : "Could not create a unique world directory"
           }
         },
         "zh-Hans" : {
@@ -17108,7 +17108,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World is being used by the game. Leave this World and try again."
+            "value" : "The world is being used by the game. Leave this world and try again."
           }
         },
         "zh-Hans" : {
@@ -17126,7 +17126,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World does not exist"
+            "value" : "The world does not exist"
           }
         },
         "zh-Hans" : {
@@ -17144,7 +17144,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "World information is incomplete. Check this World in the game first."
+            "value" : "World information is incomplete. Check this world in the game first."
           }
         },
         "zh-Hans" : {
@@ -17162,7 +17162,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid World directory name."
+            "value" : "Invalid world directory name."
           }
         },
         "zh-Hans" : {
@@ -17180,7 +17180,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The instance run directory changed after the World was selected. Select the World again."
+            "value" : "The instance run directory changed after the world was selected. Select the world again."
           }
         },
         "zh-Hans" : {
@@ -17198,7 +17198,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This version does not support entering a World directly. Launch the game and choose the World from the Singleplayer menu."
+            "value" : "This version does not support entering a world directly. Launch the game and choose the world from the Singleplayer menu."
           }
         },
         "zh-Hans" : {
@@ -17216,7 +17216,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The World has been removed or is not a valid Folder. Refresh the World list."
+            "value" : "The world has been removed or is not a valid folder. Refresh the world list."
           }
         },
         "zh-Hans" : {

@@ -440,7 +440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read the CurseForge API key (Keychain status %1$@)."
+            "value" : "Could not read the CurseForge API key (Keychain status %1$@)."
           }
         },
         "zh-Hans" : {
@@ -620,7 +620,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to save the downloaded file"
+            "value" : "Could not save the downloaded file"
           }
         },
         "zh-Hans" : {
@@ -800,7 +800,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to verify file extended attributes: %1$@"
+            "value" : "Could not verify file extended attributes: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1160,7 +1160,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Ruri] Unable to save game process information: %1$@"
+            "value" : "[Ruri] Could not save game process information: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to confirm whether directory settings were committed. The workspace and reservation records have been kept. Recover in Instance Settings: %1$@"
+            "value" : "Could not confirm whether directory settings were committed. The workspace and reservation records have been kept. Recover in Instance Settings: %1$@"
           }
         },
         "zh-Hans" : {
@@ -2636,7 +2636,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to confirm whether the instance copy was committed. Check through the recovery action. %1$@"
+            "value" : "Could not confirm whether the instance copy was committed. Check through the recovery action. %1$@"
           }
         },
         "zh-Hans" : {
@@ -2888,7 +2888,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to confirm whether the instance move was committed. Check through the recovery action. %1$@"
+            "value" : "Could not confirm whether the instance move was committed. Check through the recovery action. %1$@"
           }
         },
         "zh-Hans" : {
@@ -3140,7 +3140,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read supported Java arguments"
+            "value" : "Could not read supported Java arguments"
           }
         },
         "zh-Hans" : {
@@ -4184,7 +4184,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to locate the legacy HMCL custom directory. Confirm it manually."
+            "value" : "Could not locate the legacy HMCL custom directory. Confirm it manually."
           }
         },
         "zh-Hans" : {
@@ -4220,7 +4220,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read the legacy HMCL directory policy. Confirm the game data location."
+            "value" : "Could not read the legacy HMCL directory policy. Confirm the game data location."
           }
         },
         "zh-Hans" : {
@@ -4598,7 +4598,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to determine the actual Minecraft version. The folder name alone is insufficient."
+            "value" : "Could not determine the actual Minecraft version. The folder name alone is insufficient."
           }
         },
         "zh-Hans" : {
@@ -4634,7 +4634,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read version information from the game JAR: %1$@"
+            "value" : "Could not read version information from the game JAR: %1$@"
           }
         },
         "zh-Hans" : {
@@ -5534,7 +5534,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "parent directory"
+            "value" : "parent folder"
           }
         },
         "zh-Hans" : {
@@ -5552,7 +5552,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "retained directory record"
+            "value" : "retained folder record"
           }
         },
         "zh-Hans" : {
@@ -5606,7 +5606,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "same instance directory"
+            "value" : "same instance folder"
           }
         },
         "zh-Hans" : {
@@ -5642,7 +5642,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected instance, directory, or account changed in another window."
+            "value" : "The selected instance, folder, or account changed in another window."
           }
         },
         "zh-Hans" : {
@@ -5894,7 +5894,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read world information. You can still back up the files."
+            "value" : "Could not read world information. You can still back up the files."
           }
         },
         "zh-Hans" : {
@@ -5948,7 +5948,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to enter the game working folder"
+            "value" : "Could not enter the game run directory"
           }
         },
         "zh-Hans" : {
@@ -6092,7 +6092,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to launch the selected Java"
+            "value" : "Could not launch the selected Java"
           }
         },
         "zh-Hans" : {
@@ -6218,7 +6218,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to save the game host status"
+            "value" : "Could not save the game host status"
           }
         },
         "zh-Hans" : {

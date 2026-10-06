@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read the saved skin. The file may be corrupted."
+            "value" : "Could not read the saved skin. The file may be corrupted."
           }
         },
         "zh-Hans" : {
@@ -764,7 +764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft Accounts support 64 × 64 or 64 × 32 skins. Choose a cape from those owned by this account."
+            "value" : "Microsoft accounts support 64 × 64 or 64 × 32 skins. Choose a cape from those owned by this account."
           }
         },
         "zh-Hans" : {
@@ -782,7 +782,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Offline Accounts can play locally but cannot join servers that require account authentication."
+            "value" : "Offline accounts can play locally but cannot join servers that require account authentication."
           }
         },
         "zh-Hans" : {
@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in with a Microsoft Account, connect a third-party authentication server, or create an offline player."
+            "value" : "Sign in with a Microsoft account, connect a third-party authentication server, or create an offline player."
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The signed-in player does not match the original account. Sign in again with the original Microsoft Account. Use “Add Account” to add other accounts."
+            "value" : "The signed-in player does not match the original account. Sign in again with the original Microsoft account. Use “Add Account” to add other accounts."
           }
         },
         "zh-Hans" : {
@@ -1610,7 +1610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to sign the offline skin."
+            "value" : "Could not sign the offline skin."
           }
         },
         "zh-Hans" : {

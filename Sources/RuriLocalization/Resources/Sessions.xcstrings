@@ -3122,7 +3122,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A log line exceeds 1 MiB, so sensitive information cannot be safely hidden. Only an excerpt is provided. View the original file in the game folder."
+            "value" : "A log line exceeds 1 MiB, so sensitive information cannot be safely hidden. Only an excerpt is provided. View the original file in the game directory."
           }
         },
         "zh-Hans" : {

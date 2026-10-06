@@ -1631,13 +1631,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "This run has %1$lld report. Only the first 12 were analyzed; the rest are available in the working folder."
+                  "value" : "This run has %1$lld report. Only the first 12 were analyzed; the rest are available in the run directory."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "This run has %1$lld reports. Only the first 12 were analyzed; the rest are available in the working folder."
+                  "value" : "This run has %1$lld reports. Only the first 12 were analyzed; the rest are available in the run directory."
                 }
               }
             }
@@ -1700,7 +1700,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read the session log: %1$@"
+            "value" : "Could not read the session log: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1754,7 +1754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read %1$@: %2$@"
+            "value" : "Could not read %1$@: %2$@"
           }
         },
         "zh-Hans" : {
@@ -1844,7 +1844,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to save the diagnostic bundle."
+            "value" : "Could not save the diagnostic bundle."
           }
         },
         "zh-Hans" : {
@@ -1916,7 +1916,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save the diagnostic bundle outside the Ruri data folder and instance folder."
+            "value" : "Save the diagnostic bundle outside the Ruri data directory and instance folder."
           }
         },
         "zh-Hans" : {

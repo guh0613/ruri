@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Finding game Folders…"
+            "value" : "Finding game folders…"
           }
         },
         "zh-Hans" : {
@@ -170,7 +170,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The search area is too large. Select the game Folder or its parent directory."
+            "value" : "The search area is too large. Select the game folder or its parent directory."
           }
         },
         "zh-Hans" : {

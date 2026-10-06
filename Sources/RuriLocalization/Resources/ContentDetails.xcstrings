@@ -332,7 +332,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a Resource Pack folder containing pack.mcmeta, or a Shader Pack folder containing shaders."
+            "value" : "Choose a resource pack folder containing pack.mcmeta, or a shader pack folder containing shaders."
           }
         },
         "zh-Hans" : {
@@ -656,7 +656,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to load the matched project's details. Please try again later."
+            "value" : "Could not load the matched project's details. Please try again later."
           }
         },
         "zh-Hans" : {
@@ -818,7 +818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to determine compatibility"
+            "value" : "Could not determine compatibility"
           }
         },
         "zh-Hans" : {

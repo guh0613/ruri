@@ -98,7 +98,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to read the dropped files. Drag them from Finder again, or use “Import…”."
+            "value" : "Could not read the dropped files. Drag them from Finder again, or use “Import…”."
           }
         },
         "zh-Hans" : {

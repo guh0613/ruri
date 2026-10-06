@@ -2008,7 +2008,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to save the file. Check permissions for the destination."
+            "value" : "Could not save the file. Check permissions for the destination."
           }
         },
         "zh-Hans" : {
